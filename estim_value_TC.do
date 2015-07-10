@@ -1,5 +1,5 @@
 *************************************************
-* Programme 2 : Programme pour estimer les additive & iceberg trade costs
+* Programme : Estimer les additive & iceberg trade costs
 * Using Hummels trade data
 * 
 *************************************************
@@ -43,8 +43,6 @@ version 12
 ** Et predit = tau(i)*tau(k) + (t(i)+t(k))/p(fob)ik
 
 *** En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
-
-
 
 clear all
 *set mem 800m
@@ -633,160 +631,7 @@ timer list 2
 generate Duree_estimation_secondes = r(t2)
 timer clear
 
-
-
-
 end
-
-
-********************************************************************************************
-*Programme de rŽgression sur les effets fixes__ et sortie des rŽsultats
-***********************************************************
-
-capture program drop reg_FE_h
-program reg_FE_h
-	args year class preci mode
-* exemple : reg_FE 2006 sitc3 3 air
-* rod_var "hs hs6 SIC sitc2 sitc3 naics"
-
-
-*** STEP 1 - SAUVER LES RESULTATS ETAPE 1 *
-******************************************************************************
-
-use blouk_`year'_`class'_`preci'_`mode', clear
-
-merge m:m iso_o iso_d product prix_fob using blouk_nlI_`year'_`class'_`preci'_`mode'
-drop _merge
-
-display "`year'_`class'_`preci'_`mode'"
-
-save blouk_`year'_`class'_`preci'_`mode', replace
-
-use blouk_`year'_`class'_`preci'_`mode', clear
-keep product coef_prod_nlI ecart_type_prod_nlI coef_iso_nlI ecart_type_iso_nlI coef_prod_A coef_prod_I  ecart_type_prod_A ecart_type_prod_I terme_nlI_mp terme_nlI_et terme_A_mp terme_A_et terme_I_mp terme_I_et nbr_obs nbr_obs_prod
-
-bysort product : keep if _n==1
-
-save result_prod_`year'_`class'_`preci'_`mode', replace
-
-
-
-*** STEP 2 - EVALUER L'EFFET DES VARIABLES DE GRAVITE
-****************************************************************************
-
-** On garde la même forme fonctionnelle sur cette seconde étape
-
-use blouk_`year'_`class'_`preci'_`mode', clear
-
-keep iso_o coef_iso_nlI ecart_type_iso_nlI coef_iso_A coef_iso_I ecart_type_iso_A ecart_type_iso_I terme_A_mp terme_A_et terme_I_mp terme_I_et nbr_obs  nbr_obs_iso contig-dist 
-
-bysort iso_o : keep if _n==1
-
-generate lndist=ln(dist)
-
-** CASE 1: DANS LE CAS SANS ADDITIFS
-************************************************
-generate lncoef_iso_nlI= ln(coef_iso_nlI)
-
-
-reg lncoef_iso_nlI lndist contig-smctry, robust
-
-/*capture*/	matrix X=e(b)
-/*capture*/ matrix ET=e(V)
-
-generate rho_dist_nlI=X[1,1]
-generate rho_contig_nlI=X[1,2]
-generate rho_comlang_off_nlI=X[1,3]
-generate rho_comlang_ethno_nlI=X[1,4]
-generate rho_colony_nlI=X[1,5]
-generate rho_comcol_nlI=X[1,6]
-generate rho_curcol_nlI=X[1,7]
-generate rho_col45_nlI=X[1,8]
-generate rho_smctry_nlI=X[1,9]
-
-
-generate et_dist_nlI=ET[1,1]^0.5
-generate et_contig_nlI=ET[2,2]^0.5
-generate et_comlang_off_nlI=ET[3,3]^0.5
-generate et_comlang_ethno_nlI=ET[4,4]^0.5
-generate et_colony_nlI=ET[5,5]^0.5
-generate et_comcol_nlI=ET[6,6]^0.5
-generate et_curcol_nlI=ET[7,7]^0.5
-generate et_col45_nlI=ET[8,8]^0.5
-generate et_smctry_nlI=ET[9,9]^0.5
-
-
-** CASE 2: DANS LE CAS AVEC ADDITIFS 
-************************************************
-
-* Sur la composante "pays" de terme I
-generate lncoef_iso_I = ln(coef_iso_I)
-
-reg lncoef_iso_I lndist contig-smctry, robust
-
-capture	matrix X= e(b)
-capture matrix ET=e(V)
-
-generate rho_dist_I=X[1,1]
-generate rho_contig_I=X[1,2]
-generate rho_comlang_off_I=X[1,3]
-generate rho_comlang_ethno_I=X[1,4]
-generate rho_colony_I=X[1,5]
-generate rho_comcol_I=X[1,6]
-generate rho_curcol_I=X[1,7]
-generate rho_col45_I=X[1,8]
-generate rho_smctry_I=X[1,9]
-
-
-generate et_dist_I=ET[1,1]^0.5
-generate et_contig_I=ET[2,2]^0.5
-generate et_comlang_off_I=ET[3,3]^0.5
-generate et_comlang_ethno_I=ET[4,4]^0.5
-generate et_colony_I=ET[5,5]^0.5
-generate et_comcol_I=ET[6,6]^0.5
-generate et_curcol_I=ET[7,7]^0.5
-generate et_col45_I=ET[8,8]^0.5
-generate et_smctry_I=ET[9,9]^0.5
-
-
-* Sur la composante "pays" de terme A
-generate lncoef_iso_A = ln(coef_iso_A)
-
-
-reg lncoef_iso_A lndist contig-smctry, robust
-
-capture	matrix X= e(b)
-capture  matrix ET=e(V)
-
-generate rho_dist_A=X[1,1]
-generate rho_contig_A=X[1,2]
-generate rho_comlang_off_A=X[1,3]
-generate rho_comlang_ethno_A=X[1,4]
-generate rho_colony_A=X[1,5]
-generate rho_comcol_A=X[1,6]
-generate rho_curcol_A=X[1,7]
-generate rho_col45_A=X[1,8]
-generate rho_smctry_A=X[1,9]
-
-
-generate et_dist_A=ET[1,1]^0.5
-generate et_contig_A=ET[2,2]^0.5
-generate et_comlang_off_A=ET[3,3]^0.5
-generate et_comlang_ethno_A=ET[4,4]^0.5
-generate et_colony_A=ET[5,5]^0.5
-generate et_comcol_A=ET[6,6]^0.5
-generate et_curcol_A=ET[7,7]^0.5
-generate et_col45_A=ET[8,8]^0.5
-generate et_smctry_A=ET[9,9]^0.5
-
-
-
-save result_NLiso_`year'_`class'_`preci'_`mode', replace
-
-
-
-end
-
 
 ******************************************************
 ***** LANCER LES ESTIMATIONS *************************
@@ -796,36 +641,15 @@ end
 *** 3 digits, all years ***
 
 ***** AIR *******************************
-**** Pas de pb sur air, toutes les années - SAUF 2007 et 2009
+**** Pas de pb sur air, toutes les années 
 *****************************************
+
 set more off
 local mode air 
-
+local year 2011
 
 foreach x in `mode' {
 
-/*forvalues z = 2006(-1)1974 {
-
-
-capture log close
-log using hummels_3digits_`z'_`x', replace
-
-reg_termes_h `z' sitc2 3 `x'
-reg_FE_h `z' sitc2 3 `x'
-
-erase blouk_nlI_`z'_sitc2_3_`mode'.dta
-
-log close
-
-}
-*/
-
-
-
-*local year 2010 2011 2012 2013
-local year 2011
-
-** Pour l'instant on ne lance que le step 1
 foreach z in `year' {
 
 
@@ -833,9 +657,8 @@ capture log close
 log using hummels_3digits_`z'_`x', replace
 
 reg_termes_h `z' sitc2 3 `x'
-*reg_FE_h `z' sitc2 3 `x'
 
-*erase blouk_nlI_`z'_sitc2_3_`mode'.dta
+erase blouk_nlI_`z'_sitc2_3_`mode'.dta
 
 log close
 
@@ -845,107 +668,4 @@ log close
 
 
 *}
-
-
-**** ON s'arrete ICI pour l'instant *****
-/*
-
-**************************************
-** VESSEL ****************************
-**************************************
-
-** Attention pb sur 1984 vessel
-** ne peut estimer en seconde étape car terme I (estimé seul) tjs négatif, or on prend le log pour estimer l'effet des variables de gravité
-** Cf pgm à part pgm_temp1984.do
-** Ici on fait en deux étapes
-
-
-
-set more off
-local mode ves 
-
-
-foreach x in `mode' {
-
-
-forvalues z = 1983(-1)1974 {
-
-capture log close
-log using hummels_3digits_`z'_`x', replace
-
-reg_termes_h `z' sitc2 3 `x'
-reg_FE_h `z' sitc2 3 `x'
-
-erase blouk_nlI_`z'_sitc2_3_`mode'.dta
-
-log close
-
-}
-
-forvalues z = 2006(-1)1985 {
-
-capture log close
-log using hummels_3digits_`z'_`x', replace
-
-reg_termes_h `z' sitc2 3 `x'
-reg_FE_h `z' sitc2 3 `x'
-
-erase blouk_nlI_`z'_sitc2_3_`mode'.dta
-
-log close
-
-}
-
-* pour les années récentes
-local year 2008 2010 2011 2012 2013
-foreach z in `year' {
-
-
-capture log close
-log using hummels_3digits_`z'_`x', replace
-
-reg_termes_h `z' sitc2 3 `x'
-reg_FE_h `z' sitc2 3 `x'
-
-erase blouk_nlI_`z'_sitc2_3_`mode'.dta
-
-log close
-
-}
-
-}
-
-*/
-
-
-
-*** stop pour l'instant sur la finesse de la classification
-/*
-*** 5 digits, all ten years ***
-
-set more off
-local mode air ves 
-
-
-foreach x in `mode' {
-
-forvalues z = 2004(-10)1974 {
-*forvalues z = 1983(-1)1974 {
-
-capture log close
-log using hummels_5digits_`z'_`x', replace
-
-reg_termes_h `z' sitc2 5 `x'
-reg_FE_h `z' sitc2 5 `x'
-
-erase blouk_nlI_`z'_sitc2_5_`mode'.dta
-
-log close
-
-}
-
-}
-
-*/
-
 
