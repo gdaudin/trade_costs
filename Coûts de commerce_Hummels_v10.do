@@ -536,7 +536,7 @@ timer off 1
 timer list 1
 
 
-/*
+
 *** ESTIMATION NL SUR ICEBERG ET ADDITIF
 timer on 2
 
@@ -631,7 +631,7 @@ timer off 2
 timer list 2
 generate Duree_estimation_secondes = r(t2)
 timer clear
-*/
+
 
 
 
