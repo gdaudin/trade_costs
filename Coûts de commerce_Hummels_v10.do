@@ -555,7 +555,8 @@ capture generate t = terme_A*prix_fob
 
 ** Mesurer le fit du modèle
 ** (1) Coefficient R2
-capture correlate lnprix_obs lnpredit_nl
+*capture correlate lnprix_obs lnpredit_nl
+capture correlate ln_ratio_minus1 blink_nl
 capture generate Rp2_nl = r(rho)^2
 
 noisily capture  order iso_o iso_d product prix_fob prix_trsp2 converge predict lpredict terme* t /* e_t_rho* predict_calcul couts FE* 	*/
