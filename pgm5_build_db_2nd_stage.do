@@ -23,7 +23,7 @@ cd ~/dropbox/trade_cost/results
 
 use estimTC_bycountry.dta, clear
 
-merge 1:1 name year using "~/dropbox/trade_cost/data/DoingBusiness_exportscosts.dta"
+merge m:1 name year using "~/dropbox/trade_cost/data/DoingBusiness_exportscosts.dta"
 
 merge m:1 year using "~/dropbox/trade_cost/data/oil/oil prices, BP energy outlook.dta"
 
