@@ -107,3 +107,17 @@ erase temp.dta
 }
 
 
+** Bug sur "name" à partir de 2005,jamais renseigné
+
+use estimTC_bycountry, clear
+
+foreach x in iso_o {
+
+forvalues z = 2005(1)2013 {
+
+replace name = name[_n-1]
+}
+
+}
+
+
