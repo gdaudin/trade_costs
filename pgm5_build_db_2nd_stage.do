@@ -12,20 +12,30 @@ set more off
 set maxvar 32767
 
 
+global dir ~
+***Au lieu de changer le working directory pour s'adapter à nous deux, je fais en sorte qu'il n'y ait
+*qu'une macro à changer
 
-* sur mon laptop
-*cd "C:\Lise\trade_costs\Hummels\resultats\new"
-* sur le serveur
-*cd "C:\Echange\trade_costs\results"
-***Je change le working directory en quelque chose que nous pouvons utiliser tous les deux
-cd ~/dropbox/trade_cost/results
+cd $dir/dropbox/trade_cost/data
+import excel "DoingBusiness_exportscosts_for_stata.xlsx", sheet("Feuille1") firstrow clear
+note : Coming from http://www.doingbusiness.org/custom-query, downloaded on September 28th, 2015
+save DoingBusiness_exportscosts.dta, replace
 
-
+cd $dir/dropbox/trade_cost/results
 use estimTC_bycountry.dta, clear
+cd $dir/dropbox/trade_cost/data
+merge m:1 name year using "DoingBusiness_exportscosts.dta"
+drop if year==2014
+tabulate _merge
+drop if _merge==2
+drop nameDB _merge
 
-merge m:1 name year using "~/dropbox/trade_cost/data/DoingBusiness_exportscosts.dta"
+merge m:1 year using "oil/oil prices, BP energy outlook.dta"
 
-merge m:1 year using "~/dropbox/trade_cost/data/oil/oil prices, BP energy outlook.dta"
+drop if _merge==2
+
+cd $dir/dropbox/trade_cost/results
+save estimTC_bycountry.dta, replace
 
 
 
