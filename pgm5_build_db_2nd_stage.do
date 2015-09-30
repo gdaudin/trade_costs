@@ -33,6 +33,8 @@ drop nameDB _merge
 merge m:1 year using "oil/oil prices, BP energy outlook.dta"
 
 drop if _merge==2
+drop _merge
+
 
 cd $dir/dropbox/trade_cost/results
 save estimTC_bycountry_augmented.dta, replace
