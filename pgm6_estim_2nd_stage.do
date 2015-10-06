@@ -2,7 +2,7 @@
 * Programme 6 : Programme pour estimer les déterminants des trade costs - 2d stage
 
 *************************************************
-version 12
+
 
 clear all
 *set mem 800m
@@ -27,10 +27,20 @@ if "`c(hostname)'" =="LAB0271A" {
 
 cd $dir/results
 
-
+/*
 capture program drop reg_FE_h
 program reg_FE_h
 args preci mode
+*/
+
+*pour test du pgm 
+
+** 3 digits, air ***
+
+
+local mode air
+local preci 3
+
 
 * exemple : reg_FE 2006 sitc3 3 air
 * rod_var "hs hs6 SIC sitc2 sitc3 naics"
@@ -38,12 +48,22 @@ args preci mode
 
 use estimTC_bycountry_augmented, clear
 
-egen tt = group(year)
-gen nbyear = max(tt)
+
 
 * on ne retient que la dimension digits / mode 
-keep if mode == `mode'
+keep if mode == "`mode'"
 keep if nbdigits ==`preci'
+
+** La variable "cost_to-export" n'est renseignée qu'à partir de 2004, dans la benchmark regression on ne regarde que sur 2004-2013
+
+keep if year>=2004
+
+egen tt = group(year)
+egen tt1 = max(tt)
+
+local nb_year = tt1 -1
+
+egen year_start = min(year)
 
 ** Exprimer les dépendantes en % du fob price
 
@@ -59,7 +79,17 @@ gen oil_perusd_exported = oilprice/prix_fob
 gen oil_perkm_exported = oil_perusd_exported*dist
 
 * export cost/prox fob = overall cost of export formality, per USD exported
-gen formality_perusd_exported = Cost_to_export/prix_fob
+*gen formality_perusd_exported = Cost_to_export/prix_fob
+
+
+forvalues x = 0(1)`nb_year' {
+local z= year_start +`x'
+gen yearFE_`z' = 0 
+replace yearFE_`z' = 1 if year== `z'
+
+gen oil_perkm_exported_yearFE_`z' = oil_perkm_exported*yearFE_`z'
+}
+
 
 
 ** CASE 1: DANS LE CAS SANS ADDITIFS
@@ -69,23 +99,26 @@ gen formality_perusd_exported = Cost_to_export/prix_fob
 ** sans tenir compte de la dimension temporelle
 
 * dans les variables de gravité on ne considère que distance
-reg coef_iso_nlI dist formality_perusd_exported oil_perusd_exported oil_perkm_exported oil_perkm_exported*i.year  i.year, robust
+*reg coef_iso_nlI dist formality_perusd_exported oil_perusd_exported oil_perkm_exported oil_perkm_exported*i.year  i.year, robust
+
+local start = year_start
+reg coef_iso_nlI dist oil_perusd_exported oil_perkm_exported oil_perkm_exported_yearFE_`start'-oil_perkm_exported_yearFE_2013  yearFE_`start'-yearFE_2013, robust
 
 /*capture*/	matrix X=e(b)
 /*capture*/ matrix ET=e(V)
 
 generate rho_dist_nlI=X[1,1]
-generate rho_formality_perusd_exported_nlI=X[1,2]
-generate rho_oil_perusd_exported_nlI=X[1,3]
-generate rho_oil_perkm_exported_nlI=X[1,4]
+generate rho_formality_nlI=X[1,2]
+generate rho_oil_perusd_nlI=X[1,3]
+generate rho_oil_perkm_nlI=X[1,4]
 
-forvalues x = 0 (1) nbyear {
+forvalues x = 0(1)`nb_year' {
 
 * enregistrer le vecteur des beta3
 * année de référence 1974 TBC
-local z= 1974 +`x'
+local z= year_start +`x'
 
-generate rho_oil_perusd_exported_year_`z'_nlI = X[1,5+`x']
+generate rho_oil_perkm_year`z'_nlI = X[1,5+`x']
 }
 
 
@@ -93,14 +126,16 @@ generate rho_oil_perusd_exported_year_`z'_nlI = X[1,5+`x']
 
 
 generate et_dist_nlI=ET[1,1]^0.5
-generate et_formality_perusd_exported_nlI=ET[2,2]^0.5
-generate et_oil_perusd_exported_nlI=ET[3,3]^0.5
-generate et_oil_perkm_exported_nlI=ET[4,4]^0.5
+generate et_formality_nlI=ET[2,2]^0.5
+generate et_oil_perusd_nlI=ET[3,3]^0.5
+generate et_oil_perkm_nlI=ET[4,4]^0.5
 
 
-forvalues x = 0 (1) nbyear {
-local z= 1974+`x'
-generate et_oil_perusd_exported_year_nlI = X[5+`x',5+`x']
+forvalues x = 0(1)`nb_year' {
+
+local z= year_start +`x'
+generate et_oil_perkm_year`z'_nlI = ET[5+`x',5+`x']^0.5
+
 }
 
 
@@ -116,12 +151,15 @@ generate et_oil_perusd_exported_year_nlI = X[5+`x',5+`x']
 
 
 *sauver les résultats : 1 .dta par mode/degré de précision
-keep rho_* et_* preci mode 
-
+keep rho_* et_* nbdigits mode 
+keep if _n==1
 
 save result_NLiso_`preci'_`mode', replace
 
 end
+
+
+break
 
 *** Lancer le programme d'estimation de la 2e étape
 
