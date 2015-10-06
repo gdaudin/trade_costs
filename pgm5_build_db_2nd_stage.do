@@ -49,10 +49,6 @@ drop _merge
 cd $dir/results
 save estimTC_bycountry_augmented.dta, replace
 
-** charger la base de données
-
-cd $dir/results
-use estimTC_bycountry_augmented.dta, clear
 
 
 
