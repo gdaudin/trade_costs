@@ -33,7 +33,7 @@ cd "C:\Echange\trade_costs\results"
 ** On commence par air, vessel append ensuite
 use blouk_1974_sitc2_3_air.dta, clear
 
-keep iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+keep prix_caf prix_fob iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 
 bysort iso_o : keep if _n==1
 
@@ -49,7 +49,7 @@ save estimTC_bycountry, replace
 ** Append with vessel
 use blouk_1974_sitc2_3_ves.dta, clear
 
-keep iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+keep prix_caf prix_fob iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 
 bysort iso_o : keep if _n==1
 
@@ -81,7 +81,7 @@ foreach mode in air ves {
 
 use blouk_`z'_sitc2_`preci'_`mode'.dta, clear
 
-keep iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+keep prix_caf prix_fob iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 
 bysort iso_o : keep if _n==1
 
@@ -111,13 +111,16 @@ erase temp.dta
 
 use estimTC_bycountry, clear
 
+sort iso_o year
 foreach x in iso_o {
 
 forvalues z = 2005(1)2013 {
 
-replace name = name[_n-1]
+
+replace name = name[_n-1] if iso_o == `x' & year ==`z'
 }
 
 }
 
+save estimTC_bycountry, replace
 
