@@ -15,6 +15,13 @@ set maxvar 32767
 if "`c(hostname)'" =="MacBook-Pro-Lysandre.local" {
 	global dir ~/dropbox/trade_cost
 }
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox/trade_cost
+}
+
+
 	 
 ***Au lieu de changer le working directory pour s'adapter à nous deux, je fais en sorte qu'il n'y ait
 *qu'une macro à changer
