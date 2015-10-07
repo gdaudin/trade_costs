@@ -55,7 +55,7 @@ foreach x in `prix' {
 }
 
 bys iso_o : egen val_tot = total (val)
-label var_tot val  "total value of imports by country and transport mode"
+label var val_tot  "total value of imports by country and transport mode"
 drop val
 
 bysort iso_o : keep if _n==1

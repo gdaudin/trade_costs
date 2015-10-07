@@ -104,7 +104,7 @@ gen oil_perkm_exported_yearFE_`z' = oil_perkm_exported*yearFE_`z'
 *reg coef_iso_nlI dist formality_perusd_exported oil_perusd_exported oil_perkm_exported oil_perkm_exported*i.year  i.year, robust
 
 local start = year_start
-reg coef_iso_nlI dist oil_perusd_exported oil_perkm_exported oil_perkm_exported_yearFE_`start'-oil_perkm_exported_yearFE_2013  yearFE_`start'-yearFE_2013, robust
+reg coef_iso_nlI dist oil_perusd_exported oil_perkm_exported oil_perkm_exported_yearFE_`start'-oil_perkm_exported_yearFE_2013  yearFE_`start'-yearFE_2013 [iweight=val_tot]
 
 /*capture*/	matrix X=e(b)
 /*capture*/ matrix ET=e(V)
