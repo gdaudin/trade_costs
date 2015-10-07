@@ -29,6 +29,7 @@ if "`c(hostname)'" =="LAB0271A" {
 cd $dir/data
 import excel "DoingBusiness_exportscosts_for_stata.xlsx", sheet("Feuille1") firstrow clear
 note : Coming from http://www.doingbusiness.org/custom-query, downloaded on September 28th, 2015
+destring Cost_to_export, replace
 save DoingBusiness_exportscosts.dta, replace
 
 cd $dir/results
@@ -47,7 +48,7 @@ drop _merge
 
 
 cd $dir/results
-save estimTC_bycountry_augmented.dta, replace
+saveold estimTC_bycountry_augmented.dta, replace
 
 
 
