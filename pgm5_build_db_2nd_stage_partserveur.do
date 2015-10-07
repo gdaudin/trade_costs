@@ -30,22 +30,22 @@ cd "C:\Echange\trade_costs\results"
 
 local preci 3
 
-forvalues z =1974(1)2013 {
+forvalues year =1974(1)2013 {
 
 foreach mode in air ves {
 
 
-	use blouk_`z'_sitc2_`preci'_`mode'.dta, clear
+	use blouk_`year'_sitc2_`preci'_`mode'.dta, clear
 
 	keep prix_caf prix_fob `mode'_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 	rename `mode'_val val
 
-}
+
 
 local prix prix_fob prix_caf 
 foreach x in `prix' {
 
-	bys iso: gen `x'_val = `x'*val
+	bys iso_o: gen `x'_val = `x'*val
 	bys iso_o: egen tt = total(`x'_val)
 	bys iso_o: egen tt1 = total(val)
 	bys iso_o: gen `x'_mp = tt/tt1  
@@ -65,7 +65,7 @@ gen prix_trsp_mp = (prix_caf_mp - prix_fob_mp)/prix_fob_mp
 
 
 gen nbdigits =`preci'
-gen year = `z'
+gen year = `year'
 
 label var prix_caf_mp  "Caf price by country/year (weighted by mode val over all products)"
 label var prix_fob_mp  "Fob price by country/year (weighted by mode val over all products)"
@@ -77,7 +77,8 @@ drop prix_fob prix_caf
 
 ** Append la base originelle
 
-if "`mode'" !="air" ¦ `year' !=1974 {
+if "`mode'" !="air" | `year' !=1974 {
+
 	save temp, replace
 	use estimTC_bycountry, clear
 	append using temp
@@ -87,8 +88,8 @@ if "`mode'" !="air" ¦ `year' !=1974 {
 save estimTC_bycountry, replace
 }
 *log close
-
 }
+
 
 
 ** Bug sur "name" à partir de 2005,jamais renseigné
