@@ -35,29 +35,42 @@ use blouk_1974_sitc2_3_air.dta, clear
 
 keep prix_caf prix_fob air_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 
-* en seconde étape on va exprimer les trade costs en % du prix fob
-
-for
-bys iso: gen prix_fob_val = prix_fob*air_val
-bys iso_o: egen tt = total(prix_fob_val)
-bys iso_o: egen tt1 = total(air_val)
-bys iso_o: gen prix_fob_mp = tt/tt1  
-
+* en seconde étape on va exprimer les trade costs en % du prix fob moyen, par pays
 * On fait pareil pour le prix caf
 
-drop tt tt1* prix_fob_val
+local prix prix_fob prix_caf 
+foreach x in `prix' {
 
+bys iso: gen `x'_val = `x'*air_val
+bys iso_o: egen tt = total(`x'_val)
+bys iso_o: egen tt1 = total(air_val)
+bys iso_o: gen `x'_mp = tt/tt1  
+
+
+
+drop tt tt1* `x'_val
+
+}
 
 
 bysort iso_o : keep if _n==1
 
+
+* Générer l'écart caf-fob
+gen prix_trsp_mp = (prix_caf_mp - prix_fob_mp)/prix_fob_mp
+
 gen nbdigits =3
 gen year = 1974
 
-
-
 label var nbdigits "Product classification precision"
 label var year "Year of estimation"
+
+label var prix_caf_mp  "Caf price by country/year (weighted by mode val over all products)"
+label var prix_fob_mp  "Fob price by country/year (weighted by mode val over all products)"
+label var prix_trsp_mp "(Caf-Fob)/fob, by country/year"
+
+
+drop prix_fob prix_caf
 
 save estimTC_bycountry, replace
 
@@ -67,21 +80,40 @@ use blouk_1974_sitc2_3_ves.dta, clear
 keep prix_caf prix_fob ves_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 
 
-* en seconde étape on va exprimer les trade costs en % du prix fob
-bys iso: gen prix_fob_val = prix_fob*ves_val
-bys iso_o: egen tt = total(prix_fob_val)
-bys iso_o: egen tt1 = total(ves_val)
-bys iso_o: gen prix_fob_mp = tt/tt1  
-drop tt tt1*
+* en seconde étape on va exprimer les trade costs en % du prix fob moyen, par pays
+* On fait pareil pour le prix caf
 
+local prix prix_fob prix_caf 
+foreach x in `prix' {
+
+bys iso: gen `x'_val = `x'*ves_val
+bys iso_o: egen tt = total(`x'_val)
+bys iso_o: egen tt1 = total(ves_val)
+bys iso_o: gen `x'_mp = tt/tt1  
+
+
+
+drop tt tt1* `x'_val
+
+}
 
 bysort iso_o : keep if _n==1
+
+* Générer l'écart caf-fob
+gen prix_trsp_mp = (prix_caf_mp - prix_fob_mp)/prix_fob_mp
 
 gen nbdigits =3
 gen year = 1974
 
 label var nbdigits "Product classification precision"
 label var year "Year of estimation"
+
+label var prix_caf_mp  "Caf price by country/year (weighted by mode val over all products)"
+label var prix_fob_mp  "Fob price by country/year (weighted by mode val over all products)"
+label var prix_trsp_mp "(Caf-Fob)/fob, by country/year"
+
+
+drop prix_fob prix_caf
 
 save temp, replace
 
@@ -107,21 +139,36 @@ use blouk_`z'_sitc2_`preci'_`mode'.dta, clear
 
 keep prix_caf prix_fob `mode'_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 
+local prix prix_fob prix_caf 
+foreach x in `prix' {
 
-* en seconde étape on va exprimer les trade costs en % du prix fob
-bys iso: gen prix_fob_val = prix_fob*`mode'_val
-bys iso_o: egen tt = total(prix_fob_val)
+bys iso: gen `x'_val = `x'*`mode'_val
+bys iso_o: egen tt = total(`x'_val)
 bys iso_o: egen tt1 = total(`mode'_val)
-bys iso_o: gen prix_fob_mp = tt/tt1  
-drop tt tt1*
+bys iso_o: gen `x'_mp = tt/tt1  
+
+
+
+drop tt tt1* `x'_val
+
+}
 
 bysort iso_o : keep if _n==1
+
+
+* Générer l'écart caf-fob
+gen prix_trsp_mp = (prix_caf_mp - prix_fob_mp)/prix_fob_mp
+
 
 gen nbdigits =`preci'
 gen year = `z'
 
-label var nbdigits "Product classification precision"
-label var year "Year of estimation"
+label var prix_caf_mp  "Caf price by country/year (weighted by mode val over all products)"
+label var prix_fob_mp  "Fob price by country/year (weighted by mode val over all products)"
+label var prix_trsp_mp "(Caf-Fob)/fob, by country/year"
+
+
+drop prix_fob prix_caf
 
 save temp, replace
 
