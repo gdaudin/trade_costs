@@ -33,12 +33,20 @@ cd "C:\Echange\trade_costs\results"
 ** On commence par air, vessel append ensuite
 use blouk_1974_sitc2_3_air.dta, clear
 
-keep prix_caf prix_fob iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+keep prix_caf prix_fob air_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+
+* en seconde étape on va exprimer les trade costs en % du prix fob
+bys iso: gen prix_fob_val = prix_fob*air_val
+bys iso_o: egen tt = total(prix_fob_val)
+bys iso_o: egen tt1 = total(air_val)
+bys iso_o: gen prix_fob_mp = tt/tt1  
+drop tt tt1*
 
 bysort iso_o : keep if _n==1
 
 gen nbdigits =3
 gen year = 1974
+
 
 
 label var nbdigits "Product classification precision"
@@ -49,7 +57,16 @@ save estimTC_bycountry, replace
 ** Append with vessel
 use blouk_1974_sitc2_3_ves.dta, clear
 
-keep prix_caf prix_fob iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+keep prix_caf prix_fob ves_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+
+
+* en seconde étape on va exprimer les trade costs en % du prix fob
+bys iso: gen prix_fob_val = prix_fob*ves_val
+bys iso_o: egen tt = total(prix_fob_val)
+bys iso_o: egen tt1 = total(ves_val)
+bys iso_o: gen prix_fob_mp = tt/tt1  
+drop tt tt1*
+
 
 bysort iso_o : keep if _n==1
 
@@ -81,7 +98,15 @@ foreach mode in air ves {
 
 use blouk_`z'_sitc2_`preci'_`mode'.dta, clear
 
-keep prix_caf prix_fob iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+keep prix_caf prix_fob `mode'_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+
+
+* en seconde étape on va exprimer les trade costs en % du prix fob
+bys iso: gen prix_fob_val = prix_fob*`mode'_val
+bys iso_o: egen tt = total(prix_fob_val)
+bys iso_o: egen tt1 = total(`mode'_val)
+bys iso_o: gen prix_fob_mp = tt/tt1  
+drop tt tt1*
 
 bysort iso_o : keep if _n==1
 
