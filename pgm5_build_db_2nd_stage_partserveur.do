@@ -30,7 +30,7 @@ cd "C:\Echange\trade_costs\results"
 
 local preci 3
 
-forvalues z =1975(1)2013 {
+forvalues z =1974(1)2013 {
 
 foreach mode in air ves {
 
@@ -55,7 +55,7 @@ foreach x in `prix' {
 }
 
 bys iso_o : egen val_tot = total (val)
-label var val  "total value of imports by country"
+label var val  "total value of imports by country and transport mode"
 
 bysort iso_o : keep if _n==1
 
