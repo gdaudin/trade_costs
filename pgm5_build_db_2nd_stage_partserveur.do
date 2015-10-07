@@ -36,11 +36,18 @@ use blouk_1974_sitc2_3_air.dta, clear
 keep prix_caf prix_fob air_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 
 * en seconde étape on va exprimer les trade costs en % du prix fob
+
+for
 bys iso: gen prix_fob_val = prix_fob*air_val
 bys iso_o: egen tt = total(prix_fob_val)
 bys iso_o: egen tt1 = total(air_val)
 bys iso_o: gen prix_fob_mp = tt/tt1  
-drop tt tt1*
+
+* On fait pareil pour le prix caf
+
+drop tt tt1* prix_fob_val
+
+
 
 bysort iso_o : keep if _n==1
 
