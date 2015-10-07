@@ -33,12 +33,15 @@ program reg_FE_h
 args preci mode
 */
 
+
+***
+
 *pour test du pgm 
 
 ** 3 digits, air ***
 
 
-local mode air
+local mode ves
 local preci 3
 
 
@@ -53,6 +56,7 @@ use estimTC_bycountry_augmented, clear
 * on ne retient que la dimension digits / mode 
 keep if mode == "`mode'"
 keep if nbdigits ==`preci'
+
 
 ** La variable "cost_to-export" n'est renseignée qu'à partir de 2004, dans la benchmark regression on ne regarde que sur 2004-2013
 
@@ -89,6 +93,15 @@ replace yearFE_`z' = 1 if year== `z'
 
 gen oil_perkm_exported_yearFE_`z' = oil_perkm_exported*yearFE_`z'
 }
+
+
+
+*****test
+gen transport_costs =( prix_caf/prix_fob)-1
+twoway (scatter transport_costs dist)
+twoway (scatter coef_iso_nlI dist)
+twoway (scatter coef_iso_I dist)
+twoway (scatter coef_iso_A dist)
 
 
 
