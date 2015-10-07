@@ -56,8 +56,6 @@ keep if nbdigits ==`preci'
 
 ** La variable "cost_to-export" n'est renseignée qu'à partir de 2004, dans la benchmark regression on ne regarde que sur 2004-2013
 
-keep if year>=2004
-
 egen tt = group(year)
 egen tt1 = max(tt)
 
@@ -84,7 +82,7 @@ gen oil_perkm_exported = oil_perusd_exported*dist
 gen formality_perusd_exported = Cost_to_export/prix_fob_mp
 
 
-forvalues x = 0(1)`nb_year' {
+forvalues x = 1(1)`nb_year' {
 local z= year_start +`x'
 gen yearFE_`z' = 0 
 replace yearFE_`z' = 1 if year== `z'
@@ -105,8 +103,8 @@ preserve
 * dans les variables de gravité on ne considère que distance
 *reg coef_iso_nlI dist formality_perusd_exported oil_perusd_exported oil_perkm_exported oil_perkm_exported*i.year  i.year, robust
 
-local start = year_start
-reg coef_iso_nlI dist oil_perusd_exported oil_perkm_exported oil_perkm_exported_yearFE_`start'-oil_perkm_exported_yearFE_2013  i.year [iweight=val_tot]
+local start = year_start + 1
+reg coef_iso_nlI dist formality_perusd_exported oil_perusd_exported oil_perkm_exported oil_perkm_exported_yearFE_`start'-oil_perkm_exported_yearFE_2013  i.year [iweight=val_tot]
 
 /*capture*/	matrix X=e(b)
 /*capture*/ matrix ET=e(V)
@@ -158,7 +156,7 @@ generate et_oil_perkm_year`z'_nlI = ET[5+`x',5+`x']^0.5
 keep rho_* et_* nbdigits mode 
 keep if _n==1
 
-save result_NLiso_`preci'_`mode', replace
+save result_NLiso, replace
 
 end
 
