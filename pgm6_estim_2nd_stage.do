@@ -79,7 +79,7 @@ gen oil_perusd_exported = oilprice/prix_fob
 gen oil_perkm_exported = oil_perusd_exported*dist
 
 * export cost/prox fob = overall cost of export formality, per USD exported
-*gen formality_perusd_exported = Cost_to_export/prix_fob
+gen formality_perusd_exported = Cost_to_export/prix_fob
 
 
 forvalues x = 0(1)`nb_year' {
@@ -102,10 +102,13 @@ gen oil_perkm_exported_yearFE_`z' = oil_perkm_exported*yearFE_`z'
 *reg coef_iso_nlI dist formality_perusd_exported oil_perusd_exported oil_perkm_exported oil_perkm_exported*i.year  i.year, robust
 
 local start = year_start
-reg coef_iso_nlI dist oil_perusd_exported oil_perkm_exported oil_perkm_exported_yearFE_`start'-oil_perkm_exported_yearFE_2013  yearFE_`start'-yearFE_2013, robust
+reg coef_iso_nlI dist formality_perusd_exported oil_perusd_exported oil_perkm_exported oil_perkm_exported_yearFE_*  i.year, robust
 
 /*capture*/	matrix X=e(b)
 /*capture*/ matrix ET=e(V)
+*Je mets preserve ici de manière à pouvoir faire tourner les régressions en intéractif après le end
+preserve
+
 
 generate rho_dist_nlI=X[1,1]
 generate rho_formality_nlI=X[1,2]
