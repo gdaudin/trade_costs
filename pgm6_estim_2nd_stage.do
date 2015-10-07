@@ -73,13 +73,15 @@ replace coef_iso_I = coef_iso_I -1
 ** Génerer les explicatives
 
 * oil price / prix fob = price of a barrel per USD exported
-gen oil_perusd_exported = oilprice/prix_fob
+* attention on divise par le prix fob moyen par pays/ année (en moyenne sur les produits)
+gen oil_perusd_exported = oilprice/prix_fob_mp
 
 * (oil price / prix fob)*dist = price of a barrel per km exported
 gen oil_perkm_exported = oil_perusd_exported*dist
 
 * export cost/prox fob = overall cost of export formality, per USD exported
-*gen formality_perusd_exported = Cost_to_export/prix_fob
+* attention on divise par le prix fob moyen par pays/ année (en moyenne sur les produits)
+gen formality_perusd_exported = Cost_to_export/prix_fob_mp
 
 
 forvalues x = 0(1)`nb_year' {
