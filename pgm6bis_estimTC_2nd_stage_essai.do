@@ -17,7 +17,8 @@ if "`c(hostname)'" =="MacBook-Pro-Lysandre.local" {
 
 
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox/trade_cost
+	*global dir C:\Users\lpatureau\Dropbox/trade_cost
+	global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\resultats
 }
 
 
@@ -25,7 +26,8 @@ if "`c(hostname)'" =="LAB0271A" {
 	 
 ** charger la base de données
 
-cd $dir/results
+*cd $dir/results
+cd $dir
 
 /*
 capture program drop reg_FE_h
@@ -46,7 +48,8 @@ local preci 3
 * rod_var "hs hs6 SIC sitc2 sitc3 naics"
 
 
-use estimTC_bycountry_augmented, clear
+*use estimTC_bycountry_augmented, clear
+use estimTC, clear
 
 
 
@@ -63,11 +66,7 @@ local nb_year = tt1 -1
 
 egen year_start = min(year)
 
-** Exprimer les dépendantes en % du fob price
-
-replace coef_iso_nlI = coef_iso_nlI -1
-replace coef_iso_I = coef_iso_I -1
-
+/*
 ** Génerer les explicatives
 
 * oil price / prix fob = price of a barrel per USD exported
@@ -92,6 +91,7 @@ gen oil_perkm_exported_yearFE_`z' = oil_perkm_exported*yearFE_`z'
 drop yearFE*
 }
 
+*/
 preserve
 
 ** CASE 1: DANS LE CAS SANS ADDITIFS
@@ -117,10 +117,9 @@ reg coef_iso_I dist i.year, robust
 reg coef_iso_A dist i.year, robust
 */
 
-gen toto = prix_fob_mp*dist
 
 * en pondérant chaque obs par les flux en valeur 
-reg coef_iso_nlI dist prix_fob_mp toto i.year [iweight=val_tot]
+reg terme_iceberg dist i.year [iweight=val_tot]
 reg coef_iso_I dist i.year [iweight=val_tot], robust
 reg coef_iso_A dist i.year [iweight=val_tot], robust
 
