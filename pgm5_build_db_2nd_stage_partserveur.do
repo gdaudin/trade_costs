@@ -44,7 +44,7 @@ foreach mode in air ves {
 
 
 
-local prix prix_fob prix_caf terme_I terme_A
+local prix prix_fob prix_caf terme_I terme_A terme_iceberg
 foreach x in `prix' {
 
 	bys iso_o : gen `x'_val = `x'*val
@@ -70,9 +70,12 @@ gen prix_trsp_mp = (prix_caf_mp - prix_fob_mp)/prix_fob_mp
 gen nbdigits =`preci'
 gen year = `year'
 
-label var prix_caf_mp  "Caf price by country/year (weighted by mode val over all products)"
-label var prix_fob_mp  "Fob price by country/year (weighted by mode val over all products)"
+label var prix_caf_mp  "Caf price by country/year (weighted by val over all products)"
+label var prix_fob_mp  "Fob price by country/year (weighted by val over all products)"
 label var prix_trsp_mp "(Caf-Fob)/fob, by country/year"
+label var terme_I_mp "Terme I by country/year (weighted by mode val over all products)"
+label var terme_A_mp "Terme A by country/year (weighted by mode val over all products)"
+label var terme_iceberg_mp "Terme iceberg by country/year (weighted by mode val over all products)"
 
 
 drop prix_fob prix_caf
