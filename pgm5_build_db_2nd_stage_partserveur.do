@@ -36,19 +36,21 @@ foreach mode in air ves {
 
 
 	use blouk_`year'_sitc2_`preci'_`mode'.dta, clear
+	
+	keep if mode==`mode'
 
 	keep prix_caf prix_fob `mode'_val iso_o name coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 	rename `mode'_val val
 
 
 
-local prix prix_fob prix_caf 
+local prix prix_fob prix_caf terme_I terme_A
 foreach x in `prix' {
 
-	bys iso_o: gen `x'_val = `x'*val
-	bys iso_o: egen tt = total(`x'_val)
-	bys iso_o: egen tt1 = total(val)
-	bys iso_o: gen `x'_mp = tt/tt1  
+	bys iso_o : gen `x'_val = `x'*val
+	bys iso_o : egen tt = total(`x'_val)
+	bys iso_o : egen tt1 = total(val)
+	bys iso_o : gen `x'_mp = tt/tt1  
 
 
 	drop tt tt1* `x'_val
@@ -58,7 +60,7 @@ bys iso_o : egen val_tot = total (val)
 label var val_tot  "total value of imports by country and transport mode"
 drop val
 
-bysort iso_o : keep if _n==1
+bysort iso_o mode : keep if _n==1
 
 
 * Générer l'écart caf-fob
