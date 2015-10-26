@@ -34,40 +34,13 @@ foreach mode in air ves {
 	keep product prix_caf prix_fob `mode'_val iso_o name terme_iceberg terme_I terme_A coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 	rename `mode'_val val
 
-
-
-local prix prix_fob prix_caf 
-foreach x in `prix' {
-
-	bys iso_o: gen `x'_val = `x'*val
-	bys iso_o: egen tt = total(`x'_val)
-	bys iso_o: egen tt1 = total(val)
-	bys iso_o: gen `x'_mp = tt/tt1  
-
-
-	drop tt tt1* `x'_val
-}
-
-bys iso_o : egen val_tot = total (val)
-label var val_tot  "total value of imports by country and transport mode"
-drop val
+keep if mode ==`mode'
 
 bysort iso_o product : keep if _n==1
 
 
-* Générer l'écart caf-fob moyen par pays/année
-gen prix_trsp_mp = (prix_caf_mp - prix_fob_mp)/prix_fob_mp
-
-
 gen nbdigits =`preci'
 gen year = `year'
-
-label var prix_caf_mp  "Caf price by country/year (weighted by mode val over all products)"
-label var prix_fob_mp  "Fob price by country/year (weighted by mode val over all products)"
-label var prix_trsp_mp "(Caf-Fob)/fob, by country/year"
-
-
-drop prix_fob prix_caf
 
 
 ** Append la base originelle
