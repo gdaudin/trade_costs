@@ -47,6 +47,8 @@ forvalues year =1974(1)2013 {
 
 foreach mode in air ves {
 
+display "`year'_`mode'"
+
 
 	use blouk_`year'_sitc2_`preci'_`mode'.dta, clear
 	
@@ -126,5 +128,49 @@ replace name = name[_n-1] if iso_o == `x' & year ==`z'
 
 }
 
-save "$dir/estimTC_bycountry.dta", replace
+save "$dir/results/estimTC_bycountry.dta", replace
+
+
+*******************Ajout des variables
+
+
+if "`c(hostname)'" =="MacBook-Pro-Lysandre.local" {
+	global dir ~/dropbox/trade_cost
+}
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox/trade_cost
+}
+
+	 
+***Au lieu de changer le working directory pour s'adapter à nous deux, je fais en sorte qu'il n'y ait
+*qu'une macro à changer
+
+cd $dir/data
+import excel "DoingBusiness_exportscosts_for_stata.xlsx", sheet("Feuille1") firstrow clear
+note : Coming from http://www.doingbusiness.org/custom-query, downloaded on September 28th, 2015
+destring Cost_to_export, replace
+save DoingBusiness_exportscosts.dta, replace
+
+cd $dir/results
+use estimTC_bycountry.dta, clear
+cd $dir/data
+merge m:1 name year using "DoingBusiness_exportscosts.dta"
+drop if year==2014
+tabulate _merge
+drop if _merge==2
+drop nameDB _merge
+
+merge m:1 year using "oil/oil prices, BP energy outlook.dta"
+
+drop if _merge==2
+drop _merge
+
+
+cd $dir/results
+saveold estimTC_bycountry_augmented.dta, replace
+*rm "$dir/estimTC_bycountry.dta"
+
+
 
