@@ -73,10 +73,26 @@ sum terme_I  [fweight= air_val], det
 gen terme_I_min=r(min)
 gen terme_I_max=r(max)
 
+*** Novembre 2015 : On ajoute le calcul de l'écart-type de la régression ***
+
+gen prediction_nlI = ln(predict_nlI-1)
+gen prediction_nl = ln(predict_nl-1)
+
+gen observe = ln(prix_trsp)
+
+gen gap_nlI = (observe - prediction_nlI)^2
+gen gap_nl = (observe - prediction_nl)^2
+
+egen sum_gap_nlI = sum(gap_nlI)
+egen sum_gap_nl = sum(gap_nl)
+
+gen ecr_nlI = (sum_gap_nlI/(_N-nbr_iso_o -nbr_prod))^0.5
+gen ecr_nl = (sum_gap_nl/(_N-nbr_iso_o -nbr_prod))^0.5
+
 
 # delimit ;
 keep nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med terme_nlI_et terme_nlI_min terme_nlI_max terme_A_mp terme_A_med terme_A_et terme_A_min terme_A_max terme_I_mp 
-	terme_I_med terme_I_et terme_I_min terme_I_max Rp2_nl Rp2_nlI aic_nl aic_nlI logL_nl logL_nlI;
+	terme_I_med terme_I_et terme_I_min terme_I_max Rp2_nl Rp2_nlI aic_nl aic_nlI logL_nl logL_nlI ecr_nlI ecr_nl;
 
 # delimit cr
 
@@ -96,7 +112,7 @@ gen digits = "`preci'_digits"
 gen year = "`year'"
 
 order year digits mode nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med terme_nlI_et terme_nlI_min terme_nlI_max terme_A_mp terme_A_med terme_A_et terme_A_min /*
-*/ terme_A_max terme_I_mp terme_I_med terme_I_et terme_I_min terme_I_max Rp2_nlI Rp2_nl aic_nlI aic_nl logL_nlI logL_nl
+*/ terme_A_max terme_I_mp terme_I_med terme_I_et terme_I_min terme_I_max Rp2_nlI Rp2_nl aic_nlI aic_nl logL_nlI logL_nl ecr_nlI ecr_nl
 
 *save "E:\Lise\BQR_Lille\Hummels\resultats\results_estim_`year'_`class'_`preci'_`mode'", replace
 save results_estim_`year'_`class'_`preci'_`mode', replace
