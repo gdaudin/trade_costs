@@ -2,10 +2,10 @@
 
 
 ** -------------------------------------------------------------
-** Programme pour extraire les résultats de l'estimation Etape 1
+** Programme pour extraire les rÃ©sultats de l'estimation Etape 1
 
-** Valeur des coûts de transport
-** issus de l'estimation v10, barre à 5% au départ
+** Valeur des coÃ»ts de transport
+** issus de l'estimation v10, barre Ã  5% au dÃ©part
 
 ** 	Septembre 2015 
 ** -------------------------------------------------------------
@@ -17,7 +17,7 @@ set more off
 *set maxvar 32767
 
 
-** Programme pour sortir les résultats
+** Programme pour sortir les rÃ©sultats
 capture program drop get_table
 
 program get_table
@@ -62,7 +62,7 @@ sum terme_iceberg  [fweight= air_val], det
 gen terme_nlI_min = r(min)
 gen terme_nlI_max = r(max)
 
-** Estimation non-linéaire"
+** Estimation non-linÃ©aire"
 
 	
 sum terme_A  [fweight= air_val], det 	
@@ -73,7 +73,7 @@ sum terme_I  [fweight= air_val], det
 gen terme_I_min=r(min)
 gen terme_I_max=r(max)
 
-*** Novembre 2015 : On ajoute le calcul de l'Ã©cart-type de la rÃ©gression ***
+*** Novembre 2015 : On ajoute le calcul de l'ÃƒÂ©cart-type de la rÃƒÂ©gression ***
 
 gen prediction_nlI = ln(predict_nlI-1)
 gen prediction_nl = ln(predict_nl-1)
@@ -103,7 +103,7 @@ keep if _n==1
 *save "E:\Lise\BQR_Lille\Hummels\resultats\results_estim_`year'_`class'_`preci'_`mode'", replace
 save results_estim_`year'_`class'_`preci'_`mode', replace
 
-** Ajouter informations : Année, mode, degré de classification
+** Ajouter informations : AnnÃ©e, mode, degrÃ© de classification
 
 
 gen mode = "`mode'"
@@ -159,7 +159,7 @@ get_table `z' sitc2 `preci' `mode'
 
 
 ***************************************
-*** Step 2 - compiler en une même base
+*** Step 2 - compiler en une mÃªme base
 ***************************************
 
 
@@ -183,7 +183,7 @@ save table_`preci'_`x', replace
 
 }
 
-** Ajouter ensuite les autres années
+** Ajouter ensuite les autres annÃ©es
 
 set more off
 local preci 3

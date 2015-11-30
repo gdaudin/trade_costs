@@ -11,8 +11,8 @@ set maxvar 32767
 
 
 * ----------------------------------------------------------------------------* 
-**** Bug 1. On se rend compte de pbs sur les années récentes
-**** Liés à iso2 notamment
+**** Bug 1. On se rend compte de pbs sur les annÃ©es rÃ©centes
+**** LiÃ©s Ã  iso2 notamment
 **** Il y a des duplicates en 2012 par exemple, alors qu'il ne devrait pas
 * ----------------------------------------------------------------------------* 
 
@@ -34,7 +34,7 @@ foreach x in `mode'{
 
 use blouk_`z'_sitc2_3_`x', clear
 
-* s'assurer que les variables sont rangées dans le même ordre
+* s'assurer que les variables sont rangÃ©es dans le mÃªme ordre
 
 #delimit ;
 order iso_o iso_d product prix_fob prix_caf prix_trsp2 prix_trsp lprix_trsp2 country con_qy1 con_qy2 con_val ves_val air_val con_cha ves_cha air_cha
@@ -55,11 +55,11 @@ duplicates report iso_o-year
 
 *br if tag==1
 
-dis "détecter les pbs sur iso2"
+dis "dÃ©tecter les pbs sur iso2"
 dis "Nb of Duplicates by iso_o-year + iso2 "
 duplicates report iso_o-year iso2
 
-dis "détecter les pbs sur iso_d "
+dis "dÃ©tecter les pbs sur iso_d "
 dis "Nb of Duplicates by iso_o, product-year"
 duplicates report iso_o product-year
 
@@ -79,7 +79,7 @@ log close
 
 
 ************************************************
-**** Revenir à la base de départ ****
+**** Revenir Ã  la base de dÃ©part ****
 
 * sur le serveur
 use "C:\Echange\trade_costs\database\hummels_tra.dta", clear
@@ -93,7 +93,7 @@ duplicates report
 
 *** Eliminer le pb sur les blouk
 
-** Quand duplicates lié à pb sur iso2
+** Quand duplicates liÃ© Ã  pb sur iso2
 ** vessel, 2008, 2010, 2011, 2012
 ** air, 2008, 2010, 2011, 2012
 
@@ -181,7 +181,7 @@ save blouk_`x'_sitc2_3_air, replace
 
 
 ***************************
-** Pour les autres années
+** Pour les autres annÃ©es
 ** Certaines observations sont strictement identiques
 
 ** air
@@ -243,7 +243,7 @@ save blouk_`z'_sitc2_3_ves, replace
 }
 
 *** Check
-*** On en profite pour remplacer du nb d'obs, qui n'a pas été corrigé dans le blouk initia
+*** On en profite pour remplacer du nb d'obs, qui n'a pas Ã©tÃ© corrigÃ© dans le blouk initia
 
 set more off
 
@@ -253,7 +253,7 @@ capture log close
 
 log using ident_duplicates_check, replace
 
-dis "Vérification des pbs de duplicates après nettoyage des bases"
+dis "VÃ©rification des pbs de duplicates aprÃ¨s nettoyage des bases"
 
 local mode air ves
 
@@ -267,7 +267,7 @@ drop nbr_obs
 gen nbr_obs = _N
 
 
-* s'assurer que les variables sont rangées dans le même ordre
+* s'assurer que les variables sont rangÃ©es dans le mÃªme ordre
 
 #delimit ;
 order iso_o iso_d product prix_fob prix_caf prix_trsp2 prix_trsp lprix_trsp2 country con_qy1 con_qy2 con_val ves_val air_val con_cha ves_cha air_cha
@@ -281,11 +281,11 @@ dis year
 dis "And for transport mode "
 dis mode
 
-dis "Recherche de duplicates lies à iso2"
+dis "Recherche de duplicates lies Ã  iso2"
 duplicates report iso_o-year
 
 
-dis "Recherche de duplicates lies à iso_d"
+dis "Recherche de duplicates lies Ã  iso_d"
 duplicates report iso_o product-name
 
 dis "Recherche de duplicates purs"
@@ -379,7 +379,7 @@ duplicates drop
 br if tag==1
 drop tag
 
-** Vérifier aussi le pb sur iso2
+** VÃ©rifier aussi le pb sur iso2
 
 #delimit ;
 order iso_o iso_d product prix_fob prix_caf prix_trsp2 prix_trsp lprix_trsp2 country con_qy1 con_qy2 con_val ves_val air_val con_cha ves_cha air_cha
@@ -429,12 +429,12 @@ erase temp.dta
 
 
 * ----------------------------------------------------------------------------* 
-*** Bug 3. Au moment d'extraire les résultats, certaines stats s'ont pas été calculées à l'issue des blouk
+*** Bug 3. Au moment d'extraire les rÃ©sultats, certaines stats s'ont pas Ã©tÃ© calculÃ©es Ã  l'issue des blouk
 
 clear
 set more off
 
-* Pour air, à partir de 2008, manque terme_nlI_med, idem pour terme I et A (sauf en 2003)
+* Pour air, Ã  partir de 2008, manque terme_nlI_med, idem pour terme I et A (sauf en 2003)
 * Faire une boucle
 
 *forvalues z = 2007(-1)2004 {

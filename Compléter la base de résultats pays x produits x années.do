@@ -1,7 +1,7 @@
 *************************************************
-* Programme pour constuire la bdd permettant ensuite d'estimer les déterminants des TC
-*NB : il y a un programme sur le serveur pour rapatrier les données pertinentes à partir des blouks
-*Fait à partir de programme 5
+* Programme pour constuire la bdd permettant ensuite d'estimer les dÃ©terminants des TC
+*NB : il y a un programme sur le serveur pour rapatrier les donnÃ©es pertinentes Ã  partir des blouks
+*Fait Ã  partir de programme 5
 *************************************************
 
 version 12
@@ -24,8 +24,8 @@ if "`c(hostname)'" =="LAB0271A" {
 
 
 	 
-***Au lieu de changer le working directory pour s'adapter à nous deux, je fais en sorte qu'il n'y ait
-*qu'une macro à changer
+***Au lieu de changer le working directory pour s'adapter Ã  nous deux, je fais en sorte qu'il n'y ait
+*qu'une macro Ã  changer
 
 cd $dir/data
 import excel "DoingBusiness_exportscosts_for_stata.xlsx", sheet("Feuille1") firstrow clear

@@ -1,6 +1,6 @@
 *************************************************
-* Programme 7 : Programme pour estimer les déterminants des trade costs - 2d stage - ESSAI
-* On part de terme_icberg, terme_I, terme_A plutôt que de la composante pays seulement
+* Programme 7 : Programme pour estimer les dÃ©terminants des trade costs - 2d stage - ESSAI
+* On part de terme_icberg, terme_I, terme_A plutÃ´t que de la composante pays seulement
 
 *************************************************
 
@@ -13,13 +13,13 @@ set maxvar 32767
 
 
 	 
-** charger la base de données
+** charger la base de donnÃ©es
 
 global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results
 
 cd $dir
 
-*** Lancer le programme d'estimation de la 2e étape
+*** Lancer le programme d'estimation de la 2e Ã©tape
 
 ** on est en 3 digits **
 local preci 3
@@ -62,7 +62,7 @@ save estimTC, replace
 
 
 
-** Bug sur "name" à partir de 2005,jamais renseigné
+** Bug sur "name" Ã  partir de 2005,jamais renseignÃ©
 
 use estimTC, clear
 
@@ -79,7 +79,7 @@ replace name = name[_n-1] if iso_o == `x' & year ==`z'
 
 save estimTC, replace
 
-** Bug sur "name" à partir de 2011 sur iso_o "SDN"
+** Bug sur "name" Ã  partir de 2011 sur iso_o "SDN"
 
 use estimTC, clear
 

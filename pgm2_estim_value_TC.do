@@ -6,43 +6,43 @@
 
 version 12
 
-/* Itération sur forme d'estimation 
-*v1 : vient de Cožts de commerce_v4
-*Adaptation aux donnŽes de Hummels
+/* ItÃ©ration sur forme d'estimation 
+*v1 : vient de CoÂžts de commerce_v4
+*Adaptation aux donnÂŽes de Hummels
 *v2 : reprise 18/2
 * v3: on relache contrainte "replace terme_A= 0 if terme_A+terme_I <=0" l. 201
 * v4: on remet la contrainte l. 201 "replace terme_A= 0 if terme_A+terme_I <=0"
 * 	  mais on modifie la construction de terme A: replace terme_A=(terme_A-1)/`prix_fob' devient 
 *	  replace terme_A=(terme_A)/`prix_fob'
-* v5 : On réactive terme A: replace terme_A=(terme_A-1)/`prix_fob' et on remplace la contrainte de v2 
+* v5 : On rÃ©active terme A: replace terme_A=(terme_A-1)/`prix_fob' et on remplace la contrainte de v2 
 * 		quand termeA+termeI=0, par "replace replace `lprix_trsp2'=ln(1) if (terme_A+terme_I) <= 0) "
 
 * v6: on (re)part sur une estimation sur le niveau (prif cif/fob) et non le log
 
 **** 1 avril 2014 (ce n'est pas un poisson)
-**** vfinal : on reprend version 6, sauf qu'on coupe les extrêmes à 5%
-**** Stratégie d'estimation
+**** vfinal : on reprend version 6, sauf qu'on coupe les extrÃªmes Ã  5%
+**** StratÃ©gie d'estimation
 
-** 1. Toutes les années pour air/ vessel en 3 digits
+** 1. Toutes les annÃ©es pour air/ vessel en 3 digits
 ** 2. Tous les 5 ans pour 4 digits, air/vessel
 ** 3. En 1974, 1989 et 2004 (tous les 15 ans) en 5 digits, air/vessel
 
-**Version 9 : GD j'essaye d'implŽmenter la contrainte comme expliquŽ lˆ : http://www.stata.com/support/faqs/statistics/linear-regression-with-interval-constraints/
+**Version 9 : GD j'essaye d'implÂŽmenter la contrainte comme expliquÂŽ lÂˆ : http://www.stata.com/support/faqs/statistics/linear-regression-with-interval-constraints/
 **voir lignes 102-111 // 124-130
 
 */
 
 ***************** Avril 2015 ***********************************************************
 *** v10 : On impose les contraintes termeA>=0 et termeI<=1 (v9)
-*** Et on réfléchit "bien" sur le terme d'erreur, pour avoir une erreur centrée réduite
+*** Et on rÃ©flÃ©chit "bien" sur le terme d'erreur, pour avoir une erreur centrÃ©e rÃ©duite
 
-*** Ce qui nous amène à l'estimation
+*** Ce qui nous amÃ¨ne Ã  l'estimation
 
-** ln (obs -1) = ln(predit -1) ¨eps(ik)
+** ln (obs -1) = ln(predit -1) Â¨eps(ik)
 ** Avec obs = pcif(ik)/pfob(ik)
 ** Et predit = tau(i)*tau(k) + (t(i)+t(k))/p(fob)ik
 
-*** En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
+*** En cohÃ©rence avec l'estimation via nl, qui minimise la variance de l'erreur additive
 
 clear all
 *set mem 800m
@@ -112,16 +112,16 @@ program nlcouts_trsp
 	
 		
 
-**Ici, on fait les effets fixes (à la fois dans le terme additif et le terme multiplicatif)
+**Ici, on fait les effets fixes (Ã  la fois dans le terme additif et le terme multiplicatif)
 	
 		foreach p in iso_o prod {
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {
 					tempname feA_`p'_`j'
-***************RemplacŽ v9				
+***************RemplacÂŽ v9				
 *					scalar `feA_`p'_`j'' =`at'[1,`n']
-*Si on suppose que des coûts de transport additifs, des cdt multiplicatifs, des droits
-*de douane ad valorem, des droits de douane en quantité => il faudrait "+" dans le terme_A
+*Si on suppose que des coÃ»ts de transport additifs, des cdt multiplicatifs, des droits
+*de douane ad valorem, des droits de douane en quantitÃ© => il faudrait "+" dans le terme_A
 *et "*" dans le terme_I
 ***********************
 					tempname lnfeA_`p'_`j'
@@ -140,7 +140,7 @@ program nlcouts_trsp
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {	
 					tempname feI_`p'_`j'
-***************RemplacŽ v9			
+***************RemplacÂŽ v9			
 *					scalar `feI_`p'_`j'' =`at'[1,`n']
 *****************************ln(fe-1)
 					tempname lnfem1I_`p'_`j'
@@ -149,8 +149,8 @@ program nlcouts_trsp
 ****************************
 *outv9				replace terme_I = terme_I *exp(`p'_`j'*`feI_`p'_`j'' )
 					replace terme_I = terme_I *`feI_`p'_`j'' if `p'_`j'==1
-*Si on suppose que des coûts de transport additifs, des cdt multiplicatifs, des droits
-*de douane ad valorem, des droits de douane en quantité => il faudrait "+" dans le terme_I
+*Si on suppose que des coÃ»ts de transport additifs, des cdt multiplicatifs, des droits
+*de douane ad valorem, des droits de douane en quantitÃ© => il faudrait "+" dans le terme_I
 *et "*" dans le terme_I
 					local n = `n'+1
 				}
@@ -163,7 +163,7 @@ program nlcouts_trsp
 	replace terme_A=terme_A/`prix_fob'
 
 * v10 on modifie la forme fonctionnelle
-* de cette façon les erreurs sont bien centrées sur 0
+* de cette faÃ§on les erreurs sont bien centrÃ©es sur 0
 	replace `ln_ratio_minus1'=ln(terme_A  +terme_I-1)
 	
 *Si je mets des "*" dans le terme_I, il me faut une constante
@@ -210,7 +210,7 @@ program nlcouts_iceberg
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {	
 					tempname feI_`p'_`j'
-***************RemplacŽ v9			
+***************RemplacÂŽ v9			
 *					scalar `feI_`p'_`j'' =`at'[1,`n']
 *****************************ln(fe-1)
 					tempname lnfem1I_`p'_`j'
@@ -246,7 +246,7 @@ program reg_termes_h
 *Hummels : sitc2
 
 
-****************Préparation de la base blouk
+****************PrÃ©paration de la base blouk
 * sur mon laptop
 *use "C:\Lise\trade_costs\Hummels\database\hummels_tra.dta", clear
 
@@ -267,10 +267,10 @@ label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
 
-* Nettoyer la base de donnÈes
+* Nettoyer la base de donnÃˆes
 
 *****************************************************************************
-* On enlève en bas et en haut 
+* On enlÃ¨ve en bas et en haut 
 *****************************************************************************
 
 
@@ -282,7 +282,7 @@ bys product: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
 drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
 
 
-display "Nombre après bas et haut " _N
+display "Nombre aprÃ¨s bas et haut " _N
 
 egen prix_min = min(prix_trsp2), by(product)
 egen prix_max = max(prix_trsp2), by(product)
@@ -319,14 +319,14 @@ display "Nombre de produits : `nbr_prod_expost'"
 * Pour faire un plus petit sample
 local limite 80
 
-* On enlève les pays les plus petits (<=80% des flux, par mode considéré)
+* On enlÃ¨ve les pays les plus petits (<=80% des flux, par mode considÃ©rÃ©)
 bys iso_o: egen total_iso_o = total(`mode'_val)
 egen seuil_pays = pctile(total_iso_o),p(`limite')
 
 drop if total_iso_o <= seuil_pays
 
 
-* On enlève les roduits les plus petits (<=80% des flux, par mode considéré)
+* On enlÃ¨ve les roduits les plus petits (<=80% des flux, par mode considÃ©rÃ©)
 bys product: egen total_product = total(`mode'_val)
 egen seuil_product = pctile(total_product),p(`limite')
 
@@ -337,7 +337,7 @@ timer clear
 
 
 
-******************************************Régression
+******************************************RÃ©gression
 
 
 *	bysort iso_o: drop if _N==1
@@ -371,7 +371,7 @@ foreach i in prod iso_o	{
 	}
 
 
-**********ModifiŽ v9
+**********ModifiÂŽ v9
 *	foreach g in A I {
 *		local liste_parametres_`i'_`g'
 *		forvalue j =  1/`nbr_`i'' {
@@ -465,7 +465,7 @@ gen predict_nlI = exp(blink_nlI)+1
 capture	generate converge_nlI=e(converge)
 *capture generate R2_nlI = e(r2)
 
-** Mesurer le fit du modèle
+** Mesurer le fit du modÃ¨le
 ** (1)  R2 sur la relation entre le log(ratio obs) et log(predict_nlI)
 
 capture correlate ln_ratio_minus1 blink_nlI
@@ -486,7 +486,7 @@ generate  coef_prod_nlI =.
 generate  ecart_type_iso_nlI=.
 generate  ecart_type_prod_nlI=.
 
-** Mesurer le fit du modèle (cont')
+** Mesurer le fit du modÃ¨le (cont')
 gen aic_nlI = .
 gen logL_nlI = .
 
@@ -526,7 +526,7 @@ generate terme_nlI_mp = r(mean)
 generate terme_nlI_med = r(p50)
 generate terme_nlI_et=r(sd)	
 
-* on veut regarder si la médiane de Terme A est isolée du pb des points extrêmes (vers le haut)
+* on veut regarder si la mÃ©diane de Terme A est isolÃ©e du pb des points extrÃªmes (vers le haut)
 
 * verifier que pas de doublon
 
@@ -545,7 +545,7 @@ timer list 1
 timer on 2
 
 
-* attention on durçit la règle pour 1987, vessel
+* attention on durÃ§it la rÃ¨gle pour 1987, vessel
 *nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
@@ -561,7 +561,7 @@ capture	generate converge=e(converge)
 *capture generate R2 = e(r2)
 capture generate t = terme_A*prix_fob
 
-** Mesurer le fit du modèle
+** Mesurer le fit du modÃ¨le
 ** (1) Coefficient R2
 *capture correlate lnprix_obs lnpredit_nl
 capture correlate ln_ratio_minus1 blink_nl
@@ -586,7 +586,7 @@ generate  ecart_type_prod_A=.
 generate  ecart_type_prod_I=.
 
 
-** Mesurer le fit du modèle (cont')
+** Mesurer le fit du modÃ¨le (cont')
 gen aic_nl= .
 gen logL_nl = .
 
@@ -656,7 +656,7 @@ end
 *** 3 digits, all years ***
 
 ***** VESSEL  *******************************
-**** toutes les années 
+**** toutes les annÃ©es 
 *****************************************
 
 set more off
