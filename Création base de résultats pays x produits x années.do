@@ -33,7 +33,7 @@ foreach mode in air ves {
 
 	use $dir\raw_results_sept15\blouk_`year'_sitc2_`preci'_`mode'.dta, clear
 
-	keep product prix_caf prix_fob `mode'_val iso_o name terme_iceberg terme_I terme_A coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
+	keep product prix_caf prix_fob `mode'_val `mode'_wgt iso_o name terme_iceberg terme_I terme_A coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 	rename `mode'_val val
 
 keep if mode =="`mode'"
