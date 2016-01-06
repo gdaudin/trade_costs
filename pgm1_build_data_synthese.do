@@ -111,9 +111,8 @@ save hummels_tra.dta, replace
 
 *cd "C:\Lise\trade_costs\Hummels\database\raw_data"
 
-cd "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\database\rawdata"
 
-
+cd "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\database\rawdata" 
 ******************************************************
 ** STEP 2.1.: Constituer la base hummels_addyears
 ******************************************************
@@ -126,7 +125,7 @@ set more off
 local base IMDBR0512 IMDBR0612 IMDBR0612 IMDBR0812 IMDBR1012 IMDBR1112 IMDBR1212 IMDBR1312
  
 * Ajout 2007 et 2009 : plus loin
-*local base IMDBR0912
+local base IMDBR0912
  
 foreach x in `base' {
 clear

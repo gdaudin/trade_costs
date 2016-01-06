@@ -29,7 +29,7 @@ if "`c(hostname)'" =="lise-HP" {
 	global dir C:\Users\lise\Dropbox\trade_cost
 }
 
-import delimited using "C:\Users\lise\Dropbox\trade_cost\data\MTC_data.csv", delimiters(",") stringcols(11)
+import delimited using "$dir\data\MTC_data.csv", delimiters(",") stringcols(11)
 
 
 
@@ -54,7 +54,7 @@ sum tt
 drop tt
 * On n'a plus que du hs6
 
-save "C:\Users\lise\Dropbox\trade_cost\data\data_mtc", replace
+save "$dir\data\data_mtc", replace
 
 ***  Convertir en SITC2  *************************************************
 
@@ -62,10 +62,16 @@ save "C:\Users\lise\Dropbox\trade_cost\data\data_mtc", replace
 
 **** 23/12/2015 : Pb to be solved, pb d'encodage on perd les 0 du coup à la fin trop de variables unmatched
 
-cd "C:\Users\lise\Dropbox\trade_cost\data"
+cd "$dir\data"
 
 import excel "CN 1988 - HS 1988 - CPA 1996 - SITC Rev 3 (eurostat_ramon)", firstrow allstring clear
+
 replace SITCRev3 = substr(SITCRev3,2,.)
+
+replace HS1988="0" + HS1988  if strlen(HS1988) == 5
+
+replace SITCRev3= SITCRev3 + "0" if strlen(SITCRev3) == 4
+replace SITCRev3= SITCRev3 + "00" if strlen(SITCRev3) == 3
 
 duplicates drop
 
@@ -73,6 +79,12 @@ duplicates drop
 save hs1988_sitc3, replace
 
 import excel "SITC3- SITC2 Conversion (UNSTATS)", firstrow clear allstring
+
+
+replace SITCRev3= SITCRev3 + "0" if strlen(SITCRev3) == 4
+replace SITCRev3= SITCRev3 + "00" if strlen(SITCRev3) == 3
+
+
 save sitc3_sitc2, replace
 
 ** merger les deux bases en une seule
@@ -94,6 +106,114 @@ use data_mtc, clear
 rename comh0 HS1988
 
 merge m:1 HS1988 using temp
+
+
+drop if _merge==2
+* On drop les observations avec codes stic2 mais sans données de MTC
+
+drop _merge merge1
+
+generate SITCRev2_3d = substr(SITCRev2,1,3)
+
+drop if SITCRev2_3d==""
+
+save data_mtc_avec_conversion, replace
+
+*** Step suivant
+*** On a le MTC par produit/pays d'origine (année = 2005)
+*** On veut extraire une proxy du poids volumétrique = dimension produit seulement
+
+*** Donc, régresser sur effets fixes pays et EF produit
+
+use data_mtc_avec_conversion, clear
+
+
+** On veut vérifier que les pays ne sont pas des exportateurs mono-secteurs
+codebook SITCRev2_3d
+* 235 secteurs (SITC rev 2, 3d)
+
+codebook exp
+* 186 pays
+
+
+
+** Nous donne le nb de secteurs par pays exportateur
+gen unit=1
+collapse (sum) unit, by(exp SITCRev2_3d)
+drop unit
+tab exp
+bys exp:gen nbr_sect_exp=_N
+bys exp:keep if _n==1
+drop SITCRev2_3d
+save temp, replace
+
+use data_mtc_avec_conversion, clear
+merge m:1 exp using "$dir\data\temp.dta"
+drop _merge
+
+erase temp.dta
+
+** faire la régression
+
+
+** la variable dépendante est VALUETR_UNIT =  transport cost per kilogramme, or in other words, the cost in USD required to transport one kilogramme of merchandise
+** mais on veut régresser en pondérant par le nb de kg impliqué dans chaque importation
+
+** UNIT = COST/quanty
+** ADvalorem = COST/(price*qty)
+
+** Donc
+** pour avoir la quantité
+
+** qty = valueTR_COST/valueTR_UNIT
+** value = price*qty =valueTR_COST/valueTR_ADVA
+
+gen qty = valueTR_COST/valueTR_UNIT
+
+label var qty "quantity by maritime flow"
+
+gen value = valueTR_COST/valueTR_ADVA
+label var value "value by maritime"
+
+* On prend le log du cout de transport
+gen ln_TRunit = log(valueTR_UNIT)
+
+drop if nbr_sect_exp < 50
+
+encode SITCRev2_3d , generate(SITCRev2_3d_num)
+
+su SITCRev2_3d_num, meanonly	
+local nbr_sitc=r(max)
+quietly levelsof SITCRev2_3d, local (liste_sitc) clean
+
+encode exp, generate(exp_num) label()
+
+reg ln_TRunit i.SITCRev2_3d_num i.exp_num  [iweight = qty], robust 
+
+capture	matrix X= e(b)
+
+codebook exp if e(sample)==1
+** 69 pays exportent dans 50 secteurs ou plus
+** une manière de s'assurer que nos effets fixes produits sont bons
+
+** Last step : enregistrer nos effets fixe produit
+
+generate effet_fixe=.
+ 
+keep SITCRev2_3d_num SITCRev2_3d effet_fixe
+bys SITCRev2_3d_num : keep if _n==1
+
+insobs `nbr_sitc'
+local n 1
+foreach i in `liste_sitc' {
+	*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
+	replace effet_fixe= X[1,`n'] in `n'
+	local n=`n'+1
+}
+
+br
+
+** pb sur sitc_rev2_3d = 282 pas dans les sorties de régression donc tout est décalé d'une colonne
 
 
 
