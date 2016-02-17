@@ -288,8 +288,8 @@ gen tt = length(sitc2)
 tab tt
 
 
-egen sitc2_1 = concat(t0 sitc2) if length(sitc2)==4
-egen sitc2_2 = concat(tt0 sitc2) if length(sitc2)==3
+egen sitc2_1 = concat(sitc2 t0) if length(sitc2)==4
+egen sitc2_2 = concat(sitc2 tt0) if length(sitc2)==3
 
 replace sitc2=sitc2_1 if length(sitc2)==4
 replace sitc2=sitc2_2 if length(sitc2)==3
@@ -449,8 +449,7 @@ set more off
 * Juin 2015 : on fait le travail pour 2007
 *local base IMDBR0712
  
-* Ajout 2007 et 2009 : plus loin
-local base IMDBR0912
+local base IMDBR0712 IMDBR0912
  
 foreach x in `base' {
 clear
@@ -497,6 +496,10 @@ save new_`x', replace
 * Guillaume dira que c'est sous-optimal et avec raison 
 * mais on recommence le travail des étapes 2.2 à 2.6 sur la base année 2009
 ***************************************************************************
+ 
+local base IMDBR0712 IMDBR0912
+ 
+foreach x in `base' {
 
 use "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\database\rawdata\new_IMDBR0912"
 
@@ -522,19 +525,19 @@ tostring country, replace
 sort country
 save temp, replace
 
-use new_IMDBR0912, clear
+use new_`x', clear
 sort country
 merge m:1 country using temp
 drop if _merge==2
 drop _merge
 
 
-save new_IMDBR0912, replace
+save new_`x', replace
 erase temp.dta
 
 ** Ajouter code iso3
 
-use new_IMDBR0912, clear
+use new_`x', clear
 
 * Ajouter la variable iso_d pour merge ensuite sur les variables de gravité
 capture drop iso_d
@@ -565,7 +568,7 @@ drop if iso_o==""
 drop if iso_o=="ATF"
 
 
-save new_IMDBR0912, replace
+save new_`x', replace
 
 ******************************************************************************
 *** STEP 3.3: Passer de HS10 à SITC2 (la clé de classification dans hummels_tra)
@@ -578,12 +581,12 @@ save new_IMDBR0912, replace
 ** On fait un collapse par sitc rev2/year/pays d'origine
 
 
-use new_IMDBR0912, clear
+use new_`x', clear
 
 gen hs6=substr(hs,1,6)
 
 
-save new_IMDBR0912, replace
+save new_`x', replace
 
 clear
 
@@ -599,8 +602,8 @@ gen tt = length(sitc2)
 tab tt
 
 
-egen sitc2_1 = concat(t0 sitc2) if length(sitc2)==4
-egen sitc2_2 = concat(tt0 sitc2) if length(sitc2)==3
+egen sitc2_1 = concat(sitc2 t0) if length(sitc2)==4
+egen sitc2_2 = concat(sitc2 tt0) if length(sitc2)==3
 
 replace sitc2=sitc2_1 if length(sitc2)==4
 replace sitc2=sitc2_2 if length(sitc2)==3
@@ -617,7 +620,7 @@ save hs_sitc2, replace
 
 ** Merge avec base
 
-use new_IMDBR0912, clear
+use new_`x', clear
 merge m:1 hs6 using hs_sitc2
 
 count if _merge==1
@@ -632,11 +635,11 @@ drop _merge
 label var hs6 "HS6 classification (2002 version)"
 label var sitc2 "SITC, Rev.2, 5 digit"
 
-save new_IMDBR0912, replace
+save new_`x', replace
 
 ** Faire un collapse par year/country o/sitc2
 
-use new_IMDBR0912, clear
+use new_`x', clear
 
 collapse(sum) con_qy1 con_qy2 con_val duty con_cha con_cif_yr air_val air_wgt air_cha ves_val ves_wgt ves_cha, by (iso_o year sitc2)
 count if sitc2==""
@@ -656,12 +659,12 @@ sum _
 drop _
 * 
 
-save new_IMDBR0912, replace
+save new_`x', replace
 
 ******************************************************************************
 *** STEP 3.4: Ajouter les variables de gravité, pays destination
 ******************************************************************************
-use new_IMDBR0912, clear
+use new_`x', clear
 
 * remettre code iso2, parti dans le collapse
 rename iso_o iso3
@@ -725,7 +728,7 @@ drop if prix_fob==.
 erase temp.dta
 destring year, replace
 
-save new_IMDBR0912, replace
+save new_`x', replace
 
 ***************************************************
 *** STEP 3.6: ADD to the whole database
@@ -736,14 +739,14 @@ cd "C:\Echange\trade_costs\database"
 
 use hummels_tra, clear
 
-append using new_IMDBR0912
+append using new_`x'
 
 save hummels_tra, replace
 
 ** Attention aux anciennes versions de stata si sous Stata13
 saveold hummels_tra, replace
 
-erase new_IMDBR0912.dta
+erase new_`x'.dta
 *erase hummels_addyears.dta
 
 
@@ -786,3 +789,5 @@ label var iso_o "Exporting country (iso3)"
 
 
 save hummels_tra, replace
+
+}
