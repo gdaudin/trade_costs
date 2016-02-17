@@ -151,9 +151,33 @@ use data_mtc_avec_conversion, clear
 merge m:1 exp using "$dir\data\temp.dta"
 drop _merge
 
+save data_mtc_avec_conversion, replace
 erase temp.dta
 
-** faire la régression
+* ------------------------------------------------------------------------------------------------------------------
+*** Avant de faire la régression, on vérifie que par SITC 3d, toutes les valeurs de valueTR_UNIT ne sont pas missing
+* ------------------------------------------------------------------------------------------------------------------
+
+use data_mtc_avec_conversion, clear
+
+bys SITCRev2_3d: egen nbfilled_bySITC_3d = count(valueTR_UNIT)
+
+tab SITCRev2_3d if nbfilled_bySITC_3d == 0 
+
+/*
+
+SITCRev2_3d |      Freq.     Percent        Cum.
+------------+-----------------------------------
+        282 |         51        7.61        7.61
+        289 |         34        5.07       12.69
+        665 |        350       52.24       64.93
+        667 |         57        8.51       73.43
+        671 |        145       21.64       95.07
+        681 |         14        2.09       97.16
+        961 |          8        1.19       98.36
+        971 |         11        1.64      100.00
+*/
+drop if nbfilled_bySITC_3d == 0 
 
 
 ** la variable dépendante est VALUETR_UNIT =  transport cost per kilogramme, or in other words, the cost in USD required to transport one kilogramme of merchandise
@@ -188,7 +212,14 @@ quietly levelsof SITCRev2_3d, local (liste_sitc) clean
 
 encode exp, generate(exp_num) label()
 
+
+**********************************************************
+** Faire la régression pour extraire la composante secteur
+**********************************************************
+
+
 reg ln_TRunit i.SITCRev2_3d_num i.exp_num  [iweight = qty], robust 
+
 
 capture	matrix X= e(b)
 
@@ -213,7 +244,17 @@ foreach i in `liste_sitc' {
 
 br
 
-** pb sur sitc_rev2_3d = 282 pas dans les sorties de régression donc tout est décalé d'une colonne
+drop if effet_fixe == .
 
+rename effet_fixe effet_fixe_Vk
+label var effet_fixe_Vk "Indice de poids volumetrique par secteur (SITC Rev 2, 3 d)"
+
+keep SITCRev2_3d effet_fixe_Vk
+
+save database_Vk, replace
+
+erase data_mtc_avec_conversion.dta
+erase hs1988_sitc3.dta
+erase sitc3_sitc2.dta
 
 
