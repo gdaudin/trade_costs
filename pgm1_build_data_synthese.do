@@ -4,13 +4,13 @@
 ** Avril 2015
 
 ************************************************************************
-** PGM 1 : construction de la base de données - COMPLETE, de 1974 à 2013
+** PGM 1 : construction de la base de donnÃ©es - COMPLETE, de 1974 Ã  2013
 ************************************************************************
 
-*** Attention, on part de la base de données fournies par Hummels sur son site
+*** Attention, on part de la base de donnÃ©es fournies par Hummels sur son site
 *** http://www.krannert.purdue.edu/faculty/hummelsd/research/jep/data.html ***
 
-** Partant des importations US en hs10, hummels.dta = agrégé au niveau 5 digits (sitc2)
+** Partant des importations US en hs10, hummels.dta = agrÃ©gÃ© au niveau 5 digits (sitc2)
 
 version 12
 
@@ -60,10 +60,10 @@ replace iso_o="SVN" if name=="Slovenia"
 replace iso_o="MMR" if name=="Burma (Myanmar)"
 replace iso_o="ZAR" if name =="Congo, Democratic Republic of th"
 
-* On enlève si non renseigné pour le pays d'origine
+* On enlÃ¨ve si non renseignÃ© pour le pays d'origine
 drop if iso_o==""
 
-*On enlève les territoires français d'Antarctique
+*On enlÃ¨ve les territoires franÃ§ais d'Antarctique
 drop if iso_o=="ATF"
 
 
@@ -72,7 +72,7 @@ drop if _merge==2
 drop _merge
 
 
-**Il faut séparer les air et les vessels
+**Il faut sÃ©parer les air et les vessels
 generate mode="ves"
 
 save temp, replace
@@ -111,22 +111,21 @@ save hummels_tra.dta, replace
 
 *cd "C:\Lise\trade_costs\Hummels\database\raw_data"
 
-cd "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\database\rawdata"
 
-
+cd "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\database\rawdata" 
 ******************************************************
 ** STEP 2.1.: Constituer la base hummels_addyears
 ******************************************************
 
 
 set more off
-** STEP 1: CONSTITUER BASE ADDITIONAL YEARS: 2005, 2006, 2008, 2010 à 2013
+** STEP 1: CONSTITUER BASE ADDITIONAL YEARS: 2005, 2006, 2008, 2010 Ã  2013
 ** MANQUE 2009 
  
-local base IMDBR0512 IMDBR0612 IMDBR0712 IMDBR0812 IMDBR1012 IMDBR1112 IMDBR1212 IMDBR1312
+local base IMDBR0512 IMDBR0612 IMDBR0612 IMDBR0812 IMDBR1012 IMDBR1112 IMDBR1212 IMDBR1312
  
 * Ajout 2007 et 2009 : plus loin
-*local base IMDBR0912
+local base IMDBR0912
  
 foreach x in `base' {
 clear
@@ -169,7 +168,7 @@ rename dut_val_yr duty
 save new_`x', replace
 }
 
-** Compiler les années 2006, 2008, 2010, 11, 12 et 13
+** Compiler les annÃ©es 2006, 2008, 2010, 11, 12 et 13
 
 
 ** Start in 2005
@@ -197,7 +196,7 @@ erase new_`x'.dta
 ******************************************************
 
 ** convertir le code pays en iso2 -iso3
-** Les données du US Census sont au départ en code à 4 chiffres
+** Les donnÃ©es du US Census sont au dÃ©part en code Ã  4 chiffres
 ** Conversion en iso2 via Schedule C (see US census foreign trade website)
 
 *cd "C:\Lise\trade_costs\Hummels\database"
@@ -226,7 +225,7 @@ erase temp.dta
 
 use hummels_addyears, clear
 
-* Ajouter la variable iso_d pour merge ensuite sur les variables de gravité
+* Ajouter la variable iso_d pour merge ensuite sur les variables de gravitÃ©
 capture drop iso_d
 generate iso_d="USA"
 
@@ -237,7 +236,7 @@ drop if _merge==2
 
 drop _merge
 
-** on enlève si code pays origine pas renseigné
+** on enlÃ¨ve si code pays origine pas renseignÃ©
 drop if iso2==""
 
 *rename yr year
@@ -251,18 +250,18 @@ replace iso_o="MMR" if name=="Burma (Myanmar)"
 replace iso_o="ZAR" if name =="Congo, Democratic Republic of th"
 
 drop if iso_o==""
-*On enlève les territoires français d'Antarctique.
+*On enlÃ¨ve les territoires franÃ§ais d'Antarctique.
 drop if iso_o=="ATF"
 
 
 save hummels_addyears, replace
 
 ******************************************************************************
-*** STEP 2.3: Passer de HS10 à SITC2 (la clé de classification dans hummels_tra)
+*** STEP 2.3: Passer de HS10 Ã  SITC2 (la clÃ© de classification dans hummels_tra)
 ******************************************************************************
 
-** Les nouvelles années sont codées en HTS (Harmonized Tariff System): variable hs
-** Les 6 premiers chiffres de "hs" sont en fait les mêmes que la classification HS6
+** Les nouvelles annÃ©es sont codÃ©es en HTS (Harmonized Tariff System): variable hs
+** Les 6 premiers chiffres de "hs" sont en fait les mÃªmes que la classification HS6
 
 ** On garde les 6 premiers chiffres, on convertit ensuite en sitc Rev2
 ** On fait un collapse par sitc rev2/year/pays d'origine
@@ -289,8 +288,8 @@ gen tt = length(sitc2)
 tab tt
 
 
-egen sitc2_1 = concat(sitc2 t0) if length(sitc2)==4
-egen sitc2_2 = concat(sitc2 tt0) if length(sitc2)==3
+egen sitc2_1 = concat(t0 sitc2) if length(sitc2)==4
+egen sitc2_2 = concat(tt0 sitc2) if length(sitc2)==3
 
 replace sitc2=sitc2_1 if length(sitc2)==4
 replace sitc2=sitc2_2 if length(sitc2)==3
@@ -314,7 +313,7 @@ count if _merge==1
 egen _=group(hs6) if _merge==1
 sum _
 drop _
-* 69,005 obs, 10 hs6 sans équivalent sitc2
+* 69,005 obs, 10 hs6 sans Ã©quivalent sitc2
 * Que faire?
 drop if _merge==2
 drop _merge
@@ -334,7 +333,7 @@ count if sitc2==""
 
 drop if sitc2==""
 count
-* pour 2005 et 2006, 130,311 obs supplémentaires
+* pour 2005 et 2006, 130,311 obs supplÃ©mentaires
 
 egen _ =group(iso_o)
 sum _
@@ -348,7 +347,7 @@ drop _
 save hummels_addyears, replace
 
 ******************************************************************************
-*** STEP 2.4: Ajouter les variables de gravité, pays destination
+*** STEP 2.4: Ajouter les variables de gravitÃ©, pays destination
 ******************************************************************************
 use hummels_addyears, clear
 
@@ -374,15 +373,15 @@ label var iso_o "Exporting country (iso3)"
 
 
 ******************************************************************************
-*** STEP 2.5: Construire l'écart prix cif/fob
+*** STEP 2.5: Construire l'Ã©cart prix cif/fob
 ******************************************************************************
 
-** Attention, comme pour la base hummels, on le fait au niveau agrégé (5 digits)
+** Attention, comme pour la base hummels, on le fait au niveau agrÃ©gÃ© (5 digits)
 
-**Il faut séparer les air et les vessels
+**Il faut sÃ©parer les air et les vessels
 ** Attention, ce n'est pas "l'un ou l'autre"
-** Il peut y avoir des observations qui utilisent à la fois air et ves
-** On calcule un écart cif/fob pour chaque mode de transport
+** Il peut y avoir des observations qui utilisent Ã  la fois air et ves
+** On calcule un Ã©cart cif/fob pour chaque mode de transport
 
 generate mode="ves"
 save temp, replace
@@ -405,8 +404,8 @@ foreach i in air ves {
 }
 
 
-** De cette façon là, prix_fob est missing pour l'observation par mode "air" si tout le transport se fait par "ves"
-** Et réciproquement
+** De cette faÃ§on lÃ , prix_fob est missing pour l'observation par mode "air" si tout le transport se fait par "ves"
+** Et rÃ©ciproquement
 
 
 drop if prix_fob==.
@@ -451,7 +450,7 @@ set more off
 *local base IMDBR0712
  
 * Ajout 2007 et 2009 : plus loin
-local base IMDBR0712 IMDBR0912
+local base IMDBR0912
  
 foreach x in `base' {
 clear
@@ -496,7 +495,7 @@ save new_`x', replace
 
 ***************************************************************************
 * Guillaume dira que c'est sous-optimal et avec raison 
-* mais on recommence le travail des étapes 2.2 à 2.6 sur la base année 2009
+* mais on recommence le travail des Ã©tapes 2.2 Ã  2.6 sur la base annÃ©e 2009
 ***************************************************************************
 
 use "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\database\rawdata\new_IMDBR0912"
@@ -508,7 +507,7 @@ save "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\data
 ******************************************************
 
 ** convertir le code pays en iso2 -iso3
-** Les données du US Census sont au départ en code à 4 chiffres
+** Les donnÃ©es du US Census sont au dÃ©part en code Ã  4 chiffres
 ** Conversion en iso2 via Schedule C (see US census foreign trade website)
 
 *cd "C:\Lise\trade_costs\Hummels\database"
@@ -537,7 +536,7 @@ erase temp.dta
 
 use new_IMDBR0912, clear
 
-* Ajouter la variable iso_d pour merge ensuite sur les variables de gravité
+* Ajouter la variable iso_d pour merge ensuite sur les variables de gravitÃ©
 capture drop iso_d
 generate iso_d="USA"
 
@@ -548,7 +547,7 @@ drop if _merge==2
 
 drop _merge
 
-** on enlève si code pays origine pas renseigné
+** on enlÃ¨ve si code pays origine pas renseignÃ©
 drop if iso2==""
 
 *rename yr year
@@ -562,18 +561,18 @@ replace iso_o="MMR" if name=="Burma (Myanmar)"
 replace iso_o="ZAR" if name =="Congo, Democratic Republic of th"
 
 drop if iso_o==""
-*On enlève les territoires français d'Antarctique.
+*On enlÃ¨ve les territoires franÃ§ais d'Antarctique.
 drop if iso_o=="ATF"
 
 
 save new_IMDBR0912, replace
 
 ******************************************************************************
-*** STEP 3.3: Passer de HS10 à SITC2 (la clé de classification dans hummels_tra)
+*** STEP 3.3: Passer de HS10 Ã  SITC2 (la clÃ© de classification dans hummels_tra)
 ******************************************************************************
 
-** Les nouvelles années sont codées en HTS (Harmonized Tariff System): variable hs
-** Les 6 premiers chiffres de "hs" sont en fait les mêmes que la classification HS6
+** Les nouvelles annÃ©es sont codÃ©es en HTS (Harmonized Tariff System): variable hs
+** Les 6 premiers chiffres de "hs" sont en fait les mÃªmes que la classification HS6
 
 ** On garde les 6 premiers chiffres, on convertit ensuite en sitc Rev2
 ** On fait un collapse par sitc rev2/year/pays d'origine
@@ -600,8 +599,8 @@ gen tt = length(sitc2)
 tab tt
 
 
-egen sitc2_1 = concat(sitc2 t0) if length(sitc2)==4
-egen sitc2_2 = concat(sitc2 egen sitc2_1 = concat(s) if length(sitc2)==3
+egen sitc2_1 = concat(t0 sitc2) if length(sitc2)==4
+egen sitc2_2 = concat(tt0 sitc2) if length(sitc2)==3
 
 replace sitc2=sitc2_1 if length(sitc2)==4
 replace sitc2=sitc2_2 if length(sitc2)==3
@@ -625,7 +624,7 @@ count if _merge==1
 egen _=group(hs6) if _merge==1
 sum _
 drop _
-* 69,005 obs, 10 hs6 sans équivalent sitc2
+* 69,005 obs, 10 hs6 sans Ã©quivalent sitc2
 * Que faire?
 drop if _merge==2
 drop _merge
@@ -660,7 +659,7 @@ drop _
 save new_IMDBR0912, replace
 
 ******************************************************************************
-*** STEP 3.4: Ajouter les variables de gravité, pays destination
+*** STEP 3.4: Ajouter les variables de gravitÃ©, pays destination
 ******************************************************************************
 use new_IMDBR0912, clear
 
@@ -686,15 +685,15 @@ label var iso_o "Exporting country (iso3)"
 
 
 ******************************************************************************
-*** STEP 3.5: Construire l'écart prix cif/fob
+*** STEP 3.5: Construire l'Ã©cart prix cif/fob
 ******************************************************************************
 
-** Attention, comme pour la base hummels, on le fait au niveau agrégé (5 digits)
+** Attention, comme pour la base hummels, on le fait au niveau agrÃ©gÃ© (5 digits)
 
-**Il faut séparer les air et les vessels
+**Il faut sÃ©parer les air et les vessels
 ** Attention, ce n'est pas "l'un ou l'autre"
-** Il peut y avoir des observations qui utilisent à la fois air et ves
-** On calcule un écart cif/fob pour chaque mode de transport
+** Il peut y avoir des observations qui utilisent Ã  la fois air et ves
+** On calcule un Ã©cart cif/fob pour chaque mode de transport
 
 generate mode="ves"
 save temp, replace
@@ -717,8 +716,8 @@ foreach i in air ves {
 }
 
 
-** De cette façon là, prix_fob est missing pour l'observation par mode "air" si tout le transport se fait par "ves"
-** Et réciproquement
+** De cette faÃ§on lÃ , prix_fob est missing pour l'observation par mode "air" si tout le transport se fait par "ves"
+** Et rÃ©ciproquement
 
 
 drop if prix_fob==.
@@ -751,7 +750,7 @@ erase new_IMDBR0912.dta
 ************************************************************************
 *** 29 mai 2015
 
-*** Rétablir bug dans années récentes il n'y a pas les variables de gravité
+*** RÃ©tablir bug dans annÃ©es rÃ©centes il n'y a pas les variables de gravitÃ©
 *************************************************************************
 
 * sur le fixe Dauphine
@@ -767,7 +766,7 @@ set more off
 
 use hummels_tra, clear
 
-* On enlève les variables de gravité et on recommence le merge
+* On enlÃ¨ve les variables de gravitÃ© et on recommence le merge
 capture drop iso_d
 generate iso_d="USA"
 
