@@ -554,7 +554,7 @@ generate terme_nlI_et=r(sd)
 
 duplicates report
 
-save blouk_nlI_`year'_`class'_`preci'_`mode', replace
+save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 
 
@@ -655,18 +655,22 @@ generate terme_I_et=r(sd)
 
 duplicates report
 
-save blouk_`year'_`class'_`preci'_`mode', replace
-capture erase blouk.dta
-
 
 timer off 2
 timer list 2
 
 
 generate Duree_estimation_secondes = r(t2)
+generate machine =  "`c(hostname)'"
 
 
 timer clear
+
+
+
+save "$dir/results/blouk_`year'_`class'_`preci'_`mode'", replace
+
+
 
 end
 
@@ -681,6 +685,7 @@ end
 **** toutes les années récentes (2005-2013)
 *******************************************************
 
+/*
 set more off
 local mode ves 
 *local year 1987 
@@ -703,6 +708,29 @@ log close
 }
 }
 
+*/
 
+********4 digits
+
+set more off
+local mode ves air
+
+foreach x in `mode' {
+
+*foreach z in `year' {
+foreach z of num 1975 1977(4)2013 {
+
+
+capture log close
+log using hummels_4digits_`z'_`x', replace
+
+reg_termes_h `z' sitc2 4 `x'
+
+*erase blouk_nlI_`z'_sitc2_4_`mode'.dta
+
+log close
+
+}
+}
 
 
