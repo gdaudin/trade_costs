@@ -7,8 +7,8 @@
 *version 12
 
 /* Itération sur forme d'estimation 
-*v1 : vient de Cots de commerce_v4
-*Adaptation aux donnes de Hummels
+*v1 : vient de Coûts de commerce_v4
+*Adaptation aux données de Hummels
 *v2 : reprise 18/2
 * v3: on relache contrainte "replace terme_A= 0 if terme_A+terme_I <=0" l. 201
 * v4: on remet la contrainte l. 201 "replace terme_A= 0 if terme_A+terme_I <=0"
@@ -27,10 +27,27 @@
 ** 2. Tous les 5 ans pour 4 digits, air/vessel
 ** 3. En 1974, 1989 et 2004 (tous les 15 ans) en 5 digits, air/vessel
 
-**Version 9 : GD j'essaye d'implmenter la contrainte comme expliqu l : http://www.stata.com/support/faqs/statistics/linear-regression-with-interval-constraints/
+**Version 9 : GD j'essaye d'implémenter la contrainte comme expliqué là: http://www.stata.com/support/faqs/statistics/linear-regression-with-interval-constraints/
 **voir lignes 102-111 // 124-130
 
 */
+
+if "`c(hostname)'" =="MacBook-Pro-Lysandre.local" {
+	global dir ~/dropbox/trade_cost
+}
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox\trade_cost
+}
+
+
+if "`c(hostname)'" =="lise-HP" {
+	global dir C:\Users\lise\Dropbox\trade_cost
+}
+
+
+
 
 ***************** Avril 2015 ***********************************************************
 *** v10 : On impose les contraintes termeA>=0 et termeI<=1 (v9)
@@ -53,7 +70,7 @@ set maxvar 32767
 
 
 * stocker sur la dropbox, depuis mon laptop
-cd "C:\Users\lise\Dropbox\trade_cost\results\New_years"
+*cd "C:\Users\lise\Dropbox\trade_cost\results\New_years"
 
 * sur le serveur
 *cd "C:\Echange\trade_costs\results"
@@ -210,7 +227,7 @@ program nlcouts_iceberg
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {	
 					tempname feI_`p'_`j'
-***************Remplac v9			
+***************Remplacé v9			
 *					scalar `feI_`p'_`j'' =`at'[1,`n']
 *****************************ln(fe-1)
 					tempname lnfem1I_`p'_`j'
@@ -247,8 +264,13 @@ program reg_termes_h
 
 
 ****************Préparation de la base blouk
+
+use "$dir/data/hummels_tra.dta"
+
+
+
 * sur mon laptop
-use "C:\Lise\trade_costs\database\hummels_tra.dta", clear
+*use "C:\Lise\trade_costs\database\hummels_tra.dta", clear
 
 * sur le serveur
 *use "C:\Echange\trade_costs\database\hummels_tra.dta", clear
