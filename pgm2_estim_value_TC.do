@@ -718,7 +718,7 @@ local mode ves air
 foreach x in `mode' {
 
 *foreach z in `year' {
-foreach z of num 1975 1977(4)2013 {
+foreach z of num 1974 1977(4)2013 {
 
 
 capture log close
