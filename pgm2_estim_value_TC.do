@@ -4,7 +4,7 @@
 * 
 *************************************************
 
-version 12
+*version 12
 
 /* Itération sur forme d'estimation 
 *v1 : vient de Cots de commerce_v4
@@ -52,11 +52,11 @@ set maxvar 32767
 
 
 
-* sur mon laptop
-*cd "C:\Lise\trade_costs\Hummels\resultats\new"
+* stocker sur la dropbox, depuis mon laptop
+cd "C:\Users\lise\Dropbox\trade_cost\results\New_years"
 
 * sur le serveur
-cd "C:\Echange\trade_costs\results"
+*cd "C:\Echange\trade_costs\results"
 
 ****** timer clear ********
 
@@ -248,10 +248,10 @@ program reg_termes_h
 
 ****************Préparation de la base blouk
 * sur mon laptop
-*use "C:\Lise\trade_costs\Hummels\database\hummels_tra.dta", clear
+use "C:\Lise\trade_costs\database\hummels_tra.dta", clear
 
 * sur le serveur
-use "C:\Echange\trade_costs\database\hummels_tra.dta", clear
+*use "C:\Echange\trade_costs\database\hummels_tra.dta", clear
 
 
 ***Pour restreindre
@@ -448,7 +448,7 @@ timer on 1
 
 *** ESTIMATION NL SUR ICEBERG SEULEMENT
 
-/*
+
 
 nl couts_iceberg @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres_iceberg' ) initial (`initial_iceberg')
 
@@ -538,7 +538,7 @@ save blouk_nlI_`year'_`class'_`preci'_`mode', replace
 
 timer off 1
 timer list 1
-*/
+
 
 
 *** ESTIMATION NL SUR ICEBERG ET ADDITIF
@@ -648,25 +648,25 @@ timer clear
 
 end
 
-******************************************************
-***** LANCER LES ESTIMATIONS *************************
+*******************************************************
+***** LANCER LES ESTIMATIONS **************************
 *******************************************************
 
 
 *** 3 digits, all years ***
 
-***** VESSEL  *******************************
-**** toutes les années 
-*****************************************
+***** VESSEL, puis AIR  *******************************
+**** toutes les années récentes (2005-2013)
+*******************************************************
 
 set more off
 local mode ves 
-local year 1987 
+*local year 1987 
 
 foreach x in `mode' {
 
-foreach z in `year' {
-*forvalues z = 2003(-1)1974 {
+*foreach z in `year' {
+forvalues z = 2005(1)2013 {
 
 
 capture log close
