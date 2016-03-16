@@ -46,7 +46,7 @@ if "`c(hostname)'" =="lise-HP" {
 	global dir C:\Users\lise\Dropbox\trade_cost
 }
 
-
+cd $dir
 
 
 ***************** Avril 2015 ***********************************************************
@@ -554,12 +554,18 @@ generate terme_nlI_et=r(sd)
 
 duplicates report
 
+timer off 1
+timer list 1
+
+generate Duree_estimation_secondes = r(t2)
+generate machine =  "`c(hostname)'__`c(username)'"
+
+
 save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 
 
-timer off 1
-timer list 1
+
 
 
 
@@ -661,7 +667,7 @@ timer list 2
 
 
 generate Duree_estimation_secondes = r(t2)
-generate machine =  "`c(hostname)'"
+generate machine =  "`c(hostname)'__`c(username)'"
 
 
 timer clear
@@ -718,11 +724,11 @@ local mode ves air
 foreach x in `mode' {
 
 *foreach z in `year' {
-foreach z of num 1974 1977(4)2013 {
+foreach z of num 2005(4)2013 {
 
 
 capture log close
-log using hummels_4digits_`z'_`x', replace
+log using "$dir/results/hummels_4digits_`z'_`x'", replace
 
 reg_termes_h `z' sitc2 4 `x'
 
