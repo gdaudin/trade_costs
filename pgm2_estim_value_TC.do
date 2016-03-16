@@ -557,7 +557,7 @@ duplicates report
 timer off 1
 timer list 1
 
-generate Duree_estimation_secondes = r(t2)
+generate Duree_estimation_secondes = r(t1)
 generate machine =  "`c(hostname)'__`c(username)'"
 
 
