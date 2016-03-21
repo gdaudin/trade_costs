@@ -32,7 +32,7 @@
 
 */
 
-if "`c(hostname)'" =="MacBook-Pro-Lysandre.local" {
+if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/dropbox/trade_cost
 }
 
