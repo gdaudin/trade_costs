@@ -665,7 +665,7 @@ duplicates report
 timer off 2
 timer list 2
 
-
+capture drop Duree_estimation_secondes
 generate Duree_estimation_secondes = r(t2)
 generate machine =  "`c(hostname)'__`c(username)'"
 
@@ -724,7 +724,7 @@ local mode ves air
 foreach x in `mode' {
 
 *foreach z in `year' {
-foreach z of num 2005(4)2013 {
+foreach z of num 2009(4)2013 {
 
 
 capture log close
