@@ -667,7 +667,7 @@ timer list 2
 
 capture drop Duree_estimation_secondes
 generate Duree_estimation_secondes = r(t2)
-generate machine =  "`c(hostname)'__`c(username)'"
+capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
 timer clear
