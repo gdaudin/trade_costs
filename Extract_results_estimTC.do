@@ -129,23 +129,34 @@ end
 *** 3 digits, all years ***
 
 
-* sur le serveur
-cd "C:\Echange\trade_costs\results"
 
-* sur fixe Dauphine
-*cd "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\resultats\results_v10\vessel_3d"
+if "`c(username)'" =="guillaumedaudin" {
+	global dir ~/dropbox/trade_cost
+}
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox\trade_cost\results\New_Years
+}
+
+
+if "`c(hostname)'" =="lise-HP" {
+	global dir C:\Users\lise\Dropbox\trade_cost\results\New_Years
+}
+
+cd $dir
 
 ** Fait sur le serveur 28/08/2015
 
 set more off
-local mode ves air
+
 local preci 3
 
-foreach x in `mode' {
+foreach x in air ves {
 
 foreach k in `preci' {
 
-forvalues z = 2013(-1)1974 {
+forvalues z = 2005(1)2013 {
 
 get_table `z' sitc2 `preci' `mode'
 
@@ -164,10 +175,8 @@ get_table `z' sitc2 `preci' `mode'
 
 
 * sur le serveur
-cd "C:\Echange\trade_costs\results"
+cd $dir
 
-* sur fixe Dauphine
-*cd "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\resultats\results_v10\vessel_3d"
 
 * ---------------------------------
 *** Pour 3 digits ***
@@ -175,8 +184,9 @@ cd "C:\Echange\trade_costs\results"
 
 local preci 3
 
-foreach x in ves air {
-use results_estim_1974_sitc2_`preci'_`x', clear
+
+foreach x in air ves {
+use results_estim_2005_sitc2_`preci'_`x', clear
 
 
 save table_`preci'_`x', replace
@@ -192,7 +202,7 @@ foreach x in air ves {
 
 foreach k in `preci' {
 
-forvalues z = 1975(1)2013 {
+forvalues z = 2006(1)2013 {
 
 use table_`k'_`x', clear
 append using results_estim_`z'_sitc2_`k'_`x'
