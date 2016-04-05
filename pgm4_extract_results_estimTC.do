@@ -32,7 +32,7 @@ use blouk_`year'_`class'_`preci'_`mode'.dta, clear
 
 
 
-* nb obs = variable nbr_obs
+* nb obs = variable nbr_obs utilisées dans l'estimation
 * nb de pays dans l'estimation
 
 egen _ = group(iso_o)
