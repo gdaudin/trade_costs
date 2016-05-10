@@ -15,22 +15,18 @@ set more off
 set maxvar 32767
 
 
-if "`c(hostname)'" =="MacBook-Pro-Lysandre.local" {
-	global dir ~/dropbox/trade_cost
-}
+if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") global dir ~/dropbox/trade_cost
 
 
-if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost
-}
+
+if ("`c(hostname)'" =="LAB0271A") 	global dir C:\Users\lpatureau\Dropbox\trade_cost
 
 
-if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost
-}
+if ("`c(hostname)'" =="lise-HP") global dir C:\Users\lise\Dropbox\trade_cost
 
-import delimited using "$dir\data\MTC_data.csv", delimiters(",") stringcols(11)
+if ("`c(os)'"=="Windows") import delimited using "$dir\data\MTC_data.csv", delimiters(",") stringcols(11)
 
+if ("`c(os)'"=="MacOSX") import delimited using "$dir/data/MTC_data.csv", delimiters(",") stringcols(11)
 
 
 drop time flags flagcodes transportcostmeasures
@@ -54,7 +50,8 @@ sum tt
 drop tt
 * On n'a plus que du hs6
 
-save "$dir\data\data_mtc", replace
+if ("`c(os)'"=="Windows") save "$dir\data\data_mtc", replace
+if ("`c(os)'"=="MacOSX") save "$dir/data/data_mtc", replace
 
 ***  Convertir en SITC2  *************************************************
 
@@ -62,7 +59,8 @@ save "$dir\data\data_mtc", replace
 
 **** 23/12/2015 : Pb to be solved, pb d'encodage on perd les 0 du coup à la fin trop de variables unmatched
 
-cd "$dir\data"
+if ("`c(os)'"=="Windows") cd "$dir\data"
+if ("`c(os)'"=="MacOSX") cd "$dir/data"
 
 import excel "CN 1988 - HS 1988 - CPA 1996 - SITC Rev 3 (eurostat_ramon)", firstrow allstring clear
 
@@ -148,7 +146,8 @@ drop SITCRev2_3d
 save temp, replace
 
 use data_mtc_avec_conversion, clear
-merge m:1 exp using "$dir\data\temp.dta"
+if ("`c(os)'"=="Windows") merge m:1 exp using "$dir\data\temp.dta"
+if ("`c(os)'"=="MacOSX") merge m:1 exp using "$dir/data/temp.dta"
 drop _merge
 
 save data_mtc_avec_conversion, replace
