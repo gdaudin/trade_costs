@@ -15,9 +15,11 @@ set maxvar 32767
 	 
 ** charger la base de données
 
-global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results
+if ("`c(hostname)'" =="????") global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results
 
-cd $dir
+if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") global dir  "~/Documents/Recherche/Trade Costs/Results"
+
+cd "$dir"
 
 *** Lancer le programme d'estimation de la 2e étape
 
@@ -31,7 +33,7 @@ disp "year = `year'"
 foreach mode in air ves {
 
 
-	use $dir\raw_results_sept15\blouk_`year'_sitc2_`preci'_`mode'.dta, clear
+	use blouk_`year'_sitc2_`preci'_`mode'.dta, clear
 
 	keep product prix_caf prix_fob `mode'_val `mode'_wgt iso_o name terme_iceberg terme_I terme_A coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 	rename `mode'_val val
@@ -91,5 +93,6 @@ save estimTC, replace
 * Sauver sur la dropbox
 use estimTC, clear
 
-save "C:\Users\lpatureau\Dropbox\trade_cost\results\estimTC.dta", replace
+if ("`c(hostname)'" =="????") save "C:\Users\lpatureau\Dropbox\trade_cost\results\estimTC.dta", replace
+if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") save  ~/dropbox/trade_cost/results/estimTC.dta, replace
 
