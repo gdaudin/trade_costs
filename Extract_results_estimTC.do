@@ -10,6 +10,9 @@
 ** 	Septembre 2015 
 ** -------------------------------------------------------------
 
+
+
+
 clear all
 set mem 700m
 *set matsize 8000
@@ -126,8 +129,6 @@ end
 *capture log close
 *log using get_table, replace
 
-*** 3 digits, all years ***
-
 
 
 if "`c(username)'" =="guillaumedaudin" {
@@ -137,6 +138,7 @@ if "`c(username)'" =="guillaumedaudin" {
 
 if "`c(hostname)'" =="LAB0271A" {
 	global dir C:\Users\lpatureau\Dropbox\trade_cost\results\New_Years
+	*global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results
 }
 
 
@@ -146,8 +148,9 @@ if "`c(hostname)'" =="lise-HP" {
 
 cd $dir
 
-** Fait sur le serveur 28/08/2015
 
+*** 3 digits, all years ***
+/*
 set more off
 
 local preci 3
@@ -158,7 +161,7 @@ foreach k in `preci' {
 
 forvalues z = 2005(1)2013 {
 
-get_table `z' sitc2 `preci' `mode'
+get_table `z' sitc2 `preci' `x'
 
 *log close
 
@@ -167,21 +170,40 @@ get_table `z' sitc2 `preci' `mode'
 }
 }
 
+*/
 
+*** 4 digits, new years ***
+set more off
+
+local preci 4
+
+foreach x in air ves {
+
+foreach k in `preci' {
+
+*forvalues z = 2005(1)2013 {
+foreach z in 1974 1977 1981 1985 1989 1993 1997 2001 {
+
+get_table `z' sitc2 `preci' `x'
+
+*log close
+
+}
+
+}
+}
 
 ***************************************
 *** Step 2 - compiler en une même base
 ***************************************
 
-
-* sur le serveur
 cd $dir
 
 
 * ---------------------------------
 *** Pour 3 digits ***
 * ---------------------------------
-
+/*
 local preci 3
 
 
@@ -216,6 +238,60 @@ save table_`k'_`x', replace
 ** Exporter en excel
 
 local preci 3
+
+foreach x in air ves {
+
+foreach k in `preci' {
+
+use table_`k'_`x'
+export excel using table_`k'_`x', replace firstrow(varlabels)
+
+}
+}
+
+
+**
+*/
+
+
+* ---------------------------------
+*** Pour 4 digits, new years ***
+* ---------------------------------
+
+local preci 4
+
+
+foreach x in air ves {
+use results_estim_1974_sitc2_`preci'_`x', clear
+
+
+save table_`preci'_`x', replace
+
+}
+
+** Ajouter ensuite les autres années
+
+set more off
+local preci 4
+
+foreach x in air ves {
+
+foreach k in `preci' {
+
+forvalues z = 1977(4)2001 {
+
+use table_`k'_`x', clear
+append using results_estim_`z'_sitc2_`k'_`x'
+
+save table_`k'_`x', replace
+
+}
+}
+}
+
+** Exporter en excel
+
+local preci 4
 
 foreach x in air ves {
 
