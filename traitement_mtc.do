@@ -245,10 +245,11 @@ br
 
 drop if effet_fixe == .
 
-rename effet_fixe effet_fixe_Vk
-label var effet_fixe_Vk "Indice de poids volumetrique par secteur (SITC Rev 2, 3 d)"
+rename effet_fixe Vk
+replace Vk=exp(Vk)
+label var Vk "Indice de poids volumetrique par secteur (SITC Rev 2, 3 d)"
 
-keep SITCRev2_3d effet_fixe_Vk
+keep SITCRev2_3d Vk
 
 save database_Vk, replace
 
