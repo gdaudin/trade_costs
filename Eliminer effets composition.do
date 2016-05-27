@@ -32,19 +32,17 @@ set maxvar 32767
 
 * On part de la base estim_TC.dta, qui collecte déjà l'essentiel de l'information nécessaire, pour 3 digits
 
-use "$dir\results\estimTC", clear
+if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
+if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
 * Créer la base pour sauver les résultats
 * Et intégrer les valeurs initiales des trade costs (valeur moyenne en 1974)
 
-gen ves_val=.
-replace ves_val = val if mode =="ves"
-
-
-gen air_val=.
-replace air_val = val if mode =="air"
-
-drop val
+*gen ves_val=.
+*replace ves_val = val if mode =="ves"
+*gen air_val=.
+*replace air_val = val if mode =="air"
+*drop val
 
 local mode air ves
 local type_TC iceberg A I
@@ -54,7 +52,7 @@ keep if year == 1974
 foreach z in `mode' {
 foreach x in `type_TC' {
 
-sum terme_`x' [fweight=`z'_val] 
+sum terme_`x' [fweight=val] if mode=="`mode'" 
 generate terme_`x'_`z'_mp = r(mean)
 
 }
@@ -78,7 +76,8 @@ save start_year, replace
 * On enlève 1974, c'est l'année de référence, les EF sont estimés par rapport à cette année là
 
 
-use "$dir\results\estimTC", clear
+if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
+if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
 drop if year == 1974
 keep year
@@ -94,13 +93,15 @@ save database_pureTC, replace
 ** avec i : pays origine, k = product, t = year
 
 
-use "$dir\results\estimTC", clear
+if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
+if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 local mode air ves
 
 foreach z in `mode' {
 
 
-use "$dir\results\estimTC", clear
+if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
+if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
 gen ln_terme_iceberg = ln(terme_iceberg)
 
@@ -165,7 +166,8 @@ local mode air ves
 foreach z in `mode' {
 
 
-use "$dir\results\estimTC", clear
+if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
+if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
 gen ln_terme_I = ln(terme_I)
 
@@ -229,7 +231,8 @@ local mode air ves
 foreach z in `mode' {
 
 
-use "$dir\results\estimTC", clear
+if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
+if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
 * Pour air
 xi: reg terme_A i.year i.product i.iso_o if mode =="`z'", nocons robust 
@@ -310,5 +313,11 @@ gen TC_norm_`x'_`z' = TC_`x'_`z'*exp(effetfixe_`x'_`z')
 drop TC_`x'_`z'
 }
 }
+
+save database_pureTC, replace
+
+erase temp.dta
+erase start_year.dta
+
 
 
