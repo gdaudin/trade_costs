@@ -35,6 +35,8 @@ set maxvar 32767
 if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
 if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
+
+
 * Créer la base pour sauver les résultats
 * Et intégrer les valeurs initiales des trade costs (valeur moyenne en 1974)
 
@@ -52,7 +54,7 @@ keep if year == 1974
 foreach z in `mode' {
 	foreach x in `type_TC' {
 	
-	sum terme_`x' [fweight=val] if mode=="`mode'" 
+	sum terme_`x' [fweight= val] if mode=="`z'" 
 	generate terme_`x'_`z'_mp = r(mean)
 	
 	}
@@ -219,9 +221,9 @@ save database_pureTC, replace
 
 
 *** Step 3 - Estimation sur couts de transport additifs
-*** On prend la variable de cout additif (en % du prix fob) "tel quel
+*** On procède de la même façon que pour les autres
 
-** tikt = EF pays + EFproduit + EFyear + residu
+** ln (1+tikt) = EF pays + EFproduit + EFyear + residu
 
 set more off
 local mode air ves
@@ -295,13 +297,12 @@ rename terme_iceberg_air_mp terme_nlI_air_mp
 rename terme_iceberg_ves_mp terme_nlI_ves_mp
 
 local mode air ves
-local iceberg nlI I
-local add A
+local type_tc nlI I A
 
 
 
 foreach z in `mode' {
-foreach x in `iceberg' {
+foreach x in `type_tc' {
 
 replace terme_`x'_`z'_mp  = terme_`x'_`z'_mp[1] if terme_`x'_`z'_mp ==.
 replace effetfixe_`x'_`z' = 0 if effetfixe_`x'_`z' == .
@@ -311,6 +312,7 @@ replace terme_`x'_`z'_mp = 100*(terme_`x'_`z'_mp*exp(effetfixe_`x'_`z')-1)/(term
 
 }
 
+/*
 foreach x in `add' {
 
 replace terme_`x'_`z'_mp  = terme_`x'_`z'_mp[1] if terme_`x'_`z'_mp ==.
@@ -320,6 +322,7 @@ replace terme_`x'_`z'_mp = 100*(terme_`x'_`z'_mp + effetfixe_`x'_`z')/(terme_`x'
 
 
 }
+*/
 
 }
 
