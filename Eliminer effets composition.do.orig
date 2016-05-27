@@ -317,6 +317,12 @@ replace terme_`x'_`z'_mp = 100*(terme_`x'_`z'_mp + effetfixe_`x'_`z')/(terme_`x'
 
 }
 
+<<<<<<< HEAD
+save database_pureTC, replace
+
+erase temp.dta
+erase start_year.dta
+=======
 }
 
 local mode air ves
@@ -331,6 +337,7 @@ label var terme_`x'_`z'_mp "pure_TC_`x'_`z'"
 export excel using table_extract_effetscomposition, replace firstrow(varlabels)
 
 save database_pureTC, replace
+>>>>>>> ab21794c108df57ddcabfb60192a1895e67e805f
 
 
 
