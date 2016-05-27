@@ -46,7 +46,7 @@ if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
 local mode air ves
 local type_TC iceberg A I
-
+replace terme_A = terme_A+1
 keep if year == 1974
 
 foreach z in `mode' {
@@ -226,13 +226,18 @@ save database_pureTC, replace
 set more off
 local mode air ves
 
+
+
 foreach z in `mode' {
 
 
 if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
 if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
-xi: reg terme_A i.year i.product i.iso_o if mode =="`z'", nocons robust 
+replace terme_A = terme_A +1
+gen ln_terme_A = ln(terme_A)
+
+xi: reg ln_terme_A i.year i.product i.iso_o if mode =="`z'", nocons robust 
 
 
 * Enregistrer les effets fixes temps
