@@ -37,6 +37,10 @@ foreach mode in air ves {
 
 	keep product prix_caf prix_fob `mode'_val `mode'_wgt iso_o name terme_iceberg terme_I terme_A coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode 
 	rename `mode'_val val
+	rename `mode'_wgt wgt
+	label var val "Value"
+	label var wgt "Weight"
+	
 
 keep if mode =="`mode'"
 
