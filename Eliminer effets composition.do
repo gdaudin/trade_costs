@@ -50,24 +50,24 @@ local type_TC iceberg A I
 keep if year == 1974
 
 foreach z in `mode' {
-foreach x in `type_TC' {
-
-sum terme_`x' [fweight=val] if mode=="`mode'" 
-generate terme_`x'_`z'_mp = r(mean)
-
-}
+	foreach x in `type_TC' {
+	
+	sum terme_`x' [fweight=val] if mode=="`mode'" 
+	generate terme_`x'_`z'_mp = r(mean)
+	
+	}
 }
 
 keep year terme_iceberg_air_mp terme_iceberg_ves_mp terme_I_air_mp terme_I_ves_mp terme_A_air_mp terme_A_ves_mp
 keep if _n==1
 
 foreach z in `mode' {
-foreach x in `type_TC' {
-
-
-label var terme_`x'_`z'_mp "Mean value of estimated TC of type `x', 1974, mode `z'"
-
-}
+	foreach x in `type_TC' {
+	
+	
+	label var terme_`x'_`z'_mp "Mean value of estimated TC of type `x', 1974, mode `z'"
+	
+	}
 }
 
 save start_year, replace
@@ -192,12 +192,12 @@ drop if year==1974
 insobs `nbr_year'
 local n 1
 
-foreach i in `liste_year' {
-	*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
-	replace effet_fixe= X[1,`n'] in `n'
-
-	local n=`n'+1
-}
+	foreach i in `liste_year' {
+		*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
+		replace effet_fixe= X[1,`n'] in `n'
+	
+		local n=`n'+1
+	}
 
 
 drop if effet_fixe == .
@@ -232,7 +232,6 @@ foreach z in `mode' {
 if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
 if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
-* Pour air
 xi: reg terme_A i.year i.product i.iso_o if mode =="`z'", nocons robust 
 
 
@@ -254,12 +253,12 @@ drop if year==1974
 insobs `nbr_year'
 local n 1
 
-foreach i in `liste_year' {
-	*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
-	replace effet_fixe= X[1,`n'] in `n'
-
-	local n=`n'+1
-}
+	foreach i in `liste_year' {
+		*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
+		replace effet_fixe= X[1,`n'] in `n'
+	
+		local n=`n'+1
+	}
 
 
 drop if effet_fixe == .
