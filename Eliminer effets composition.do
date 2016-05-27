@@ -133,12 +133,11 @@ foreach i in `liste_year' {
 	local n=`n'+1
 }
 
-br
 
 drop if effet_fixe == .
 
 rename effet_fixe effetfixe_nlI_`z'
-label var effetfixe_nlI_`z' " Pure Iceberg trade cost, estimated alone, `z', 3d"
+label var effetfixe_nlI_`z' "pure_FE_nlI_`z'"
 
 keep year effetfixe_nlI_`z'
 
@@ -198,12 +197,11 @@ foreach i in `liste_year' {
 	local n=`n'+1
 }
 
-br
 
 drop if effet_fixe == .
 
 rename effet_fixe effetfixe_I_`z'
-label var effetfixe_I_`z' " Pure Iceberg trade cost, estimated with additive costs,`z', 3d"
+label var effetfixe_I_`z' "pure_FE_I_`z'"
 
 keep year effetfixe_I_`z'
 
@@ -260,12 +258,11 @@ foreach i in `liste_year' {
 	local n=`n'+1
 }
 
-br
 
 drop if effet_fixe == .
 
 rename effet_fixe effetfixe_A_`z'
-label var effetfixe_A_`z' " Pure Additive trade cost,`z', 3d"
+label var effetfixe_A_`z' "pure_FE_A_`z'"
 
 keep year effetfixe_A_`z'
 
@@ -278,37 +275,60 @@ save database_pureTC, replace
 
 }
 
+
 * Ajouter 1974 et partir d'une valeur 100 en 1974
 
 
 use database_pureTC, clear
 
-keep year
-keep if _n==1
-replace year = 1974
-
-save temp, replace
-
-use database_pureTC, clear
-
-append using temp
+append using start_year
 sort year
 
+rename terme_iceberg_air_mp terme_nlI_air_mp
+rename terme_iceberg_ves_mp terme_nlI_ves_mp
+
 local mode air ves
-local tt nlI A I
+local iceberg nlI I
+local add A
+
+
 
 foreach z in `mode' {
- foreach x in `tt' {
+foreach x in `iceberg' {
 
-gen TC_`x'_`z' = 100
-replace effetfixe_`x'_`z' = 0 if year == 1974
+replace terme_`x'_`z'_mp  = terme_`x'_`z'_mp[1] if terme_`x'_`z'_mp ==.
+replace effetfixe_`x'_`z' = 0 if effetfixe_`x'_`z' == .
 
-*gen TC_norm_`x'_`z' = TC_`x'_`z'*(1+effetfixe_`x'_`z')
+replace terme_`x'_`z'_mp = 100*(terme_`x'_`z'_mp*exp(effetfixe_`x'_`z')-1)/(terme_`x'_`z'_mp-1)
 
-gen TC_norm_`x'_`z' = TC_`x'_`z'*exp(effetfixe_`x'_`z')
 
-drop TC_`x'_`z'
+}
+
+foreach x in `add' {
+
+replace terme_`x'_`z'_mp  = terme_`x'_`z'_mp[1] if terme_`x'_`z'_mp ==.
+replace effetfixe_`x'_`z' = 0 if effetfixe_`x'_`z' == .
+
+replace terme_`x'_`z'_mp = 100*(terme_`x'_`z'_mp + effetfixe_`x'_`z')/(terme_`x'_`z'_mp)
+
+
+}
+
+}
+
+local mode air ves
+local tc_type nlI A I
+
+foreach z in `mode' {
+foreach x in `tc_type' {
+label var terme_`x'_`z'_mp "pure_TC_`x'_`z'"
 }
 }
 
+export excel using table_extract_effetscomposition, replace firstrow(varlabels)
 
+save database_pureTC, replace
+
+
+
+erase start_year.dta
