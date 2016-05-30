@@ -50,11 +50,19 @@ foreach year of num 2005/2013 {
 			
 			foreach term in terme_A terme_I terme_iceberg { 
 			
-				if "`term'"!="terme_A" replace ln_TC_ik = ln(`term'-1)
-				if "`term'"=="terme_A" replace ln_TC_ik = ln(`term')
+
+
 	
 			
 				preserve
+				
+				if "`term'"!="terme_A" replace ln_TC_ik = ln(`term'-1)
+				if "`term'"=="terme_A" replace ln_TC_ik = ln(`term')
+				
+				egen c_95_`term' = pctile(`term'),p(95)
+				drop if `term' > c_95_`term' 
+
+				
 				drop if expl_ins==. | expl_freight==. | expl_costs==.
 				keep if year==`year'
 				keep if mode=="`mode'"
