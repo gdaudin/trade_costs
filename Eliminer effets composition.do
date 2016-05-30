@@ -221,9 +221,18 @@ save database_pureTC, replace
 
 
 *** Step 3 - Estimation sur couts de transport additifs
-*** On procède de la même façon que pour les autres
+*** On NE PEUT PAS PROCEDER de la même façon que pour les autres
 
-** ln (1+tikt) = EF pays + EFproduit + EFyear + residu
+** On se dit que les effets fixes temps sont multiplicatives des deux autres composantes
+** (les couts additifs augmentent de 30% d'un an sur l'autre)
+** D'où
+** ln (tikt) = ln(ti+tk) + ln (tt)
+
+** Idée pour rester en linéaire
+** ln (tikt) = ln(tik) + ln (tt)
+
+/* TO BE DONE */
+
 
 set more off
 local mode air ves
@@ -239,7 +248,7 @@ if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 replace terme_A = terme_A +1
 gen ln_terme_A = ln(terme_A)
 
-xi: reg ln_terme_A i.year i.product i.iso_o if mode =="`z'", nocons robust 
+xi: reg ln_terme_A i.year i.product*i.iso_o if mode =="`z'", nocons robust 
 
 
 * Enregistrer les effets fixes temps
@@ -296,6 +305,8 @@ sort year
 rename terme_iceberg_air_mp terme_nlI_air_mp
 rename terme_iceberg_ves_mp terme_nlI_ves_mp
 
+
+** Pour les termes en multiplicatifs
 local mode air ves
 local type_tc nlI I A
 
@@ -304,30 +315,28 @@ local type_tc nlI I A
 foreach z in `mode' {
 foreach x in `type_tc' {
 
-replace terme_`x'_`z'_mp  = terme_`x'_`z'_mp[1] if terme_`x'_`z'_mp ==.
+
+
+
+generate terme_`x'_`z'_74  = terme_`x'_`z'_mp[1]
+
+
 replace effetfixe_`x'_`z' = 0 if effetfixe_`x'_`z' == .
 
-replace terme_`x'_`z'_mp = 100*(terme_`x'_`z'_mp*exp(effetfixe_`x'_`z')-1)/(terme_`x'_`z'_mp-1)
+replace terme_`x'_`z'_mp = 100*(terme_`x'_`z'_74*exp(effetfixe_`x'_`z')-1)/(terme_`x'_`z'_74-1)
+
+}
 
 
 }
 
-/*
-foreach x in `add' {
+** TO BE DONE SUR COUTS ADDITIFS **
 
-replace terme_`x'_`z'_mp  = terme_`x'_`z'_mp[1] if terme_`x'_`z'_mp ==.
-replace effetfixe_`x'_`z' = 0 if effetfixe_`x'_`z' == .
+** Last step : export to excel 
 
-replace terme_`x'_`z'_mp = 100*(terme_`x'_`z'_mp + effetfixe_`x'_`z')/(terme_`x'_`z'_mp)
-
-
-}
-*/
-
-}
 
 local mode air ves
-local tc_type nlI A I
+local tc_type nlI I /* A */
 
 foreach z in `mode' {
 foreach x in `tc_type' {
@@ -339,6 +348,7 @@ export excel using table_extract_effetscomposition, replace firstrow(varlabels)
 
 save database_pureTC, replace
 
+*/
 
 
 erase start_year.dta
