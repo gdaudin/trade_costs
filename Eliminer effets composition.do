@@ -4,6 +4,67 @@
 *** des coûts de transport estimés
 *** de manière à récupérer l'évolution "pure" des coûts de transport, via les effets fixes pays
 
+version 14.1
+
+clear all
+*set mem 800m
+set matsize 8000
+set more off
+set maxvar 32767
+
+
+
+
+******************************************************************
+*** FONCTION ESTIMATION NON-LINEAIRE pour ADDITIFS ****
+******************************************************************
+
+capture program drop nldeter_couts_add
+program nldeter_couts_add
+	version 14.1
+	summarize group_iso_o, meanonly	
+	local nbr_iso_o=r(max)
+	summarize group_prod, meanonly	
+	local nbr_prod=r(max)
+	summarize year, meanonly
+	local nbr_year=r(max)-r(min)+1
+	local nbr_var = `nbr_iso_o'+`nbr_prod'+`nbr_year'+1
+		
+	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
+
+	
+	capture drop terme_A
+	generate double terme_A=0
+	local ln_terme_A : word 1 of `varlist'
+		
+
+**Ici, on fait les effets fixes (à la fois dans le terme additif et le terme multiplicatif)
+	
+	local n 1
+	foreach type_FE in iso_o prod year {
+		foreach num_FE of num 1/`nbr_`type_FE'' {
+*			if "`p'"!="iso_o" | `num_FE'!=1 {
+				tempname feA_`type_FE'_`num_FE' 
+
+
+				scalar `feA_`type_FE'_`num_FE'' =`at'[1,`n']
+
+				if ("`type_FE'"!="year") replace terme_A = terme_A + (`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE')
+				if ("`type_FE'"=="year") replace terme_A = terme_A * (exp(`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE'))
+				local n = `n'+1
+*			}
+		}
+	}
+
+	
+	replace `ln_terme_A' = ln(terme_A) `if'
+
+	end
+**********************************************************************
+************** FIN FONCTION
+**********************************************************************	
+
+
 
 
 if "`c(username)'" =="guillaumedaudin" {
@@ -24,11 +85,6 @@ cd $dir
 
 * En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
 
-clear all
-*set mem 800m
-set matsize 8000
-set more off
-set maxvar 32767
 
 * On part de la base estim_TC.dta, qui collecte déjà l'essentiel de l'information nécessaire, pour 3 digits
 
@@ -78,20 +134,47 @@ save database_pureTC, replace
 
 
 
-*** Step 1 et 2 - Estimation sur couts de transport estimés en iceberg/terme_I seulement
-*** On précise l'équation en log
 
-** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
-** avec i : pays origine, k = product, t = year
 
-foreach type_TC in iceberg I {
+
+foreach mode in air /*ves*/ {
 
 	
-	foreach mode in air ves {
+	
+	if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
+	if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
+	
+	keep if mode=="`mode'"
 	
 	
-		if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
-		if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
+	keep if year < 1980
+	local limit 150
+	bys iso_o : drop if _N<=`limit'
+	bys product : drop if _N<=`limit'
+	bys iso_o : drop if _N<=`limit'
+	bys product : drop if _N<=`limit'
+	bys iso_o : drop if _N<=`limit'
+	bys product : drop if _N<=`limit'
+	bys iso_o : drop if _N<=`limit'
+	bys product : drop if _N<=`limit'
+	bys iso_o : drop if _N<=`limit'
+	bys product : drop if _N<=`limit'
+	
+	
+
+
+
+
+
+/*
+	foreach type_TC in iceberg I {
+		*** Step 1 et 2 - Estimation sur couts de transport estimés en iceberg/terme_I seulement
+		*** On précise l'équation en log
+
+		** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
+		** avec i : pays origine, k = product, t = year
+		preserve
+	
 		
 		gen ln_terme_`type_TC' = ln(terme_`type_TC')
 		
@@ -138,11 +221,12 @@ foreach type_TC in iceberg I {
 		drop _merge
 		
 		save database_pureTC, replace
+		restore
 	
 	}
 
-}
 
+*/
 
 
 *** Step 2 - Estimation sur couts de transport additifs
@@ -157,29 +241,111 @@ foreach type_TC in iceberg I {
 ** ln (tikt) = ln(tik) + ln (tt)
 
 
-
-
-set more off
-local mode air ves
-
-
-
-foreach z in `mode' {
-
 	
-	if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
-	if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
-	
+	drop if terme_A==0 | terme_A==.
 	replace terme_A = terme_A +1
 	gen ln_terme_A = ln(terme_A)
 	
-	xi: reg ln_terme_A i.year i.product i.iso_o if mode =="`z'", nocons robust 
+	bys iso_o : drop if _N<=15
+	bys product : drop if _N<=15
 	
+	
+	************************ Importé de Estim_value_TC
+		******************************************Régression
+	
+
+	
+	*Pour nombre de product
+	quietly egen group_prod=group(product)
+	quietly summarize group_prod
+	local nbr_prod=r(max)
+	quietly levelsof product, local (liste_prod) clean
+	quietly tabulate product, gen (prod_)
+		
+	*Pour nombre d'iso_o
+	quietly egen group_iso_o=group(iso_o)
+	quietly summarize group_iso_o	
+	local nbr_iso_o=r(max)
+	quietly levelsof iso_o, local(liste_iso_o) clean
+	quietly tabulate iso_o, gen(iso_o_)
+	
+	*Pour nombre d'années
+	quietly egen group_year=group(year)
+	quietly summarize group_year	
+	local nbr_year=r(max)-r(min)+1
+	quietly levelsof year, local(liste_year) clean
+	quietly tabulate year, gen(year_)
+	
+	
+	
+	
+	**Cette boucle crée les variables, les paramètres et leurs valeurs initales	
+	foreach type_FE in  iso_o prod year {
+	
+		local liste_variables_`type_FE' 
+		forvalue num_FE =  1/`nbr_`type_FE'' {
+*			if "`type_FE'" !="prod" | `num_FE' !=1 {
+				local liste_variables_`type_FE'  `liste_variables_`type_FE'' `type_FE'_`num_FE'
+*			}
+		}
+	
+	
+	***REGARDER NOMBRE DE VARIABLES
+	
+		local liste_parametres_`type_FE'
+			forvalue num_FE =  1/`nbr_`type_FE'' {
+*				if  "`type_FE'" !="prod" | `num_FE'!=1 {			
+					local liste_parametres_`type_FE'  `liste_parametres_`type_FE'' fe_`type_FE'_`num_FE'
+*				}
+			}
+	
+	
+		
+		
+		local initial_`type_FE'
+		forvalue num_FE =  1/`nbr_`type_FE'' {
+*			if  "`type_FE'" !="prod" |`num_FE'!=1 {
+						if ("`type_FE'" !="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 0.02
+						if ("`type_FE'" =="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 1.02
+*			}
+				
+		}		
+	}
+	
+	
+		
+		
+	
+	
+	
+	local liste_variables `liste_variables_year' `liste_variables_iso_o' `liste_variables_prod'  
+	
+	** pour estimation NL both A & I
+	local liste_parametres `liste_parametres_year' `liste_parametres_iso_o' `liste_parametres_prod'  
+	local initial `initial_year' `initial_iso_o' `initial_prod'  
+	
+*	display "Liste des variables :" "`liste_variables'"
+*	display "Liste des paramètres :" "`liste_parametres'"
+*	display "Initial :" "`initial'"
+
+	display "Nombre des variables :" wordcount("`liste_variables'")
+	display "Liste des paramètres :" wordcount("`liste_parametres'")
+	display "Initial :" wordcount("`initial'")
+	
+	timer on 1
+	
+	
+	
+	
+	nl deter_couts_add @ ln_terme_A `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	
+	
+*	blouk
 	
 	* Enregistrer les effets fixes temps
 	
 	su year, meanonly	
-	local nbr_year=r(max)
+	local nbr_year=r(max)-r(min)+1
 	quietly levelsof year, local (liste_year) clean
 	
 	* matrice des coefficients estimés
@@ -189,30 +355,30 @@ foreach z in `mode' {
 	 
 	keep year effet_fixe
 	bys year : keep if _n==1
-	drop if year==1974
+*	drop if year==1974
 	
-	insobs `nbr_year'
+*	insobs `nbr_year'
 	local n 1
 	
 		foreach i in `liste_year' {
-			*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
 			replace effet_fixe= X[1,`n'] in `n'
-		
 			local n=`n'+1
 		}
 	
 	
 	drop if effet_fixe == .
 	
-	rename effet_fixe effetfixe_A_`z'
-	label var effetfixe_A_`z' "pure_FE_A_`z'"
+	rename effet_fixe effetfixe_A_`mode'
+	label var effetfixe_A_`mode' "pure_FE_A_`mode'"
 	
-	keep year effetfixe_A_`z'
+	keep year effetfixe_A_`mode'
 	
 	sort year
 	merge 1:1 year using database_pureTC 
 	keep if _merge==3
 	drop _merge
+	
+	list
 	
 	save database_pureTC, replace
 
@@ -221,7 +387,7 @@ foreach z in `mode' {
 
 * Ajouter 1974 et partir d'une valeur 100 en 1974
 *Puis construire le fichier de résultat
-
+blouk
 
 use database_pureTC, clear
 
