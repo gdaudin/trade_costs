@@ -28,7 +28,7 @@ program nldeter_couts_add
 	local nbr_prod=r(max)
 	summarize year, meanonly
 	local nbr_year=r(max)-r(min)+1
-	local nbr_var = `nbr_iso_o'+`nbr_prod'+`nbr_year'+1
+	local nbr_var = `nbr_iso_o'+`nbr_prod'+`nbr_year'+1-1
 		
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 
@@ -43,7 +43,7 @@ program nldeter_couts_add
 	local n 1
 	foreach type_FE in iso_o prod year {
 		foreach num_FE of num 1/`nbr_`type_FE'' {
-*			if "`p'"!="iso_o" | `num_FE'!=1 {
+			if "`type_FE'"!="year" | `num_FE'!=1 {
 				tempname feA_`type_FE'_`num_FE' 
 
 
@@ -52,7 +52,7 @@ program nldeter_couts_add
 				if ("`type_FE'"!="year") replace terme_A = terme_A + (`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE')
 				if ("`type_FE'"=="year") replace terme_A = terme_A * (exp(`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE'))
 				local n = `n'+1
-*			}
+			}
 		}
 	}
 
@@ -284,9 +284,9 @@ foreach mode in air /*ves*/ {
 	
 		local liste_variables_`type_FE' 
 		forvalue num_FE =  1/`nbr_`type_FE'' {
-*			if "`type_FE'" !="prod" | `num_FE' !=1 {
+			if "`type_FE'" !="year" | `num_FE' !=1 {
 				local liste_variables_`type_FE'  `liste_variables_`type_FE'' `type_FE'_`num_FE'
-*			}
+			}
 		}
 	
 	
@@ -294,9 +294,9 @@ foreach mode in air /*ves*/ {
 	
 		local liste_parametres_`type_FE'
 			forvalue num_FE =  1/`nbr_`type_FE'' {
-*				if  "`type_FE'" !="prod" | `num_FE'!=1 {			
+				if  "`type_FE'" !="year" | `num_FE'!=1 {			
 					local liste_parametres_`type_FE'  `liste_parametres_`type_FE'' fe_`type_FE'_`num_FE'
-*				}
+				}
 			}
 	
 	
@@ -304,10 +304,10 @@ foreach mode in air /*ves*/ {
 		
 		local initial_`type_FE'
 		forvalue num_FE =  1/`nbr_`type_FE'' {
-*			if  "`type_FE'" !="prod" |`num_FE'!=1 {
+			if  "`type_FE'" !="year" |`num_FE'!=1 {
 						if ("`type_FE'" !="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 0.02
 						if ("`type_FE'" =="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 1.02
-*			}
+			}
 				
 		}		
 	}
@@ -344,9 +344,6 @@ foreach mode in air /*ves*/ {
 	
 	* Enregistrer les effets fixes temps
 	
-	su year, meanonly	
-	local nbr_year=r(max)-r(min)+1
-	quietly levelsof year, local (liste_year) clean
 	
 	* matrice des coefficients estimés
 	capture	matrix X= e(b)
@@ -355,7 +352,10 @@ foreach mode in air /*ves*/ {
 	 
 	keep year effet_fixe
 	bys year : keep if _n==1
-*	drop if year==1974
+	drop if year==1974
+	quietly levelsof year, local (liste_year) clean
+	
+	
 	
 *	insobs `nbr_year'
 	local n 1
