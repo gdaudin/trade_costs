@@ -28,7 +28,7 @@ program nldeter_couts_add
 	local nbr_prod=r(max)
 	summarize year, meanonly
 	local nbr_year=r(max)-r(min)+1
-	local nbr_var = `nbr_iso_o'+`nbr_prod'+`nbr_year'+1-1
+	local nbr_var = `nbr_iso_o'+`nbr_prod'+`nbr_year'+1-2
 		
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 
@@ -43,7 +43,7 @@ program nldeter_couts_add
 	local n 1
 	foreach type_FE in iso_o prod year {
 		foreach num_FE of num 1/`nbr_`type_FE'' {
-			if "`type_FE'"!="year" | `num_FE'!=1 {
+			if "`type_FE'"=="prod" | `num_FE'!=1 {
 				tempname feA_`type_FE'_`num_FE' 
 
 
@@ -137,7 +137,7 @@ save database_pureTC, replace
 
 
 
-foreach mode in air /*ves*/ {
+foreach mode in air ves {
 
 	
 	
@@ -166,7 +166,7 @@ foreach mode in air /*ves*/ {
 
 
 
-/*
+
 	foreach type_TC in iceberg I {
 		*** Step 1 et 2 - Estimation sur couts de transport estimés en iceberg/terme_I seulement
 		*** On précise l'équation en log
@@ -226,7 +226,7 @@ foreach mode in air /*ves*/ {
 	}
 
 
-*/
+
 
 
 *** Step 2 - Estimation sur couts de transport additifs
@@ -245,10 +245,6 @@ foreach mode in air /*ves*/ {
 	drop if terme_A==0 | terme_A==.
 	replace terme_A = terme_A +1
 	gen ln_terme_A = ln(terme_A)
-	
-	bys iso_o : drop if _N<=15
-	bys product : drop if _N<=15
-	
 	
 	************************ Importé de Estim_value_TC
 		******************************************Régression
@@ -284,7 +280,7 @@ foreach mode in air /*ves*/ {
 	
 		local liste_variables_`type_FE' 
 		forvalue num_FE =  1/`nbr_`type_FE'' {
-			if "`type_FE'" !="year" | `num_FE' !=1 {
+			if "`type_FE'" =="prod" | `num_FE' !=1 {
 				local liste_variables_`type_FE'  `liste_variables_`type_FE'' `type_FE'_`num_FE'
 			}
 		}
@@ -294,7 +290,7 @@ foreach mode in air /*ves*/ {
 	
 		local liste_parametres_`type_FE'
 			forvalue num_FE =  1/`nbr_`type_FE'' {
-				if  "`type_FE'" !="year" | `num_FE'!=1 {			
+				if  "`type_FE'" =="prod" | `num_FE'!=1 {			
 					local liste_parametres_`type_FE'  `liste_parametres_`type_FE'' fe_`type_FE'_`num_FE'
 				}
 			}
@@ -304,7 +300,7 @@ foreach mode in air /*ves*/ {
 		
 		local initial_`type_FE'
 		forvalue num_FE =  1/`nbr_`type_FE'' {
-			if  "`type_FE'" !="year" |`num_FE'!=1 {
+			if  "`type_FE'" =="prod" |`num_FE'!=1 {
 						if ("`type_FE'" !="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 0.02
 						if ("`type_FE'" =="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 1.02
 			}
@@ -387,15 +383,11 @@ foreach mode in air /*ves*/ {
 
 * Ajouter 1974 et partir d'une valeur 100 en 1974
 *Puis construire le fichier de résultat
-blouk
 
 use database_pureTC, clear
 
 append using start_year
 sort year
-local mode air ves
-local type_tc nlI I A
-
 
 
 foreach mode in air ves {
