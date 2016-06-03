@@ -148,7 +148,7 @@ foreach mode in air ves {
 	
 	
 *	keep if year < 1980
-	local limit 150
+	local limit 15
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
 	bys iso_o : drop if _N<=`limit'
@@ -333,7 +333,7 @@ foreach mode in air ves {
 	
 	
 	
-	nl deter_couts_add @ ln_terme_A `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	
 	
 *	blouk
