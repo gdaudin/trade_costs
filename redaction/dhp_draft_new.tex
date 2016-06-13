@@ -1,0 +1,749 @@
+\documentclass[a4paper,11pt]{article}
+%\usepackage[pdftex]{graphicx}
+\usepackage{amsmath}
+%\usepackage[latin1]{inputenc}
+%\usepackage{hyperref}
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{lscape}
+\usepackage[round]{natbib}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{vmargin}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage[tableposition=top]{caption}
+%\usepackage[nolists, figuresfirst]{endfloat}
+%\usepackage{sidefloat}
+
+\setlength{\abovecaptionskip}{-8pt}
+
+%\usepackage[usenames]{color}
+%\definecolor{grey}{rgb}{0.35,0.35,0.35}
+%\definecolor{webdarkblue}{rgb}{0,0,0.4}
+%\definecolor{orange}{rgb}{0.7,0.2,0.05}
+
+
+%\usepackage[pdfcreator={PDFLaTeX}, pdfproducer={PDFLaTeX}, pdfstartview=FitH, pdfpagemode=UseOutlines, pagebackref=false, colorlinks={true},
+%citecolor={webdarkblue}, linkcolor={webdarkblue},
+%urlcolor={webdarkblue}]{hyperref}
+
+
+
+%\addtolength{\oddsidemargin}{-0.4in}
+%\addtolength{\evensidemargin}{-0.4in}
+%\addtolength{\textwidth}{0.8in} \addtolength{\topmargin}{-0.85in}
+%\addtolength{\textheight}{1.7in}
+\renewcommand{\baselinestretch}{1.2}
+
+
+
+
+
+\setmarginsrb{2cm}{2cm}{2cm}{2cm}{0,5cm}{0,5cm}{0,3cm}{0,5cm}
+
+
+
+% commands
+
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bd}{\begin{description}}
+\newcommand{\ed}{\end{description}}
+\newcommand{\beqa}{\begin{eqnarray}}
+\newcommand{\eeqa}{\end{eqnarray}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\bigskip}
+\newcommand{\A}{$^a$}
+\newcommand{\B}{$^b$}
+\newcommand{\C}{$^c$}
+\begin{document}
+
+
+
+\date{\today}
+\title{\textsc{Beyond the Iceberg Hypothesis: \\Opening the Black Box of Transport Costs}} %\thanks{We are especially grateful to XXX. Part of this research was funded by the French Agence Nationale de la Recherche (ANR), under grant ANR-11-JSH1 002 01. Finally, any remaining errors are ours.}}}
+%We also thank participants at the EEA 27\textsuperscript{th} Congress (Oslo), ETSG 13\textsuperscript{th} meetings (Copenhagen), INFER Workshop (Orleans), 45\textsuperscript{th} Congress of the Canadian Economic Association (Ottawa), IAW Workshop (Tubingen), and seminars at WTO, Strathclyde University, OFCE and EQUIPPE-University of Lille.
+\author{Guillaume \textsc{Daudin}\thanks{%
+Universit\'{e} Paris Dauphine (DIAL - UMR 225 \& LEDa), Chercheur associ\'{e} - Sciences Po (OFCE)}  \qquad J\'{e}r\^{o}me \textsc{H\'{e}ricourt} \thanks{Universit\'{e} de Lille - LEM-CNRS (UMR 9221), Universit\'{e} de Bretagne Occidentale-ICI (EA 2652) and CEPII}\qquad Lise \textsc{Patureau}\thanks{Universit\'{e} Paris Dauphine (DIAL - UMR 225 \& LEDa)} } \maketitle
+
+
+\bigskip
+
+\begin{abstract}
+
+
+\begin{spacing}{1.2}
+
+{\normalsize XXXX}
+
+{\normalsize \bigskip }
+
+\end{spacing}
+\end{abstract}
+
+\thispagestyle{empty} \pagestyle{plain} \setcounter{page}{1}
+
+
+
+{\normalsize JEL classification: F14, N70, R40\newline
+Keywords: Transport costs estimates, transport costs determinants, non-linear econometrics, period 1974-2013, additive transport costs }
+
+{\normalsize \vspace{0cm} }
+
+{\normalsize \titlepage }
+
+{\normalsize \newpage }
+
+%\begin{spacing}{1.5}
+
+\section{Introduction}
+
+
+\noindent Trade costs remain central in international economic analysis. Defined as the costs associated with the exchange of goods across national borders, they are a major obstacle to international economic integration. In addition, they might be the key to the explanation of major puzzles in international macroeconomics (\citealp{rogoff}). Historical perspective show that indeed, trade costs variations are a major determinant of the level of trade flows. According to the estimates by \citet{Jacks08}, trade cost declines explain around 55 percent of the pre World War I trade boom and 33 percent of the post-World War II trade boom, while the abrupt rise in trade costs explains the inter war trade collapse. After 1950, average trade costs fell by 16\%. Based on panel data, \citet{novy13} finds  that U.S. trade costs with major trading partners declined on average by about 40 percent between 1970 and 2000.
+
+Trade costs are usually split into transaction costs (information costs, contract enforcement costs, costs associated with the use of different currencies...), policy costs (tariff  and non-tariff-costs), time costs (time to ship goods) and transport costs \emph{per se}. Many believe that the latter have dramatically decreased with technological advance in transportation, infrastructure development and new communication technologies (see \citealp{Lafourcade_Thisse}). \citet{Glaeser04} find that, over the twentieth century, the costs of moving goods have declined by over 90\% in real terms. However, \citet{hummels2007} shows that the bulk of price declines in transportation comes from air shipping, where average cost per ton-kilometer shipped dropped by 92\% between 1955 and 2004; concerning ocean shipping, which represents the major part of world trade value, decline in trade prices are much less obvious, even if the rise in containerization lowered shipping costs from 3 to 13\%. Studies overviewed by \citet{Behar_Venables} are consistent with those results: the fall in measured transport costs has been relatively small. The importance of fuel costs and technical progress (which improved speed and reliability rather than decreased costs) in transport explain that result.
+
+Despite the decrease in distance-related costs\footnote{\citet{Behar_Venables} suggest freight costs account for two thirds of the effect of distance, the remaining third ebmoyding more or less the effect of time}, several papers (mostly based on empirical estimates of the gravity equation) in the last decade have shown that distance remained a major obstacle to trade (e.g. \citealp{Head_Mayer04} and \citealp{Disdier_Head08}). \citet{anderson_wincoop_jel} estimate that average trade costs for industrialized countries put up to 170\% markups over production costs, divided into 55\% distribution costs and 74\% international costs (1.7 $=$ 1.55 $\times$ 1.74 - 1). Again, the latter comprises 44\% border-related trade barriers and 21\% transportation costs. That means that transportation costs are higher than each component of border costs taken separately (namely, 8\% for tariff and non-tariff costs, 7\% for language differences, 14\% for for currency differences and 9\% for other costs).\footnote{1.44 $=$ 1.08 $\times$ 1.07 $\times$ 1.14 $\times$  1.09)}. Therefore, the share of transport costs in the consumer price of manufactured goods remains high (\citealp{Lafourcade_Thisse}). Besides, \citet{combes_lafourcade} emphasize that the figures provided by \citet{anderson_wincoop_jel} should be considered as a a downward benchmark, and could be higher in developing economies. Despite technical progress and infrastructure development, transport costs remain large and deserve attention. In that respect, \citet{Behar_Venables} support that the elasticity of trade with respect to freight costs is around -3, which remains a large number.
+
+Following \citet{samuelson1954}, standard models of international trade have usually relied on the iceberg cost hypothesis, implicitly reducing trade costs to their transport part, and modelling the latter as an \emph{ad valorem} tax equivalent (ie, as a constant percentage of the producer price per unit traded). This implies that more expensive goods are costlier to trade. However, many common empirical facts support the existence of additive costs: pricing structure in shipping, additive tariffs, distribution costs... often exhibit (at least partly) an additive structure (see \citealp{Irrazabal_2015}). The additive versus iceberg trade costs is not a new debate in the international trade literature. The famous Alchian and Allen conjecture (\citealp{alchian}), which points out that the relative price of two varieties of some good will depend on the level of trade costs, does rely on the existence of additive costs: the demand for more expensive/higher quality product goods should increase with trade cost (``shipping the good apples out''). \citet{martin2012} gives a strong empirical support to this conjecture: based on a very disaggregated firm-product-level database of French exporters, he finds that firms charge higher fob unit values on exports to more remote countries, whereas the iceberg hypothesis would imply the opposite. \citet{hummels_skiba} also find some strong evidence in favor of the Alchian-Allen conjecture: the elasticity of freight rates with respect to price is estimated to be well below unity, in contradiction with the iceberg assumption. Also, their estimates implied that doubling freight costs increases average fob export prices by 80-141 percent, consistent with high quality goods being sold in markets with high freight costs. Conversely, \citet{Lashka15} finds strong empirical support for the iceberg hypothesis when considering the data at a sufficiently disaggregated level. Based on US imports data, he finds that a 10\% increase in the price of an item increases the shipping cost by 9.5\%. The additive structure of trade costs emerges only when weight is forced to be independent of price. Besides, \citet{Lashka15} supports that higher-priced, still exported to faraway markets, varieties are heavier and involve proportionally higher shipping costs, the latter increasing the relative demand for high-markup varieties. Markups would therefore be the driving force for explaining the ``shipping the good apples out'' effect in the presence of \emph{ad-valorem} trade costs.
+
+A correct measure of transport costs is also important for understanding several key features of international trade. For example, the existence of additive costs may explain a large number of zeros in bilateral trade flows, and more generally, the granularity of trade flows. Relying on Spanish and US transaction-level trade data, \citet{Hornok14} find that additive trade costs of are associated with less frequent and larger shipments, i.e. more ``lumpiness'', in international trade; in other words, exporters wait to fill completely a container before sending it abroad, to decrease as much as possible the number of shipments. Besides, several recent papers show that the existence of additive trade costs has important non trivial effects when assessing the welfare effects of trade liberalization. \citealp{sorensen2014} extends \citet{melitz}'s seminal model of international trade by including additive (per-unit) trade costs, in addition to iceberg/multiplicative costs. A key analytical result is that the welfare gain from a reduction in trade barriers is higher for a decrease in additive costs than a decrease in multiplicative costs. The difference arises from dissimilar adjustments at the extensive margin - fewer firms enter into the export market following a reduction in additive costs. Calibrating on Norwegian firm-level data for 2004, \citet{Irrazabal_2015} find that an additive import tariff reduces welfare and trade by more than an identically-sized multiplicative tariff.
+
+
+Our purpose in this paper is to provide results on the size of transportation costs over time, explicitly distinguishing between multiplicative and additive parts. Our paper stands at the crossroad of these two strands of the literature, the first one dealing with the dynamics of transport, and more generally trade costs over time, the second one focusing on the measurement and nature of the latter. More precisely, we provide estimates of the relative importance of additive and multiplicative transport costs over a large time dimension - several decades. To do so, we update the detailed US customs, sector-level data from the US Imports of Merchandise used by \citet{hummels2007}. Therefore, our period of study runs from 1974 to 2013. Closely related to this paper is the work by \citet{Irrazabal_2015}, who develop a structural framework for inferring additive trade costs from firm-level trade data. Based on Norwegian firm-level data, their results suggest that additive costs are on average 14 percent, relatively to the median price, and that they are strongly correlated with standard proxies for trade costs (like e. g., distance). However, while our data requires that we focus only on transportation costs, our approach departs from theirs in several key aspects.
+
+First, our theoretically agnostic approach aims at letting the data speak, and provides a fairly simple framework for assessing \emph{both} multiplicative and additive parts of transportation costs, which may prove to represent a non-negligible advantage for calibrating related models; to our best knowledge, our paper is the first to provide such an extensive quantitative assessment of the shares of multiplicative and additive costs in total transport costs. Second, we provide, through standard measures of ``goodness-of-fit'', an empirical assessment of what standard international trade models lose by skipping additive transport costs. Third, the time dimension of our data allows us to characterize the evolution of transportation costs, and more precisely the dynamics of the relative share of each specific (multiplicative and additive) cost over a forty years time span; to our knowledge, no firm-level database is able to provide such a time coverage. Fourth, we are also able to discriminate our results by transport mode (air and vessel).
+
+Finally, our analysis is also indirectly related to a large strand of the international trade literature assessing the impact of trade costs on international exchanges. Following \citet{anderson_wincoop} and \citet{anderson_wincoop_jel}, there has been a huge bunch of articles relying on gravity equations to infer indirectly trade costs as tariff equivalents, or losses related to various kinds of trade barriers - many of these works are surveyed in \citet{anderson_wincoop}; among the various subsequent works, see in particular \citet{anderson_yotov}, \citet{novy13} or \citealp{chen_novy}). However, our purpose in the present paper is different. We first infer directly transport costs from price data, discriminating between multiplicative and additive parts. In a second step, following an approach similar to \citet{Behar_Venables}, we relate the previous measures to traditional determinants of transport costs (like e. g., distance), in order to understand how differently the latter impact the multiplicative and additive transport costs.
+
+%time as a trade barrier, on risque d'avoir des problèmes avec ça... \citet{Lafourcade_Thisse},
+
+
+XXX Here a summary of our results and contribution XXX
+
+The next section presents the data and our fundamental equation. Section 3 reports our baseline estimates for multiplicative and additive measures of transport costs across time, as well as a number of robustness checks. Section 4 discusses the results of estimates relating traditional determinants of transport costs to the previous measures, while Section 5 XXX has yet to be discussed!!! XXX. The last section concludes.
+
+
+%\noindent More generally,  Among the closest to our own work, Eaton et al. (2002) develop a Ricardian general equilibrium trade model to estimate parameters relating to absolute advantage, to comparative advantage, and to geographic barriers. Anderson and Wincoop (2003) elaborate a theory-founded gravity equation to assess the cost of trade frictions, and use it to provide a direct measure of the trade losses due to national borders (between 20 and 50 percent).
+
+
+\section{Data Sources and Empirical Methodology}
+
+\subsection{A measure of Transportation Costs}
+
+\noindent
+
+Our strategy for representing transportation costs is relatively standard, and consists in exploiting the difference between commodity-level export and prices. We first use values, quantities and freight costs to recover free-on-board (FOB) and cost-insurance-fret (CIF) prices, by goods, origins and transportation mode. More precisely, the (unit) FOB price is computed as the total customs value divided by the shipping weight; in other words, it is the price for the good net of transportation costs. The CIF price is then computed as the sum of the customs value and freight charges, once again divided by the shipping weight. Our dependant variable is finally computed as the ratio of the CIF price divided by the FOB price. Strictly higher than 1, the variable provides therefore with a measure of transport costs as a proportion of the good's price, an \emph{ad valorem} equivalent.
+
+To have the import price of the good (CIF price), next to the export price (FOB price) is highly valuable. Indeed, this allows us thus to estimate both the \textit{levels} of the iceberg trade costs and of the additive trade costs. This differentiates us from \citet{Irrazabal_2015}, that can only estimate the ratio of additive costs as a share of the tola price. However, note that this measure based on \emph{freight} cost ignores another dimension of transportation costs related to the time value of goods in transit. According to \citet{anderson_wincoop_jel}), the 21\% markup over production costs coming from transport costs includes both directly measured freight costs and 9\% tax equivalent of the time value of goods in transit.
+
+\subsection{Database}
+
+
+%laius sur pourquoi pas de donnes de firmes (triop comutational), ni comtrade (trop mauvais, citer RIE) XXX
+
+\noindent Even if the data of transportation costs we rely could be available at the firm-level, the use of a nonlinear estimator (see below) triggers computational limitations that do not make them a likely option. A product-level bilateral database of CIF-FOB ratios is theoretically possible, and could be built from the well-known UN's COMTRADE data. Unfortunately, \citet{hummels_rie} show that issues inherent to the construction of data (especially the use of ``mirror'' flows) make this database unreliable for our purpose.
+
+We decide therefore to use database for a single country, but with strong statistical reliability arising from a single, trustworthy customs origin. More precisely, the empirical analysis relies on yearly data from US annual Imports of Merchandise provided by the Census bureau\footnote{More information available at: \url{http://www.census.gov/foreign-trade/reference/products/catalog/fl_imp.txt}}, spanning from 1974 to 2013. Based on customs declarations, this dataset inventories all imports (both values and quantities) by origin to the United states at the HS 10-digit highly disaggregated level, with a concordance code to the SITC 5-digit coding system. In addition, the database reports information regarding freight expenditures and transportation mode (Ocean Vessel and Air). The first will be crucial to compute transport costs (see below), the second will alow us enlightening potential different dynamics of transport costs across transportation mode.
+
+Due to the abovementioned computational limitations, data are reaggregated at the 3- and 4-digit level: comparing different levels of aggregation will be useful to check differences and the presence of biases precisely due to aggregation. Depending on the considered year, this leaves us with around 200 (3-digits) and 600-700 (4-digits) products.
+
+
+% Why the gap CIF-FOB is a good measure of trade costs (cf mimeo by Gaulier and Zignago)? JH: to me, This is not the right question to ask. We have the freight costs in our data. The true question is: how well these freight costs proxy correctly transportation costs as a whole.
+
+
+
+\subsection{Key empirical specification}
+
+\noindent Our purpose is to provide estimates over time of the relative shares of multiplicative and additive costs among total transport costs. To do so, we start from a very simple equation, quite alike the one proposed by \citet{hummels2010}:
+
+\begin{equation}\label{eq:base}
+p = \tau \widetilde{p} + t
+\end{equation}
+
+or as a ratio
+
+\begin{equation}\label{eq:base_bis}
+\frac{p}{\widetilde{p}} = \tau  + \frac{t}{\widetilde{p}}
+\end{equation}
+
+This equation relates the ratio of the consumer price (ie, cif price, denoted $p$) to the producer price (ie, fob price, denoted $\widetilde{p}$) to the two types of costs (multiplicative and additive). Iceberg trade costs are denoted $\tau$ (with $\tau=1$ meaning no iceberg trade costs) while additive trade costs are labeled $t$ (with $t=0$ implying no additive trade costs).
+%\begin{equation*}
+%p =\tau \widetilde{p}+t
+%\end{equation*}
+We estimate this equation for each year over the period 1974-2013, and for each of the two transportation modes reported (air or vessel), on a sectoral-origin country basis. Let us denote $i$ the origin country and $k$, the sector. Hence, the equation to be estimated is given by:
+
+\begin{equation}\label{eq:base_estimee}
+\frac{p_{ik}}{\widetilde{p}_{ik}} = \tau_{ik}+\frac{t_{ik}}{ \widetilde{p}_{ik}}
+\end{equation}
+
+
+
+\section{Decomposing the Dynamics of Transport Costs over Time}
+
+\subsection{Estimation Strategy}
+
+% nonlinear least squares: problem with heteroskedasticity???
+
+We transpose the approach by \citet{Irrazabal_2015} by considering that both multiplicative and additive costs are separable between origin country and products, in a multiplicative way for the former and an additive way for the latter. In other words, $\tau$ and $t$ from equation~\ref{eq:base_estimee} become:
+
+%\begin{eqnarray}
+%\tau_{ik} &=& dist^{\rho_I}F^I_i \label{eq:iceberg}\\
+%t_{ik} &=& dist^{\rho_A}F^A_i-1 \label{eq:add}
+%\end{eqnarray}
+
+\begin{eqnarray}
+\tau_{ik} &=& \tau_{i} \times \tau_{k} \label{eq:iceberg}\\
+t_{ik} &=& t_{i} + t_{k} \label{eq:add}
+\end{eqnarray}
+
+
+As a result, our underlying theoretical equation is specified as:
+
+%\begin{equation}
+%\frac{p_{ik}}{\widetilde{p}_{ik}} =dist^{\rho_I}F^I_ik+\frac{dist^{\rho_A}F^A_ik-1}{ \widetilde{p}_{k}}\label{eq:estimatedequation}
+%\end{equation}
+
+\begin{equation}
+\frac{p_{ik}}{\widetilde{p}_{ik}} =\tau_{i} \times \tau_{k}+\frac{t_{i} + t_{k}}{ \widetilde{p}_{ik}} \label{eq:theory_equation}
+\end{equation}
+
+The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a ``one-lower bond'', since by construction, the \emph{cif} price $p$ cannot be lower than the \emph{fob} price: $p>\widetilde{p}_{ik}$. Taking into account this constraint in the estimation requires to impose a multiplicative structure for the error term. More precisely:
+
+\begin{equation}
+\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{k}+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right)\times \varepsilon_{ik}
+\end{equation}
+
+Log-linearization gets the following, tractable empirical equation:
+
+\begin{equation}
+ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= ln \left(\tau_{i} \times \tau_{k}+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:estimatedequation}
+\end{equation}
+where $\tau_{i}$, $\tau_{k}$, $t_{i}$ and $t_{k}$ are the parameters to be estimated, i.e., fixed effects specific to each origin country $i$ and sector $k$, and $\epsilon_{ik}= ln(\varepsilon_{ik})$ .
+
+Still following \citet{Irrazabal_2015}, we report a ``synthetic estimate'' of each type of transport cost, by averaging all $\widehat{\tau}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}$ and $\widehat{t}_{ik} = t_{i} + t_{k}$ using the values of each trade flow over total yearly trade as a weighting scheme. Therefore, we recover for each year and transportation mode a $\widehat{\tau}$ and $\widehat{t}$ that will be the results we will report for step 1.\\
+
+\subsection{Econometric Issues}
+
+\noindent Our primary interest relates to the importance of additive costs relatively to iceberg costs. Put differently, what traditional models of international trade lose by ignoring additive costs? A natural way to answer this question is to perform estimations of equation~\ref{eq:estimatedequation} constraining $t$ to be equal to zero, and compare the fitting properties/explanatory power of the restricted and complete models. This is done bye computing several standard diagnostic statistics (R$^{2}$ and statistics based on the likelihood function).
+
+The shape of our main equation \ref{eq:estimatedequation} is such that estimations cannot be performed using standard linear estimators. Therefore, all estimates are performed using non linear least squares. The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares does not decrease from one iteration to the next. In our case, due to computational limitations implied by the size of our dataset, we implement 100 iterations and set the convergence criterion for successive parameter estimates and for the residual sum of squares at 0.01.
+
+Finally, to control for the potential influence of outliers, we excluded observations in the 5 percent from the upper and lower tails of the distribution in the regression variables, and all our three measures of trade costs are bounded by 0 as minimal value. These cut-offs are aimed at eliminating reporting or coding errors. %(XXX develop a little bit?XXX)
+
+
+%\noindent with the exponents $I$ and $A$ respectively identifying the iceberg and the additive trade costs, $\rho_I$ and $\rho_A$ being the parameters of interest to be estimated. The adding of $-1 $ in the specification for the additive costs (\ref{eq:add}) is necessary to be consistent with $t$ starting from 0. In the absence of additive trade costs, ie $\rho_A=F^A_i=F^A_j=0$, the specification (\ref{eq:add}) consistently implies $t=0$. As well, if iceberg costs are null ($\rho_I=F^I_i=F^I_j=0$), the specification (\ref{eq:iceberg})) correctly implies $\tau=1$.
+
+
+\subsection{Results: Distinguishing Additive and Multiplicative Parts of Trade Costs}
+
+\subsubsection{Goodness-of-fit}
+
+
+Here, we proceed to a pure statistical analysis of our results, i.e., we investigate the properties of our two models (with and without an additive term) in terms of goodness-of-fit. Our idea is to assess what loss of explanatory power is implied by the omission of the additive term. We distinguish between ``Air'' and ``Vessel'', in order to see if and how the quality-of-fit varies across transports modes. We start with a simple visual inspection of Figure \ref{fig:good_fit}, where are reported the yearly median \emph{ad valorem} estimates of the iceberg costs ($\widehat{\tau}_{i}$) estimated in equation \ref{eq:estimatedequation}\footnote{Qualitatively similar results are obtained when the mean values are reported instead. More details of those results available upon request to the authors.}. The dotted line plots the estimated iceberg cost ($\widehat{\tau}_{i}$) when the additive term $t$ is restricted to 0, and the plain dark line represents the iceberg cost in the model including a non-null additive term. In both cases, multiplicative costs are reported minus one, for a better reading comfort and comparability with Figure \ref{fig:mult_vs_add}.
+
+For both transport modes, it appears that the omission of the additive term seriously biases the multiplicative term upward. For Air, the size of the bias seems to decrease over time, while it seems pretty stationary for Vessel. In any case, the omission of the additive term leads to overestimate the iceberg component by roughly a factor 2. On average over the whole period, biased estimate for iceberg is 1.04 for Air and 1.05 for Vessel, while unbiased estimates, are, respectively 1.02 and 1.03.
+
+In order to deliver a more systematic diagnosis, we use several standard measures of fit. Of course R$^{2}$ comes naturally to mind, but its use is far from being straightforward when evaluating non-linear estimates.\footnote{R-squared is based on the underlying assumption that the adjusted model is a linear one. In a non-linear context, R-squared is therefore inappropriate, strictly speaking. However, if the error distribution is approximately normal, a standard metric like R-squared remains informative on the quality of adjustment.)}. Therefore, we provide as a complement the Standard Error of Regression (SER) which represents the average distance that the observed values fall from the regression line. Smaller values are better because it indicates that the observations are closer to the fitted line. We also report the log-likelihood function, and two measures derived, the Akaike Information Criterion (AIC) and the log-likelihood (LL) ratio test. A decrease in the log-likelihood function points to a better quality-of-fit. However, the likelihood function systematically decreases with the number of parameters included; the AIC criterion allows for correcting this overfitting by including a penalty in the computation of the statistic, so that AIC stat $= 2 \times \textrm{number of parameters} - 2 \times \textrm{Likelihood} $. Once again, the preferred model is the one with the minimum AIC value. Finally, the log-likelihood ratio test statistic compares systematically the likelihood of the Unrestricted model (\emph{UR}, including an additive term, see equation~\ref{eq:estimatedequation}) and the Restricted one (\emph{R}, i.e. equation~\ref{eq:estimatedequation} with $t=0$). The null tested is that the two models are statistically equivalent. Results are reported in Tables~\ref{tab:good_fit_air} and \ref{tab:good_fit_ves}.
+
+
+
+%If we keep the R² as a measure of GoF, we will have to provide some evidence of normality for residuals. In addition, a plot of observations and the adjustment curve might be useful.
+Unsurprisingly, it appears that the inclusion of the additive term leads to an improvement of the quality of fit, whatever the considered criterion or transport mode. On average over the whole period, $R^{2}$ doubles when restricting to Air Transport, and increases by 50\% for Vessel. Similar qualitative conclusions arise from the comparisons of SERs, but may be more reliable on the quantitative side, since the use of R-squared on non-linear estimates may be qualified. Regarding the other criteria, improvements allowed by the inclusion of the additive term are roughly of the same extent across transport modes. Both AIC and Log-Likelihood statistics decrease with the inclusion of the additive term, and the LL test unambiguously reject the null of statistical equivalence of the two models. This is true whatever the considered year.
+
+However, going into the examination of the levels of these goodness-of-fit statistics reveals intriguing differences. Multiplicative costs appear more important for the Vessel sector, where they account for 39\% of the variance of the CIF/FOB ratio, versus 31\% for the Air sector; the standard error of the regression based only on the iceberg term is consistently lower for Vessel than for Air. Besides, the dynamics over time also reveals intriguing differences. Quality of fit decreases strongly after 2000, for both transport modes. For Air, it seems that the additive term explains less and less variance over time: in 2000, the inclusion of the additive term allows adding more than 30\% of explanatory power, and decreases the SER by 14 percentage points ;  in 2010 and 2013, it is hardly more than 10\% for the $R^{2}$, and 7 percentage points for the SER. The picture is quite different for Vessel. For that transport mode, the inclusion of the additive term increases the R$^{2}$ by a percentage very similar whatever the considered year (between 12 and 18\%); a similar conclusion can be drawn for the SER, which decreases by 8-11 percentage points across the years. It appears that the deteriorating performance of the model in terms of goodness-of-fit from 2000 comes mainly from the decreasing performance of the iceberg term. In order to enlighten the roots of these differences, the following section elaborates further on the quantitative dynamics of each type of cost.
+
+For comparison purposes, we provide in the appendix similar results for some years based on a more disaggregated dataset at the product level (4-digits).\footnote{Since we use a non-linear estimator, estimations are highly computer-intensive. This explains why we decided to focus on the 3-digit product classification, which requires less time-consuming calculations.}. If anything the quality of fitting appears slightly higher when estimations are based on the 4-digits classification. This is especially true for the model restricting trade cost to their iceberg dimension, whatever the transport mode considered. When the additive part is taken into account however, the difference becomes very small, whatever the considered criterion.
+
+Using a more disaggregated classification unsurprisingly adds some statistical precision, but not to an extent which disqualifies the use of slightly more aggregated data.
+% need for SER on all years to be complete.
+
+
+
+
+\subsubsection{Interpretation}
+
+We now more specifically investigate the long-run behavior of the estimated iceberg and additive parameters. Tables\label{tab:result_air} and \label{tab:result_ves} report, respectively for the Air and Vessel sector, our estimates for Iceberg trade costs, first from equation \label{eq:iceberg} (upper panel), then from equation \label{eq:estimatedequation} where they are estimated jointly with an additive term, which estimate is also reported (bottom panel). Remember that estimation is performed on a yearly basis, consequently, for the sake of clarity, we do not report estimates for each year, but for the beginning and the end of our sample, as well as starting year for each decade. To complement these tables, Figure\label{fig:mult_vs_add} reports the estimates of equation \label{eq:estimatedequation}, this time for each year: the dotted line plots estimated for the additive term, and the plain, dark line plots the iceberg cost (-1, for a better reading comfort). As we did for the quality-of-fit, we report in Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} in the Appendix the estimated for coefficients for products disaggregated at the 4-digits level. In any case, these estimates are very close, and do not show any major difference with the baseline ones.
+
+Unsurprisingly, the trend in transportation costs is clearly decreasing whatever the mode (air or vessel) or measure (with or without additive term) we consider. Starting from 1974, the decrease appears more important for sea than air transportation: transportation costs are divided by three for the first mode, and two for the second one. That said, it is widely know the two oil shocks inflated artificially transportation costs that specific year. If we start the analysis from 1980, the decrease is roughly 1.5-2 percentage points for Air, and 2-3 percentage points for Vessel - depending if we consider mean or median estimates. These figures are consistent with the ones by Hummels (2007). However, our methodology allows distinguishing in this trend, what comes from multiplicative and additive costs. To make a long story short, it appears that the additive costs represent the bulk of the decrease for Air, whereas the multiplicative component is the main responsible of the decreasing trend for Vessel, except for the years 2012-2103, witnessing an abrupt decrease in additive costs. To give a few average numbers, starting from 1980 and ending in 2013, the iceberg term decreases by 0.6 percentage point (pp), and the additive term is reduced by 1 pp for Air; for Ocean shipping, the reduction is roughly 2 pp for additive costs, and 1 pp for multiplicative costs. 
+
+
+
+%Itrrazbal
+
+%Composition effects ??
+
+
+In section \ref{sec:determinants}, we provide rationales for those differences.
+
+\section{Reassessing the Traditional Determinants of Transport Costs}\label{sec:determinants}
+
+\subsection{Methodological Concerns}
+
+%In step 2, we ask if the traditional determinants of transportation costs impact differently the multiplicative and additive costs estimated in the first step.
+%Therefore, we consistently focus only on origin-country-specific transportation costs, taking the estimated $\tau_{i}$ and $t_{i}$ from step 1 as dependent variables. In line with the trade literature, we proxy transport costs by (log of) distance and other proxies for trade costs (mainly, geographic and cultural factors).\interfootnotelinepenalty=10000\footnote{All those variables come from the well-known GeoDist database built by the CEPII: \url{http://www.cepii.fr/CEPII/fr/bdd_modele/presentation.asp?id=6}.} More formally, we estimate, still on a yearly basis and for each transportation mode:
+
+%\begin{eqnarray}
+%ln(\widehat{\tau}_{i}) &=& \beta_{1} \textrm{ln(distance)} + \Gamma_{1} \textrm{Gravity} + \mu_{i} \label{eq:step2_iceberg}\\
+%ln(\widehat{t}_{i}) &=& \beta_{2} \textrm{ln(distance)} + \Gamma_{2} \textrm{Gravity} + \nu_{i} \label{eq:step2_additive}
+%\end{eqnarray}
+
+%where the ln operator denotes that variables have been log-linearized, $distance$ is the bilateral distance between US and the origin country $i$  and $Gravity$ is a vector of controls including the languages spoken in the country under different definitions, whether the country is landlocked, and their colonial links.
+
+In this second stage of the paper, we thus keep on questioning the way the literature models the trade costs determinants. Do the proxies frequently used as measures for trade costs, typically distance, correspond more to additive cots or to multiplicative trade costs? Or total? Usually, people use a measure of distance as a way to capture iceberg trade costs. What is the size of the error we make (what is the size of the approximation) when we suppose that distance is a good proxy of (total) transport costs? Using our decomposition of transport costs obtained in the first stage, we can assess the contributions of typical gravity variables to each component of transport costs (additive / iceberg). To put this simply, consider first our ``raw'' estimate of trade costs (meaning, only modeling a multiplicative form); we estimate the role of distance (as quite frequent) and find that this fits reasonably well, the estimated coefficient stands in the average. We then apply the same regression on each multiplicative / additive component of trade costs. Suppose that we find a high correlation with the additive cost, and almost 0 with the multiplicative cost. This means that, using this proxy to capture the size of iceberg trade costs amounts making a sizeable approximation error. \bigskip
+
+\paragraph{Data treatment} Before presenting the estimated equation, let us mention how we deal with the data. We regress 1°) the ``overall trade costs'' (i.e.), modeled as an iceberg transport cost (denoted $\tau_{ik}^{nlI}$ hereafter ($i$ for the origin country, $k$ for the product and $nlI$ for the ``non-linear iceberg'' estimation method) and 2°) the two additive and multiplicative transport costs, $\tau_{ik}$ and $t_{ik}$ respectively, on some common determinants. Precisely, we re-treat the iceberg component (both $\tau_{ik}^{nlI}$ and $\tau_{ik}$) to have it expressed in percentage of the fob price, ie we build the variable $\tau_{ik} =  100(\widehat{\tau}_{ik}-1)$ (with $\widehat{\tau}_{ik}$ the estimated variable obtained at stage 1). As for the additive cost, from stage 1 of the paper, we have obtained the value of (country-specific) trade cost as a fraction of the fob price (denoted $\widehat{t}_{ik}$); we multiply it to have it expressed as a percentage of the fob price (considering $t_{ik} =  100 \widehat{t}_{ik}$). Further, and in line with our first-step estimation method, we estimate the determinants of trade costs on a yearly basis, and conditional to the transport mode (air or vessel).
+
+
+In the three cases, we want to explain trade costs expressed as a percentage of the fob price. All our three measures of trade costs are bounded by 0 as minimal value, and we drop outliers by only keeping the 95 first percentile of each distribution.
+\bigskip
+
+\paragraph{Functional form} To derive the estimated equation, we start recalling what is behind the gap between cif-fob prices. In the US import data we use, the cif price is based on applying import charges on the custom value. What is defined as import charges? As detailed in Appendix \ref{app:data}, ``import charges represent the aggregate cost of all freight, insurance, and other charges (excluding U.S. import duties) incurred in bringing the merchandise from alongside the carrier''. So in fact what we call ``fob price'' is ``fas price'', for ``free alongside''. This means that the seller has paid to bring the goods to the port, but not to put them on the boat. In this respect, all hauling charges are excluded from what we call the ``fob'' price. In comparison with the fas price, the cif price is ``cost, insurance, freight'' included.\footnote{From OECD stats, the c.i.f. price (i.e. cost, insurance and freight price) is the price of a good delivered at the frontier of the importing country, including any insurance and freight charges incurred to that point, or the price of a service delivered to a resident, before the payment of any import duties or other taxes on imports or trade and transport margins within the country.}
+
+Accordingly, if we denote $TC_{ik}$ the total transport cost paid to import the product $k$ from country $i$ (on a given year, conditional to a certain transport mode), expressed in USD, we can decompose it in three elements:
+
+$$TC_{ik} = \text{Freight + Insurance + Handling costs}$$
+
+Our second-stage estimation is then guided by two questions. For each of these three dimensions (cost, insurance, freight) at the root of the cif-fas prices gap, 1°) what are its determinants, and 2°) do we expect this dimension to play rather on the additive or the multiplicative dimension?
+
+
+
+
+\paragraph{Insurance}: Based on information collected about insurance grids \textbf{(source???)}\footnote{\textbf{See Appendix ??? for details.}}, we infer that insurance costs depend on the value of the shipment, conditional on the type of product transported (Insuring one ton of diamonds does not bear the same cost as a ton of wood). The database provides us with the quantity (in terms of kilograms) of the shipment ($q_{ik}$), as well as the price, so that we have the value of the shipment. However, we have no dedicated variable to measure the insurance cost in the database. Accordingly, we capture this dimension by including product fixed effects. Insurance grids retain a degree of product categorization much broader than the 3-digit level we retain as benchmark sectorial degree (our $k$ index for the product dimension). In most pieces of information we have collected, insurance grids adopt a ranking in \textbf{20 (??)} types of products. Accordingly, we include product fixed effects of dimension \textbf{20}, that we refer to with the subscript $k^\prime$, i.e. $FE_{k^\prime}$. If we denote $p_{ik}^{fob}$ and $q_{ik}$ the (fas) price and the quantity of the shipment, total insurance costs (in USD) are accordingly measured by $FE_{k^\prime}\times p_{ik}^{fob}\times q_{ik}$. As insurance cost depend on the value of the shipment, we expect it to be proportional to the price, ie rather play on the iceberg part of the transport costs.
+
+\paragraph{Costs} (for handling costs). The amount paid to load the bulk on transport mode is likely to depend on the quantity of product charged, as well as the bulk implied in the shipping, that is referred to as the volumetric weight (A ton of cars does not represent the same volume on board as a ton of apparel, and accordingly does not imply the same handling costs); further, handling costs also depend on the country of origin (quality of infrastructure, labor and various other costs). If the database provides us with the quantity that is imported (of product $k$ from country $i$), we do not have information about the volume it takes, which affects the handling costs. We capture this dimension using information provided by the \textit{Maritime Transport Costs} database provided by the OECD. As detailed in Appendix \ref{app:data}, we use this database to build a measure of the product-specific cost to export at the 3-digit level, that we use as proxy for the handling costs specific to the volumetric weight of products (denoted by $V_{k}$). Last, handling costs are likely to be country-dependent (in the quality of infrastructure in particular). We capture this dimension with the ``Cost to export'' variable provided by the World Bank (see Appendix \ref{app:data} for details), denoted $EC_{i}$ in the following. Accordingly, we measure total handling costs (in USD) by $EC_i\times V_{k}\times q_{ik}$. As such costs depend on the quantity that is shipped, but not on the price, we expect this dimension to play on the additive part of transport costs.
+
+ \paragraph{Freight}. Quite intuitively, freight costs should depend on the distance between the origin country and the U.S. (denoted $dist_i$). Further, they likely depend on the quantity ($q_{ik}$) and the bulk of the shipment. Again, we capture this dimension through product fixed effects, based on the same product categorization (based on $k^\prime$) as for handling and insurance costs. Accordingly, we capture freight costs through $V_{k}\times dist_i\times q_{ik}$. Because this cost is most likely dependent on the quantity of goods exported rather than their value, we expect this term to have more impact on the additive part of total transport costs.
+
+
+As a result, total transport costs by $TC_{ik}$ (expressed in USD) can be decomposed in the three components of insurance, handling costs and freight, according to:
+
+$$TC_{ik} =  \underbrace{EC_i\times V_{k}\times q_{ik}}_{\text{Costs}} +\underbrace{FE_{k^\prime}\times p_{ik}^{fob}\times q_{ik}}_{\text{Insurance}}+ \underbrace{V_k\times dist_i\times q_{ik}}_{Freight}$$
+
+By definition, such transport costs can be written as $TC_{ik} = (p^{cif}_{ik} - p^{fas}_{ik})q_{ik}$. Accordingly, we can write:
+
+\begin{eqnarray*}
+&&(p^{cif}_{ik} - p^{fas}_{ik})q_{ik} = EC_i\times V_{k}\times q_{ik}+ FE_{k^\prime}\times p_{ik}^{fob}\times q_{ik}+ V_{k}\times dist_i\times q_{ik} \\
+\Leftrightarrow && \left(\frac{p^{cif}_{ik}}{p^{fas}_{ik}} -1 \right)p^{fas}_{ik} q_{ik} = EC_i\times V_{k}\times q_{ik}+ FE_{k^\prime}\times p_{ik}^{fob}\times q_{ik}+ V_k \times dist_i\times q_{ik}
+\end{eqnarray*}
+
+From the above equation, it comes that $\frac{TC_{ik}}{p^{fas}_{ik} q_{ik}} = \left(\frac{p^{cif}_{ik}}{p^{fas}_{ik}} -1 \right)$, which is exactly the measure of trade costs obtained in the first stage.\footnote{Recall that our first stage starts from the equation: $\left(\frac{p^{cif}_{ik}}{p^{fas}_{ik}} -1 \right) = \tau^{nlI}_{ik}$ in the ``raw'' equation and $\left(\frac{p^{cif}_{ik}}{p^{fas}_{ik}} -1 \right) = \tau_{ik}+ \frac{t_{ik}}{p^{fas}_{ik}}$ when decomposing between iceberg and additive transport costs.}
+
+Accordingly, we can decompose each of our three measures of trade costs ($\tau^{nlI}_{ik}$, $\tau_{ik}$ and $\frac{t_{ik}}{p^{fas}_{ik}}$, expressed in the three cases as a percentage of the fob price, and denoted $tc_{ik}$ to gain in generality, according to:
+
+\begin{equation}
+tc_{ik} = \underbrace{\frac{EC_i\times V_{k}}{p^{fas}_{ik}}}_{\text{C}} + \underbrace{FE_{k^\prime}}_{\text{I}}+ \underbrace{\frac{V_k\times dist_i}{p_{ik}^{fas}}}_{\text{F}} \label{eq:theory}
+\end{equation}
+
+Based on Equation (\ref{eq:theory}), we specify the estimated equation as follows:
+
+\begin{equation}
+tc_{ik} = \left[\frac{EC_i\times V_k}{p^{fas}_{ik}} + FE_{k^\prime}+ \frac{V_k\times dist_i}{p_{ik}^{fas}} + EC_i + V_k\right]e^{\varepsilon_{ik}} \label{eq:estim}
+\end{equation}
+
+with $\varepsilon_{ik}$ the error term, centered on 0. This calls for two comments. First, we add the country fixed effects separately in the regression, in order to correctly identify the associated interaction term. Second, we specify the error term multiplicatively. If we estimate the equation by setting the error term in addition to the other variables, it means that the error term is expressed as a percentage of the fob price (ie, it is independent of the other dimensions, the residual term can be interpreted in percentage points). In this case, it is very likely that the variance of the error term depends on the size of the observed costs. E.g., because costs and their measures are bounded by zero, the error has to be small when costs are small and it might be higher when costs are high. Adopting this functional form would then be subject to a potential bias in point estimates due to the heteroscedasticity of error terms. This drives us to specify the error term in a multiplicative manner (such that the error term is in percentage of each explicative variable and centered on 0), and to take the log of the equation.
+
+Accordingly, the functional form that we estimate, for each of the three transport costs obtained at the first stage ($tc_{ik} = \tau^{nlI}_{ik}$, $\tau_{ik}$ and $\frac{t_{ik}}{p^{fas}_{ik}}$, conditional on the year and the transport mode), is expressed as:
+
+\begin{equation}
+\log tc_{ik} = \log\left[\frac{EC_i\times V_{k}}{p^{fas}_{ik}} + FE_{k^\prime}+ \frac{V_k\times dist_i}{p_{ik}^{fas}} + EC_i + V_k \right]+ \varepsilon_{ik} \label{eq:estim1}
+\end{equation}
+
+
+
+%\textbf{Careful:} Again, challenging the role of distance (as we ambition) may receive limited support, in that the counter-argument we should expect: ``ok it has no role on the iceberg part of transport costs, and all on additive component of transport costs, but you don't show that it does not play on the other dimensions of trade costs you don't cover (on top of the cif-fob difference) multiplicatively. So, you don't demonstrate what you argue, that distance is not a good proxy for trade costs.'' ... \bigskip
+
+%What we are doing here is descriptive statistics exercise; therefore, it is normal that we do not report standard deviations !
+
+\subsection{Results and Interpretation}
+%\section{One step further into interpretation: transportation costs as an indicator of market structure.}
+
+\section{Conclusion}
+
+\newpage
+\bibliographystyle{essaien}
+\bibliography{biblio}
+
+
+\newpage
+
+
+\appendix
+
+\section*{Data Appendix \label{app:data}}
+
+\subsection{Fob-cif prices}
+From the US Census website:
+
+The Customs value is the value of imports as appraised by the U.S. Customs and Border Protection in accordance with the legal requirements of the Tariff Act of 1930, as amended. This value is generally defined as the price actually paid or payable for merchandise when sold for exportation to the United States, excluding U.S. import duties, freight, insurance, and other charges incurred in bringing the merchandise to the United States. The term ``price actually paid or payable'' means the total payment (whether direct or indirect, and exclusive of any costs, charges, or expenses incurred for transportation, insurance, and related services incident to the international shipment of the merchandise from the country of exportation to the place of importation in the United States) made, or to be made, for imported merchandise by the buyer to, or for the benefit, of the seller. In the case of transactions between related parties, the relationship between buyer and seller should not influence the Customs value.
+
+In those instances where assistance was furnished to a foreign manufacturer for use in producing an article which is imported into the United States, the value of the assistance is required to be included in the value reported for the merchandise. Such ``assists'' include both tangible and intangible assistance, such as machinery, tools, dies and molds, blue prints, copyrights, research and development, and engineering and consulting services. If the value of these ``assists'' is identified and separately reported, it is subtracted from the value during statistical processing. However, where it is not possible to isolate the value of ``assists'', they are included. In these cases the unit values may be increased due to the inclusion of such ``assists''.
+Import Charges
+
+The import charges represent the aggregate cost of all freight, insurance, and other charges (excluding U.S. import duties) incurred in bringing the merchandise from alongside the carrier at the port of exportation in the country of exportation and placing it alongside the carrier at the first port of entry in the United States. In the case of overland shipments originating in Canada or Mexico, such costs include freight, insurance, and all other charges, costs and expenses incurred in bringing the merchandise from the point of origin (where the merchandise begins its journey to the United States) in Canada or Mexico to the first port of entry.
+C.I.F. Import Value
+
+The C.I.F. (cost, insurance, and freight) value represents the landed value of the merchandise at the first port of arrival in the United States. It is computed by adding ``Import Charges'' to the ``Customs Value'' (see definitions above) and therefore excludes U.S. import duties.
+
+\subsection{Product classification for Insurance fixed effects}
+\textbf{to be done}
+
+\subsection{Volumetric weight and the Maritime Transport Costs database}
+The Maritime Transport Costs (MTC) database built by the OECD\footnote{See \texttt{http://stats.oecd.org/Index.aspx?datasetcode=MTC}.} contains data from 1991 to the most recent available year of bilateral maritime transport costs. Transport costs are available for 43 importing countries (including EU15 countries as a custom union) from 218 countries of origin at the detailed commodity (6 digit) level of the Harmonized System 1988.
+
+At commodity level (6 digit HS), maritime transport costs are displayed using three measures:
+\begin{itemize}
+\item Transport cost: the total cost expressed in USD (insurance plus freight) of transporting all of the given product during the given year,
+\item  Unit transport cost: transport cost per kilogramme, or in other words, the cost in USD required to transport one kilogramme of merchandise, and
+\item Ad valorem equivalent: transport cost divided by the  total import value, i.e. the share transport cost represents in the total import value of the product.
+\end{itemize}
+At chapter level (2 digit HS), the transport costs are the sum of the corresponding 6 digits commodities. The unit cost and ad valorem cost are then the transport costs at chapter level divided respectively by sum of the weights at 6 digits, and by the sum of the import values at 6 digits.
+
+\subsection{Country-specific handling costs and the ``Cost to export'' variable}
+
+
+Doing Business measures the time and cost (excluding tariffs) associated with exporting and importing a standardized cargo of goods by sea transport. The most recent round of data collection for the project was completed in June 2014. Among the four variables provided, we retain the variable ``Cost to export'' (US\$ per container), as it represents the ``cost associated with all procedures required to export goods[...,] including the costs for documents, administrative fees for customs clearance and technical control, customs broker fees, terminal handling charges and inland transport.'' We use the variable observed \textbf{in year ??? attention la variable est-elle destination spefici? A priori non, a verifier.}
+\newpage
+
+
+\section*{Tables and Figures}
+
+
+%%%Figures
+% Goodness-of-fit
+
+\begin{figure}[htbp]
+\caption{Multiplicative Costs (-1), Median Value 3 digits}\label{fig:good_fit}
+\begin{center}
+\begin{tabular}{cc}
+{\small (a) Air } & {\small (b) Vessel}\\
+\includegraphics[width=3.5in, height=3in]{graph1a.pdf}
+& \includegraphics[width=3.5in,height=3in]{graph1b.pdf} \\
+\end{tabular}
+\end{center}
+\end{figure}
+
+%Economic interpretation
+%usepackage{float} + H is great to keep images on the right page
+\begin{figure}[H]
+\caption{Multiplicative vs. Additive Trade Costs, Median Value 3 digits}\label{fig:mult_vs_add}
+\begin{center}
+\begin{tabular}{cc}
+{\small (a) Air } & {\small (b) Vessel}\\
+\includegraphics[width=3.5in, height=3in]{graph2a.pdf}
+& \includegraphics[width=3.5in,height=3in]{graph2b.pdf} \\
+\end{tabular}
+\end{center}
+\end{figure}
+
+
+%%%%Tables
+%Goodness-of-fit
+\begin{table}[htbp]
+  \centering
+  \caption{Air: Measures of Goodness-of-fit}
+\begin{center}
+    \begin{tabular}{lccccccc}
+  %  \toprule
+   \hline\hline
+          & \multicolumn{6}{c}{Year}                      &  \\
+
+      & \multicolumn{1}{c}{1974} & \multicolumn{1}{c}{1980} & \multicolumn{1}{c}{1990} & \multicolumn{1}{c}{2000} & \multicolumn{1}{c}{2010} & \multicolumn{1}{c}{2013} & \multicolumn{1}{c}{\textbf{Mean stat}}\\
+\hline
+\textbf{R$^{2}$} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & 0.30  & 0.27  & 0.25  & 0.32  & \multicolumn{1}{c}{0.42} & \multicolumn{1}{c}{0.31} & \multicolumn{1}{c}{\textbf{0.31}} \\
+Terms A \& I & 0.59  & 0.65  & 0.63  & 0.64  & \multicolumn{1}{c}{0.51} & \multicolumn{1}{c}{0.42} & \multicolumn{1}{c}{\textbf{0.60}} \\
+\textbf{SER} &       &       &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & 0.79  & 0.86  & 0.81  & 0.84  & \multicolumn{1}{c}{0.86} & \multicolumn{1}{c}{0.92} & \multicolumn{1}{c}{\textbf{0.85}} \\
+Terms A \& I & 0.67  & 0.71  & 0.67  & 0.70  & \multicolumn{1}{c}{0.79} & \multicolumn{1}{c}{0.85} & \multicolumn{1}{c}{\textbf{0.73}} \\
+\textbf{Log-likelihood} &       &       &       &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & -17530.49 & -20253.49 & -29977.79 & -43341.27 & \multicolumn{1}{c}{-50746.83} & \multicolumn{1}{c}{-52690.29} & \multicolumn{1}{c}{\textbf{-34888.64}} \\
+Terms A \& I & -15125.65 & -17263.20 & -25393.46 & -36788.44 & \multicolumn{1}{c}{-47277.53} & \multicolumn{1}{c}{-49419.70} & \multicolumn{1}{c}{\textbf{-30508.29}} \\
+\textbf{AIC criteria} &       &       &       &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & 35674.98 & 41170.98 & 60715.58 & 87492.55 & \multicolumn{1}{c}{102297.66} & \multicolumn{1}{c}{106130.58} & \multicolumn{1}{c}{\textbf{70498.08}} \\
+Terms A \& I & 31387.29 & 35738.39 & 52098.91 & 74954.88 & \multicolumn{1}{c}{95887.05} & \multicolumn{1}{c}{100155.41} & \multicolumn{1}{c}{\textbf{62284.99}} \\
+\textbf{Test LL} &       &       &       &       & \multicolumn{1}{c}{} &       &  \\
+2$\times$(ll(UR) -ll(R)) & 4809.68 & 5980.59 & 9168.67 & 13105.67 & \multicolumn{1}{c}{6938.61} & \multicolumn{1}{c}{6541.17} & \multicolumn{1}{c}{\textbf{8760.69}} \\
+\# restrictions  & 355   & 369   & 393   & 426   & \multicolumn{1}{c}{426.00} & \multicolumn{1}{c}{422} & \multicolumn{1}{c}{\textbf{401.93}} \\
+p-value & 0.000 & 0.000 & 0.000 & 0.000 & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{\textbf{}} \\
+
+
+\hline\hline
+   % \bottomrule
+
+    \end{tabular}%
+    \end{center}
+  \label{tab:good_fit_air}%
+  \tiny{Note: I = Iceberg; A = Additive; SER = Standard Error of regression; AIC = Akaike Information Criterion. Statistics are obtained weighting each observation by its value in transport (mode-dependent). Term A expressed in fraction of fob price. R$^{2}$ between the log of predicted ratio and the log of the observed ratio. The number \# of restrictions is equal to the number of parameters estimated, i.e., the number of partner countries plus the number of products.}
+\end{table}%
+
+
+\begin{table}[htbp]
+  \centering
+  \caption{Vessel, Measures of Goodness-of-fit}
+\begin{center}
+    \begin{tabular}{lccccccc}
+  %  \toprule
+   \hline\hline
+          & \multicolumn{6}{c}{Year}                      &  \\
+          & 1974  & 1980  & 1990  & 2000  & 2010  & 2013  & \textbf{Mean stat} \\
+\hline
+\textbf{R$^{2}$}\unboldmath{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       &  \\
+Term I only & \multicolumn{1}{c}{0.45} & \multicolumn{1}{c}{0.41} & \multicolumn{1}{c}{0.46} & \multicolumn{1}{c}{0.40} & \multicolumn{1}{c}{0.35} & \multicolumn{1}{c}{0.34} & \multicolumn{1}{c}{\textbf{0.39}} \\
+Terms A \& I & \multicolumn{1}{c}{0.61} & \multicolumn{1}{c}{0.58} & \multicolumn{1}{c}{0.59} & \multicolumn{1}{c}{0.57} & \multicolumn{1}{c}{0.49} & \multicolumn{1}{c}{0.46} & \multicolumn{1}{c}{\textbf{0.56}} \\
+\textbf{SER} &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & \multicolumn{1}{c}{0.58} & \multicolumn{1}{c}{0.62} & \multicolumn{1}{c}{0.59} & \multicolumn{1}{c}{0.65} & \multicolumn{1}{c}{0.74} & \multicolumn{1}{c}{0.76} & \multicolumn{1}{c}{\textbf{0.66}} \\
+Terms A \& I & \multicolumn{1}{c}{0.48} & \multicolumn{1}{c}{0.53} & \multicolumn{1}{c}{0.51} & \multicolumn{1}{c}{0.55} & \multicolumn{1}{c}{0.66} & \multicolumn{1}{c}{0.68} & \multicolumn{1}{c}{\textbf{0.57}} \\
+\textbf{Log-likelihood} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & \multicolumn{1}{c}{-16287.40} & \multicolumn{1}{c}{-16129.13} & \multicolumn{1}{c}{-25169.31} & \multicolumn{1}{c}{-35263.95} & \multicolumn{1}{c}{-41998.95} & \multicolumn{1}{c}{-43692.93} & \multicolumn{1}{c}{\textbf{-28534.30}} \\
+Terms A\& I & \multicolumn{1}{c}{-12985.76} & \multicolumn{1}{c}{-13353.65} & \multicolumn{1}{c}{-21171.37} & \multicolumn{1}{c}{-29490.96} & \multicolumn{1}{c}{-37418.66} & \multicolumn{1}{c}{-39751.86} & \multicolumn{1}{c}{\textbf{-24151.31}} \\
+\textbf{AIC criteria} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & \multicolumn{1}{c}{33328.81} & \multicolumn{1}{c}{33010.27} & \multicolumn{1}{c}{51142.62} & \multicolumn{1}{c}{71365.89} & \multicolumn{1}{c}{84789.89} & \multicolumn{1}{c}{88191.87} & \multicolumn{1}{c}{\textbf{57848.60}} \\
+Terms A \& I & \multicolumn{1}{c}{27331.52} & \multicolumn{1}{c}{28067.31} & \multicolumn{1}{c}{43664.74} & \multicolumn{1}{c}{60475.91} & \multicolumn{1}{c}{76161.33} & \multicolumn{1}{c}{80873.72} & \multicolumn{1}{c}{\textbf{49683.32}} \\
+\textbf{Test LL} &       &       &       &       & \multicolumn{1}{c}{} &       & \multicolumn{1}{c}{\textbf{}} \\
+2$\times$(ll(UR) -ll(R)) & \multicolumn{1}{c}{6603.28} & \multicolumn{1}{c}{5550.96} & \multicolumn{1}{c}{7995.88} & \multicolumn{1}{c}{11545.98} & \multicolumn{1}{c}{9160.56} & \multicolumn{1}{c}{7882.15} & \multicolumn{1}{c}{\textbf{8765.97}} \\
+\# restrictions  & \multicolumn{1}{c}{393} & \multicolumn{1}{c}{395} & \multicolumn{1}{c}{411} & \multicolumn{1}{c}{436} & \multicolumn{1}{c}{424} & \multicolumn{1}{c}{427} & \multicolumn{1}{c}{\textbf{417.05}} \\
+p-value & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} \\
+
+
+\hline\hline
+   % \bottomrule
+
+    \end{tabular}%
+    \end{center}
+  \label{tab:good_fit_ves}%
+  \tiny{Note: I = Iceberg; A = Additive; SER = Standard Error of Regression; AIC = Akaike Information Criterion. Statistics are obtained weighting each observation by its value in transport (mode-dependent). Term A expressed in fraction of fob price. R$^{2}$ between the log of predicted ratio and the log of the observed ratio. The number \# of restrictions is equal to the number of parameters estimated, i.e., the number of partner countries plus the number of products.}
+\end{table}%
+
+
+%Economic Interpretation
+
+\begin{table}[htbp]
+  \centering
+  \caption{Air: Dynamics of Trade Costs over Time}
+\begin{center}
+    \begin{tabular}{lccccccc}
+
+  %  \toprule
+   \hline\hline
+          & \multicolumn{6}{c}{Year}                      &  \\
+
+          & 1974  & 1980  & 1990  & 2000  & 2010  & 2013  & \multicolumn{1}{c}{\textbf{Mean stat}} \\
+ \hline
+\multicolumn{1}{l}{\textbf{With only Iceberg Trade Costs}} &       &       &       &       &       &       & \multicolumn{1}{c}{\textbf{}} \\
+Mean  & 1.069 & 1.054 & 1.050 & 1.036 & 1.042 & 1.034 & \multicolumn{1}{c}{\textbf{1.051}} \\
+Median & 1.054 & 1.038 & 1.044 & 1.025 & 1.034 & 1.029 & \multicolumn{1}{c}{\textbf{1.042}} \\
+Standard Error & 0.052 & 0.049 & 0.039 & 0.033 & 0.037 & 0.024 & \multicolumn{1}{c}{\textbf{0.042}}\\
+\hline
+\multicolumn{1}{l}{\textbf{With Additive \& Iceberg Trade Costs }} &       &       &       &       &       &       & \multicolumn{1}{c}{\textbf{}}\\
+\multicolumn{1}{l}{\textit{Additive term }} &       &       &       &       &       &       & \multicolumn{1}{c}{\textbf{}} \\
+\multicolumn{1}{l}{Mean } & 0.026 & 0.020 & 0.018 & 0.013 & 0.011 & 0.010 & \multicolumn{1}{c}{\textbf{0.019}} \\
+\multicolumn{1}{l}{Median} & 0.011 & 0.005 & 0.008 & 0.005 & 0.004 & 0.005 & \multicolumn{1}{c}{\textbf{0.007}} \\
+\multicolumn{1}{l}{Standard Error} & 0.040 & 0.041 & 0.033 & 0.028 & 0.024 & 0.020 & \multicolumn{1}{c}{\textbf{0.076}} \\
+\multicolumn{1}{l}{\textit{Iceberg term}} &       &       &       &       &       &       & \multicolumn{1}{c}{\textbf{}} \\
+\multicolumn{1}{l}{Mean } & 1.036 & 1.023 & 1.024 & 1.017 & 1.026 & 1.017 & \multicolumn{1}{c}{\textbf{1.025}} \\
+\multicolumn{1}{l}{Median} & 1.027 & 1.016 & 1.016 & 1.012 & 1.022 & 1.017 & \multicolumn{1}{c}{\textbf{1.018}} \\
+Standard Error & 0.032 & 0.025 & 0.021 & 0.016 & 0.023 & 0.012 & \multicolumn{1}{c}{\textbf{0.023}} \\
+\hline
+\# observations & 14955 & 16118 & 24958 & 35027 & 40279 & 39351 & \textbf{} \\
+
+\hline\hline
+    \end{tabular}%
+  \end{center}
+  \label{tab:result_air}%
+\tiny{Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fob price. }
+\end{table}%
+
+
+\begin{table}[htbp]
+  \centering
+  \caption{Vessel: Dynamics of Trade Costs over Time}
+\begin{center}
+    \begin{tabular}{lccccccc}
+
+  %  \toprule
+   \hline\hline
+          & \multicolumn{6}{c}{Year}                      &  \\
+
+          & 1974  & 1980  & 1990  & 2000  & 2010  & 2013  & \multicolumn{1}{c}{\textbf{Mean stat}} \\
+ \hline
+   \textbf{With only Iceberg Trade Costs} &       &       &       &       &       &       & \textbf{} \\
+Mean  & 1.098 & 1.065 & 1.057 & 1.051 & 1.040 & 1.036 & \textbf{1.058} \\
+Median & 1.096 & 1.055 & 1.046 & 1.049 & 1.036 & 1.033 & \textbf{1.051} \\
+Standard Error & 0.053 & 0.040 & 0.032 & 0.028 & 0.020 & 0.018 & \textbf{0.032} \\
+\textbf{With Additive \& Iceberg Trade Costs} &       &       &       &       &       &       & \textbf{} \\
+\hline
+\textit{Additive term } &       &       &       &       &       &       & \textbf{} \\
+Mean  & 0.051 & 0.034 & 0.027 & 0.028 & 0.025 & 0.015 & \textbf{0.029} \\
+Median & 0.029 & 0.023 & 0.017 & 0.022 & 0.019 & 0.008 & \textbf{0.019} \\
+Standard Error & 0.085 & 0.046 & 0.040 & 0.043 & 0.025 & 0.020 & \textbf{0.041} \\
+\textit{Iceberg term} &       &       &       &       &       &       & \textbf{} \\
+Mean  & 1.054 & 1.031 & 1.033 & 1.025 & 1.019 & 1.022 & \textbf{1.032} \\
+Median & 1.049 & 1.024 & 1.028 & 1.021 & 1.018 & 1.018 & \textbf{1.028} \\
+Standard Error & 0.041 & 0.023 & 0.022 & 0.021 & 0.018 & 0.018 & \textbf{0.028} \\
+\hline
+\# obs & 19007 & 17356 & 28383 & 36090 & 37748 & 38473 & \textbf{} \\
+
+
+\hline\hline
+    \end{tabular}%
+  \end{center}
+  \label{tab:result_ves}%
+\tiny{Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fob price. }
+\end{table}%
+
+\newpage
+
+\appendix
+
+\section{Results with a Higher Level of Products Disaggregation }
+%\vspace{-0.5cm}
+\begin{table}[htbp]
+  \centering
+  \caption{Air: Measures of Goodness-of-fit, 4-digits}
+\begin{center}
+\label{tab:good_fit_air_rob}%
+%\vspace{0.5cm}
+\scalebox{0.97}{
+\begin{tabular}{lccccccc}
+\hline
+\hline
+      & \multicolumn{6}{c}{Year}                      &  \\
+      & \multicolumn{1}{c}{1974} & \multicolumn{1}{c}{1981} & \multicolumn{1}{c}{1989} & \multicolumn{1}{c}{2001} & \multicolumn{1}{c}{2009} & \multicolumn{1}{c}{2013} & \multicolumn{1}{c}{\textbf{Mean stat}} \\
+\hline
+\textbf{R2} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       &       &       & \multicolumn{1}{c}{\textbf{}}\\
+Term I only & \multicolumn{1}{c}{0.48} & \multicolumn{1}{c}{0.49} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.45} & \multicolumn{1}{c}{0.35} & \textbf{0.47} \\
+Terms A \& I & \multicolumn{1}{c}{0.63} & \multicolumn{1}{c}{0.66} & \multicolumn{1}{c}{0.65} & \multicolumn{1}{c}{0.66} & \multicolumn{1}{c}{0.54} & \multicolumn{1}{c}{0.45} & \textbf{0.63} \\
+\textbf{SER} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \textbf{} \\
+Term I only & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       & \multicolumn{1}{c}{0.88} & \multicolumn{1}{c}{0.93} & \textbf{0.89} \\
+Terms A \& I & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       & \multicolumn{1}{c}{0.80} & \multicolumn{1}{c}{0.86} & \textbf{0.79} \\
+\textbf{Log-likelihood} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \textbf{} \\
+Term I only & \multicolumn{1}{c}{-17505.55} & \multicolumn{1}{c}{-21813.46} & \multicolumn{1}{c}{-30960.56} & \multicolumn{1}{c}{-44067.62} & \multicolumn{1}{c}{-49375.57} & \multicolumn{1}{c}{-53197.87} & \textbf{-34744.40} \\
+Terms A\& I & \multicolumn{1}{c}{-14895.81} & \multicolumn{1}{c}{-18589.91} & \multicolumn{1}{c}{-26553.53} & \multicolumn{1}{c}{-37297.93} & \multicolumn{1}{c}{-45747.57} & \multicolumn{1}{c}{-49899.14} & \textbf{-30243.95} \\
+\textbf{AIC criteria} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \textbf{} \\
+Term I only & \multicolumn{1}{c}{36243.10} & \multicolumn{1}{c}{44966.91} & \multicolumn{1}{c}{63417.12} & \multicolumn{1}{c}{89747.24} & \multicolumn{1}{c}{100317.13} & \multicolumn{1}{c}{107963.73} & \textbf{70940.07} \\
+Terms A \& I & \multicolumn{1}{c}{31873.63} & \multicolumn{1}{c}{39495.82} & \multicolumn{1}{c}{55777.05} & \multicolumn{1}{c}{77439.85} & \multicolumn{1}{c}{94059.14} & \multicolumn{1}{c}{102224.28} & \textbf{62955.73} \\
+\textbf{Test LL} &       &       &       &       &       &       & \textbf{} \\
+2$\times$(ll(UR) -ll(R)) & \multicolumn{1}{c}{5219.47} & \multicolumn{1}{c}{6447.09} & \multicolumn{1}{c}{8814.06} & \multicolumn{1}{c}{13539.39} & \multicolumn{1}{c}{7255.99} & \multicolumn{1}{c}{6597.45} & \textbf{9000.89} \\
+\# restrictions  & \multicolumn{1}{c}{640} & \multicolumn{1}{c}{698} & \multicolumn{1}{c}{778} & \multicolumn{1}{c}{833} & \multicolumn{1}{c}{824} & \multicolumn{1}{c}{818} & \textbf{755.73} \\
+p-value & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \textbf{} \\
+\hline\hline
+\end{tabular}}%
+\end{center}
+ \vspace{-10pt} \tiny{Note: I = Iceberg; A = Additive; SER = Standard Error of regression; AIC = Akaike Information Criterion. Statistics are obtained weighting each observation by its value in transport (mode-dependent). Term A expressed in fraction of fob price. R$^{2}$ between the log of predicted ratio and the log of the observed ratio. The number \# of restrictions is equal to the number of parameters estimated, i.e., the number of partner countries plus the number of products.}
+\end{table}%
+
+\begin{table}[H]
+  \centering
+  \caption{Vessel: Measures of Goodness-of-fit, 4-digits}
+\begin{center}
+\label{tab:good_fit_ves_rob}%
+
+\scalebox{0.97}{\begin{tabular}{lccccccc}
+\hline
+\hline
+      & \multicolumn{6}{c}{Year}                      &  \\
+      & \multicolumn{1}{c}{1974} & \multicolumn{1}{c}{1981} & \multicolumn{1}{c}{1989} & \multicolumn{1}{c}{2001} & \multicolumn{1}{c}{2009} & \multicolumn{1}{c}{2013} & \multicolumn{1}{c}{\textbf{Mean stat}} \\ \hline
+\boldmath{}\textbf{R$^{2}$}\unboldmath{} &       &       &       &       &       &       &  \\
+Term I only & 0.50  & 0.45  & \multicolumn{1}{c}{0.47} & \multicolumn{1}{c}{0.41} & \multicolumn{1}{c}{0.37} & \multicolumn{1}{c}{0.35} & \multicolumn{1}{c}{\textbf{0.44}} \\
+Terms A \& I & 0.66  & 0.62  & \multicolumn{1}{c}{0.62} & \multicolumn{1}{c}{0.58} & \multicolumn{1}{c}{0.51} & \multicolumn{1}{c}{0.46} & \multicolumn{1}{c}{\textbf{0.59}} \\
+\textbf{SER} &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{0.79} & \multicolumn{1}{c}{0.82} & \multicolumn{1}{c}{\textbf{0.77}} \\
+Terms A \& I &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{0.69} & \multicolumn{1}{c}{0.75} & \multicolumn{1}{c}{\textbf{0.68}} \\
+\textbf{Log-likelihood} &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & -16460.10 & -16951.61 & \multicolumn{1}{c}{-26771.44} & \multicolumn{1}{c}{-39008.34} & \multicolumn{1}{c}{-43888.90} & \multicolumn{1}{c}{-47161.62} & \multicolumn{1}{c}{\textbf{-29883.62}} \\
+Terms A\& I & -12743.65 & -13546.92 & \multicolumn{1}{c}{-21752.77} & \multicolumn{1}{c}{-33280.96} & \multicolumn{1}{c}{-39078.86} & \multicolumn{1}{c}{-43399.22} & \multicolumn{1}{c}{\textbf{-25303.92}} \\
+\textbf{AIC criteria} &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{\textbf{}} \\
+Term I only & 34464.19 & 35491.21 & \multicolumn{1}{c}{55272.87} & \multicolumn{1}{c}{79800.67} & \multicolumn{1}{c}{89459.80} & \multicolumn{1}{c}{95987.23} & \multicolumn{1}{c}{\textbf{61425.60}} \\
+Terms A \& I & 28271.29 & 29877.84 & \multicolumn{1}{c}{46595.55} & \multicolumn{1}{c}{69743.91} & \multicolumn{1}{c}{81155.73} & \multicolumn{1}{c}{89692.44} & \multicolumn{1}{c}{\textbf{53573.29}} \\
+\textbf{Test LL} &       &       & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} \\
+2$\times$(ll(UR) -ll(R)) & 12385.80 & 11226.75 & \multicolumn{1}{c}{17354.65} & \multicolumn{1}{c}{20113.52} & \multicolumn{1}{c}{16608.16} & \multicolumn{1}{c}{12589.59} & \multicolumn{1}{c}{15704.63} \\
+\# restrictions  & 797   & 814   & \multicolumn{1}{c}{881} & \multicolumn{1}{c}{910} & \multicolumn{1}{c}{886} & \multicolumn{1}{c}{874} & \multicolumn{1}{c}{860} \\
+p-value & 0.000 & 0.000 & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} \\
+
+\hline\hline
+\end{tabular}}
+\end{center}
+  \vspace{-10pt}\tiny{Note: I = Iceberg; A = Additive; SER = Standard Error of regression; AIC = Akaike Information Criterion. Statistics are obtained weighting each observation by its value in transport (mode-dependent). Term A expressed in fraction of fob price. R$^{2}$ between the log of predicted ratio and the log of the observed ratio. The number \# of restrictions is equal to the number of parameters estimated, i.e., the number of partner countries plus the number of products.}
+\end{table}%
+
+
+\begin{table}[htbp]
+  \centering
+  \caption{Air: Dynamics of Trade Costs over Time}
+\begin{center}
+    \begin{tabular}{lccccccc}
+
+  %  \toprule
+   \hline\hline
+          & \multicolumn{6}{c}{Year}                      &  \\
+
+
+& 1974  & 1981  & 1989  & 2001  & 2009  & 2013  & \textbf{Mean Stat}\\
+
+\hline
+\textbf{With only Iceberg Trade Costs} &       &       &       &       &       &       &  \\
+Mean  & 1.066 & 1.058 & 1.052 & \multicolumn{1}{c}{1.033} & \multicolumn{1}{c}{1.037} & \multicolumn{1}{c}{1.032} & \multicolumn{1}{c}{\textbf{1.049}} \\
+Median & 1.052 & 1.044 & 1.041 & \multicolumn{1}{c}{1.021} & \multicolumn{1}{c}{1.027} & \multicolumn{1}{c}{1.026} & \multicolumn{1}{c}{\textbf{1.037}} \\
+Standard Error & 0.056 & 0.054 & 0.046 & \multicolumn{1}{c}{0.040} & \multicolumn{1}{c}{0.036} & \multicolumn{1}{c}{0.025} & \multicolumn{1}{c}{\textbf{0.045}} \\
+\hline
+\textbf{With Additive \& Iceberg Trade Costs } &       &       &       &       &       &       & \textbf{} \\
+\textit{Additive term} &       &       &       &       &       &       & \multicolumn{1}{c}{\textbf{}} \\
+Mean  & 0.026 & 0.021 & 0.017 & \multicolumn{1}{c}{0.012} & \multicolumn{1}{c}{0.012} & \multicolumn{1}{c}{0.010} & \multicolumn{1}{c}{\textbf{0.019}} \\
+Median & 0.012 & 0.006 & 0.006 & \multicolumn{1}{c}{0.005} & \multicolumn{1}{c}{0.004} & \multicolumn{1}{c}{0.004} & \multicolumn{1}{c}{\textbf{0.008}} \\
+Standard Error & 0.039 & 0.042 & 0.033 & \multicolumn{1}{c}{0.027} & \multicolumn{1}{c}{0.029} & \multicolumn{1}{c}{0.019} & \multicolumn{1}{c}{\textbf{0.034}} \\
+\textit{Iceberg term} &       &       &       &       &       &       & \textbf{} \\
+Mean  & 1.035 & 1.026 & 1.031 & \multicolumn{1}{c}{1.015} & \multicolumn{1}{c}{1.021} & \multicolumn{1}{c}{1.016} & \multicolumn{1}{c}{\textbf{1.024}} \\
+Median & 1.025 & 1.017 & 1.019 & \multicolumn{1}{c}{1.010} & \multicolumn{1}{c}{1.017} & \multicolumn{1}{c}{1.014} & \multicolumn{1}{c}{\textbf{1.016}} \\
+Standard Error & 0.036 & 0.028 & 0.030 & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{0.015} & \multicolumn{1}{c}{\textbf{0.026}} \\
+\hline
+\# obs & 14944 & 16844 & 25307 & \multicolumn{1}{c}{35005} & \multicolumn{1}{c}{38475} & \multicolumn{1}{c}{39460} & \multicolumn{1}{c}{\textbf{}} \\
+
+\hline\hline
+    \end{tabular}%
+  \end{center}
+  \label{tab:result_air_rob}%
+\tiny{Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fob price. }
+\end{table}%
+
+
+\begin{table}[htbp]
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+  \centering
+\caption{Vessel: Dynamics of Trade Costs over Time}
+\begin{center}
+    \begin{tabular}{lccccccc}
+  %  \toprule
+   \hline\hline
+          & \multicolumn{6}{c}{Year}                      &  \\
+& 1974  & 1981  & 1989  & 2001  & 2009  & 2013  & \textbf{Mean Stat}\\
+\hline
+\textbf{With only Iceberg Trade Costs} &       &       &       &       &       &       & \textbf{} \\
+Mean  & 1.098 & 1.061 & \multicolumn{1}{c}{1.058} & \multicolumn{1}{c}{1.051} & \multicolumn{1}{c}{1.042} & \multicolumn{1}{c}{1.036} & \textbf{1.060} \\
+Median & 1.094 & 1.051 & \multicolumn{1}{c}{1.048} & \multicolumn{1}{c}{1.045} & \multicolumn{1}{c}{1.038} & \multicolumn{1}{c}{1.031} & \textbf{1.052} \\
+Standard Error & 0.060 & 0.038 & \multicolumn{1}{c}{0.036} & \multicolumn{1}{c}{0.030} & \multicolumn{1}{c}{0.023} & \multicolumn{1}{c}{0.020} & \textbf{0.036} \\
+\hline
+\textbf{With Additive \& Iceberg Trade Costs } &       &       &       &       &       &       & \textbf{}\\
+\textit{Additive term} &       &       &       &       &       &       & \textbf{} \\
+Mean  & 0.046 & 0.026 & \multicolumn{1}{c}{0.031} & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.015} & \textbf{0.028} \\
+Median & 0.029 & 0.013 & \multicolumn{1}{c}{0.019} & \multicolumn{1}{c}{0.015} & \multicolumn{1}{c}{0.013} & \multicolumn{1}{c}{0.008} & \textbf{0.017} \\
+Standard Error & 0.068 & 0.044 & \multicolumn{1}{c}{0.037} & \multicolumn{1}{c}{0.035} & \multicolumn{1}{c}{0.031} & \multicolumn{1}{c}{0.023} & \textbf{0.039} \\
+\textit{Iceberg term} &       &       &       &       &       &       & \textbf{} \\
+Mean  & 1.054 & 1.034 & \multicolumn{1}{c}{1.028} & \multicolumn{1}{c}{1.028} & \multicolumn{1}{c}{1.024} & \multicolumn{1}{c}{1.021} & \textbf{1.033} \\
+Median & 1.049 & 1.030 & \multicolumn{1}{c}{1.024} & \multicolumn{1}{c}{1.025} & \multicolumn{1}{c}{1.026} & \multicolumn{1}{c}{1.018} & \textbf{1.028} \\
+Standard Error & 0.043 & 0.026 & \multicolumn{1}{c}{0.025} & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.016} & \multicolumn{1}{c}{0.013} & \textbf{0.025} \\
+\# obs & 19196 & 17916 & \multicolumn{1}{c}{29387} & \multicolumn{1}{c}{36677} & \multicolumn{1}{c}{37643} & \multicolumn{1}{c}{38820} & \textbf{}\\
+\hline\hline
+    \end{tabular}%
+  \end{center}
+  \label{tab:result_ves_rob}%
+\vspace{-10pt}\tiny{Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fob price. }
+\end{table}%
+
+\end{document}
