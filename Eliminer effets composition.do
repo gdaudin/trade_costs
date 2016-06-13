@@ -49,7 +49,7 @@ program nldeter_couts_add
 
 				scalar `feA_`type_FE'_`num_FE'' =`at'[1,`n']
 
-				if ("`type_FE'"!="year") replace terme_A = terme_A + (`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE')
+				if ("`type_FE'"!="year") replace terme_A = terme_A + (exp(`feA_`type_FE'_`num_FE'') * `type_FE'_`num_FE')
 				if ("`type_FE'"=="year") replace terme_A = terme_A * (exp(`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE'))
 				local n = `n'+1
 			}
