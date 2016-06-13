@@ -31,10 +31,11 @@ sort random
 *keep if _n<=1000
 
 
-generate expl_costs = Cost_to_export*Vk/prix_fob
-generate expl_freight = Vk*dist/prix_fob
+*generate expl_costs = Cost_to_export*Vk/prix_fob
+*generate expl_freight = Vk*dist/prix_fob
 
-
+generate expl_costs = Cost_to_export/prix_fob
+generate expl_freight = dist/prix_fob
 
 generate ln_TC_ik =.
 generate expl_ins=.
@@ -63,8 +64,10 @@ foreach year of num 2005/2013 {
 				keep if mode=="`mode'"
 				assert _N>=10
 				if `controle'==0 nl (ln_TC_ik = log({coef_costs=1}*expl_costs+{coef_ins=1}*expl_ins+{coef_freight=1}*expl_freight))
+				*if `controle'==1 nl (ln_TC_ik = log({coef_costs=1}*expl_costs+{coef_ins=1}*expl_ins+{coef_freight=1}*expl_freight /*
+			*		*/+ {coef_EC=1}*Cost_to_export + {coef_Vk=1}*Vk + {coef_dist=1}*dist + {coef_prix_fob=1}/prix_fob))
 				if `controle'==1 nl (ln_TC_ik = log({coef_costs=1}*expl_costs+{coef_ins=1}*expl_ins+{coef_freight=1}*expl_freight /*
-					*/+ {coef_EC=1}*Cost_to_export + {coef_Vk=1}*Vk + {coef_dist=1}*dist + {coef_prix_fob=1}/prix_fob))
+					*/+ {coef_EC=1}*Cost_to_export +  {coef_dist=1}*dist + {coef_prix_fob=1}/prix_fob))
 				if "`controle'"=="dist" nl (ln_TC_ik = log({coef_dist=1}*dist))
 			
 				putexcel set Résultats_déterminants_des_coûts_`year'.xlsx, sheet(`controle'_`mode'_`term') modify
