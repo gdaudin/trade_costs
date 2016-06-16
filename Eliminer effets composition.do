@@ -14,6 +14,28 @@ set maxvar 32767
 
 
 
+if "`c(username)'" =="guillaumedaudin" {
+	global dir ~/dropbox/trade_cost
+}
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox\trade_cost
+}
+
+
+if "`c(hostname)'" =="lise-HP" {
+	global dir C:\Users\lise\Dropbox\trade_cost
+}
+
+cd $dir
+
+capture log using "`c(current_time)' `c(current_date)'"
+
+* En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
+
+
+
 
 ******************************************************************
 *** FONCTION ESTIMATION NON-LINEAIRE pour ADDITIFS ****
@@ -67,23 +89,6 @@ program nldeter_couts_add
 
 
 
-if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/trade_cost
-}
-
-
-if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost
-}
-
-
-if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost
-}
-
-cd $dir
-
-* En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
 
 
 * On part de la base estim_TC.dta, qui collecte déjà l'essentiel de l'information nécessaire, pour 3 digits
@@ -301,8 +306,8 @@ foreach mode in air ves {
 		local initial_`type_FE'
 		forvalue num_FE =  1/`nbr_`type_FE'' {
 			if  "`type_FE'" =="prod" |`num_FE'!=1 {
-						if ("`type_FE'" !="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 0.02
-						if ("`type_FE'" =="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 1.02
+						if ("`type_FE'" !="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' -2
+						if ("`type_FE'" =="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 0.02
 			}
 				
 		}		
@@ -357,7 +362,7 @@ foreach mode in air ves {
 	local n 1
 	
 		foreach i in `liste_year' {
-			replace effet_fixe= X[1,`n'] in `n'
+			replace effet_fixe= exp(X[1,`n']) in `n'
 			local n=`n'+1
 		}
 	
