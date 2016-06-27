@@ -14,34 +14,43 @@ set maxvar 32767
 
 
 if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") global dir ~/dropbox/trade_cost
-
-
-
 if ("`c(hostname)'" =="LAB0271A") 	global dir C:\Users\lpatureau\Dropbox\trade_cost
-
-
 if ("`c(hostname)'" =="lise-HP") global dir C:\Users\lise\Dropbox\trade_cost
 
 
-if ("`c(os)'"=="MacOSX") use $dir/results/estimTC_augmented.dta, clear
-if ("`c(os)'"!="MacOSX") use $dir\results\estimTC_augmented.dta, clear
+use $dir/results/estimTC_augmented.dta, clear
+
+
+generate wgt=ves_wgt
+replace wgt=air_wgt if mode=="air"
+
+*drop air_wgt ves_wgt
+
+
+bys iso_o year mode : egen TWim = total(wgt) 
+label var TWim "Total weight imported by the US by that mode from that country"
+
+
+
 
 generate random=runiform()
-sort random
+*sort random
 *keep if _n<=1000
 
 
 generate expl_costs = Cost_to_export*Vk/prix_fob
 generate expl_freight = Vk*dist/prix_fob
+generate margin_proxy = expl_freight*TWim
 
 
 
 generate ln_TC_ik =.
 generate expl_ins=.
 
+cd $dir
 putexcel set Résultats_déterminants_des_coûts_`year'.xlsx, replace
 
-foreach year of num 2005/2013 {
+foreach year of num 2005 {
 	foreach controle in 0 1 dist {
 	
 		foreach mode in ves air  {
@@ -62,8 +71,10 @@ foreach year of num 2005/2013 {
 				keep if year==`year'
 				keep if mode=="`mode'"
 				assert _N>=10
-				if `controle'==0 nl (ln_TC_ik = log({coef_costs=1}*expl_costs+{coef_ins=1}*expl_ins+{coef_freight=1}*expl_freight))
-				if `controle'==1 nl (ln_TC_ik = log({coef_costs=1}*expl_costs+{coef_ins=1}*expl_ins+{coef_freight=1}*expl_freight /*
+				if `controle'==0 nl (ln_TC_ik = log({coef_costs=1}*expl_costs+{coef_ins=1}*expl_ins+{coef_freight=1}*expl_freight/*
+					*/+{coef_margin=1}*margin_proxy +{beta_5=1}*TWim))
+				if `controle'==1 nl (ln_TC_ik = log({coef_costs=1}*expl_costs+{coef_ins=1}*expl_ins+{coef_freight=1}*expl_freight/*
+					*/+{coef_margin=1}*margin_proxy +{beta_5=1}*TWim/*
 					*/+ {coef_EC=1}*Cost_to_export + {coef_Vk=1}*Vk + {coef_dist=1}*dist + {coef_prix_fob=1}/prix_fob))
 				if "`controle'"=="dist" nl (ln_TC_ik = log({coef_dist=1}*dist))
 			
