@@ -8,7 +8,7 @@ version 14.1
 
 clear all
 *set mem 800m
-set matsize 11000
+set matsize 8000
 set more off
 set maxvar 32767
 
@@ -34,7 +34,7 @@ capture log using "`c(current_time)' `c(current_date)'"
 
 * En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
 
-/*
+
 
 
 ******************************************************************
@@ -51,12 +51,13 @@ program nldeter_couts_add
 	summarize year, meanonly
 	local nbr_year=r(max)-r(min)+1
 	local nbr_var = `nbr_iso_o'+`nbr_prod'+`nbr_year'+1-2
+	*En effet, je garde toutse les variables pour les produits, et j'enlève une pour les années et une pour les pays 
 		
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 
 	
-	capture drop terme_A
-	generate double terme_A=0
+	tempvar terme_A_dsbcle
+	generate double `terme_A_dsbcle'=0
 	local ln_terme_A : word 1 of `varlist'
 		
 
@@ -71,22 +72,22 @@ program nldeter_couts_add
 
 				scalar `feA_`type_FE'_`num_FE'' =`at'[1,`n']
 
-				if ("`type_FE'"!="year") replace terme_A = terme_A + (exp(`feA_`type_FE'_`num_FE'') * `type_FE'_`num_FE')
-				if ("`type_FE'"=="year") replace terme_A = terme_A * (exp(`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE'))
+				if ("`type_FE'"!="year") replace `terme_A_dsbcle' = `terme_A_dsbcle' + (exp(`feA_`type_FE'_`num_FE'') * `type_FE'_`num_FE')
+				if ("`type_FE'"=="year") replace `terme_A_dsbcle' = `terme_A_dsbcle' * (exp(`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE'))
 				local n = `n'+1
 			}
 		}
 	}
 
 	
-	replace `ln_terme_A' = ln(terme_A) `if'
+	replace `ln_terme_A' = ln(`terme_A_dsbcle') `if'
 
 	end
 **********************************************************************
 ************** FIN FONCTION
 **********************************************************************	
 
-*/
+
 
 
 
@@ -107,11 +108,11 @@ if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 *replace air_val = val if mode =="air"
 *drop val
 
-replace terme_A = terme_A+1
+*replace terme_A = terme_A
 keep if year == 1974
 
 foreach mode in air ves {
-	foreach type_TC in iceberg A I {
+	foreach type_TC in A iceberg I{
 	
 		sum terme_`type_TC' [fweight= val] if mode=="`mode'" 
 		generate terme_`type_TC'_`mode'_mp = r(mean)
@@ -142,23 +143,18 @@ save database_pureTC, replace
 
 
 
-foreach mode in air /* ves*/ {
+foreach mode in air ves {
 
 	
 	
 	if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
 	if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
-	replace terme_A = terme_A+1
 	
 	keep if mode=="`mode'"
 	
 	
-	
- 
-	
-	
-*	keep if year < 1980
-	local limit 35
+	keep if year < 1980
+	local limit 15
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
 	bys iso_o : drop if _N<=`limit'
@@ -170,44 +166,39 @@ foreach mode in air /* ves*/ {
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
 	
-	generate prod_pays=iso_o+"_"+product
-	bys prod_pays : drop if _N<=`limit'
-	encode prod_pays, generate(prod_pays_num)
+	foreach type_TC in iceberg I A {
+		
+		bys mode : egen c_95_`type_TC' = pctile(terme_`type_TC'),p(95)
+		bys mode : egen c_05_`type_TC' = pctile(terme_`type_TC'),p(05)
+		drop if terme_`type_TC' < c_05_`type_TC' | terme_`type_TC' > c_95_`type_TC'
+	}
 	
+		
+
 	
-	
 
 
 
 
-
-
-	foreach type_TC in /*iceberg I */A {
+	foreach type_TC in iceberg I {
 		*** Step 1 et 2 - Estimation sur couts de transport estimés en iceberg/terme_I seulement
 		*** On précise l'équation en log
 
 		** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
 		** avec i : pays origine, k = product, t = year
 		preserve
+	
+	
 		
-		bys mode : egen c_95_`type_TC' = pctile(terme_`type_TC'),p(95)
-		bys mode : egen c_05_`type_TC' = pctile(terme_`type_TC'),p(05)
-		drop if terme_`type_TC' < c_05_`type_TC' | terme_`type_TC' > c_95_`type_TC'
+	
+	
 	
 		
 		gen ln_terme_`type_TC' = ln(terme_`type_TC')
 		
+		display "Regression `type_TC' `mode'"
 		
-		codebook ln_terme_`type_TC' if mode=="`mode'"
-		summarize ln_terme_`type_TC' if mode=="`mode'"
-		codebook terme_`type_TC' if mode=="`mode'"
-		summarize terme_`type_TC' if mode=="`mode'"
-		display "Régression  `type_TC' //// `mode'"
-		
-		reg ln_terme_`type_TC' i.year i.prod_pays_num if mode =="`mode'", /*nocons*/ robust 
-		
-		predict predictTC_`type_TC'_`mode'
-		save predictTC_`type_TC'_`mode'
+		xi: reg ln_terme_`type_TC' i.year i.product i.iso_o if mode =="`mode'", /*nocons*/ robust 
 		
 		
 		* Enregistrer les effets fixes temps
@@ -223,7 +214,7 @@ foreach mode in air /* ves*/ {
 		 
 		keep year effet_fixe
 		bys year : keep if _n==1
-		*drop if year==1974
+		drop if year==1974
 		
 		insobs `nbr_year'
 		local n 1
@@ -255,7 +246,7 @@ foreach mode in air /* ves*/ {
 
 
 
-/*
+
 
 *** Step 2 - Estimation sur couts de transport additifs
 *** On NE PEUT PAS PROCEDER de la même façon que pour les autres
@@ -271,13 +262,15 @@ foreach mode in air /* ves*/ {
 
 	
 	drop if terme_A==0 | terme_A==.
-	replace terme_A = terme_A +1
 	gen ln_terme_A = ln(terme_A)
 	
 	************************ Importé de Estim_value_TC
 		******************************************Régression
 	
-
+replace iso_o = "0ARG" if iso_o=="ARG"
+**Le premier pays (AFG) ne fait pas de commerce du premier bien (001) en 1974. Je change de manière à ce que l'Argentine passe en tête
+**L'argentine fait bien du commerce de 001 en 1974
+**Sinon, j'ai un soucis avec les EF que j'enlève dans l'équation non-linéaire.
 	
 	*Pour nombre de product
 	quietly egen group_prod=group(product)
@@ -342,11 +335,11 @@ foreach mode in air /* ves*/ {
 	
 	
 	
-	local liste_variables `liste_variables_year' `liste_variables_iso_o' `liste_variables_prod'  
+	local liste_variables `liste_variables_iso_o' `liste_variables_prod'  `liste_variables_year' 
 	
 	** pour estimation NL both A & I
-	local liste_parametres `liste_parametres_year' `liste_parametres_iso_o' `liste_parametres_prod'  
-	local initial `initial_year' `initial_iso_o' `initial_prod'  
+	local liste_parametres  `liste_parametres_iso_o' `liste_parametres_prod'  `liste_parametres_year'
+	local initial  `initial_iso_o' `initial_prod'  `initial_year'
 	
 *	display "Liste des variables :" "`liste_variables'"
 *	display "Liste des paramètres :" "`liste_parametres'"
@@ -359,18 +352,29 @@ foreach mode in air /* ves*/ {
 	timer on 1
 	
 	
+	display "Regression terme_A `mode'"
 	
 	
-	*nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	display "nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')"
+	
+	nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	
 	
-*	blouk
+	predict ln_terme_A_predict
+	generate terme_A_predict=exp(ln_terme_A_predict)
+	twoway (scatter ln_terme_A_predict ln_terme_A)
+	
+	save blouk.dta, replace
+	
 	
 	* Enregistrer les effets fixes temps
 	
 	
 	* matrice des coefficients estimés
+	
+*	set trace on
 	capture	matrix X= e(b)
+	matrix dir
 	
 	generate effet_fixe=.
 	 
@@ -380,15 +384,17 @@ foreach mode in air /* ves*/ {
 	quietly levelsof year, local (liste_year) clean
 	
 	
+	display "local n = `nbr_iso_o' + `nbr_prod' - 1 + 1"
+	local n = `nbr_iso_o' + `nbr_prod' - 1 + 1
 	
-*	insobs `nbr_year'
-	local n 1
-	
-		foreach i in `liste_year' {
-			replace effet_fixe= exp(X[1,`n']) in `n'
+		
+	display "`liste_year'"	
+	foreach i in `liste_year' {
+			display "effet_fixe= X[1,`n'] if year==`i'"
+			replace effet_fixe= X[1,`n'] if year==`i'
 			local n=`n'+1
 		}
-	
+	list
 	
 	drop if effet_fixe == .
 	
@@ -404,14 +410,10 @@ foreach mode in air /* ves*/ {
 	
 	list
 	
+*	set trace off
 	save database_pureTC, replace
 
-
-*/	
 }
-
-
-
 
 
 * Ajouter 1974 et partir d'une valeur 100 en 1974
@@ -423,14 +425,25 @@ append using start_year
 sort year
 
 
-foreach mode in/* air*/ ves {
-	foreach type_TC in /*iceberg I */A {
+foreach mode in air ves {
+	foreach type_TC in iceberg I {
 		generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
 		replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 		replace terme_`type_TC'_`mode'_mp = 100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
 		label var terme_`type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
 	}
 }
+
+
+foreach mode in air ves {
+	foreach type_TC in  A {
+		generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
+		replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
+		replace terme_`type_TC'_`mode'_mp = 100*exp(effetfixe_`type_TC'_`mode')
+		label var terme_`type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
+	}
+}
+
 
 
 
@@ -441,4 +454,4 @@ save database_pureTC, replace
 */
 
 
-erase start_year.dta
+*erase start_year.dta
