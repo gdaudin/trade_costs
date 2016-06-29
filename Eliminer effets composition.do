@@ -8,7 +8,7 @@ version 14.1
 
 clear all
 *set mem 800m
-set matsize 8000
+set matsize 11000
 set more off
 set maxvar 32767
 
@@ -34,7 +34,7 @@ capture log using "`c(current_time)' `c(current_date)'"
 
 * En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
 
-
+/*
 
 
 ******************************************************************
@@ -86,7 +86,7 @@ program nldeter_couts_add
 ************** FIN FONCTION
 **********************************************************************	
 
-
+*/
 
 
 
@@ -142,18 +142,23 @@ save database_pureTC, replace
 
 
 
-foreach mode in air ves {
+foreach mode in air /* ves*/ {
 
 	
 	
 	if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
 	if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
+	replace terme_A = terme_A+1
 	
 	keep if mode=="`mode'"
 	
 	
+	
+ 
+	
+	
 *	keep if year < 1980
-	local limit 15
+	local limit 35
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
 	bys iso_o : drop if _N<=`limit'
@@ -165,6 +170,11 @@ foreach mode in air ves {
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
 	
+	generate prod_pays=iso_o+"_"+product
+	bys prod_pays : drop if _N<=`limit'
+	encode prod_pays, generate(prod_pays_num)
+	
+	
 	
 
 
@@ -172,19 +182,32 @@ foreach mode in air ves {
 
 
 
-	foreach type_TC in iceberg I {
+	foreach type_TC in /*iceberg I */A {
 		*** Step 1 et 2 - Estimation sur couts de transport estimés en iceberg/terme_I seulement
 		*** On précise l'équation en log
 
 		** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
 		** avec i : pays origine, k = product, t = year
 		preserve
+		
+		bys mode : egen c_95_`type_TC' = pctile(terme_`type_TC'),p(95)
+		bys mode : egen c_05_`type_TC' = pctile(terme_`type_TC'),p(05)
+		drop if terme_`type_TC' < c_05_`type_TC' | terme_`type_TC' > c_95_`type_TC'
 	
 		
 		gen ln_terme_`type_TC' = ln(terme_`type_TC')
 		
-		* Pour air
-		xi: reg ln_terme_`type_TC' i.year i.product i.iso_o if mode =="`mode'", nocons robust 
+		
+		codebook ln_terme_`type_TC' if mode=="`mode'"
+		summarize ln_terme_`type_TC' if mode=="`mode'"
+		codebook terme_`type_TC' if mode=="`mode'"
+		summarize terme_`type_TC' if mode=="`mode'"
+		display "Régression  `type_TC' //// `mode'"
+		
+		reg ln_terme_`type_TC' i.year i.prod_pays_num if mode =="`mode'", /*nocons*/ robust 
+		
+		predict predictTC_`type_TC'_`mode'
+		save predictTC_`type_TC'_`mode'
 		
 		
 		* Enregistrer les effets fixes temps
@@ -200,7 +223,7 @@ foreach mode in air ves {
 		 
 		keep year effet_fixe
 		bys year : keep if _n==1
-		drop if year==1974
+		*drop if year==1974
 		
 		insobs `nbr_year'
 		local n 1
@@ -232,7 +255,7 @@ foreach mode in air ves {
 
 
 
-
+/*
 
 *** Step 2 - Estimation sur couts de transport additifs
 *** On NE PEUT PAS PROCEDER de la même façon que pour les autres
@@ -338,7 +361,7 @@ foreach mode in air ves {
 	
 	
 	
-	nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	*nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	
 	
 *	blouk
@@ -383,7 +406,12 @@ foreach mode in air ves {
 	
 	save database_pureTC, replace
 
+
+*/	
 }
+
+
+
 
 
 * Ajouter 1974 et partir d'une valeur 100 en 1974
@@ -395,8 +423,8 @@ append using start_year
 sort year
 
 
-foreach mode in air ves {
-	foreach type_TC in iceberg I A {
+foreach mode in/* air*/ ves {
+	foreach type_TC in /*iceberg I */A {
 		generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
 		replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 		replace terme_`type_TC'_`mode'_mp = 100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
