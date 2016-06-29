@@ -30,7 +30,8 @@ replace wgt=air_wgt if mode=="air"
 bys iso_o year mode : egen TWim = total(wgt) 
 label var TWim "Total weight imported by the US by that mode from that country"
 
-
+* Essai sur observé
+gen prix_trsp2 = prix_caf/prix_fob 
 
 
 generate random=runiform()
@@ -58,7 +59,7 @@ foreach year of num 2005 {
 			
 			replace expl_ins = ins_`mode'
 			
-			foreach term in terme_A terme_I terme_iceberg { 
+			foreach term in prix_trsp2 terme_A terme_I terme_iceberg { 
 			
 				if "`term'"!="terme_A" replace ln_TC_ik = ln(`term'-1) 
 				* A prendre en % ?
