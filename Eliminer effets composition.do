@@ -153,7 +153,7 @@ foreach mode in air ves {
 	keep if mode=="`mode'"
 	
 	
-	keep if year < 1980
+	*keep if year < 1980
 	local limit 15
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
