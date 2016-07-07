@@ -10,7 +10,7 @@ set matsize 8000
 set more off
 set maxvar 32767
 
-** Dans ce programme, on estime les déterminats des coûts de transport version "structurelle" **
+** Dans ce programme, on estime les déterminants des coûts de transport version "structurelle" **
 
 if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") global dir ~/dropbox/trade_cost
 if ("`c(hostname)'" =="LAB0271A") 	global dir C:\Users\lpatureau\Dropbox\trade_cost
@@ -48,85 +48,128 @@ label variable prix_trsp2 "prix_caf/prix_fob"
 * sans : l'inverse
 
 
-/* * Vk "nul part"
+* Vk "nul part"
  ** couts a dditifs
 generate expl_costs_add = Cost_to_export/prix_fob
+generate expl_ins_add = .
 generate expl_freight_add  = dist/prix_fob
-generate margin_proxy_add = expl_freight*TWim
+generate margin_proxy_add = expl_freight_add*TWim
 
 
 ** couts multiplicatifs - on autorise aussi les composantes freight et handling costs
 ** à avoir une composante multiplicative
 
 
-generate expl_ins=.
+generate expl_ins_mult   =.
 generate expl_costs_mult = Cost_to_export
 generate expl_freight_mult  = dist
 generate margin_proxy_mult = dist*TWim
 
-*/
+
+
 
 /*
 ** Vk "partout"
 ** couts a dditifs
 generate expl_costs_add = Cost_to_export*Vk/prix_fob
+generate expl_ins_add = .
 generate expl_freight_add  = Vk*dist/prix_fob
-generate margin_proxy_add = expl_freight*TWim
+generate margin_proxy_add = expl_freight_add*TWim
 
 
 ** couts multiplicatifs - on autorise aussi les composantes freight et handling costs
 ** à avoir une composante multiplicative
 
 
-generate expl_ins=.
+generate expl_ins_mult=.
 generate expl_costs_mult = Cost_to_export*Vk
 generate expl_freight_mult  = Vk*dist
 generate margin_proxy_mult = Vk*dist*TWim
-
 */
 
 
+
+/*
 ** Vk "dans add pas dans mult"
 ** couts a dditifs
 generate expl_costs_add = Cost_to_export*Vk/prix_fob
+generate expl_ins_add = .
 generate expl_freight_add  = Vk*dist/prix_fob
-generate margin_proxy_add = expl_freight*TWim
+
+generate margin_proxy_add = expl_freight_add*TWim
 
 
 ** couts multiplicatifs - on autorise aussi les composantes freight et handling costs
 ** à avoir une composante multiplicative
 
 
-generate expl_ins=.
+generate expl_ins_mult=.
 generate expl_costs_mult = Cost_to_export
 generate expl_freight_mult  = dist
+
 generate margin_proxy_mult = dist*TWim
+*/
 
 
 
 cd $dir
+putexcel set Résultats_déterminants_des_coûts_sur_observé.xlsx, replace
 
-keep if year==2005
 
+*foreach year of num 2005/2013 {
+
+foreach year of num 2005 {	
+
+foreach controle in 0 1 {
+
+foreach mode in ves air  {
+
+preserve
+
+keep if mode =="`mode'"
+keep if year == `year'
 
 bys product: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
 bys product: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
 drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
 
-
-keep if mode=="air"
-
-replace expl_ins = ins_air
-*gen expl_ins_add = expl_ins/prix_fob
+replace expl_ins_mult = ins_`mode'
+replace expl_ins_add = ins_`mode'/prix_fob
 
 
-drop if expl_ins==. | expl_freight_add==. | expl_costs_add==.			
+drop if expl_ins_mult==. | expl_freight_add==. | expl_costs_add==.			
 assert _N>=10
 
-* sans la variable de marge 
-nl (ln_ratio_minus1= log({coef_costs_add=1}*expl_costs_add +{coef_freight_add=1}*expl_freight_add /*
-			*/+ {coef_margin_add=1}*margin_proxy_add +{coef_margin_mult=1}*margin_proxy_mult + {coef_ins=1}*expl_ins /*
+
+if `controle' == 0 nl (ln_ratio_minus1= log({coef_costs_add=1}*expl_costs_add +{coef_freight_add=1}*expl_freight_add /*
+			*/+ {coef_ins_add=1}*expl_ins_add + {coef_margin_add=1}*margin_proxy_add +{coef_margin_mult=1}*margin_proxy_mult + {coef_ins_mult=1}*expl_ins_mult /*
 			*/+ {coef_costs_mult=1}*expl_costs_mult +{coef_freight_mult=1}*expl_freight_mult ))  
+	
+
+if `controle' == 1 nl (ln_ratio_minus1= log({coef_costs_add=1}*expl_costs_add +{coef_freight_add=1}*expl_freight_add /*
+			*/+ {coef_ins_add=1}*expl_ins_add  + {coef_ins_mult=1}*expl_ins_mult /*
+			*/+ {coef_costs_mult=1}*expl_costs_mult +{coef_freight_mult=1}*expl_freight_mult ))  
+
+			
+putexcel set Résultats_déterminants_des_coûts_sur_observe.xlsx, sheet(`year'_`mode'_`controle') modify
+
+if `controle' == 1 putexcel A1="Régression sans la variable de marge"
+if `controle' == 0 putexcel A1="Régression avec la variable de marge"
+
+				putexcel C2="Coef."
+				matrix b = e(b)'
+				putexcel A3=matrix(b), rownames nformat(scientific_d2)
+				mata: ecart_types_mata=sqrt(diagonal(st_matrix("e(V)")))
+				*matrix ecart_types=(vecdiag(e(V)*e(V)))'
+				mata: st_matrix("ecart_types",ecart_types_mata)
+				putexcel D2="écart-type"
+				putexcel D3=matrix(ecart_types),  nformat(scientific_d2)
+				
+					
+				putexcel E2="R2 adjusted"
+				local R2_a = e(r2_a)
+				putexcel E3=`e(r2_a)', nformat(number_d2) 
+				
 			
 predict blink_nl
 
@@ -135,43 +178,63 @@ gen predict_nl = exp(blink_nl)+1
 * Faire la décomposition additif / multiplicatif
 
 * Sauvegarder les variables
-foreach var in expl_costs_add expl_freight_add margin_proxy_add expl_ins expl_costs_mult expl_freight_mult margin_proxy_mult {
-	gen old_`var' = `var'
-}
+
+foreach var in expl_costs_add expl_ins_add expl_freight_add margin_proxy_add expl_costs_mult expl_ins_mult expl_freight_mult margin_proxy_mult {
+	gen old_`var' = `var' 
+	}
 	
 * Reconstruire le terme additif (mettre tous les termes en multiplicatif à 0)
 
-foreach var in expl_ins margin_proxy_mult expl_costs_mult expl_freight_mult {
+foreach var in expl_ins_mult margin_proxy_mult expl_costs_mult expl_freight_mult {
 	replace `var' = 0
 }
 
-predict terme_struct_A
-replace terme_struct_A = exp(terme_struct_A)
+predict terme_A_struct
+replace terme_A_struct = exp(terme_A_struct)
 
-foreach var in expl_ins margin_proxy_mult expl_costs_mult expl_freight_mult {
+foreach var in expl_ins_mult margin_proxy_mult expl_costs_mult expl_freight_mult {
 	replace `var' = old_`var'
 	*erase old_`var'
 }
 
 * Reconstruire le terme multiplicatif (mettre tous les termes en additif à 0)
 
-foreach var in expl_costs_add expl_freight_add margin_proxy_add  {
+foreach var in expl_costs_add expl_ins_add expl_freight_add margin_proxy_add  {
 	replace `var' = 0
 }
 
-predict terme_struct_I
-replace terme_struct_I = exp(terme_struct_I)+1
+predict terme_I_struct
+replace terme_I_struct = exp(terme_I_struct)+1
 
-foreach var in expl_costs_add expl_freight_add margin_proxy_add {
+foreach var in expl_costs_add expl_ins_add expl_freight_add margin_proxy_add {
 	replace `var' = old_`var'
 	*erase old_`var'
 }
 
-pwcorr (terme_A terme_struct_A)
+putexcel A12="Corrélation entre terme_A estimé première étape et terme_A structurel"
 
-pwcorr (terme_I terme_struct_I)
+pwcorr (terme_A terme_A_struct)
+local correlation = r(rho)
 
-blif
+putexcel A13=`correlation', nformat(number_d2) 
+
+
+putexcel A14="Corrélation entre terme_I estimé première étape et terme_I structurel"
+
+pwcorr (terme_I terme_I_struct)
+local correlation = r(rho)
+
+putexcel A15=`correlation', nformat(number_d2)
+
+restore
+
+
+
+}
+}
+}
+
+
 
 /* pour garder une trace du resultat, en 2005
 
