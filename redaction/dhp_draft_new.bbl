@@ -1,0 +1,135 @@
+\begin{thebibliography}{25}
+\newcommand{\enquote}[1]{``\,#1\,''}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Alchian and Allen(1964)}]{alchian}
+\textsc{Alchian, A.~A.} and \textsc{Allen, W.~R.} (1964), \emph{University
+  Economics}, Belmont, CA: Wadsworth Publishing Company.
+
+\bibitem[{Anderson and Van~Wincoop(2003)}]{anderson_wincoop}
+\textsc{Anderson, J.} and \textsc{Van~Wincoop, E.} (2003), \enquote{Gravity
+  with Gravitas: A Solution to the Border Puzzle}, \emph{American Economic
+  Review}, vol.~93 \,n\textsuperscript{o}~1: pp. 170--192.
+
+\bibitem[{Anderson and Van~Wincoop(2004)}]{anderson_wincoop_jel}
+\textsc{Anderson, J.} and \textsc{Van~Wincoop, E.} (2004), \enquote{Trade
+  Costs}, \emph{Journal of Economic Literature}, vol.~42
+  \,n\textsuperscript{o}~3: pp. 691--751.
+
+\bibitem[{Anderson and Yotov(2010)}]{anderson_yotov}
+\textsc{Anderson, J.~E.} and \textsc{Yotov, Y.~V.} (2010), \enquote{The
+  Changing Incidence of Geography}, \emph{American Economic Review}, vol. 100
+  \,n\textsuperscript{o}~5: p. 2157–2186.
+
+\bibitem[{Behar and Venables(2011)}]{Behar_Venables}
+\textsc{Behar, A.} and \textsc{Venables, A.~J.} (2011), \enquote{Transport
+  costs and International Trade}, in \textsc{A.~de Palma, E. Q. R.~V.,
+  R.~Lindsey} (editor), \emph{A Handbook of Transport Economics}, Cheltenham:
+  Edward Elgar Publishing Ltd.
+
+\bibitem[{Chen and Novy(2012)}]{chen_novy}
+\textsc{Chen, N.} and \textsc{Novy, D.} (2012), \enquote{On the Measurement of
+  Trade Costs: Direct vs. Indirect Approaches to Quantifying Standards and
+  Technical Regulations}, \emph{World Trade Review}, vol.~11
+  \,n\textsuperscript{o}~3: pp. 401--414.
+
+\bibitem[{Combes and Lafourcade(2005)}]{combes_lafourcade}
+\textsc{Combes, P.-P.} and \textsc{Lafourcade, M.} (2005), \enquote{Transport
+  Costs: Measures, Determinants and Regional Policy Implications for France},
+  \emph{Journal of Economic Geography}, vol.~5: pp. 319--349.
+
+\bibitem[{Disdier and Head(2008)}]{Disdier_Head08}
+\textsc{Disdier, A.-C.} and \textsc{Head, K.} (2008), \enquote{The Puzzling
+  Persistence of the Distance Effect on Bilateral Trade}, \emph{The Review of
+  Economics and Statistics}, vol.~90 \,n\textsuperscript{o}~1: pp. 37--48.
+
+\bibitem[{Glaeser and Kohlhase(2004)}]{Glaeser04}
+\textsc{Glaeser, E.~L.} and \textsc{Kohlhase, J.~E.} (2004), \enquote{Cities,
+  regions and the decline of transport costs}, \emph{Papers in Regional
+  Science}, vol.~83: pp. 197--228.
+
+\bibitem[{Head and Mayer(2004)}]{Head_Mayer04}
+\textsc{Head, K.} and \textsc{Mayer, T.} (2004), \enquote{The empirics of
+  agglomeration and trade}, in \textsc{J.V.~Henderson, J.~T.} (editor),
+  \emph{Handbook of Regional ad Urban Economics, Volume IV}, Amsterdam:
+  North-Holland.
+
+\bibitem[{Hornok and Koren(2015)}]{Hornok14}
+\textsc{Hornok, C.} and \textsc{Koren, M.} (2015), \enquote{Per-Shipment Costs
+  and the Lumpiness of International Trade}, \emph{Review of Economics and
+  Statistics}, vol.~97 \,n\textsuperscript{o}~2: pp. 525--530.
+
+\bibitem[{Hummels(2007)}]{hummels2007}
+\textsc{Hummels, D.} (2007), \enquote{Transportation Costs and International
+  Trade in the Second Era of Globalization}, \emph{Journal of Economic
+  Perspectives}, vol.~21 \,n\textsuperscript{o}~3: pp. 131--154.
+
+\bibitem[{Hummels(2010)}]{hummels2010}
+\textsc{Hummels, D.} (2010), \enquote{Transportation Costs and Adjustment to
+  Trade}, in \textsc{Hoekman, B.} and \textsc{Porto, G.} (editors), \emph{Trade
+  Adjustment Costs in Developing Countries: Impacts, Determinants and Policy
+  Responses}, London: Center for Economic Policy Research.
+
+\bibitem[{Hummels and Lugovskyy(2006)}]{hummels_rie}
+\textsc{Hummels, D.} and \textsc{Lugovskyy, V.} (2006), \enquote{Are Matched
+  Partner Trade Statistics a Usable Measure of Transportation Costs?},
+  \emph{Review of International Economics}, vol.~14 \,n\textsuperscript{o}~1:
+  pp. 69--86.
+
+\bibitem[{Hummels and Skiba(2004)}]{hummels_skiba}
+\textsc{Hummels, D.} and \textsc{Skiba, S.} (2004), \enquote{Shipping the Good
+  Apples Out? An Empirical Confirmation of the Alchian-Allen Conjecture},
+  \emph{Journal of Political Economy}, vol. 112.
+
+\bibitem[{Irarrazabal \emph{et~al.}(2015)}]{Irrazabal_2015}
+\textsc{Irarrazabal, A.}, \textsc{Moxnes, A.} and \textsc{Opromolla, L.~D.}
+  (2015), \enquote{The Tip of the Iceberg: A Quantitative Framework for
+  Estimating Trade Costs}, \emph{The Review of Economics and Statistics}, vol.
+  forthcoming.
+
+\bibitem[{Jacks \emph{et~al.}(2008)}]{Jacks08}
+\textsc{Jacks, D.~S.}, \textsc{Meissner, C.~M.} and \textsc{Novy, D.} (2008),
+  \enquote{Trade Costs, 1870-2000}, \emph{American Economic Review, Papers and
+  Proceedings}, vol.~98 \,n\textsuperscript{o}~2: pp. 529--534.
+
+\bibitem[{Lafourcade and Thisse(2011)}]{Lafourcade_Thisse}
+\textsc{Lafourcade, M.} and \textsc{Thisse, J.-F.} (2011), \enquote{New
+  Economic Geography: the Role of Transport Costs}, in \textsc{A.~de Palma, E.
+  Q. R.~V., R.~Lindsey} (editor), \emph{A Handbook of Transport Economics},
+  Cheltenham: Edward Elgar Publishing Ltd.
+
+\bibitem[{Lashkaripour(2015)}]{Lashka15}
+\textsc{Lashkaripour, A.} (2015), \enquote{Worth its Weight in Gold: Product
+  Weight, International Shipping, and Patterns of Trade}, Mimeo Indiana
+  University.
+
+\bibitem[{Martin(2012)}]{martin2012}
+\textsc{Martin, J.} (2012), \enquote{Markups, Quality, and Transport Costs},
+  \emph{European Economic Review}, vol.~56: pp. 777--791.
+
+\bibitem[{Melitz(2003)}]{melitz}
+\textsc{Melitz, M.} (2003), \enquote{The Impact of Trade on Intra-Industry
+  Reallocations and Aggregate Industry Productivity}, \emph{Econometrica},
+  vol.~71 \,n\textsuperscript{o}~6: pp. 1695--1725.
+
+\bibitem[{Novy(2013)}]{novy13}
+\textsc{Novy, D.} (2013), \enquote{Gravity Redux: Measuring International Trade
+  Costs with Panel Data}, \emph{Economic Inquiry}, vol.~51
+  \,n\textsuperscript{o}~1: pp. 101--121.
+
+\bibitem[{Obstfeld and Rogoff(2000)}]{rogoff}
+\textsc{Obstfeld, M.} and \textsc{Rogoff, K.} (2000), \enquote{The Six Major
+  Puzzles in International Macroeconomics: Is There a Common Cause?}, NBER
+  Working Papers 7777.
+
+\bibitem[{Samuelson(1954)}]{samuelson1954}
+\textsc{Samuelson, P.} (1954), \enquote{The Transfer Problem and Transport
+  Costs, II: Analysis of Effects of Trade Impediments}, \emph{Economic
+  Journal}, vol.~64: p. 264–289.
+
+\bibitem[{Sorensen(2014)}]{sorensen2014}
+\textsc{Sorensen, A.} (2014), \enquote{Additive versus multiplicative trade
+  costs and the gains from trade}, \emph{Canadian Journal of Economics},
+  vol.~47 \,n\textsuperscript{o}~3: pp. 1032--1046.
+
+\end{thebibliography}

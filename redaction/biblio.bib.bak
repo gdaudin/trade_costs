@@ -28,43 +28,6 @@
   number={C},
   pages={1-17}}
 
-  @Article{Disdier_Head08,
-  author={Anne-Celia Disdier and Keith Head},
-  title={The Puzzling Persistence of the Distance Effect on Bilateral Trade},
-  journal={The Review of Economics and Statistics},
-  year=2008,
-  volume={90},
-  number={1},
-  pages={37-48}}
-
-  @Article{hummels_rie,
-  author={David Hummels and Volodymyr Lugovskyy},
-  title={Are Matched Partner Trade Statistics a Usable Measure of Transportation Costs?},
-  journal={ Review of International Economics},
-  year=2006,
-  volume={14},
-  number={1},
-  pages={69-86}}
-
-
-  @Article{Glaeser04,
-  author={Edward L. Glaeser and Janet E. Kohlhase},
-  title={Cities, regions and the decline of transport costs},
-  journal={Papers in Regional Science},
-  year=2004,
-  volume={83},
-  pages={197-228}}
-
-@Article{sorensen2014,
-  author={Sorensen, Allan},
-  title={Additive versus multiplicative trade costs and the gains from trade},
-  journal={Canadian Journal of Economics},
-  year=2014,
-  volume={47},
-  number={3},
-  pages={1032-1046}}
-
-
 @unpublished{bernardetal2012,
   author={Bernard, Andrew B. and Blanchard, Emily and van Beveren, Ilke and Vandenbussche, Hylke},
   title={Carry-Along Trade},
@@ -100,27 +63,6 @@
   pages={73-85}
   }
 
-@Article{Jacks08,
-  author={David S. Jacks and Christopher M. Meissner and Dennis Novy},
-  title={Trade Costs, 1870-2000},
-  journal={American Economic Review, Papers and Proceedings},
-  year=2008,
-  volume={98},
-  number={2},
-  pages={529-534}
-  }
-
-@article{Hornok14,
-    title="Per-Shipment Costs and the Lumpiness of International Trade",
-    author="Cecília Hornok and Miklós Koren",
-    year=2015,
-    journal="Review of Economics and Statistics",
-    volume=97,
-    number="2",
-    pages="525-530"
-}
-
-
 
 @Article{berthou_vicard2014,
   author={Antoine Berthou and Vincent Vicard},
@@ -149,14 +91,6 @@ type={NBER Working Papers},
 number={19326}
 }
 
-@Article{Irrazabal_2015,
-  author={Alfonso Irarrazabal and Andreas Moxnes and Luca David Opromolla},
-  title={The Tip of the Iceberg: A Quantitative Framework for Estimating Trade Costs},
-  journal={The Review of Economics and Statistics},
-  year=2015,
-  volume={forthcoming}
-  }
-
 
 
 @Article{hummels_klenow2005,
@@ -167,25 +101,15 @@ number={19326}
   volume={95},
   number={3},
   pages={704-723}}
-
-  21 (2007)  pp. 131-154.
-
-@Article{hummels2007,
-  author={Hummels, David},
-  title={Transportation Costs and International Trade in the Second Era of Globalization},
-  journal={Journal of Economic Perspectives},
-  year=2007,
-  volume={21},
-  number={3},
-  pages={131-154}}
-
+  
 @Article{martin2012,
   author={Martin, Julien},
-  title={Markups, Quality, and Transport Costs},
+  title={XXX},
   journal={European Economic Review},
-  year=2012,
-  volume={56},
-  pages={777-791}}
+  year=2005,
+  volume={95},
+  number={3},
+  pages={704-723}}
 
 @Article{frankel_rose_EJ98,
   author={Frankel, Jeffrey A and Rose, Andrew K},
@@ -222,13 +146,6 @@ AUTHOR={Forlani, Emanuele},
 TITLE={Firms Credit Constraints and Export Propensity},
 YEAR=2008,
 NOTE= {mimeo CORE / Universite Catholique de Louvain}
-}
-
-@UNPUBLISHED{Lashka15,
-AUTHOR={Ahmad Lashkaripour},
-TITLE={Worth its Weight in Gold: Product Weight, International Shipping, and Patterns of Trade},
-YEAR=2015,
-NOTE= {mimeo Indiana University}
 }
 
 @UNPUBLISHED{suwad,
@@ -423,14 +340,6 @@ pages={333-335}}
 }
 
 
-@Article{samuelson1954,
-  author={Samuelson, Paul},
-  title={The Transfer Problem and Transport Costs, II: Analysis of Effects of Trade Impediments},
-  journal={Economic Journal},
-  year=1954,
-  volume={64},
-  pages={264–289}}
-
 @Article{aghion_fally_scarpetta,
   author={Aghion, Philippe and Fally, Thibault and Scarpetta, Stefano },
   title={Credit constraints as a barrier to the entry and post-entry growth of firms},
@@ -439,25 +348,13 @@ pages={333-335}}
   volume={22}
   pages={731-779}}
 
-@Article{hummels_skiba,
-  author={Hummels, David and Skiba, Sasha},
-  title={Shipping the Good Apples Out?  An Empirical Confirmation of the Alchian-Allen Conjecture},
-  journal={Journal of Political Economy},
-  year=2004,
-  volume={112}
-  pages={1384-1402}}
+
 
 @BOOK{wooldridge2002,
 AUTHOR={Wooldridge, J.},
 TITLE={Econometric analysis of cross section and panel data},
 PUBLISHER={Cambridge, MA: The MIT Press.},
 YEAR={2002}}
-
-@BOOK{alchian,
-AUTHOR={Alchian, Armen A. and Allen, William R.},
-TITLE={University Economics},
-PUBLISHER={Belmont, CA: Wadsworth Publishing Company},
-YEAR={1964}}
 
 
 
@@ -647,14 +544,6 @@ PUBLISHER={Cambridge: Cambridge University Press},
 YEAR={2005}}
 %PAGES={80–108}}
 
-@InCollection{hummels2010,
-AUTHOR={David Hummels},
-EDITOR={B. Hoekman and G. Porto},
-TITLE={Transportation Costs and Adjustment to Trade},
-BOOKTITLE={Trade Adjustment Costs in Developing Countries: Impacts, Determinants and Policy Responses},
-PUBLISHER={London: Center for Economic Policy Research},
-YEAR={2010}
-PAGES={255–264}}
 
 @InCollection{Schiantarelli95,
 AUTHOR={Fabio Schiantarelli},
@@ -761,8 +650,8 @@ journal={American Economic Review},
   year=2013,
   VOLUME={forth.}
   }
-
-
+  
+  
   @Article{cristea_etal2013,
   author={Cristea, Anca and Hummels, David and Puzzello, Laura and Avetisyan, Misak},
   title={{Trade and the greenhouse gas emissions from international freight transport}},
@@ -901,7 +790,7 @@ NOTE={NBER Working Papers 19170}
   volume={93},
   number={1},
   pages={170-192}}
-
+  
 @Article{anderson_wincoop_jel,
   author={Anderson, J.E. and Van Wincoop, Eric},
   title={Trade Costs},
@@ -910,34 +799,16 @@ NOTE={NBER Working Papers 19170}
   volume={42},
   number={3},
   pages={691-751}}
-
+  
 @Article{combes_lafourcade,
   author={Combes, P.-P. and Lafourcade, Miren},
-  title={Transport Costs: Measures, Determinants and Regional Policy Implications for France},
+  title={ransport Costs: Measures, Determinants and Regional Policy Implications for France},
   journal={Journal of Economic Geography},
   year=2005,
   volume={5},
   pages={319-349}}
+  
 
-
-@Article{novy13,
-  author={Novy, Dennis},
-  title={Gravity Redux: Measuring International Trade Costs with Panel Data},
-  journal={Economic Inquiry},
-  year=2013,
-  volume={51},
-  number={1},
-  pages={101-121}}
-
-
-  @Article{chen_novy,
-  author={Chen, Natahlie and Novy, Dennis},
-  title={On the Measurement of Trade Costs: Direct vs. Indirect Approaches to Quantifying Standards and Technical Regulations},
-  journal={World Trade Review},
-  year=2012,
-  volume={11},
-  number={3},
-  pages={401-414}}
 
 @Article{harrison2004,
   author={Harrison, A. and McMillan, M. and Love, I.},
@@ -3348,43 +3219,4 @@ NUMBER={France}}
   volume={90},
   number={1},
   pages={65-74}
-
-
-@Article{anderson_yotov,
-  author={James E. Anderson and Yoto V. Yotov},
-  title={The Changing Incidence of Geography},
-  journal={American Economic Review},
-  year=2010,
-  volume={100},
-  number={5},
-  pages={2157–2186}
-
-  @InCollection{Lafourcade_Thisse,
-AUTHOR={Miren Lafourcade and Jacques-François Thisse},
-EDITOR={A. de Palma, R. Lindsey, E. Quinet, R. Vickerman},
-TITLE={New Economic Geography: the Role of Transport Costs},
-BOOKTITLE={A Handbook of Transport Economics},
-PUBLISHER={Cheltenham: Edward Elgar Publishing Ltd.},
-YEAR={2011}
-PAGES={67–95}}
 }
-
-
-  @InCollection{Behar_Venables,
-AUTHOR={Alberto Behar and Anthony J. Venables},
-EDITOR={A. de Palma, R. Lindsey, E. Quinet, R. Vickerman},
-TITLE={Transport costs and International Trade},
-BOOKTITLE={A Handbook of Transport Economics},
-PUBLISHER={Cheltenham: Edward Elgar Publishing Ltd.},
-YEAR={2011}
-PAGES={97–114}}
-}
-
-  @InCollection{Head_Mayer04,
-AUTHOR={Keith Head and Thierry Mayer},
-EDITOR={J.V. Henderson, J.F. Thisse},
-TITLE={ The empirics of agglomeration and trade},
-BOOKTITLE={Handbook of Regional ad Urban Economics, Volume IV},
-PUBLISHER={Amsterdam: North-Holland},
-YEAR={2004}
-PAGES={2609–2669}}

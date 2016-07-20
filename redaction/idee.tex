@@ -1,0 +1,717 @@
+
+
+\documentclass[11pt,english,pdftex]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage[centertags]{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage[ansinew]{inputenc}
+\usepackage{babel,varioref}
+\usepackage{natbib}
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.00.0.2552}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{Created=Friday, December 31, 2004 13:48:08}
+%TCIDATA{LastRevised=Friday, April 08, 2011 16:11:47}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="Standard LaTeX\Blank - Standard LaTeX Article">}
+%TCIDATA{Language=American English}
+%TCIDATA{CSTFile=40 LaTeX article.cst}
+
+\setlength{\textwidth}{16.5cm} \setlength{\textheight}{21.5cm}
+\topmargin-1cm \oddsidemargin1pt \evensidemargin0pt
+\baselineskip17pt
+
+
+%%%%%%%%%%% Here are theorem_related declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newtheorem{defi}{Definition}
+\newtheorem{theo}{Theorem}
+\newtheorem{prop}{Proposition}
+%\newtheorem{proof}{Proof}
+\newtheorem{property}{Property}
+\newtheorem{coro}{Corollary}
+\newtheorem{propannex}{Proposition}
+
+\newcounter{countAnnexA}
+\setcounter{countAnnexA}{0}
+\renewcommand{\propannex}{\addtocounter{countAnnexA}{1}
+\noindent \large \textbf{Proposition \thesection.\thecountAnnexA}
+\normalsize}
+
+%\input{tcilatex}
+
+\begin{document}
+
+\section{Problématique}
+
+Essayer de résumer notre problématique. Point de départ du papier: ``The distance puzzle''
+
+What is it? Start from a standard gravity equation
+
+$$\ln X_{ijt} = - \alpha_t \ln d_{ij} + F_i + F_j + F_t$$
+
+where $X_{ijt}$ represents the aggregate trade flows from country $i$ to country $j$ (at time $t$), $d_{ijt}$ is the geographical distance between $i$ and $j$, and $F_i$, $F_j$ are country-fixed effects, and $F_t$ time fixed effects.
+
+We expect $\alpha$ of positive sign, as you trade less with countries that are far away.
+
+The ``puzzle'': $\alpha$ is relatively constant over time, and even slightly increasing over the recent decades (see the paper of Daudin and Elizaveta). This is striking in light of the increasing wave of globalization, that is expected to reduce trade costs, hence the impact of geography on trade. Hence the ``distance puzzle''.
+
+
+Our ambition in this paper is to investigate this distance puzzle. To do so, we refer to the theoretical foundations of the gravity equation.
+
+In fact, it is possible using theory, to decompose the distance coefficient $\alpha$, ie the elasticity of trade flows to distance, as the product of two parameters, let's say $\rho$, that measures the elasticity of iceberg transport costs to geographical distance ($\tau_{ij}=(d_{ij})^\rho$) and $\xi$, that measures the elasticity of trade flows to trade costs.
+
+Depending on the underlying model, one can have an economic interpretation of $\xi$, that is referred to as the ``trade elasticity''.
+
+\begin{itemize}
+\item In the Armington model, the sensitivity of trade flows to trade costs is equal to $\sigma-1$, with $\sigma>1$ the elasticity of substitution between the domestic and foreign varieties. A $\sigma$ is high, goods are highly substitutable, then an increase in trade costs, strongly reduce trade flows between country $i$ to $j$, as household are ready to easily switch from foreign to home goods.
+
+\item In the Ricardian model (Eaton and Kortum, 2002), the aggregate trade elasticity is equal to $\theta$, that measures the Fréchet distribution parameter that captures the degree of efficiency dispersion across sectors (within countries). Broadly speaking, $\theta$ is inversely related to the strength of the comparative advantage. A higher value of $\theta$ means that there is few heterogeneity across sectors, ie there is a low comparative advantage. A weak comparative advantage exerts a small force against trade barriers, and the elasticity of trade to trade costs is high. The higher $\theta$, the less heterogeneity across sectors, the higher the trade elasticity.
+
+\item In the Chaney-Melitz model, the key explanation of the trade elasticity is given by $\gamma$, that is the Pareto distribution which captures the degree of efficiency dispersion across firms (within the same country, and aggregating over sectors). The intuition is straightforward. The higher $\gamma$, the more homogenous the firms' efficiency distribution. That is, the dispersion of firms is low, with a large number of low-productive firms. As a result, a reduction in trade costs changes the cut-off level above which exporting becomes profitable. The extensive margin of trade increases, all the more as $\gamma$ is high, ie that the fall in trade costs meets an area with a large number of firms. The higher $\gamma$, the lower the efficiency dispersion among firms (within sector),  the larger the response of trade flows to trade costs.
+\end{itemize}
+
+Summing up: the distance coefficient is in fact the product of $\rho$ and $\xi$ (whatever the theoretical meaning of $\xi$, depending on the underlying model).
+
+How to account for the distance puzzle, ie the stability of $\alpha$ overt time (over the recent decades)?
+
+\begin{itemize}
+\item Document the evolution of $\alpha$ over years: See work of Daudin and Elizaveta
+\item Two possible explanations:
+\begin{itemize}
+\item The evolution of $\rho$, ie the elasticity of trade costs to geographical distance
+\item The evolution of $\xi$, ie the elasticity of trade flows to trade costs
+\end{itemize}
+
+\item So, to go further in the distance puzzle, to account for the stability of $\alpha$
+\begin{itemize}
+\item How has evolved $\rho$ over time? Intuitively, it has fallen (less weight of distance-related trade costs in overall (variable) trade barriers)
+\item Provided that $\rho$ has decreased over time, stability of $\alpha$ is accounted for by the increase in $\xi$
+
+\end{itemize}
+\item Our ambition: to document this, relying on French export data on the empirical side, and on the Mélitz-Chaney model on the theoretical side. If $\xi$ (ie $\gamma$ in terms of Chaney-Mélitz model) has increased over time, it means that the efficiency dispersion of firms has decreased over time (more homogenous firms), inducing more firms to export along the extensive margin of trade for a given reduction in trade costs.
+
+\item In this case then, it means that ultimately, the change of pattern of trade flows is a question of changing productivities (ie, more homogeneous firms).
+\end{itemize}
+
+Question, what would be the story in the Ricardian model? The lower the strength of comparative advantage, the larger the trade elasticity. That is, if $\theta$ increases over time, it is because sectors (within countries) become more similar. The result, that comparative advantage has become weaker over time, has been documented by Levchenko and Zhang (2011). In comparison with Levchenko and Zhang (2011), we pursue an alternative (but somehow parallel) road, as we base our investigation on the role of heterogeneity within sectors (rather than between sectors).\bigskip
+
+
+Point important: Dans le modèle de Chaney, l'élasticité des trade flows aux coûts du commerce est en fait double, il y a l'élasticité aux coûts fixes et l'élasticité aux coûts variables. Ceci repose sur l'hypothèse que le coût fixe à l'exportation $f_{ij}$ dépend de la distance $d_{ij}$. Dans ce cas, l'élasticité des trade flows à la distance ($\alpha$) dépend \textbf{et} de $\gamma$ le degré de dispersion dans la productivité des firmes, \textbf{et} de $\sigma$, qui est l'élasticité de substitution entre variétés de biens différenciées. De plus, on a une élasticité des coûts de commerce à la distance $\rho$, qui est spécifique à chaque type de coût (fixe ou variable).
+
+Nous: éliminer cette dimension en supposant que le coût fixe d'entrée n'est pas fonction de la distance géographique. A ce moment là, le coefficient $\alpha$ estimé sur données agrégées est bien le produit de l'élasticité des flux du commerce aux coûts de commerce variables, et dans le modèle de Chaney correspond au degré de dispersion dans l'efficacité des firmes ($\gamma$), et de l'élasticité des variable trade costs à la distance géographique.
+
+
+\subsection{Etape 1- Characterizing the evolution of $\rho$}
+
+\begin{itemize}
+\item Par COMTRADE, on a les valeurs unitaires du commerce de 1962 à 2009 (2010?), à un niveau de désagrégation sectoriel de 4 digit
+\item Par la base CEPII, on a les valeurs unitaires du commerce sur un niveau de désagrégation sectoriel de 6 digit. Mais laissons tomber cette base, au moins pour l'instant
+\item On a la distance géographique via la base distance du CEPII
+\item On veut estimer l'évolution de $\rho$, ie:
+
+$$\ln\tau_{ijt} = \rho_t \ln d_{ij} + F_i + F_j $$
+\item Mais attention, on veut cette estimation au niveau agrégé
+\item On peut estimer les trade costs via les valeurs unitaires
+\item Mais, donc on aura les trade costs au niveau sectoriel
+\item Question: comment agréger les trade costs estimés au niveau sectoriel, au niveau agrégé?
+\item[$\Rightarrow$] Réponse: pas besoin d'agréger les trade costs
+\end{itemize}
+
+On part donc de la base COMTRADE, sur 1962-2010. On a une estimation des coûts de transport au niveau sectoriel (4-digit), à partir du ratio  des unit values:
+
+$$TC_{ijkt} = \frac{p^{cif}_{ijkt}}{p^{fob}_{ijkt}}$$
+avec $p^{cif}$ le prix à l'importation, $p^{fob}$ le prix à l'exportation, $i$ le pays exportateur, $j$ le pays importateur, $k$ le secteur et $t$ l'année.
+
+
+\begin{itemize}
+\item On estime l'effet de la distance, selon l'équation
+    $$\ln TC_{ijkt} = \rho_t \ln d_{ij} + F_i+ F_j+ X_{ij}+ F_k$$
+    avec $X_{ij}$ un ensemble de variables de contrôle spécifiques à la paire ($i,j$) (colonisation, langue, frontière commune).
+\item Comme on veut l'évolution temporelle de $\rho$, on estime cette équation année par année
+\item[$\Rightarrow$] Soit, 48 points (pour 1962-2009)
+\item[] Remarque: Si on part sur 500 secteurs (en 4 digit), supposons que 100 pays exportateurs, 100 pays importateurs, on a alors (par année), 500 000 observations, avec 700 effets fixes
+\item[$\Rightarrow$] On obtient alors $\widehat{\rho}_t$
+
+\item Question: cela fait une grosse base, et se pose le pb de la cohérence avec nos données de firme ensuite. Restreindre notre estimation (à ce stade) pour la rendre comparable à l'étape sur données de firmes? Ie
+    \begin{itemize}
+    \item[-] Ne considérer que la France comme pays exportateur ($i$)
+    \item[-] Ne considérer comme pays importateurs que ceux vers laquelle les données de douane françaises nous disent que la France exporte
+    \item[-] Et se restreindre à la période 1993-2007 (couverture des données de douane)?
+    \end{itemize}
+\item Réponse: Ne pas forcément se restreindre a priori au moment de la cosntrauction de la base. Partir large, on pourra toujours vérifier la robustesse de nos résultats sur la base restreintt (France comme exportateur, sur 1993-1997).
+
+
+\item Une fois qu'on a obtenu $\rho_t$ au niveau agrégé, documenter son évolution temporelle, selon l'équation
+
+$$\rho_t = \beta t + u_t$$
+
+\begin{itemize}
+\item Si $\beta$ est significativement positif: élasticité des trade costs à la distance augmente dans le temps, contribue à expliquer le distance puzzle (a priori, pas ce qu'on attend)
+\item Si $\beta$ est non-significativement différent de 0, signifie que l'élasticité des trade costs à la distance est constante au cours du temps (ce qu'on aimerait avoir)
+\item Si $\beta$ est significativement négatif, élasticité des trade costs à la distance diminue au cours du temps, amplfie le puzzle (encore mieux qu'avant)
+\end{itemize}
+
+\end{itemize}
+
+Notre intuition: On s'attend à ce que $\rho$ décroisse au cours du temps (l'élasticité des trade costs à la distance diminue). Dans ce cas, outre apporter une caractérisation empirique de cette élasticité, les résultats de cette étape indiquent qu'il fait aller plus loin pour expliquer le ``distance puzzle''.\bigskip
+
+Question sur cette section: quelle est la littérature qui a estimé cette élasticité? Sur quelles données? Avec quels résultats? A priori peu de papiers mais creuser la question.
+
+\subsection{Etape 2 -- Into the trade costs black box}
+
+S'inscrire dans le débat: Samuelson (1954) vs Alchian and Allen (1964). Ie, les trades costs sont-ils de type iceberg, ou incluent-ils également une composante additive.
+
+Pour résumer, la spécification la plus générale (celle à la Alchian and Allen (1964)) implique la relation suivante entre prix $fob$ et $cif$:
+$$p^{cif}_{ijkt} = \tau_{ijkt}~p^{fob}_{ijkt} + T_{ijkt}$$
+
+Si les trade costs sont uniquement de type iceberg, alors $T_{ijkt}=0$, et le ratio des valeurs unitaires $cif-fob$ est indépendant du prix. En revanche, en présence de trade costs additifs, on obtient qu'il décroit avec le prix de vente à l'epxort, selon:
+\begin{equation}
+\frac{p^{cif}_{ijkt}}{p^{fob}_{ijkt}} = \tau_{ijkt} + \frac{T_{ijkt}}{p^{fob}_{ijkt}} \label{eq:tradecostsEtape2}
+\end{equation}
+
+Dans cette étape, notre ambition est de creuser la spécification des trade costs. Creuser les différents papiers sur cette problématique.
+
+De plus, cette analyse nous permet de tester la robustesse de nos résultats de l'étape 1. Est-ce que notre caractérisation de l'évolution de $\rho$ (l'léasticité des coûts de transport à la distance géographique), est robuste à la spécification des trade costs?
+
+On dispose comme point de départ du ratio des unit values ($\frac{p^{cif}_{ijkt}}p^{fob}_{ijkt}$). Difficultés techniques pour évaluer la pertinence empirique de trade costs additifs (ie, $T_{ijkt} \neq 0$): ça rend les choses additives, donc passage en log (donc, à la forme linéaire) problématique.
+
+\subsubsection{Hypothèse 1}
+
+On fait l'hypothèse que les trade costs iceberg et additifs sont tous les deux fonction de la distance géographique entre $i$ et $j$, ainsi que d'un certain nb de variables spécifiques au pays $i$, au pays $j$ et au secteur $k$, que l'on capture par des effets fixes. De plus, on fait \textbf{ici} l'hypothèse que la forme fonctionnelle est la même, soit:
+\begin{eqnarray*}
+\tau_{ijkt} &=&f(dist_{ij}, F_i,F_j,F_k) = dist_{ij}^{\rho_t}e^{F_i} e^{F_j}e^{F_k} \\
+T_{ijkt} &=&f(dist_{ij}, F_i,F_j,F_k) =dist_{ij}^{\rho_t}e^{F_i} e^{F_j}e^{F_k}
+\end{eqnarray*}
+
+Soit finalement, que $\tau_{ijkt} = T_{ijkt}$
+
+Donc, le ratio des unit values (Equation (\ref{eq:tradecostsEtape2}) s'écrit:
+\begin{eqnarray*}
+&\frac{p^{cif}_{ijkt}}{p^{fob}_{ijkt}} &= dist_{ij}^{\rho_t}\times e^{F_i}\times e^{F_j}\times e^{F_k}\times \left(1+\frac{1}{p^{fob}_{ijkt}}\right) \\
+\Leftrightarrow &\frac{p^{cif}_{ijkt}}{p^{fob}_{ijkt}} & = dist_{ij}^{\rho_t}\times e^{F_i}\times e^{F_j}\times e^{F_k} \times \left(\frac{p^{fob}_{ijkt}+1}{p^{fob}_{ijkt}}\right)
+\end{eqnarray*}
+
+On peut alors considérer le log de cette expression, et l'estimer (année par année), selon
+\begin{equation}
+\ln\left(\frac{p^{cif}_{ijkt}}{p^{fob}_{ijkt}}   \right)= \rho_t \ln dist_{ij}+ F_i + F_j + F_k +\ln\left(\frac{p^{fob}_{ijkt}+1}{p^{fob}_{ijkt}} \right) \label{eq:ttt1}
+\end{equation}
+
+Plus précisément, cela nous amène à réécrire l'équation estimée en modifiant le membre de gauche (variable expliquée):
+\begin{equation}
+\ln\left(\frac{p^{cif}_{ijkt}}{p^{fob}_{ijkt}}   \right)- \ln\left(\frac{p^{fob}_{ijkt}+1}{p^{fob}_{ijkt}} \right)= \rho_t \ln dist_{ij}+ F_i + F_j + F_k   \label{eq:ttt2}
+\end{equation}
+
+Dont on déduit la série temporelle de $\rho$.
+
+
+Pour évaluer la pertinence empirique des coûts de transport additifs, on procède de manière similaire mais \textbf{sans} inclure de coûts de transport additifs, soit en estimant l'équations:
+
+\begin{equation}
+\ln\left(\frac{p^{cif}_{ijkt}}{p^{fob}_{ijkt}}   \right)= \rho_t \ln dist_{ij}+ F_i + F_j + F_k \label{eq:tradecostsICB}
+\end{equation}
+
+
+La comparaison des résultats des deux spécifications nous renseigne sur la valeur des coûts de trasnport additifs (la composante $\ln\left(\frac{p^{fob}_{ijkt}+1}{p^{fob}_{ijkt}} \right)$ étant observation-spécifique)
+\begin{itemize}
+\item La première régression fait-elle mieux (en termes de variance expliquée) que la seconde? Quel est le meilleur fit? Est-ce que le fait d'ajouter ce terme $\ln\left(\frac{p^{fob}_{ijkt}+1}{p^{fob}_{ijkt}} \right)$ ajoute-t-elle du bruit, ou de l'information?
+\item Autre avantage: Selon la spécification qui s'impose, on peut aussi tester la robustesse de nos résultats de l'étape 1, quant à l'évolution temporelle de $\rho$.
+\item Limite: on fait l'hypothèse que les trade costs iceberg et additifs sont liés à la distance et aux effets fixes selon la même forme fonctionnelle
+\end{itemize}
+
+Mais questions (naïves)
+\begin{itemize}
+\item Si conceptuellement les équations (\ref{eq:ttt1}) et (\ref{eq:ttt2}) sont identiques, 
+\item Peut-on vraiment comparer les deux équations (\ref{eq:ttt2}) et (\ref{eq:tradecostsICB})? Vu qu'on ne considère pas la même variable estimée (puisque $\ln\left(\frac{p^{fob}_{ijkt}+1}{p^{fob}_{ijkt}}\right)$ est observation-spécifique, ce n'est donc pas une constante)?
+\end{itemize}
+
+\subsubsection{Hypothèse 2}
+
+On relâche alors l'hypothèse d'une même forme fonctionnelle des trade costs. Plus précisément, on suppose qu'ils sont tjs fonction de la distance et d'effets fixes pays importateurs/exportateur/année, mais avec des coefficients spécifiques, soit:
+\begin{eqnarray*}
+\tau_{ijkt} &=&f^I(dist_{ij}, F^I_i,F^I_j,F^I_k) = (dist_{ij})^{\rho^I_t}\times F^I_i\times F^I_j\times F^I_k \\
+T_{ijkt} &=&f^A(dist_{ij}, F^A_i,F^A_j,F^A_k) =(dist_{ij})^{\rho^A_t}\times F^A_i\times F^A_j\times F^A_k
+\end{eqnarray*}
+
+Alors, on ne peut plus factoriser, et l'équation d'intérêt s'écrit sous forme non-linéaire:
+\begin{eqnarray}
+&\frac{p^{cif}_{ijkt}}{p^{fob}_{ijkt}}= (dist_{ij})^{\rho^I_t}\times e^{F^I_i}\times e^{F^I_j}\times e^{F^I_k}+ \frac{dist_{ij}^{\rho^A_t}\times e^{F^A_i}\times e^{F^A_j}\times e^{F^A_k}}{p^{fob}_{ijkt}} \label{eq:tradecostsNL}
+\end{eqnarray}
+
+Avantages de cette méthode
+\begin{itemize}
+\item On ne se contraint pas à la même forme fonctionnelle sur les trade costs icerberg et additifs
+\item En particulier, on autorise une élasticité différente des trade costs à la distance ($\rho^A$ et $\rho^I$), et on produit une estimation différenciée de leur évolution temporelle
+\end{itemize}
+Questions
+\begin{itemize}
+\item La toolbox ``nl'' sous stata est-elle convaincante
+\item Peut-on estimer en non-linéaire avec des effets fixes? Sous Stata 12?
+\end{itemize}
+
+Si on procède ainsi, on peut là aussi évaluer l'importance des coûts de transport addififs, en comparant les résultats de l'estimation de l'équation (\ref{eq:tradecostsICB}) (iceberg) avec ceux de l'équation (\ref{eq:tradecostsNL}) (attention, l'une est en log, l'autre non). Pour voir laquelle a le meilleur fit.
+
+\subsection{Etape 3 -- Caractériser l'évolution de la trade elasticity}
+
+Résumé: On part du ``distance puzzle'', on veut l'expliquer par le fait que, si l'élasticité des trade flows à la distance est constante, voire croissante au cours du temps, c'est parce que l'élasticité des trade flows aux coûts (variables) du commerce elle-même augmente au cours du temps.
+
+On a montré (!) que l'évolution de l'élasticité des couts du commerce à la distance est constante au cours du temps, ou décroissante. Rest donc à explorer l'évolution de $\xi$ = élasticité des trade flows aux trade costs.
+
+On se base pour cela sur le modèle de Chaney-Mélitz, que l'on teste à partir des données de douanes francçaises, que l'on combine aux données EAE.\medskip
+
+
+Mais, la modélisation adoptée en cette troisième étape, dépend des résultats de l'étape précédente. Si l'étape 2 met en évidence l'existence (au niveau mondial) de côûts de transport additifs ($T_{ijkt} \neq 0$), alors il est nécessaire d'intégrer cette spécification dans le modèle de l'étape 3.
+
+
+\subsubsection{Sur le plan des données}
+
+\begin{itemize}
+\item Données de douane, sur 1993-2010
+\begin{itemize}
+\item[-] Structure des données de douane (par ordre des colonnes): année / siren de la firme / produit / pays (d'exportation) / valeur en euros / masse en kg / unité supplémentaire
+\item[-] Détails,
+\begin{itemize}
+\item[$\star$] la masse, toujours exprimée en kilos, est obligatoire quelque soit la nomenclature de produit (sauf cas trés particulier, et depuis 2006 en flux intracommunautaire quand les unités supplémentaires sont servies)
+\item[$\star$] en plus de la masse, l'opérateur doit aussi fournir 1 chiffre correspondant à une unité supplémentaire (USUP) pour certains produits.
+\item[$\star$] les nomenclatures de produits avec USUP obligatoire sont nombreuses :voir le taleau joint NC2012-FR-rev1 qui reprend toutes les nomenclatures en indiquant s'il y a une USUP ou aller sur le site Pro.douane.fr : Deb sous Pro.douane, Documentation, les nomenclatures NC8, liste récapitulative
+\item[$\star$] les USUP sont diverses : voir liste des unités supplémentaires jointe
+\item[$\star$] Pour résumer, Unités supplémentaires: Cette rubrique n'est fournie que pour autant que la nomenclature du produit l'exige. Ce sont les unités de mesure autres que le kilogramme. Il peut s'agir par exemple: de paires (chaussures de sport NC 64 04 11 00), de litres (eaux minérales NC 22 02 10 00), de grammes (perles de culture NC 71 01 22 00), de $m^2$ (tissus NC 58 03 10 10), etc.
+\end{itemize}
+\end{itemize}
+\item Données EAE: sur 1993-2007
+\begin{itemize}
+\item[-] Vont permettre de calculer la productivité de la firme (rapport valeur ajoutée/emploi), et de croiser ça avec les données de douane (via siren)
+\end{itemize}
+\item Donc, on a des données individuelles de firmes sur 1993-2007, avec toutes les exportations par firme/produit, vers quels pays, pour quelle valeur / quantité (donc, à quel prix), et via les EAE, la productivité de chaque firme qui exporte, et plus largement, de toutes les firmes françaises > 20 salariés
+\end{itemize}
+
+\subsubsection{Sur le plan du modèle}
+
+Dans le modèle de Chaney-Mélitz, si on raisonne au niveau d'un secteur donné, une baisse des coûts de transport $\tau^k_{ij}$ a un impact d'autant plus grand sur les flux de commerce sectoriels, que $\gamma_h$ est grand. Avec $\gamma_h$, le paramètre de la loi de Pareto qui caractérise la distribution des productivités des firmes (au sein d'un secteur donné).
+
+Deux effets
+\begin{itemize}
+\item A la marge intensive: Toutes choses égales par ailleurs, la baisse des coûts de transport permet de vendre plus, donc le flux vendu par chaque firme augmente
+\item A la marge extensive: plus $\gamma_h$ est élevé, plus la distribution des productivités est homogène, et alors la baisse des coûts de transport modifie la valeur seuil de productivité au-delà de laquelle il devient rentable de payer le coût fixe d'exportation, donc plus de firmes entrent sur le marché d'exportations
+\item Notre objectif, caractériser l'évolution du $\gamma$ dans le temps. Notre idée, $\gamma$ augmente au cours du temps, contribue ainsi à expliquer le distance puzzle
+\end{itemize}
+
+\subsubsection{Les difficultés: la question de l'agrégation}
+
+On dispose de données de firmes, avec la productivité de chacune (qu'elle exporte ou non). On veut le paramètre $\gamma$ qui est le coefficient qui représente la dispersion dans la distribution de l'efficience des firmes \textbf{au niveau agrégé}. Ie, en ayant agrégé tous les secteurs.
+
+\begin{itemize}
+\item On peut estimer un $\gamma_h$ par secteur / par année
+\item Question 1: à quel niveau de désagrégation sectorielle? Si on est cohérent avec notre analyse précédente, faut-il estimer un $\gamma_h$ au niveau 4-digit? Combien de secteurs cela représente?
+
+\item Question 2: comment ``remonter'' les $\gamma_h$ sectoriels, au niveau agrégé?
+
+\item Questions connexes: comment gérer si des secteurs apparaissent dans les données d'exportation? ou EAE?
+\begin{itemize}
+\item[-] Si apparaissent dans les douanes, elles doivent apparaitre aussi dans les EAE, si entreprise a plus de 20 salariés. Si ce n'est pas le cas, où ne peut pas tenir compte de cette information, car on ne peut croiser avec la productivité de la firme.
+\item[-] Si n'apparaissent que dans les EAE, et pas les douanes, ça signifie qu'aucune entreprise de ce secteur n'a la productivité seuil suffisante pour exporter. Faut-il tenir compte de ce nouveau secteur?
+\end{itemize}
+\item Que perd-on si on restreint l'échantillon de firmes
+\begin{itemize}
+\item[-] On ne garde dans les EAE que les secteurs où les firmes exportent (ie, on élimine les non échangeables). Vérifier la pertinence de cette hypothèse sur le plan théorique.
+\item[-] Plus précisément, on ne garde que les secteurs (à quel niveau de désagrégation?) qui sont présents \textbf{tout au long de notre échantillon (ie, toutes les années)} dans les données de douane. Comme ça, on est sûr qu'on a bien, pour toutes les années, uniquement les secteurs ``échangeables'', ie ou au moins une entreprise française exporte.
+\end{itemize}
+
+
+
+\end{itemize}
+
+Admettons qu'on ait une estimation du $\gamma$ au niveau agrégé. L'objectif final est alors de caractériser son évolution dans le temps, à partir de l'équation
+
+$$\gamma = \beta t + \epsilon_t$$
+(ou faut-il prendre le log? a voir)
+
+Et caractériser, comme pour $\rho$, la significativité de $\beta$. Idéalement, on voudrait obtenir $\beta$ significativement positif: On apporterait alors une explication au ``distance puzzle'' par l'évolution (à la hausse) de l'élasticité des flux de commerce aux trade costs, elle-même liée à l'évolution de la dispersion des productivités des firmes, qui sont plus homogènes au cours du temps, ie que c'est donc parce que la marge extensive du commerce joue de plus en plus.
+
+
+\section{Eléments de modélisation sur l'étape 3}
+
+\subsection{Le cas des coûts de transport iceberg}
+On part du modèle de \cite{Chaney-AER-08}.
+
+\subsubsection{Main assumptions}
+
+There a N potentially asymmetric countries that produce goods using only labor. Country $n$ has a population $L_n$ (exogenous and constant). Consumers in each country maximize utility, that derives from the consumption of goods in $H+1$ sectors.
+
+Sector $Z$ provides a single homogeneous good, while each of the other $H$ sectors produce differentiated varieties, with firms in monopolistic competition.
+
+More precisely, we adopt the following specifications. In country $i$, overall utility is given by:
+
+\begin{equation}
+\mathcal{U}_i =(C_i^X)^\mu(C_{i}^Z)^{1-\mu} \qquad 0<\mu<1 \label{eq:utility}
+\end{equation}
+
+with $C_i^X$ the aggregate bundle of differentiated goods produced in the $H$ sectors. As in \cite{Chaney-AER-08} or \cite{Imbs-Mejean-WP}, we adopt a Cobb-Douglas specification for the composite good of all sectorial bundles ($C_i^X$):
+
+\begin{equation}
+C_i^X =\prod_{h=1}^H\left(\frac{C^h_i}{\alpha_h}\right)^{\alpha_h} \qquad \text{with}\sum_{h=1}^H \alpha_h =1 \label{eq:prefgoodX}
+\end{equation}
+
+As such, there is an unitary elasticity of substitution across sectorial varieties.
+
+Last, we retain CES preferences for varieties within a given differentiated sector $h$, such as:
+
+\begin{equation}
+C_i^h = \left[\int_{\Omega_h}\left(c_i^h(\omega)\right)^{\frac{\sigma_h-1}{\sigma_h}} d\omega \right]^{\frac{\sigma_h}{\sigma_h-1}} \label{eq:prefgoodh}
+\end{equation}
+
+with $\sigma_h>1$ the elasticity of substitution between differentiated goods in sector $h$, $\Omega_h$ the set of available varieties (endogenously determined) and $\omega$ a given variety. $c_i^h(\omega)$ thus denotes the consumption by country $i$, of good $\omega$ produced in sector $h$.
+
+
+As the homogenous good $Z$ is assumed to be freely traded at the worlwide level, with no trade costs, its price is equalized across countries and we normalize its price by 1. Good $Z$ thus serves as numéraire.Good $Z$ is produced under CRS, with one unit of labor in country $n$ producing $w_n$ units of good $Z$. That is, if country $n$ produces this good $Z$ (which is assumed, see Footnote 4 de \cite{Chaney-AER-08}), the wage in country $n$ is $w_n$.
+
+
+By contrast, goods in the $H$ sectors are subject to trade costs. First, when exporting one variety $\omega$ of sector $h$ from country $i$ to $j$, there are some loss due to iceberg transport cost, ie $\tau^h_{ij}$. Second, firms have to pay a fixed cost of exporting from $i$ to $j$, denoted $f_{ij}^h$. Both fixed and variable costs are assumed to be sector-specific. Due to the presence of fixed costs, firms in all the differentiated sectors operate under increasing-returns-to-scale technology.
+
+Besides, following \cite{Chaney-AER-08}, we assume that firms are heterogenous in productivity. Each firm in a given sector $h$ drams a random unit labor productivity $\varphi$. The efficiency parameter is drawn from a Pareto distribution with shape parameter $\gamma_h$, such that:
+\begin{equation}
+Pr(\widetilde{\varphi}^h <\varphi)= G_h(\varphi) = 1- \varphi^{-\gamma_h} \qquad \text{with }\gamma_h >\sigma_h-1
+\end{equation}
+
+\subsubsection{Programs of the agents}
+
+\paragraph{The household's program: Obtaining the demand functions}
+
+
+Let's consider the program of the representative household in country $i$. The budget constraint is:
+$$C_i^Z + P_i^{1} C_i^{1} + P_i^{2} C_i^{2}+ ... + P_i^{H} C_i^{H} \leq w_i L_i +\pi_i$$
+Or
+
+$$C_i^Z + \sum_{h=1}^HP_i^{h} C_i^{h}\leq w_i L_i +\pi_i$$
+
+With $\pi_i$ the dividend received by the i's hh from the global mutual funds (no free-entry condition, so differentiated firms do make profit in equilibrium, given to a worldwide mutual funds, then divided across countries). Precisely, it is assumed that:
+$$\pi_i = w_iL_i \pi$$
+with $\pi$ the dividend per share of the global mutual fund (endogenous).
+
+
+In the previous equation, $P_i^h$ represents the price of the composite good of sector $h$ in country $i$.
+
+The budget constraint may equivalently be rewritten as:
+\begin{equation}
+C_i^Z + P_i^{X} C_i^{X}\leq w_i L_i +\pi_i \label{eq:CB}
+\end{equation}
+
+with $P_i^{X}$ the price index of the bundle of differentiated varieties. Let's denote by $Y_i = w_iL_i+\pi_i $ aggregate revenue in country $i$.
+
+\subparagraph{Arbitrage between goods $Z$ and $X$} The optimal choice between the homogenous good $Z$ and the compositie good $X$ is the solution of maximizing utility (Equation \ref{eq:utility}) subject to the budget constraint (\ref{eq:CB}).
+
+We thus obtain the following demand functions:
+\begin{eqnarray}
+P_i^X C_i^X &=& \mu Y_i \label{eq:dmdgoodX} \\
+C_i^Z = (1-\mu) Y_i \notag
+\end{eqnarray}
+
+\subparagraph{Arbitrage between sectors} The optimal choice between the various $H$ sectorial varieties is the solution of the following program: Maximize Equation (\ref{eq:prefgoodh}) under the budget constraint:
+\begin{eqnarray}
+&&P_i^1 C_i^1+... +P_i^H C_i^H \leq P_i^X C_i^X \notag\\
+\Leftrightarrow && \sum_{h=1}^H P_i^h C_i^h \leq P_i^X C_i^X \label{eq:CBgoodX}
+\end{eqnarray}
+
+The solution of this program maximization yields the following demand function, for the composite good of sector $h$:
+$$P_i^h C_i^h = \frac{\alpha_h}{\sum_h \alpha_h}P_i^X C_i^X$$
+
+Recalling our assumption that $\sum_h \alpha_h=1$, and using Equation (\ref{eq:dmdgoodX}, we get:
+\begin{equation}
+P_i^h C_i^h = \alpha_h \mu Y_B \label{eq:dmdgoodh}
+\end{equation}
+
+\subparagraph{Arbitrage between varieties within sectors} Within a given sector $h$, the optimal choice between all varieties solves the program:
+
+$$\max C_i^X = \left[\int_{\Omega_h}\left[c_i^h(\omega)\right]^{\frac{\sigma_h-1}{\sigma_h}} d\omega \right]^{\frac{\sigma_h}{\sigma_h-1}}$$
+
+under the constraint:
+\begin{equation}
+P_i^h C_i^h = \int_{\Omega_h}p_i^h(\omega)c^h_i(\omega) d\omega \label{eq:CBgoodh}
+\end{equation}
+
+Solving this program delivers the optimal demand of country $i$, for the variety $\omega$ produced in sector $h$:
+\begin{equation*}
+c_i^h(\omega) = \left[\frac{p_i^h(\omega)}{P_i^h}\right]^{-\sigma_h} C_i^h
+\end{equation*}
+
+Which becomes, using Equation (\ref{eq:CBgoodh}):
+\begin{equation*}
+c_i^h(\omega) = \left[\frac{p_i^h(\omega)}{P_i^h}\right]^{-\sigma_h} \alpha_h \mu \frac{Y_i}{P^h_i} \label{eq:dmdgoodi}
+\end{equation*}
+
+
+\subparagraph{Expression of price indices}
+
+The optimal price index of the composite good $X$ ($P_i^X$) is obtained using the previous results. Precisely, when incorporating the optimal demand for any sectorial good $h$ (Equation (\ref{eq:dmdgoodh}) into the constraint (\ref{eq:CBgoodX} gives:
+
+\begin{equation}
+P_i^X = \prod_{h=1}^H (P_i^h)^{\alpha-h} \label{eq:indexPX}
+\end{equation}
+
+By the same reasoning, one can obtain the expression of the price index for a given sector $h$. Using Equation (\ref{eq:dmdgoodi}) into equation (\ref{eq:CBgoodh}), we obtain that
+
+\begin{equation}
+P_i^X = \left[ \int{\Omega_h} (p_i^h(\omega))^{1-\sigma_h}d\omega \right]^{\frac{1}{1-\sigma_h}}\label{eq:indexPh}
+\end{equation}
+
+\paragraph{The firms' pricing decisions}
+
+Let's consider now the program of a firm settled in country $i$, from sector $h$, that features a productivity level of $\varphi$. For convenience, let's just assume that there is only two markets to serve, country $i$ and $j$.
+
+The profit expression of firm ($\varphi,h,i)$ is given by:
+
+\begin{equation}
+\pi^h_{i}(\varphi) = p^h_{ii}(\varphi) c_{i}^h(\varphi) + p^h_{ij}(\varphi) c_{j}^h(\varphi) - \frac{w_i}{\varphi}\left[c_{i}^h(\varphi)+ \tau^h_{ij}c_{j}^h(\varphi)\right] - f^h_{ij} \label{eq:fprofit}
+\end{equation}
+
+with $p^h_{ii}(\varphi)$ the price of good $\varphi$ produced by the firm in sector $h$ located in country $i$ and sold in country $i$, and $p^h_{ij}(\varphi)$ the price of this good when sold in country $y$. Given iceberg costs, the marginal cost of exporting is raised by $\tau^h_{ij}$ in comparison with the local sale (assuming here $\tau^h_{ii}=1$).
+
+Firm are in monopolistic competition in the production of the good, so that each firm $\varphi$ maximizes its profit function (\ref{eq:fprofit}) subject to the demands for its variety coming from each country, recalled here for convenience, coming from countries $i$ and $j$ respectively:
+\begin{eqnarray*}
+c_i^h(\varphi) &=& \left[\frac{p_{ii}^h(\varphi)}{P_i^h}\right]^{-\sigma_h} C_i^h \\
+c_j^h(\varphi) &=& \left[\frac{p_{ij}^h(\varphi)}{P_j^h}\right]^{-\sigma_h} C_j^h
+\end{eqnarray*}
+
+Optimal pricing decisions on each domestic and export market respectively yield:
+\begin{eqnarray}
+p_{ii}^h(\varphi)&=& \frac{\sigma_h}{\sigma_h-1}\frac{w_i}{\varphi} \notag \\
+p_{ij}^h(\varphi)&=& \frac{\sigma_h}{\sigma_h-1}\frac{w_i\tau^h_{ij}}{\varphi} \label{eq:prixijh}
+\end{eqnarray}
+
+As a result, the exports in value, of firm ($\varphi,h,i$) on market $j$, is equal to
+$$x_{ij}^h(\varphi) = p_{ij}^h(\varphi)c_{j}^h(\varphi)$$
+
+Given the optimal pricing decision (\ref{eq:prixijh}) and the demand function (\ref{eq:dmdgoodi}), we obtain:
+\begin{equation*}
+x_{ij}^h(\varphi)  = \left[\frac{\sigma_h}{\sigma_h-1}\frac{\frac{w_i}{\varphi}\tau^h_{ij}}{P_i^h}  \right]^{1-\sigma_h}\alpha_h \mu Y_j
+\end{equation*}
+
+
+\subsubsection{Skipping the details}
+
+Je n'ai pas totalement tout refait mais bon, publi à l'AER je pense que c'est ok:-)
+
+Donc, on arrive au système donné par l'équation (9) de son papier, plus celle de l'indice de prix $P_i^h$, que je résume ici
+\begin{itemize}
+\item Export sales of an individual firm ($\phi,h,i$) on export market $j$:
+\begin{eqnarray}
+x_{ij}^h(\varphi)  &= &\lambda_3^h\left[\frac{Y_j}{Y}\right]^{\frac{\sigma_h-1}{\gamma_h}}\left[\frac{\theta^h_j}{w_i\tau^h_{ij}} \right]^{\sigma_h-1}\varphi^{\sigma_h-1} \qquad \text{if } \varphi\geq\overline{\varphi}^h_{ij}\label{eq:exportsi} \\
+&=&0 \qquad \qquad \qquad \qquad \qquad \qquad  \qquad \qquad\text{if }\varphi<\overline{\varphi}^h_{ij} \notag
+\end{eqnarray}
+
+\item Cut-off productivity level
+\begin{equation}
+\overline{\varphi}^h_{ij} = \lambda_4^h \left(\frac{Y}{Y_j}\right)^{\frac{1}{\gamma_h}}\frac{w_i \tau^h_{ij}}{\theta_j}\left[f^h_{ij}  \right]^{\frac{1}{\sigma_h-1}} \label{eq:phibar}
+\end{equation}
+
+with $Y$ world production and $\theta_j^h$ an index of remoteness of country $j$, sector $k$ from the rest of the world, whose expression is:
+$$\theta^h_j = \left[\sum_{k=1}^N \frac{Y_k}{Y} \left(w_k\tau^h_{kj} \right)^{-\gamma_h}\left(f^h_{kj} \right)^{-(\frac{\gamma_h}{\sigma_h-1}-1)}\right]^{\frac{-1}{\gamma_h}}$$
+
+\item Aggregate revenue in country $i$:
+$$Y_i = (1+\lambda_5)w_iL_i$$
+
+\item Dividend per share of the global fund:
+$$\pi = \lambda_5$$
+
+\item Price index of sector $h$, in country $j$:
+\begin{equation}
+P_j^h = \lambda_2\theta^h_j (Y_j)^{\frac{1}{\gamma_h}-\frac{1}{\sigma_h-1}} \label{eq:Phequi}
+\end{equation}
+\end{itemize}
+
+In the previous system of equations, note that all $\lambda$ are solely functions of deep parameters, hence fully exogenous (assuming $Y$ to be exogenous and constant).
+
+\subsubsection{Obtaining the elasticity of aggregate trade flows to variable trade costs}
+
+From Equation (\ref{eq:exportsi}) and given and the assumption that the mass of potential entrants is proportional to the country size, ie $w_iL_i$), one can obtain the sectoral value of exports of sector $h$ in country $i$, to country $j$:
+
+\begin{equation*}
+X_{ij}^h = w_iL_i \int_{\overline{\varphi}_{ij}^h}^{\infty} \lambda_3^h \left[\frac{Y_j}{Y}\right]^{\frac{\sigma_h-1}{\gamma_h}}\left[\frac{\theta^h_j}{w_i\tau^h_{ij}} \right]^{\sigma_h-1}\varphi^{\sigma_h-1} dG(\varphi)
+\end{equation*}
+
+Given the properties of the Pareto distribution, we obtain:
+
+\begin{equation}
+X_{ij}^h = \alpha_h ~\mu ~\frac{Y_i~Y_j}{Y}\left(\frac{w_i\tau^h_{ij}}{\theta_j^h} \right)^{-\gamma_h}\left(f_{ij}^h\right)^{-\left(\frac{\gamma_h}{\gamma_h-1}-1 \right)} \label{eq:exportsh}
+\end{equation}
+
+
+Total exports of country $i$ to country $j$ are defined as:
+
+$$X_{ij} = \sum_{h=1}^H X^h_{ij}$$
+
+Using our previous results, total exports can be rewritten as:
+
+$$X_{ij} = \sum_{h=1}^H \alpha_h ~\mu ~\frac{Y_i~Y_j}{Y}\left(\frac{w_i\tau^h_{ij}}{\theta_j^h} \right)^{-\gamma_h}\left(f_{ij}^h\right)^{-\left(\frac{\gamma_h}{\gamma_h-1}-1 \right)}$$
+
+
+Or, equivalently:
+\begin{equation}
+X_{ij} = \mu \frac{Y_i~Y_j}{Y}~\sum_{h=1}^H \alpha_h \left(\frac{w_i\tau^h_{ij}}{\theta_j^h} \right)^{-\gamma_h}\left(f_{ij}^h\right)^{-\left(\frac{\gamma_h}{\gamma_h-1}-1 \right)} \label{eq:totalexports}
+\end{equation}
+
+Au niveau sectoriel, on vérifie bien que l'élasticité des flux de commerce aux variable trade costs est égal à $\gamma_h$:
+
+$$\varepsilon_{X_{ij}^h/\tau^h_{ij}} = -\gamma_h$$
+
+\textbf{Remarque:} Il me semble que cela repose sur l'hypothèse que $\theta^h_j$ est insensible à une variation de $\tau^h_{ij}$. A vérifier.\bigskip
+
+Notre objectif est d'obtenir l'élasticité des flux de commerce \textbf{agrégés}
+
+Deux types de variations de coûts de transport peuvent être étudiés, donc deux élasticités dérivées:
+\begin{itemize}
+\item Une modification du coût de transport entre le pays $i$ et le pays $j$ qui est identique entre tous les secteurs:
+    $$\frac{d\tau^h_{ij}}{\tau^h_{ij}}  = \frac{d\tau^{h^\prime}_{ij}}{\tau^{h^\prime}_{ij}} = \widehat{\tau}_{ij} \qquad \forall h,h^{\prime} \in \Omega_h$$
+
+\item Une modification du coût de transport entre le pays $i$ et le pays $j$ qui est spécifique à un seul secteur, les autres couts de transport sectoriels restant constants:
+     $$\frac{d\tau^h_{ij}}{\tau^h_{ij}}  = \widehat{\tau}^h_{ij}$$
+\end{itemize}
+
+\paragraph{Simplifying case} Pour simplifier les calculs, supposons deux secteurs (1 et 2). Alors, les exportations totales de $i$ vers $j$ sont:
+
+$$X_{ij} = \mu \frac{Y_i~Y_j}{Y}\left[\alpha_1 \left(\frac{w_i \tau_{ij}^1}{\theta_i^1}\right)^{-\gamma_1}\left(f_{ij}^1  \right)^{-\left(\frac{\gamma_1}{\sigma_1-1}-1 \right)}  + \alpha_2 \left(\frac{w_i \tau_{ij}^2}{\theta_i^2}\right)^{-\gamma_2}\left(f_{ij}^2  \right)^{-\left(\frac{\gamma_2}{\sigma_1-2}-1 \right)} \right] $$
+
+Let's define
+$$\kappa_h = \alpha_h \left(\frac{w_i}{\theta_i^h} \right)^{-\gamma_h}\left(f_{ij}^h  \right)^{-\left(\frac{\gamma_h}{\sigma_h-1}-1 \right)}$$
+
+for $h=1,2$ the index of the sector. Thus, aggregate exports can be rewritten as (for a given number $H$ of sectors):
+
+$$X_{ij} = \mu \frac{Y_i~Y_j}{Y} \left[\sum_h=1^H\kappa_h\left(\tau_{ij}^h\right)^{-\gamma_h}\right]$$
+
+In the two-sector case, we get:
+
+$$X_{ij} = \mu \frac{Y_i~Y_j}{Y} \left[\kappa_1\left(\tau_{ij}^1\right)^{-\gamma_1} +\kappa_2\left(\tau_{ij}^2\right)^{-\gamma_2} \right]$$
+
+To obtain the elasticity, I differentiate the previous equation, starting from a given steady state (identified as $\overline{x}$ for any variable $x$).\bigskip
+
+En détaillant les calculs, en supposant le PIB mondial constant (remarque, je me rends compte que j'ai aussi supposé $\kappa_n$ constant, ce qui est faux, mais je fais l'hypothèse que les éléments qui le consitituent ne sont pas affectés par la variation des trade costs. Je pourrai faire pareil pour les PIB, mais là j'ai fait la différentielle totale en supposant qu'ils varient).
+
+
+\begin{eqnarray*}
+X_{ij}-\overline{X}_{ij} &=& \frac{\mu}{Y} \left[\sum_{h=1}^H\kappa_h\left(\tau_{ij}^h\right)^{-\gamma_h}\right]\left[\overline{Y}_j(Y_i-\overline{Y}_i)+ \overline{Y}_i(Y_j-\overline{Y}_j) \right] \\
+&&+\mu \frac{\overline{Y}_i\overline{Y}_j}{Y}\left[\kappa_1(-\gamma_1)(\overline{\tau}_{ij}^1)^{-\gamma_1-1}(\tau_{ij}^1- \overline{\tau}_{ij}^1) +\kappa_2(-\gamma_2)(\overline{\tau}_{ij}^2)^{-\gamma_2-1}(\tau_{ij}^2- \overline{\tau}_{ij}^2) \right]
+\end{eqnarray*}
+
+Denoting by $\widehat{x}=\frac{x-\overline{x}}{\overline{x}}$ the relative change of variable $x$ from its steady state value, we obtain:
+
+\begin{eqnarray*}
+\overline{X}_{ij}\widehat{X}_{ij} &=& \mu \frac{\overline{Y}_i\overline{Y}_j}{Y}\left(\sum_h \kappa_h (\overline{\tau}_{ij}^h \right)^{-\gamma_h}\left[\widehat{Y}_i+\widehat{Y}_j  \right] \\
+&&- \mu\frac{\overline{Y}_i\overline{Y}_j}{Y} \left[\kappa_1 \gamma_1 (\overline{\tau}_{ij}^1)^{-\gamma_1}\widehat{\tau}_{ij}^1 +\kappa_2 \gamma_2 (\overline{\tau}_{ij}^2)^{-\gamma_2}\widehat{\tau}_{ij}^2  \right]
+\end{eqnarray*}
+
+
+Given that, in steady state:
+
+$$\overline{X}_{ij} = \mu \frac{\overline{Y}_i\overline{Y}_j}{Y}\left(\sum_h \kappa_h (\overline{\tau}_{ij}^h )^{-\gamma_h}\right)$$
+
+the previous equation can be simplified to give:
+$$\widehat{X}_{ij} =\widehat{Y}_i + \widehat{Y}_j - \left[\frac{\kappa_1(\overline{\tau}_{ij}^1)^{-\gamma_1}}{\kappa_1(\overline{\tau}_{ij}^1)^{-\gamma_1}+\kappa_2(\overline{\tau}_{ij}^2)^{-\gamma_2}}\gamma_1\widehat{\tau}_{ij}^1  +\frac{\kappa_2(\overline{\tau}_{ij}^2)^{-\gamma_2}}{\kappa_1(\overline{\tau}_{ij}^1)^{-\gamma_1}+\kappa_2(\overline{\tau}_{ij}^2)^{-\gamma_2}}\gamma_2\widehat{\tau}_{ij}^2  \right]
+$$
+
+
+\paragraph{Soit variation des coûts de transport identiques pour tous les secteurs} Soit $\widehat{\tau}_{ij}^h= \widehat{\tau}_{ij}^{h^\prime} = \widehat{\tau}_{ij}$, et en supposant que $\widehat{Y}_i=\widehat{Y_j}=0$, on peut récrire:
+
+\begin{equation*}
+\widehat{X}_{ij} = \frac{-1}{\sum_h \kappa_h (\overline{\tau}_{ij}^h)^{-\gamma_h}}\left[\gamma_1 \kappa_1 \left(\overline{\tau}_{ij}^1\right)^{-\gamma_1}  +\gamma_2 \kappa_2 \left(\overline{\tau}_{ij}^2\right)^{-\gamma_2} \right]\widehat{\tau}_{ij}
+\end{equation*}
+
+Soit, l'élasticité des exportations agrégées aux variable trade costs donnée par:
+
+\begin{equation}
+\varepsilon_{X_{ij}/\tau_{ij}} = \frac{-1}{\sum_h \kappa_h (\overline{\tau}_{ij}^h)^{-\gamma_h}}\left[\gamma_1 \kappa_1 \left(\overline{\tau}_{ij}^1\right)^{-\gamma_1}  +\gamma_2 \kappa_2 \left(\overline{\tau}_{ij}^2\right)^{-\gamma_2} \right] \label{eq:elast1}
+\end{equation}
+
+
+Problème si on ne peut simplifier
+\begin{itemize}
+\item Il ne suffit pas d'avoir le paramètre de distribution des productivités par secteur ($\gamma_h$)
+\item Il faudrait aussi, le niveau des coûts de transport par secteur ($\overline{\tau}_{ij}^h$)
+\item De même que les composantes de $\kappa_h$ (salaire du pays $w_i$, part du secteur $h$ dans le panier de bien différenciés $\alpha_h$, ``remoteness'' du secteur/pays ($\theta_j^h$)
+\item Et surtout, le coût fixe à l'export entre le secteur $h$ du pays $i$ vers le pays $j$...
+\end{itemize}
+\bigskip
+Trouver un moyen de simplifier
+\bigskip
+Appelons $D$ le dénominateur de l'équation (\ref{eq:elast1}) et $N^h$ la partie du numérateur définie telle que:
+$$N^h = \kappa_h (\tau_{ij}^h)^{-\gamma_h}$$
+L'élasticité des flux de commerce agrégés se réécrit alors:
+$$\varepsilon_{X_{ij}/\tau_{ij}}= -\frac{1}{D} \left[\gamma_1 N^1+\gamma_2 N^2 \right]$$
+
+Sachant l'expression des flux agrégés de commerce, on peut récrire $D$ comme
+
+$$D = X_{ij} \frac{1}{\mu}\frac{Y}{Y_i Y_j}$$
+
+Et si on considère l'expression des flux de commerce sectoriels
+
+$$X_{ij}^h = \mu \frac{Y_iY_j}{Y}\underbrace{\kappa_h (\tau_{ij}^h)^{-\gamma_h}}_{N^h}$$
+
+Alors on a
+$$N^h = X^h_{ij}\frac{1}{\mu}\frac{Y}{Y_iY_j}$$
+
+Donc, partant de l'élasticité des fux agrégés aux trade costs:
+\begin{equation*}
+\varepsilon_{X_{ij}/\tau_{ij}} = -\left[\sum_h \frac{N^h}{D}\gamma_h  \right]
+\end{equation*}
+
+avec
+\begin{eqnarray*}
+N^h&=& \alpha_h \left(\frac{w_i \tau_{ij}^h}{\theta_j^h}   \right)^{-\gamma_h}\left(f_{ij}^h\right)^{-\left(\frac{\gamma_h}{\sigma_h-1}-1 \right)} \\
+D &= &\sum_{h=1}^H \alpha_h \left(\frac{w_i \tau_{ij}^h}{\theta_j^h}   \right)^{-\gamma_h}\left(f_{ij}^h\right)^{-\left(\frac{\gamma_h}{\sigma_h-1}-1 \right)}
+\end{eqnarray*}
+
+On peut simplifier avec
+\begin{eqnarray*}
+N^h&=&X_{ij}^h \frac{1}{\mu}\frac{Y}{Y_iY_j} \\
+D&=&X_{ij} \frac{1}{\mu}\frac{Y}{Y_iY_j}
+\end{eqnarray*}
+
+Alors, l'élasticité des flux de commerce agrégés aux trade costs (avraible), est égale à
+
+\begin{equation}
+\varepsilon_{X_{ij}/\tau_{ij}}  = - \left(\sum_{h=1}^H \frac{X_{ij}^h}{X_{ij}}\gamma_h \right) \label{eq:elast2}
+\end{equation}
+
+L'élasticité des flux de commerce agrégés aux trade costs est (en valeur absolue) égale à la somme pondérée des paramètres de distribution d'efficience sectoriels, la pondération étant donnée par la part de chaque secteur dans les exportations totales.\bigskip
+
+\paragraph{Si on considère une variation des coûts de transport dans un secteur donné} Alors c'est la même chose:
+
+\begin{equation}
+\varepsilon_{X_{ij}/\tau^h_{ij}}  = - \frac{X_{ij}^h}{X_{ij}}\gamma_h  \label{eq:elasth}
+\end{equation}
+
+\paragraph{Question technique} Attention, on a une nomenclature différente pour les bases de commerce (ie, ce qui nous a servi en étapes 1 et 2 pour calculer le $\rho$) et pour les bases de production (ie, les EAE).
+
+Donc, l'estimation du $\gamma_h$ sectoriel n'a a priori aucune raison de correspondre au même secteur que les secteurs (4-digit) à partir desquels on a estimé l'évolution de $\rho$.
+
+Mais ce n'est pas forcément un problème fondamental car ce qui nous intéresse in fine au niveau agrégé, c'est l'élasticité des trade flows aux trade costs, oe on peut l'obtenir à partir des résultats précédents (\ref{eq:elast2}). Ce qui nous pose problème en revanche, c'est la question de la clé d'agrégation.
+
+On peut obtenir les flux de commerce au niveau sectoriel par les données de douane. En effet, par numéro de siren, on peut apparier les données EAE et les données de douane.
+\begin{itemize}
+\item On estime un $\gamma_h$ par secteur de production (chaque firme appartient à un secteur productif donné)
+\item Pour agréger, on utilise les données de douane pour calculer par firme, le flux de ses exports, on agrège par secteur productif
+\item Ie, le secteur est fondamentalement le secteur productif (côté firme) et non pas le secteur du produit exporté (logique, ce qui compte c'est la productivité de la firme qui exporte, qu'elle exporte des bananes ou des tee-shirts ou les deux)
+\end{itemize}
+
+
+
+
+{\normalsize %\bibliography{HoursEdhec}
+\bibliographystyle{apalike2}
+\bibliography{lise}
+}
+
+
+
+\end{document} 
