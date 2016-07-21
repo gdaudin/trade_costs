@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.12.9)  21 JUL 2016 16:59
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.12.9)  21 JUL 2016 17:45
 entering extended mode
 **//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Git_Hub/
 trade_costs/redaction/dhp_draft_july2016.tex
@@ -396,141 +396,136 @@ Missing character: There is no   in font cmr10!
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
 
 Package natbib Warning: Citation `lashkaripour' on page 1 undefined on input li
-ne 108.
+ne 105.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.110 
+l.106 
        [1] [2] [3] [4]
 Missing character: There is no Â in font cmti10!
 Missing character: There is no ° in font cmti10!
  [5] [6]
-Overfull \hbox (41.24812pt too wide) in paragraph at lines 208--234
+Overfull \hbox (41.24812pt too wide) in paragraph at lines 207--233
  [] 
  []
 
 
-Overfull \hbox (41.24812pt too wide) in paragraph at lines 244--270
+Overfull \hbox (41.24812pt too wide) in paragraph at lines 243--269
  [] 
  []
 
-[7] <graph1a.pdf, id=239, 844.83629pt x 597.432pt>
+<graph1a.pdf, id=239, 844.83629pt x 597.432pt>
 File: graph1a.pdf Graphic file (type pdf)
  <use graph1a.pdf>
-Package pdftex.def Info: graph1a.pdf used on input line 286.
+Package pdftex.def Info: graph1a.pdf used on input line 285.
 (pdftex.def)             Requested size: 252.9372pt x 216.8074pt.
 
 <graph1b.pdf, id=240, 844.83629pt x 597.432pt>
 File: graph1b.pdf Graphic file (type pdf)
  <use graph1b.pdf>
-Package pdftex.def Info: graph1b.pdf used on input line 287.
+Package pdftex.def Info: graph1b.pdf used on input line 286.
 (pdftex.def)             Requested size: 252.9372pt x 216.8074pt.
 
-Overfull \hbox (45.53734pt too wide) in paragraph at lines 284--289
+Overfull \hbox (45.53734pt too wide) in paragraph at lines 283--288
  [] 
  []
 
 <graph2a.pdf, id=243, 844.83629pt x 597.432pt>
 File: graph2a.pdf Graphic file (type pdf)
  <use graph2a.pdf>
-Package pdftex.def Info: graph2a.pdf used on input line 301.
+Package pdftex.def Info: graph2a.pdf used on input line 300.
 (pdftex.def)             Requested size: 252.9372pt x 216.8074pt.
 
 <graph2b.pdf, id=244, 844.83629pt x 597.432pt>
 File: graph2b.pdf Graphic file (type pdf)
  <use graph2b.pdf>
-Package pdftex.def Info: graph2b.pdf used on input line 302.
+Package pdftex.def Info: graph2b.pdf used on input line 301.
 (pdftex.def)             Requested size: 252.9372pt x 216.8074pt.
 
-Overfull \hbox (45.53734pt too wide) in paragraph at lines 299--304
+Overfull \hbox (45.53734pt too wide) in paragraph at lines 298--303
  [] 
  []
 
-[8] [9 <//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Gi
+[7] [8 <//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Gi
 t_Hub/trade_costs/redaction/graph1a.pdf> <//filer.windows.dauphine.fr/home/l/lp
 atureau/My_Work/Lise/trade_cost/Git_Hub/trade_costs/redaction/graph1b.pdf
 
 pdfTeX warning: pdflatex.exe (file //filer.windows.dauphine.fr/home/l/lpatureau
 /My_Work/Lise/trade_cost/Git_Hub/trade_costs/redaction/graph1b.pdf): PDF inclus
 ion: multiple pdfs with page group included in a single page
-> <//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Git_Hub
-/trade_costs/redaction/graph2a.pdf
-
-pdfTeX warning: pdflatex.exe (file //filer.windows.dauphine.fr/home/l/lpatureau
-/My_Work/Lise/trade_cost/Git_Hub/trade_costs/redaction/graph2a.pdf): PDF inclus
-ion: multiple pdfs with page group included in a single page
-> <//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Git_Hub
-/trade_costs/redaction/graph2b.pdf
+>] [9 <//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Git
+_Hub/trade_costs/redaction/graph2a.pdf> <//filer.windows.dauphine.fr/home/l/lpa
+tureau/My_Work/Lise/trade_cost/Git_Hub/trade_costs/redaction/graph2b.pdf
 
 pdfTeX warning: pdflatex.exe (file //filer.windows.dauphine.fr/home/l/lpatureau
 /My_Work/Lise/trade_cost/Git_Hub/trade_costs/redaction/graph2b.pdf): PDF inclus
 ion: multiple pdfs with page group included in a single page
 >] [10]
-LaTeX Font Info:    Try loading font information for U+bbold on input line 339.
+LaTeX Font Info:    Try loading font information for U+bbold on input line 338.
 
  ("C:\Program Files\MiKTeX 2.9\tex\latex\bbold\ubbold.fd") [11] [12]
 (\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
 rade_costs\redaction\dhp_draft_july2016.bbl
 Missing character: There is no – in font cmr10!
  [13]) [14]
-Overfull \hbox (24.67725pt too wide) in paragraph at lines 399--428
+Overfull \hbox (24.67725pt too wide) in paragraph at lines 398--427
  [] 
  []
 
 
-Overfull \hbox (21.02722pt too wide) in paragraph at lines 438--466
+Overfull \hbox (21.02722pt too wide) in paragraph at lines 437--465
  [] 
  []
 
 
-Overfull \hbox (12.94794pt too wide) in paragraph at lines 508--509
+Overfull \hbox (12.94794pt too wide) in paragraph at lines 507--508
  [] 
  []
 
 
-Overfull \hbox (5.8669pt too wide) in paragraph at lines 542--543
+Overfull \hbox (5.8669pt too wide) in paragraph at lines 541--542
  [] 
  []
 
 [15] [16]
-Overfull \hbox (47.47437pt too wide) in paragraph at lines 552--581
+Overfull \hbox (47.47437pt too wide) in paragraph at lines 551--580
  [] 
  []
 
 [17]
-Overfull \hbox (47.47437pt too wide) in paragraph at lines 592--615
+Overfull \hbox (47.47437pt too wide) in paragraph at lines 591--614
  [] 
  []
 
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 620.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 619.
 [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 620.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 619.
 
 (\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
 rade_costs\redaction\dhp_draft_july2016.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 620.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 620.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 619.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 619.
 Package rerunfilecheck Info: File `dhp_draft_july2016.out' has not changed.
 (rerunfilecheck)             Checksum: EC2AE79E0EB23B1DF2DA2F24632315A8;949.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 620.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 619.
  ) 
 Here is how much of TeX's memory you used:
- 7607 strings out of 493705
- 114568 string characters out of 3144558
+ 7608 strings out of 493705
+ 114579 string characters out of 3144558
  242065 words of memory out of 3000000
  10722 multiletter control sequences out of 15000+200000
  18875 words of font info for 68 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 42i,15n,38p,2492b,456s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 42i,15n,38p,3062b,456s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/bbold-type1/bbold10.pfb><C:/P
 rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program F
 iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiK
@@ -539,21 +534,23 @@ onts/type1/public/amsfonts/cm/cmcsc10.pfb><C:/Program Files/MiKTeX 2.9/fonts/ty
 pe1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
 ic/amsfonts/cmextra/cmex8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
 msfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.
-pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/P
-rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Fi
-les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX
- 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
-ts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
-sy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><
-C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Progr
-am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on dhp_draft_july2016.pdf (19 pages, 1119709 bytes).
+cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi6.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/P
+rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fon
+ts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/p
+ublic/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cm
+r9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Progra
+m Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmtt9.pfb>
+Output written on dhp_draft_july2016.pdf (19 pages, 1138563 bytes).
 PDF statistics:
- 429 PDF objects out of 1000 (max. 8388607)
- 78 named destinations out of 1000 (max. 500000)
+ 444 PDF objects out of 1000 (max. 8388607)
+ 79 named destinations out of 1000 (max. 500000)
  117 words of extra memory for PDF output out of 10000 (max. 10000000)
 
