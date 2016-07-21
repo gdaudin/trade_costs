@@ -117,6 +117,7 @@ foreach mode in air ves {
 		sum terme_`type_TC' [fweight= val] if mode=="`mode'" 
 		generate terme_`type_TC'_`mode'_mp = r(mean)
 		label var terme_`type_TC'_`mode'_mp "Weighted mean value of estimated TC of type `type_TC', 1974, mode `mode'"
+		generat ecart_type_`type_TC'_`mode'_mp=.
 	
 	}
 }
@@ -153,7 +154,7 @@ foreach mode in air ves {
 	keep if mode=="`mode'"
 	
 	
-	*keep if year < 1980
+*	keep if year < 1976
 	local limit 15
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
@@ -209,10 +210,12 @@ foreach mode in air ves {
 		
 		* matrice des coefficients estimés
 		capture	matrix X= e(b)
+		capture matrix V=e(V)
 		
 		generate effet_fixe=.
+		generate ecart_type=.
 		 
-		keep year effet_fixe
+		keep year effet_fixe ecart_type
 		bys year : keep if _n==1
 		drop if year==1974
 		
@@ -222,17 +225,21 @@ foreach mode in air ves {
 		foreach i in `liste_year' {
 				*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
 				replace effet_fixe= X[1,`n'] in `n'
+				replace ecart_type=V[`n',`n'] in `n'
 			
 				local n=`n'+1
 		}
 		
+		replace ecart_type=(ecart_type)^0.5
 		
 		drop if effet_fixe == .
 		
 		rename effet_fixe effetfixe_`type_TC'_`mode'
+		rename ecart_type ecart_type_`type_TC'_`mode'
 		label var effetfixe_`type_TC'_`mode' "pure_FE_`type_TC'_`mode'"
+		label var ecart_type_`type_TC'_`mode' "ecart_type_`type_TC'_`mode'"
 		
-		keep year effetfixe_`type_TC'_`mode'
+		keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'
 		
 		sort year
 		merge 1:1 year using database_pureTC 
@@ -374,11 +381,13 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	
 *	set trace on
 	capture	matrix X= e(b)
+	capture matrix V=e(V)
 	matrix dir
 	
 	generate effet_fixe=.
+	generate ecart_type=.
 	 
-	keep year effet_fixe
+	keep year effet_fixe ecart_type
 	bys year : keep if _n==1
 	drop if year==1974
 	quietly levelsof year, local (liste_year) clean
@@ -392,8 +401,11 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	foreach i in `liste_year' {
 			display "effet_fixe= X[1,`n'] if year==`i'"
 			replace effet_fixe= X[1,`n'] if year==`i'
+			replace ecart_type= V[`n',`n'] if year==`i'
 			local n=`n'+1
 		}
+	
+	replace ecart_type=(ecart_type)^0.5
 	list
 	
 	drop if effet_fixe == .
@@ -401,7 +413,10 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	rename effet_fixe effetfixe_A_`mode'
 	label var effetfixe_A_`mode' "pure_FE_A_`mode'"
 	
-	keep year effetfixe_A_`mode'
+	rename ecart_type ecart_type_A_`mode'
+	label var ecart_type_A_`mode' "Écart type du pure_FE_A_`mode'"
+	
+	keep year effetfixe_A_`mode' ecart_type_A_`mode'
 	
 	sort year
 	merge 1:1 year using database_pureTC 
@@ -413,6 +428,10 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 *	set trace off
 	save database_pureTC, replace
 
+	
+	
+	
+	
 }
 
 
@@ -430,7 +449,16 @@ foreach mode in air ves {
 		generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
 		replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 		replace terme_`type_TC'_`mode'_mp = 100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
+		*replace ecart_type_`type_TC'_`mode' = 100*(terme_`type_TC'_`mode'_74*exp(ecart_type_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
+		
+		gen terme_95_`type_TC'_`mode'_mp=100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'+1.96*ecart_type_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)
+		gen terme_05_`type_TC'_`mode'_mp=100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'-1.96*ecart_type_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)
+		
+		
+		
+		
 		label var terme_`type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
+		label var ecart_type_`type_TC'_`mode' "ecart_type_TC_`type_TC'_`mode'"
 	}
 }
 
@@ -440,7 +468,13 @@ foreach mode in air ves {
 		generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
 		replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 		replace terme_`type_TC'_`mode'_mp = 100*exp(effetfixe_`type_TC'_`mode')
+*		replace ecart_type_`type_TC'_`mode' = 100*exp(ecart_type_`type_TC'_`mode')
+		
+		gen terme_95_`type_TC'_`mode'_mp=100*exp(effetfixe_`type_TC'_`mode'+1.96*ecart_type_`type_TC'_`mode')
+		gen terme_05_`type_TC'_`mode'_mp=100*exp(effetfixe_`type_TC'_`mode'-1.96*ecart_type_`type_TC'_`mode')
+		
 		label var terme_`type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
+		label var ecart_type_`type_TC'_`mode' "ecart_type_TC_`type_TC'_`mode'"
 	}
 }
 
