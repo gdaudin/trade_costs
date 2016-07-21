@@ -135,6 +135,7 @@ I was expecting a `,' or a `}'---line 3390 of file biblio.bib
  : PAGES={2609–2669}}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
+Warning--I didn't find a database entry for "lashkaripour"
 Too many commas in name 1 of "A. de Palma, R. Lindsey, E. Quinet, R. Vickerman" for entry Behar_Venables
 while executing---line 1599 of file essaien.bst
 Too many commas in name 1 of "A. de Palma, R. Lindsey, E. Quinet, R. Vickerman" for entry Lafourcade_Thisse
