@@ -336,8 +336,8 @@ Unsurprisingly, the trend in transportation costs is clearly decreasing whatever
 The evolution of transport costs depends both on the evolution of per product and per partner costs and on the evolution of the composition of trade. To isolate the evolution of per product and per partner cost, we estimate the following equations.
 
 \begin{eqnarray}
-\tau_{ikt}&=&\exp\left(\sum_{i \neq \text{ARG}}\alpha_i.\mathbb{1}_i\right).\exp\left(\sum_k\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right) \notag \\
-\Leftrightarrow \ln(\tau_{ikt})&=&\sum_{i \neq \text{ARG}}\alpha_i.\mathbb{1}_i + \sum_k\beta_k.\mathbb{1}_k + \sum_{t \neq 1974}\gamma_t.\mathbb{1}_t+\epsilon_{ikt}
+\tau_{ikt}&=&cst.\exp\left(\sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i\right).\exp\left(\sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right) \notag \\
+\Leftrightarrow \ln(\tau_{ikt})&=&cst+\sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i + \sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k + \sum_{t \neq 1974}\gamma_t.\mathbb{1}_t+\epsilon_{ikt}
 \end{eqnarray}
 
 \begin{eqnarray}
@@ -355,7 +355,7 @@ In the iceberg and multiplicative case, we report $\Gamma_t$, defined as:
 
 
 
-Figure ???? reports the time effect as the $\Gamma_t$ in the iceberg and multiplicative case and as $100.\exp(\gamma_t)$ in the additive case (assuming $\gamma_{1974}=0$).
+Figure ???? reports the time effect as the $\Gamma_t$ in the iceberg and multiplicative case and as $100.\exp(\gamma_t)$ in the additive case (assuming in both cases that $\gamma_{1974}=0$).
 
 
 
