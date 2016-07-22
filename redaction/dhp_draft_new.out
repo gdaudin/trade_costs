@@ -1,19 +1,20 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Data Sources and Empirical Methodology}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{A measure of transportation costs}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.1}{A measure of Transportation Costs}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Database}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{Key empirical specification}{section.2}% 5
-\BOOKMARK [1][-]{section.3}{Estimation strategy and econometric concerns}{}% 6
-\BOOKMARK [2][-]{subsection.3.1}{Step 1. Decomposing trade costs}{section.3}% 7
-\BOOKMARK [2][-]{subsection.3.2}{Step 2. Reassessing the traditional determinants of trade costs}{section.3}% 8
-\BOOKMARK [2][-]{subsection.3.3}{Econometric issues}{section.3}% 9
-\BOOKMARK [1][-]{section.4}{Results from step 1: distinguishing additive and multiplicative parts of trade costs}{}% 10
-\BOOKMARK [2][-]{subsection.4.1}{Goodness-of-fit}{section.4}% 11
-\BOOKMARK [2][-]{subsection.4.2}{Interpretation}{section.4}% 12
-\BOOKMARK [1][-]{section.5}{Results from step 2: studying the determinants of trade costs}{}% 13
-\BOOKMARK [1][-]{section.6}{Conclusion}{}% 14
-\BOOKMARK [2][-]{subsection.Alph0.1}{Fob-cif prices}{section.6}% 15
-\BOOKMARK [2][-]{subsection.Alph0.2}{Product classification for Insurance fixed effects}{section.6}% 16
-\BOOKMARK [2][-]{subsection.Alph0.3}{Volumetric weight and the Maritime Transport Costs database}{section.6}% 17
-\BOOKMARK [2][-]{subsection.Alph0.4}{Country-specific handling costs and the ``Cost to export'' variable}{section.6}% 18
-\BOOKMARK [1][-]{appendix.A}{Results with a Higher Level of Products Disaggregation }{}% 19
+\BOOKMARK [1][-]{section.3}{Decomposing the Dynamics of Transport Costs over Time}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Estimation Strategy}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Econometric Issues}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.3}{Results: Distinguishing Additive and Multiplicative Parts of Trade Costs}{section.3}% 9
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Goodness-of-fit}{subsection.3.3}% 10
+\BOOKMARK [3][-]{subsubsection.3.3.2}{Interpretation}{subsection.3.3}% 11
+\BOOKMARK [1][-]{section.4}{Reassessing the Traditional Determinants of Transport Costs}{}% 12
+\BOOKMARK [2][-]{subsection.4.1}{Methodological Concerns}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.2}{Results and Interpretation}{section.4}% 14
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 15
+\BOOKMARK [2][-]{subsection.Alph0.1}{Fob-cif prices}{section.5}% 16
+\BOOKMARK [2][-]{subsection.Alph0.2}{Product classification for Insurance fixed effects}{section.5}% 17
+\BOOKMARK [2][-]{subsection.Alph0.3}{Volumetric weight and the Maritime Transport Costs database}{section.5}% 18
+\BOOKMARK [2][-]{subsection.Alph0.4}{Country-specific handling costs and the ``Cost to export'' variable}{section.5}% 19
+\BOOKMARK [1][-]{appendix.A}{Results with a Higher Level of Products Disaggregation }{}% 20
