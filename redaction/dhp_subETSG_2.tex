@@ -364,7 +364,7 @@ Terms A \& I & \multicolumn{1}{c}{0.612} & \multicolumn{1}{c}{0.575} & \multicol
 
 Tables \ref{tab:good_fit_air} and \ref{tab:good_fit_vessel} lead to the same conclusion: The inclusion of the additive term leads to an improvement of the quality of fit, whatever the considered criterion or the transport mode. On average over the whole period, the $R^{2}$ doubles when per-kg costs are included for Air, and increases by 50\% for Vessel. Similar qualitative conclusions arise from the comparisons of the standard errors of the regression (SER). Regarding the other criteria, improvements allowed by the inclusion of the additive term are roughly of the same extent across transport modes. Both AIC and Log-Likelihood statistics decrease with the inclusion of the additive term, and the log-likelihood test unambiguously rejects the null of statistical equivalence of the two models. These results holds whatever the considered year.\smallskip
 
-Going deeper into the examination of the levels of these goodness-of-fit statistics reveals interesting differences. First, ad-valorem costs have more explanative power in the Vessel sector, where they account for 39\% of the variance of the CIF/FAB ratio, versus 31\% for the Air sector (considering the mean values of the $R^2$ across transport modes). The standard error of the regression based only on the ad-valorem term is consistently lower for Vessel than for Air. 
+Going deeper into the examination of the levels of these goodness-of-fit statistics reveals interesting differences. First, ad-valorem costs have more explanative power in the Vessel sector, where they account for 39\% of the variance of the CIF/FAB ratio, versus 31\% for the Air sector (considering the mean values of the $R^2$ across transport modes). The standard error of the regression based only on the ad-valorem term is consistently lower for Vessel than for Air.
 
 Second, the dynamics over time also reveals that the quality of fit decreases strongly after 2000 for both transport modes. For Air, the additive term explains less and less variance over time: In 2000, the inclusion of the additive term increases the explanatory power by 30\%, and decreases the standard error of the regression by 14 percentage points;  in 2010 and 2013, it is hardly more than 10\% for the $R^{2}$, and 7 percentage points for the SER. The picture is quite different for Vessel. In this case, the inclusion of the additive term increases the R$^{2}$ by a percentage very similar whatever the considered year (between 12 and 18\%); a similar conclusion can be drawn for the SER, which decreases by 8-11 percentage points across the years when additive costs are included. the deteriorating performance of the model in terms of goodness-of-fit from 2000 mainly comes from the decreasing performance of the ad-valorem term. This suggests contrasting and time-evolving roles for additive and ad-valorem components of trade costs.\smallskip
 
@@ -395,9 +395,9 @@ Notice that Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add})
 Equation (\ref{eq:compeffects_mult}) is estimated using OLS and Equation (\ref{eq:compeffects_add}) is estimated using non-linear least squares (by transport mode).
 
 In this exercise, we are interested in isolating the change in the time dimension of the each transport cost component. From the estimation of Equation (\ref{eq:compeffects_mult}) (on both $\widehat{\tau}_{ikt}$ and $\widehat{\tau}_{ikt}^{nlI}$), we built the variable $\Gamma_t$, for each year $t\geq 1974$, according to:
-\begin{eqnarray}
-\Gamma_t &=& 100.\frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1}
-\end{eqnarray}
+\begin{equation*}
+\Gamma_t = 100.\frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1}
+\end{equation*}
 
 As for the additive cost, we built the variable $\Gamma^{add}_t = 100.\exp(\gamma_t)$, with the reference year being 1974 in all cases (ie, with $\gamma_{1974}=0$). As a result, the series for $\Gamma_t$ (with an initial value of 100 for $t=1974$) have a straightforward interpretation in percentage changes. \medskip
 
