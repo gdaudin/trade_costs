@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.10.8)  26 AUG 2016 11:38
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.10.8)  26 AUG 2016 19:25
 entering extended mode
 **C:/Lise/trade_costs/Git_Hub/trade_costs/redaction/slides_ETSG.tex
 (C:/Lise/trade_costs/Git_Hub/trade_costs/redaction/slides_ETSG.tex
@@ -1143,17 +1143,17 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 File: Fig2a_decompTC_air_3d.pdf Graphic file (type pdf)
 
 <use Fig2a_decompTC_air_3d.pdf>
-Package pdftex.def Info: Fig2a_decompTC_air_3d.pdf used on input line 392.
+Package pdftex.def Info: Fig2a_decompTC_air_3d.pdf used on input line 395.
 (pdftex.def)             Requested size: 142.26472pt x 142.25885pt.
 
 <Fig2b_decompTC_vessel_3d.pdf, id=416, 624.03941pt x 393.868pt>
 File: Fig2b_decompTC_vessel_3d.pdf Graphic file (type pdf)
 
 <use Fig2b_decompTC_vessel_3d.pdf>
-Package pdftex.def Info: Fig2b_decompTC_vessel_3d.pdf used on input line 392.
+Package pdftex.def Info: Fig2b_decompTC_vessel_3d.pdf used on input line 395.
 (pdftex.def)             Requested size: 142.25961pt x 142.26114pt.
 
-Overfull \hbox (1.23447pt too wide) in paragraph at lines 392--392
+Overfull \hbox (1.23447pt too wide) in paragraph at lines 395--395
  [] 
  []
 
@@ -1180,7 +1180,7 @@ File: Fig3a_TC_overtime_comp_effects_excl.pdf Graphic file (type pdf)
 
 <use Fig3a_TC_overtime_comp_effects_excl.pdf>
 Package pdftex.def Info: Fig3a_TC_overtime_comp_effects_excl.pdf used on input 
-line 574.
+line 577.
 (pdftex.def)             Requested size: 142.2619pt x 142.26416pt.
 
 <TC_addplusmult_compeffects_excl.pdf, id=668, 695.50067pt x 466.99086pt>
@@ -1188,10 +1188,10 @@ File: TC_addplusmult_compeffects_excl.pdf Graphic file (type pdf)
 
 <use TC_addplusmult_compeffects_excl.pdf>
 Package pdftex.def Info: TC_addplusmult_compeffects_excl.pdf used on input line
- 574.
+ 577.
 (pdftex.def)             Requested size: 142.26018pt x 142.26454pt.
 
-Overfull \hbox (1.23221pt too wide) in paragraph at lines 574--574
+Overfull \hbox (1.23221pt too wide) in paragraph at lines 577--577
  [] 
  []
 
@@ -1208,7 +1208,7 @@ File: Fig3b_TCovertime_add_et_mult_3d.pdf Graphic file (type pdf)
 
 <use Fig3b_TCovertime_add_et_mult_3d.pdf>
 Package pdftex.def Info: Fig3b_TCovertime_add_et_mult_3d.pdf used on input line
- 617.
+ 620.
 (pdftex.def)             Requested size: 227.62111pt x 113.81139pt.
  [23
 
@@ -1234,7 +1234,7 @@ st version <1.5> allowed
 File: Fig1a_mult_air_3d.pdf Graphic file (type pdf)
 
 <use Fig1a_mult_air_3d.pdf>
-Package pdftex.def Info: Fig1a_mult_air_3d.pdf used on input line 752.
+Package pdftex.def Info: Fig1a_mult_air_3d.pdf used on input line 755.
 (pdftex.def)             Requested size: 142.26398pt x 180.67296pt.
 
 
@@ -1245,15 +1245,15 @@ ction/Fig1b_mult_vessel_3d.pdf): PDF inclusion: found PDF version <1.7>, but at
 File: Fig1b_mult_vessel_3d.pdf Graphic file (type pdf)
 
 <use Fig1b_mult_vessel_3d.pdf>
-Package pdftex.def Info: Fig1b_mult_vessel_3d.pdf used on input line 752.
+Package pdftex.def Info: Fig1b_mult_vessel_3d.pdf used on input line 755.
 (pdftex.def)             Requested size: 142.2645pt x 180.67969pt.
 
-Overfull \hbox (1.2386pt too wide) in paragraph at lines 752--752
+Overfull \hbox (1.2386pt too wide) in paragraph at lines 755--755
  [] 
  []
 
 
-Overfull \vbox (6.0191pt too high) detected at line 752
+Overfull \vbox (6.0191pt too high) detected at line 755
  []
 
 [29
@@ -1261,7 +1261,7 @@ Overfull \vbox (6.0191pt too high) detected at line 752
  <C:/Lise/trade_costs/Git_Hub/trade_costs/redaction/Fig1a_mult_air_3d.pdf, page
  is rotated 90 degrees> <C:/Lise/trade_costs/Git_Hub/trade_costs/redaction/Fig1
 b_mult_vessel_3d.pdf, page is rotated 90 degrees>]
-Overfull \hbox (14.16832pt too wide) in alignment at lines 776--776
+Overfull \hbox (14.16832pt too wide) in alignment at lines 779--779
  [][][] []
  []
 
@@ -1273,11 +1273,11 @@ Overfull \hbox (14.16832pt too wide) in alignment at lines 776--776
 \tf@nav=\write6
 \tf@toc=\write7
 \tf@snm=\write8
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 806.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 806.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 809.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 809.
  (C:\Lise\trade_costs\Git_Hub\trade_costs\redaction\slides_ETSG.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 806.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 806.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 809.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 809.
 Package rerunfilecheck Info: File `slides_ETSG.out' has not changed.
 (rerunfilecheck)             Checksum: A7F4D589709A975A14292322A595ED53;42.
 
@@ -1285,12 +1285,12 @@ Package rerunfilecheck Info: File `slides_ETSG.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 806.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 809.
  ) 
 Here is how much of TeX's memory you used:
  19016 strings out of 493705
  363707 string characters out of 3144573
- 450518 words of memory out of 3000000
+ 450532 words of memory out of 3000000
  21765 multiletter control sequences out of 15000+200000
  15889 words of font info for 57 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
@@ -1317,7 +1317,7 @@ msy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Progr
 am Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msam7.pfb><C:/Program F
 iles/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm7.pfb>
-Output written on slides_ETSG.pdf (31 pages, 799477 bytes).
+Output written on slides_ETSG.pdf (31 pages, 799628 bytes).
 PDF statistics:
  1137 PDF objects out of 1200 (max. 8388607)
  95 named destinations out of 1000 (max. 500000)

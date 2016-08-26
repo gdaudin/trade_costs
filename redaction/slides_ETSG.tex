@@ -180,7 +180,7 @@ Lise Patureau \\
 \item How have international transport costs evolved over time? \vspace{0.1cm}
 \begin{itemize}
 \item[-] Transport costs \textit{per se} have fallen since 1985, by 40\% \vspace{0.1cm}
-\item[-] When additive costs are included, not much difference between air and sea transport
+\item[-] When additive costs are included, not much difference between air and sea transport, $\neq$ Hummels (2007) and Behar \& Venables (2011)
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -203,12 +203,12 @@ Lise Patureau \\
 \begin{frame} [label=slide_data]
 \frametitle{Data sources}
 \begin{itemize}
-%\item Measure international transport costs as the difference between the export price and the import price \vspace{0.1cm}
-\item Database: US annual imports of merchandise database \hyperlink{app_data}{\beamergotobutton{More}}\vspace{0.1cm}
+\item Our measure of international transport costs: The difference between the export price and the import price \vspace{0.1cm}
+\item Database: US Imports of Merchandise database \hyperlink{app_data}{\beamergotobutton{More}}\vspace{0.1cm}
 \begin{itemize}
-\item[-] Yearly basis, from 1974 to 2013, HS 10 digit classification level \vspace{0.1cm}
 \item[-] The export (fas) price, $\widetilde{p}$: the price for one kg of merchandise at the country export gate \vspace{0.1cm}
-\item[-] The import (cif) price, $p$: the price for one kg of merchandise at the US import gate \vspace{0.1cm}
+\item[-] The import (cif) price, $p$: the price for one kg of merchandise at the entry in the US \vspace{0.1cm}
+\item[-] Yearly basis, from 1974 to 2013, HS 10 digit classification level, by transport mode (air or vessel) \vspace{0.1cm}
 \end{itemize}
 \item[$\Rightarrow$] Our dependent variable: The ratio $p/\widetilde{p}$ \vspace{0.1cm}
 \begin{itemize}
@@ -229,10 +229,13 @@ Lise Patureau \\
 \begin{itemize}
 \item Relate the import price $p$ to the export price $\widetilde{p}$ given both additive (per-kg) costs $t$ and ad-valorem costs $\tau$:
 $$p = \tau \widetilde{p} + t, \qquad \text{with}\quad \tau \geq 1,\quad t \geq 0$$
-\item For product $k$, from country $i$ (and by transport mode, air or vessel) \vspace{0.1cm}
+\item For product $k$, from country $i$  \vspace{0.1cm}
 \item Rewrite to get:
 $$\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}}$$
-\item[$\Rightarrow$] Estimate this equation for each year over 1974-2013 (at the $k=$ 3-digit classification level)
+\item[$\Rightarrow$] Estimate this equation for each year over 1974-2013 (at the $k=$ 3-digit classification level) \vspace{0.1cm}
+\begin{itemize}
+\item[-] Notice the equation is also year- and mode (air or vessel)- specific
+\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -279,11 +282,7 @@ $$\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{k} -1+\frac{t
 \begin{equation}
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{k}-1 +\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}\right) + \epsilon_{ik} \label{eq:model_with_add}
 \end{equation}
-\normalsize
-\begin{itemize}
-\item[-] From which we re-built:
-$$\widehat{\tau}^{adv}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}, \qquad \widehat{t}^{add}_{ik} = \widehat{t}_{i} + \widehat{t}_{k}$$
-\end{itemize}
+
 \end{itemize}
 \end{frame}
 
@@ -294,8 +293,12 @@ $$\widehat{\tau}^{adv}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}, \qqu
 \begin{equation}
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{k}-1 \right) + \epsilon^{ice}_{ik} \label{eq:model_nlI}
 \end{equation}
+
+\item From which we re-built: \vspace{0.1cm}
 \begin{itemize}
-\item[-] From which we re-built:
+\item[-] With additive costs: 
+$$\widehat{\tau}^{adv}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}, \qquad \widehat{t}^{add}_{ik} = \widehat{t}_{i} + \widehat{t}_{k}$$
+\item[-] With only iceberg costs: 
 $$\widehat{\tau}^{ice}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}$$
 \end{itemize}
 \item  Taking the average over the product-country dimension, we finally get (by year and transport mode): \vspace{0.1cm}
