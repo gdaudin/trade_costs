@@ -18,6 +18,9 @@
 \usepackage{amsmath,amssymb}
 \usepackage[english]{babel}
 \usepackage{epic,eepic,bez123}
+\usepackage{ bbold }
+\usepackage{ upgreek }
+\usepackage{amsmath}
 %\usepackage[T1]{fontenc}
 %\usepackage[ansinew]{inputenc}
 %\usepackage[latin1]{inputenc}
@@ -110,10 +113,10 @@ Lise Patureau \\
 \end{itemize}
 \item Transport costs: A sizeable share of international trade costs \vspace{0.1cm}
 \begin{itemize}
-\item[-] Account for 21\% of international trade costs (Anderson \& Van Wincoop, 2004) \vspace{0.1cm}
+\item[-] Account for 21\% of international trade costs $\Leftrightarrow$ A 15\% markup (Anderson \& Van Wincoop, 2004) \vspace{0.1cm}
 %\item[-] Elasticity of trade wrt freight costs = -3 (Behar \& Venables, 2011) \vspace{0.1cm}
 \end{itemize}
-\item[$\Rightarrow$] If much trade policy barriers have been removed, the transport cost component of trade costs remains sizeable \vspace{0.1cm}
+\item[$\Rightarrow$] If many trade policy barriers have been removed, the transport cost component of trade costs does not seem to be declining\vspace{0.1cm}
 \end{itemize}
 \textbf{The paper: On international transport costs}
 
@@ -128,12 +131,13 @@ Lise Patureau \\
 \item[$\Leftrightarrow$] The ``iceberg cost'' hypothesis (Samuelson, 1954) \vspace{0.1cm}
 \end{itemize}
 \item Yet... A debated question \vspace{0.1cm}
-\item Wouldn't trade costs rather exhibit an additive structure ?  \vspace{0.1cm}
-\item The structure (additive vs iceberg) of transport costs, far from being anecdotal \vspace{0.1cm}
+\item Would not trade costs rather exhibit an additive structure ?  \vspace{0.1cm}
+\item The structure (additive vs iceberg) of transport costs, not anecdotal \vspace{0.1cm}
 \begin{itemize}
 \footnotesize{
-\item[-] Additive trade costs, an important role in shaping the pattern of trade flows: Martin (2012), Hummels \& Skiba (2004), Irrarazabal et al. (2015) \vspace{0.1cm}
-\item[-] With strong normative implications: Sorensen (2014), Irrarazabal et al. (2015) \vspace{0.1cm}}
+\item[-] Additive trade costs \& the pattern of trade flows (Alchian \& Allen, 1964) \vspace{0.1cm}
+\item[-] Strong normative implications (Sorensen, 2014)\vspace{0.1cm}
+\item[-] The additive structure of trade costs is supported by recent empirical evidence (Hummels \& Skiba, 2004)  \vspace{0.1cm}}
 \end{itemize}
 \item[$\Rightarrow$] Trade costs are likely to display an additive component, but precisely... by how much? \vspace{0.1cm}
 \end{itemize}
@@ -145,29 +149,30 @@ Lise Patureau \\
 An empirical decomposition of the structure of transport costs \vspace{0.1cm}
 \begin{itemize}
 \item[(1)] What is the size of the iceberg and the additive trade costs? \vspace{0.1cm}
-\item[$\Rightarrow$] Provide a quantitative measure of both  \vspace{0.1cm}
+\item[$\Rightarrow$] Provide a quantitative measure of both, using US imports data \vspace{0.1cm}
 \begin{itemize}
 \footnotesize{
-\item[-] Iceberg cost: 2.5\% and 3.2\% of the export price in air and ocean transport (mean value over 1974-2013) \vspace{0.1cm}
+\item[-] Iceberg cost: 2.5\% and 3.2\% of the export price in air and ocean transport (mean value over 1974-2013, US imports) \vspace{0.1cm}
 \item[-] Additive cost: 1.8\% and 2.9\% of the export price  \vspace{0.1cm}
 }
 \end{itemize}
 \item[(2)] What do we lose by skipping the additive part of transport costs? \vspace{0.1cm}
 \item[$\Rightarrow$] We lose much: With the additive term included, \vspace{0.1cm}
 \begin{itemize}
-\item[-] The estimated iceberg component reduces by a factor of 2 \vspace{0.1cm}
+\item[-] The estimated iceberg component is reduced by a factor of 2 \vspace{0.1cm}
 \item[-] A significantly better ``goodness-of-fit'' \vspace{0.1cm}
 \end{itemize}
 \item[(3)] How have international transport costs evolved over time? \vspace{0.1cm}
 \begin{itemize}
 \item[-] Transport costs \textit{per se} have fallen since 1985, by $\simeq$ 40\% \vspace{0.1cm}
-\item[-] When additive costs are included, not much difference between air and sea transport, $\neq$ Hummels (2007) and Behar \& Venables (2011)
+\item[-] When additive costs are included, not much difference between air and sea transport, $\neq$ Hummels (2007) and Behar \& Venables (2011) \vspace{0.1cm}
+%\item[-] Marked difference in the evolution of additive and multiplicative costs in Air
 \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Plan of the talk}
+\frametitle{Outline of the talk}
 \begin{itemize}
 \item Data Sources  \vspace{0.1cm}
 \item Empirical Methodology \vspace{0.1cm}
@@ -179,17 +184,18 @@ An empirical decomposition of the structure of transport costs \vspace{0.1cm}
 \begin{frame} [label=slide_data]
 \frametitle{Data sources}
 \begin{itemize}
-\item Our measure of international transport costs: The difference between the export price and the import price \vspace{0.1cm}
+\item Our measure of international transport costs: The difference between the export (fas) price and the import (cif) price \vspace{0.1cm}
 \item Database: US Imports of Merchandise database \hyperlink{app_data}{\beamergotobutton{More}}\vspace{0.1cm}
 \begin{itemize}
-\item[-] The export (fas) price, $\widetilde{p}$: the price for one kg of merchandise at the country export gate \vspace{0.1cm}
+\item[-] The export ($\simeq$ fas) price, $\widetilde{p}$: the price for one kg of merchandise at the country export point \vspace{0.1cm}
 \item[-] The import (cif) price, $p$: the price for one kg of merchandise at the entry in the US \vspace{0.1cm}
 \item[-] Yearly basis, from 1974 to 2013, HS 10 digit classification level, by transport mode (air or vessel) \vspace{0.1cm}
+\item[-] A dataset also used by Hummels (2007) (until 2004) \vspace{0.1cm}
 \end{itemize}
 \item[$\Rightarrow$] Our dependent variable: The ratio $p/\widetilde{p}$ \vspace{0.1cm}
 \begin{itemize}
 \item[-] At the 3-digit classification level  \vspace{0.1cm}
-\item[-] Estimation at the 4-digit level on some selected years as robustness \vspace{0.1cm}
+\item[-] At the 4-digit level on some selected years as robustness check \vspace{0.1cm}
 \item[-] Approximatively 200 products (3 digits), from around 200 countries  \vspace{0.1cm}
 \begin{itemize}
 \item[$\ast$] Around 600-700 products at the 4-digit level
@@ -238,16 +244,16 @@ $$\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde
 \item  Taking the average over the product-country dimension, we finally get (by year and transport mode): \hyperlink{app_method_2}{\beamergotobutton{More}}\vspace{0.1cm}
 \begin{itemize}
 \item[-] When additive costs are included: $\widehat{\tau}^{adv}$, $\widehat{t}^{add}$  \vspace{0.1cm}
-\item[-] With only iceberg costs: $\widehat{\tau}^{ice}$
+\item[-] With only ad-valorem costs: $\widehat{\tau}^{ice}$
 \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[label=slide_results_summary]
 \frametitle{Result 1: Estimating transport costs over time}
-For both the ad-valorem and the additive components of transport costs (by year \& transport mode)\vspace{0.1cm}
+For both the ad-valorem and the additive components (by year \& transport mode)\vspace{0.1cm}
 \begin{itemize}
-\item[-] \footnotesize{ Average values over 1974-2013, in percent of the export price \hyperlink{app_results_summary}{\beamergotobutton{More}}  } \vspace{0.1cm}
+\item[-] \footnotesize{Average weighted values over 1974-2013, in percent of the export price \hyperlink{app_results_summary}{\beamergotobutton{More}}  } \vspace{0.1cm}
 \end{itemize}
 \begin{table}[htbp]
   \centering
@@ -255,9 +261,9 @@ For both the ad-valorem and the additive components of transport costs (by year 
   %\caption{Transport costs estimates: Summary \label{tab:summary_results}}
   \begin{center}
     \begin{tabular}{l|cc|cc}
-      \hline \hline
+      \hline \hline 
     %\multicolumn{5}{c}{Mean value over 1974-2013}   \\
-    \# digit & \multicolumn{2}{c}{3 digits} & \multicolumn{2}{c}{4 digits ($^\ast$)} \\ \hline
+    \# digit & \multicolumn{2}{c}{3 digits} & \multicolumn{2}{c}{4 digits} \\ \hline
     Mode  & Vessel & Air & Vessel & Air \\ \hline
     \multicolumn{5}{l}{With only Ad-Valorem Trade Costs ($\widehat{\tau}^{ice}$)}  \\ \hline
     Mean  & \bf{5.8} & \bf{5.1} & 6.0 & 4.9 \\
@@ -278,13 +284,14 @@ For both the ad-valorem and the additive components of transport costs (by year 
     %Std   & 0.041 & 0.034 & 0.039 & 0.034 \\
     %Min. value & 0.000 & 0.000 & 0.000 & 0.000 \\
     %Max. value & 2.941 & 13.303 & 3.197 & 11.440 \\ \hline
-        \# obs. & 29279 & 28207 & 29317 & 27680 \\
+        \# obs. & 29279 & 28207 & 29317 & 27680 \\ \hline \hline 
    % \# origin country & 188 & 191 & 188 & 189 \\
-   % \# products & 230 & 211 & 666 & 567 \\  \hline \hline
+   % \# products & 230 & 211 & 666 & 567 \\  
   \end{tabular}
-    \end{center}}
-%\parbox[l]{8cm}{\tiny{Notes: Statistics are obtained weighting each observation by its value. The additive term is expressed in fraction of fab price. ($^\ast$): Four 4-digit estimation: 0n selected years. ($^{\ast \ast}$): 1989 omitted in 3 digit estimation for air.}}
-\end{table}%
+%\parbox[l]{8cm}{\tiny{Notes: Statistics are obtained weighting each observation by its value.}}
+%. The additive term is expressed in fraction of fab price. ($^\ast$): Four 4-digit estimation: 0n selected years. ($^{\ast \ast}$): 1989 omitted in 3 digit estimation for air.}}
+\end{center}}
+  \end{table}%
 \begin{itemize}
 \item Transport costs are sizeable \vspace{0.1cm}
 \begin{itemize}
@@ -305,8 +312,8 @@ For both the ad-valorem and the additive components of transport costs (by year 
 \begin{itemize}
 \item[-] Omitting the additive term substantially biases the iceberg component upwards (Table 1) \vspace{0.1cm}
 \begin{itemize}
-\item[$\star$] The ad-valorem cost reduces by a factor of 2 when additive transport costs are included in the estimation  \vspace{0.1cm}
-\item[$\star$] Amounts to 3.2\% and 2.5\% as mean values in vessel and air respectively in presence of additive costs \vspace{0.1cm}
+\item[$\star$] The ad-valorem cost is reduced by a factor of 2 when additive transport costs are included in the estimation  \vspace{0.1cm}
+\item[$\star$] An iceberg cost equal 3.2\% and 2.5\% as mean values in vessel and air respectively in presence of additive costs \vspace{0.1cm}
 \item[$\star$] vs 5.8\% and 5.1\% when estimated alone \vspace{0.1cm}
 \end{itemize}
 \item[-] A sizeable share of the additive component in total transport costs \vspace{0.1cm}
@@ -318,7 +325,10 @@ For both the ad-valorem and the additive components of transport costs (by year 
 \item A result confirmed by goodness of fit comparisons \vspace{0.1cm}
 \begin{itemize}
 \item[-] 4 measures of goodness of fit for Models (\ref{eq:model_with_add}) (with additive TC) and (\ref{eq:model_nlI}) (without additive TC) \vspace{0.1cm}
-\item[$\Rightarrow$] A systematically better goodness of fit when including the additive component \hyperlink{app_goodnessfit}{\beamergotobutton{More results}}
+\item[$\Rightarrow$] A systematically better goodness of fit when including the additive component \hyperlink{app_goodnessfit}{\beamergotobutton{More results}} \vspace{0.1cm}
+\begin{itemize}
+\item[$\star$] Taking into account the additional degrees of freedom
+\end{itemize}
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -334,17 +344,19 @@ For both the ad-valorem and the additive components of transport costs (by year 
 \begin{center}
 \begin{tabular}{cc}
 {\scriptsize (a) Air } & {\scriptsize  (b) Vessel}\\
-\includegraphics[width=5cm, height=5cm]{Fig2a_decompTC_air_3d.pdf}
-& \includegraphics[width=5cm,height=5cm]{Fig2b_decompTC_vessel_3d.pdf} \\
+\includegraphics[width=5cm, height=4cm]{Fig2a_decompTC_air_3d.pdf}
+& \includegraphics[width=5cm,height=4cm]{Fig2b_decompTC_vessel_3d.pdf} \\
 \end{tabular}
 \end{center}
 \end{figure}
-\item[$\Rightarrow$] Downward trend in overall transport costs, for both air and ocean shipping since 1974 \hyperlink{app_fig1}{\beamergotobutton{Robustness of this result}}\vspace{0.1cm}
 \begin{itemize}
-\footnotesize{
-\item[-] From 1980, a 1.5- 2 percentage points decrease in Air, a 2-3 percentage point decrease in Vessel }\vspace{0.1cm}
+\item[-] Lower overall transport costs in Air than in Vessel \vspace{0.1cm}
+\item[-] Downward trend for both modes since 1974 \hyperlink{app_fig1}{\beamergotobutton{Robustness of this result}}\vspace{0.1cm}
+%\item[-] Slighlty ore pronounced in ocean shipping \vspace{0.1cm}
+\begin{itemize}
+\item[$\star$] A 50\% decrease in Air, a 60\% decrease in Vessel \vspace{0.1cm}
 \end{itemize}
-\
+\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -391,14 +403,14 @@ For both the ad-valorem and the additive components of transport costs (by year 
 \item The importance of excluding composition effects  \vspace{0.1cm}
 \begin{itemize}
 \item[-] The reduction of the \textit{pure} transport costs: Starts in 1985 (not in 1974) \vspace{0.1cm}
-\item[-] The reduction between 1974 and 1984 (\hyperlink{slide_fig1}{\beamergotobutton{Figure 1}}), attributable to change in the composition of trade patterns \vspace{0.1cm}
+\item[-] The reduction between 1974 and 1984 (\hyperlink{slide_fig1}{\beamergotobutton{Figure 1}}) is attributable to change in the composition of trade patterns \vspace{0.1cm}
 \end{itemize}
 \item Overall (pure) transport costs have declined by $\simeq$ 40\% since 1985\vspace{0.1cm}
 \item The importance of the additive component of transport costs (again) \vspace{0.1cm}
 \begin{itemize}
 \item[-] When only iceberg costs are modeled (Panel (a)): A stronger decrease in Air transport over the 1985-2005 period \vspace{0.1cm}
 \item[-] In accordance with Hummels (2007), Behar \& Venables (2011) \vspace{0.1cm}
-\item[-] But... No more substantial difference when additive costs are included (Panel (b))
+\item[-] But... No substantial difference when additive costs are included (Panel (b))
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -411,18 +423,20 @@ For both the ad-valorem and the additive components of transport costs (by year 
 %composition effects excluded}
 %\label{fig:TC_add_mult_compeffects_excl}
 \begin{center}
-\includegraphics[width=8cm, height=4cm]{Fig3b_TCovertime_add_et_mult_3d.pdf}
+\includegraphics[width=8cm, height=3.5cm]{Fig3b_TCovertime_add_et_mult_3d.pdf}
 %{\footnotesize {OECD data} }
 \end{center}
 \end{figure}
 \begin{itemize}
-\item For Vessel: Similar downward trend for both $\tau$ and $t$
-\item For Air: Much more contrasted trends
+\item For Vessel: Similar downward trend for both $\tau$ and $t$  \vspace{0.1cm}
+\item For Air: Much more contrasted trends  \vspace{0.1cm}
 \begin{itemize}
-\item[-] Substantial decrease in the ad-valorem costs over 1985-2005, but roughly constant additive costs
-\item[$\Rightarrow$] An explanation to the difference between Panels (a) and (b) above
+\item[-] Substantial decrease in the ad-valorem costs over 1985-2005, but roughly constant additive costs  \vspace{0.1cm}
+\item[$\Rightarrow$] An explanation to the difference between Panels (a) and (b) above  \vspace{0.1cm}
+
+\item[$\Rightarrow$] The importance of modeling additive costs  \vspace{0.1cm}
+\item[-] Trend reversal around 2005: Any suggestion?
 \end{itemize}
-\item[$\Rightarrow$] The importance of modeling additive costs
 \end{itemize}
 \end{frame}
 
@@ -433,13 +447,14 @@ For both the ad-valorem and the additive components of transport costs (by year 
 \begin{itemize}
 \item Provide a quantitative evaluation of both the additive and the ad-valorem components \vspace{0.1cm}
 \begin{itemize}
+\item[-] Based on the US imports flows from 1974 to 2013 \vspace{0.1cm}
 \item[-] Additive cost: amount to 2.8\% of the export price in ocean shipping, 1.8\% in air transport \vspace{0.1cm}
 \item[-] Iceberg cost: 3.2\% and 2.5\% for air and ocean respectively \vspace{0.1cm}
 \end{itemize}
 \item The importance of taking into account additive transport costs \vspace{0.1cm}
 \begin{itemize}
 \item[-] Additive costs are far from negligible quantitatively \vspace{0.1cm}
-\item[-] A better fit of the model when taken into account    \vspace{0.1cm}
+\item[-] A better fit of the model when they are taken into account    \vspace{0.1cm}
 \end{itemize}
 \item Characterize the evolution of transport costs over time \vspace{0.1cm}
 \begin{itemize}
@@ -458,6 +473,7 @@ For both the ad-valorem and the additive components of transport costs (by year 
 \item On the empirical side: Go deeper in the structural determinants of transport costs \vspace{0.1cm}
 \begin{itemize}
 \item[-] Identify the respective roles of handling costs, insurance and freight costs at the root of the import-export prices gap \vspace{0.1cm}
+\item[-] Compare the transports costs between air and vessel (excluding composition effects) \vspace{0.1cm}
 \end{itemize}
 \item On the theoretical side: Use our results to explore the role of additive costs \vspace{0.1cm}
 \begin{itemize}
@@ -478,12 +494,12 @@ For both the ad-valorem and the additive components of transport costs (by year 
 \item Implications (and limitations) \vspace{0.1cm}
 \begin{itemize}
 \item[-] Only cover international transport costs \vspace{0.1cm}
-\item[-] Among transport costs, quantitative freight costs (not those related to the time value of goods) \vspace{0.1cm}
+\item[-] Among transport costs, only quantitative costs (freight, insurance and handling - nothing about those related to the time value of goods) \vspace{0.1cm}
 \end{itemize}
 \item A rich database to exploit \vspace{0.1cm}
 \begin{itemize}
 \item[-] US imports, large time period: Broad view of international trade flows \vspace{0.1cm}
-\item[-] A reliable database, already used by Hummels (2007), but on a larger period of time \vspace{0.1cm}
+\item[-] A reliable database, already used by Hummels (2007). But we have a longer period of time \vspace{0.1cm}
 \item[-] Have both the import and the export prices: Estimate both the levels of the ad-valorem and the additive trade costs ($\neq$ Irrarazabal et al., 2015)
 \end{itemize}
 \end{itemize}
@@ -532,7 +548,8 @@ $$\widehat{\tau}^{adv}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}, \qqu
 \item[$\star$] With only iceberg costs:
 $$\widehat{\tau}^{ice}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}$$
 \end{itemize}
-\item[-] Then, take the (weighted) average by country-product
+\item[-] Then, take the weighted average by country-product, \vspace{0.1cm}
+\item[-] Using the values of each trade flow (ik-specific) over total yearly trade as a weighting scheme
 \end{itemize}
 \end{itemize}
 \hyperlink{slide_method}{\beamergotobutton{Back to slide}}
@@ -595,7 +612,7 @@ $$\widehat{\tau}^{ice}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}$$
 \begin{itemize}
 \item[-] The $R^2$ (the larger the value, the better the fit) \vspace{0.1cm}
 \item[-] Standard Error of Regression (SER) (the smaller the value, the better the fit) \vspace{0.1cm}
-\item[-] The log-likelihood function and two derived measures \vspace{0.1cm}
+\item[-] The log-likelihood function and two derived measures, which take into account the degrees of freedom \vspace{0.1cm}
 \begin{itemize}
 \item[$\ast$] The Akaike Information Criterion (the lower AIC, the better the fit) \vspace{0.1cm}
 \item[$\ast$] The log-likelihood ratio test ($H_0$: both models are equivalent)
