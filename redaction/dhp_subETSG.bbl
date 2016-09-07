@@ -1,4 +1,4 @@
-\begin{thebibliography}{18}
+\begin{thebibliography}{17}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -32,11 +32,6 @@
   agglomeration and trade}, in \textsc{J.V.~Henderson, J.~T.} (editor),
   \emph{Handbook of Regional ad Urban Economics, Volume IV}, Amsterdam:
   North-Holland.
-
-\bibitem[{Hornok and Koren(2015)}]{Hornok14}
-\textsc{Hornok, C.} and \textsc{Koren, M.} (2015), \enquote{Per-Shipment Costs
-  and the Lumpiness of International Trade}, \emph{Review of Economics and
-  Statistics}, vol.~97 \,n\textsuperscript{o}~2: pp. 525--530.
 
 \bibitem[{Hummels(2007)}]{hummels2007}
 \textsc{Hummels, D.} (2007), \enquote{Transportation Costs and International
@@ -86,7 +81,7 @@
 \bibitem[{Samuelson(1954)}]{samuelson1954}
 \textsc{Samuelson, P.} (1954), \enquote{The Transfer Problem and Transport
   Costs, II: Analysis of Effects of Trade Impediments}, \emph{Economic
-  Journal}, vol.~64: p. 264–289.
+  Journal}, vol.~64: pp. 264--Â–289.
 
 \bibitem[{Sorensen(2014)}]{sorensen2014}
 \textsc{Sorensen, A.} (2014), \enquote{Additive versus multiplicative trade
