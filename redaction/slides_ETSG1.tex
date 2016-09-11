@@ -137,7 +137,7 @@ Lise Patureau \\
 \footnotesize{
 \item[-] Additive trade costs \& the pattern of trade flows (Alchian \& Allen, 1964) \vspace{0.1cm}
 \item[-] Strong normative implications (Sorensen, 2014)\vspace{0.1cm}
-\item[-] The additive structure of trade costs is supported by recent empirical evidence (Hummels \& Skiba, 2004)  \vspace{0.1cm}}
+\item[-] The additive structure of trade costs is supported by recent empirical evidence (Irrarazabal et al. 2014, Hummels \& Skiba, 2004)  \vspace{0.1cm}}
 \end{itemize}
 \item[$\Rightarrow$] Trade costs are likely to display an additive component, but precisely... by how much? \vspace{0.1cm}
 \end{itemize}
@@ -148,7 +148,7 @@ Lise Patureau \\
 \frametitle{Our paper in 3 questions (and 3 answers)}
 An empirical decomposition of the structure of transport costs \vspace{0.1cm}
 \begin{itemize}
-\item[(1)] What is the size of the iceberg and the additive trade costs? \vspace{0.1cm}
+\item[(1)] What is the size of the iceberg and the additive transport costs? \vspace{0.1cm}
 \item[$\Rightarrow$] Provide a quantitative measure of both, using US imports data \vspace{0.1cm}
 \begin{itemize}
 \footnotesize{
@@ -209,7 +209,7 @@ An empirical decomposition of the structure of transport costs \vspace{0.1cm}
 \frametitle{Empirical specification: The estimated equation}
 \begin{itemize}
 \item Relate the import price $p$ to the export price $\widetilde{p}$ given both additive (per-kg) costs $t$ and ad-valorem costs $\tau$:
-$$p = \tau \widetilde{p} + t, \qquad \text{with}\quad \tau \geq 1,\quad t \geq 0$$
+$$p = \tau \widetilde{p} + t, \quad \text{with }~~\tau \geq 1, \quad t \geq 0$$
 \item For product $k$, from country $i$  \vspace{0.1cm}
 \item Rewrite to get:
 $$\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}}$$
@@ -265,13 +265,13 @@ For both the ad-valorem and the additive components \vspace{0.1cm}
     %\multicolumn{5}{c}{Mean value over 1974-2013}   \\
     \# digit & \multicolumn{2}{c}{3 digits} & \multicolumn{2}{c}{4 digits} \\ \hline
     Mode  & Vessel & Air & Vessel & Air \\ \hline
-    \multicolumn{5}{l}{With only Ad-Valorem Trade Costs ($\widehat{\tau}^{ice}$)}  \\ \hline
+    \multicolumn{5}{l}{With only Ad-Valorem Costs ($\widehat{\tau}^{ice}$)}  \\ \hline
     Mean  & \bf{5.8} & \bf{5.1} & 6.0 & 4.9 \\
     Median & 5.1 & 4.2 & 5.2 & 3.7 \\ \hline
     %Std   & 0.032 & 0.042 & 0.036 & 0.045 \\
     %Min. value & 1.003 & 1.001 & 1.003 & 1.000 \\
     %Max. value & 1.304 & 1.685 & 1.408 & 2.051 \\ \hline
-    \multicolumn{5}{l}{With Additive \& Ad-Valorem Trade Costs } \\ \hline
+    \multicolumn{5}{l}{With Additive \& Ad-Valorem Costs } \\ \hline
    \multicolumn{5}{l}{\textit{Ad-valorem term} ($\widehat{\tau}^{adv}$)}\\ \hline
     Mean  & \bf{3.2} & \bf{2.5} & 3.3 & 2.4 \\
     Median & 2.8 & 1.8 & 2.8 & 1.6 \\ \hline
@@ -523,7 +523,7 @@ For both the ad-valorem and the additive components \vspace{0.1cm}
  \tau_{ik} = \tau_{i} \times \tau_{k}, \qquad t_{ik} = t_{i} + t_{k} \label{eq:specifTC}
  \end{equation}
 \end{itemize}
-\item Given the constraint $\frac{p_{ik}}{\widetilde{p}_{ik}} -1$, the error term should be always positive and multiplicative \vspace{0.1cm}
+\item Given the constraint $\frac{p_{ik}}{\widetilde{p}_{ik}} \geq 1$, the error term should be always positive and multiplicative \vspace{0.1cm}
 \item[$\Rightarrow$] The estimated equation becomes:
 $$\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})$$
 \begin{itemize}
@@ -541,9 +541,9 @@ $$\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{k} -1+\frac{t
 \item The non-linear least squares method \vspace{0.1cm}
 \begin{itemize}
 \item[-] At the basis of the method: Approximate the model by a linear one and refine the parameters by successive iterations \vspace{0.1cm}
-\item[-] The criterion for convergence: That the sum of the squares of the residuals does not not increase? from one iteration to the next \vspace{0.1cm}
+\item[-] The criterion for convergence: That the sum of the squares of the residuals does not increase from one iteration to the next \vspace{0.1cm}
 \end{itemize}
-\item Eliminate potential influence of outliers: Exclude the 5 percent of the upper and lower tails of the distribution \vspace{0.1cm}
+\item Eliminate potential influence of outliers: Exclude the 5 \% of the upper and lower tails of the distribution \vspace{0.1cm}
 \item Obtaining the final estimates: More details  \vspace{0.1cm}
 \begin{itemize}
 \item[-] After estimating Equations (\ref{eq:model_with_add}) and (\ref{eq:model_nlI}), re-built \vspace{0.1cm}
