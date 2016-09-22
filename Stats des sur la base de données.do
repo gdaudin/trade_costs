@@ -1,10 +1,9 @@
 *************************************************
 * Programme : Avoir qqs stats des sur la base de données
-* Using Hummels trade data
 * 
 *************************************************
 
-*version 12
+version 14.1
 
 
 if "`c(username)'" =="guillaumedaudin" {
@@ -39,26 +38,33 @@ keep if year==`year'
 keep if mode=="`mode'"
 
 gen prix_trsp = prix_caf/prix_fob -1
-gen lnprix_trsp = log(prix_trsp)
-gen lnterme_ice = log(terme_iceberg -1)
+gen termeAetI = terme_A+terme_I-1
+gen termeiceberg = terme_iceberg -1
 
-local type prix_trsp lnprix_trsp lnterme_ice
+local type prix_trsp termeAetI termeiceberg
+
+foreach i of local type {
+	gen ln`i' = log(prix_trsp)
+}
+	
+
+
+local type prix_trsp termeAetI termeiceberg lnprix_trsp lntermeAetI lntermeiceberg
+keep `type' year mode val
 
 foreach x in `type' {
 
-sum `x'  [fweight= val], det
-generate `x'_mp = r(mean)
-generate `x'_med = r(p50)
-generate `x'_et = r(sd)
-generate `x'_min = r(min)
-generate `x'_max = r(max)
+	quietly sum `x'  [fweight= val], det
+	generate `x'_mp = r(mean)
+	generate `x'_med = r(p50)
+	generate `x'_et = r(sd)
+	generate `x'_min = r(min)
+	generate `x'_max = r(max)
 
 }
 
 keep if _n ==1
 
-keep year mode prix_trsp_mp prix_trsp_med prix_trsp_et prix_trsp_min prix_trsp_max lnprix_trsp_mp lnprix_trsp_med lnprix_trsp_et lnprix_trsp_min /*
-*/ lnprix_trsp_max lnterme_ice_mp lnterme_ice_med lnterme_ice_et lnterme_ice_min  lnterme_ice_max 
 
 save "$dir/results/describe_db_`year'_`mode'", replace 
 
@@ -75,14 +81,14 @@ local mode ves air
 
 foreach x in `mode' {
 
-*foreach z in `year' {
-foreach z of num 1974(1)2013 {
-
-
-stats_des `z' `x'
-
-
-}
+	*foreach z in `year' {
+		foreach z of num 1974(1)2013 {
+		
+		
+		stats_des `z' `x'
+		
+	
+	}
 }
 
 
@@ -100,12 +106,12 @@ local mode ves air
 
 foreach x in `mode' {
 
-use describe_db_1974_`x', clear
-
-
-save compil_describedb_`x', replace
-*erase describe_db_1974_`classe'_`preci'_`x'.dta
-
+	use describe_db_1974_`x', clear
+	
+	
+	save compil_describedb_`x', replace
+	*erase describe_db_1974_`classe'_`preci'_`x'.dta
+	
 }
 
 * Les années ultérieures
@@ -113,15 +119,15 @@ save compil_describedb_`x', replace
 
 foreach x in `mode' {
 
-foreach z of num 1975(1)2013 {
-
-use compil_describedb_`x', clear
-append using describe_db_`z'_`x'
-
-save compil_describedb_`x', replace
-*erase describe_db_`z'_`x'.dta
-
-}
+	foreach z of num 1975(1)2013 {
+	
+		use compil_describedb_`x', clear
+		append using describe_db_`z'_`x'
+		
+		save compil_describedb_`x', replace
+		*erase describe_db_`z'_`x'.dta
+	
+	}
 
 }
 
@@ -133,23 +139,21 @@ local mode ves air
 
 
 foreach x in `mode' {
-use compil_describedb_`x', clear
-
-display "Mode de transport = `x'" 
-
-
-local type prix_trsp_mp prix_trsp_med lnprix_trsp_mp lnprix_trsp_med lnterme_ice_mp lnterme_ice_med
-
-foreach y in `type' {
-
-sum `y'
-generate `y'_meanperiod = r(mean)
-
-
+	use compil_describedb_`x', clear
+	
+	display "Mode de transport = `x'" 
+	
+		foreach  y of varlist prix_trsp* termeAetI* termeiceberg* lnprix_trsp* lntermeAetI* lntermeiceberg* {
+		
+		quietly sum `y'
+		generate `y'_meanperiod = r(mean)
+		
+		
+		}
+	
+	save compil_describedb_`x', replace
+	
+	
 }
 
-save compil_describedb_`x', replace
-
-
-}
-
+edit *mp_meanperiod in 1
