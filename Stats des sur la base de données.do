@@ -28,94 +28,39 @@ cd $dir
 
 capture program drop stats_des
 program stats_des
-	args year class preci mode
-* exemple : reg_termes_h 2006 sitc2 3 air
-*Hummels : sitc2
+	args year mode
 
 
-**************** On reprend le traitement de la database comme pour la préparation de la base blouk
+use "$dir/results/estimTC.dta", clear
 
-use "$dir/data/hummels_tra.dta", clear
-
-
-
-save "$dir/results/describe_db_`year'_`class'_`preci'_`mode'", replace 
-
-use "$dir/results/describe_db_`year'_`class'_`preci'_`mode'", clear
-
-
-***Pour restreindre
-*keep if substr(sitc2,1,1)=="0"
-*************************
+* Base qui synthétise les résultats des estimations sur 3 digits, en intégrant en plus les variables observées
 
 keep if year==`year'
 keep if mode=="`mode'"
-rename `class' product
-replace product = substr(product,1,`preci')
 
-label variable iso_d "pays importateur"
-label variable iso_o "pays exportateur"
+gen prix_trsp = prix_caf/prix_fob -1
+gen lnprix_trsp = log(prix_trsp)
+gen lnterme_ice = log(terme_iceberg -1)
 
+local type prix_trsp lnprix_trsp lnterme_ice
 
-* Nettoyer la base de donnÈes
+foreach x in `type' {
 
-*****************************************************************************
-* On enlève en bas et en haut 
-*****************************************************************************
+sum `x'  [fweight= val], det
+generate `x'_mp = r(mean)
+generate `x'_med = r(p50)
+generate `x'_et = r(sd)
+generate `x'_min = r(min)
+generate `x'_max = r(max)
 
-
-
-display "Nombre avant bas et haut " _N
-
-bys product: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
-bys product: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
-drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
-
-
-display "Nombre après bas et haut " _N
-
-egen prix_min = min(prix_trsp2), by(product)
-egen prix_max = max(prix_trsp2), by(product)
-
-g lprix_trsp2 = ln(prix_trsp2)
-label variable lprix_trsp2 "log(prix_caf/prix_fob)"
-*g lprix_trsp2 = ln(prix_trsp2)
-
-g ldist = ln(dist)
-label variable ldist "log(distance)"
-
-**********Sur le produits
-
-codebook product
-
-
-egen group_prod=group(product)
-su group_prod, meanonly	
-drop group_prod
-local nbr_prod_exante=r(max)
-display "Nombre de produits : `nbr_prod_exante'" 
-
-bysort product: drop if _N<=5
-
-egen group_prod=group(product)
-su group_prod, meanonly	
-local nbr_prod_expost=r(max)
-drop group_prod
-display "Nombre de produits : `nbr_prod_expost'" 
-
-
-sum prix_trsp  [fweight=`mode'_val], det
-generate prix_trsp_mp = r(mean)
-generate prix_trsp_med = r(p50)
-generate prix_trsp_et = r(sd)
-generate prix_trsp_min = r(min)
-generate prix_trsp_max = r(max)
+}
 
 keep if _n ==1
 
-keep year mode prix_trsp_mp prix_trsp_med prix_trsp_et prix_trsp_min prix_trsp_min
+keep year mode prix_trsp_mp prix_trsp_med prix_trsp_et prix_trsp_min prix_trsp_max lnprix_trsp_mp lnprix_trsp_med lnprix_trsp_et lnprix_trsp_min /*
+*/ lnprix_trsp_max lnterme_ice_mp lnterme_ice_med lnterme_ice_et lnterme_ice_min  lnterme_ice_max 
 
-save "$dir/results/describe_db_`year'_`class'_`preci'_`mode'", replace 
+save "$dir/results/describe_db_`year'_`mode'", replace 
 
 
 end
@@ -134,12 +79,13 @@ foreach x in `mode' {
 foreach z of num 1974(1)2013 {
 
 
-*stats_des `z' sitc2 3 `x'
-stats_des `z' sitc2 4 `x'
+stats_des `z' `x'
 
 
 }
 }
+
+
 
 ** Compiler les résultats sur toutes les années
 
@@ -150,16 +96,15 @@ cd $dir/results/
 
 set more off
 local mode ves air
-local classe sitc2
-local preci 4
+
 
 foreach x in `mode' {
 
-use describe_db_1974_`classe'_`preci'_`x', clear
+use describe_db_1974_`x', clear
 
 
-save compil_describedb_`classe'_`preci'_`x', replace
-erase describe_db_1974_`classe'_`preci'_`x'.dta
+save compil_describedb_`x', replace
+*erase describe_db_1974_`classe'_`preci'_`x'.dta
 
 }
 
@@ -170,11 +115,11 @@ foreach x in `mode' {
 
 foreach z of num 1975(1)2013 {
 
-use compil_describedb_`classe'_`preci'_`x', clear
-append using describe_db_`z'_`classe'_`preci'_`x'
+use compil_describedb_`x', clear
+append using describe_db_`z'_`x'
 
-save compil_describedb_`classe'_`preci'_`x', replace
-erase describe_db_`z'_`classe'_`preci'_`x'.dta
+save compil_describedb_`x', replace
+*erase describe_db_`z'_`x'.dta
 
 }
 
@@ -185,41 +130,25 @@ erase describe_db_`z'_`classe'_`preci'_`x'.dta
 
 * Pour 3 digits
 local mode ves air
-local classe sitc2
-local preci 3 
 
 
 foreach x in `mode' {
-use compil_describedb_`classe'_`preci'_`x', clear
+use compil_describedb_`x', clear
 
 display "Mode de transport = `x'" 
 
-sum prix_trsp_mp
 
-sum prix_trsp_med
+local type prix_trsp_mp prix_trsp_med lnprix_trsp_mp lnprix_trsp_med lnterme_ice_mp lnterme_ice_med
+
+foreach y in `type' {
+
+sum `y'
+generate `y'_meanperiod = r(mean)
 
 
 }
 
-
-* Pour 4 digits on ne garde que les années sur lesquelles on a fait l'estimation
-
-local mode ves air
-local classe sitc2
-local preci 4
-
- 
-
-foreach x in `mode' {
-use compil_describedb_`classe'_`preci'_`x', clear
-
-keep if year == 1974 | year == 1977|year == 1981| year == 1985|	year == 1989| year == 1993|	year ==1997|year ==2001|year ==2005	|year ==2009| year ==2013
-
-display "Mode de transport = `x'" 
-
-sum prix_trsp_mp
-
-sum prix_trsp_med
+save compil_describedb_`x', replace
 
 
 }
