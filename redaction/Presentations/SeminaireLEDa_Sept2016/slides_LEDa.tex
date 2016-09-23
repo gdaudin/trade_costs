@@ -302,7 +302,7 @@ $$\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{k} -1+\frac{t
 \end{frame}
 
 
-\begin{frame} 
+\begin{frame}
 \begin{itemize}
 \item Taking logs, we finally estimate the following equation
 
@@ -328,11 +328,11 @@ $$\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{k} -1+\frac{t
 \item Estimate Equation (\ref{eq:est_equation}) constraining $t=0$ \vspace{0.1cm}
 \item[$\Rightarrow$] Estimate \textit{two} equations, for each year over 1974-2013, by transport mode (air/ocean)\vspace{0.1cm}
 \begin{itemize}
-\item[-] With additive costs included: 
+\item[-] With additive costs included:
 %\footnotesize
 \begin{equation}
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{k}+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik}
-\end{equation}  
+\end{equation}
 %\normalsize
 \begin{itemize}
 \item[$\Rightarrow$] By year and transport mode, $\simeq$ 800 fixed effects to estimate   \vspace{0.1cm}
@@ -400,9 +400,9 @@ For both the ad-valorem and the additive components \vspace{0.1cm}
     %Std   & 0.041 & 0.034 & 0.039 & 0.034 \\
     %Min. value & 0.000 & 0.000 & 0.000 & 0.000 \\
     %Max. value & 2.941 & 13.303 & 3.197 & 11.440 \\ \hline
-    %   \multicolumn{5}{l}{\textit{Data} }\\ \hline
-    %Mean &5.6 &4.0 &5.7 & 4.0\\
-    %Median  &4.4 & 1.9 &4.5 & 2.0 \\  \hline
+       \multicolumn{5}{l}{\textit{Data} }\\ \hline
+    Mean &5.3 &5.0 & 5.6&3.9 \\
+    Median  &4.3 & 2.0 &4.4 & 1.9 \\  \hline
     \# obs. & 29279 & 28207 & 29317 & 27680 \\
     \# origin country & 188 & 191 & 188 & 189 \\
     \# products & 230 & 211 & 666 & 567 \\    \hline \hline
@@ -531,7 +531,7 @@ For both the ad-valorem and the additive components \vspace{0.1cm}
 \footnotesize
 \begin{eqnarray}
 %\widehat{\tau}_{ikt}&=&\delta\times \exp\left(\sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i\right).\exp\left(\sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right) \notag \\
-\ln(\widehat{\tau}_{ikt})&=&\delta +\underbrace{\sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i }_{\ln(\widetilde{\tau}_i)}+ \underbrace{\sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k }_{\ln(\widetilde{\tau}_k)}+ \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t}_{\text{``Pure'' TC}}+\epsilon_{ikt} \label{eq:compeffects_mult}
+\ln(\widehat{\tau}_{ikt})&=&\delta +\underbrace{\sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i }_{\ln(\widetilde{\tau}_i)}+ \underbrace{\sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k }_{\ln(\widetilde{\tau}_k)}+ \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t}_{\text{Time trend}}+\epsilon_{ikt} \label{eq:compeffects_mult}
 \end{eqnarray}
 \normalsize
 \begin{itemize}
@@ -541,10 +541,10 @@ For both the ad-valorem and the additive components \vspace{0.1cm}
 \footnotesize
 \begin{eqnarray}
 %\widehat{t}_{ikt}&=&\left( \prod_{i \neq \text{ARG}}  \alpha_i.\mathbb{1}_i+\prod_{k}\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right) \notag \\
-\ln(\widehat{t}_{ijt})&=&\ln\left( \underbrace{\prod_{i \neq \text{ARG}}  \alpha_i.\mathbb{1}_i}_{\widetilde{t}_i}+ \underbrace{\prod_{k}\beta_k.\mathbb{1}_k}_{\widetilde{t}_k}\right) + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t}_{\text{``Pure'' TC}}+\epsilon_{ijt} \label{eq:compeffects_add}
+\ln(\widehat{t}_{ijt})&=&\ln\left(\delta +  \underbrace{\sum_{i \neq \text{ARG}}  \alpha_i.\mathbb{1}_i}_{\widetilde{t}_i}+ \underbrace{\sum_{k \neq \text{011}}\beta_k.\mathbb{1}_k}_{\widetilde{t}_k}\right) + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t}_{\text{Time trend}}+\epsilon_{ijt} \label{eq:compeffects_add}
 \end{eqnarray}
 \normalsize
-\item Underlying rationale
+\item Underlying rationale 
 \footnotesize
 \begin{itemize}
 \item[-] Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}): Preserve our specification of the ad-valorem and the additive costs (Equation (\ref{eq:specifTC})) \vspace{0.1cm}
@@ -554,16 +554,15 @@ For both the ad-valorem and the additive components \vspace{0.1cm}
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[label = slide_compeffects]
 \begin{itemize}
-\item Exclude the composition effects of transport costs changes  \vspace{0.1cm}
+\item Exclude the composition effects of transport costs changes  \hyperlink{app_compeffects}{\beamergotobutton{More details}}\vspace{0.1cm}
 \item[$\Leftrightarrow$] Isolate the change in the time dimension  \vspace{0.1cm}
 \begin{itemize}
 \item[-] From the ad-valorem component estimation (Equation (\ref{eq:compeffects_mult})), build the variable $\Gamma_t$ ($\forall~t > 1974$):
-\begin{eqnarray*}
-&&\Gamma_t = 100\frac {\bar{\tau}_{t}-1} {\bar{\tau}_{1974}-1} \\
-\Leftrightarrow && \Gamma_t= \frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1}
-\end{eqnarray*}
+\begin{equation*}
+ \Gamma_t= \frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1}
+\end{equation*}
 \begin{itemize}
 \item[$\ast$] with $\bar{\tau}_{1974} = \exp(\delta+\sum_i \alpha_i + \sum_k \beta_k$) the mean TC in 1974
 \end{itemize}
@@ -862,5 +861,69 @@ Terms A \& I &  0.575 & 0.590 & 0.571 & 0.491 & 0.462 & 0.56 \\ \hline
 
 
 
+\begin{frame}[label=app_compeffects]
+\frametitle{Excluding the composition effects: More details}
+\begin{itemize}
+\item \textbf{For the ad-valorem cost}, rewriting Equation (\ref{eq:compeffects_mult}) :
+\footnotesize
+\begin{equation*}
+\widehat{\tau}_{ikt}=\exp\left(\delta + \sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i+\sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right)
+\end{equation*}
+\normalsize
+\begin{itemize}
+\item[-] From which we deduce after estimation: $\widehat{\tau}_{ik74} = \exp(\delta +\alpha_i +\beta_k)$ \vspace{0.1cm}
+\item[-] And, for any year $t > 1974$: $\widehat{\tau}_{ikt} = \exp(\delta +\alpha_i +\beta_k)\times \exp(\gamma_t)$ \vspace{0.1cm}
+\item[-] Which implies:
+\begin{equation*}
+\widehat{\tau}_{ikt} = \widehat{\tau}_{ik74}\times \exp(\gamma_t)
+\end{equation*}
+\end{itemize}
+\item With $\tau>1$, rewrite things to get the percentage change between years 1974 and $t$:
+\footnotesize
+$$\Gamma_{ikt} = 100.\frac{\widehat{\tau}_{ikt}-1}{\widehat{\tau}_{ik74}-1} = 100.\frac{\widehat{\tau}_{ik74}\exp(\gamma_t)-1}{\widehat{\tau}_{ik74}-1}$$
+\normalsize
+\begin{itemize}
+\item[-] With $\Gamma_{ikt}$ an index of transport costs in $t$ (relative to 1974) \vspace{0.1cm}
+\item[-] Only depend on the cost observed in 1974 and the time trend \vspace{0.1cm}
+\item[-] But, specific to a product-origin country pair  \vspace{0.1cm}
+
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item Choose to pick as reference the mean value of the cost in 1974
+\begin{itemize}
+\item[-] Build the index $\Gamma_t$ such that:
+\footnotesize
+\begin{equation*}
+ \Gamma_t= 100.\frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1}
+\end{equation*}
+\item[-] With $\bar{\tau}_{1974} = \exp(\delta + \sum_i \alpha_i + \sum_k \beta_k$) the mean TC in 1974 \vspace{0.2cm}
+\end{itemize}
+\item \textbf{For the additive component}, after estimating Equation (\ref{eq:compeffects_add}):
+\footnotesize
+\begin{eqnarray*}
+\widehat{t}_{ik74}&= & \delta + \alpha_i+ \beta_k \\
+\widehat{t}_{ikt}&=&\left(\delta + \alpha_i+ \beta_k\right).\exp(\gamma_t),\qquad \forall t > 1974
+\end{eqnarray*}
+\normalsize
+
+\begin{itemize}
+\item[-] From which we deduce: 
+$$\widehat{t}_{ikt} = \widehat{t}_{ik74} \times \exp(\gamma_t)$$
+\item[-] With $t >0$, obtain the percentage change from 1974 through:
+\footnotesize
+\begin{equation*}
+\Gamma^{add}_{ikt} = 100\frac{\widehat{t}_{ikt}}{\widehat{t}_{ik74}} = 100\exp(\gamma_t)
+\end{equation*}
+\normalsize
+\item Independent of the $i,k$ dimension, such that we can rewrite:
+$$\Gamma^{add}  = 100\exp(\gamma_t) $$
+\end{itemize}
+\end{itemize}
+\hyperlink{slide_compeffects}{\beamergotobutton{Back to slide}}
+\end{frame}
 
 \end{document}
