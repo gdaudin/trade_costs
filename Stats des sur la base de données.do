@@ -44,7 +44,7 @@ gen termeiceberg = terme_iceberg -1
 local type prix_trsp termeAetI termeiceberg
 
 foreach i of local type {
-	gen ln`i' = log(prix_trsp)
+	gen ln`i' = log(`i')
 }
 	
 
@@ -61,6 +61,11 @@ foreach x in `type' {
 	generate `x'_min = r(min)
 	generate `x'_max = r(max)
 
+	
+	quietly sum `x', det
+	generate `x'_uwm = r(mean)
+	generate `x'_uwmed = r(p50)
+	
 }
 
 keep if _n ==1
@@ -156,4 +161,14 @@ foreach x in `mode' {
 	
 }
 
-edit *mp_meanperiod in 1
+
+use compil_describedb_air, clear
+
+edit mode *mp_meanperiod  *uwm_meanperiod *uwmed_meanperiod in 1
+
+use compil_describedb_ves, clear
+
+edit mode *mp_meanperiod  *uwm_meanperiod *uwmed_meanperiod in 1
+
+
+
