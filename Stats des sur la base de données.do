@@ -273,3 +273,6 @@ edit mode prix_trsp_mp_meanperiod prix_trsp_med_meanperiod  in 1
 
 use compil_describedb_ves_4digits, clear
 edit mode prix_trsp_mp_meanperiod prix_trsp_med_meanperiod  in 1
+
+
+
