@@ -13,6 +13,8 @@
 \beamer@slide {slide_fig1}{19}
 \beamer@slide {eq:compeffects_mult}{21}
 \beamer@slide {eq:compeffects_add}{21}
+\beamer@slide {slide_compeffects<1>}{22}
+\beamer@slide {slide_compeffects}{22}
 \beamer@slide {slide_comment_compositioneffects<1>}{24}
 \beamer@slide {slide_comment_compositioneffects}{24}
 \beamer@slide {app_results_summary<1>}{28}
@@ -24,3 +26,5 @@
 \beamer@slide {app_goodnessfit}{30}
 \beamer@slide {tab:good_fit_air}{30}
 \beamer@slide {tab:good_fit_vessel}{31}
+\beamer@slide {app_compeffects<1>}{33}
+\beamer@slide {app_compeffects}{33}
