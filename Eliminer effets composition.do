@@ -490,9 +490,9 @@ foreach mode in air ves {
 
 export excel using table_extract_effetscomposition_`sitc', replace firstrow(varlabels)
 
-save database_pureTC_`sitc', replace
+save resultats_finaux/database_pureTC_`sitc', replace
 
-erase start_year`sitc'.dta
+erase start_year_`sitc'.dta
 
 end
 
@@ -504,7 +504,7 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
-eliminer_effets_composition 6
+eliminer_effets_composition 8
 
 
 
