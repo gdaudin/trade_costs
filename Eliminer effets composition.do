@@ -89,14 +89,20 @@ program nldeter_couts_add
 
 
 
+capture drop program eliminer_effets_composition
+program eliminer_effets_composition
+args sitc
+*Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all
 
 
 
 * On part de la base estim_TC.dta, qui collecte déjà l'essentiel de l'information nécessaire, pour 3 digits
 
-if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
-if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
 
+use "$dir/results/estimTC.dta", clear
+if "`sitc'" != "all" keep if substr(product,1,1)=="`sitc'"
+
+ 
 
 
 * Créer la base pour sauver les résultats
@@ -125,19 +131,19 @@ foreach mode in air ves {
 keep year terme_iceberg_air_mp terme_iceberg_ves_mp terme_I_air_mp terme_I_ves_mp terme_A_air_mp terme_A_ves_mp
 keep if _n==1
 
-save start_year, replace
+save start_year_`sitc', replace
 
 * La base pour stocker les résultats des estimations
 * On enlève 1974, c'est l'année de référence, les EF sont estimés par rapport à cette année là
 
 
-if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
-if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
+
+use "$dir/results/estimTC.dta", clear
 
 drop if year == 1974
 keep year
 bys year: keep if _n ==1
-save database_pureTC, replace
+save database_pureTC_`sitc', replace
 
 
 
@@ -148,8 +154,9 @@ foreach mode in air ves {
 
 	
 	
-	if ("`c(os)'"!="MacOSX") use "$dir\results\estimTC", clear
-	if ("`c(os)'"=="MacOSX") use "$dir/results/estimTC.dta", clear
+	
+	use "$dir/results/estimTC.dta", clear
+	if "`sitc'" != "all" keep if substr(product,1,1)=="`sitc'"
 	
 	keep if mode=="`mode'"
 	
@@ -242,11 +249,11 @@ foreach mode in air ves {
 		keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'
 		
 		sort year
-		merge 1:1 year using database_pureTC 
+		merge 1:1 year using database_pureTC_`sitc' 
 		keep if _merge==3
 		drop _merge
 		
-		save database_pureTC, replace
+		save database_pureTC_`sitc', replace
 		restore
 	
 	}
@@ -419,14 +426,14 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	keep year effetfixe_A_`mode' ecart_type_A_`mode'
 	
 	sort year
-	merge 1:1 year using database_pureTC 
+	merge 1:1 year using database_pureTC_`sitc' 
 	keep if _merge==3
 	drop _merge
 	
 	list
 	
 *	set trace off
-	save database_pureTC, replace
+	save database_pureTC_`sitc', replace
 
 	
 	
@@ -438,9 +445,9 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 * Ajouter 1974 et partir d'une valeur 100 en 1974
 *Puis construire le fichier de résultat
 
-use database_pureTC, clear
+use database_pureTC_`sitc', clear
 
-append using start_year
+append using start_year_`sitc'
 sort year
 
 
@@ -481,11 +488,24 @@ foreach mode in air ves {
 
 
 
-export excel using table_extract_effetscomposition, replace firstrow(varlabels)
+export excel using table_extract_effetscomposition_`sitc', replace firstrow(varlabels)
 
-save database_pureTC, replace
+save resultats_finaux/database_pureTC_`sitc', replace
+
+erase start_year_`sitc'.dta
+
+end
+
 
 */
 
 
-*erase start_year.dta
+
+***********LANCER LES PROGRAMMES********************
+
+
+eliminer_effets_composition 8
+
+
+
+
