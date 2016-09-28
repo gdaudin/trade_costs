@@ -504,7 +504,7 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
-eliminer_effets_composition 8
+eliminer_effets_composition 2
 
 
 

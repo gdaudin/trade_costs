@@ -47,4 +47,7 @@ Compter le nombre de coefficients significatifs parmi les effets fixes
 
 # Brigitte : dire qu’on ne sait pas quelle est la variable qui fait les choses. Accepter l’endogénéité. 
 
+# Dans Hummels, tout est aggrégé en sitc 5 digit. Dans les "nouvelles années", ce n'est pas le cas.
+Est-ce qu'il faut coller à Hummels ou pas ?
+
 
