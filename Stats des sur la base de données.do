@@ -23,7 +23,33 @@ if "`c(hostname)'" =="lise-HP" {
 cd $dir
 
 
-*** Faire un programme *** 
+***************************************************************
+** Question endogénéité tau ik, t ik et prix fob
+
+use $dir\data\hummels_tra, clear
+
+gen sitc2_3d = substr(sitc2,1,3)
+
+bys year sitc2_3d mode country: gen nb_par_sitc2_c_y_m = _N
+sum nb_par_sitc2_c_y_m, det
+gen val=air_val+ves_val
+sum nb_par_sitc2_c_y_m [fw=val], det
+
+bys year sitc2_3d mode country: keep if _n==1
+
+sum nb_par_sitc2_c_y_m, det
+
+
+** En moyenne, chaque observation a 182 co-obs dans la même catg sitc2 3d, pays, mode, année
+
+** Autres éléments d'info:
+** Par catg sitc2 à digits, pays, mode, année : 4 observations
+** En moyenne, chaque dollar importé a 143 obs au sein d'une catg
+
+*** Répond à la question de l'endogénéité entre tauik, til et prix fob ik
+
+********************************************************************
+*** Faire un programme qui calcule l'écart cif-fob observé / prédit*** 
 
 capture program drop stats_des
 program stats_des
