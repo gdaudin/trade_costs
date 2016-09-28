@@ -101,6 +101,7 @@ args sitc
 
 use "$dir/results/estimTC.dta", clear
 if "`sitc'" != "all" keep if substr(product,1,1)=="`sitc'"
+gen terme_obs = prix_caf/prix_fob
 
  
 
@@ -118,7 +119,7 @@ if "`sitc'" != "all" keep if substr(product,1,1)=="`sitc'"
 keep if year == 1974
 
 foreach mode in air ves {
-	foreach type_TC in A iceberg I{
+	foreach type_TC in A I obs {
 	
 		sum terme_`type_TC' [fweight= val] if mode=="`mode'" 
 		generate terme_`type_TC'_`mode'_mp = r(mean)
@@ -128,7 +129,7 @@ foreach mode in air ves {
 	}
 }
 
-keep year terme_iceberg_air_mp terme_iceberg_ves_mp terme_I_air_mp terme_I_ves_mp terme_A_air_mp terme_A_ves_mp
+keep year terme_*_mp
 keep if _n==1
 
 save start_year_`sitc', replace
@@ -157,6 +158,7 @@ foreach mode in air ves {
 	
 	use "$dir/results/estimTC.dta", clear
 	if "`sitc'" != "all" keep if substr(product,1,1)=="`sitc'"
+	gen terme_obs = prix_caf/prix_fob
 	
 	keep if mode=="`mode'"
 	
@@ -174,7 +176,7 @@ foreach mode in air ves {
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
 	
-	foreach type_TC in iceberg I A {
+	foreach type_TC in obs I A {
 		
 		bys mode : egen c_95_`type_TC' = pctile(terme_`type_TC'),p(95)
 		bys mode : egen c_05_`type_TC' = pctile(terme_`type_TC'),p(05)
@@ -188,8 +190,8 @@ foreach mode in air ves {
 
 
 
-	foreach type_TC in iceberg I {
-		*** Step 1 et 2 - Estimation sur couts de transport estimés en iceberg/terme_I seulement
+	foreach type_TC in obs I {
+		*** Step 1 et 2 - Estimation sur couts de transport estimés en obs/terme_I seulement
 		*** On précise l'équation en log
 
 		** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
@@ -452,7 +454,7 @@ sort year
 
 
 foreach mode in air ves {
-	foreach type_TC in iceberg I {
+	foreach type_TC in obs I {
 		generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
 		replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 		replace terme_`type_TC'_`mode'_mp = 100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
@@ -504,7 +506,7 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
-eliminer_effets_composition 2
+eliminer_effets_composition 0
 
 
 
