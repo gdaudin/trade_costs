@@ -26,7 +26,7 @@ cd $dir
 ***************************************************************
 ** Question endogénéité tau ik, t ik et prix fob
 
-use $dir\data\hummels_tra, clear
+use $dir/data/hummels_tra, clear
 
 gen sitc2_3d = substr(sitc2,1,3)
 
@@ -190,6 +190,8 @@ use compil_describedb_ves, clear
 
 *edit mode *_mp_meanperiod *_med_meanperiod *uwm_meanperiod *uwmed_meanperiod in 1
 edit mode prix_trsp_med_meanperiod termeAetI_med_meanperiod termeiceberg_med_meanperiod in 1
+
+edit mode year lnprix_trsp_uwm lntermeiceberg_uwm  lntermeAetI_uwm
 
 *use compil_describedb_ves, clear
 *edit mode *_mp_meanperiod  *_med_meanperiod *uwm_meanperiod *uwmed_meanperiod in 1
