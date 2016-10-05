@@ -157,13 +157,14 @@ foreach mode in air ves {
 	
 	
 	use "$dir/results/estimTC.dta", clear
+
 	if "`sitc'" != "all" keep if substr(product,1,1)=="`sitc'"
 	gen terme_obs = prix_caf/prix_fob
 	
 	keep if mode=="`mode'"
 	
 	
-*	keep if year < 1976
+*	keep if year < 1980
 	local limit 15
 	bys iso_o : drop if _N<=`limit'
 	bys product : drop if _N<=`limit'
@@ -506,7 +507,7 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
-eliminer_effets_composition 0
+eliminer_effets_composition all
 
 
 
