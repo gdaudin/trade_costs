@@ -474,13 +474,12 @@ local liste_parametres `liste_parametres_prod_A' `liste_parametres_iso_o_A' `lis
 local initial `initial_prod_A' `initial_iso_d_A' `initial_prod_I' `initial_iso_d_I' 
 
 ** pour estimation NL iceberg only
-local initial_iceberg `initial_prod_I' `initial_iso_d_I' 
 local liste_parametres_iceberg `liste_parametres_prod_I' `liste_parametres_iso_o_I'  
+local initial_iceberg `initial_prod_I' `initial_iso_d_I' 
 
 ** pour estimation NL additif only
-local initial_additif `initial_prod_A' `initial_iso_d_A' 
 local liste_parametres_additif `liste_parametres_prod_A' `liste_parametres_iso_o_A' 
-
+local initial_additif `initial_prod_A' `initial_iso_d_A' 
 
 
 **********************************************************************
@@ -591,11 +590,20 @@ save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 timer on 2
 
-* attention on durçit la règle pour 1987, vessel
-*nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
+
 
 disp "`liste_parametres_additif'" 
+
+disp("ttttt")
+
+
 disp "`initial_additif'" 
+
+disp("ttttt")
+disp "`liste_variables'"
+
+disp("ttttt")
+
 
 nl couts_additif @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres_additif' ) initial (`initial_additif')
 
@@ -797,10 +805,6 @@ timer clear
 
 
 save "$dir/results/blouk_`year'_`class'_`preci'_`mode'", replace
-
-
-
-
 
 
 
