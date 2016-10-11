@@ -456,9 +456,21 @@ foreach i in prod iso_o	{
 			}
 		}		
 	}
-
-
+/*
+foreach g in A {
+		local initial_additif_`i'_`g'
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" |`j'!=1 {
+				if "`g'" =="A" {
+*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1 
+					local initial_additif_`i'_`g'  `initial_additif_`i'_`g'' lnfeA_`i'_`j' 
+				}
+				
+			}
+		}		
+	}
 	
+*/
 	
 }
 
@@ -480,6 +492,7 @@ local initial_iceberg `initial_prod_I' `initial_iso_d_I'
 ** pour estimation NL additif only
 local liste_parametres_additif `liste_parametres_prod_A' `liste_parametres_iso_o_A' 
 local initial_additif `initial_prod_A' `initial_iso_d_A' 
+*local initial_additif `initial_additif_prod_A' `initial_additif_iso_d_A'
 
 
 **********************************************************************
@@ -590,6 +603,18 @@ save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 timer on 2
 
+
+disp "`liste_parametres_iceberg'" 
+
+disp("ttttt")
+
+
+disp "`initial_iceberg'" 
+
+disp("ttttt")
+disp "`liste_variables'"
+
+disp("ttttt")
 
 
 disp "`liste_parametres_additif'" 
