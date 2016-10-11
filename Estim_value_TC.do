@@ -456,9 +456,21 @@ foreach i in prod iso_o	{
 			}
 		}		
 	}
-
-
+/*
+foreach g in A {
+		local initial_additif_`i'_`g'
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" |`j'!=1 {
+				if "`g'" =="A" {
+*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1 
+					local initial_additif_`i'_`g'  `initial_additif_`i'_`g'' lnfeA_`i'_`j' 
+				}
+				
+			}
+		}		
+	}
 	
+*/
 	
 }
 
@@ -474,13 +486,13 @@ local liste_parametres `liste_parametres_prod_A' `liste_parametres_iso_o_A' `lis
 local initial `initial_prod_A' `initial_iso_d_A' `initial_prod_I' `initial_iso_d_I' 
 
 ** pour estimation NL iceberg only
-local initial_iceberg `initial_prod_I' `initial_iso_d_I' 
 local liste_parametres_iceberg `liste_parametres_prod_I' `liste_parametres_iso_o_I'  
+local initial_iceberg `initial_prod_I' `initial_iso_d_I' 
 
 ** pour estimation NL additif only
-local initial_additif `initial_prod_A' `initial_iso_d_A' 
 local liste_parametres_additif `liste_parametres_prod_A' `liste_parametres_iso_o_A' 
-
+local initial_additif `initial_prod_A' `initial_iso_d_A' 
+*local initial_additif `initial_additif_prod_A' `initial_additif_iso_d_A'
 
 
 **********************************************************************
@@ -591,11 +603,32 @@ save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 timer on 2
 
-* attention on durçit la règle pour 1987, vessel
-*nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
+
+disp "`liste_parametres_iceberg'" 
+
+disp("ttttt")
+
+
+disp "`initial_iceberg'" 
+
+disp("ttttt")
+disp "`liste_variables'"
+
+disp("ttttt")
+
 
 disp "`liste_parametres_additif'" 
+
+disp("ttttt")
+
+
 disp "`initial_additif'" 
+
+disp("ttttt")
+disp "`liste_variables'"
+
+disp("ttttt")
+
 
 nl couts_additif @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres_additif' ) initial (`initial_additif')
 
@@ -797,10 +830,6 @@ timer clear
 
 
 save "$dir/results/blouk_`year'_`class'_`preci'_`mode'", replace
-
-
-
-
 
 
 
