@@ -102,7 +102,7 @@ save "$dir/results/describe_db_`year'_`mode'", replace
 
 end
 
-
+******************************
 *** Lancer le programme
 
 set more off
@@ -196,9 +196,10 @@ edit mode year lnprix_trsp_uwm lntermeiceberg_uwm  lntermeAetI_uwm
 *use compil_describedb_ves, clear
 *edit mode *_mp_meanperiod  *_med_meanperiod *uwm_meanperiod *uwmed_meanperiod in 1
 
+
 **********************************************************************************
 ****  Sur les estimations en 4 digits, on est obligé de repartir de hummels_tra
-
+**********************************************************************************
 
 capture program drop stats_des_4digits
 program stats_des_4digits
@@ -211,7 +212,9 @@ use "$dir/data/hummels_tra.dta", clear
 
 keep if year==`year'
 keep if mode=="`mode'"
-keep if preci = 4
+
+rename sitc2 product
+replace product = substr(product,1,4)
 
 
 
@@ -234,6 +237,26 @@ keep if _n==1
 save "$dir/results/describe_db_`year'_`mode'_4digits", replace 
 
 end
+
+
+
+
+*** Lancer le programme
+
+set more off
+local mode ves air
+
+foreach x in `mode' {
+
+	*foreach z in `year' {
+		foreach z of num 1974(1)2013 {
+		
+		
+		stats_des_4digits `z' `x'
+		
+	
+	}
+}
 
 ** *******************************************
 ** Compiler les résultats sur toutes les années
@@ -299,7 +322,7 @@ foreach x in `mode' {
 use compil_describedb_ves_4digits, clear
 edit mode prix_trsp_mp_meanperiod prix_trsp_med_meanperiod  in 1
 
-use compil_describedb_ves_4digits, clear
+use compil_describedb_air_4digits, clear
 edit mode prix_trsp_mp_meanperiod prix_trsp_med_meanperiod  in 1
 
 
