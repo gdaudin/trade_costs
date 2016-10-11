@@ -23,8 +23,8 @@
 \usepackage{ upgreek }
 \usepackage{comment}
 \includecomment{commentGD}
-\usepackage[draft]{todonotes}
-%%GDPour cacher les notes, \usepackage[disable]{todonotes}
+%\usepackage[draft]{todonotes}
+\usepackage[disable]{todonotes}
 
 
 %\usepackage[nolists, figuresfirst]{endfloat}
@@ -395,39 +395,36 @@ In this exercise, we are interested in isolating the change in the time dimensio
 \Gamma_t = 100.\frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1}
 \end{equation*}
 
-As for the additive cost, we built the variable $\Gamma^{add}_t = 100.\exp(\gamma_t)$, with the reference year being 1974 in all cases (ie, with $\gamma_{1974}=0$). As a result, the series for $\Gamma_t$ (with an initial value of 100 for $t=1974$) have a straightforward interpretation in percentage changes. Figure \ref{fig:totalTC_compeffects_excl} reports the results. Panel (a) displays the time changes in transport costs when only iceberg costs are modeled. In Panel (b), we report the sum of the ad-valorem and the additive costs (re-scaled to start from the reference value 100), for each transport mode.\footnote{For each mode, and by year, we build the total value of transport costs as the weighted sum of both the ad valorem index and the additive index, taking as weighting scheme the relative share of each type of costs in the overall total cost in 1974 (using the figures at the root of Figure \ref{fig:mult_alone_withadd}), i.e. respectively 48.2 \% for additive costs in Vessel and 42.3\% for Air in 1974.}
+As for the additive cost, we built the variable $\Gamma^{add}_t = 100.\exp(\gamma_t)$, with the reference year being 1974 in all cases (ie, with $\gamma_{1974}=0$). As a result, the series for $\Gamma_t$ (with an initial value of 100 for $t=1974$) have a straightforward interpretation in percentage changes. Figure \ref{fig:totalTC_compeffects_excl} reports the results. 
 
 \begin{figure}[htbp]
 \caption{Transport costs (composition effects excluded)}
 \label{fig:totalTC_compeffects_excl}
 \begin{center}
 \begin{tabular}{cc}
-{\small (a) Iceberg alone } & {\small (b) With additive costs}\\
-\includegraphics[width=3in, height=2.5in]{Fig3a_TC_overtime_comp_effects_excl.pdf}
-& \includegraphics[width=3in,height=2.5in]{TC_addplusmult_compeffects_excl.pdf} \\
+ \includegraphics[width=6in]{graph_composition_all.eps} \\
 \end{tabular}
 \end{center}
 \end{figure}
 
+[To be commented]
 
+%Figure \ref{fig:totalTC_compeffects_excl} drives the following comments. First, whatever the transport mode considered, transport costs have been roughly constant from 1974 to 1984. This stands in sharp contrast with Figures \ref{fig:mult_alone_withadd} and \ref{fig:decomp_TC_3d}, which rather conveyed the view that the fall in transport costs immediately started in 1974. Combining these results therefore indicates that the reduction of transport costs between 1974 and 1984 was due to changes in the composition of trade patterns (either in the country or the product dimension, or both) of the US, rather than a decrease in transport costs \textit{per se}. In line with \citet{hummels2007}, this confirms the importance of excluding these composition effects before assessing the time trends of transport costs.
 
-Figure \ref{fig:totalTC_compeffects_excl} drives the following comments. First, whatever the transport mode considered, transport costs have been roughly constant from 1974 to 1984. This stands in sharp contrast with Figures \ref{fig:mult_alone_withadd} and \ref{fig:decomp_TC_3d}, which rather conveyed the view that the fall in transport costs immediately started in 1974. Combining these results therefore indicates that the reduction of transport costs between 1974 and 1984 was due to changes in the composition of trade patterns (either in the country or the product dimension, or both) of the US, rather than a decrease in transport costs \textit{per se}. In line with \citet{hummels2007}, this confirms the importance of excluding these composition effects before assessing the time trends of transport costs.
+%Second, after excluding the composition effects, we find that all types of transport costs have steadily decreased, to reach a reduction of 40\% over the period 1984-2011, in accordance with the literature. Further, if we only assume ad-valorem costs (Panel (a)), we can infer that the decrease is stronger for air transport than for air shipping over the period 1984-2005. This in accordance with the findings of \cite{hummels2007} and \cite{Behar_Venables}. Yet, going deeper in the decomposition between the additive and the ad-valorem components substantially modifies the picture, as it can be inferred from Panel (b). When the additive costs are taken into account, there is now not much difference in the reduction of transport costs between air transport and ocean shipping, and both display very similar time changes. The downward trend in transport costs indeed is roughly of the same order of magnitude throughout the years, for both transport modes. Taking into account the additive component therefore substantially modifies the analysis of the dynamics of transport costs over time. In Figure \ref{fig:TC_add_mult_compeffects_excl}, we investigate this result further, by reporting the changes in both the additive and ad-valorem components of transport costs, by transport mode.
 
-Second, after excluding the composition effects, we find that all types of transport costs have steadily decreased, to reach a reduction of 40\% over the period 1984-2011, in accordance with the literature. Further, if we only assume ad-valorem costs (Panel (a)), we can infer that the decrease is stronger for air transport than for air shipping over the period 1984-2005. This in accordance with the findings of \cite{hummels2007} and \cite{Behar_Venables}. Yet, going deeper in the decomposition between the additive and the ad-valorem components substantially modifies the picture, as it can be inferred from Panel (b). When the additive costs are taken into account, there is now not much difference in the reduction of transport costs between air transport and ocean shipping, and both display very similar time changes. The downward trend in transport costs indeed is roughly of the same order of magnitude throughout the years, for both transport modes. Taking into account the additive component therefore substantially modifies the analysis of the dynamics of transport costs over time. In Figure \ref{fig:TC_add_mult_compeffects_excl}, we investigate this result further, by reporting the changes in both the additive and ad-valorem components of transport costs, by transport mode.
-
-\begin{figure}[htbp]
-\caption{Decomposing transport costs over time,
-composition effects excluded}
-\label{fig:TC_add_mult_compeffects_excl}
-\begin{center}
-\includegraphics[width=14cm, height=7cm]{Fig3b_TCovertime_add_et_mult_3d.pdf}
+%\begin{figure}[htbp]
+%\caption{Decomposing transport costs over time,composition effects excluded}
+%\label{fig:TC_add_mult_compeffects_excl}
+%\begin{center}
+%\includegraphics[width=14cm, height=7cm]{Fig3b_TCovertime_add_et_mult_3d.pdf}
 %{\footnotesize {OECD data} }
-\end{center}
-\end{figure}
+%\end{center}
+%\end{figure}
 
-Again, the decomposition between both components of transport costs brings valuable insights. For ocean shipping, both additive and iceberg components exhibit a downward pattern since 1985. Air transport exhibit much more contrasted trends. While the ad-valorem component has been steadily declining over 1985-2000, the additive cost has been rather stable on the same period. Such a difference therefore most likely explains the difference of results between Panels (a) et (b) of Figure \ref{fig:totalTC_compeffects_excl}. Skipping the additive component leads to an important omission bias in the characterization of the time changes of transport costs. When correctly measured (ie, when the additive component is included), there is no noticeable difference in the downward trend of transport costs between ocean and air transport, in contradiction with the findings of \citet{hummels2007} and \cite{Behar_Venables}. Again, this finding points out to the importance of taking into account the additive component of international transport costs. \smallskip
+%Again, the decomposition between both components of transport costs brings valuable insights. For ocean shipping, both additive and iceberg components exhibit a downward pattern since 1985. Air transport exhibit much more contrasted trends. While the ad-valorem component has been steadily declining over 1985-2000, the additive cost has been rather stable on the same period. Such a difference therefore most likely explains the difference of results between Panels (a) et (b) of Figure \ref{fig:totalTC_compeffects_excl}. Skipping the additive component leads to an important omission bias in the characterization of the time changes of transport costs. When correctly measured (ie, when the additive component is included), there is no noticeable difference in the downward trend of transport costs between ocean and air transport, in contradiction with the findings of \citet{hummels2007} and \cite{Behar_Venables}. Again, this finding points out to the importance of taking into account the additive component of international transport costs. \smallskip
 
-Our analysis also brings valuable results to the findings of \citet{hummels2007}, as we extend his time coverage (end year 2004) by one decade (to stop in 2013). On this decade, our analysis reveals substantial changes in the time trend of transport costs in the air sector. As reported in Figure \ref{fig:totalTC_compeffects_excl}, Panel (b), transport costs have raised between 2005 and 2010, to substantially decline on the very recent years (2011-2013), by more than 20\%. As reported in Figure \ref{fig:TC_add_mult_compeffects_excl}, this can be attributed to the iceberg component (while the additive cost has conversely been drastically reduced since 2005). These results suggest that important changes in the structure of costs ate at work in the air transport in the very recent period, that should be investigated in further research.
+%Our analysis also brings valuable results to the findings of \citet{hummels2007}, as we extend his time coverage (end year 2004) by one decade (to stop in 2013). On this decade, our analysis reveals substantial changes in the time trend of transport costs in the air sector. As reported in Figure \ref{fig:totalTC_compeffects_excl}, Panel (b), transport costs have raised between 2005 and 2010, to substantially decline on the very recent years (2011-2013), by more than 20\%. As reported in Figure \ref{fig:TC_add_mult_compeffects_excl}, this can be attributed to the iceberg component (while the additive cost has conversely been drastically reduced since 2005). These results suggest that important changes in the structure of costs ate at work in the air transport in the very recent period, that should be investigated in further research.
 
 
 
