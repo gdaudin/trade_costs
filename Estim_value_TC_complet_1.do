@@ -6,7 +6,7 @@
 * 
 *************************************************
 
-*version 12
+version 12
 
 /* Itération sur forme d'estimation 
 
@@ -91,7 +91,7 @@ program nlcouts_IetA
 		local `var' : word `n' of `varlist'
 		local n = `n'+1
 	}
-	*/
+
 	local n 1
 	
 	capture drop terme_A
@@ -248,7 +248,7 @@ program nlcouts_additif
 	local n 1
 	
 	capture drop terme_additif
-	generate double terme_additif =0
+	generate double terme_additif=0
 
 		
 **Ici, on fait les effets fixes (dans le terme additif)
@@ -294,18 +294,13 @@ end
 **********************************************************************	
 
 
-
 **********************************************************************
-************** PROGRAMME PREPARATION BASE DE DONNEES 
+************** PROGRAMME ESTIMATION NL SUR ICEBERG SEULEMENT
 **********************************************************************	
 
-
-capture program drop prep_reg
-program prep_reg
-
+capture program drop reg_iceberg
+program reg_iceberg
 args year class preci mode
-* exemple : prep_reg 2006 sitc2 3 air
-* Hummels : sitc2
 
 
 ****************Préparation de la base blouk
@@ -319,19 +314,18 @@ use "$dir/data/hummels_tra.dta"
 keep if year==`year'
 keep if mode=="`mode'"
 rename `class' product
+
 replace product = substr(product,1,`preci')
 
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
 
-* Nettoyer la base de donnÈes
+* Nettoyer la base de données
 
 *****************************************************************************
 * On enlève en bas et en haut 
 *****************************************************************************
-
-
 
 display "Nombre avant bas et haut " _N
 
@@ -456,21 +450,9 @@ foreach i in prod iso_o	{
 			}
 		}		
 	}
-/*
-foreach g in A {
-		local initial_additif_`i'_`g'
-		forvalue j =  1/`nbr_`i'' {
-			if  "`i'" !="prod" |`j'!=1 {
-				if "`g'" =="A" {
-*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1 
-					local initial_additif_`i'_`g'  `initial_additif_`i'_`g'' lnfeA_`i'_`j' 
-				}
-				
-			}
-		}		
-	}
+
+
 	
-*/
 	
 }
 
@@ -481,24 +463,9 @@ gen ln_ratio_minus1 = ln(prix_trsp2 -1)
 
 local liste_variables `liste_variables_prod' `liste_variables_iso_o'
 
-** pour estimation NL both A & I
-local liste_parametres `liste_parametres_prod_A' `liste_parametres_iso_o_A' `liste_parametres_prod_I' `liste_parametres_iso_o_I'  
-local initial `initial_prod_A' `initial_iso_d_A' `initial_prod_I' `initial_iso_d_I' 
-
 ** pour estimation NL iceberg only
-local liste_parametres_iceberg `liste_parametres_prod_I' `liste_parametres_iso_o_I'  
 local initial_iceberg `initial_prod_I' `initial_iso_d_I' 
-
-** pour estimation NL additif only
-local liste_parametres_additif `liste_parametres_prod_A' `liste_parametres_iso_o_A' 
-local initial_additif `initial_prod_A' `initial_iso_d_A' 
-*local initial_additif `initial_additif_prod_A' `initial_additif_iso_d_A'
-
-
-**********************************************************************
-************** PROGRAMME ESTIMATION NL SUR ICEBERG SEULEMENT
-**********************************************************************	
-
+local liste_parametres_iceberg `liste_parametres_prod_I' `liste_parametres_iso_o_I'  
 
 timer on 1
 
@@ -591,138 +558,191 @@ timer list 1
 generate Duree_estimation_secondes = r(t1)
 generate machine =  "`c(hostname)'__`c(username)'"
 
+* Une seule observation par pays origine/produit/prix export
+duplicates report iso_o product prix_fob
 
+sort iso_o product prix_fob
 save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 
+end
 
-* ------------------------------------------------
-******** ESTIMATION AVEC COUTS ADDITIF ONLY
-* ------------------------------------------------
+
+**********************************************************************
+************** PROGRAMME ESTIMATION NL SUR ICEBERG ET ADDITIF
+**********************************************************************	
+
+capture program drop reg_IetA
+program reg_IetA
+args year class preci mode
+
+
+****************Préparation de la base blouk
+
+use "$dir/data/hummels_tra.dta"
+
+***Pour restreindre
+*keep if substr(sitc2,1,1)=="0"
+*************************
+
+keep if year==`year'
+keep if mode=="`mode'"
+rename `class' product
+
+replace product = substr(product,1,`preci')
+
+label variable iso_d "pays importateur"
+label variable iso_o "pays exportateur"
+
+
+* Nettoyer la base de données
+
+*****************************************************************************
+* On enlève en bas et en haut 
+*****************************************************************************
+
+display "Nombre avant bas et haut " _N
+
+bys product: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
+bys product: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
+drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
+
+
+display "Nombre après bas et haut " _N
+
+egen prix_min = min(prix_trsp2), by(product)
+egen prix_max = max(prix_trsp2), by(product)
+
+g lprix_trsp2 = ln(prix_trsp2)
+label variable lprix_trsp2 "log(prix_caf/prix_fob)"
+*g lprix_trsp2 = ln(prix_trsp2)
+
+g ldist = ln(dist)
+label variable ldist "log(distance)"
+
+**********Sur le produits
+
+codebook product
+
+
+egen group_prod=group(product)
+su group_prod, meanonly	
+drop group_prod
+local nbr_prod_exante=r(max)
+display "Nombre de produits : `nbr_prod_exante'" 
+
+bysort product: drop if _N<=5
+
+egen group_prod=group(product)
+su group_prod, meanonly	
+local nbr_prod_expost=r(max)
+drop group_prod
+display "Nombre de produits : `nbr_prod_expost'" 
+
+
+*** Tester le pgm
+* Pour faire un plus petit sample
+local limite 80
+
+* On enlève les pays les plus petits (<=80% des flux, par mode considéré)
+bys iso_o: egen total_iso_o = total(`mode'_val)
+egen seuil_pays = pctile(total_iso_o),p(`limite')
+
+drop if total_iso_o <= seuil_pays
+
+
+* On enlève les roduits les plus petits (<=80% des flux, par mode considéré)
+bys product: egen total_product = total(`mode'_val)
+egen seuil_product = pctile(total_product),p(`limite')
+
+drop if total_product <= seuil_product
+
+*** reprendre ici
+
+timer clear
+
+
+*Pour nombre de product
+quietly egen group_prod=group(product)
+su group_prod, meanonly	
+local nbr_prod=r(max)
+quietly levelsof product, local (liste_prod) clean
+quietly tabulate product, gen (prod_)
+	
+*Pour nombre d'iso_o
+quietly egen group_iso_o=group(iso_o)
+su group_iso_o, meanonly	
+local nbr_iso_o=r(max)
+*Donne le nbr d'iso_o
+quietly levelsof iso_o, local(liste_iso_o) clean
+quietly tabulate iso_o, gen(iso_o_)
+
+
+
+foreach i in prod iso_o	{
+	local liste_variables_`i' 
+	forvalue j =  1/`nbr_`i'' {
+		if "`i'" !="prod" | `j' !=1 {
+			local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
+		}
+	}
+
+
+***************************************
+
+		local liste_parametres_`i'_A
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" | `j'!=1 {			
+				local liste_parametres_`i'_A  `liste_parametres_`i'_A' lnfeA_`i'_`j'
+			}
+		}
+
+
+		local liste_parametres_`i'_I
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" | `j'!=1 {			
+				local liste_parametres_`i'_I  `liste_parametres_`i'_I' lnfem1I_`i'_`j'
+			}
+		}
+
+**************************************
+
+	
+	foreach g in A I {
+		local initial_`i'_`g'
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" |`j'!=1 {
+				if "`g'" =="A" {
+*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1 
+					local initial_`i'_`g'  `initial_`i'_`g'' lnfeA_`i'_`j' -3
+				}
+				if "`g'" =="I" {
+*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1
+					local initial_`i'_`g'  `initial_`i'_`g'' lnfem1I_`i'_`j' -3
+****ln(0.05) = -3
+				}
+			}
+		}		
+	}
+
+
+	
+	
+}
+
+* v10, on estime le log du ratio ob -1
+gen ln_ratio_minus1 = ln(prix_trsp2 -1)
+
+
+local liste_variables `liste_variables_prod' `liste_variables_iso_o'
+
+** pour estimation NL both A & I
+local liste_parametres `liste_parametres_prod_A' `liste_parametres_iso_o_A' `liste_parametres_prod_I' `liste_parametres_iso_o_I'  
+local initial `initial_prod_A' `initial_iso_d_A' `initial_prod_I' `initial_iso_d_I' 
+
 
 
 timer on 2
-
-
-disp "`liste_parametres_iceberg'" 
-
-disp("ttttt")
-
-
-disp "`initial_iceberg'" 
-
-disp("ttttt")
-disp "`liste_variables'"
-
-disp("ttttt")
-
-
-disp "`liste_parametres_additif'" 
-
-disp("ttttt")
-
-
-disp "`initial_additif'" 
-
-disp("ttttt")
-disp "`liste_variables'"
-
-disp("ttttt")
-
-
-nl couts_additif @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres_additif' ) initial (`initial_additif')
-
-
-capture	generate rc=_rc
-*capture	predict predict
-capture	predict blink_nlA
-
-gen predict_nlA = exp(blink_nlA)+1 
-*capture	generate predict=exp(lpredict)	
-capture	generate converge_nlA=e(converge)
-*capture generate R2 = e(r2)
-capture generate t_nlA = terme_A*prix_fob
-
-** Mesurer le fit du modèle
-** (1) Coefficient R2
-*capture correlate lnprix_obs lnpredit_nl
-capture correlate ln_ratio_minus1 blink_nlA
-capture generate Rp2_nlA = r(rho)^2
-
-noisily capture  order iso_o iso_d product prix_fob prix_trsp2 converge_nlA predict_nlA terme* t_nlA /* e_t_rho* predict_calcul couts FE* 	*/
-
-capture	matrix X= e(b)
-capture matrix ET=e(V)
-local nbr_var = e(k)/2
-
-generate nbr_obs=e(N)
-bysort product : generate nbr_obs_prod=_N
-bysort iso_o : generate nbr_obs_iso=_N
-generate  coef_iso_nlA =.
-generate  coef_prod_nlA =.
-generate  ecart_type_iso_nlA=.
-generate  ecart_type_prod_nlA=.
-
-
-** Mesurer le fit du modèle (cont')
-gen aic_nlA= .
-gen logL_nlA = .
-
-estat ic
-capture matrix W= r(S)
-
-* (2) AIC 
-replace aic_nlA = W[1,5]
-
-* (3) log-likelihood
-replace logL_nlA = W[1,3]
-
-
-display "`liste_variables'"
-local n 1
-local m = `nbr_var'+1
-foreach i in `liste_variables' {
-	if strmatch("`i'","*prod*")==1 {
-		quietly replace coef_prod_nlA =exp(X[1,`n']) if `i'==1
-		quietly replace ecart_type_prod_nlA =ET[`n',`n']^0.5 if `i'==1
-	}
-	if strmatch("`i'","*iso*")==1 {
-		quietly replace coef_iso_nlA =exp(X[1,`n']) if `i'==1
-		quietly replace ecart_type_iso_nlA =ET[`n',`n']^0.5 if `i'==1
-	}
-	
-	local n = `n'+1
-	local m = `m'+1
-}
-
-sum terme_nlA  [fweight=`mode'_val], det
-generate terme_nlA_mp = r(mean)
-generate terme_nlA_med = r(p50)
-generate terme_nlA_et = r(sd)
-gen terme_nlA_min = r(min)
-gen terme_nlA_max = r(max)
-
-duplicates report
-
-
-timer off 2
-timer list 2
-
-capture drop Duree_estimation_secondes
-generate Duree_estimation_secondes = r(t2)
-capture generate machine =  "`c(hostname)'__`c(username)'"
-
-
-save "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
-
-
-
-* ------------------------------------------------
-******** ESTIMATION AVEC COUTS ADDITIF ET ICEBERG
-* ------------------------------------------------
-
-
-timer on 3
 
 
 * attention on durçit la règle pour 1987, vessel
@@ -825,11 +845,287 @@ generate Duree_estimation_secondes = r(t2)
 capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
+timer clear
+
+* Une seule observation par pays origine/produit/prix export
+duplicates report iso_o product prix_fob
+
+sort iso_o product prix_fob
+save "$dir/results/blouk_`year'_`class'_`preci'_`mode'", replace
+
+
+
+end
+
+
+**********************************************************************
+************** PROGRAMME ESTIMATION NL SUR ADDITIF SEULEMENT
+**********************************************************************	
+
+capture program drop reg_additif
+program reg_additif
+args year class preci mode
+
+
+****************Préparation de la base blouk
+
+use "$dir/data/hummels_tra.dta"
+
+***Pour restreindre
+*keep if substr(sitc2,1,1)=="0"
+*************************
+
+keep if year==`year'
+keep if mode=="`mode'"
+rename `class' product
+
+replace product = substr(product,1,`preci')
+
+label variable iso_d "pays importateur"
+label variable iso_o "pays exportateur"
+
+
+* Nettoyer la base de données
+
+*****************************************************************************
+* On enlève en bas et en haut 
+*****************************************************************************
+
+display "Nombre avant bas et haut " _N
+
+bys product: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
+bys product: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
+drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
+
+
+display "Nombre après bas et haut " _N
+
+egen prix_min = min(prix_trsp2), by(product)
+egen prix_max = max(prix_trsp2), by(product)
+
+g lprix_trsp2 = ln(prix_trsp2)
+label variable lprix_trsp2 "log(prix_caf/prix_fob)"
+*g lprix_trsp2 = ln(prix_trsp2)
+
+g ldist = ln(dist)
+label variable ldist "log(distance)"
+
+**********Sur le produits
+
+codebook product
+
+
+egen group_prod=group(product)
+su group_prod, meanonly	
+drop group_prod
+local nbr_prod_exante=r(max)
+display "Nombre de produits : `nbr_prod_exante'" 
+
+bysort product: drop if _N<=5
+
+egen group_prod=group(product)
+su group_prod, meanonly	
+local nbr_prod_expost=r(max)
+drop group_prod
+display "Nombre de produits : `nbr_prod_expost'" 
+
+
+*** Tester le pgm
+* Pour faire un plus petit sample
+local limite 80
+
+* On enlève les pays les plus petits (<=80% des flux, par mode considéré)
+bys iso_o: egen total_iso_o = total(`mode'_val)
+egen seuil_pays = pctile(total_iso_o),p(`limite')
+
+drop if total_iso_o <= seuil_pays
+
+
+* On enlève les roduits les plus petits (<=80% des flux, par mode considéré)
+bys product: egen total_product = total(`mode'_val)
+egen seuil_product = pctile(total_product),p(`limite')
+
+drop if total_product <= seuil_product
+
+*** reprendre ici
 
 timer clear
 
 
-save "$dir/results/blouk_`year'_`class'_`preci'_`mode'", replace
+*Pour nombre de product
+quietly egen group_prod=group(product)
+su group_prod, meanonly	
+local nbr_prod=r(max)
+quietly levelsof product, local (liste_prod) clean
+quietly tabulate product, gen (prod_)
+	
+*Pour nombre d'iso_o
+quietly egen group_iso_o=group(iso_o)
+su group_iso_o, meanonly	
+local nbr_iso_o=r(max)
+*Donne le nbr d'iso_o
+quietly levelsof iso_o, local(liste_iso_o) clean
+quietly tabulate iso_o, gen(iso_o_)
+
+
+
+foreach i in prod iso_o	{
+	local liste_variables_`i' 
+	forvalue j =  1/`nbr_`i'' {
+		if "`i'" !="prod" | `j' !=1 {
+			local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
+		}
+	}
+
+
+***************************************
+
+		local liste_parametres_`i'_A
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" | `j'!=1 {			
+				local liste_parametres_`i'_A  `liste_parametres_`i'_A' lnfeA_`i'_`j'
+			}
+		}
+
+
+		local liste_parametres_`i'_I
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" | `j'!=1 {			
+				local liste_parametres_`i'_I  `liste_parametres_`i'_I' lnfem1I_`i'_`j'
+			}
+		}
+
+**************************************
+
+	
+	foreach g in A I {
+		local initial_`i'_`g'
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" |`j'!=1 {
+				if "`g'" =="A" {
+*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1 
+					local initial_`i'_`g'  `initial_`i'_`g'' lnfeA_`i'_`j' -3
+				}
+				if "`g'" =="I" {
+*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1
+					local initial_`i'_`g'  `initial_`i'_`g'' lnfem1I_`i'_`j' -3
+****ln(0.05) = -3
+				}
+			}
+		}		
+	}
+
+
+	
+	
+}
+
+* v10, on estime le log du ratio ob -1
+gen ln_ratio_minus1 = ln(prix_trsp2 -1)
+
+local liste_variables `liste_variables_prod' `liste_variables_iso_o'
+
+** pour estimation NL additif only
+local initial_additif `initial_prod_A' `initial_iso_d_A' 
+local liste_parametres_additif `liste_parametres_prod_A' `liste_parametres_iso_o_A' 
+
+
+
+timer on 3
+
+
+* attention on durçit la règle pour 1987, vessel
+*nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
+nl couts_additif @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres_additif' ) initial (`initial_additif')
+
+
+capture	generate rc=_rc
+*capture	predict predict
+capture	predict blink_nlA
+
+gen predict_nlA = exp(blink_nlA)+1 
+*capture	generate predict=exp(lpredict)	
+capture	generate converge_nlA=e(converge)
+*capture generate R2 = e(r2)
+capture generate t_nlA = terme_A*prix_fob
+
+** Mesurer le fit du modèle
+** (1) Coefficient R2
+*capture correlate lnprix_obs lnpredit_nl
+capture correlate ln_ratio_minus1 blink_nlA
+capture generate Rp2_nlA = r(rho)^2
+
+noisily capture  order iso_o iso_d product prix_fob prix_trsp2 converge_nlA predict_nlA terme* t_nlA /* e_t_rho* predict_calcul couts FE* 	*/
+
+capture	matrix X= e(b)
+capture matrix ET=e(V)
+local nbr_var = e(k)/2
+
+generate nbr_obs=e(N)
+bysort product : generate nbr_obs_prod=_N
+bysort iso_o : generate nbr_obs_iso=_N
+generate  coef_iso_nlA =.
+generate  coef_prod_nlA =.
+generate  ecart_type_iso_nlA=.
+generate  ecart_type_prod_nlA=.
+
+
+** Mesurer le fit du modèle (cont')
+gen aic_nlA= .
+gen logL_nlA = .
+
+estat ic
+capture matrix W= r(S)
+
+* (2) AIC 
+replace aic_nlA = W[1,5]
+
+* (3) log-likelihood
+replace logL_nlA = W[1,3]
+
+
+display "`liste_variables'"
+local n 1
+local m = `nbr_var'+1
+foreach i in `liste_variables' {
+	if strmatch("`i'","*prod*")==1 {
+		quietly replace coef_prod_nlA =exp(X[1,`n']) if `i'==1
+		quietly replace ecart_type_prod_nlA =ET[`n',`n']^0.5 if `i'==1
+	}
+	if strmatch("`i'","*iso*")==1 {
+		quietly replace coef_iso_nlA =exp(X[1,`n']) if `i'==1
+		quietly replace ecart_type_iso_nlA =ET[`n',`n']^0.5 if `i'==1
+	}
+	
+	local n = `n'+1
+	local m = `m'+1
+}
+
+sum terme_nlA  [fweight=`mode'_val], det
+generate terme_nlA_mp = r(mean)
+generate terme_nlA_med = r(p50)
+generate terme_nlA_et = r(sd)
+gen terme_nlA_min = r(min)
+gen terme_nlA_max = r(max)
+
+duplicates report
+
+
+timer off 3
+timer list 3
+
+capture drop Duree_estimation_secondes
+generate Duree_estimation_secondes = r(t3)
+capture generate machine =  "`c(hostname)'__`c(username)'"
+
+timer clear
+
+* Une seule observation par pays origine/produit/prix export
+duplicates report iso_o product prix_fob
+
+
+sort iso_o product prix_fob
+save "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
 
 
 
@@ -850,8 +1146,12 @@ end
 
 
 set more off
+*version 12
+
+
 local mode ves 
 local year 1974 
+
 
 foreach x in `mode' {
 
@@ -861,10 +1161,8 @@ foreach z in `year' {
 capture log close
 log using hummels_3digits_complet_`z'_`x', replace
 
-prep_reg `z' sitc2 3 `x'
 
 
-/*
 * Modèle Additif only
 *reg_additif `z' sitc2 3 `x'
 
@@ -872,10 +1170,10 @@ prep_reg `z' sitc2 3 `x'
 reg_iceberg `z' sitc2 3 `x'
 
 * Modèle iceberg et additif
-*reg_IetA `z' sitc2 3 `x'
+reg_IetA `z' sitc2 3 `x'
 
 * Fusionner les trois bases
-
+/*
 use "$dir/results/blouk_`year'_`class'_`preci'_`mode'", clear
 merge using "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'"
 drop if _merge!=3
@@ -886,12 +1184,10 @@ use "$dir/results/blouk_`year'_`class'_`preci'_`mode'", clear
 merge using "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'"
 drop if _merge!=3
 
-
-
-*/
-
 *erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 *erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
+
+*/
 
 log close
 
