@@ -155,16 +155,16 @@ We use sectorial price data at the 3-digit level, even if the data of transporta
 
 \subsection{Empirical specification}
 
-\paragraph{The estimated equation} Our purpose is to provide estimates over time of the size of ad-valorem and additive costs among total transport costs. To do so, we start from the equation that expresses the price $p$ paid by the importer (import, or cif) a function of the producer price $\widetilde{p}$ (export, or fas), given both per-kg ($t$) and ad-valorem ($\tau$) transport costs, according to:
+\paragraph{The estimated equation} Our purpose is to provide estimates over time of the size of ad-valorem and additive costs among total transport costs. To do so, we start from the equation that expresses the price $p(z)$ of a good $z$ paid by the importer (import, or cif) a function of the producer price $\widetilde{p}(z)$ (export, or fas), given both per-kg ($t$) and ad-valorem ($\tau$) transport costs, according to:
 
 \begin{equation}
-p = \tau \widetilde{p} + t \label{eq:base}
+p(z) = \tau \widetilde{p}(z) + t \label{eq:base}
 \end{equation}
 
-\noindent As usual in the literature, the iceberg trade costs are denoted $\tau$ (with  $\tau \geq 1$, $\tau=1$ meaning no ad-valorem trade costs), while additive trade costs are labeled $t$ (with $t \geq 0$, $t=0$ implying no additive costs).  Let us denote $i$ the origin country, and $k$, the sector (or product). Transforming the above equation (\ref{eq:base}) as ratio, we thus get the following equation at the root of our estimation:\footnote{We skip the year and transport-mode dimensions in the notations for reading convenience.}
+\noindent As usual in the literature, the iceberg trade costs are denoted $\tau$ (with  $\tau \geq 1$, $\tau=1$ meaning no ad-valorem trade costs), while additive trade costs are labeled $t$ (with $t \geq 0$, $t=0$ implying no additive costs).  Let us denote $i$ the origin country, and $k$, the sector. Transforming the above equation (\ref{eq:base}) as ratio, we thus get the following equation at the root of our estimation:\footnote{We skip the year and transport-mode dimensions in the notations for reading convenience.}
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
+\frac{p_{ikz}}{\widetilde{p}_{ikz}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ikz}} \label{eq:base_estimee}
 \end{equation*}
 
 We estimate this equation for each year over the period 1974-2013, and for each of the two transportation modes reported (air or vessel), on a sectoral-origin country basis.
@@ -179,34 +179,34 @@ t_{ik} &=& t_{i} + t_{k} \label{eq:add}
 \noindent As a result, our underlying theoretical equation is specified as:
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\tau_{i} \times \tau_{k} -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ik}} \label{eq:theory_equation}
+\frac{p_{ikz}}{\widetilde{p}_{ikz}}-1 =\tau_{i} \times \tau_{k} -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ikz}} \label{eq:theory_equation}
 \end{equation*}
 
-The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by construction, the cif price $p$ cannot be lower than the fas price ($p_{ik}>\widetilde{p}_{ik}$). Taking into account this constraint in the estimation suggests that the error term should be always positive and multiplicative, as in:
+The ratio $\frac{p_{ikz}}{\widetilde{p}_{ikz}}$ has a lower bound of one, since by construction, the cif price $p$ cannot be lower than the fas price ($p_{ikz}>\widetilde{p}_{ikz}$). Taking into account this constraint in the estimation suggests that the error term should be always positive and multiplicative, as in:
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})
+\frac{p_{ikz}}{\widetilde{p}_{ikz}}-1 =\left(\tau_{i} \times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ikz}} \right)\times \exp(\epsilon_{ikz})
 \end{equation*}
 \noindent where $\epsilon_{ik}$ follows an normal law centered on 0. Taking the logs, this drives us to estimate the following equation:
 
 \begin{equation}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{k}+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:estimatedequation}
+\ln\left(\frac{p_{ikz}}{\widetilde{p}_{ikz}}-1 \right)= \ln \left(\tau_{i} \times \tau_{k}+\frac{t_{i} + t_{k}}{\widetilde{p}_{ikz}}-1 \right) + \epsilon_{ikz} \label{eq:estimatedequation}
 \end{equation}
 where $\tau_{i}$, $\tau_{k}$, $t_{i}$ and $t_{k}$ are the parameters to be estimated, i.e., fixed effects specific to each origin country $i$ and sector $k$, and $\epsilon_{ik}= \ln(\varepsilon_{ik})$.
 
 
-The non-linearity of Equation (\ref{eq:estimatedequation}) implies that it cannot be estimated using standard linear estimators. Therefore, all estimates are performed using non-linear least squares. The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares does not decrease from one iteration to the next.\todo{Dire plutot: sum of squares of residuals; to increase rather than to decrease? Not clear to me.} Finally, to eliminate the potential influence of outliers, we excluded 5 percent of the upper and lower tails of the distribution in the regression variables.
+The non-linearity of Equation (\ref{eq:estimatedequation}) implies that it cannot be estimated using standard linear estimators. Therefore, all estimates are performed using non-linear least squares. The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares does not increase from one iteration to the next. Finally, to eliminate the potential influence of outliers, we excluded 5 percent of the upper and lower tails of the distribution in the regression variables.
 These cut-offs are aimed at eliminating reporting or coding errors.\medskip
 
 
 Further, one key objective of the paper is to characterize the importance of additive costs relatively to ad-valorem costs. Put differently, what traditional models of international trade lose by ignoring additive costs? A natural way to answer this question is to perform estimations of Equation (\ref{eq:estimatedequation}) constraining $t$ to be equal to zero, and compare the fitting properties and the explanatory power of the restricted and complete models. Accordingly, for each year and transport mode, we estimate two equations, depending on additive transport costs being included (Equation (\ref{eq:model_with_add})) or not (Equation (\ref{eq:model_nlI})):
 
 \begin{eqnarray}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i} \times \tau_{k}-1 +\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}\right) + \epsilon_{ik} \label{eq:model_with_add} \\
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i} \times \tau_{k}-1 \right) + \epsilon^{ice}_{ik} \label{eq:model_nlI}
+\ln\left(\frac{p_{ikz}}{\widetilde{p}_{ikz}}-1 \right)&=& \ln \left(\tau_{i} \times \tau_{k}-1 +\frac{t_{i} + t_{k}}{\widetilde{p}_{ikz}}\right) + \epsilon_{ikz} \label{eq:model_with_add} \\
+\ln\left(\frac{p_{ikz}}{\widetilde{p}_{ikz}}-1 \right)&=& \ln \left(\tau_{i} \times \tau_{k}-1 \right) + \epsilon^{ice}_{ikz} \label{eq:model_nlI}
 \end{eqnarray}
 
-After estimating Equation (\ref{eq:model_nlI}), we can re-built a measure of each component $\widehat{\tau}^{adv}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}$ and $\widehat{t}^{add}_{ik} = \widehat{t}_{i} + \widehat{t}_{k}$, that is country-product specific, by year and transport mode. 
+After estimating Equation (\ref{eq:model_nlI}), we can re-built a measure of each component $\widehat{\tau}^{adv}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}$ and $\widehat{t}^{add}_{ik} = \widehat{t}_{i} + \widehat{t}_{k}$, that is country-product specific, by year and transport mode.
 
 When assuming iceberg costs only (Equation (\ref{eq:model_nlI})), we proceed similarly to get $\widehat{\tau}^{ice}_{ik} = \widehat{\tau_{i}} \times \widehat{\tau_{k}}$.\footnote{In this case, notice that the equation could be estimated relying on a linear form. To preserve comparability of the results, we keep the same non-linear estimation method in both cases though.} Similarly as \citet{Irrazabal_2015}, we take the average over the product-country dimension, using the values of each trade flow ($ik$-specific) over total yearly trade as a weighting scheme. We thus recover a ``synthetic estimate'' of each type of transport cost $\widehat{\tau}^{ice}$, $\widehat{\tau}^{adv}$ and $\widehat{t}$, for each year and transportation mode. These results are reported in Section \ref{sec:results_decomposition}.
 
@@ -249,6 +249,9 @@ Our first contribution to the literature is to provide estimates for the size of
     Std   & 0.041 & 0.034 & 0.039 & 0.034 \\
     Min. value & 0.000 & 0.000 & 0.000 & 0.000 \\
     Max. value & 2.941 & 13.303 & 3.197 & 11.440 \\ \hline
+        \multicolumn{5}{l}{Data } \\ \hline
+        Mean & 1.053 & 1.05& 1.056&1.039 \\
+        Median & 1.043 & 1.02 & 1.044& 1.019 \\ \hline
         \# obs. & 29279 & 28207 & 29317 & 27680 \\
     \# origin country & 188 & 191 & 188 & 189 \\
     \# products & 230 & 211 & 666 & 567 \\  \hline \hline
@@ -259,8 +262,7 @@ Our first contribution to the literature is to provide estimates for the size of
 
 
 Table \ref{tab:summary_results} yields the following comments. First, the magnitude of overall transport costs is sizeable. Over 1974-2013, they correspond to a mean increase of the export price by 5.8\% for ocean shipping, and by 5.1\% for air shipping. Air transport costs are smaller than sea transport costs. This is counter-intuitive, but certainly linked to selection effects.
-Second, when decomposing transport costs into an additive and an ad-valorem component, we find that the per-kg cost dimension is sizeable. Over the whole period, additive costs are 2.9\% of the export price for ocean shipping  - and ad-valorem ones being equal to 3.2\%. These values are respectively equal to 1.8\% and 2.5\% for air transport. For both transport modes, the omission of the additive term seriously biases the ad-valorem term upward. In quantitative terms, the omission of the additive term leads to overestimate the ad-valorem component by roughly a factor 2.
-
+Second, when decomposing transport costs into an additive and an ad-valorem component, we find that the per-kg cost dimension is sizeable. Over the whole period, additive costs are 2.9\% of the export price for ocean shipping  - and ad-valorem ones being equal to 3.2\%. These values are respectively equal to 1.8\% and 2.5\% for air transport. For both transport modes, the omission of the additive term seriously biases the ad-valorem term upward. In quantitative terms, the omission of the additive term leads to overestimate the ad-valorem component by roughly a factor 2.\todo{Ajouter un commentaire sur mean different de median, en comparaison avec les data.}
 We investigate the robustness of this conclusion on a yearly basis. Figure \ref{fig:mult_alone_withadd} thus reports the mean value of the ad-valorem component, estimated alone (Dashed line, corresponding to Equation (\ref{eq:model_nlI})) and along with the mean value of the additive component (Plain line, corresponding to Equation (\ref{eq:model_with_add}), by transport mode.
 
 \begin{figure}[htbp]
@@ -275,7 +277,7 @@ We investigate the robustness of this conclusion on a yearly basis. Figure \ref{
 \end{center}
 \end{figure}
 
-From Figure \ref{fig:mult_alone_withadd}, we can infer that the sizeable magnitude of additive costs also holds on a yearly basis. For Air, the size of the bias seems to decrease over time, while it appears rather stationary for ocean shipping. Put it differently, this suggests that the share of the additive component in total transport costs has decreased over time for air transport. To get a better picture on this, we study the shares of both ad-valorem and additive components in total costs, by transport mode and over time, based on Figure \ref{fig:decomp_TC_3d}.
+From Figure \ref{fig:mult_alone_withadd}, we can infer that the sizeable magnitude of additive costs also holds on a yearly basis. Further, Figure \ref{fig:mult_alone_withadd} reports that for Air, the size of the bias seems to decrease over time, while it appears rather stationary for ocean shipping. Put it differently, this suggests that the share of the additive component in total transport costs has decreased over time for air transport. To get a better picture on this, we study the shares of both ad-valorem and additive components in total costs, by transport mode and over time, based on Figure \ref{fig:decomp_TC_3d}.
 
 \begin{figure}[htbp]
 \caption{Decomposing Transport costs (Yearly mean value, 3 digits)}
@@ -289,11 +291,13 @@ From Figure \ref{fig:mult_alone_withadd}, we can infer that the sizeable magnitu
 \end{center}
 \end{figure}
 
-At this stage, two interesting comments can be made. First, the magnitude of transport costs is higher for ocean shipping than for air transport. This result holds considering ad-valorem costs alone (Figure \ref{fig:mult_alone_withadd}), as well as in presence of costs (Figure \ref{fig:decomp_TC_3d}), for all years throughout the period. Second, in both transport modes, the additive component appears of sizeable importance: As mean value over the period, it amounts to 48.2\% of total transport costs in Vessel, and 42.3\% in Air. We go on investigating this result further in the next subsection.\footnote{Figure \ref{fig:decomp_TC_3d} also delivers interesting results with respect to the time trends of transport costs. We come back to this aspect in Section \ref{sec:results_trends}.}
+At this stage, two interesting comments can be made. First, the magnitude of transport costs is higher for ocean shipping than for air transport. This result holds considering ad-valorem costs alone (Figure \ref{fig:mult_alone_withadd}), as well as in presence of costs (Figure \ref{fig:decomp_TC_3d}), for all years throughout the period. Second, in both transport modes, the additive component appears of sizeable importance: As mean value over the period, it amounts to 48.2\% of total transport costs in Vessel, and 42.3\% in Air. We go on investigating this result further in the next subsection.\footnote{Figure \ref{fig:decomp_TC_3d} also delivers interesting results with respect to the time trends of transport costs. We come back to this aspect in Section \ref{sec:results_trends}.}\todo{Comparer avec la litterature. Cf AvW 2004 pure transport costs 11\% markup over production costs.}
+
+
 
 \subsection{Assessing the importance of additive transport costs}
 
-In this section, we explore the performances of each type of model (with and without additive costs) in fitting the observed cif-fas prices gap, in order to deliver a more systematic diagnosis about the importance of additive costs. To do so, we rely on several standard measures of fit. The first indicator is through comparing $R^{2}$. However, its use is far from being straightforward when evaluating non-linear estimates.\footnote{$R^2$ is based on the underlying assumption that the adjusted model is a linear one. In a non-linear context, $R^2$ is  strictly speaking inappropriate. However, if the error distribution is approximately normal, a standard metric like $R^2$ remains informative on the quality of adjustment.} As a complement, we provide the Standard Error of Regression (SER), which represents the average distance that the observed values fall from the regression line. Smaller values are better because it indicates that the observations are closer to the fitted line. We also report the log-likelihood function, and two measures derived, the Akaike Information Criterion (AIC) and the log-likelihood (LL) ratio test. A decrease in the log-likelihood function points to a better quality-of-fit. However, the likelihood function systematically decreases with the number of parameters included; the AIC criterion allows for correcting this overfitting by including a penalty in the computation of the statistic, so that AIC stat $= 2 \times \textrm{number of parameters} - 2 \times \textrm{Likelihood} $. Once again, the preferred model is the one with the minimum AIC value. Finally, the log-likelihood ratio test statistic compares systematically the likelihood of the Unrestricted model (\emph{UR}, including an additive term, i.e. Equation (\ref{eq:model_with_add}) and the Restricted one (\emph{R}, i.e. Equation (\ref{eq:model_nlI})). The null tested is that the two models are statistically equivalent. Results are reported in Tables \ref{tab:good_fit_air} and \ref{tab:good_fit_vessel}, for Air and Vessel respectively, at the 3-digit level.\footnote{Due to our time coverage, we do not report the results for all years (at the 3-digit level). The results for all years are available upon request to the authors.}\medskip
+In this section, we explore the performances of each type of model (with and without additive costs) in fitting the observed cif-fas prices gap, in order to deliver a more systematic diagnosis about the importance of additive costs. To do so, we rely on several standard measures of fit. The first indicator is through comparing $R^{2}$. However, its use is far from being straightforward when evaluating non-linear estimates.\footnote{$R^2$ is based on the underlying assumption that the adjusted model is a linear one. In a non-linear context, $R^2$ is  strictly speaking inappropriate. However, if the error distribution is approximately normal, a standard metric like $R^2$ remains informative on the quality of adjustment.} This drives us to complement the goodness of fit diagnosis with three alternative measures. We provide the Standard Error of Regression (SER), which represents the average distance that the observed values fall from the regression line. Smaller values are better because it indicates that the observations are closer to the fitted line. We also report the log-likelihood function, and two measures derived, the Akaike Information Criterion (AIC) and the log-likelihood (LL) ratio test. A decrease in the log-likelihood function points to a better quality-of-fit. However, the likelihood function systematically decreases with the number of parameters included; the AIC criterion allows for correcting this overfitting by including a penalty in the computation of the statistic.\footnote{Precisely, the AIC stat is equal to $2 \times \textrm{number of parameters} - 2 \times \textrm{Likelihood} $.} The preferred model is the one with the minimum AIC value. Finally, the log-likelihood ratio test statistic compares systematically the likelihood of the Unrestricted model (\emph{UR}, including an additive term, i.e. Equation (\ref{eq:model_with_add}) and the Restricted one (\emph{R}, i.e. Equation (\ref{eq:model_nlI})). The null tested is that the two models are statistically equivalent. Results are reported in Tables \ref{tab:good_fit_air} and \ref{tab:good_fit_vessel}, for Air and Vessel respectively, at the 3-digit level.\footnote{Due to our time coverage, we do not report the results for all years (at the 3-digit level). The results for all years are available upon request to the authors.}\medskip
 
 \begin{table}[htbp]
   \centering
@@ -356,21 +360,18 @@ Terms A \& I & \multicolumn{1}{c}{0.612} & \multicolumn{1}{c}{0.575} & \multicol
 \end{table}%
 
 
-Tables \ref{tab:good_fit_air} and \ref{tab:good_fit_vessel} lead to the same conclusion: The inclusion of the additive term leads to an improvement of the quality of fit, whatever the considered criterion or the transport mode. On average over the whole period, the $R^{2}$ doubles when per-kg costs are included for Air, and increases by 50\% for Vessel. Similar qualitative conclusions arise from the comparisons of the standard errors of the regression (SER). Regarding the other criteria, improvements allowed by the inclusion of the additive term are roughly of the same extent across transport modes. Both AIC and Log-Likelihood statistics decrease with the inclusion of the additive term, and the log-likelihood test unambiguously rejects the null of statistical equivalence of the two models. These results holds whatever the considered year.\smallskip 
+Tables \ref{tab:good_fit_air} and \ref{tab:good_fit_vessel} lead to the same conclusion: The inclusion of the additive term leads to an improvement of the quality of fit, whatever the considered criterion or the transport mode. On average over the whole period, the $R^{2}$ doubles when per-kg costs are included for Air, and increases by 50\% for Vessel. Similar qualitative conclusions arise from the comparisons of the standard errors of the regression (SER). Regarding the other criteria, improvements allowed by the inclusion of the additive term are roughly of the same extent across transport modes. Both AIC and Log-Likelihood statistics decrease with the inclusion of the additive term, and the log-likelihood test unambiguously rejects the null of statistical equivalence of the two models. These results holds whatever the considered year.\smallskip
 
 
 For comparison purposes, we provide a similar goodness-of-fit exercise at the 4-digit product level (4-digits), reported in in Appendix \ref{app:robust_4d}, Tables \ref{tab:good_fit_air_rob} and \ref{tab:good_fit_ves_rob}. If anything, the quality of fitting appears slightly higher when estimations are based on the 4-digit classification. This is especially true for the model restricting trade cost to their ad-valorem dimension, whatever the transport mode considered. When the additive part is taken into account however, the difference in goodness of fit between the 3- and the 4-digit classification level becomes very small, whatever the considered criterion. In other words, if using a more disaggregated classification unsurprisingly adds some statistical precision, this is not with an extent that would disqualify the use of slightly more aggregated data. Further, the same conclusion established at the 3-digit level regarding the significant role of the additive components in fitting international transport costs emerges at the 4-digit level.
 
-
-Going deeper into the examination of the levels of these goodness-of-fit statistics reveals interesting differences. First, iceberg costs have more explanative power in the Vessel sector, where they account for 39\% of the variance of the CIF/FAB ratio, versus 31\% for the Air sector (considering the mean values of the $R^2$ across transport modes). The standard error of the regression based only on the ad-valorem term is consistently lower for Vessel than for Air.
-
-Second, the dynamics over time also reveals that the quality of fit decreases strongly after 2000 for both transport modes. Interestingly, this seems to be attributable to different reasons depending of the transport mode considered. For Air, the additive term explains less and less variance over time: In 2000, the inclusion of the additive term increases the explanatory power by 30\%, and decreases the standard error of the regression by 14 percentage points;  in 2010 and 2013, it is hardly more than 10\% for the $R^{2}$, and 7 percentage points for the SER. Accordingly, the lower quality of fit for air transport seems to be attributable to a loss of explanatory power of the additive component. The picture is quite different for Vessel. In this case, the inclusion of the additive term increases the R$^{2}$ by a percentage very similar whatever the considered year (between 12 and 18\%); a similar conclusion can be drawn for the SER, which decreases by 8-11 percentage points across the years when additive costs are included. In contrast to air transport, the deteriorating performance of the model in terms of goodness-of-fit from 2000 mainly comes from the decreasing performance of the ad-valorem term. This suggests contrasting and time-evolving roles for additive and ad-valorem components of trade costs. We henceforth go deeper into this time-trend analysis in the next section.\smallskip
+\smallskip
 
 
 \section{Decomposing Transport Costs: Characterizing the trends \label{sec:results_trends}}
 
 In this section, we investigate the role of the additive component in total transport costs by exploring the time dimension of our data. As a first step, we come back to Figure \ref{fig:decomp_TC_3d}, which displays the respective shares of additive and iceberg components in transport costs over time (by transport mode).
-Let us consider first the trend in total transport costs (ie, considering the upper line in Figure \ref{fig:decomp_TC_3d}). Two main comments can be made. First, both air and ocean shipping exhibit a downward trend in overall transport costs since 1974. Second, the decrease appears more important for sea than air transportation: Transportation costs were divided by 3 for the ocean shipping, versus by 2 for air transport. That said, it may be the case the oil shock inflated transportation costs that specific year. If we start the analysis from 1980, the decrease is roughly 1.5-2 percentage points for Air, and 2-3 percentage points for Vessel (depending if we consider mean or median estimates). These results are consistent with \citet{hummels2007}. 
+Let us consider first the trend in total transport costs (ie, considering the upper line in Figure \ref{fig:decomp_TC_3d}). Two main comments can be made. First, both air and ocean shipping exhibit a downward trend in overall transport costs since 1974. Second, the decrease appears more important for sea than air transportation: Transportation costs were divided by 3 for the ocean shipping, versus by 2 for air transport. That said, it may be the case the oil shock inflated transportation costs that specific year. If we start the analysis from 1980, the decrease is roughly 1.5-2 percentage points for Air, and 2-3 percentage points for Vessel (depending if we consider mean or median estimates). These results are consistent with \citet{hummels2007}.
 
 Before making any definite statement about this though, it is worth emphasizing that the evolution of transport costs depends both of the evolution of per product and per partner costs and of the evolution of the composition of trade.
 Total transport costs may have decreased over time either the country either trades with countries with which trade is cheaper, or trades products which are cheaper to transport, independently of any change in tranport costs \textit{per se}. As argued by \citet{hummels2007}, it is hence necessary to eliminate the composition effects of trade flows to isolate the evolution of per product- and per partner- transport costs. To do this, we estimate the following equation for the ad-valorem cost, based on the series obtained $\widehat{\tau}_{ikt}^{ice}$ and $\widehat{\tau}_{ikt}^{adv}$ that have been previously estimated:
@@ -378,13 +379,13 @@ Total transport costs may have decreased over time either the country either tra
 
 \begin{eqnarray}
 \widehat{\tau}_{ikt}&=&\delta\times \exp\left(\sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i\right).\exp\left(\sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right) \notag \\
-\Leftrightarrow \ln(\tau_{ikt})&=&\delta +\sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i + \sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k + \sum_{t \neq 1974}\gamma_t.\mathbb{1}_t+\epsilon_{ikt} \label{eq:compeffects_mult}
+\Leftrightarrow \ln(\widehat{\tau}_{ikt})&=&\delta +\sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i + \sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k + \sum_{t \neq 1974}\gamma_t.\mathbb{1}_t+\epsilon_{ikt} \label{eq:compeffects_mult}
 \end{eqnarray}
 
 As for the additive cost, we estimate the following equation, based on the additive cost series $\widehat{t}_{ikt}$ previously obtained:
 \begin{eqnarray}
-\widehat{t}_{ikt}&=&\left( \prod_{i \neq \text{ARG}}  \alpha_i.\mathbb{1}_i+\prod_{k}\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right) \notag \\
-\Leftrightarrow \ln(t_{ijt})&=&\ln\left( \prod_{i \neq \text{ARG}}  \alpha_i.\mathbb{1}_i+\prod_{k}\beta_k.\mathbb{1}_k\right) + \sum_{t \neq 1974}\gamma_t.\mathbb{1}_t+\epsilon_{ijt} \label{eq:compeffects_add}
+\widehat{t}_{ikt}&=&\left( \sum_{i \neq \text{ARG}}  \alpha_i.\mathbb{1}_i+\sum_{k}\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right) \notag \\
+\Leftrightarrow \ln(t_{ijt})&=&\ln\left( \sum_{i \neq \text{ARG}}  \alpha_i.\mathbb{1}_i+\sum_{k}\beta_k.\mathbb{1}_k\right) + \sum_{t \neq 1974}\gamma_t.\mathbb{1}_t+\epsilon_{ijt} \label{eq:compeffects_add}
 \end{eqnarray}
 Notice that Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}) preserve our specification of the ad-valorem and additive costs of Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}), as we consider that the iceberg cost is the product of the country of origin and the good dimension, while the additive cost is the sum of the two dimensions.
 %%In the three estimations (ad-valorem costs alone, ad-valorem costs estimated along with additive, and the additive component), we consider Argentina, the sector 011 and the first year of our dataset 1974, as references for the country-, product and -year dummies.
@@ -410,8 +411,10 @@ As for the additive cost, we built the variable $\Gamma^{add}_t = 100.\exp(\gamm
 \end{figure}
 
 
+\textbf{Faire l'analyse mais sur l'ecart cif-fob observe et non plus reconstruit. Faire aussi une analyse plus fine par grande categorie: Manuf / Agriculture / Matieres premieres.}
 
-Figure \ref{fig:totalTC_compeffects_excl} drives the following comments. First, whatever the transport mode considered, transport costs have been roughly constant from 1974 to 1984. This stands in sharp contrast with Figures \ref{fig:mult_alone_withadd} and \ref{fig:decomp_TC_3d}, which rather conveyed the view that the fall in transport costs immediately started in 1974. Combining these results therefore indicates that the reduction of transport costs between 1974 and 1984 was due to changes in the composition of trade patterns (either in the country or the product dimension, or both) of the US, rather than a decrease in transport costs \textit{per se}. In line with \citet{hummels2007}, this confirms the importance of excluding these composition effects before assessing the time trends of transport costs. 
+
+Figure \ref{fig:totalTC_compeffects_excl} drives the following comments. First, whatever the transport mode considered, transport costs have been roughly constant from 1974 to 1984. This stands in sharp contrast with Figures \ref{fig:mult_alone_withadd} and \ref{fig:decomp_TC_3d}, which rather conveyed the view that the fall in transport costs immediately started in 1974. Combining these results therefore indicates that the reduction of transport costs between 1974 and 1984 was due to changes in the composition of trade patterns (either in the country or the product dimension, or both) of the US, rather than a decrease in transport costs \textit{per se}. In line with \citet{hummels2007}, this confirms the importance of excluding these composition effects before assessing the time trends of transport costs.
 
 Second, after excluding the composition effects, we find that all types of transport costs have steadily decreased, to reach a reduction of 40\% over the period 1984-2011, in accordance with the literature. Further, if we only assume ad-valorem costs (Panel (a)), we can infer that the decrease is stronger for air transport than for air shipping over the period 1984-2005. This in accordance with the findings of \cite{hummels2007} and \cite{Behar_Venables}. Yet, going deeper in the decomposition between the additive and the ad-valorem components substantially modifies the picture, as it can be inferred from Panel (b). When the additive costs are taken into account, there is now not much difference in the reduction of transport costs between air transport and ocean shipping, and both display very similar time changes. The downward trend in transport costs indeed is roughly of the same order of magnitude throughout the years, for both transport modes. Taking into account the additive component therefore substantially modifies the analysis of the dynamics of transport costs over time. In Figure \ref{fig:TC_add_mult_compeffects_excl}, we investigate this result further, by reporting the changes in both the additive and ad-valorem components of transport costs, by transport mode.
 
@@ -429,7 +432,24 @@ Again, the decomposition between both components of transport costs brings valua
 
 Our analysis also brings valuable results to the findings of \citet{hummels2007}, as we extend his time coverage (end year 2004) by one decade (to stop in 2013). On this decade, our analysis reveals substantial changes in the time trend of transport costs in the air sector. As reported in Figure \ref{fig:totalTC_compeffects_excl}, Panel (b), transport costs have raised between 2005 and 2010, to substantially decline on the very recent years (2011-2013), by more than 20\%. As reported in Figure \ref{fig:TC_add_mult_compeffects_excl}, this can be attributed to the iceberg component (while the additive cost has conversely been drastically reduced since 2005). These results suggest that important changes in the structure of costs ate at work in the air transport in the very recent period, that should be investigated in further research.
 
+\section{Robustness checks}
 
+\subsection{Robustness to the specification of the estimated equation}
+
+
+\paragraph{Estimating the difference between fas and cif prices in level}
+
+Ie, estimate
+
+$$\log(p_{ikz})= \log(\tau_i\times \tau_k \times \widetilde{p}_{ikz}+ t_i+ t_k)+ \exp(\epsilon_{ikz})$$
+
+\paragraph{Robustness to the separability assumption}
+
+
+Ie, estimate
+
+
+$$\log(\frac{p_{ikz}}{\widetilde{p}_{ikz}} -1)= \log(\tau_{ik} -1+ \frac{t_{ik}}{\widetilde{p}_{ikz}})+ \exp(\epsilon_{ikz})$$
 
 \section{Conclusion \label{sec:conclu}}
 
@@ -589,7 +609,7 @@ Standard Error & 0.068 & 0.044 & \multicolumn{1}{c}{0.037} & \multicolumn{1}{c}{
 \end{table}%
 
 
-\section{Robustness checks \label{app:robust_4d}}
+\subsection{Goodness-of-fit: Detailed results \label{app:robust_4d}}
 
 In this section, we report the goodness-of-fit exercise conducted by transport mode, for selected years at the 4-digit product classification level. The results are reported in Tables \ref{tab:good_fit_air_rob} (for Air) and \ref{tab:good_fit_ves_rob} (for Vessel), for a sample of some years.
 \begin{table}[htbp]
