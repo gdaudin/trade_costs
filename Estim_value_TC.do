@@ -189,8 +189,8 @@ program nlcouts_iceberg
 	
 	local n 1
 
-	capture drop terme_iceberg
-	generate double terme_iceberg=1
+	capture drop terme_nlI
+	generate double terme_nlI=1
 	
 **Ici, on fait les effets fixes 
 	
@@ -205,8 +205,8 @@ program nlcouts_iceberg
 					scalar `lnfem1I_`p'_`j'' =`at'[1,`n']
 					scalar `feI_`p'_`j'' =exp(`lnfem1I_`p'_`j'')+1
 ****************************
-*outv9				replace terme_iceberg = terme_iceberg *exp(`p'_`j'*`feI_`p'_`j'' )
-					replace terme_iceberg = terme_iceberg *`feI_`p'_`j'' if `p'_`j'==1
+*outv9				replace terme_nlI = terme_nlI *exp(`p'_`j'*`feI_`p'_`j'' )
+					replace terme_nlI = terme_nlI *`feI_`p'_`j'' if `p'_`j'==1
 
 					local n = `n'+1
 				}
@@ -214,7 +214,7 @@ program nlcouts_iceberg
 		}
 
 * v10 idem on change la forme fonctionnelle
-	replace `ln_ratio_minus1'= ln(terme_iceberg -1)
+	replace `ln_ratio_minus1'= ln(terme_nlI -1)
 	
 	
 end
@@ -247,8 +247,8 @@ program nlcouts_additif
 
 	local n 1
 	
-	capture drop terme_additif
-	generate double terme_additif =0
+	capture drop terme_nlA
+	generate double terme_nlA =0
 
 		
 **Ici, on fait les effets fixes (dans le terme additif)
@@ -268,7 +268,7 @@ program nlcouts_additif
 					scalar `feA_`p'_`j'' =exp(`lnfeA_`p'_`j'')
 ************************
 
-					replace terme_additif = terme_additif + `feA_`p'_`j'' * `p'_`j'
+					replace terme_nlA = terme_nlA + `feA_`p'_`j'' * `p'_`j'
 					local n = `n'+1
 				}
 			}
@@ -280,13 +280,13 @@ program nlcouts_additif
 	
 *out v9	replace terme_A=(terme_A-1)/`prix_fob'
 
-	replace terme_additif=terme_additif/`prix_fob'
+	replace terme_nlA=terme_nlA/`prix_fob'
 
 * v10 on modifie la forme fonctionnelle
 * de cette façon les erreurs sont bien centrées sur 0
-	replace `ln_ratio_minus1'=ln(terme_additif-1)
+	*replace `ln_ratio_minus1'=ln(terme_nlA-1)
 	
-
+	replace `ln_ratio_minus1'=ln(terme_nlA)
 	
 end
 **********************************************************************
@@ -373,6 +373,7 @@ display "Nombre de produits : `nbr_prod_expost'"
 
 
 *** Tester le pgm
+/*
 * Pour faire un plus petit sample
 local limite 80
 
@@ -390,6 +391,8 @@ egen seuil_product = pctile(total_product),p(`limite')
 drop if total_product <= seuil_product
 
 *** reprendre ici
+*/
+
 
 timer clear
 
@@ -495,6 +498,7 @@ local initial_additif `initial_prod_A' `initial_iso_d_A'
 *local initial_additif `initial_additif_prod_A' `initial_additif_iso_d_A'
 
 
+/*
 **********************************************************************
 ************** PROGRAMME ESTIMATION NL SUR ICEBERG SEULEMENT
 **********************************************************************	
@@ -572,7 +576,7 @@ foreach i in `liste_variables' {
 }
 
 
-sum terme_iceberg  [fweight=`mode'_val], det
+sum terme_nlI  [fweight=`mode'_val], det
 generate terme_nlI_mp = r(mean)
 generate terme_nlI_med = r(p50)
 generate terme_nlI_et=r(sd)	
@@ -594,7 +598,7 @@ generate machine =  "`c(hostname)'__`c(username)'"
 
 save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
-
+*/
 
 * ------------------------------------------------
 ******** ESTIMATION AVEC COUTS ADDITIF ONLY
@@ -602,33 +606,6 @@ save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 
 timer on 2
-
-
-disp "`liste_parametres_iceberg'" 
-
-disp("ttttt")
-
-
-disp "`initial_iceberg'" 
-
-disp("ttttt")
-disp "`liste_variables'"
-
-disp("ttttt")
-
-
-disp "`liste_parametres_additif'" 
-
-disp("ttttt")
-
-
-disp "`initial_additif'" 
-
-disp("ttttt")
-disp "`liste_variables'"
-
-disp("ttttt")
-
 
 nl couts_additif @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres_additif' ) initial (`initial_additif')
 
@@ -655,9 +632,9 @@ capture	matrix X= e(b)
 capture matrix ET=e(V)
 local nbr_var = e(k)/2
 
-generate nbr_obs=e(N)
-bysort product : generate nbr_obs_prod=_N
-bysort iso_o : generate nbr_obs_iso=_N
+generate nbr_obs_nlA=e(N)
+bysort product : generate nbr_obs_nlA_prod=_N
+bysort iso_o : generate nbr_obs_nlA_iso=_N
 generate  coef_iso_nlA =.
 generate  coef_prod_nlA =.
 generate  ecart_type_iso_nlA=.
@@ -713,6 +690,7 @@ generate Duree_estimation_secondes = r(t2)
 capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
+/*
 save "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
 
 
@@ -825,6 +803,7 @@ generate Duree_estimation_secondes = r(t2)
 capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
+*/
 
 timer clear
 
@@ -850,12 +829,14 @@ end
 
 
 set more off
-local mode ves 
-local year 1974 
+local mode ves air
+*local year 1974 
 
 foreach x in `mode' {
 
-foreach z in `year' {
+*foreach z in `year' {
+
+forvalues z = 1974(1)2013 {
 
 
 capture log close
@@ -863,32 +844,6 @@ log using hummels_3digits_complet_`z'_`x', replace
 
 prep_reg `z' sitc2 3 `x'
 
-
-/*
-* Modèle Additif only
-*reg_additif `z' sitc2 3 `x'
-
-* Modèle iceberg only
-reg_iceberg `z' sitc2 3 `x'
-
-* Modèle iceberg et additif
-*reg_IetA `z' sitc2 3 `x'
-
-* Fusionner les trois bases
-
-use "$dir/results/blouk_`year'_`class'_`preci'_`mode'", clear
-merge using "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'"
-drop if _merge!=3
-
-save "$dir/results/blouk_`year'_`class'_`preci'_`mode'", clear
-
-use "$dir/results/blouk_`year'_`class'_`preci'_`mode'", clear
-merge using "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'"
-drop if _merge!=3
-
-
-
-*/
 
 *erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 *erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
