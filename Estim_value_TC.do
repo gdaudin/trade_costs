@@ -506,7 +506,7 @@ local initial_additif `initial_prod_A' `initial_iso_d_A'
 
 timer on 1
 
-nl couts_iceberg @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres_iceberg' ) initial (`initial_iceberg')
+nl couts_iceberg @  prix_fob `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres_iceberg' ) initial (`initial_iceberg')
 
 
 capture	generate rc_nlI=_rc
@@ -827,7 +827,7 @@ end
 **** toutes les années récentes (2005-2013)
 *******************************************************
 
-
+/*
 set more off
 local mode ves air
 *local year 1974 
@@ -852,15 +852,38 @@ log close
 
 }
 }
+*/
 
 
-/*
+
 ********4 digits
 
+set more off
+*local mode ves air
+*local year 1974	1977 1981 1985 1989	1993 1997 2001 2005	2009 2013
 
-A FAIRE 
+local year 2013
+local mode ves
+
+foreach x in `mode' {
+
+foreach z in `year' {
+
+*forvalues z = 1974(1)2013 {
 
 
-*/
+capture log close
+log using hummels_4digits_complet_`z'_`x', replace
+
+prep_reg `z' sitc2 4 `x'
+
+
+*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
+*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
+
+log close
+
+}
+}
 
 
