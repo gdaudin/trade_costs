@@ -65,8 +65,7 @@ sum terme_iceberg  [fweight= air_val], det
 gen terme_nlI_min = r(min)
 gen terme_nlI_max = r(max)
 
-** Estimation non-linéaire"
-
+** Estimation non-linéaire sur I et A"
 	
 sum terme_A  [fweight= air_val], det 	
 gen terme_A_min = r(min)
@@ -76,7 +75,9 @@ sum terme_I  [fweight= air_val], det
 gen terme_I_min=r(min)
 gen terme_I_max=r(max)
 
-*** Novembre 2015 : On ajoute le calcul de l'Ã©cart-type de la rÃ©gression ***
+*** Novembre 2015 : On ajoute le calcul de l'écart-type de la régression ***
+
+
 
 gen prediction_nlI = ln(predict_nlI-1)
 gen prediction_nl = ln(predict_nl-1)
