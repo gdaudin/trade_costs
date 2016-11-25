@@ -76,61 +76,61 @@ You're missing a field name---line 878 of file biblio.bib
  :   %author={Berman, Nicolas and H\'ericourt, J\'er\^ome},
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 1045 of file biblio.bib
+I was expecting a `,' or a `}'---line 1055 of file biblio.bib
  :   
  :   number={13209}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 1054 of file biblio.bib
+I was expecting a `,' or a `}'---line 1064 of file biblio.bib
  :   
  :   number={2012-07}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 1289 of file biblio.bib
+I was expecting a `,' or a `}'---line 1299 of file biblio.bib
  :   
  :   pages={3-24}}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 1348 of file biblio.bib
+I was expecting a `,' or a `}'---line 1358 of file biblio.bib
  :   
  :   number={13199}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 1495 of file biblio.bib
+I was expecting a `,' or a `}'---line 1505 of file biblio.bib
  :     
  :     number={11471}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 2652 of file biblio.bib
+I was expecting a `,' or a `}'---line 2662 of file biblio.bib
  : 
  : title = "",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-"{" immediately follows a field name---line 2923 of file biblio.bib
+"{" immediately follows a field name---line 2933 of file biblio.bib
  : @unpublished
  :             {campa05,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3373 of file biblio.bib
+I was expecting a `,' or a `}'---line 3383 of file biblio.bib
  : 
  : @Article{anderson_yotov,
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3382 of file biblio.bib
+I was expecting a `,' or a `}'---line 3392 of file biblio.bib
  :   
  :   @InCollection{Lafourcade_Thisse,
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3389 of file biblio.bib
+I was expecting a `,' or a `}'---line 3399 of file biblio.bib
  : 
  : PAGES={6795}}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3400 of file biblio.bib
+I was expecting a `,' or a `}'---line 3410 of file biblio.bib
  : 
  : PAGES={97114}}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3410 of file biblio.bib
+I was expecting a `,' or a `}'---line 3420 of file biblio.bib
  : 
  : PAGES={26092669}}
 (Error may have been on previous line)

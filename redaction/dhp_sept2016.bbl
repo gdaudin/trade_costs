@@ -1,4 +1,4 @@
-\begin{thebibliography}{20}
+\begin{thebibliography}{21}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -80,6 +80,11 @@
 \bibitem[{Lashkaripour(2016)}]{Lashkaripour-mimeo-2016}
 \textsc{Lashkaripour, A.} (2016), \enquote{Worth its Weight in Gold: Product
   Weight, Trade Costs, and Trade Patterns}, .
+
+\bibitem[{Limao and Venables(2001)}]{limao_venables}
+\textsc{Limao, N.} and \textsc{Venables, A.} (2001), \enquote{Infrastructure,
+  Geographical Disadvantage, Transport Costs and Trade}, \emph{World Bank
+  Economic Review}, vol.~15 \,n\textsuperscript{o}~3: pp. 451--479.
 
 \bibitem[{Martin(2012)}]{martin2012}
 \textsc{Martin, J.} (2012), \enquote{Markups, Quality, and Transport Costs},
