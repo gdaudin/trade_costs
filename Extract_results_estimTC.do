@@ -33,7 +33,7 @@ dis "mode = `mode'"
 
 use blouk_`year'_`class'_`preci'_`mode'.dta, clear
 
-
+*use blouk_2009_sitc2_3_air, clear
 
 * nb obs = variable nbr_obs utilisées dans l'estimation
 * nb de pays dans l'estimation
@@ -51,52 +51,51 @@ gen nbr_prod = r(max)
 
 drop _
 
-*** S'assurer que le calcul du R2 sur estimation additif & iceberg est le bon
 
-drop Rp2_nl
+** Attention il manque min et max dans estimation iceberg / I et A alone
 
-* R2 sur estimpation nl iceberg set additifs
-correlate ln_ratio_minus1 blink_nl
-generate Rp2_nl = r(rho)^2
-
-
-** Estimation NL avec iceberg trade costs ONLY"
-sum terme_iceberg  [fweight= air_val], det 
+sum terme_iceberg  [fweight=`mode'_val], det 	
 gen terme_nlI_min = r(min)
 gen terme_nlI_max = r(max)
 
-** Estimation non-linéaire sur I et A"
-	
-sum terme_A  [fweight= air_val], det 	
+
+sum terme_I  [fweight=`mode'_val], det 	
+gen terme_I_min = r(min)
+gen terme_I_max = r(max)
+
+sum terme_A  [fweight=`mode'_val], det 	
 gen terme_A_min = r(min)
 gen terme_A_max = r(max)
 
-sum terme_I  [fweight= air_val], det 	
-gen terme_I_min=r(min)
-gen terme_I_max=r(max)
+** Génerer Ecart-type de la régression
 
-*** Novembre 2015 : On ajoute le calcul de l'écart-type de la régression ***
+local model nlI nlA nl
 
-
-
-gen prediction_nlI = ln(predict_nlI-1)
-gen prediction_nl = ln(predict_nl-1)
+foreach x in `model'  {
+gen prediction_`x' = ln(predict_`x'-1)
 
 gen observe = ln(prix_trsp)
 
-gen gap_nlI = (observe - prediction_nlI)^2
-gen gap_nl = (observe - prediction_nl)^2
+gen gap_`x' = (observe - prediction_`x')^2
 
-egen sum_gap_nlI = sum(gap_nlI)
-egen sum_gap_nl = sum(gap_nl)
+egen sum_gap_`x' = sum(gap_`x')
 
-gen ecr_nlI = (sum_gap_nlI/(_N-nbr_iso_o -nbr_prod))^0.5
-gen ecr_nl = (sum_gap_nl/(_N-nbr_iso_o -nbr_prod))^0.5
+gen ecr_`x' = (sum_gap_`x'/(_N-nbr_iso_o -nbr_prod))^0.5
+
+drop observe
+
+}
 
 
+
+
+** Sélection variables d'intérêt
 # delimit ;
-keep nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med terme_nlI_et terme_nlI_min terme_nlI_max terme_A_mp terme_A_med terme_A_et terme_A_min terme_A_max terme_I_mp 
-	terme_I_med terme_I_et terme_I_min terme_I_max Rp2_nl Rp2_nlI aic_nl aic_nlI logL_nl logL_nlI ecr_nlI ecr_nl;
+keep nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med terme_nlI_et terme_nlI_min terme_nlI_max 
+	terme_A_mp terme_A_med terme_A_et terme_A_min terme_A_max 
+	terme_I_mp terme_I_med terme_I_et terme_I_min terme_I_max 
+	terme_nlA_mp terme_nlA_med terme_nlA_et terme_nlA_min terme_nlA_max 
+	Rp2_nl Rp2_nlI Rp2_nlA aic_nl aic_nlI aic_nlA logL_nl logL_nlI logL_nlA ecr_nl ecr_nlI ecr_nlA ;
 
 # delimit cr
 
@@ -105,7 +104,7 @@ keep if _n==1
 
 
 *save "E:\Lise\BQR_Lille\Hummels\resultats\results_estim_`year'_`class'_`preci'_`mode'", replace
-save results_estim_`year'_`class'_`preci'_`mode', replace
+save "$dir\3_models\results_estim_`year'_`class'_`preci'_`mode'", replace
 
 ** Ajouter informations : Année, mode, degré de classification
 
@@ -115,11 +114,17 @@ gen mode = "`mode'"
 gen digits = "`preci'_digits"
 gen year = "`year'"
 
-order year digits mode nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med terme_nlI_et terme_nlI_min terme_nlI_max terme_A_mp terme_A_med terme_A_et terme_A_min /*
-*/ terme_A_max terme_I_mp terme_I_med terme_I_et terme_I_min terme_I_max Rp2_nlI Rp2_nl aic_nlI aic_nl logL_nlI logL_nl ecr_nlI ecr_nl
+# delimit ;
+order year digits mode nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med terme_nlI_et terme_nlI_min terme_nlI_max 
+	terme_A_mp terme_A_med terme_A_et terme_A_min terme_A_max 
+	terme_I_mp terme_I_med terme_I_et terme_I_min terme_I_max 
+	terme_nlA_mp terme_nlA_med terme_nlA_et terme_nlA_min terme_nlA_max 
+	Rp2_nl Rp2_nlI Rp2_nlA aic_nl aic_nlI aic_nlA logL_nl logL_nlI logL_nlA ecr_nl ecr_nlI ecr_nlA ;
+
+# delimit cr
 
 *save "E:\Lise\BQR_Lille\Hummels\resultats\results_estim_`year'_`class'_`preci'_`mode'", replace
-save results_estim_`year'_`class'_`preci'_`mode', replace
+save "$dir\3_models\results_estim_`year'_`class'_`preci'_`mode'", replace
 
 
 end
@@ -138,20 +143,20 @@ if "`c(username)'" =="guillaumedaudin" {
 
 
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost\results\New_Years
+	global dir C:\Users\lpatureau\Dropbox\trade_cost\results
 	*global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results
 }
 
 
 if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost\results\New_Years
+	global dir C:\Users\lise\Dropbox\trade_cost\results
 }
 
 cd $dir
 
 
 *** 3 digits, all years ***
-/*
+
 set more off
 
 local preci 3
@@ -160,7 +165,7 @@ foreach x in air ves {
 
 foreach k in `preci' {
 
-forvalues z = 2005(1)2013 {
+forvalues z = 1974(1)2013 {
 
 get_table `z' sitc2 `preci' `x'
 
@@ -171,7 +176,7 @@ get_table `z' sitc2 `preci' `x'
 }
 }
 
-*/
+
 
 *** 4 digits, new years ***
 set more off
@@ -183,7 +188,7 @@ foreach x in air ves {
 foreach k in `preci' {
 
 *forvalues z = 2005(1)2013 {
-foreach z in 1974 1977 1981 1985 1989 1993 1997 2001 {
+foreach z in 1974 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013 {
 
 get_table `z' sitc2 `preci' `x'
 
@@ -198,18 +203,18 @@ get_table `z' sitc2 `preci' `x'
 *** Step 2 - compiler en une même base
 ***************************************
 
-cd $dir
+cd $dir\3_models
 
 
 * ---------------------------------
 *** Pour 3 digits ***
 * ---------------------------------
-/*
+
 local preci 3
 
 
 foreach x in air ves {
-use results_estim_2005_sitc2_`preci'_`x', clear
+use results_estim_1974_sitc2_`preci'_`x', clear
 
 
 save table_`preci'_`x', replace
@@ -225,7 +230,7 @@ foreach x in air ves {
 
 foreach k in `preci' {
 
-forvalues z = 2006(1)2013 {
+forvalues z = 1975(1)2013 {
 
 use table_`k'_`x', clear
 append using results_estim_`z'_sitc2_`k'_`x'
@@ -252,7 +257,7 @@ export excel using table_`k'_`x', replace firstrow(varlabels)
 
 
 **
-*/
+
 
 
 * ---------------------------------
@@ -279,7 +284,7 @@ foreach x in air ves {
 
 foreach k in `preci' {
 
-forvalues z = 1977(4)2001 {
+forvalues z = 1977(4)2013 {
 
 use table_`k'_`x', clear
 append using results_estim_`z'_sitc2_`k'_`x'

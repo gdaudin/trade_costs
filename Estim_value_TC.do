@@ -859,11 +859,10 @@ log close
 ********4 digits
 
 set more off
-*local mode ves air
-*local year 1974	1977 1981 1985 1989	1993 1997 2001 2005	2009 2013
+local mode air
+local year 1974 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013
+* attention pb en 1989 air il faut passer à 300 itérations
 
-local year 2013
-local mode ves
 
 foreach x in `mode' {
 

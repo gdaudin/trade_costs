@@ -22,17 +22,48 @@ cd $dir
 
 set more off
 
-local mode ves
+local mode ves air
 *local mode air ves
 
 *local year 1974
 
-* stop en 2009 pour l'instant
-* 2013 à faire
+** 3 digits
+
+/*
+foreach x in `mode' {
+
+forvalues z = 2010(1) 2013 {
+
+*foreach z in `year' {
+
+* la nouvelle base
+*use blouk_`z'_sitc2_3_`x', clear
+
+use $dir\results_I_IetA\blouk_`z'_sitc2_3_`x'
+
+
+* de mon poste Dauphine
+merge using "C:\Users\lpatureau\Dropbox\trade_cost\results\blouk_`z'_sitc2_3_`x'"
+
+drop _merge
+
+save "C:\Users\lpatureau\Dropbox\trade_cost\results\blouk_`z'_sitc2_3_`x'", replace
+
+
+}
+
+}
+*/
+
+
+** 4 digits
+
+local year 1974 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013
+
 
 foreach x in `mode' {
 
-forvalues z = 1974(1) 2009 {
+foreach z in `year'{
 
 *foreach z in `year' {
 
