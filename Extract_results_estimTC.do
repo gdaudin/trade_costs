@@ -95,7 +95,7 @@ keep nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med terme_nlI_et terme_nl
 	terme_A_mp terme_A_med terme_A_et terme_A_min terme_A_max 
 	terme_I_mp terme_I_med terme_I_et terme_I_min terme_I_max 
 	terme_nlA_mp terme_nlA_med terme_nlA_et terme_nlA_min terme_nlA_max 
-	Rp2_nl Rp2_nlI Rp2_nlA aic_nl aic_nlI aic_nlA logL_nl logL_nlI logL_nlA ecr_nl ecr_nlI ecr_nlA ;
+	Rp2_nlI Rp2_nlA Rp2_nl ecr_nlI ecr_nlA ecr_nl aic_nlI aic_nlA aic_nl logL_nlI logL_nlA logL_nl ;
 
 # delimit cr
 
@@ -119,7 +119,7 @@ order year digits mode nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med ter
 	terme_A_mp terme_A_med terme_A_et terme_A_min terme_A_max 
 	terme_I_mp terme_I_med terme_I_et terme_I_min terme_I_max 
 	terme_nlA_mp terme_nlA_med terme_nlA_et terme_nlA_min terme_nlA_max 
-	Rp2_nl Rp2_nlI Rp2_nlA aic_nl aic_nlI aic_nlA logL_nl logL_nlI logL_nlA ecr_nl ecr_nlI ecr_nlA ;
+	Rp2_nlI Rp2_nlA Rp2_nl ecr_nlI ecr_nlA ecr_nl aic_nlI aic_nlA aic_nl logL_nlI logL_nlA logL_nl ;
 
 # delimit cr
 
@@ -176,6 +176,7 @@ get_table `z' sitc2 `preci' `x'
 }
 }
 
+/*
 
 
 *** 4 digits, new years ***
@@ -198,6 +199,7 @@ get_table `z' sitc2 `preci' `x'
 
 }
 }
+*/
 
 ***************************************
 *** Step 2 - compiler en une même base
@@ -226,7 +228,7 @@ save table_`preci'_`x', replace
 set more off
 local preci 3
 
-foreach x in air ves {
+foreach x in air  {
 
 foreach k in `preci' {
 
@@ -257,7 +259,7 @@ export excel using table_`k'_`x', replace firstrow(varlabels)
 
 
 **
-
+/*
 
 
 * ---------------------------------
@@ -311,3 +313,4 @@ export excel using table_`k'_`x', replace firstrow(varlabels)
 
 
 **
+*/
