@@ -116,31 +116,31 @@ I was expecting a `,' or a `}'---line 2673 of file biblio.bib
  : title = "",
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-"{" immediately follows a field name---line 2944 of file biblio.bib
+"{" immediately follows a field name---line 2945 of file biblio.bib
  : @unpublished
  :             {campa05,
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3394 of file biblio.bib
+I was expecting a `,' or a `}'---line 3405 of file biblio.bib
  : 
  : @Article{anderson_yotov,
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3403 of file biblio.bib
+I was expecting a `,' or a `}'---line 3414 of file biblio.bib
  :   
  :   @InCollection{Lafourcade_Thisse,
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3410 of file biblio.bib
+I was expecting a `,' or a `}'---line 3421 of file biblio.bib
  : 
  : PAGES={6795}}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3421 of file biblio.bib
+I was expecting a `,' or a `}'---line 3432 of file biblio.bib
  : 
  : PAGES={97114}}
 (Error may have been on previous line)
 I'm skipping whatever remains of this entry
-I was expecting a `,' or a `}'---line 3431 of file biblio.bib
+I was expecting a `,' or a `}'---line 3442 of file biblio.bib
  : 
  : PAGES={26092669}}
 (Error may have been on previous line)
