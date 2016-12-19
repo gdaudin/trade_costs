@@ -43,7 +43,7 @@ program decompo_var
 		
 		gen var_intra_`dim'=sd_intra_`dim'^2
 		egen var_intra_`dim'_moy=mean(var_intra_`dim'), by(year mode)
-		gen share_var_intra_`dim' = 1-var_intra_`dim'_moy/var_tot
+		gen share_var_inter_`dim' = 1-var_intra_`dim'_moy/var_tot
 	}
 			
 	
@@ -51,7 +51,7 @@ program decompo_var
 	
 	foreach mode in air ves {
 	
-		twoway (line  share_var_intra_produit year) (line  share_var_intra_secteur year) (line  share_var_intra_pays year) /*(line  product_country_variance year)*/ ///
+		twoway (line  share_var_inter_produit year) (line  share_var_inter_secteur year) (line  share_var_inter_pays year) /*(line  product_country_variance year)*/ ///
 				if mode=="`mode'", ///
 				legend(label(1 "Share of between product variance") label(3 "Share of between country variance") label(2 "Share of between secteur variance")  /*label(3 "Share of between product x country variance")*/ ///
 				rows(3)) ///
@@ -75,7 +75,7 @@ decompo_var
 		
 graph export "$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_brut.png", replace	
 
-keep year mode sd_tot-share_var_intra_secteur
+keep year mode sd_tot-share_var_inter_secteur
 
 
 export delimited 	"$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_brut.csv", replace
@@ -92,7 +92,7 @@ decompo_var
 
 graph export "$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_ss_val_ext.png", replace	
 
-keep year mode sd_tot-share_var_intra_secteur
+keep year mode sd_tot-share_var_inter_secteur
 
 
 export delimited 	"$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_ss_val_ext.csv", replace
