@@ -1,4 +1,4 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{23}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -49,6 +49,10 @@
   \enquote{Per-Shipment Costs and the Lumpiness of International Trade},
   \emph{Review of Economics and Statistics}, vol.~97 \,n\textsuperscript{o}~2:
   pp. 525--530.
+
+\bibitem[{Hummels(1999)}]{Hummels_1999}
+\textsc{Hummels, D.} (1999), \enquote{Have International Transportation Costs
+  Declined?}, Working paper, purdue university.
 
 \bibitem[{Hummels(2007)}]{hummels2007}
 \textsc{Hummels, D.} (2007), \enquote{Transportation Costs and International
@@ -109,5 +113,9 @@
 \textsc{Sorensen, A.} (2014), \enquote{Additive versus multiplicative trade
   costs and the gains from trade}, \emph{Canadian Journal of Economics},
   vol.~47 \,n\textsuperscript{o}~3: pp. 1032--1046.
+
+\bibitem[{Wooldridge(2001)}]{Woolridge-Book-2001}
+\textsc{Wooldridge, J.~M.} (2001), \emph{Econometric Analysis of Cross Section
+  and Panel Data}, MIT Press Books, The MIT Press, 1 edition.
 
 \end{thebibliography}
