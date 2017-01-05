@@ -158,7 +158,17 @@ foreach mode in air ves {
 	
 	use "$dir/results/estimTC.dta", clear
 
-	if "`sitc'" != "all" keep if substr(product,1,1)=="`sitc'"
+	foreach secteur in 0(1)9 {
+		if "`sitc'"=="`secteur'" keep if substr(product,1,1)=="`sitc'"
+	}
+
+	if "`sitc'"=="non-manuf" keep if substr(product,1,1)=="0" | substr(product,1,1)=="1" /// 
+		| substr(product,1,1)=="2" | substr(product,1,1)=="3" | substr(product,1,1)=="4"
+	if "`sitc'"=="manuf" keep if substr(product,1,1)=="5" | substr(product,1,1)=="6"  ///
+		| substr(product,1,1)=="7" | substr(product,1,1)=="8"
+	
+	
+	
 	gen terme_obs = prix_caf/prix_fob
 	
 	keep if mode=="`mode'"
@@ -508,6 +518,15 @@ end
 
 
 eliminer_effets_composition all
+eliminer_effets_composition manuf
+eliminer_effets_composition nonmanuf
+
+foreach secteur in 0(1)8 {
+		eliminer_effets_composition nonmanuf "`secteur'"
+}
+
+
+
 
 
 
