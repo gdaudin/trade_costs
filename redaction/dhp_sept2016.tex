@@ -147,18 +147,18 @@ The paper is built as follows. \ref{sec:data_method} presents our data and our  
 
 \subsection{A measure of Transportation Costs}
 
-Our analysis of transportation costs consists in exploiting the difference between commodity-level export and import prices, as in \cite{hummels2007} (among others). The database we use to construct our measure of transport costs comes from US annual Imports of Merchandise provided by the Census bureau\footnote{More information available at: \url{http://www.census.gov/foreign-trade/reference/products/catalog/fl_imp.txt}}, spanning from 1974 to 2013. We first use customs values, quantities and freight costs to recover free-alongside (fas) and cost-insurance-fret (cif) prices, by goods, country of origin and transportation mode.\footnote{The related literature commonly refers to the fob price rather than the fas price. While both are closely related, we refer to the fas price as the price considered by the US Foreign Trade Statistics.} More precisely, the (unit) fas price is computed as the total ``customs value'' in the US trade statistics divided by the shipping weight; in other words, it is the price for one kg of the good net of transportation costs. The cif price is then computed as the sum of the customs value and freight charges, once again divided by the shipping weight. Our dependant variable is finally computed as the ratio of the cif price divided by the fas price. Higher than 1, the variable provides therefore with a measure of transport costs as a proportion of the good's price, an \emph{ad-valorem} equivalent. This is a quite standard and widespread strategy, as emphasized by \citet{anderson_wincoop_jel}.
+Our analysis of transportation costs consists in exploiting the difference between commodity-level export and import prices, as in \cite{hummels2007} (among others). The database we use to construct our measure of transport costs comes from US annual Imports of Merchandise provided by the Census bureau,\footnote{More information available at: \url{http://www.census.gov/foreign-trade/reference/products/catalog/fl_imp.txt}} spanning from 1974 to 2013. We first use customs values, quantities and freight costs to recover free-alongside (fas) and cost-insurance-fret (cif) prices, by goods, country of origin and transportation mode.\footnote{The related literature commonly refers to the fob price rather than the fas price. While both are closely related, we refer to the fas price as the price considered by the US Foreign Trade Statistics.} More precisely, the (unit) fas price is computed as the total ``customs value'' in the US trade statistics divided by the shipping weight; in other words, it is the price for one kg of the good net of transportation costs. The cif price is then computed as the sum of the customs value and freight charges, once again divided by the shipping weight. Our dependant variable is finally computed as the ratio of the cif price divided by the fas price. Higher than 1, the variable provides therefore with a measure of transport costs as a proportion of the good's price, an \emph{ad-valorem} equivalent. This is a quite standard and widespread strategy, as emphasized by \citet{anderson_wincoop_jel}.
 
 It is worth acknowledging that using this dataset encounters some limitations. First, it restricts our analysis to the study of international transport costs, as our measure of the cif-fas price gap only covers freight, insurance and handling costs. It is thus silent about the others dimensions of international trade costs, unlike \citet{Irrazabal_2015}. Further, in terms of transport costs \textit{per se}, our measure based on the cif-fas price gap omits the other dimension of transport costs related to the time value of goods in transit. According to \citet{anderson_wincoop_jel}, the 21\% markup over production costs coming from transport costs includes both directly measured freight costs and 9\% tax equivalent of the time value of goods in transit. In this respect, it is true that using this dataset embraces a partial view of international transport barriers.
 
 Yet, we believe that our analysis delivers valuable insights on this topic. Indeed, using this dataset has (at least) three main advantages. First, this dataset delivers a strong statistical reliability arising from a single, trustworthy, customs origin. Based on customs declarations, the US Imports database inventories all imports (both values and quantities) by country of origin to the United states at the HS 10-digit level, with a concordance code to the SITC 5-digit coding system. In addition, the database reports information regarding freight, insurance and handling expenditures by transportation mode (ocean (or ``vessel'') and air). The first will be crucial to compute transport costs (see below), the second will allow to enlighten substantial differences in the dynamics of transport costs across transportation mode. Second, using this dataset allows us to have the import price of the good, next to the export price. This is highly valuable, as we can estimate both the \textit{levels} of the iceberg costs and of the additive costs. This strongly differentiates us from \citet{Irrazabal_2015}, who can only estimate the ratio of additive costs as a share of the median total consumer price. Third, this dataset is available over a long time span. We are thus able to exploit information on a yearly basis from 1974 to 2013. \cite{hummels2007} preceded us in investigating the time dimension of this database. However, our paper differentiates from his work in two main respects. First, we extend the time coverage to the more recent period up to 2013, while \cite{hummels2007} stops in 2004. As we show in Section \ref{sec:results_trends}, covering the time period over the recent years delivers interesting insights regarding the trends in air shipping costs. Second, we study the time trends of transport costs by disentangling the additive from the iceberg components. This proves to be important in the characterization of transport costs changes over time, in particular in air transport.\smallskip
 
-We use sectorial price data at the 3-digit level, even if the data of transportation costs is available at a more disaggregated level. As detailed below, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time.\footnote{Yet, we ensure the robustness of these results by conducting the estimations at the 4-digit level for some selected years. The selected years for the 4-digit level estimations are: 1974, 1977, 1981, 1985, 1989, 1993, 1997, 2001, 2005, 2009, 2013. Comparing different levels of aggregation is useful to check differences and the presence of biases precisely due to aggregation. We thus obtain no substantial difference between the estimation results conducted at the 3 and 4-digit levels. Estimation results at the 4-digit classification level are reported in Appendix ??.} Depending on the considered year, this leaves us with around 200 sectors sectors, from approximately 200 countries of origin.
+We estimate international transport costs at the 3-digit classification level, even if data series on the cif and fas prices are available at the 5-digit classification level. As detailed below, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. Yet, we ensure the robustness of these results by conducting the estimations at the 4-digit level for some selected years.\footnote{The selected years for the 4-digit level estimations are: 1974, 1977, 1981, 1985, 1989, 1993, 1997, 2001, 2005, 2009, 2013. Comparing different levels of aggregation is useful to check differences and the presence of biases precisely due to aggregation. We thus obtain no substantial difference between the estimation results conducted at the 3 and 4-digit levels. Estimation results at the 4-digit classification level are reported in Appendix ??.} Depending on the considered year, this leaves us with around 200 sectors, from approximately 200 countries of origin.
 
 
 \subsection{Empirical specification}
 
-\paragraph{The estimated equation} Our purpose is to provide estimates over time of the size of ad-valorem and additive costs among total transport costs. To do so, we start from the equation that expresses the price $p$ of a good $k$ paid by the importer (import, or cif) a function of the producer price $\widetilde{p}$ (export, or fas), given both per-kg ($t$) and ad-valorem ($\tau$) transport costs, according to:
+\paragraph{The estimated equation} Our purpose is to provide estimates over time of the size of ad-valorem and additive costs among total transport costs. To do so, we start from the equation that expresses the price $p$ of a good paid by the importer (import, or cif price) as a function of the producer price $\widetilde{p}_{isk}$ (export, or fas price), given both per-kg ($t$) and ad-valorem ($\tau$) transport costs, according to:
 
 \begin{equation}
 p = \tau \widetilde{p}+ t \label{eq:base}
@@ -167,7 +167,7 @@ p = \tau \widetilde{p}+ t \label{eq:base}
 \noindent As usual in the literature, the iceberg trade costs are denoted $\tau$ (with  $\tau \geq 1$, $\tau=1$ meaning no ad-valorem trade costs), while additive trade costs are labeled $t$ (with $t \geq 0$, $t=0$ implying no additive costs).  Let us denote $i$ the origin country, and $k$, the product. Transforming the above equation (\ref{eq:base}) as ratio, we thus get the following equation at the root of our estimation:\footnote{We skip the year and transport-mode dimensions in the notations for reading convenience.}
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ikz}} \label{eq:base_estimee}
+\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
 \end{equation*}
 
 \paragraph{Estimation Strategy} We follow \citet{Irrazabal_2015} by considering that \textit{1)} both ad-valorem and additive costs are separable between the origin country ($i$) and the product ($k$) dimensions, and \textit{2)} this separability is in a multiplicative way for the former and an additive way for the latter.In other words, $\tau_{ik}$ and $t_{ik}$ from Equation (\ref{eq:base_estimee}) are written as:\footnote{Notice that, given the magnitude or order of transport costs, assuming an additive or a multiplicative form does not make a substantial difference since, for small values (as we obtain), we have $\tau_i\times \tau_k \simeq (\tau_i-1)\times (\tau_k -1)-1$ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.}
@@ -180,7 +180,7 @@ t_{ik} &=& t_{i} + t_{k} \label{eq:add}
 \noindent As a result, our underlying theoretical equation is specified as:
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\tau_{i} \times \tau_{k} -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ikz}} \label{eq:theory_equation}
+\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\tau_{i} \times \tau_{k} -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ik}} \label{eq:theory_equation}
 \end{equation*}
 
 The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by construction, the cif price $p$ cannot be lower than the fas price ($p_{ik}>\widetilde{p}_{ik}$). Taking into account this constraint in the estimation suggests that the error term should be always positive and multiplicative, as in:
@@ -194,21 +194,22 @@ The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{k}+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:equation0}
 \end{equation}
 
-The non-linearity of Equation (\ref{eq:equation0}) implies that it cannot be estimated using standard linear estimators. All estimates are thus performed using non-linear least squares.\footnote{The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares does not decrease from one iteration to the next. See \cite{Woolridge-Book-2001} for more details.} Yet, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. Confronted to this arbitrage, we retain the 3-digit level as our benchmark classification, even though data series are available at the 5-digit classification level ($k$). This drives us to estimate a modified version of Equation (\ref{eq:equation0}), according to:
+The non-linearity of Equation (\ref{eq:equation0}) implies that it cannot be estimated using standard linear estimators. All estimates are thus performed using non-linear least squares.\footnote{The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares of residuals does not increase from one iteration to the next. See \cite{Woolridge-Book-2001} for more details.} Yet, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. Confronted to this arbitrage, we estimate international transport costs at the 3-digit level as our benchmark classification, even though data series are available at the 5-digit classification level ($k$). Put it differently, this amounts making the additional assumption, that all products $k$ in a 3-digit sector $s$ share the
+same structure of costs.\footnote{We ensure the robustness of our estimation results to this assumption in two ways. First, we conduct the estimations at the 4-digit level for some selected years. As reported in Appendix \ref{app:4digit}, the results are not substantially affected. Second, we provide a decomposition variance exercise on the observed cif-fas price. As reported in Appendix ???, the share of the observed variance that is accounted for by the between-sector ($s$) variance is roughly similar to the between-product ($k$) variance.} This drives us to estimate a modified version of Equation (\ref{eq:equation0}), according to:
 \begin{equation}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{s}+\frac{t_{i} + t_{s}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:estimatedequation}
+\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{s(k)}+\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:estimatedequation}
 \end{equation}
-where $\tau_{i}$, $\tau_{s}$, $t_{i}$ and $t_{s}$ are the parameters to be estimated, i.e., fixed effects specific to each origin country $i$ and sector $s$ (at the 3-digit classification level), and $\epsilon_{ik}$ the residual centered on 0. To eliminate the potential influence of outliers, we excluded 5 percent of the upper and lower tails of the distribution in the regression variables. These cut-offs are aimed at eliminating reporting or coding errors. We estimate this equation for each year over the period 1974-2013, for each of the transportation mode reported (air or vessel), on a sectoral-origin country basis ($i,s$). Depending on the year considered, this leaves us with around 800 fixed effects to estimate by transport mode (at the 3-digit level).   \smallskip
+where $\tau_{i}$, $\tau_{s(k)}$, $t_{i}$ and $t_{s(k)}$ are the parameters to be estimated, i.e., fixed effects specific to each origin country $i$ and sector $s$ (at the 3-digit classification level), and $\epsilon_{ik}$ the residual centered on 0. To eliminate the potential influence of outliers, we excluded 5 percent of the upper and lower tails of the distribution in the regression variables. These cut-offs are aimed at eliminating reporting or coding errors. We estimate this equation for each year over the period 1974-2013, for each of the transportation mode reported (air or vessel), on a sectoral-origin country basis ($i,s$). Depending on the year considered, this leaves us with around 800 fixed effects to estimate by transport mode (at the 3-digit level).   \smallskip
 
 One key objective of the paper is to characterize the importance of additive costs relatively to ad-valorem costs. Put it differently, what traditional models of international trade lose by ignoring additive costs? A natural way to answer this question is to perform estimations of Equation (\ref{eq:estimatedequation}) constraining additive costs $t$ to be equal to zero, and compare the fitting properties and the explanatory power of the models. For each year and transport mode, we thus estimate the two models: \textit{(a)} when transport costs are modeled as iceberg costs (Equation (\ref{eq:model_nlI})), and \textit{(b)} when transport costs are modeled as decomposed in the two dimensions of additive and iceberg (Equation (\ref{eq:model_IetA})):
 
 \begin{eqnarray}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i}\times\tau_{s}-1 \right) + \epsilon^{nlI}_{ik} \label{eq:model_nlI} \\
+\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i}\times\tau_{s(k)}-1 \right) + \epsilon^{nlI}_{ik} \label{eq:model_nlI} \\
 %\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\frac{t_{i} + t_{s}}{\widetilde{p}_{ik}}\right) + \epsilon^{nlA}_{ik} \label{eq:model_nlA} \\
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i} \times \tau_{s}-1 +\frac{t_{i} + t_{s}}{\widetilde{p}_{ik}}\right) + \epsilon_{ik} \label{eq:model_IetA}
+\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i} \times \tau_{s(k)}-1 +\frac{t_{i} + t_{s}}{\widetilde{p}_{ik}}\right) + \epsilon_{ik} \label{eq:model_IetA}
 \end{eqnarray}
 
-After estimating Equation (\ref{eq:model_IetA}), we can re-built a measure of each component $\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}$ and $\widehat{t}^{add}_{is} = \widehat{t}_{i} + \widehat{t}_{s}$, that is country-product specific, by year and transport mode. Under Model (a), when assuming iceberg costs only (Equation (\ref{eq:model_nlI})), we proceed similarly to get $\widehat{\tau}^{nlI}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}$.\footnote{In this case, notice that the equation could be estimated relying on a linear form. To preserve comparability of the results, we keep the same non-linear estimation method in both cases though.}$^{,}$\footnote{One may object that a comprehensive study of the structure of transport costs should also include the third model with only additive costs. This has driven us to estimate this case as well, in which case the estimated equation is written according to: $\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\frac{t_{i} + t_{s}}{\widetilde{p}_{ik}}\right) + \epsilon^{nlA}_{ik}$. The main result that emerges is that the model with additive costs only is dominated (in terms of quality of fit properties) by the model with multiplicative costs only (which is itself dominated by the complete model (b), anticipating on further results. For sake of space saving, the results of this model are not reported in the paper. Of course, they are available upon request to the authors.} Similarly as \citet{Irrazabal_2015}, we take the average over the product-country dimension, using the values of each trade flow ($is$-specific) over total yearly trade as a weighting scheme. We thus recover a ``synthetic estimate'' of each type of transport cost: \textit{a)} $\widehat{\tau}^{nlI}$, \textit{b)} $\widehat{\tau}^{adv}$ and $\widehat{t}$, for each year and transportation mode. These results are reported in Section \ref{sec:results_decomposition}.
+After estimating Equation (\ref{eq:model_IetA}), we can re-built a measure of each component $\widehat{\tau}^{adv}_{is(k)} = \widehat{\tau_{i}} \times \widehat{\tau_{s(k)}}$ and $\widehat{t}^{add}_{is(k)} = \widehat{t}_{i} + \widehat{t}_{s(k)}$, that is country-sector specific, by year and transport mode. When assuming iceberg costs only (Equation (\ref{eq:model_nlI})), we proceed similarly to get $\widehat{\tau}^{nlI}_{is(k)} = \widehat{\tau_{i}} \times \widehat{\tau_{s(k)}}$.\footnote{In this case, notice that the equation could be estimated relying on a linear form. To preserve comparability of the results, we keep the same non-linear estimation method in both cases though.}$^{,}$\footnote{One may object that a comprehensive study of the structure of transport costs should also include the third model with only additive costs. This has driven us to estimate this model as well, in which case the estimated equation is written according to: $\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}\right) + \epsilon^{nlA}_{ik}$. The main result that emerges is that the model with additive costs only is dominated (in terms of quality of fit properties) by the model with multiplicative costs only (Equation (\ref{eq:model_nlI})), which is itself dominated by the complete model (Equation (\ref{eq:model_IetA})), anticipating on further results. For sake of space saving, the results of this model are not reported in the paper. Of course, they are available upon request to the authors.} Similarly as \citet{Irrazabal_2015}, we take the average over the product-country dimension, using the values of each trade flow ($is$-specific) over total yearly trade as a weighting scheme. We thus recover a ``synthetic estimate'' of each type of transport cost: \textit{a)} $\widehat{\tau}^{nlI}$, \textit{b)} $\widehat{\tau}^{adv}$ and $\widehat{t}$, for each year and transportation mode. These results are reported in Section \ref{sec:results_decomposition}.
 
 \todo{A un moment, parler du risque d'endogeneite entre tauik tik et ptildeik, dire que pas de pb. Dire ou?}
 
@@ -220,7 +221,7 @@ The objective of this section is twofold. First, we quantify the magnitude of tr
 
 \subsection{Decomposing transport costs over 1974-2013}
 
-Our first contribution to the literature is to provide estimates for the size of both the ad-valorem and the additive components of transport costs. Table \ref{tab:summary_results} reports a summary of our results. It displays the mean and median values of each type of trade costs (ad-valorem estimated alone, estimated along with additive costs and the additive component), as well as the associated standard deviation, averaged over the period 1974-2013, for estimation driven both at the 3- and 4-digit sectorial level.\footnote{In Appendix \ref{app:more_results}, we report similar results for a sample of years, for both transport mode, at the 3 and 4-digit classification level. Results for all years (available at the 3-digit level) are available upon request to the authors.}$^{,}$\footnote{We present the results for air at the 3-digit level removing the year 1989, as the estimation results reveal the presence of strong outliers that bias the estimates of transport costs upwards. Overall results (over the whole period) are not substantially affected if this year is included though. These results are available upon request to the authors.}
+Our first contribution to the literature is to provide estimates for the size of both the ad-valorem and the additive components of transport costs. Table \ref{tab:summary_results} reports a summary of our results. It displays the mean and median values of each type of trade costs (ad-valorem estimated alone, estimated along with additive costs and the additive component), as well as the associated standard deviation, averaged over the period 1974-2013, for estimation driven both at the 3- and 4-digit sectorial level.\footnote{In Appendix \ref{app:more_results}, we report similar results for a sample of years, for both transport mode, at the 3 and 4-digit classification level. Results for all years (available at the 3-digit level) are available upon request to the authors. We investigate the evolution of transport costs over the period in more details in Section \ref{sec:results_decomposition}.}$^{,}$\footnote{We present the results for air at the 3-digit level removing the year 1989, as the estimation results reveal the presence of strong outliers that bias the estimates of transport costs upwards. Overall results (over the whole period) are not substantially affected if this year is included though. These results are available upon request to the authors.}
 
 \begin{table}[htbp]
   \centering
@@ -446,7 +447,7 @@ Our analysis also brings valuable results to the findings of \citet{hummels2007}
 
 \section{Robustness checks}
 
-Robustness to the specification of the estimated equation. 
+Robustness to the specification of the estimated equation.
 
 
 \paragraph{Robustness to the separability assumption}
@@ -457,7 +458,7 @@ Ie, estimate
 
 $$\log(\frac{p_{ik}}{\widetilde{p}_{ik}} -1)= \log(\tau_{is} -1+ \frac{t_{is}}{\widetilde{p}_{ik}})+ \exp(\epsilon_{ik})$$
 
-To do on 100 products ($s$), 50 countries (the most important?) 
+To do on 100 products ($s$), 50 countries (the most important?)
 
 \paragraph{what else?}
 
@@ -489,39 +490,44 @@ The import charges represent the aggregate cost of all freight, insurance, and o
 
 The cif (cost, insurance, and freight) value represents the landed value of the merchandise at the first port of arrival in the United States. It is computed by adding ``Import Charges'' to the ``Customs Value'' (see definitions above) and therefore excludes U.S. import duties.
 
-\section{Some detailed results \label{app:more_results}}
+\section{More on the estimation results \label{app:more_results}}
 
-In this section, we report the estimates for international transport costs, by transport mode on a yearly basis, when either additive costs are included in the estimation (Equation (\ref{eq:model_IetA})) or not (Equation (\ref{eq:model_nlI})). For sake of space saving, we only report the results for a sample of years. Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} display the results for the 4-digit product-level estimation (again, for selected years).
+In this section, we report more detailed results for the estimates for international transport costs, by transport mode on a yearly basis, when either additive costs are included in the estimation (Equation (\ref{eq:model_IetA})) or not (Equation (\ref{eq:model_nlI})). 
 
+
+
+\subsection{Detailed results at the 3-digit classification level} 
+
+In this section, we complement the results displayed in Table \ref{tab:summary_results} by reporting the estimates of international transport costs for a sample of years over 1974-2013, when the degree of classification retained ($s$) is at the 3-digit classification level. Table \ref{tab:result_air_3d_detail} reports the results for Air transport. The results for Ocean transport are displayed in Table \ref{tab:result_ves_3d_detail}.
 
 \begin{table}[htbp]
   \centering
-  \caption{Air: Dynamics of Trade Costs over Time, 3 digits (selected years)}
+  \caption{Air: Transport costs estimates, 3-digits (selected years)}
 \begin{center}
     \begin{tabular}{l|cccccc}
 \hline\hline
 
 Year & 1974  & 1980  & 1990  & 2000  & 2010  & 2013   \\ \hline
-\multicolumn{7}{l}{\textbf{With only Iceberg Trade Costs}}     \\
+\multicolumn{7}{l}{\textbf{With only Iceberg Trade Costs}}     \\ \hline
 Mean  & 1.069 & 1.054 & 1.050 & 1.036 & 1.042 & 1.034  \\
 Median & 1.054 & 1.038 & 1.044 & 1.025 & 1.034 & 1.029  \\
 Standard Error & 0.052 & 0.049 & 0.039 & 0.033 & 0.037 & 0.024 \\
 \hline
-\multicolumn{7}{l}{\textbf{With Additive \& Iceberg Trade Costs }}    \\
-\multicolumn{1}{l}{\textit{Additive term }} &       &       &       &       &       &      \\
+\multicolumn{7}{l}{\textbf{With Additive \& Iceberg Trade Costs }}    \\ \hline
+\multicolumn{7}{l}{\textit{Additive term }}     \\ \hline
 \multicolumn{1}{l}{Mean } & 0.026 & 0.020 & 0.018 & 0.013 & 0.011 & 0.010  \\
 \multicolumn{1}{l}{Median} & 0.011 & 0.005 & 0.008 & 0.005 & 0.004 & 0.005  \\
-\multicolumn{1}{l}{Standard Error} & 0.040 & 0.041 & 0.033 & 0.028 & 0.024 & 0.020  \\
-\multicolumn{1}{l}{\textit{Iceberg term}} &       &       &       &       &       &        \\
+\multicolumn{1}{l}{Standard Error} & 0.040 & 0.041 & 0.033 & 0.028 & 0.024 & 0.020  \\ \hline
+\multicolumn{7}{l}{\textit{Iceberg term}}  \\ \hline
 \multicolumn{1}{l}{Mean } & 1.036 & 1.023 & 1.024 & 1.017 & 1.026 & 1.017  \\
 \multicolumn{1}{l}{Median} & 1.027 & 1.016 & 1.016 & 1.012 & 1.022 & 1.017 \\
 Standard Error & 0.032 & 0.025 & 0.021 & 0.016 & 0.023 & 0.012  \\ \hline
 \# observations & 14955 & 16118 & 24958 & 35027 & 40279 & 39351  \\
 \hline\hline
-    \end{tabular}%
-  \end{center}
-  \label{tab:result_air_3d_detail}%
-\tiny{Notes: Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fas price. }
+\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fas price.}}}
+\end{tabular}%
+\end{center} 
+\label{tab:result_air_3d_detail}
 \end{table}%
 
 
@@ -533,64 +539,67 @@ Standard Error & 0.032 & 0.025 & 0.021 & 0.016 & 0.023 & 0.012  \\ \hline
    \hline\hline
 Year         & 1974  & 1980  & 1990  & 2000  & 2010  & 2013   \\
  \hline
-   \textbf{With only Iceberg Trade Costs} &       &       &       &       &       &       \\
+   \multicolumn{7}{l}{\textbf{With only Iceberg Trade Costs} }  \\
 Mean  & 1.098 & 1.065 & 1.057 & 1.051 & 1.040 & 1.036  \\
 Median & 1.096 & 1.055 & 1.046 & 1.049 & 1.036 & 1.033  \\
 Standard Error & 0.053 & 0.040 & 0.032 & 0.028 & 0.020 & 0.018  \\
-\textbf{With Additive \& Iceberg Trade Costs} &       &       &       &       &       &     \\
+\multicolumn{7}{l}{\textbf{With Additive \& Iceberg Trade Costs} }    \\
 \hline
-\textit{Additive term } &       &       &       &       &       &        \\
+\multicolumn{7}{l}{\textit{Additive term } }  \\ \hline
 Mean  & 0.051 & 0.034 & 0.027 & 0.028 & 0.025 & 0.015  \\
 Median & 0.029 & 0.023 & 0.017 & 0.022 & 0.019 & 0.008 \\
-Standard Error & 0.085 & 0.046 & 0.040 & 0.043 & 0.025 & 0.020 \\
-\textit{Iceberg term} &       &       &       &       &       &        \\
+Standard Error & 0.085 & 0.046 & 0.040 & 0.043 & 0.025 & 0.020 \\ \hline
+\multicolumn{7}{l}{\textit{Iceberg term} } \\ \hline
 Mean  & 1.054 & 1.031 & 1.033 & 1.025 & 1.019 & 1.022 \\
 Median & 1.049 & 1.024 & 1.028 & 1.021 & 1.018 & 1.018  \\
 Standard Error & 0.041 & 0.023 & 0.022 & 0.021 & 0.018 & 0.018  \\
 \hline
  \# obs & 19007 & 17356 & 28383 & 36090 & 37748 & 38473 \\ \hline
 \hline\hline
-    \end{tabular}%
-  \end{center}
-  \label{tab:result_ves_3d_detail}%
-\tiny{Notes: Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fas price. }
+\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fas price.}}}
+\end{tabular}%
+\end{center} \label{tab:result_ves_3d_detail}
 \end{table}%
 
+\subsection{Estimation at the 4-digit level \label{app:4digit}}
 
+In this section, we report the estimation results when we retain the 4-digit classification level ($s$=4-digit). 
+
+\paragraph{Transport cost estimates} Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} report the estimates of both models (with and without additive costs) in Air and Ocean transport respectively.
 
 \begin{table}[htbp]
   \centering
-  \caption{Air: Dynamics of Trade Costs over Time, 4-digit}
+  \caption{Air: Transport costs estimates, Selected years, 4-digit}
 \begin{center}
     \begin{tabular}{l|cccccc}
    \hline\hline
-Year & 1974  & 1981  & 1989  & 2001  & 2009  & 2013 \\
+Year & 1974  & 1981  & 1989  & 2001  & 2009  & 2013 \\ \hline
 \multicolumn{7}{l}{\textbf{With only Iceberg Trade Costs} }  \\
 Mean  & 1.066 & 1.058 & 1.052 & \multicolumn{1}{c}{1.033} & \multicolumn{1}{c}{1.037} & \multicolumn{1}{c}{1.032} \\
 Median & 1.052 & 1.044 & 1.041 & \multicolumn{1}{c}{1.021} & \multicolumn{1}{c}{1.027} & \multicolumn{1}{c}{1.026}  \\
 Standard Error & 0.056 & 0.054 & 0.046 & \multicolumn{1}{c}{0.040} & \multicolumn{1}{c}{0.036} & \multicolumn{1}{c}{0.025}  \\
 \hline
 \multicolumn{7}{l}{\textbf{With Additive \& Iceberg Trade Costs }}  \\ \hline
-\textit{Iceberg term} &       &       &       &       &       &     \\
+\multicolumn{7}{l}{\textit{Iceberg term} }   \\ \hline
 Mean  & 1.035 & 1.026 & 1.031 & \multicolumn{1}{c}{1.015} & \multicolumn{1}{c}{1.021} & \multicolumn{1}{c}{1.016}  \\
 Median & 1.025 & 1.017 & 1.019 & \multicolumn{1}{c}{1.010} & \multicolumn{1}{c}{1.017} & \multicolumn{1}{c}{1.014}  \\
-Standard Error & 0.036 & 0.028 & 0.030 & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{0.015}  \\
-\textit{Additive term} &       &       &       &       &       &     \\
+Standard Error & 0.036 & 0.028 & 0.030 & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{0.015}  \\ \hline
+\multicolumn{7}{l}{\textit{Additive term} }   \\ \hline
 Mean  & 0.026 & 0.021 & 0.017 & \multicolumn{1}{c}{0.012} & \multicolumn{1}{c}{0.012} & \multicolumn{1}{c}{0.010} \\
 Median & 0.012 & 0.006 & 0.006 & \multicolumn{1}{c}{0.005} & \multicolumn{1}{c}{0.004} & \multicolumn{1}{c}{0.004}  \\
 Standard Error & 0.039 & 0.042 & 0.033 & \multicolumn{1}{c}{0.027} & \multicolumn{1}{c}{0.029} & \multicolumn{1}{c}{0.019} \\ \hline
 \# obs & 14944 & 16844 & 25307 & \multicolumn{1}{c}{35005} & \multicolumn{1}{c}{38475} & \multicolumn{1}{c}{39460}  \\
 \hline\hline
-    \end{tabular}%
-  \end{center}
-  \label{tab:result_air_rob}%
-\tiny{Notes:Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fas price. }
+\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fas price.}}}
+\end{tabular}%
+\end{center}
+  \label{tab:result_air_rob}
 \end{table}%
 
 
 \begin{table}[htbp]
   \centering
-\caption{Vessel: Dynamics of Trade Costs over Time, 4-digit}
+\caption{Vessel: Transport costs estimates, Selected years, 4-digit}
 \begin{center}
     \begin{tabular}{l|cccccc}
    \hline\hline
@@ -606,33 +615,30 @@ Standard Error & 0.060 & 0.038 & \multicolumn{1}{c}{0.036} & \multicolumn{1}{c}{
 Mean  & 1.054 & 1.034 & \multicolumn{1}{c}{1.028} & \multicolumn{1}{c}{1.028} & \multicolumn{1}{c}{1.024} & \multicolumn{1}{c}{1.021}  \\
 Median & 1.049 & 1.030 & \multicolumn{1}{c}{1.024} & \multicolumn{1}{c}{1.025} & \multicolumn{1}{c}{1.026} & \multicolumn{1}{c}{1.018} \\
 Standard Error & 0.043 & 0.026 & \multicolumn{1}{c}{0.025} & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.016} & \multicolumn{1}{c}{0.013}  \\
-\textit{Iceberg term} &       &       &       &       &       &     \\
+\textit{Additive term} &       &       &       &       &       &     \\
 Mean  & 0.046 & 0.026 & \multicolumn{1}{c}{0.031} & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.015}  \\
 Median & 0.029 & 0.013 & \multicolumn{1}{c}{0.019} & \multicolumn{1}{c}{0.015} & \multicolumn{1}{c}{0.013} & \multicolumn{1}{c}{0.008} \\
 Standard Error & 0.068 & 0.044 & \multicolumn{1}{c}{0.037} & \multicolumn{1}{c}{0.035} & \multicolumn{1}{c}{0.031} & \multicolumn{1}{c}{0.023} \\ \hline
 \# obs & 19196 & 17916 & \multicolumn{1}{c}{29387} & \multicolumn{1}{c}{36677} & \multicolumn{1}{c}{37643} & \multicolumn{1}{c}{38820} \\
 \hline\hline
-    \end{tabular}%
-  \end{center}
-  \label{tab:result_ves_rob}%
-\vspace{-10pt}\tiny{Notes: Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fas price. }
+\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: Statistics are obtained weighting each observation by its value in transport (mode-dependent). Additive term expressed in fraction of fas price.}}}
+\end{tabular}%
+\end{center}
+\label{tab:result_ves_rob}%
 \end{table}%
 
-
-\subsection{Goodness-of-fit: Detailed results \label{app:robust_4d}}
-
-In this section, we report the goodness-of-fit exercise conducted by transport mode, for selected years at the 4-digit product classification level. The results are reported in Tables \ref{tab:good_fit_air_rob} (for Air) and \ref{tab:good_fit_ves_rob} (for Vessel), for a sample of some years.
+\paragraph{Goodness-of-fit tests at the 4-digit level} We now report the goodness-of-fit exercise (conducted by transport mode) at the 4-digit product classification level (for the selected years). The results are reported in Tables \ref{tab:good_fit_air_rob} (for Air) and \ref{tab:good_fit_ves_rob} (for Vessel).
 \begin{table}[htbp]
   \centering
   \caption{Air: Measures of Goodness-of-fit, 4-digits}
 \begin{center}
 \label{tab:good_fit_air_rob}%
 %\vspace{0.5cm}
-\scalebox{0.97}{
-\begin{tabular}{lcccccc}
+%\scalebox{0.97}{
+\begin{tabular}{l|cccccc}
 \hline
 \hline
-      & \multicolumn{5}{c}{Year}                      &  \\
+      & \multicolumn{6}{c}{Year}              \\
       & \multicolumn{1}{c}{1974} & \multicolumn{1}{c}{1981} & \multicolumn{1}{c}{1989} & \multicolumn{1}{c}{2001} & \multicolumn{1}{c}{2009} & \multicolumn{1}{c}{2013}  \\
 \hline
 \textbf{R2} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{} &       &       &      \\
@@ -652,18 +658,18 @@ Terms A \& I & \multicolumn{1}{c}{31873.63} & \multicolumn{1}{c}{39495.82} & \mu
 \# restrictions  & \multicolumn{1}{c}{640} & \multicolumn{1}{c}{698} & \multicolumn{1}{c}{778} & \multicolumn{1}{c}{833} & \multicolumn{1}{c}{824} & \multicolumn{1}{c}{818}  \\
 p-value & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} \\
 \hline\hline
-\end{tabular}}%
+\multicolumn{7}{l}{\parbox[l]{15cm}{ \vspace{7pt}\scriptsize{Notes: R$^{2}$ between the log of predicted ratio and the log of the observed ratio. The number \# of restrictions is equal to the number of parameters estimated, i.e., the number of partner countries plus the number of products.}}}
+\end{tabular}%
 \end{center}
- \vspace{-10pt} \tiny{Notes: R$^{2}$ between the log of predicted ratio and the log of the observed ratio. The number \# of restrictions is equal to the number of parameters estimated, i.e., the number of partner countries plus the number of products.}
 \end{table}%
+
 
 \begin{table}[htbp]
   \centering
   \caption{Vessel: Measures of Goodness-of-fit, 4-digits}
 \begin{center}
 \label{tab:good_fit_ves_rob}%
-
-\scalebox{0.97}{\begin{tabular}{l|cccccc}
+\begin{tabular}{l|cccccc}
 \hline
 \hline
       & \multicolumn{6}{c}{Year}                   \\
@@ -685,14 +691,29 @@ Terms A \& I & 28271.29 & 29877.84 & \multicolumn{1}{c}{46595.55} & \multicolumn
 \# restrictions  & 797   & 814   & \multicolumn{1}{c}{881} & \multicolumn{1}{c}{910} & \multicolumn{1}{c}{886} & \multicolumn{1}{c}{874} \\
 p-value & 0.000 & 0.000 & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} \\
 \hline\hline
-\end{tabular}}
+\multicolumn{7}{l}{\parbox[l]{15cm}{ \vspace{7pt}\scriptsize{Notes: R$^{2}$ between the log of predicted ratio and the log of the observed ratio. The number \# of restrictions is equal to the number of parameters estimated, i.e., the number of partner countries plus the number of products.}}}
+\end{tabular}%
 \end{center}
-  \vspace{-10pt}\tiny{Notes: R$^{2}$ between the log of predicted ratio and the log of the observed ratio. The number \# of restrictions is equal to the number of parameters estimated, i.e., the number of partner countries plus the number of products.}
 \end{table}%
+
+\subsection{Variance decomposition exercise \label{app:decomp_variance}}
+
+In this section, we provide a variance decomposition exercise on the observed cif-fas price gap. Precisely, we determine the share of the observed variance in the ratio $\ln(\frac{p_{ik}}{\widetilde{p}_{ik}}-1)$ that comes from \textit{i)} the between-product variance (at the 5-digit level, $k$), \textit{ii)} the between-sector variance (at the 3-digit level, $s$). This gives us an alternative way to ensure the robustness of the estimation results to the degree of classification retained to estimate international transport costs. We also determine the share of the observed variance that can be attributed to the between-country variance. Results are reported in Figure \ref{fig:decomp_variance}.
+
+\begin{figure}[htbp]
+\caption{Variance decomposition (observed cif-fas price gap)}
+\label{fig:decomp_variance}
+\begin{center}
+\includegraphics[width=10cm, height=7cm]{variance_decomposition.pdf}
+%{\footnotesize {OECD data} }
+\end{center}
+\end{figure}
+
+Two interesting results emerge from Figure \ref{fig:decomp_variance}. First, the share of the cif-fas price gap variance that comes from the variance between products (5-digit level) is of same magnitude of order at the variance between sectors at the 3-digit level. Both account for between 30 and 40\% of the total variance in Air transport, depending on the years considered. This is also the case for Ocean transport, even if the difference between the between-country variance share and the between-sector share is more pronounced (30\% for the between-sector vs 40\% for the between-product variance at the beginning of the period). This delivers an indirect robustness check to the degree of classification we have retained to estimate international transport costs. Second, the variance of the cif-fas price gap that can be attributed to the product (or sector) dimension is much larger that the between-country variance. This holds throughout the period and for both transport modes. This suggests that what primarily matters in international transport costs is mostly attributable to the product per se, rather than to the country where it comes from. By extension, one can expect a limited role of distance and other country-related variables as determinants of transport costs. 
 
 \section{More on eliminating the composition effects \label{app:comp-effects}}
 
-In this section, we explain with more details the method employed to eliminate the country- and product- dimensions of the estimated transport cost. 
+In this section, we explain with more details the method employed to eliminate the country- and product- dimensions of the estimated transport cost.
 
 \paragraph{For the ad-valorem component} Consider first the multiplicative transport cost component. Rewriting Equation (\ref{eq:compeffects_mult}) by taking the exponential, we get:
 
@@ -700,11 +721,11 @@ In this section, we explain with more details the method employed to eliminate t
 \widehat{\tau}_{ikt}=\exp\left(\delta + \sum_{i \neq \text{AFG}}\alpha_i.\mathbb{1}_i+\sum_{k\neq \text{011}}\beta_k.\mathbb{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbb{1}_t\right) .\exp\left(\epsilon_{ikt}\right)
 \end{equation*}
 
-Based on this equation, we deduce after estimation that: 
+Based on this equation, we deduce after estimation that:
 \begin{eqnarray*}
 \text{For the year 1974}&& \widehat{\tau}_{is74} = \exp(\delta +\alpha_i+\beta_s), \\
 \text{For any year}~t> 1974&& \widehat{\tau}_{ist} = \exp(\delta +\alpha_i+\beta_s)\times \exp(\gamma_t)
-\end{eqnarray*} 
+\end{eqnarray*}
 
 From this, we obtain the foolowing recursive link: $\widehat{\tau}_{ist} = \widehat{\tau}_{is74}\exp(\gamma_t)$. Given that $\tau >1$, we can rewrite things to get the percentage change between year 1974 and any year $t>1974$:
 $$\Gamma_{ist} = 100.\frac{\widehat{\tau}_{ist}-1}{\widehat{\tau}_{is74}-1} = 100.\frac{\widehat{\tau}_{is74}\exp(\gamma_t)-1}{\widehat{\tau}_{is74}-1}$$
@@ -713,7 +734,7 @@ As such, the index of transport costs in year $t$ (relative to the reference yea
 \begin{equation*}
  \Gamma_t= 100.\frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1}
 \end{equation*}
-\noindent with $\bar{\tau}_{1974} = \exp(\delta + \sum_i \alpha_i + \sum_k \beta_k$) the mean (ad-valorem) transport cost in 1974. 
+\noindent with $\bar{\tau}_{1974} = \exp(\delta + \sum_i \alpha_i + \sum_k \beta_k$) the mean (ad-valorem) transport cost in 1974.
 
 \paragraph{For the additive component} After estimating Equation (\ref{eq:compeffects_add}), we can re-build the additive component according to:
 \begin{eqnarray*}
