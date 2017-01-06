@@ -161,11 +161,20 @@ foreach mode in air ves {
 	foreach secteur in 0(1)9 {
 		if "`sitc'"=="`secteur'" keep if substr(product,1,1)=="`sitc'"
 	}
+*Based on UNCTAD Stat "product groupings" DimSitcRev3Products_DsibSpecialGroupings_Hierarchy.xls 
+*http://unctadstat.unctad.org/EN/Classifications.html
 
-	if "`sitc'"=="non-manuf" keep if substr(product,1,1)=="0" | substr(product,1,1)=="1" /// 
-		| substr(product,1,1)=="2" | substr(product,1,1)=="3" | substr(product,1,1)=="4"
-	if "`sitc'"=="manuf" keep if substr(product,1,1)=="5" | substr(product,1,1)=="6"  ///
-		| substr(product,1,1)=="7" | substr(product,1,1)=="8"
+	if "`sitc'"=="primary" keep if substr(product,1,1)=="0" | substr(product,1,1)=="1" /// 
+		| substr(product,1,1)=="2" | substr(product,1,1)=="3" | substr(product,1,1)=="4" /// 
+		| substr(product,1,3)=="667" | substr(product,1,2)=="68"
+	
+	
+	
+	
+	if "`sitc'"=="manuf" drop if substr(product,1,1)=="0" | substr(product,1,1)=="1" /// 
+		| substr(product,1,1)=="2" | substr(product,1,1)=="3" | substr(product,1,1)=="4" /// 
+		| substr(product,1,3)=="667" | substr(product,1,2)=="68" | substr(product,1,1)=="9"
+	
 	
 	
 	
@@ -516,10 +525,9 @@ end
 
 ***********LANCER LES PROGRAMMES********************
 
-
-eliminer_effets_composition all
+eliminer_effets_composition primary
 eliminer_effets_composition manuf
-eliminer_effets_composition nonmanuf
+
 
 foreach secteur in 0(1)8 {
 		eliminer_effets_composition nonmanuf "`secteur'"
