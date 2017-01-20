@@ -46,11 +46,11 @@ program nldeter_couts_add
 	version 14.1
 	summarize group_iso_o, meanonly	
 	local nbr_iso_o=r(max)
-	summarize group_prod, meanonly	
-	local nbr_prod=r(max)
+	summarize group_sect, meanonly	
+	local nbr_sect=r(max)
 	summarize year, meanonly
 	local nbr_year=r(max)-r(min)+1
-	local nbr_var = `nbr_iso_o'+`nbr_prod'+`nbr_year'+1-2
+	local nbr_var = `nbr_iso_o'+`nbr_sect'+`nbr_year'+1-2
 	*En effet, je garde toutse les variables pour les produits, et j'enlève une pour les années et une pour les pays 
 		
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
@@ -64,9 +64,9 @@ program nldeter_couts_add
 **Ici, on fait les effets fixes (à la fois dans le terme additif et le terme multiplicatif)
 	
 	local n 1
-	foreach type_FE in iso_o prod year {
+	foreach type_FE in iso_o sect year {
 		foreach num_FE of num 1/`nbr_`type_FE'' {
-			if "`type_FE'"=="prod" | `num_FE'!=1 {
+			if "`type_FE'"=="sect" | `num_FE'!=1 {
 				tempname feA_`type_FE'_`num_FE' 
 
 
@@ -100,7 +100,7 @@ args sitc
 
 
 use "$dir/results/estimTC.dta", clear
-if "`sitc'" != "all" keep if substr(product,1,1)=="`sitc'"
+if "`sitc'" != "all" keep if substr(sector,1,1)=="`sitc'"
 gen terme_obs = prix_caf/prix_fob
 
  
@@ -159,21 +159,21 @@ foreach mode in air ves {
 	use "$dir/results/estimTC.dta", clear
 
 	foreach secteur in 0(1)9 {
-		if "`sitc'"=="`secteur'" keep if substr(product,1,1)=="`sitc'"
+		if "`sitc'"=="`secteur'" keep if substr(sector,1,1)=="`sitc'"
 	}
 *Based on UNCTAD Stat "product groupings" DimSitcRev3Products_DsibSpecialGroupings_Hierarchy.xls 
 *http://unctadstat.unctad.org/EN/Classifications.html
 
-	if "`sitc'"=="primary" keep if substr(product,1,1)=="0" | substr(product,1,1)=="1" /// 
-		| substr(product,1,1)=="2" | substr(product,1,1)=="3" | substr(product,1,1)=="4" /// 
-		| substr(product,1,3)=="667" | substr(product,1,2)=="68"
+	if "`sitc'"=="primary" keep if substr(sector,1,1)=="0" | substr(sector,1,1)=="1" /// 
+		| substr(sector,1,1)=="2" | substr(sector,1,1)=="3" | substr(sector,1,1)=="4" /// 
+		| substr(sector,1,3)=="667" | substr(sector,1,2)=="68"
 	
 	
 	
 	
-	if "`sitc'"=="manuf" drop if substr(product,1,1)=="0" | substr(product,1,1)=="1" /// 
-		| substr(product,1,1)=="2" | substr(product,1,1)=="3" | substr(product,1,1)=="4" /// 
-		| substr(product,1,3)=="667" | substr(product,1,2)=="68" | substr(product,1,1)=="9"
+	if "`sitc'"=="manuf" drop if substr(sector,1,1)=="0" | substr(sector,1,1)=="1" /// 
+		| substr(sector,1,1)=="2" | substr(sector,1,1)=="3" | substr(sector,1,1)=="4" /// 
+		| substr(sector,1,3)=="667" | substr(sector,1,2)=="68" | substr(sector,1,1)=="9"
 	
 	
 	
@@ -186,15 +186,15 @@ foreach mode in air ves {
 *	keep if year < 1980
 	local limit 15
 	bys iso_o : drop if _N<=`limit'
-	bys product : drop if _N<=`limit'
+	bys sector : drop if _N<=`limit'
 	bys iso_o : drop if _N<=`limit'
-	bys product : drop if _N<=`limit'
+	bys sector : drop if _N<=`limit'
 	bys iso_o : drop if _N<=`limit'
-	bys product : drop if _N<=`limit'
+	bys sector : drop if _N<=`limit'
 	bys iso_o : drop if _N<=`limit'
-	bys product : drop if _N<=`limit'
+	bys sector : drop if _N<=`limit'
 	bys iso_o : drop if _N<=`limit'
-	bys product : drop if _N<=`limit'
+	bys sector : drop if _N<=`limit'
 	
 	foreach type_TC in obs I A {
 		
@@ -215,7 +215,7 @@ foreach mode in air ves {
 		*** On précise l'équation en log
 
 		** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
-		** avec i : pays origine, k = product, t = year
+		** avec i : pays origine, k = sector, t = year
 		preserve
 	
 	
@@ -228,7 +228,7 @@ foreach mode in air ves {
 		
 		display "Regression `type_TC' `mode'"
 		
-		xi: reg ln_terme_`type_TC' i.year i.product i.iso_o if mode =="`mode'", /*nocons*/ robust 
+		reg ln_terme_`type_TC' i.year i.sector i.iso_o if mode =="`mode'" [iweight=val], /*nocons*/ robust 
 		
 		
 		* Enregistrer les effets fixes temps
@@ -308,12 +308,12 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 **L'argentine fait bien du commerce de 001 en 1974
 **Sinon, j'ai un soucis avec les EF que j'enlève dans l'équation non-linéaire.
 	
-	*Pour nombre de product
-	quietly egen group_prod=group(product)
-	quietly summarize group_prod
-	local nbr_prod=r(max)
-	quietly levelsof product, local (liste_prod) clean
-	quietly tabulate product, gen (prod_)
+	*Pour nombre de sector
+	quietly egen group_sect=group(sector)
+	quietly summarize group_sect
+	local nbr_sect=r(max)
+	quietly levelsof sector, local (liste_sect) clean
+	quietly tabulate sector, gen (sect_)
 		
 	*Pour nombre d'iso_o
 	quietly egen group_iso_o=group(iso_o)
@@ -333,11 +333,11 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	
 	
 	**Cette boucle crée les variables, les paramètres et leurs valeurs initales	
-	foreach type_FE in  iso_o prod year {
+	foreach type_FE in  iso_o sect year {
 	
 		local liste_variables_`type_FE' 
 		forvalue num_FE =  1/`nbr_`type_FE'' {
-			if "`type_FE'" =="prod" | `num_FE' !=1 {
+			if "`type_FE'" =="sect" | `num_FE' !=1 {
 				local liste_variables_`type_FE'  `liste_variables_`type_FE'' `type_FE'_`num_FE'
 			}
 		}
@@ -347,7 +347,7 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	
 		local liste_parametres_`type_FE'
 			forvalue num_FE =  1/`nbr_`type_FE'' {
-				if  "`type_FE'" =="prod" | `num_FE'!=1 {			
+				if  "`type_FE'" =="sect" | `num_FE'!=1 {			
 					local liste_parametres_`type_FE'  `liste_parametres_`type_FE'' fe_`type_FE'_`num_FE'
 				}
 			}
@@ -357,7 +357,7 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 		
 		local initial_`type_FE'
 		forvalue num_FE =  1/`nbr_`type_FE'' {
-			if  "`type_FE'" =="prod" |`num_FE'!=1 {
+			if  "`type_FE'" =="sect" |`num_FE'!=1 {
 						if ("`type_FE'" !="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' -2
 						if ("`type_FE'" =="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 0.02
 			}
@@ -371,11 +371,11 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	
 	
 	
-	local liste_variables `liste_variables_iso_o' `liste_variables_prod'  `liste_variables_year' 
+	local liste_variables `liste_variables_iso_o' `liste_variables_sect'  `liste_variables_year' 
 	
 	** pour estimation NL both A & I
-	local liste_parametres  `liste_parametres_iso_o' `liste_parametres_prod'  `liste_parametres_year'
-	local initial  `initial_iso_o' `initial_prod'  `initial_year'
+	local liste_parametres  `liste_parametres_iso_o' `liste_parametres_sect'  `liste_parametres_year'
+	local initial  `initial_iso_o' `initial_sect'  `initial_year'
 	
 *	display "Liste des variables :" "`liste_variables'"
 *	display "Liste des paramètres :" "`liste_parametres'"
@@ -393,7 +393,7 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	
 	display "nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')"
 	
-	nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=val], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	
 	
 	predict ln_terme_A_predict
@@ -422,8 +422,8 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	quietly levelsof year, local (liste_year) clean
 	
 	
-	display "local n = `nbr_iso_o' + `nbr_prod' - 1 + 1"
-	local n = `nbr_iso_o' + `nbr_prod' - 1 + 1
+	display "local n = `nbr_iso_o' + `nbr_sect' - 1 + 1"
+	local n = `nbr_iso_o' + `nbr_sect' - 1 + 1
 	
 		
 	display "`liste_year'"	
@@ -525,6 +525,8 @@ end
 
 ***********LANCER LES PROGRAMMES********************
 
+eliminer_effets_composition all
+/*
 eliminer_effets_composition primary
 eliminer_effets_composition manuf
 
@@ -533,7 +535,7 @@ foreach secteur in 0(1)8 {
 		eliminer_effets_composition nonmanuf "`secteur'"
 }
 
-
+*/
 
 
 
