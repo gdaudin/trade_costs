@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{24}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -74,6 +74,12 @@
 \textsc{Jacks, D.~S.}, \textsc{Meissner, C.~M.} and \textsc{Novy, D.} (2008),
   \enquote{Trade Costs, 1870-2000}, \emph{American Economic Review, Papers and
   Proceedings}, vol.~98 \,n\textsuperscript{o}~2: pp. 529--534.
+
+\bibitem[{Krugman(1987)}]{Krugman-87}
+\textsc{Krugman, P.} (1987), \enquote{Pricing-To-Market When the Exchange Rate
+  Changes}, in \textsc{Arndt, S.} and \textsc{Richardson, J.} (editors),
+  \emph{Real-Financial Linkages Among Open Economies}, MIT Press, Cambridge MA,
+  pp. 49--70.
 
 \bibitem[{Lafourcade and Thisse(2011)}]{Lafourcade_Thisse}
 \textsc{Lafourcade, M.} and \textsc{Thisse, J.-F.} (2011), \enquote{New
