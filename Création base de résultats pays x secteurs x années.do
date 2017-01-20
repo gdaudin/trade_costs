@@ -45,15 +45,15 @@ foreach mode in air ves {
 
 keep if mode =="`mode'"
 
-gen prix_caf_pond = prix_caf*val
-gen prix_fob_pond = prix_caf*val
+gen prix_caf_pond = prix_caf*wgt
+gen prix_fob_pond = prix_caf*wgt
 
 bys sector iso_o mode : gen nbr_prod=_N
 
-collapse (sum) prix_caf_pond prix_fob_pond val , by(sector iso_o name terme_iceberg terme_I terme_A coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode nbr_prod)
+collapse (sum) prix_caf_pond prix_fob_pond val wgt, by(sector iso_o name terme_iceberg terme_I terme_A coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode nbr_prod)
 
-gen prix_caf = prix_caf_pond/val
-gen prix_fob = prix_fob_pond/val
+gen prix_caf = prix_caf_pond/wgt
+gen prix_fob = prix_fob_pond/wgt
 
 drop prix_caf_pond prix_fob_pond
 
