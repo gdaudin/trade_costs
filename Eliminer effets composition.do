@@ -228,7 +228,10 @@ foreach mode in air ves {
 		
 		display "Regression `type_TC' `mode'"
 		
-		reg ln_terme_`type_TC' i.year i.sector i.iso_o if mode =="`mode'" [iweight=val], /*nocons*/ robust 
+		encode sector, gen(sector_num)
+		encode iso_o, gen(iso_o_num)
+		
+		reg ln_terme_`type_TC' i.year i.sector_num i.iso_o_num if mode =="`mode'" [iweight=val], /*nocons*/ robust 
 		
 		
 		* Enregistrer les effets fixes temps
