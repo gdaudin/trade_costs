@@ -17,7 +17,7 @@ set maxvar 32767
 
 if ("`c(hostname)'" =="????") global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results
 
-if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") global dir  "~/Documents/Recherche/Trade Costs/Results"
+if "`c(username)'" =="guillaumedaudin" global dir  "~/Documents/Recherche/Trade Costs/Results"
 
 cd "$dir"
 
@@ -40,12 +40,22 @@ foreach mode in air ves {
 	rename `mode'_wgt wgt
 	label var val "Value"
 	label var wgt "Weight"
+	rename product sector
 	
 
 keep if mode =="`mode'"
 
-bysort iso_o product : keep if _n==1
+gen prix_caf_pond = prix_caf*val
+gen prix_fob_pond = prix_caf*val
 
+bys sector iso_o mode : gen nbr_prod=_N
+
+collapse (sum) prix_caf_pond prix_fob_pond val , by(sector iso_o name terme_iceberg terme_I terme_A coef_iso_nlI coef_iso_A coef_iso_I contig-distwces mode nbr_prod)
+
+gen prix_caf = prix_caf_pond/val
+gen prix_fob = prix_fob_pond/val
+
+drop prix_caf_pond prix_fob_pond
 
 gen nbdigits =`preci'
 gen year = `year'
