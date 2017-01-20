@@ -153,7 +153,7 @@ It is worth acknowledging that using this dataset encounters some limitations. F
 
 Yet, we believe that our analysis delivers valuable insights on this topic. Indeed, using this dataset has (at least) three main advantages. First, this dataset delivers a strong statistical reliability arising from a single, trustworthy, customs origin. Based on customs declarations, the US Imports database inventories all imports (both values and quantities) by country of origin to the United states at the HS 10-digit level, with a concordance code to the SITC 5-digit coding system. In addition, the database reports information regarding freight, insurance and handling expenditures by transportation mode (ocean (or ``vessel'') and air). The first will be crucial to compute transport costs (see below), the second will allow to enlighten substantial differences in the dynamics of transport costs across transportation mode. Second, using this dataset allows us to have the import price of the good, next to the export price. This is highly valuable, as we can estimate both the \textit{levels} of the iceberg costs and of the additive costs. This strongly differentiates us from \citet{Irrazabal_2015}, who can only estimate the ratio of additive costs as a share of the median total consumer price. Third, this dataset is available over a long time span. We are thus able to exploit information on a yearly basis from 1974 to 2013. \cite{hummels2007} preceded us in investigating the time dimension of this database. However, our paper differentiates from his work in two main respects. First, we extend the time coverage to the more recent period up to 2013, while \cite{hummels2007} stops in 2004. As we show in Section \ref{sec:results_trends}, covering the time period over the recent years delivers interesting insights regarding the trends in air shipping costs. Second, we study the time trends of transport costs by disentangling the additive from the iceberg components. This proves to be important in the characterization of transport costs changes over time, in particular in air transport.\smallskip
 
-We estimate international transport costs at the 3-digit classification level, even if data series on the cif and fas prices are available at the 5-digit classification level. As detailed below, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. Yet, we ensure the robustness of these results by conducting the estimations at the 4-digit level for some selected years.\footnote{The selected years for the 4-digit level estimations are: 1974, 1977, 1981, 1985, 1989, 1993, 1997, 2001, 2005, 2009, 2013. Comparing different levels of aggregation is useful to check differences and the presence of biases precisely due to aggregation. We thus obtain no substantial difference between the estimation results conducted at the 3 and 4-digit levels. Estimation results at the 4-digit classification level are reported in Appendix ??.} Depending on the considered year, this leaves us with around 200 sectors, from approximately 200 countries of origin.
+We estimate international transport costs at the 3-digit classification level, even if data series on the cif and fas prices are available at the 5-digit classification level. As detailed below, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. Yet, we ensure the robustness of these results by conducting the estimations at the 4-digit level for some selected years.\footnote{The selected years for the 4-digit level estimations are: 1974, 1977, 1981, 1985, 1989, 1993, 1997, 2001, 2005, 2009, 2013. Comparing different levels of aggregation is useful to check differences and the presence of biases precisely due to aggregation. We thus obtain no substantial difference between the estimation results conducted at the 3 and 4-digit levels. Estimation results at the 4-digit classification level are reported in Appendix \ref{app:4digit}.} Depending on the considered year, this leaves us with around 200 sectors, from approximately 200 countries of origin.
 
 
 \subsection{Empirical specification}
@@ -166,11 +166,11 @@ p = \tau \widetilde{p}+ t \label{eq:base}
 
 \noindent As usual in the literature, the iceberg trade costs are denoted $\tau$ (with  $\tau \geq 1$, $\tau=1$ meaning no ad-valorem trade costs), while additive trade costs are labeled $t$ (with $t \geq 0$, $t=0$ implying no additive costs).  Let us denote $i$ the origin country, and $k$, the product. Transforming the above equation (\ref{eq:base}) as ratio, we thus get the following equation at the root of our estimation:\footnote{We skip the year and transport-mode dimensions in the notations for reading convenience.}
 
-\begin{equation*}
+\begin{equation}
 \frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
-\end{equation*}
+\end{equation}
 
-\paragraph{Estimation Strategy} We follow \citet{Irrazabal_2015} by considering that \textit{1)} both ad-valorem and additive costs are separable between the origin country ($i$) and the product ($k$) dimensions, and \textit{2)} this separability is in a multiplicative way for the former and an additive way for the latter.In other words, $\tau_{ik}$ and $t_{ik}$ from Equation (\ref{eq:base_estimee}) are written as:\footnote{Notice that, given the magnitude or order of transport costs, assuming an additive or a multiplicative form does not make a substantial difference since, for small values (as we obtain), we have $\tau_i\times \tau_k \simeq (\tau_i-1)\times (\tau_k -1)-1$ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.}
+\paragraph{Estimation Strategy} We follow \citet{Irrazabal_2015} by considering that \textit{1)} both ad-valorem and additive costs are separable between the origin country ($i$) and the product ($k$) dimensions, and \textit{2)} this separability is in a multiplicative way for the former and an additive way for the latter. In other words, $\tau_{ik}$ and $t_{ik}$ from Equation (\ref{eq:base_estimee}) are written as:\footnote{Notice that, given the magnitude or order of transport costs, assuming an additive or a multiplicative form does not make a substantial difference since, for small values (as we obtain), we have $\tau_i\times \tau_k \simeq (\tau_i-1)\times (\tau_k -1)-1$ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.}
 
 \begin{eqnarray}
 \tau_{ik} &=& \tau_{i} \times \tau_{k} \label{eq:ad-valorem}\\
@@ -195,7 +195,7 @@ The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by
 \end{equation}
 
 The non-linearity of Equation (\ref{eq:equation0}) implies that it cannot be estimated using standard linear estimators. All estimates are thus performed using non-linear least squares.\footnote{The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares of residuals does not increase from one iteration to the next. See \cite{Woolridge-Book-2001} for more details.} Yet, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. Confronted to this arbitrage, we estimate international transport costs at the 3-digit level as our benchmark classification, even though data series are available at the 5-digit classification level ($k$). Put it differently, this amounts making the additional assumption, that all products $k$ in a 3-digit sector $s$ share the
-same structure of costs.\footnote{We ensure the robustness of our estimation results to this assumption in two ways. First, we conduct the estimations at the 4-digit level for some selected years. As reported in Appendix \ref{app:4digit}, the results are not substantially affected. Second, we provide a decomposition variance exercise on the observed cif-fas price. As reported in Appendix ???, the share of the observed variance that is accounted for by the between-sector ($s$) variance is roughly similar to the between-product ($k$) variance.} This drives us to estimate a modified version of Equation (\ref{eq:equation0}), according to:
+same structure of costs.\footnote{We ensure the robustness of our estimation results to this assumption in two ways. First, we conduct the estimations at the 4-digit level for some selected years. As reported in Appendix \ref{app:4digit}, the results are not substantially affected. Second, we provide a decomposition variance exercise on the observed cif-fas price. As reported in Appendix ???, the share of the observed variance that is accounted for by the between-sector ($s$) variance is roughly similar to the between-product ($k$) variance.} This drives us to estimate a modified version of Equation (\ref{eq:equation0}), specified as:
 \begin{equation}
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{s(k)}+\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:estimatedequation}
 \end{equation}
@@ -204,19 +204,19 @@ where $\tau_{i}$, $\tau_{s(k)}$, $t_{i}$ and $t_{s(k)}$ are the parameters to be
 One key objective of the paper is to characterize the importance of additive costs relatively to ad-valorem costs. Put it differently, what traditional models of international trade lose by ignoring additive costs? A natural way to answer this question is to perform estimations of Equation (\ref{eq:estimatedequation}) constraining additive costs $t$ to be equal to zero, and compare the fitting properties and the explanatory power of the models. For each year and transport mode, we thus estimate the two models: \textit{(a)} when transport costs are modeled as iceberg costs (Equation (\ref{eq:model_nlI})), and \textit{(b)} when transport costs are modeled as decomposed in the two dimensions of additive and iceberg (Equation (\ref{eq:model_IetA})):
 
 \begin{eqnarray}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i}\times\tau_{s(k)}-1 \right) + \epsilon^{nlI}_{ik} \label{eq:model_nlI} \\
+\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i}\times\tau_{s(k)}-1 \right) + \epsilon^{ice}_{ik} \label{eq:model_nlI} \\
 %\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\frac{t_{i} + t_{s}}{\widetilde{p}_{ik}}\right) + \epsilon^{nlA}_{ik} \label{eq:model_nlA} \\
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)&=& \ln \left(\tau_{i} \times \tau_{s(k)}-1 +\frac{t_{i} + t_{s}}{\widetilde{p}_{ik}}\right) + \epsilon_{ik} \label{eq:model_IetA}
 \end{eqnarray}
 
-After estimating Equation (\ref{eq:model_IetA}), we can re-built a measure of each component $\widehat{\tau}^{adv}_{is(k)} = \widehat{\tau_{i}} \times \widehat{\tau_{s(k)}}$ and $\widehat{t}^{add}_{is(k)} = \widehat{t}_{i} + \widehat{t}_{s(k)}$, that is country-sector specific, by year and transport mode. When assuming iceberg costs only (Equation (\ref{eq:model_nlI})), we proceed similarly to get $\widehat{\tau}^{nlI}_{is(k)} = \widehat{\tau_{i}} \times \widehat{\tau_{s(k)}}$.\footnote{In this case, notice that the equation could be estimated relying on a linear form. To preserve comparability of the results, we keep the same non-linear estimation method in both cases though.}$^{,}$\footnote{One may object that a comprehensive study of the structure of transport costs should also include the third model with only additive costs. This has driven us to estimate this model as well, in which case the estimated equation is written according to: $\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}\right) + \epsilon^{nlA}_{ik}$. The main result that emerges is that the model with additive costs only is dominated (in terms of quality of fit properties) by the model with multiplicative costs only (Equation (\ref{eq:model_nlI})), which is itself dominated by the complete model (Equation (\ref{eq:model_IetA})), anticipating on further results. For sake of space saving, the results of this model are not reported in the paper. Of course, they are available upon request to the authors.} Similarly as \citet{Irrazabal_2015}, we take the average over the product-country dimension, using the values of each trade flow ($is$-specific) over total yearly trade as a weighting scheme. We thus recover a ``synthetic estimate'' of each type of transport cost: \textit{a)} $\widehat{\tau}^{nlI}$, \textit{b)} $\widehat{\tau}^{adv}$ and $\widehat{t}$, for each year and transportation mode. These results are reported in Section \ref{sec:results_decomposition}.
+After estimating Equation (\ref{eq:model_IetA}), we can re-built a measure of each component $\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau}_{s(k)}$ and $\widehat{t}_{is} = \widehat{t}_{i} + \widehat{t}_{s(k)}$, that is country-sector specific, by year and transport mode. When assuming iceberg costs only (Equation (\ref{eq:model_nlI})), we proceed similarly to get $\widehat{\tau}^{ice}_{is} = \widehat{\tau}_{i} \times \widehat{\tau}_{s}$.\footnote{In this case, notice that the equation could be estimated relying on a linear form. To preserve comparability of the results, we keep the same non-linear estimation method in both cases though.}$^{,}$\footnote{One may object that a comprehensive study of the structure of transport costs should also include the third model with only additive costs. This has driven us to estimate this model as well, in which case the estimated equation is written according to: $\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}\right) + \epsilon^{add}_{ik}$. The main result that emerges is that the model with additive costs only is dominated (in terms of quality of fit properties) by the model with multiplicative costs only (Equation (\ref{eq:model_nlI})), which is itself dominated by the complete model (Equation (\ref{eq:model_IetA})), anticipating on further results. For sake of space saving, the results of this model are not reported in the paper. Of course, they are available upon request to the authors.} Similarly as \citet{Irrazabal_2015}, we take the average over the sector-country dimension, using the values of each trade flow ($is$-specific) over total yearly trade as a weighting scheme. We thus recover a ``synthetic estimate'' of each type of transport cost: \textit{a)} $\widehat{\tau}^{ice}$, \textit{b)} $\widehat{\tau}^{adv}$ and $\widehat{t}$, for each year and transportation mode. These results are reported in Section \ref{sec:results_decomposition}.
 
 \todo{A un moment, parler du risque d'endogeneite entre tauik tik et ptildeik, dire que pas de pb. Dire ou?}
 
 
 \section{Decomposing Transport Costs: The importance of the additive component \label{sec:results_decomposition}}
 
-The objective of this section is twofold. First, we quantify the magnitude of transport costs over time (by transport mode), distinguishing whether the additive component $t_{ik}$ is included or not in the estimated equation (Equation (\ref{eq:model_IetA}) or (\ref{eq:model_nlI})). Second, we evaluate the importance of the additive component of in overall transport costs through the means of goodness-of-fit measures.
+The objective of this section is twofold. First, we quantify the magnitude of transport costs over time (by transport mode), distinguishing whether the additive component $t_{ik}$ is excluded or included in the estimated equation (Equation (\ref{eq:model_IetA}) or (\ref{eq:model_nlI})). Second, we evaluate the importance of the additive component of in overall transport costs through the means of goodness-of-fit measures.
 
 
 \subsection{Decomposing transport costs over 1974-2013}
@@ -297,16 +297,17 @@ From Figure \ref{fig:mult_alone_withadd}, we can infer that the sizeable magnitu
 \end{figure}
 
 
-The overall trend pictured in these estimates is in line with the findings by \citet{Hummels_1999}, who point that the overall transport cost for the United States declined from 6 percent to 4 percent between 1974 and 1996. For the same years, our own results point to a total decrease from 6.9 to 4.2\% on average for air transport, and from 9.8\% to 4.8\% for ocean transport.\footnote{One may be puzzled for by the high magnitude of estimates for the beginning of the period (say, until 1980) for Ocean transport. \citet{hummels2007} finds similar outcomes on tramp prices indexes, and suggests the oil shock as a likely culprit, in a context where quality XXX} Once again, the fact that our estimates are on average higher than those by \citet{Hummels_1999} should not be a surprise, since ours are simple averages, whereas \citet{Hummels_1999}'s are trade-weighted. But the fact that trends are very close are comforting.
-%\todo{This has to be clarified: What data uses Hummels? Does he distinguish at some point between air and vessel? }
+The overall trend pictured in these estimates is in line with the findings by \citet{Hummels_1999}, who point that the overall transport cost for the United States declined from 6 percent to 4 percent between 1974 and 1996. For the same years, our own results point to a total decrease from 6.9 to 4.2\% on average for air transport, and from 9.8\% to 4.8\% for ocean transport.\footnote{One may be puzzled for by the high magnitude of estimates for the beginning of the period (say, until 1980) for Ocean transport. \citet{hummels2007} finds similar outcomes on tramp prices indexes, and suggests the oil shock as a likely culprit, in a context where technological progress was quicker in aviation than in vessel, allowing a better dampening of oil shocks on freight rates.} Once again, the fact that our estimates are on average higher than those by \citet{Hummels_1999} should not be a surprise, since ours are simple averages, whereas \citet{Hummels_1999}'s are trade-weighted. But the fact that trends are very close are comforting. It appears therefore that the magnitude of transport costs is higher for ocean shipping than for air transport. 
 
-It appears therefore that the magnitude of transport costs is higher for ocean shipping than for air transport. This result holds considering ad-valorem costs alone (Figure \ref{fig:mult_alone_withadd}), as well as in presence of additive costs (Figure \ref{fig:decomp_TC_3d}), for all years throughout the period. Second, in both transport modes, the additive component appears of sizeable importance As mean value over the period, it amounts to 48.2\% of total transport costs in Vessel, and 42.3\% in Air. We go on investigating this result further in the next subsection.\footnote{Figure \ref{fig:decomp_TC_3d} also delivers interesting results with respect to the time trends of transport costs. We come back to this aspect in Section \ref{sec:results_trends}.}
+Besides, we go beyond by distinguishing within these evolutions between multiplicative and additive transport costs. First, the decreasing trend holds considering ad-valorem costs alone (Figure \ref{fig:mult_alone_withadd}), as well as in presence of additive costs (Figure \ref{fig:decomp_TC_3d}), for all years throughout the period. Second, in both transport modes, the additive component appears of sizeable importance. As mean value over the period, it amounts to 48.2\% of total transport costs in Vessel, and 42.3\% in Air. We go on investigating this result further in the next subsection.\footnote{Figure \ref{fig:decomp_TC_3d} also delivers interesting results with respect to the time trends of transport costs. We come back to this aspect in Section \ref{sec:results_trends}.} 
 
-\todo{Comparer avec la litterature. Cf AvW 2004 pure transport costs 11\% markup over production costs.}
+Before, we check how our estimates of additive costs compare to those of \citet{Irrazabal_2015}, which provide the most recent evidence on that matter. Based on Norwegian firm-level trade data for 2004, \citet{Irrazabal_2015} find that additive costs are on average 14\% of the median price. Expressed in our own terminology, this means they find that $\frac{t/\tau}{\widetilde{p}}=14\%$. Let us define the ratio of additive costs over total costs as $\frac{t}{\tau\widetilde{p}+t}$, and divide both numerators and denominators by $\tau\widetilde{p}$. We get: $\frac{t}{\tau\widetilde{p}+t}=\frac{t/\tau\widetilde{p}}{1+t/\tau\widetilde{p}}$. Plugging \citet{Irrazabal_2015} result gives 0,14/1+0,14= 12,5\%. Additive trade costs represents 12.5\% of total trade costs. Based on \citet{anderson_wincoop_jel}, we know that transport costs represent a 11\% markup over production costs, and that total international trade costs represent 74\%, so transport costs amount to 11/74= 15\% of total trade costs. Given that in 2004, our estimates for additive (multiplicative) transport costs is 2.9\% (2.7\%) for Vessel, the same reasoning as before leads to 2.9/(2.7+2.9)*11/74 = 7.7\% of total trade costs, that is 62\% (7.7/12.5=62\%) of \citet{Irrazabal_2015}'s estimates. For Air transportation, our estimates for additive (multiplicative) transport costs is 1.5\% (1.9\%), and the same computation brings that additive costs represent 6.6\% of total trade costs, that is 53\% of \citet{Irrazabal_2015}'s estimates. In other words, we find that additive transport costs represent between half and two thirds of the total additive trade costs, which seems totally consistent with the magnitudes reported by e.g. \citet{anderson_wincoop_jel}.
 
-% JH: XXX We have to discuss this: "Overall, these estimates are in line with the ones by \citet{Hummels_1999}, who finds on the same date that the all-commodities trade-weighted average transport cost is 3.8 percent of the fob price for the USA in 1994. More precisely, for this specific year, we find... something slightly higher...
 
-%How do our results compare with other studies? Here, compare with Irrarazabal, Hummels and co.
+
+
+%\todo{Comparer avec la litterature. Cf AvW 2004 pure transport costs 11\% markup over production costs.}
+
 
 
 \subsection{Assessing the importance of additive transport costs}
@@ -494,7 +495,6 @@ Our results could be extended in two main ways. On the empirical side, one may w
 
 \section{Data Appendix \label{app:data}}
 
-\subsection{Fab-cif prices}
 
 The Customs value is the value of imports as appraised by the U.S. Customs and Border Protection in accordance with the legal requirements of the Tariff Act of 1930, as amended. This value is generally defined as the price actually paid or payable for merchandise when sold for exportation to the United States, excluding U.S. import duties, freight, insurance, and other charges incurred in bringing the merchandise to the United States. The term ``price actually paid or payable'' means the total payment (whether direct or indirect, and exclusive of any costs, charges, or expenses incurred for transportation, insurance, and related services incident to the international shipment of the merchandise from the country of exportation to the place of importation in the United States) made, or to be made, for imported merchandise by the buyer to, or for the benefit, of the seller. In this respect, the ``custom value'' corresponds to the fas price (``free-alongside'' price) delivered by the seller.
 
@@ -502,15 +502,11 @@ The import charges represent the aggregate cost of all freight, insurance, and o
 
 The cif (cost, insurance, and freight) value represents the landed value of the merchandise at the first port of arrival in the United States. It is computed by adding ``Import Charges'' to the ``Customs Value'' (see definitions above) and therefore excludes U.S. import duties.
 
-\section{More on the estimation results \label{app:more_results}}
+\section{Estimation at the 3-digit classification level \label{app:more_results}}
 
-In this section, we report more detailed results for the estimates for international transport costs, by transport mode on a yearly basis, when either additive costs are included in the estimation (Equation (\ref{eq:model_IetA})) or not (Equation (\ref{eq:model_nlI})).
+\subsection{Transport costs estimates: More detailed results}
 
-
-
-\subsection{Detailed results at the 3-digit classification level}
-
-In this section, we complement the results displayed in Table \ref{tab:summary_results} by reporting the estimates of international transport costs for a sample of years over 1974-2013, when the degree of classification retained ($s$) is at the 3-digit classification level. Table \ref{tab:result_air_3d_detail} reports the results for Air transport. The results for Ocean transport are displayed in Table \ref{tab:result_ves_3d_detail}.
+In this section, we report more detailed results for the estimates for international transport costs, by transport mode on a yearly basis, when either additive costs are included in the estimation (Equation (\ref{eq:model_IetA})) or not (Equation (\ref{eq:model_nlI})), under our benchmark sectoral classification level (3 digit). Precisely, we complement the results displayed in Table \ref{tab:summary_results} by reporting the estimates of international transport costs for a sample of years over 1974-2013, when the degree of classification retained ($s$) is at the 3-digit classification level. Table \ref{tab:result_air_3d_detail} reports the results for Air transport. The results for Ocean transport are displayed in Table \ref{tab:result_ves_3d_detail}.
 
 \begin{table}[htbp]
   \centering
@@ -545,7 +541,7 @@ Standard Error & 0.032 & 0.025 & 0.021 & 0.016 & 0.023 & 0.012  \\ \hline
 
 \begin{table}[htbp]
   \centering
-  \caption{Vessel: Dynamics of Trade Costs over Time (3 digits), selected years}
+  \caption{Vessel: Transport costs estimates, 3 digit (selected years)}
 \begin{center}
     \begin{tabular}{l|cccccc}
    \hline\hline
@@ -573,11 +569,30 @@ Standard Error & 0.041 & 0.023 & 0.022 & 0.021 & 0.018 & 0.018  \\
 \end{center} \label{tab:result_ves_3d_detail}
 \end{table}%
 
-\subsection{Estimation at the 4-digit level \label{app:4digit}}
+
+\subsection{Variance decomposition exercise \label{app:decomp_variance}}
+
+In this section, we provide a variance decomposition exercise on the observed cif-fas price gap. Precisely, we determine the share of the observed variance in the ratio $\ln(\frac{p_{ik}}{\widetilde{p}_{ik}}-1)$ that comes from \textit{i)} the between-product variance (at the 5-digit level, $k$), \textit{ii)} the between-sector variance (at the 3-digit level, $s$). This gives us an alternative way to ensure the robustness of the estimation results to the degree of classification retained to estimate international transport costs. We also determine the share of the observed variance that can be attributed to the between-country variance. Results are reported in Figure \ref{fig:decomp_variance}.
+
+\begin{figure}[htbp]
+\caption{Variance decomposition (observed cif-fas price gap)}
+\label{fig:decomp_variance}
+\begin{center}
+\includegraphics[width=10cm, height=7cm]{variance_decomposition.pdf}
+%{\footnotesize {OECD data} }
+\end{center}
+\end{figure}
+
+Two interesting results emerge from Figure \ref{fig:decomp_variance}. First, the share of the cif-fas price gap variance that comes from the variance between products (5-digit level) is of same magnitude of order at the variance between sectors at the 3-digit level. Both account for between 30 and 40\% of the total variance in Air transport, depending on the years considered. This is also the case for Ocean transport, even if the difference between the between-country variance share and the between-sector share is more pronounced (30\% for the between-sector vs 40\% for the between-product variance at the beginning of the period). This delivers an indirect robustness check to the degree of classification we have retained to estimate international transport costs. Second, the variance of the cif-fas price gap that can be attributed to the product (or sector) dimension is much larger that the between-country variance. This holds throughout the period and for both transport modes. This suggests that what primarily matters in international transport costs is mostly attributable to the product per se, rather than to the country where it comes from. By extension, one can expect a limited role of distance and other country-related variables as determinants of transport costs.
+
+\section{Estimation at the 4-digit level \label{app:4digit}}
 
 In this section, we report the estimation results when we retain the 4-digit classification level ($s$=4-digit).
 
-\paragraph{Transport cost estimates} Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} report the estimates of both models (with and without additive costs) in Air and Ocean transport respectively.
+\subsection{Transport cost estimates} 
+
+
+Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} report the estimates of both models (with and without additive costs) in Air and Ocean transport respectively.
 
 \begin{table}[htbp]
   \centering
@@ -639,7 +654,9 @@ Standard Error & 0.068 & 0.044 & \multicolumn{1}{c}{0.037} & \multicolumn{1}{c}{
 \label{tab:result_ves_rob}%
 \end{table}%
 
-\paragraph{Goodness-of-fit tests at the 4-digit level} We now report the goodness-of-fit exercise (conducted by transport mode) at the 4-digit product classification level (for the selected years). The results are reported in Tables \ref{tab:good_fit_air_rob} (for Air) and \ref{tab:good_fit_ves_rob} (for Vessel).
+\subsection{Goodness-of-fit tests at the 4-digit level} 
+
+We now report the goodness-of-fit exercise (conducted by transport mode) at the 4-digit product classification level (for the selected years). The results are reported in Tables \ref{tab:good_fit_air_rob} (for Air) and \ref{tab:good_fit_ves_rob} (for Vessel).
 \begin{table}[htbp]
   \centering
   \caption{Air: Measures of Goodness-of-fit, 4-digits}
@@ -708,20 +725,6 @@ p-value & 0.000 & 0.000 & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} 
 \end{center}
 \end{table}%
 
-\subsection{Variance decomposition exercise \label{app:decomp_variance}}
-
-In this section, we provide a variance decomposition exercise on the observed cif-fas price gap. Precisely, we determine the share of the observed variance in the ratio $\ln(\frac{p_{ik}}{\widetilde{p}_{ik}}-1)$ that comes from \textit{i)} the between-product variance (at the 5-digit level, $k$), \textit{ii)} the between-sector variance (at the 3-digit level, $s$). This gives us an alternative way to ensure the robustness of the estimation results to the degree of classification retained to estimate international transport costs. We also determine the share of the observed variance that can be attributed to the between-country variance. Results are reported in Figure \ref{fig:decomp_variance}.
-
-\begin{figure}[htbp]
-\caption{Variance decomposition (observed cif-fas price gap)}
-\label{fig:decomp_variance}
-\begin{center}
-\includegraphics[width=10cm, height=7cm]{variance_decomposition.pdf}
-%{\footnotesize {OECD data} }
-\end{center}
-\end{figure}
-
-Two interesting results emerge from Figure \ref{fig:decomp_variance}. First, the share of the cif-fas price gap variance that comes from the variance between products (5-digit level) is of same magnitude of order at the variance between sectors at the 3-digit level. Both account for between 30 and 40\% of the total variance in Air transport, depending on the years considered. This is also the case for Ocean transport, even if the difference between the between-country variance share and the between-sector share is more pronounced (30\% for the between-sector vs 40\% for the between-product variance at the beginning of the period). This delivers an indirect robustness check to the degree of classification we have retained to estimate international transport costs. Second, the variance of the cif-fas price gap that can be attributed to the product (or sector) dimension is much larger that the between-country variance. This holds throughout the period and for both transport modes. This suggests that what primarily matters in international transport costs is mostly attributable to the product per se, rather than to the country where it comes from. By extension, one can expect a limited role of distance and other country-related variables as determinants of transport costs.
 
 \section{More on eliminating the composition effects \label{app:comp-effects}}
 
