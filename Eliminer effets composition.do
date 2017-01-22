@@ -150,7 +150,6 @@ save database_pureTC_`sitc', replace
 
 
 
-
 foreach mode in air ves {
 
 	
@@ -178,9 +177,12 @@ foreach mode in air ves {
 	
 	
 	
+	
 	gen terme_obs = prix_caf/prix_fob
 	
 	keep if mode=="`mode'"
+	
+	
 	
 	
 *	keep if year < 1980
@@ -204,6 +206,11 @@ foreach mode in air ves {
 	}
 	
 		
+	*Création du poids pertinent
+	*Qui est la part occupée chaque année par chaque secteur x pays
+	bys year : egen annual_trade = total(val), 
+	generate yearly_share=val/annual_trade
+	label var yearly_share "part dans le commerce de cette année-là"
 
 	
 
@@ -231,7 +238,7 @@ foreach mode in air ves {
 		encode sector, gen(sector_num)
 		encode iso_o, gen(iso_o_num)
 		
-		reg ln_terme_`type_TC' i.year i.sector_num i.iso_o_num if mode =="`mode'" [iweight=val], /*nocons*/ robust 
+		reg ln_terme_`type_TC' i.year i.sector_num i.iso_o_num if mode =="`mode'" [iweight=yearly_share], /*nocons*/ robust 
 		
 		
 		* Enregistrer les effets fixes temps
@@ -396,7 +403,7 @@ replace iso_o = "0ARG" if iso_o=="ARG"
 	
 	display "nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')"
 	
-	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=val], iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	
 	
 	predict ln_terme_A_predict
