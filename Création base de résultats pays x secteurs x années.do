@@ -46,7 +46,7 @@ foreach mode in air ves {
 keep if mode =="`mode'"
 
 gen prix_caf_pond = prix_caf*wgt
-gen prix_fob_pond = prix_caf*wgt
+gen prix_fob_pond = prix_fob*wgt
 
 bys sector iso_o mode : gen nbr_prod=_N
 
