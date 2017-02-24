@@ -147,9 +147,12 @@ save database_pureTC_`mode'_`sitc', replace
 
 use "$dir/results/estimTC.dta", clear
 
-foreach secteur in 0(1)9 {
+foreach secteur of num 0(1)9 {
 	if "`sitc'"=="`secteur'" keep if substr(sector,1,1)=="`sitc'"
 }
+
+
+
 *Based on UNCTAD Stat "product groupings" DimSitcRev3Products_DsibSpecialGroupings_Hierarchy.xls 
 *http://unctadstat.unctad.org/EN/Classifications.html
 
@@ -526,14 +529,14 @@ end
 
 
 
-foreach secteur in all /*primary manuf 0(1)8*/ {
+foreach secteur in /*all primary manuf*/ 0 1 2 3 4 5 6 7 8 {
 	eliminer_effets_composition air "`secteur'"
 	eliminer_effets_composition ves "`secteur'"	
 }
 
 
 
-foreach secteur in all /*primary manuf 0(1)8*/ {
+foreach secteur in /*all primary manuf*/ 0 1 2 3 4 5 6 7 8 {
 	use database_pureTC_air_`secteur', clear
 	merge year using database_pureTC_ves_`secteur'
 	export excel using table_extract_effetscomposition_`secteur', replace firstrow(varlabels)
