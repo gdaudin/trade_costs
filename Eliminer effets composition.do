@@ -91,16 +91,45 @@ program nldeter_couts_add
 
 capture drop program eliminer_effets_composition
 program eliminer_effets_composition
-args mode sitc
-*Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all
+args mode sitc type_TC
+
+*Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all A
 
 
 
 * On part de la base estim_TC.dta, qui collecte déjà l'essentiel de l'information nécessaire, pour 3 digits
 
 
+
+***************CRÉATION DE LA BASE POUR STOCKER LES DONNÉES AVEC LE COÛT EN 1974
+
 use "$dir/results/estimTC.dta", clear
-if "`sitc'" != "all" keep if substr(sector,1,1)=="`sitc'"
+
+
+
+
+foreach secteur of num 0(1)9 {
+	if "`sitc'"=="`secteur'" keep if substr(sector,1,1)=="`sitc'"
+}
+
+
+
+*Based on UNCTAD Stat "product groupings" DimSitcRev3Products_DsibSpecialGroupings_Hierarchy.xls 
+*http://unctadstat.unctad.org/EN/Classifications.html
+
+if "`sitc'"=="primary" keep if substr(sector,1,1)=="0" | substr(sector,1,1)=="1" /// 
+	| substr(sector,1,1)=="2" | substr(sector,1,1)=="3" | substr(sector,1,1)=="4" /// 
+	| substr(sector,1,3)=="667" | substr(sector,1,2)=="68"
+
+
+
+
+if "`sitc'"=="manuf" drop if substr(sector,1,1)=="0" | substr(sector,1,1)=="1" /// 
+	| substr(sector,1,1)=="2" | substr(sector,1,1)=="3" | substr(sector,1,1)=="4" /// 
+	| substr(sector,1,3)=="667" | substr(sector,1,2)=="68" | substr(sector,1,1)=="9"
+
+
+
 gen terme_obs = prix_caf/prix_fob
 
  
@@ -118,31 +147,30 @@ gen terme_obs = prix_caf/prix_fob
 *replace terme_A = terme_A
 keep if year == 1974
 
-foreach type_TC in A I obs {
 
-	sum terme_`type_TC' [fweight= val] if mode=="`mode'" 
-	generate terme_`type_TC'_`mode'_mp = r(mean)
-	label var terme_`type_TC'_`mode'_mp "Weighted mean value of estimated TC of type `type_TC', 1974, mode `mode'"
-	generat ecart_type_`type_TC'_`mode'_mp=.
+sum terme_`type_TC' [fweight= val] if mode=="`mode'" 
+generate terme_`type_TC'_`mode'_mp = r(mean)
+label var terme_`type_TC'_`mode'_mp "Weighted mean value of estimated TC of type `type_TC', 1974, mode `mode'"
+generat ecart_type_`type_TC'_`mode'_mp=.
 
-}
 
-keep year terme_*_mp
+
+keep year terme_`type_TC'_`mode'_mp
 keep if _n==1
 
-save start_year_`mode'_`sitc', replace
+save start_year_`mode'_`sitc'_`type_TC', replace
 
 * La base pour stocker les résultats des estimations
 * On enlève 1974, c'est l'année de référence, les EF sont estimés par rapport à cette année là
 
-
+**************************DÉBUT DE L'ANALYSE PROPROMENT DITE
 
 use "$dir/results/estimTC.dta", clear
 
 drop if year == 1974
 keep year
 bys year: keep if _n ==1
-save database_pureTC_`mode'_`sitc', replace
+save database_pureTC_`mode'_`sitc'_`type_TC', replace
 
 
 
@@ -181,7 +209,8 @@ keep if mode=="`mode'"
 
 
 *keep if year < 1977
-*local limit 100
+*keep if iso_o=="FRA" | iso_o=="DEU" | iso_o=="GBR" | iso_o=="FIN" 
+*local limit 1
 local limit 15
 bys iso_o : drop if _N<=`limit'
 bys sector : drop if _N<=`limit'
@@ -193,14 +222,10 @@ bys iso_o : drop if _N<=`limit'
 bys sector : drop if _N<=`limit'
 bys iso_o : drop if _N<=`limit'
 bys sector : drop if _N<=`limit'
-
-foreach type_TC in obs I A {
 	
-	egen c_95_`type_TC' = pctile(terme_`type_TC'),p(95)
-	egen c_05_`type_TC' = pctile(terme_`type_TC'),p(05)
-	drop if terme_`type_TC' < c_05_`type_TC' | terme_`type_TC' > c_95_`type_TC'
-}
-
+egen c_95_`type_TC' = pctile(terme_`type_TC'),p(95)
+egen c_05_`type_TC' = pctile(terme_`type_TC'),p(05)
+drop if terme_`type_TC' < c_05_`type_TC' | terme_`type_TC' > c_95_`type_TC'
 	
 *Création du poids pertinent
 *Qui est la part occupée chaque année par chaque secteur x pays
@@ -209,22 +234,17 @@ generate yearly_share=val/annual_trade
 label var yearly_share "part dans le commerce de cette année-là"
 
 
-save tmp_`mode'_`sitc'.dta, replace
+save tmp_`mode'_`sitc'_`type_TC'.dta, replace
 
 
 
-foreach type_TC in obs I {
+if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	*** Step 1 et 2 - Estimation sur couts de transport estimés en obs/terme_I seulement
 	*** On précise l'équation en log
 
 	** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
 	** avec i : pays origine, k = sector, t = year
-	use tmp_`mode'_`sitc'.dta, clear
-
-	
-
-
-
+	use tmp_`mode'_`sitc'_`type_TC'.dta, clear
 	
 	gen ln_terme_`type_TC' = ln(terme_`type_TC')
 	
@@ -281,16 +301,16 @@ foreach type_TC in obs I {
 	
 	sort year
 *	list
-	merge 1:1 year using database_pureTC_`mode'_`sitc' 
+	merge 1:1 year using database_pureTC_`mode'_`sitc'_`type_TC' 
 	keep if _merge==3
 	drop _merge
 	
-	save database_pureTC_`mode'_`sitc', replace
+	save database_pureTC_`mode'_`sitc'_`type_TC', replace
 	
 
 }
 
-blif
+
 
 
 *** Step 2 - Estimation sur couts de transport additifs
@@ -305,183 +325,178 @@ blif
 ** ln (tikt) = ln(tik) + ln (tt)
 
 
-use tmp_`mode'_`sitc'.dta, clear
-drop if terme_A==0 | terme_A==.
-gen ln_terme_A = ln(terme_A)
-
-************************ Importé de Estim_value_TC
-	******************************************Régression
-
-replace iso_o = "0ARG" if iso_o=="ARG"
-**Le premier pays (AFG) ne fait pas de commerce du premier bien (001) en 1974. Je change de manière à ce que l'Argentine passe en tête
-**L'argentine fait bien du commerce de 001 en 1974
-**Sinon, j'ai un soucis avec les EF que j'enlève dans l'équation non-linéaire.
-
-*Pour nombre de sector
-quietly egen group_sect=group(sector)
-quietly summarize group_sect
-local nbr_sect=r(max)
-quietly levelsof sector, local (liste_sect) clean
-quietly tabulate sector, gen (sect_)
+if "`type_TC'"== "A" {
 	
-*Pour nombre d'iso_o
-quietly egen group_iso_o=group(iso_o)
-quietly summarize group_iso_o	
-local nbr_iso_o=r(max)
-quietly levelsof iso_o, local(liste_iso_o) clean
-quietly tabulate iso_o, gen(iso_o_)
-
-*Pour nombre d'années
-quietly egen group_year=group(year)
-quietly summarize group_year	
-local nbr_year=r(max)-r(min)+1
-quietly levelsof year, local(liste_year) clean
-quietly tabulate year, gen(year_)
-
-
-
-
-**Cette boucle crée les variables, les paramètres et leurs valeurs initales	
-foreach type_FE in  iso_o sect year {
-
-	local liste_variables_`type_FE' 
-	forvalue num_FE =  1/`nbr_`type_FE'' {
-		if "`type_FE'" =="sect" | `num_FE' !=1 {
-			local liste_variables_`type_FE'  `liste_variables_`type_FE'' `type_FE'_`num_FE'
-		}
-	}
-
-
-***REGARDER NOMBRE DE VARIABLES
-
-	local liste_parametres_`type_FE'
+	use tmp_`mode'_`sitc'_`type_TC'.dta, clear
+	drop if terme_A==0 | terme_A==.
+	gen ln_terme_A = ln(terme_A)
+	
+	************************ Importé de Estim_value_TC
+		******************************************Régression
+	
+	replace iso_o = "0ARG" if iso_o=="ARG"
+	**Le premier pays (AFG) ne fait pas de commerce du premier bien (001) en 1974. Je change de manière à ce que l'Argentine passe en tête
+	**L'argentine fait bien du commerce de 001 en 1974
+	**Sinon, j'ai un soucis avec les EF que j'enlève dans l'équation non-linéaire.
+	
+	*Pour nombre de sector
+	quietly egen group_sect=group(sector)
+	quietly summarize group_sect
+	local nbr_sect=r(max)
+	quietly levelsof sector, local (liste_sect) clean
+	quietly tabulate sector, gen (sect_)
+		
+	*Pour nombre d'iso_o
+	quietly egen group_iso_o=group(iso_o)
+	quietly summarize group_iso_o	
+	local nbr_iso_o=r(max)
+	quietly levelsof iso_o, local(liste_iso_o) clean
+	quietly tabulate iso_o, gen(iso_o_)
+	
+	*Pour nombre d'années
+	quietly egen group_year=group(year)
+	quietly summarize group_year	
+	local nbr_year=r(max)-r(min)+1
+	quietly levelsof year, local(liste_year) clean
+	quietly tabulate year, gen(year_)
+	
+	
+	
+	
+	**Cette boucle crée les variables, les paramètres et leurs valeurs initales	
+	foreach type_FE in  iso_o sect year {
+	
+		local liste_variables_`type_FE' 
 		forvalue num_FE =  1/`nbr_`type_FE'' {
-			if  "`type_FE'" =="sect" | `num_FE'!=1 {			
-				local liste_parametres_`type_FE'  `liste_parametres_`type_FE'' fe_`type_FE'_`num_FE'
+			if "`type_FE'" =="sect" | `num_FE' !=1 {
+				local liste_variables_`type_FE'  `liste_variables_`type_FE'' `type_FE'_`num_FE'
 			}
 		}
-
-
 	
 	
-	local initial_`type_FE'
-	forvalue num_FE =  1/`nbr_`type_FE'' {
-		if  "`type_FE'" =="sect" |`num_FE'!=1 {
-					if ("`type_FE'" !="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' -2
-					if ("`type_FE'" =="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 0.02
-		}
-			
-	}		
-}
-
-
+	***REGARDER NOMBRE DE VARIABLES
+	
+		local liste_parametres_`type_FE'
+			forvalue num_FE =  1/`nbr_`type_FE'' {
+				if  "`type_FE'" =="sect" | `num_FE'!=1 {			
+					local liste_parametres_`type_FE'  `liste_parametres_`type_FE'' fe_`type_FE'_`num_FE'
+				}
+			}
 	
 	
-
-
-
-local liste_variables `liste_variables_iso_o' `liste_variables_sect'  `liste_variables_year' 
-
-** pour estimation NL both A & I
-local liste_parametres  `liste_parametres_iso_o' `liste_parametres_sect'  `liste_parametres_year'
-local initial  `initial_iso_o' `initial_sect'  `initial_year'
-
-*	display "Liste des variables :" "`liste_variables'"
-*	display "Liste des paramètres :" "`liste_parametres'"
-*	display "Initial :" "`initial'"
-
-display "Nombre des variables :" wordcount("`liste_variables'")
-display "Liste des paramètres :" wordcount("`liste_parametres'")
-display "Initial :" wordcount("`initial'")
-
-timer on 1
-
-
-display "Regression terme_A `mode'"
-
-
-display "nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')"
-
-nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
-
-
-predict ln_terme_A_predict
-generate terme_A_predict=exp(ln_terme_A_predict)
-twoway (scatter ln_terme_A_predict ln_terme_A)
-
-save blouk.dta, replace
-
-
-* Enregistrer les effets fixes temps
-
-
-* matrice des coefficients estimés
-
-*	set trace on
-capture	matrix X= e(b)
-capture matrix V=e(V)
-matrix dir
-
-generate effet_fixe=.
-generate ecart_type=.
- 
-keep year effet_fixe ecart_type
-bys year : keep if _n==1
-drop if year==1974
-quietly levelsof year, local (liste_year) clean
-
-
-display "local n = `nbr_iso_o' + `nbr_sect' - 1 + 1"
-local n = `nbr_iso_o' + `nbr_sect' - 1 + 1
-
-	
-display "`liste_year'"	
-foreach i in `liste_year' {
-		display "effet_fixe= X[1,`n'] if year==`i'"
-		replace effet_fixe= X[1,`n'] if year==`i'
-		replace ecart_type= V[`n',`n'] if year==`i'
-		local n=`n'+1
+		
+		
+		local initial_`type_FE'
+		forvalue num_FE =  1/`nbr_`type_FE'' {
+			if  "`type_FE'" =="sect" |`num_FE'!=1 {
+						if ("`type_FE'" !="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' -2
+						if ("`type_FE'" =="year") local initial_`type_FE'  `initial_`type_FE'' fe_`type_FE'_`num_FE' 0.02
+			}
+				
+		}		
 	}
-
-
 	
-replace ecart_type=(ecart_type)^0.5
-list
+	
+		
+		
+	
+	
+	
+	local liste_variables `liste_variables_iso_o' `liste_variables_sect'  `liste_variables_year' 
+	
+	** pour estimation NL both A & I
+	local liste_parametres  `liste_parametres_iso_o' `liste_parametres_sect'  `liste_parametres_year'
+	local initial  `initial_iso_o' `initial_sect'  `initial_year'
+	
+	*	display "Liste des variables :" "`liste_variables'"
+	*	display "Liste des paramètres :" "`liste_parametres'"
+	*	display "Initial :" "`initial'"
+	
+	display "Nombre des variables :" wordcount("`liste_variables'")
+	display "Liste des paramètres :" wordcount("`liste_parametres'")
+	display "Initial :" wordcount("`initial'")
+	
+	timer on 1
+	
+	
+	display "Regression terme_A `mode'"
+	
+	
+	display "nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')"
+	
+	replace yearly_share = yearly_share*100000
+	
+	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	*nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=val], iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	
+	predict ln_terme_A_predict
+	generate terme_A_predict=exp(ln_terme_A_predict)
+	twoway (scatter ln_terme_A_predict ln_terme_A)
+	
+	save blouk.dta, replace
+	
+	
+	* Enregistrer les effets fixes temps
+	
+	
+	* matrice des coefficients estimés
+	
+	*	set trace on
+	capture	matrix X= e(b)
+	capture matrix V=e(V)
+	matrix dir
+	
+	generate effet_fixe=.
+	generate ecart_type=.
+	 
+	keep year effet_fixe ecart_type
+	bys year : keep if _n==1
+	drop if year==1974
+	quietly levelsof year, local (liste_year) clean
+	
+	
+	display "local n = `nbr_iso_o' + `nbr_sect' - 1 + 1"
+	local n = `nbr_iso_o' + `nbr_sect' - 1 + 1
+	
+		
+	display "`liste_year'"	
+	foreach i in `liste_year' {
+			display "effet_fixe= X[1,`n'] if year==`i'"
+			replace effet_fixe= X[1,`n'] if year==`i'
+			replace ecart_type= V[`n',`n'] if year==`i'
+			local n=`n'+1
+		}
+	
+	
+		
+	replace ecart_type=(ecart_type)^0.5
+	list
+	
+	drop if effet_fixe == .
+	
+	rename effet_fixe effetfixe_A_`mode'
+	label var effetfixe_A_`mode' "pure_FE_A_`mode'"
+	
+	rename ecart_type ecart_type_A_`mode'
+	label var ecart_type_A_`mode' "Écart type du pure_FE_A_`mode'"
+	
+	keep year effetfixe_A_`mode' ecart_type_A_`mode'
 
-drop if effet_fixe == .
-
-rename effet_fixe effetfixe_A_`mode'
-label var effetfixe_A_`mode' "pure_FE_A_`mode'"
-
-rename ecart_type ecart_type_A_`mode'
-label var ecart_type_A_`mode' "Écart type du pure_FE_A_`mode'"
-
-keep year effetfixe_A_`mode' ecart_type_A_`mode'
-
-sort year
-merge 1:1 year using database_pureTC_`mode'_`sitc' 
-keep if _merge==3
-drop _merge
-
-list
-
+	sort year
+	save database_pureTC_`mode'_`sitc'_`type_TC'.dta, replace
+	
+	
+	list
+}
 *	set trace off
-save database_pureTC_`mode'_`sitc', replace
 
 
 
-
-* Ajouter 1974 et partir d'une valeur 100 en 1974
-*Puis construire le fichier de résultat
-
-use database_pureTC_`mode'_`sitc', clear
-
-append using start_year_`mode'_`sitc'
+use database_pureTC_`mode'_`sitc'_`type_TC'.dta, clear
+append using start_year_`mode'_`sitc'_`type_TC'
 sort year
 
-
-
-foreach type_TC in obs I {
+if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 	replace terme_`type_TC'_`mode'_mp = 100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
@@ -500,7 +515,7 @@ foreach type_TC in obs I {
 
 
 
-foreach type_TC in  A {
+if "`type_TC'"== "A" {
 	generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 	replace terme_`type_TC'_`mode'_mp = 100*exp(effetfixe_`type_TC'_`mode')
@@ -515,14 +530,10 @@ foreach type_TC in  A {
 
 
 
+save database_pureTC_`mode'_`sitc'_`type_TC', replace
 
-
-export excel using table_extract_effetscomposition_`mode'_`sitc', replace firstrow(varlabels)
-
-save resultats_finaux/database_pureTC_`mode'_`sitc', replace
-
-erase start_year_`mode'_`sitc'.dta
-erase tmp_`mode'_`sitc'.dta, clear
+erase start_year_`mode'_`sitc'_`type_TC'.dta
+erase tmp_`mode'_`sitc'_`type_TC'.dta
 
 end
 
@@ -531,25 +542,70 @@ end
 
 
 
+
+
+**************Nouveau programme : agrégation entre les résultats
+
+
+
+capture program erase aggreg
+program aggreg
+args secteur
+
+
+
+* Ajouter 1974 et partir d'une valeur 100 en 1974
+*Puis construire le fichier de résultat
+
+use database_pureTC_air_`secteur'_I, clear
+merge 1:1 year using database_pureTC_air_`secteur'_obs
+drop _merge
+merge 1:1 year using database_pureTC_air_`secteur'_A
+drop _merge
+merge 1:1 year using database_pureTC_ves_`secteur'_obs
+drop _merge
+merge 1:1 year using database_pureTC_ves_`secteur'_A
+drop 	_merge
+merge 1:1 year using database_pureTC_ves_`secteur'_obs
+drop _merge
+
+
+export excel using table_extract_effetscomposition_`secteur', replace firstrow(varlabels)
+save resultats_finaux/database_pureTC_`secteur', replace
+
+end
+
+
+
+
+
+
+
+
 ***********LANCER LES PROGRAMMES********************
 
 
 
-foreach secteur in /*all primary manuf*/ 0 1 2 3 4 5 6 7 8 {
-	eliminer_effets_composition air "`secteur'"
-	eliminer_effets_composition ves "`secteur'"	
+foreach secteur in  all primary manuf 0 1 2 3 4 5 6 7 8 {
+	eliminer_effets_composition air "`secteur'"   A
+	eliminer_effets_composition air "`secteur'"  I
+	eliminer_effets_composition air "`secteur'"  obs
+	eliminer_effets_composition ves "`secteur'"  A
+	eliminer_effets_composition ves "`secteur'"  I
+	eliminer_effets_composition ves "`secteur'"  obs
 }
 
 
 
-foreach secteur in /*all primary manuf*/ 0 1 2 3 4 5 6 7 8 {
-	use database_pureTC_air_`secteur', clear
-	merge year using database_pureTC_ves_`secteur'
-	export excel using table_extract_effetscomposition_`secteur', replace firstrow(varlabels)
-	save resultats_finaux/database_pureTC_`secteur', replace	
+
+
+
+
+foreach secteur in all primary manuf 0 1 2 3 4 5 6 7 8 {
+	aggreg `secteur'
 }
 
-*/
+
 
 
 
