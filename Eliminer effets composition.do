@@ -145,6 +145,8 @@ bys year: keep if _n ==1
 save database_pureTC_`mode'_`sitc', replace
 
 
+
+
 use "$dir/results/estimTC.dta", clear
 
 foreach secteur of num 0(1)9 {
@@ -207,7 +209,7 @@ generate yearly_share=val/annual_trade
 label var yearly_share "part dans le commerce de cette année-là"
 
 
-
+save tmp_`mode'_`sitc'.dta, replace
 
 
 
@@ -217,8 +219,7 @@ foreach type_TC in obs I {
 
 	** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
 	** avec i : pays origine, k = sector, t = year
-	preserve
-
+	use tmp_`mode'_`sitc'.dta, clear
 
 	
 
@@ -240,6 +241,7 @@ foreach type_TC in obs I {
 	su year, meanonly	
 	local nbr_year=r(max)
 	quietly levelsof year, local (liste_year) clean
+	display "`liste_year'"
 	
 	* matrice des coefficients estimés
 	capture	matrix X= e(b)
@@ -250,18 +252,21 @@ foreach type_TC in obs I {
 	 
 	keep year effet_fixe ecart_type
 	bys year : keep if _n==1
-	drop if year==1974
 	
-	insobs `nbr_year'
+	
 	local n 1
+*	list
+*	matrix list X
 	
 	foreach i in `liste_year' {
 			*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
 			replace effet_fixe= X[1,`n'] in `n'
-			replace ecart_type=V[`n',`n'] in `n'
-		
+			replace ecart_type=V[`n',`n'] in `n'	
 			local n=`n'+1
 	}
+	drop if year==1974
+
+*	list
 	
 	replace ecart_type=(ecart_type)^0.5
 	
@@ -275,17 +280,17 @@ foreach type_TC in obs I {
 	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'
 	
 	sort year
+*	list
 	merge 1:1 year using database_pureTC_`mode'_`sitc' 
 	keep if _merge==3
 	drop _merge
 	
 	save database_pureTC_`mode'_`sitc', replace
-	restore
+	
 
 }
 
-
-
+blif
 
 
 *** Step 2 - Estimation sur couts de transport additifs
@@ -300,7 +305,7 @@ foreach type_TC in obs I {
 ** ln (tikt) = ln(tik) + ln (tt)
 
 
-
+use tmp_`mode'_`sitc'.dta, clear
 drop if terme_A==0 | terme_A==.
 gen ln_terme_A = ln(terme_A)
 
@@ -517,6 +522,7 @@ export excel using table_extract_effetscomposition_`mode'_`sitc', replace firstr
 save resultats_finaux/database_pureTC_`mode'_`sitc', replace
 
 erase start_year_`mode'_`sitc'.dta
+erase tmp_`mode'_`sitc'.dta, clear
 
 end
 
