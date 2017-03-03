@@ -108,7 +108,7 @@ use "$dir/results/estimTC.dta", clear
 
 
 
-foreach secteur of num 0(1)9 {
+foreach secteur of num 0(1)8 {
 	if "`sitc'"=="`secteur'" keep if substr(sector,1,1)=="`sitc'"
 }
 
@@ -586,7 +586,7 @@ end
 
 
 
-foreach secteur in  all primary manuf 0 1 2 3 4 5 6 7 8 {
+foreach secteur in  all primary manuf 0 1 2 3 4 5 6 7 8{
 	eliminer_effets_composition air "`secteur'"   A
 	eliminer_effets_composition air "`secteur'"  I
 	eliminer_effets_composition air "`secteur'"  obs
