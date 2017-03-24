@@ -562,11 +562,11 @@ merge 1:1 year using database_pureTC_air_`secteur'_obs
 drop _merge
 merge 1:1 year using database_pureTC_air_`secteur'_A
 drop _merge
-merge 1:1 year using database_pureTC_ves_`secteur'_obs
+merge 1:1 year using database_pureTC_ves_`secteur'_I
 drop _merge
-merge 1:1 year using database_pureTC_ves_`secteur'_A
-drop 	_merge
 merge 1:1 year using database_pureTC_ves_`secteur'_obs
+drop 	_merge
+merge 1:1 year using database_pureTC_ves_`secteur'_A
 drop _merge
 
 
@@ -587,7 +587,7 @@ end
 
 
 foreach secteur in  all primary manuf 0 1 2 3 4 5 6 7 8{
-	eliminer_effets_composition air "`secteur'"   A
+	eliminer_effets_composition air "`secteur'"  A
 	eliminer_effets_composition air "`secteur'"  I
 	eliminer_effets_composition air "`secteur'"  obs
 	eliminer_effets_composition ves "`secteur'"  A
@@ -601,7 +601,7 @@ foreach secteur in  all primary manuf 0 1 2 3 4 5 6 7 8{
 
 
 
-foreach secteur in all primary manuf 0 1 2 3 4 5 6 7 8 {
+foreach secteur in all primary manuf 0 1 2 3 4 5 6 7 8 {
 	aggreg `secteur'
 }
 
