@@ -584,9 +584,9 @@ end
 
 ***********LANCER LES PROGRAMMES********************
 
-/*
 
-foreach secteur in  all primary manuf {
+
+foreach secteur in  /*all primary*/ manuf {
 	eliminer_effets_composition air "`secteur'"  A
 	eliminer_effets_composition air "`secteur'"  I
 	eliminer_effets_composition air "`secteur'"  obs
@@ -599,8 +599,10 @@ foreach secteur in all primary manuf  {
 	aggreg `secteur'
 }
 
-*/
 
+
+
+/*
 foreach secteur of num /*0 1 2*/ 3 4 5 6 7 8 {
 	eliminer_effets_composition air "`secteur'"  A
 	eliminer_effets_composition air "`secteur'"  I
