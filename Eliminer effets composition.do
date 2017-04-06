@@ -92,6 +92,8 @@ program nldeter_couts_add
 capture drop program eliminer_effets_composition
 program eliminer_effets_composition
 args mode sitc type_TC
+local type_TCm `type_TC'
+if "`type_TC'"=="obs_Hummels" local type_TCm obs
 
 *Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all A
 
@@ -148,14 +150,16 @@ gen terme_obs = prix_caf/prix_fob
 keep if year == 1974
 
 
-sum terme_`type_TC' [fweight= val] if mode=="`mode'" 
-generate terme_`type_TC'_`mode'_mp = r(mean)
-label var terme_`type_TC'_`mode'_mp "Weighted mean value of estimated TC of type `type_TC', 1974, mode `mode'"
-generat ecart_type_`type_TC'_`mode'_mp=.
+
+
+sum terme_`type_TCm' [fweight= val] if mode=="`mode'" 
+generate terme_`type_TCm'_`mode'_mp = r(mean)
+label var terme_`type_TCm'_`mode'_mp "Weighted mean value of estimated TC of type `type_TC', 1974, mode `mode'"
+generat ecart_type_`type_TCm'_`mode'_mp=.
 
 
 
-keep year terme_`type_TC'_`mode'_mp
+keep year terme_`type_TCm'_`mode'_mp
 keep if _n==1
 
 save start_year_`mode'_`sitc'_`type_TC', replace
@@ -223,9 +227,9 @@ bys sector : drop if _N<=`limit'
 bys iso_o : drop if _N<=`limit'
 bys sector : drop if _N<=`limit'
 	
-egen c_95_`type_TC' = pctile(terme_`type_TC'),p(95)
-egen c_05_`type_TC' = pctile(terme_`type_TC'),p(05)
-drop if terme_`type_TC' < c_05_`type_TC' | terme_`type_TC' > c_95_`type_TC'
+egen c_95_`type_TCm' = pctile(terme_`type_TCm'),p(95)
+egen c_05_`type_TCm' = pctile(terme_`type_TCm'),p(05)
+drop if terme_`type_TCm' < c_05_`type_TCm' | terme_`type_TCm' > c_95_`type_TCm'
 	
 *Création du poids pertinent
 *Qui est la part occupée chaque année par chaque secteur x pays
@@ -492,6 +496,99 @@ if "`type_TC'"== "A" {
 
 
 
+
+
+if "`type_TC'"== "obs_Hummels"  {
+	
+	*** On précise l'équation en log
+
+	** log (tau ikt) = log (tauik) + beta. lag (weight/value) + log (taut) + residu
+	** avec i : pays origine, k = sector, t = year
+	use tmp_`mode'_`sitc'_`type_TC'.dta, clear
+	
+	gen ln_terme_`type_TCm' = ln(terme_`type_TCm')
+	
+	display "Regression `type_TC' `mode'"
+	
+	encode sector, gen(sector_num)
+	encode iso_o, gen(iso_o_num)
+	
+	egen ii = group(sector iso_o)
+	
+	*gen val_caf = prix_caf*wgt
+	*rename val val_fob
+	*collapse (sum) val_caf val_fob yearly_share wgt, by(ii year)
+	*gen ln_terme_`type_TCm'=ln(val_caf/val_fob) 
+	*gen ln_inv_unit_price=ln(wgt/val_fob)
+	*xtset ii year
+	replace wgt = wgt/2.2  if year <=1988
+	gen ln_inv_unit_price=ln(wgt/val)
+	
+	reghdfe ln_terme_`type_TCm'  i.year ln_inv_unit_price [aweight=yearly_share], /*nocons robust*/ absorb(ii)
+	
+	
+	* Enregistrer les effets fixes temps
+	
+	su year, meanonly	
+	local nbr_year=r(max)
+	quietly levelsof year, local (liste_year) clean
+	display "`liste_year'"
+	
+	* matrice des coefficients estimés
+	capture	matrix X= e(b)
+	capture matrix V=e(V)
+	
+	generate effet_fixe=.
+	generate ecart_type=.
+	 
+	keep year effet_fixe ecart_type
+	bys year : keep if _n==1
+	
+	
+	*local n 1
+*	list
+	matrix list X
+	
+	drop if year==1974
+	
+	foreach i of num 1(1)39 {
+			*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
+			replace effet_fixe= X[1,`i'] in `i'
+			replace ecart_type=V[`i',`i'] in `i'	
+	*		local n=`n'+1
+	}
+	
+	
+	
+
+*	list
+	
+	replace ecart_type=(ecart_type)^0.5
+	
+	drop if effet_fixe == .
+	
+	rename effet_fixe effetfixe_`type_TC'_`mode'
+	rename ecart_type ecart_type_`type_TC'_`mode'
+	label var effetfixe_`type_TC'_`mode' "pure_FE_`type_TC'_`mode'"
+	label var ecart_type_`type_TC'_`mode' "ecart_type_`type_TC'_`mode'"
+	
+	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'
+	
+	sort year
+*	list
+	merge 1:1 year using database_pureTC_`mode'_`sitc'_`type_TC' 
+	keep if _merge==3
+	drop _merge
+	
+	save database_pureTC_`mode'_`sitc'_`type_TC', replace
+	graph twoway (line  effetfixe_obs_Hummels_ves year) if year <=2004
+	
+
+}
+
+****************Fin des estimations
+****************Début des contrefactuels
+
 use database_pureTC_`mode'_`sitc'_`type_TC'.dta, clear
 append using start_year_`mode'_`sitc'_`type_TC'
 sort year
@@ -585,6 +682,11 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
+eliminer_effets_composition ves all obs_Hummels
+
+
+
+/*
 
 foreach secteur in  /*all primary*/ manuf {
 	eliminer_effets_composition air "`secteur'"  A
@@ -599,6 +701,7 @@ foreach secteur in all primary manuf  {
 	aggreg `secteur'
 }
 
+*/
 
 
 
