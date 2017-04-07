@@ -48,6 +48,69 @@ sum nb_par_sitc2_c_y_m, det
 
 *** Répond à la question de l'endogénéité entre tauik, til et prix fob ik
 
+
+
+* Mettre en avant hétérogénéité des termes A et I entre pays d'origine / entre secteurs
+
+* Stats des dans la dimension secteur
+local stats mean median sd min max
+local dim sector country
+
+foreach x in `stats' {
+	foreach y in `dim' {
+	
+	use "$dir/results/estimTC.dta", clear
+
+rename iso_o country
+		collapse (`x') terme_A terme_I terme_iceberg [fweight= val], by(`y')
+		
+		foreach type in terme_A terme_I terme_iceberg {
+		 rename `type' `type'_`x'_`y'
+		}
+		
+		collapse terme_A_`x'_`y' terme_I_`x'_`y' terme_iceberg_`x'_`y'
+		
+		save $dir\results\stats_des\temp_`x'_`y', replace
+
+}
+}
+
+
+*
+* Compiler
+
+cd $dir\results\stats_des
+
+use temp_mean_sector, clear
+
+merge using temp_mean_country
+drop _merge
+
+save base_statsdes_bycountry_byproduct, replace
+
+
+local stats median sd min max
+local dim sector country
+
+foreach x in `stats' {
+foreach y in `dim' {
+
+
+	use base_statsdes_bycountry_byproduct, clear
+	merge using temp_`x'_`y'
+	drop _merge
+
+save base_statsdes_bycountry_byproduct, replace
+
+
+}
+}
+
+use base_statsdes_bycountry_byproduct, clear
+
+export excel using base_statsdes_bycountry_byproduct, firstrow(variables) replace
+
+
 ********************************************************************
 *** Faire un programme qui calcule l'écart cif-fob observé / prédit*** 
 
