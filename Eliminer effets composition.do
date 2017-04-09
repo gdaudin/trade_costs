@@ -316,7 +316,6 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 
 
 
-
 *** Step 2 - Estimation sur couts de transport additifs
 *** On NE PEUT PAS PROCEDER de la même façon que pour les autres
 
@@ -521,10 +520,10 @@ if "`type_TC'"== "obs_Hummels"  {
 	*gen ln_terme_`type_TCm'=ln(val_caf/val_fob) 
 	*gen ln_inv_unit_price=ln(wgt/val_fob)
 	*xtset ii year
-	replace wgt = wgt/2.2  if year <=1988
+	*replace wgt = wgt/2.2  if year <=1988 (Hummels le fait. Mais pourquoi diable ???
 	gen ln_inv_unit_price=ln(wgt/val)
 	
-	reghdfe ln_terme_`type_TCm'  i.year ln_inv_unit_price [aweight=yearly_share], /*nocons robust*/ absorb(ii)
+	reghdfe ln_terme_`type_TCm'  i.year /*ln_inv_unit_price*/ /*[aweight=yearly_share]*/, /*nocons robust*/ absorb(ii)
 	
 	
 	* Enregistrer les effets fixes temps
@@ -574,14 +573,23 @@ if "`type_TC'"== "obs_Hummels"  {
 	
 	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'
 	
+	
 	sort year
-*	list
+	list
 	merge 1:1 year using database_pureTC_`mode'_`sitc'_`type_TC' 
 	keep if _merge==3
 	drop _merge
 	
 	save database_pureTC_`mode'_`sitc'_`type_TC', replace
-	graph twoway (line  effetfixe_obs_Hummels_ves year) if year <=2004
+	
+	append using start_year_`mode'_`sitc'_`type_TC'
+	sort year
+
+	
+	replace effetfixe_obs_Hummels_ves=0 if year==1974
+	egen niv_1974=max(terme_obs_ves_mp)
+	gen blif = niv_1974+ effetfixe_obs_Hummels_ves
+	graph twoway (line  blif year) if year <=2004
 	
 
 }
