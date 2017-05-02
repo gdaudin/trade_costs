@@ -24,6 +24,7 @@
 \usepackage{comment}
 \includecomment{commentGD}
 \usepackage[draft]{todonotes}
+%\usepackage[disable]{todonotes}
 %%GDPour cacher les notes, \usepackage[disable]{todonotes}
 
 
@@ -121,8 +122,8 @@ Yet, several papers (mostly based on empirical estimates of the gravity equation
 Defined as the costs associated with the exchange of goods across national borders, trade costs are usually split into transaction costs (information costs, contract enforcement costs, costs associated with the use of different currencies...), policy costs (tariff  and non-tariff costs), time costs (time to ship goods) and transport costs \emph{per se}. In this vein, \citet{anderson_wincoop_jel} obtain that the 74\% markup made by international trade costs can be divided between 44\% for border-related trade barriers and 21\% for transportation costs. This last figure suggests that the share of transport costs in the consumer price of manufactured goods is substantial.
 \citet{Behar_Venables} obtain that the elasticity of trade with respect to freight costs is sizeable, by around -3. If much of trade-policy barriers have been removed over the second half of the 20th century, these findings point out that the transport costs component of the overall trade costs remain large and deserve attention. This is accordingly the focus of the paper.\smallskip
 
-%\todo{reprendre slides presentation LEDa pour la motivation de la question.}
-%JH: apparently, it has been done! Or do you want to have the Italian shoes example in the intro????
+\todo{reprendre slides presentation LEDa pour la motivation de la question.}
+\todo{JH: apparently, it has been done! Or do you want to have the Italian shoes example in the intro????}
 
 Following \citet{samuelson1954}, standard models of international trade have usually relied on modelling trade costs as an \emph{ad-valorem} tax equivalent (ie, as a constant percentage of the producer price per unit traded, part of the ``iceberg cost'' hypothesis\footnote{Rigourously speaking, the ``iceberg cost'' includes the ad-valorem costs and the fact that the costs are paid in terms of the good that is traded. As this last element is irrelevant in our case, we use the terme ``iceberg'' and ``ad-valorem'' interchangeably, as commonly made in the literature.}). However, many common empirical facts support the existence of additive costs. As documented by \citet{Irrazabal_2015}, pricing structure in shipping, additive tariffs, distribution costs... often exhibit (at least partly) an additive structure. The structure (additive vs ad-valorem) of transport costs is far from being anecdotal, as the literature has long emphasized its role in shaping the pattern of trade flows. The Alchian and Allen conjecture (\citealp{alchian}), that points out that the relative price of two varieties of some good will depend on the level of trade costs, does rely on the existence of additive costs: The relative demand for more expensive/higher quality product goods should increase with trade cost (``shipping the good apples out''). \citet{Lashkaripour-mimeo-2016} challenges this view. He finds supporting evidence for the \emph{ad-valorem} assumption by taking into account the fact that more expensive goods are systematically heavier and hence more costly to transport. One can yet be concerned by the generality of this result. By nature, his study is restricted to goods that are enumerated by items in the statistics (they represent 60\% of US imports). Furthermore, while the positive correlation between weight and price seems reasonable for goods from the second industrial revolution like cars, it is dubious in the case of ITC goods which importance has been rising since 1994 (the end point of Lashkaripour's study). Besides, a number of empirical papers provide a strong empirical support to the role of additive costs in international costs. Based on a firm-product-level database of French exporters, \citet{martin2012} finds that firms charge higher fas unit values on exports to more remote countries, in contradiction with the ad-valorem hypothesis. \citet{hummels_skiba} estimate the elasticity of freight rates with respect to price to be well below unity. Also, their estimates imply that doubling freight costs increases average fas export prices by 80-141 percent, consistent with high quality goods being sold in markets with high freight costs. These findings deliver strong empirical support in favor of the Alchian-Allen conjecture.
 \smallskip
@@ -269,7 +270,7 @@ Our first contribution to the literature is to provide estimates for the size of
 
 Table \ref{tab:summary_results} calls for two types of comments. Starting with pure statistical concerns, it appears that mean values are systematically higher than medians - by around one percentage point. This is no surprise at all: once again, our key variable is by nature bounded to 0; therefore, outliers can only be positive, pushing the mean up compared to the median. Besides, one can also note that estimated total costs are also systematically higher than observed costs by 0.5 to 1 percentage point. This is due to the fact that observed data are \emph{de facto} trade-weighted (i.e., by the weight of each good among total trade), while our estimates are based on simple arithmetic means - section 4 will go into more details of these compositions effects.
 
-Coming now to interpretation, Table \ref{tab:summary_results} shows the magnitude of overall transport costs is sizeable. Over 1974-2013, they correspond to a mean increase of the export price by 5.8\% for ocean shipping, and by 5.1\% for air shipping. Furthermore, when decomposing transport costs into an additive and an ad-valorem component, we find that the per-kg cost dimension is sizeable. Over the whole period, additive costs are 2.9\% of the export price for ocean shipping  - and ad-valorem ones being equal to 3.2\%. These values are respectively equal to 1.8\% and 2.5\% for air transport. For both transport modes, the omission of the additive term seriously biases the ad-valorem term upward. In quantitative terms, the omission of the additive term leads to overestimate the ad-valorem component by roughly a factor 2.%\todo{Ajouter un commentaire sur mean different de median, en comparaison avec les data.}
+Coming now to interpretation, Table \ref{tab:summary_results} shows the magnitude of overall transport costs is sizeable. Over 1974-2013, they correspond to a mean increase of the export price by 5.8\% for ocean shipping, and by 5.1\% for air shipping. Furthermore, when decomposing transport costs into an additive and an ad-valorem component, we find that the per-kg cost dimension is sizeable. Over the whole period, additive costs are 2.9\% of the export price for ocean shipping  - and ad-valorem ones being equal to 3.2\%. These values are respectively equal to 1.8\% and 2.5\% for air transport. For both transport modes, the omission of the additive term seriously biases the ad-valorem term upward. In quantitative terms, the omission of the additive term leads to overestimate the ad-valorem component by roughly a factor 2.\todo{Ajouter un commentaire sur mean different de median, en comparaison avec les data.}
 
 We extend further our analysis by using explicitly the time dimension of our analysis in order to assess the dynamics of our estimates over time. Figure \ref{fig:mult_alone_withadd} thus reports the mean value of the ad-valorem component, estimated alone (Dashed line, corresponding to Equation (\ref{eq:model_nlI})) and along with the mean value of the additive component (Plain line, corresponding to Equation (\ref{eq:model_IetA}), by transport mode.
 
@@ -309,7 +310,7 @@ Before, we check how our estimates of additive costs compare to those of \citet{
 
 
 
-%\todo{Comparer avec la litterature. Cf AvW 2004 pure transport costs 11\% markup over production costs.}
+\todo{Comparer avec la litterature. Cf AvW 2004 pure transport costs 11\% markup over production costs.}
 
 
 
@@ -396,18 +397,18 @@ Let us consider first the trend in total transport costs (ie, considering the up
 Before making any definite statement about this, it is worth emphasizing that the evolution of transport costs depends on the one hand of the evolution of per product and per partner costs and on the other hand of the evolution of the composition of trade.
 Total transport costs may have decreased over time because the share of neighbour countries in total US trade or the share of cheaper to transport goods have increased, independently of any change in transport costs \textit{per se}. As argued by \citet{hummels2007}, it is hence necessary to eliminate the composition effects of trade flows to isolate the evolution of per product- and per partner- transport costs. 
 
-\textbf{a dire pas forcement ici, tout n'est pas que sur cette question des effets de composition.}
+\todo{a dire pas forcement ici, tout n'est pas que sur cette question des effets de composition.}
 
-\textbf{argument general}
+\todo{argument general}
 In comparison with \citet{hummels2007}, our empirical analysis allows for a more flexible estimation of the share between the additive and the ad-valorem components of transport costs. Precisely, we allow it to change over time and across country partners and products, while \citet{hummels2007} imposes it to be constant in these three dimensions.\footnote{In the terms of \cite{hummels_skiba}, our estimation strategy allows for a varying $\beta$ across time, country partner and product.}
 
-\textbf{argument sur les effets de composition}
+\todo{argument sur les effets de composition}
 If we share this view with \citet{hummels2007}, our strategy for eliminating composition effects differs from his in two main respects. First, we provide a broader characterization of the time trends in transport costs as our empirical analysis allows for a more flexible estimation of the share between the additive and the ad-valorem components of transport costs. In characterizing the time trend in the ``pure transport costs'', \citet{hummels2007} eliminates the changes in the price per kilo dimension, attributing this to a change in the composition of the bundle over time (per country-commodity).\footnote{See \citet{hummels2007}, p. 146.} By contrast, we provide an explicit decomposition of this additive cost component over time: By comparing the additive cost component unfitted (total) and fitted (composition effects excluded), we are thus able to characterize if this dimension of the transport cost has fallen due to (for instance) the fact that product quality has increased over time (weight has reduced, hence reducing the transport cost by dollar transported), or if it is the ``pure'' additive costs (for instance, handling costs) that have reduced over time. As well, we are able to do so for the multiplicative component of trade costs. We also agglomerate the two components in a unified measure of transport costs from which we exclude the composition effects. This allows us to compare how ``pure'' transport costs have changed over time, composition effects excluded, and to compare them to the unfitted ones, reported in Figure \ref{fig:decomp_TC_3d}). Last, for sake of comparison though, we do the same exercise as \citet{hummels2007}. 
 
-\textbf{A faire: sous forme de graph, par transport mode : Ligne 1, l'exercice de Hummels, ln TC in \% fob price (observed)= dummy pays-produit + beta* ln (weight/value) + dummy temps. Ligne 2, ce qu'on a sur la dimension iceberg cost estimated; ligne 3, sur les couts additifs estimes. Ligne 4, a faire, la somme des deux, estimee? Ou alors, partir simplement du TC observe, ie ce qu'on a deja?}
+\todo{A faire: sous forme de graph, par transport mode : Ligne 1, l'exercice de Hummels, ln TC in \% fob price (observed)= dummy pays-produit + beta* ln (weight/value) + dummy temps. Ligne 2, ce qu'on a sur la dimension iceberg cost estimated; ligne 3, sur les couts additifs estimes. Ligne 4, a faire, la somme des deux, estimee? Ou alors, partir simplement du TC observe, ie ce qu'on a deja?}
 
 
-Second, we characterize the evolution of the ``pure'' transport costs over time by measuring how these costs have changed over time, blocking the composition of trade flows by product and country partners to the one observed in 1974 (the beginning of our sample), while \citet{hummels2007} captures the trend evolution of by the yearly dummy. Doing so enables us to build measures of transport costs that are easily comparable between transport modes and transport costs components. \textbf{Pertinence de cet argument? A reformuler.}
+Second, we characterize the evolution of the ``pure'' transport costs over time by measuring how these costs have changed over time, blocking the composition of trade flows by product and country partners to the one observed in 1974 (the beginning of our sample), while \citet{hummels2007} captures the trend evolution of by the yearly dummy. Doing so enables us to build measures of transport costs that are easily comparable between transport modes and transport costs components. \todo{Pertinence de cet argument? A reformuler.}
 
  
 
@@ -455,7 +456,7 @@ Figure \ref{fig:totalTC_compeffects_excl} reports the results. Panel (a) display
 \end{figure}
 
 
-\textbf{Faire aussi une analyse plus fine par grande categorie: Manuf / Agriculture / Matieres premieres.}
+\todo{Faire aussi une analyse plus fine par grande categorie: Manuf / Agriculture / Matieres premieres.}
 
 
 Figure \ref{fig:totalTC_compeffects_excl} drives the following comments. Air transport costs were reduced by 50\% and vessel transport costs
@@ -483,7 +484,6 @@ Our analysis also brings valuable results to the findings of \citet{hummels2007}
 
 Robustness to the specification of the estimated equation.
 
-
 \paragraph{Robustness to the separability assumption}
 
 
@@ -494,7 +494,7 @@ $$\log(\frac{p_{ik}}{\widetilde{p}_{ik}} -1)= \log(\tau_{is} -1+ \frac{t_{is}}{\
 
 To do on 100 products ($s$), 50 countries (the most important?)
 
-\paragraph{what else?}
+\todo{what else?}
 
 \section{Conclusion \label{sec:conclu}}
 
