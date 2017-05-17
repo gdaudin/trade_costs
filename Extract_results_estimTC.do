@@ -1,4 +1,4 @@
-*version 12
+version 14.2
 
 
 ** -------------------------------------------------------------
@@ -11,6 +11,21 @@
 ** -------------------------------------------------------------
 
 
+if "`c(username)'" =="guillaumedaudin" {
+	global dir ~/Documents/Recherche/trade costs/results
+}
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox\trade_cost/results
+}
+
+
+if "`c(hostname)'" =="lise-HP" {
+	global dir C:\Users\lise\Dropbox\trade_cost/results
+}
+
+cd "$dir"
 
 
 clear all
@@ -31,7 +46,7 @@ dis "year = " `year'
 dis "\# digits= " `preci'
 dis "mode = `mode'"
 
-use blouk_`year'_`class'_`preci'_`mode'.dta, clear
+use "$dir//blouk_`year'_`class'_`preci'_`mode'.dta", clear
 
 *use blouk_2009_sitc2_3_air, clear
 
@@ -135,24 +150,6 @@ end
 *capture log close
 *log using get_table, replace
 
-
-
-if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/trade_cost
-}
-
-
-if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost\results
-	*global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results
-}
-
-
-if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost\results
-}
-
-cd $dir
 
 
 *** 3 digits, all years ***
