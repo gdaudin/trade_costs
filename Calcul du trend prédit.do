@@ -1,9 +1,9 @@
 *************************************************
-*À partir de Stat des sur la Base de donnée
+*
 * 
 *************************************************
 
-version 14.1
+version 14.2
 
 
 if "`c(username)'" =="guillaumedaudin" {
@@ -23,370 +23,41 @@ if "`c(hostname)'" =="lise-HP" {
 cd $dir
 
 
-***************************************************************
-** Question endogénéité tau ik, t ik et prix fob
-
-use $dir/data/hummels_tra, clear
-
-gen sitc2_3d = substr(sitc2,1,3)
-
-bys year sitc2_3d mode country: gen nb_par_sitc2_c_y_m = _N
-sum nb_par_sitc2_c_y_m, det
-gen val=air_val+ves_val
-sum nb_par_sitc2_c_y_m [fw=val], det
-
-bys year sitc2_3d mode country: keep if _n==1
-
-sum nb_par_sitc2_c_y_m, det
-
-
-** En moyenne, chaque observation a 182 co-obs dans la même catg sitc2 3d, pays, mode, année
-
-** Autres éléments d'info:
-** Par catg sitc2 à digits, pays, mode, année : 4 observations
-** En moyenne, chaque dollar importé a 143 obs au sein d'une catg
-
-*** Répond à la question de l'endogénéité entre tauik, til et prix fob ik
-
-
-
-* Mettre en avant hétérogénéité des termes A et I entre pays d'origine / entre secteurs
-
-* Stats des dans la dimension secteur
-local stats mean median sd min max
-local dim sector country
-
-foreach x in `stats' {
-	foreach y in `dim' {
-	
-	use "$dir/results/estimTC.dta", clear
-
-rename iso_o country
-		collapse (`x') terme_A terme_I terme_iceberg [fweight= val], by(`y')
-		
-		foreach type in terme_A terme_I terme_iceberg {
-		 rename `type' `type'_`x'_`y'
-		}
-		
-		collapse terme_A_`x'_`y' terme_I_`x'_`y' terme_iceberg_`x'_`y'
-		
-		save $dir\results\stats_des\temp_`x'_`y', replace
-
-}
-}
-
-
-*
-* Compiler
-
-cd $dir\results\stats_des
-
-use temp_mean_sector, clear
-
-merge using temp_mean_country
-drop _merge
-
-save base_statsdes_bycountry_byproduct, replace
-
-
-local stats median sd min max
-local dim sector country
-
-foreach x in `stats' {
-foreach y in `dim' {
-
-
-	use base_statsdes_bycountry_byproduct, clear
-	merge using temp_`x'_`y'
-	drop _merge
-
-save base_statsdes_bycountry_byproduct, replace
-
-
-}
-}
-
-use base_statsdes_bycountry_byproduct, clear
-
-export excel using base_statsdes_bycountry_byproduct, firstrow(variables) replace
-
 
 ********************************************************************
 *** Faire un programme qui calcule l'écart cif-fob observé / prédit*** 
 
-capture program drop stats_des
-program stats_des
-	args year mode
+capture program drop calc_trend
+program calc_trend
+	args precis mode 
+	*ex : calc_trend 3 air
 
+use "$dir/results/3_models/table_`precis'_`mode'.dta", clear
 
-use "$dir/results/estimTC.dta", clear
+replace terme_nlI_mp = terme_nlI_mp-1
+replace terme_I_mp = terme_I_mp-1
+generate terme_IetA_mp = terme_I_mp+terme_A_mp
+local var_liste terme_nlI terme_nlA terme_A terme_I terme_IetA
+gen year_num = real(year)
 
-* Base qui synthétise les résultats des estimations sur 3 digits, en intégrant en plus les variables observées
-
-keep if year==`year'
-keep if mode=="`mode'"
-
-gen prix_trsp = prix_caf/prix_fob -1
-gen termeAetI = terme_A+terme_I-1
-gen termeiceberg = terme_iceberg -1
-
-local type prix_trsp termeAetI termeiceberg
-
-foreach i of local type {
-	gen ln`i' = log(`i')
+foreach var of local var_liste {
+	gen ln_var = ln(`var'_mp)
+	quietly regress ln_var year_num
+	matrix e=e(b)
+	local redu = round(e[1,1],0.001)
+	display "Le trend pour `var' pour `mode' en précision `precis' sur la période 1974-2013 est `redu'"
+	quietly regress ln_var year_num if year_num>=1980
+	matrix e=e(b)
+	local redu = round(e[1,1],0.001)
+	display "Le trend pour `var' pour `mode' en précision `precis' sur la période 1980-2013 est `redu'"
+	drop ln_var
 }
-	
-
-
-local type prix_trsp termeAetI termeiceberg lnprix_trsp lntermeAetI lntermeiceberg
-keep `type' year mode val
-
-foreach x in `type' {
-
-	quietly sum `x'  [fweight= val], det
-	generate `x'_mp = r(mean)
-	generate `x'_med = r(p50)
-	generate `x'_et = r(sd)
-	generate `x'_min = r(min)
-	generate `x'_max = r(max)
-
-	
-	quietly sum `x', det
-	generate `x'_uwm = r(mean)
-	generate `x'_uwmed = r(p50)
-	
-}
-
-keep if _n ==1
-
-
-save "$dir/results/describe_db_`year'_`mode'", replace 
 
 
 end
 
-******************************
-*** Lancer le programme
-
-set more off
-local mode ves air
-
-foreach x in `mode' {
-
-	*foreach z in `year' {
-		foreach z of num 1974(1)2013 {
-		
-		
-		stats_des `z' `x'
-		
-	
-	}
-}
-
-
-
-** Compiler les résultats sur toutes les années
-
-cd $dir/results/
-
-* Première année 1974
-
-
-set more off
-local mode ves air
-
-
-foreach x in `mode' {
-
-	use describe_db_1974_`x', clear
-	
-	
-	save compil_describedb_`x', replace
-	erase describe_db_1974_`x'.dta
-	
-}
-
-* Les années ultérieures
-
-
-foreach x in `mode' {
-
-	foreach z of num 1975(1)2013 {
-	
-		use compil_describedb_`x', clear
-		append using describe_db_`z'_`x'
-		
-		save compil_describedb_`x', replace
-		erase describe_db_`z'_`x'.dta
-	
-	}
-
-}
-
-
-** Exploiter la base de données
-
-* Pour 3 digits
-local mode ves air
-
-
-foreach x in `mode' {
-	use compil_describedb_`x', clear
-	
-	display "Mode de transport = `x'" 
-	
-		foreach  y of varlist prix_trsp* termeAetI* termeiceberg* lnprix_trsp* lntermeAetI* lntermeiceberg* {
-		
-		quietly sum `y'
-		generate `y'_meanperiod = r(mean)
-		
-		
-		}
-	
-	save compil_describedb_`x', replace
-	
-	
-}
-
-
-use compil_describedb_ves, clear
-
-*edit mode *_mp_meanperiod *_med_meanperiod *uwm_meanperiod *uwmed_meanperiod in 1
-edit mode prix_trsp_med_meanperiod termeAetI_med_meanperiod termeiceberg_med_meanperiod in 1
-
-edit mode year lnprix_trsp_uwm lntermeiceberg_uwm  lntermeAetI_uwm
-
-*use compil_describedb_ves, clear
-*edit mode *_mp_meanperiod  *_med_meanperiod *uwm_meanperiod *uwmed_meanperiod in 1
-
-
-**********************************************************************************
-****  Sur les estimations en 4 digits, on est obligé de repartir de hummels_tra
-**********************************************************************************
-
-capture program drop stats_des_4digits
-program stats_des_4digits
-args year mode
-
-
-use "$dir/data/hummels_tra.dta", clear
-
-* Base de départ des estimations
-
-keep if year==`year'
-keep if mode=="`mode'"
-
-rename sitc2 product
-replace product = substr(product,1,4)
-
-
-
-display "Nombre avant bas et haut " _N
-
-bys product: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
-bys product: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
-drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
-
-sum prix_trsp  [fweight=`mode'_val], det
-generate prix_trsp_mp = r(mean)
-generate prix_trsp_med = r(p50)
-generate prix_trsp_et=r(sd)	
-generate prix_trsp_min = r(min)
-generate prix_trsp_max=r(max)	
-
-keep year mode prix_trsp_*
-keep if _n==1
-
-save "$dir/results/describe_db_`year'_`mode'_4digits", replace 
-
-end
-
-
-
-
-*** Lancer le programme
-
-set more off
-local mode ves air
-
-foreach x in `mode' {
-
-	*foreach z in `year' {
-		foreach z of num 1974(1)2013 {
-		
-		
-		stats_des_4digits `z' `x'
-		
-	
-	}
-}
-
-** *******************************************
-** Compiler les résultats sur toutes les années
-
-cd $dir/results/
-
-* Première année 1974
-
-set more off
-local mode ves air
-
-
-foreach x in `mode' {
-
-	use describe_db_1974_`x'_4digits, clear
-	
-	
-	save compil_describedb_`x'_4digits, replace
-	erase describe_db_1974_`x'_4digits.dta
-	
-}
-
-* Les années ultérieures
-foreach x in `mode' {
-
-	foreach z of num 1975(1)2013 {
-	
-		use compil_describedb_`x'_4digits, clear
-		append using describe_db_`z'_`x'_4digits
-		
-		save compil_describedb_`x'_4digits, replace
-		erase describe_db_`z'_`x'_4digits.dta
-	
-	}
-
-}
-
-
-** Exploiter la base de données
-
-local mode ves air
-
-
-foreach x in `mode' {
-	use compil_describedb_`x'_4digits, clear
-	
-	display "Mode de transport = `x'" 
-	
-		foreach  y of varlist prix_trsp*  {
-		
-		quietly sum `y'
-		generate `y'_meanperiod = r(mean)
-		
-		
-		}
-	
-	save compil_describedb_`x'_4digits, replace
-	
-	
-}
-
-
-use compil_describedb_ves_4digits, clear
-edit mode prix_trsp_mp_meanperiod prix_trsp_med_meanperiod  in 1
-
-use compil_describedb_air_4digits, clear
-edit mode prix_trsp_mp_meanperiod prix_trsp_med_meanperiod  in 1
+calc_trend 3 air
+calc_trend 3 ves 
 
 
 
