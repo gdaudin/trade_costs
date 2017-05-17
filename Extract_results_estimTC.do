@@ -11,6 +11,9 @@ version 14.2
 ** -------------------------------------------------------------
 
 
+*Deux programmes : le premier prends les blouk et fait des résultats. Le 2e prend les résultats et fait une table
+
+
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/Documents/Recherche/trade costs/results
 }
@@ -144,34 +147,6 @@ save "$dir\3_models\results_estim_`year'_`class'_`preci'_`mode'", replace
 
 end
 
-***********************************
-**** SORTIR LES RESULTATS *********
-
-*capture log close
-*log using get_table, replace
-
-
-
-*** 3 digits, all years ***
-
-set more off
-
-local preci 3
-
-foreach x in air ves {
-
-foreach k in `preci' {
-
-forvalues z = 1974(1)2013 {
-
-get_table `z' sitc2 `preci' `x'
-
-*log close
-
-}
-
-}
-}
 
 /*
 
@@ -202,7 +177,31 @@ get_table `z' sitc2 `preci' `x'
 *** Step 2 - compiler en une même base
 ***************************************
 
-cd $dir\3_models
+
+capture prog drop from_result_to_table
+program from_result_to_table
+
+
+
+if "`c(username)'" =="guillaumedaudin" {
+	global dir ~/Dropbox/trade_cost/results
+}
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox\trade_cost/results
+}
+
+
+if "`c(hostname)'" =="lise-HP" {
+	global dir C:\Users\lise\Dropbox\trade_cost/results
+}
+
+cd "$dir"
+
+
+
+cd "$dir/3_models"
 
 
 * ---------------------------------
@@ -225,7 +224,7 @@ save table_`preci'_`x', replace
 set more off
 local preci 3
 
-foreach x in air  {
+foreach x in air ves {
 
 foreach k in `preci' {
 
@@ -311,3 +310,44 @@ export excel using table_`k'_`x', replace firstrow(varlabels)
 
 **
 */
+
+end
+
+
+***************
+
+***********************************
+**** SORTIR LES RESULTATS des blouks*********
+/*
+*capture log close
+*log using get_table, replace
+
+
+
+
+*** 3 digits, all years ***
+
+set more off
+
+local preci 3
+
+foreach x in air ves {
+
+foreach k in `preci' {
+
+forvalues z = 1974(1)2013 {
+
+get_table `z' sitc2 `preci' `x'
+
+*log close
+
+}
+
+}
+}
+*/
+
+
+
+************Passer des results aux tables
+from_result_to_table
