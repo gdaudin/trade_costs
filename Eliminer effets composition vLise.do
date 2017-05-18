@@ -59,11 +59,12 @@ if "`sitc'"=="manuf" drop if substr(sector,1,1)=="0" | substr(sector,1,1)=="1" /
 
 gen prix_trsp = prix_caf/prix_fob -1
 replace terme_I = terme_I-1
-*gen termeAetI = terme_A+terme_I-1
+
+gen terme_AetI = terme_A+terme_I-1
 *gen termeiceberg = terme_iceberg -1
 
 
-local type prix_trsp terme_I terme_A /*AetI termeiceberg */
+local type prix_trsp terme_I terme_A terme_AetI /*termeiceberg */
 keep `type' year mode val
 
 foreach x in `type' {
@@ -76,7 +77,7 @@ foreach x in `type' {
 
 
 
-keep year mode prix_trsp_mp terme_I_mp terme_A_mp /* termeiceberg_mp prix_trsp_med termeAetI_med termeiceberg_med */
+keep year mode prix_trsp_mp terme_I_mp terme_A_mp terme_AetI_mp /* termeiceberg_mp prix_trsp_med termeAetI_med termeiceberg_med */
 rename prix_trsp_mp terme_obs_mp
 keep if _n ==1
 
@@ -144,7 +145,7 @@ erase compil_results_ves_`sitc'.dta
 
 use compil_results_`sitc', clear
 
-local type terme_obs terme_A terme_I 
+local type terme_obs terme_A terme_I terme_AetI
 
 
 foreach z in `type' {
@@ -157,9 +158,9 @@ foreach z in `type' {
 
 
 *reshape wide prix_trsp termeAetI termeiceberg, i(year) j(mode) string
-reshape wide terme_obs terme_A terme_I, i(year) j(mode) string
+reshape wide terme_obs terme_A terme_I terme_AetI, i(year) j(mode) string
 
-local type terme_obs terme_A terme_I
+local type terme_obs terme_A terme_I terme_AetI
 local mode air ves
 
 foreach z in `type' {
@@ -177,7 +178,7 @@ save compil_results_`sitc', replace
 use compil_results_`sitc', clear
 sort year
 
-local type terme_obs terme_A terme_I
+local type terme_obs terme_A terme_I terme_AetI
 local mode air ves
 
 
@@ -201,9 +202,9 @@ save compil_results_`sitc', replace
 use "$dir/resultats_finaux/database_pureTC_`sitc'", clear
 
 count
-keep year terme_A_air_mp terme_A_ves_mp terme_I_air_mp terme_I_ves_mp terme_obs_air_mp terme_obs_ves_mp
+keep year terme_A_air_mp terme_A_ves_mp terme_I_air_mp terme_I_ves_mp terme_AetI_air_mp terme_AetI_ves_mp terme_obs_air_mp terme_obs_ves_mp 
 
-local type terme_A terme_I terme_obs
+local type terme_A terme_I terme_AetI terme_obs
 local mode air ves
 
 foreach z in `type' {
@@ -213,18 +214,6 @@ foreach z in `type' {
 	}
 }
 
-* cf table_extract_effetscomposition v27 juillet.xls dans le dossier résultats finaux
-* poids relatif additif dans transport total en 1974 = 0.423 en air, 0.482 en vessel
-
-* prendre le poids de chaque année?
-
-local type pure overall
-
-foreach z in `type' {
-
-	gen termeAetI_`z'_air = 0.423*terme_A_`z'_air + (1-0.423)*terme_I_`z'_air
-	gen termeAetI_`z'_ves = 0.482*terme_A_`z'_ves + (1-0.482)*terme_I_`z'_ves
-}
 
 sort year
 
@@ -254,8 +243,9 @@ export excel using table_moreon_effetscomposition_`sitc', replace firstrow(var)
 *** Comparer les purs TC entre transport mode, selon qu'effets de composition élevés ou pas
 *** Cf discussion de Hummels, les TC ont-ils plus baissé dans l'aérien que dans le vessel?
 
+* Mai 2017, laisser de côté l'écart cif-fob observé
 
-local type terme_A terme_I terme_obs
+local type terme_A terme_I terme_AetI /* terme_obs */
 local mode air ves
 *capture rename terme_iceberg* termeiceberg*
  
@@ -265,13 +255,13 @@ foreach z in `type' {
 		replace `z'_pure_`x' = . if `z'_pure_`x' > 200
 *		label var `z'_pure_`x' "TC `z'_`x' hors effets de composition"
 		
-		if "`z'"== "terme_obs" & "`x'"== "air" label var `z'_overall_`x' "(a) Total transport costs, Air"
-		if "`z'"== "terme_obs" & "`x'"== "ves" label var `z'_overall_`x' "(a) Total transport costs, Ocean"
+		if "`z'"== "terme_AetI" & "`x'"== "air" label var `z'_overall_`x' "(a) Total transport costs, Air"
+		if "`z'"== "terme_AetI" & "`x'"== "ves" label var `z'_overall_`x' "(a) Total transport costs, Ocean"
 		if "`z'"== "terme_I" label var `z'_overall_`x' "(b) Multiplicative transport costs, `x'"
 		if "`z'"== "terme_A" label var `z'_overall_`x' "(c) Additive transport costs, `x'"
 		
-		if "`z'"== "terme_obs" & "`x'"== "air" local title_graph  "(a) Total transport costs, Air"
-		if "`z'"== "terme_obs" & "`x'"== "ves" local title_graph  "(a) Total transport costs, Ocean"
+		if "`z'"== "terme_AetI" & "`x'"== "air" local title_graph  "(a) Total transport costs, Air"
+		if "`z'"== "terme_AetI" & "`x'"== "ves" local title_graph  "(a) Total transport costs, Ocean"
 		
 		if "`z'"== "terme_A" & "`x'"== "air" local title_graph  "(c) Additive transport costs, Air"
 		if "`z'"== "terme_A" & "`x'"== "ves" local title_graph  "(c) Additive transport costs, Ocean"
@@ -284,11 +274,11 @@ foreach z in `type' {
 		replace `z'_overall_`x' = . if `z'_overall_`x' > 200
 
 		if "`sitc'"!="all" twoway (line `z'_overall_`x' year) (line `z'_pure_`x' year) , ///
-				name(`z'_`x', replace) nodraw legend(label(1 "Transport cost") label(2 "idem, corrected for composition") row(1) size(vsmall)) ///
+				name(`z'_`x', replace) nodraw legend(label(1 "Transport cost") label(2 "Composition effects excluded") row(1) size(vsmall)) ///
 				title("`title_graph'", size(small)) ///
 				yscale(range(0 200)) ylabel(0(50)200, angle(horizontal) labsize(vsmall))
 		if "`sitc'"=="all" twoway (line `z'_overall_`x' year) (line `z'_pure_`x' year) , ///
-				name(`z'_`x', replace) nodraw legend(label(1 "Transport cost") label(2 "idem, corrected for composition") row(1) size(vsmall)) ///
+				name(`z'_`x', replace) nodraw legend(label(1 "Transport cost") label(2 "Composition effects excluded") row(1) size(vsmall)) ///
 				title("`title_graph'", size (small)) ///
 				yscale(range(0 125)) ylabel(0(25)125, angle(horizontal) labsize(vsmall))
 	}
