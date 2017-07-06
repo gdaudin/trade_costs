@@ -106,7 +106,7 @@ SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), Fran
 	\renewcommand\thesubsection{\Alph{subsection}}
 	
 	
-\subsection{Additive-costs only Model \label{oa_sec:additive_only}}
+\subsection{Additive-costs only Model \label{secoa:additive_only}}
 
 %%%% RAW TABLE TO BE FOUND AT: "...\Dropbox\Papier_Lise_Guillaume\trade_cost\results\3_models"
 % modele iceberg tout seul : terme nlI
@@ -130,26 +130,11 @@ SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), Fran
     \multicolumn{5}{c}{Mean value over 1974-2013}   \\
     \# digit & \multicolumn{2}{c}{3 digits} & \multicolumn{2}{c}{4 digits ($^\ast$)} \\ \hline
     Mode  & Vessel & Air ($^{\ast \ast}$) & Vessel & Air \\ \hline
-    \multicolumn{5}{l}{\textbf{With only Additive Transport Costs} ($\widehat{\tau}^{ice}$, in \%)}  \\ \hline
-    Mean  & 5.8 & 5.1 & 6.0 & 4.9 \\
-    Median & 5.1 & 4.2 & 5.2 & 3.7 \\ \hline
-    %Std   & 0.032 & 0.042 & 0.036 & 0.045 \\
-    %Min. value & 1.003 & 1.001 & 1.003 & 1.000 \\
-    %Max. value & 1.304 & 1.685 & 1.408 & 2.051 \\ \hline
-    \multicolumn{5}{l}{\textbf{With Additive \& Ad-Valorem Transport Costs} } \\ \hline
-   \textit{Ad-valorem term ($\widehat{\tau}^{adv}$, in \%)} & & & & \\ \hline
-    Mean  & 3.2 & 2.5 & 3.3 & 2.4 \\
-    Median & 2.8 & 1.8 & 2.8 & 1.6 \\ \hline
-    %Std   & 0.023 & 0.023 & 0.025 & 0.026 \\
-    %Min. value & 1.001 & 1.000 & 1.000 & 1.000 \\
-    %Max. value & 1.227 & 1.474 & 1.264 & 1.537 \\ \hline
-    \textit{Additive term ($\widehat{t}^{add}/\widetilde{p}$, in \%)}& & & &   \\ \hline
-    Mean  & 2.9 & 1.8 & 2.8 & 1.9 \\
-    Median & 1.9 & 0.7 & 1.7 & 0.8 \\ \hline
-    %Std   & 0.041 & 0.034 & 0.039 & 0.034 \\
-    %Min. value & 0.000 & 0.000 & 0.000 & 0.000 \\
-    %Max. value & 2.941 & 13.303 & 3.197 & 11.440 \\ \hline
-    \multicolumn{5}{l}{\textbf{Data} ($p/\widetilde{p}$, in \%) } \\ \hline
+    \multicolumn{5}{l}{\textbf{With only Additive Transport Costs} ($\widehat{t}^{add}$, in \%)}  \\ \hline
+    Mean  & 9.2 & 5.1 & 8.0 & 5.8 \\
+    Median & 5.7 & 2.4 & 5.5 & 2.5 \\ \hline
+ 
+       \multicolumn{5}{l}{\textbf{Data} ($p/\widetilde{p}$, in \%) } \\ \hline
         Mean & 5.3 & 5.0& 5.6&3.9 \\
         Median & 4.3 & 2.0 & 4.4& 1.9 \\ \hline
         \# obs. & 29279 & 28207 & 29317 & 27680 \\
@@ -165,61 +150,7 @@ SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), Fran
 
 
 
-\begin{landscape}
-\begin{table}[htbp]\centering
- \begin{threeparttable}
-\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
-\caption{\label{NER_ext}Alternative Measure of Exchange-rate Volatility - Nominal Exchange Rate (NER) Volatility - Extensive Margin}
-\begin{tabular}{l*{8}{c}}
-\hline\hline
-               Dep. Variable &\multicolumn{4}{c}{Entry}&\multicolumn{4}{c}{Participation}\\
-                                &\multicolumn{4}{c}{$Pr(X_{ijt}>0\mid X_{ijt-1}=0)$}&\multicolumn{4}{c}{$Pr(X_{ijt}>0$)}\\
-                 \cmidrule(lr){2-5}
-  \cmidrule(lr){6-9} \\
-                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}&\multicolumn{1}{c}{(7)}&\multicolumn{1}{c}{(8)}\\
 
-\hline
-
-Ln Bil NER Volatility                 &      -0.002      &       0.006      &                  &                  &       0.004      &       0.013      &                  &                  \\
-                    &     (0.002)      &     (0.005)      &                  &                  &     (0.003)      &     (0.011)      &                  &                  \\
-[1em]
-Ln GDP              &       0.133{$^a$}&       0.133{$^a$}&                  &                  &       0.149{$^a$}&       0.148{$^a$}&                  &                  \\
-                    &     (0.011)      &     (0.011)      &                  &                  &     (0.019)      &     (0.019)      &                  &                  \\
-[1em]
-Ln country price index&       0.012{$^a$}&       0.012{$^a$}&                  &                  &       0.021{$^a$}&       0.021{$^a$}&                  &                  \\
-                    &     (0.002)      &     (0.002)      &                  &                  &     (0.004)      &     (0.004)      &                  &                  \\
-[1em]
-Ln Bil NER Volatility $\times$ Ln Nb Dest$_{t-1}$          &                  &      -0.002      &      -0.002      &      -0.001      &                  &      -0.003      &      -0.001      &      -0.002{$^a$}\\
-                    &                  &     (0.002)      &     (0.002)      &     (0.001)      &                  &     (0.003)      &     (0.002)      &     (0.001)      \\
-\hline
-Observations        &     2672139      &     2672139      &     2672139      &     2672139      &     4819302      &     4819302      &     4819302      &     4819302      \\
-\(R^{2}\)           &       0.181      &       0.181      &       0.183      &       0.402      &       0.198      &       0.198      &       0.207      &       0.440      \\
-
-\hline
-%Firm-year dyads &     370522      &     370522      &     370522      & 554350& 554350&554350     \\
-Firm-year FE  & X & X & X & X & X & X & X & X \\
-Country FE  & X & X &  &  & X & X &  &  \\
-Country-year FE &  &  & X & X &  &  & X & X \\
-Firm-country FE &  &  &  & X &  &  &  & X \\
-\hline\hline
-\end{tabular}
-\begin{tablenotes}
-\small
-\item Note: In this table, exchange-rate volatility is computed as follows. We compute the standard deviation of monthly log deviation of \emph{nominal} exchange rates, instead of the real exchange-rate levels as we did within the paper. We exclude Euro Area observations because they exhibit zero NER volatility after 1999, which may generate a bias in the estimation. Robust standard errors are clustered by destination-year in parentheses with {$^a$}, {$^b$} and {$^c$} respectively denoting significance at the 1\%, 5\% and 10\% levels.
-\end{tablenotes}
-\end{threeparttable}
-\end{table}
-
-\end{landscape}
-
-
-
-
-
-
-
-
-%
 %
 %XXXXXX
 %
@@ -242,12 +173,14 @@ Firm-country FE &  &  &  & X &  &  &  & X \\
 
 
 
-\subsection{Alternative Measures of Firm Performance \label{secoa:firmperformance}}
+\subsection{Detailed Results \label{secoa:detailed}}
 \setcounter{table}{0}
 \renewcommand{\thetable}{B.\arabic{table}}
 
 
-\subsubsection{Additional Measures of Firm Performance}
+\subsubsection{3-Digits Level}
+
+\subsubsection{4-Digits Level}
 
 
 
