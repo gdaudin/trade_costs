@@ -8,19 +8,24 @@ version 15
 clear
 set more off
 capture log close
-set mem 2000m
+*set mem 2000m
 
-global DIR c:\david\decline\finaldata\regs/
+*global DIR c:\david\decline\finaldata\regs/
+cd "~/Dropbox/trade_cost"
 
-use ${DIR}sitcreallysmall_allyears
+
+*use ${DIR}sitcreallysmall_allyears
+
+use   "~/Dropbox/trade_cost/data/hummels_tra.dta"
+rename iso2 ctry
 
 drop if substr(sitc2,1,1)=="9"
 
-gen manuflag =  real(substr(sitc2,1,1))> 5  
+*cgen manuflag =  real(substr(sitc2,1,1))> 5  
 
-ren yr year
+*ren yr year
 sort year
-
+/*
 
 merge year using ${DIR}fuelprices
 keep if year >=1974
@@ -53,6 +58,8 @@ foreach var of varlist *val *cha *fuel duty {
 replace `var' = `var' / gdpdefl
 }
 
+*/
+
 replace ves_wgt = ves_wgt/2.2  if year <=1988
 replace air_wgt = air_wgt/2.2  if year <=1988
 
@@ -69,7 +76,7 @@ gen vval = ves_val
 
 egen atrade = sum(aval), by(ctry year)
 egen vtrade = sum(vval), by(ctry year)
-gen cont = teu/vtrade
+*gen cont = teu/vtrade
 
 
 /* clean up out of bound observations */
@@ -84,7 +91,7 @@ drop airflag vesflag
 
 /* take logs */
 
-foreach var of varlist aval vval afw vfw afv vfv awv vwv afuel vfuel dist gdp cont atrade vtrade {
+foreach var of varlist aval vval afw vfw afv vfv awv vwv /*afuel vfuel*/ dist /* gdp cont*/ atrade vtrade {
 replace `var' = ln(`var')
 }
 
@@ -94,7 +101,7 @@ replace `var' = ln(`var')
 tab year, gen(y)
 global ct 1
 
-while $ct <=31 {
+while $ct <=40 {
 global nct = $ct + 1973
 ren y$ct  y$nct
 
@@ -112,24 +119,24 @@ save temp1, replace
 
 /*  first simple regressions */
 
-log using regs_rewrite_final.log, replace
+*log using regs_rewrite_final.log, replace
 
 
 iis ii
 tis year
 
 
-
-
 /* generate output for main figure */
-xtreg afv awv y1975-y2004, fe
+xtreg afv awv y1975-y2013, fe
+
+
 predict afvhat
 
 
-xtreg vfv vwv y1975-y2004, fe
+xtreg vfv vwv y1975-y2013, fe
 predict vfvhat
 
-
+/*
 
 /* table regressions */
 
@@ -150,7 +157,7 @@ xtreg afv awv afuel dist, fe
 xtreg afv awv afuel dist trend dt, fe
 
 
-
+*/
 /* collapse data down to something useful */
 
 foreach var of varlist afvhat vfvhat afv vfv {
@@ -181,7 +188,7 @@ afvhat_wgt... are value weighted averages of the estimates
 
 save predictedrates, replace
 
-log close
+*log close
 
 
 */
@@ -205,5 +212,9 @@ quietly capture graph save figure6, replace
 
 
 
+
+erase temp
+erase temp1
+erase predictrates
 
 
