@@ -37,6 +37,8 @@ reshape wide ves_val air_val, i(year) j(prim_manuf) string
 gen share_prim_ves = ves_valprim / (ves_valprim + ves_valmanuf)
 gen share_prim_air = air_valprim / (air_valprim + air_valmanuf)
 
-twoway (line share_prim_ves year) (line share_prim_air year,lpattern(shortdash)) ///
+twoway (line share_prim_ves year) (line share_prim_air year,lpattern(shortdash)), ///
 	legend( label(1 "Share of primary trade in the value of total vessel imports") ///
-			label(2 "Share of primary trade in the value of total air imports")
+			label(2 "Share of primary trade in the value of total air imports") rows(2))
+			
+graph export "$dir/resultats_finaux/Share_of_primary.pdf", replace
