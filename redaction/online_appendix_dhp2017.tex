@@ -1,0 +1,260 @@
+\documentclass[11pt,twoside, authoryear]{elsarticle}
+\usepackage[frenchb, english]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{fontenc}
+%\usepackage[ansinew]{inputenc}
+\usepackage{setspace}
+\usepackage{babel,varioref}
+\usepackage{supertabular}
+\usepackage{graphicx}
+%\usepackage[pdftex]{graphicx}
+%\DeclareGraphicsExtensions{.pdf,.mps,.png,.jpg,.eps}
+\usepackage{lscape}
+\usepackage[authoryear]{natbib}
+%\usepackage[frenchb,english]{babel}
+\usepackage{multirow}
+\usepackage{ifthen}
+%\usepackage{harvard}
+\usepackage{vmargin}
+\usepackage{verbatim}
+\usepackage{array}
+%\usepackage[authoryear]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=Black, citecolor=blue, urlcolor=blue}
+%\setmarginsrb{2cm}{2cm}{2cm}{2cm}{0cm}{0cm}{0cm}{0cm}
+\usepackage{booktabs,caption,fixltx2e}
+
+\usepackage[flushleft]{threeparttable}
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+\usepackage{adjustbox}
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+%\usepackage[round]{natbib}
+
+\renewcommand{\thesection}{\Alph{section}}
+
+% \newcommand\section[1]{%
+%   \refstepcounter{section}%
+%   \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+%   \sectionmark{#1}}
+%   }
+
+
+% % \refstepcounter{section}%
+% %   \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+% %   \sectionmark{#1}}
+
+
+
+%   \newcommand\subsection[1]{%
+%   \refstepcounter{subsection}%
+%   \addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#1}%
+%   %\subsectionmark{#1}
+%   }
+
+%\EnableSectionsInLOFT
+
+
+
+\begin{document}
+\title{\textbf{Beyond the Iceberg Hypothesis: \\Opening the Black Box of Transport Costs}\\Online Appendix (Not for publication)}
+
+\urlstyle{rm}
+\author{Guillaume Daudin\footnote{\noindent Corresponding author. Universit\'{e} Paris-Dauphine, PSL Research University, LEDa-DIAL, UMR 225, France \&
+SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), France; email: \url{guillaume.daudin@dauphine.fr}} \qquad \quad Jérôme Héricourt\footnote{\noindent Corresponding author. Université de Lille - LEM-CNRS (UMR 9221) and CEPII; email: \url{jerome.hericourt@univ-lille1.fr}} \qquad \quad Lise Patureau\footnote{\noindent Universit\'{e} Paris-Dauphine, PSL Research University, LEDa, France ; email: \url{lise.patureau@dauphine.fr}}}
+%\date{\vspace{-5ex}}
+%
+%%\author[lille,brest,cepii]{J\'{e}r\^{o}me H\'{e}ricourt\fnref{fn1}}
+%\fntext[fn1]{Corresponding author. Address: D\'{e}partement de Droit, \'{E}conomie, Gestion et AES, 12, Rue de Kergoat - CS 93837, 29238 Brest Cedex 3, France. Tel: (0033) 1 53 68 55 14. E-mail: jerome.hericourt@univ-brest.fr}
+%\address[lille]{Univ. Lille, CNRS, IESEG School of Management, Institut Catholique de Lille, UMR 9221 - LEM - Lille Économie Management}
+%\address[brest]{University of Brest-ICI (EA 2652), France}
+%\address[cepii]{CEPII, France}
+%
+%\author[lille]{Clément Nedoncelle\fnref{fn2}}
+%%\address[lille]{University of Lille - LEM-CNRS (UMR 9221), France}
+%\fntext[fn2]{Address: Université de Lille, Facult\'{e} de Sciences \'{E}conomiques et Sociales, Cit\'{e} Scientifique - B\^{a}t SH2, 59655 Villeneuve d'Ascq Cedex, France. E-mail: clement.nedoncelle@ed.univ-lille1.fr}
+%
+
+
+
+\maketitle
+
+
+
+
+
+%\newpage
+
+\tableofcontents
+\vspace{1cm}
+\newpage
+\listoftables
+
+\newpage
+%\section{\label{sec:addi}Additional Tables}
+
+
+	\renewcommand\thesubsubsection{\Alph{subsection}.\arabic{subsubsection}}
+	
+	\renewcommand\thesubsection{\Alph{subsection}}
+	
+	
+\subsection{Additive-costs only Model \label{oa_sec:additive_only}}
+
+%%%% RAW TABLE TO BE FOUND AT: "...\Dropbox\Papier_Lise_Guillaume\trade_cost\results\3_models"
+% modele iceberg tout seul : terme nlI
+% colonnes L à U: modèle avec les deux
+% termes nla, de V à Z, modèles avec que de l'additif
+%nlI quer iceberg
+%nla que additif
+%nl : les deux
+\setcounter{table}{0}
+\renewcommand{\thetable}{A.\arabic{table}}
+%\subsubsection{Nominal Exchange Rate Volatility}
+
+
+\begin{table}[htbp]
+  \centering
+  \footnotesize{
+  \caption{Transport costs estimates: Summary \label{sec_oa:add_only}}
+  \begin{center}
+    \begin{tabular}{l|cc|cc}
+      \hline \hline
+    \multicolumn{5}{c}{Mean value over 1974-2013}   \\
+    \# digit & \multicolumn{2}{c}{3 digits} & \multicolumn{2}{c}{4 digits ($^\ast$)} \\ \hline
+    Mode  & Vessel & Air ($^{\ast \ast}$) & Vessel & Air \\ \hline
+    \multicolumn{5}{l}{\textbf{With only Additive Transport Costs} ($\widehat{\tau}^{ice}$, in \%)}  \\ \hline
+    Mean  & 5.8 & 5.1 & 6.0 & 4.9 \\
+    Median & 5.1 & 4.2 & 5.2 & 3.7 \\ \hline
+    %Std   & 0.032 & 0.042 & 0.036 & 0.045 \\
+    %Min. value & 1.003 & 1.001 & 1.003 & 1.000 \\
+    %Max. value & 1.304 & 1.685 & 1.408 & 2.051 \\ \hline
+    \multicolumn{5}{l}{\textbf{With Additive \& Ad-Valorem Transport Costs} } \\ \hline
+   \textit{Ad-valorem term ($\widehat{\tau}^{adv}$, in \%)} & & & & \\ \hline
+    Mean  & 3.2 & 2.5 & 3.3 & 2.4 \\
+    Median & 2.8 & 1.8 & 2.8 & 1.6 \\ \hline
+    %Std   & 0.023 & 0.023 & 0.025 & 0.026 \\
+    %Min. value & 1.001 & 1.000 & 1.000 & 1.000 \\
+    %Max. value & 1.227 & 1.474 & 1.264 & 1.537 \\ \hline
+    \textit{Additive term ($\widehat{t}^{add}/\widetilde{p}$, in \%)}& & & &   \\ \hline
+    Mean  & 2.9 & 1.8 & 2.8 & 1.9 \\
+    Median & 1.9 & 0.7 & 1.7 & 0.8 \\ \hline
+    %Std   & 0.041 & 0.034 & 0.039 & 0.034 \\
+    %Min. value & 0.000 & 0.000 & 0.000 & 0.000 \\
+    %Max. value & 2.941 & 13.303 & 3.197 & 11.440 \\ \hline
+    \multicolumn{5}{l}{\textbf{Data} ($p/\widetilde{p}$, in \%) } \\ \hline
+        Mean & 5.3 & 5.0& 5.6&3.9 \\
+        Median & 4.3 & 2.0 & 4.4& 1.9 \\ \hline
+        \# obs. & 29279 & 28207 & 29317 & 27680 \\
+    \# origin country & 188 & 191 & 188 & 189 \\
+    \# products & 230 & 211 & 666 & 567 \\  \hline \hline
+  \end{tabular}
+    \end{center}}
+\parbox[l]{10cm}{\tiny{Notes: Statistics are obtained weighting each observation by its value relative to total trade flows. The additive term is expressed in fraction of fas price. ($^\ast$): Four 4-digit estimation: 0n selected years. ($^{\ast \ast}$): 1989 omitted in 3-digit estimation for air.}}
+\end{table}%
+
+
+
+
+
+
+\begin{landscape}
+\begin{table}[htbp]\centering
+ \begin{threeparttable}
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{\label{NER_ext}Alternative Measure of Exchange-rate Volatility - Nominal Exchange Rate (NER) Volatility - Extensive Margin}
+\begin{tabular}{l*{8}{c}}
+\hline\hline
+               Dep. Variable &\multicolumn{4}{c}{Entry}&\multicolumn{4}{c}{Participation}\\
+                                &\multicolumn{4}{c}{$Pr(X_{ijt}>0\mid X_{ijt-1}=0)$}&\multicolumn{4}{c}{$Pr(X_{ijt}>0$)}\\
+                 \cmidrule(lr){2-5}
+  \cmidrule(lr){6-9} \\
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}&\multicolumn{1}{c}{(7)}&\multicolumn{1}{c}{(8)}\\
+
+\hline
+
+Ln Bil NER Volatility                 &      -0.002      &       0.006      &                  &                  &       0.004      &       0.013      &                  &                  \\
+                    &     (0.002)      &     (0.005)      &                  &                  &     (0.003)      &     (0.011)      &                  &                  \\
+[1em]
+Ln GDP              &       0.133{$^a$}&       0.133{$^a$}&                  &                  &       0.149{$^a$}&       0.148{$^a$}&                  &                  \\
+                    &     (0.011)      &     (0.011)      &                  &                  &     (0.019)      &     (0.019)      &                  &                  \\
+[1em]
+Ln country price index&       0.012{$^a$}&       0.012{$^a$}&                  &                  &       0.021{$^a$}&       0.021{$^a$}&                  &                  \\
+                    &     (0.002)      &     (0.002)      &                  &                  &     (0.004)      &     (0.004)      &                  &                  \\
+[1em]
+Ln Bil NER Volatility $\times$ Ln Nb Dest$_{t-1}$          &                  &      -0.002      &      -0.002      &      -0.001      &                  &      -0.003      &      -0.001      &      -0.002{$^a$}\\
+                    &                  &     (0.002)      &     (0.002)      &     (0.001)      &                  &     (0.003)      &     (0.002)      &     (0.001)      \\
+\hline
+Observations        &     2672139      &     2672139      &     2672139      &     2672139      &     4819302      &     4819302      &     4819302      &     4819302      \\
+\(R^{2}\)           &       0.181      &       0.181      &       0.183      &       0.402      &       0.198      &       0.198      &       0.207      &       0.440      \\
+
+\hline
+%Firm-year dyads &     370522      &     370522      &     370522      & 554350& 554350&554350     \\
+Firm-year FE  & X & X & X & X & X & X & X & X \\
+Country FE  & X & X &  &  & X & X &  &  \\
+Country-year FE &  &  & X & X &  &  & X & X \\
+Firm-country FE &  &  &  & X &  &  &  & X \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\item Note: In this table, exchange-rate volatility is computed as follows. We compute the standard deviation of monthly log deviation of \emph{nominal} exchange rates, instead of the real exchange-rate levels as we did within the paper. We exclude Euro Area observations because they exhibit zero NER volatility after 1999, which may generate a bias in the estimation. Robust standard errors are clustered by destination-year in parentheses with {$^a$}, {$^b$} and {$^c$} respectively denoting significance at the 1\%, 5\% and 10\% levels.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\end{landscape}
+
+
+
+
+
+
+
+
+%
+%
+%XXXXXX
+%
+%
+%			SECTION 2 / ALTERNATIVE MEASURES OF FIRM PERFORMANCE
+%			
+%			
+%					
+%XXXXXX
+%
+%
+%
+%
+
+
+
+
+
+
+
+
+
+\subsection{Alternative Measures of Firm Performance \label{secoa:firmperformance}}
+\setcounter{table}{0}
+\renewcommand{\thetable}{B.\arabic{table}}
+
+
+\subsubsection{Additional Measures of Firm Performance}
+
+
+
+
+\end{document}
+
+
+
+
+
