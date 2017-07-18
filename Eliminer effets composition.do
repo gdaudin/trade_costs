@@ -4,7 +4,7 @@
 *** des coûts de transport estimés
 *** de manière à récupérer l'évolution "pure" des coûts de transport, via les effets fixes pays
 
-version 15.0
+version 14.1
 
 clear all
 *set mem 800m
@@ -95,9 +95,7 @@ args mode sitc type_TC
 local type_TCm `type_TC'
 if "`type_TC'"=="obs_Hummels" local type_TCm obs
 
-*Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition air all A
-*eliminer_effets_composition ves all obs_Hummels (pour faire comme Hummels - mais c'est ///
-* mieux fait dans Calcul de l'effet de composition comme chez Hummels.do
+*Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all A
 
 
 
@@ -260,29 +258,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	encode iso_o, gen(iso_o_num)
 	
 	reg ln_terme_`type_TC' i.year i.sector_num i.iso_o_num [iweight=yearly_share], /*nocons*/ robust 
-	estimates save "Eliminer effets composition_`type_TC'_`mode'.ster", replace
 	
-	predict ln_terme_`type_TC'_pred
-	bys year : egen TC_pred_hummels_`type_TC'_`mode'=mean(exp(ln_terme_`type_TC'_pred)-1)
-	label var TC_pred_hummels_`type_TC'_`mode' "Moyenne non-pondérée des coûts de transport prédits"
-	
-	gen blif = terme_`type_TC'*yearly_share
-	bys year : egen blouf=total(blif)
-	bys year : egen bling=total(yearly_share)
-	gen TC_obs_`type_TC'_`mode'=blouf/bling-1
-	drop blif blouf bling
-	
-	
-	label var TC_obs_`type_TC'_`mode' "Moyenne pondérée des coûts de transport (ou moyenne «prédite par le 1st stage»)"
-	
-	*preserve
-	bys year : keep if _n==1
-	
-	twoway (line TC_pred_hummels_`type_TC'_`mode'  year) (line TC_obs_`type_TC'_`mode'  year)
-	
-	
-	*blif
-	*restore
 	
 	* Enregistrer les effets fixes temps
 	
@@ -298,8 +274,8 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	generate effet_fixe=.
 	generate ecart_type=.
 	 
-	keep year effet_fixe ecart_type TC_pred_hummels_`type_TC'_`mode' TC_obs_`type_TC'_`mode'
-	*bys year : keep if _n==1
+	keep year effet_fixe ecart_type
+	bys year : keep if _n==1
 	
 	
 	local n 1
@@ -325,7 +301,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	label var effetfixe_`type_TC'_`mode' "pure_FE_`type_TC'_`mode'"
 	label var ecart_type_`type_TC'_`mode' "ecart_type_`type_TC'_`mode'"
 	
-	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode' TC_pred_hummels_`type_TC'_`mode' TC_obs_`type_TC'_`mode'
+	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'
 	
 	sort year
 *	list
@@ -455,35 +431,12 @@ if "`type_TC'"== "A" {
 	
 	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	*nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=val], iterate(100) parameters(`liste_parametres' ) initial(`initial')
-	estimates save "Eliminer effets composition_`type_TC'_`mode'.ster", replace
 	
 	predict ln_terme_A_predict
 	generate terme_A_predict=exp(ln_terme_A_predict)
 	twoway (scatter ln_terme_A_predict ln_terme_A)
 	
 	save blouk.dta, replace
-	
-	
-	predict ln_terme_`type_TC'_pred
-	bys year : egen TC_pred_hummels_`type_TC'_`mode'=mean(exp(ln_terme_`type_TC'_pred)-1)
-	label var TC_pred_hummels_`type_TC'_`mode' "Moyenne non-pondérée des coûts de transport prédits"
-	
-	gen blif = terme_`type_TC'*yearly_share
-	bys year : egen blouf=total(blif)
-	bys year : egen bling=total(yearly_share)
-	gen TC_obs_`type_TC'_`mode'=blouf/bling-1
-	drop blif blouf bling
-	
-	
-	label var TC_obs_`type_TC'_`mode' "Moyenne pondérée des coûts de transport (ou moyenne «prédite par le 1st stage»)"
-	
-	*preserve
-	bys year : keep if _n==1
-	
-	twoway (line TC_pred_hummels_`type_TC'_`mode'  year) (line TC_obs_`type_TC'_`mode'  year)
-	
-	
-	
 	
 	
 	* Enregistrer les effets fixes temps
@@ -499,8 +452,8 @@ if "`type_TC'"== "A" {
 	generate effet_fixe=.
 	generate ecart_type=.
 	 
-	keep year effet_fixe ecart_type TC_pred_hummels_`type_TC'_`mode' TC_obs_`type_TC'_`mode'
-	*bys year : keep if _n==1
+	keep year effet_fixe ecart_type
+	bys year : keep if _n==1
 	drop if year==1974
 	quietly levelsof year, local (liste_year) clean
 	
@@ -530,7 +483,7 @@ if "`type_TC'"== "A" {
 	rename ecart_type ecart_type_A_`mode'
 	label var ecart_type_A_`mode' "Écart type du pure_FE_A_`mode'"
 	
-	keep year effetfixe_A_`mode' ecart_type_A_`mode' TC_pred_hummels_`type_TC'_`mode' TC_obs_`type_TC'_`mode'
+	keep year effetfixe_A_`mode' ecart_type_A_`mode'
 
 	sort year
 	save database_pureTC_`mode'_`sitc'_`type_TC'.dta, replace
@@ -626,7 +579,7 @@ if "`type_TC'"== "obs_Hummels"  {
 	merge 1:1 year using database_pureTC_`mode'_`sitc'_`type_TC' 
 	keep if _merge==3
 	drop _merge
-		
+	
 	save database_pureTC_`mode'_`sitc'_`type_TC', replace
 	
 	append using start_year_`mode'_`sitc'_`type_TC'
@@ -737,9 +690,7 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
-*eliminer_effets_composition ves all I
-eliminer_effets_composition ves all A
-
+eliminer_effets_composition ves all obs_Hummels
 
 
 
