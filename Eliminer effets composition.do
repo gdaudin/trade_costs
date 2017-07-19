@@ -259,6 +259,8 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	
 	reg ln_terme_`type_TC' i.year i.sector_num i.iso_o_num [iweight=yearly_share], /*nocons*/ robust 
 	
+	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
+	
 	
 	* Enregistrer les effets fixes temps
 	
@@ -432,6 +434,8 @@ if "`type_TC'"== "A" {
 	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	*nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=val], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	
+	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
+	
 	predict ln_terme_A_predict
 	generate terme_A_predict=exp(ln_terme_A_predict)
 	twoway (scatter ln_terme_A_predict ln_terme_A)
@@ -525,6 +529,8 @@ if "`type_TC'"== "obs_Hummels"  {
 	
 	reghdfe ln_terme_`type_TCm'  i.year /*ln_inv_unit_price*/ /*[aweight=yearly_share]*/, /*nocons robust*/ absorb(ii)
 	
+	
+	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
 	
 	* Enregistrer les effets fixes temps
 	
@@ -690,7 +696,7 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
-eliminer_effets_composition ves all obs_Hummels
+eliminer_effets_composition ves all A
 
 
 
