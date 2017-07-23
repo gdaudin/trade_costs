@@ -45,6 +45,7 @@ capture program drop nldeter_couts_add
 program nldeter_couts_add
 	version 14.1
 	summarize group_iso_o, meanonly	
+	* Tip du Sata Technical support pour cette ligne : ce serait mieux d'utiliser des tempvar. «it would be advisable to use local varnames on all occasions, as opposed to hard-coding variable names in your  program, but this is an unrelated comment.»
 	local nbr_iso_o=r(max)
 	summarize group_sect, meanonly	
 	local nbr_sect=r(max)
