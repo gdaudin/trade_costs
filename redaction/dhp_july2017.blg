@@ -1,11 +1,6 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: dhp_july2017.aux
 The style file: essaien.bst
 Database file #1: biblio.bib
-I was expecting a `,' or a `}'---line 20 of file biblio.bib
- :   
- :   note= {Mimeo Department of Economics, Indiana University},
-(Error may have been on previous line)
-I'm skipping whatever remains of this entry
 I was expecting a `,' or a `}'---line 38 of file biblio.bib
  :  
  :  @TechReport{Hummels_2001,
@@ -155,5 +150,4 @@ while executing---line 1599 of file essaien.bst
 Warning--missing institution in Hummels_1999
 Too many commas in name 1 of "A. de Palma, R. Lindsey, E. Quinet, R. Vickerman" for entry Lafourcade_Thisse
 while executing---line 1599 of file essaien.bst
-Warning--empty note in Lashkaripour-mimeo-2017
-(There were 32 error messages)
+(There were 31 error messages)
