@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.6.22)  27 JUL 2017 16:00
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2015.6.22)  28 JUL 2017 15:24
 entering extended mode
 **D:/Hericourt/Documents/Documents/trade_costs/redaction/online_appendix_dhp201
 7.tex
@@ -636,20 +636,20 @@ Package: chngcntr 2009/09/02 v1.0a change counter resetting
 )
 (D:\Hericourt\Documents\Documents\trade_costs\redaction\online_appendix_dhp2017
 .aux)
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 66.
-LaTeX Font Info:    ... okay on input line 66.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 72.
+LaTeX Font Info:    ... okay on input line 72.
  ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count120
@@ -664,20 +664,20 @@ LaTeX Font Info:    ... okay on input line 66.
 \makeMPintoPDFobject=\count125
 \everyMPtoPDFconversion=\toks25
 )
-LaTeX Info: Redefining \degres on input line 66.
+LaTeX Info: Redefining \degres on input line 72.
 
 
 Package frenchb.ldf Warning: Figures' and tables' captions might look like
 (frenchb.ldf)                `Figure 1:' which is wrong in French.
 (frenchb.ldf)                Check your class or packages to change this;
-(frenchb.ldf)                reported on input line 66.
+(frenchb.ldf)                reported on input line 72.
 
-LaTeX Info: Redefining \dots on input line 66.
-LaTeX Info: Redefining \up on input line 66.
+LaTeX Info: Redefining \dots on input line 72.
+LaTeX Info: Redefining \up on input line 72.
 
 Package frenchb.ldf Warning: OT1 encoding should not be used for French.
 (frenchb.ldf)                Add \usepackage[T1]{fontenc} to the preamble
-(frenchb.ldf)                of your document, on input line 66.
+(frenchb.ldf)                of your document, on input line 72.
 
 \AtBeginShipoutBox=\box35
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
@@ -688,7 +688,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: pdftex.def on input line 137.
 )
-Package hyperref Info: Link coloring ON on input line 66.
+Package hyperref Info: Link coloring ON on input line 72.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -699,29 +699,29 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 \c@section@level=\count126
 LaTeX Info: Redefining \Ref on input line 513.
 )
-LaTeX Info: Redefining \ref on input line 66.
-LaTeX Info: Redefining \pageref on input line 66.
-LaTeX Info: Redefining \nameref on input line 66.
+LaTeX Info: Redefining \ref on input line 72.
+LaTeX Info: Redefining \pageref on input line 72.
+LaTeX Info: Redefining \nameref on input line 72.
 
 (D:\Hericourt\Documents\Documents\trade_costs\redaction\online_appendix_dhp2017
 .out)
 (D:\Hericourt\Documents\Documents\trade_costs\redaction\online_appendix_dhp2017
 .out)
 \@outlinefile=\write4
-LaTeX Info: Redefining \Ref on input line 66.
+LaTeX Info: Redefining \Ref on input line 72.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 81.
+(Font)              <10.95> on input line 88.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 81.
+(Font)              <8> on input line 88.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 81.
+(Font)              <6> on input line 88.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <9> on input line 81.
+(Font)              <9> on input line 88.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 81.
+(Font)              <5> on input line 88.
 
 (D:\Hericourt\Documents\Documents\trade_costs\redaction\online_appendix_dhp2017
 .toc)
@@ -733,66 +733,83 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (D:\Hericourt\Documents\Documents\trade_costs\redaction\online_appendix_dhp2017
 .lot)
 \tf@lot=\write6
- [2] <graph_composition_manuf.pdf, id=49, 397.485pt x 289.08pt>
+ [2] [3] [4]
+Overfull \hbox (68.74773pt too wide) in paragraph at lines 244--245
+ [] 
+ []
+
+[5]
+Overfull \hbox (68.74773pt too wide) in paragraph at lines 307--308
+ [] 
+ []
+
+[6] <graph_composition_manuf.pdf, id=78, 397.485pt x 289.08pt>
 File: graph_composition_manuf.pdf Graphic file (type pdf)
 
 <use graph_composition_manuf.pdf>
-Package pdftex.def Info: graph_composition_manuf.pdf used on input line 181.
+Package pdftex.def Info: graph_composition_manuf.pdf used on input line 333.
 (pdftex.def)             Requested size: 397.50221pt x 289.07999pt.
 
-<graph_composition_primary.pdf, id=50, 397.485pt x 289.08pt>
+<graph_composition_primary.pdf, id=79, 397.485pt x 289.08pt>
 File: graph_composition_primary.pdf Graphic file (type pdf)
 
 <use graph_composition_primary.pdf>
-Package pdftex.def Info: graph_composition_primary.pdf used on input line 190.
+Package pdftex.def Info: graph_composition_primary.pdf used on input line 342.
 (pdftex.def)             Requested size: 397.50221pt x 289.07999pt.
 
-<Share_of_primary.pdf, id=51, 397.485pt x 289.08pt>
+<Share_of_primary.pdf, id=80, 397.485pt x 289.08pt>
 File: Share_of_primary.pdf Graphic file (type pdf)
  <use Share_of_primary.pdf>
-Package pdftex.def Info: Share_of_primary.pdf used on input line 201.
+Package pdftex.def Info: Share_of_primary.pdf used on input line 353.
 (pdftex.def)             Requested size: 397.50221pt x 289.07999pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 217.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 366.
 
-[3] [4 <D:/Hericourt/Documents/Documents/trade_costs/redaction/graph_compositio
-n_manuf.pdf>] [5 <D:/Hericourt/Documents/Documents/trade_costs/redaction/graph_
-composition_primary.pdf>] [6 <D:/Hericourt/Documents/Documents/trade_costs/reda
-ction/Share_of_primary.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 217.
+[7
+
+
+
+
+ <D:/Hericourt/Documents/Documents/trade_costs/redaction/graph_composition_manu
+f.pdf>] [8 <D:/Hericourt/Documents/Documents/trade_costs/redaction/graph_compos
+ition_primary.pdf>] [9 <D:/Hericourt/Documents/Documents/trade_costs/redaction/
+Share_of_primary.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 366.
 
 (D:\Hericourt\Documents\Documents\trade_costs\redaction\online_appendix_dhp2017
 .aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 217.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 217.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 366.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 366.
 Package rerunfilecheck Info: File `online_appendix_dhp2017.out' has not changed
 .
-(rerunfilecheck)             Checksum: 46DD83D1C7595B603CCEF3BFF8DEEFA9;293.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 217.
+(rerunfilecheck)             Checksum: AD55E3789CC2BB05EFB8C1A1D24A760D;363.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 366.
  ) 
 Here is how much of TeX's memory you used:
- 9174 strings out of 493705
- 137307 string characters out of 3144558
- 241654 words of memory out of 3000000
- 12310 multiletter control sequences out of 15000+200000
+ 9182 strings out of 493705
+ 137421 string characters out of 3144558
+ 265814 words of memory out of 3000000
+ 12313 multiletter control sequences out of 15000+200000
  9893 words of font info for 34 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
- 36i,10n,75p,599b,439s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 36i,11n,75p,599b,439s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
-msfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/c
-m/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pf
-b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Prog
-ram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/
-MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmti10.pfb>
-Output written on online_appendix_dhp2017.pdf (6 pages, 253326 bytes).
+nts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/P
+rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Fil
+es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
+lic/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
+nts/cm/cmti10.pfb>
+Output written on online_appendix_dhp2017.pdf (9 pages, 282170 bytes).
 PDF statistics:
- 157 PDF objects out of 1000 (max. 8388607)
- 17 named destinations out of 1000 (max. 500000)
+ 184 PDF objects out of 1000 (max. 8388607)
+ 22 named destinations out of 1000 (max. 500000)
  48 words of extra memory for PDF output out of 10000 (max. 10000000)
 
