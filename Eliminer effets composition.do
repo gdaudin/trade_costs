@@ -262,6 +262,11 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	
 	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
 	
+	collapse (mean) terme_A_predict, by(year)
+	rename terme_A_predict terme_`type_TC'_`mode'_np
+	label var terme_`type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
+	
+	
 	
 	* Enregistrer les effets fixes temps
 	
@@ -277,7 +282,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	generate effet_fixe=.
 	generate ecart_type=.
 	 
-	keep year effet_fixe ecart_type
+	keep year effet_fixe ecart_type  terme_`type_TC'_`mode'_np
 	bys year : keep if _n==1
 	
 	
@@ -304,7 +309,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	label var effetfixe_`type_TC'_`mode' "pure_FE_`type_TC'_`mode'"
 	label var ecart_type_`type_TC'_`mode' "ecart_type_`type_TC'_`mode'"
 	
-	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'
+	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'  terme_`type_TC'_`mode'_np
 	
 	sort year
 *	list
@@ -442,6 +447,11 @@ if "`type_TC'"== "A" {
 	twoway (scatter ln_terme_A_predict ln_terme_A)
 	
 	save blouk.dta, replace
+	collapse (mean) terme_A_predict, by(year)
+	rename terme_A_predict terme_`type_TC'_`mode'_np
+	label var terme_`type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
+	
+	
 	
 	
 	* Enregistrer les effets fixes temps
@@ -457,7 +467,7 @@ if "`type_TC'"== "A" {
 	generate effet_fixe=.
 	generate ecart_type=.
 	 
-	keep year effet_fixe ecart_type
+	keep year effet_fixe ecart_type terme_`type_TC'_`mode'_np
 	bys year : keep if _n==1
 	drop if year==1974
 	quietly levelsof year, local (liste_year) clean
@@ -488,7 +498,7 @@ if "`type_TC'"== "A" {
 	rename ecart_type ecart_type_A_`mode'
 	label var ecart_type_A_`mode' "Écart type du pure_FE_A_`mode'"
 	
-	keep year effetfixe_A_`mode' ecart_type_A_`mode'
+	keep year effetfixe_A_`mode' ecart_type_A_`mode' terme_`type_TC'_`mode'_np
 
 	sort year
 	save database_pureTC_`mode'_`sitc'_`type_TC'.dta, replace
@@ -697,7 +707,7 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
-eliminer_effets_composition ves all A
+eliminer_effets_composition ves all I
 
 
 
