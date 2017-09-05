@@ -131,9 +131,8 @@ Lise Patureau \\
 \item[-] As a constant percentage of the producer price per unit traded \vspace{0.1cm}
 \item[$\Leftrightarrow$] Part of the ``iceberg cost'' hypothesis (Samuelson, 1954) \vspace{0.1cm}
 \begin{itemize}
-\item[-] With $p$ the import price, $\widetilde{p}$ the export price, $q$ the quantity traded and $\tau >1$ the trade cost \vspace{0.1cm}
-\footnotesize
-$$pq = \tau \widetilde{p}q$$
+\item[$\ast$] With $p$ the import price, $\widetilde{p}$ the export price, $q$ the quantity traded and $\tau >1$ the trade cost \vspace{0.1cm}
+\item[$\Rightarrow$] Multiplicative costs:     \footnotesize $pq = \tau \widetilde{p}q$
 \normalsize
 \end{itemize}
 \end{itemize}
@@ -143,11 +142,10 @@ $$pq = \tau \widetilde{p}q$$
 \item[-] Why would it be more costly to transport from Milan to Paris, a pair of Italian shoes at price \euro 300 than a pair of Italian shoes at price \euro 50? \vspace{0.1cm}
 \item[-] Pricing shipping often includes an additive component \vspace{0.1cm}
 \begin{itemize}
-\item[$\star$] UPS: A \$125 fee charged for a 2 pound package from Oslo to NYC (Irrarazabal et al., 2014) \vspace{0.1cm}
+\item[$\ast$] UPS: A \$125 fee charged for a 2 pound package from Oslo to NYC (Irrarazabal et al., 2015) \vspace{0.1cm}
+\item[$\ast$] Some trade policy instruments as well (quota license price) \vspace{0.1cm}
+\item[$\Rightarrow$] Additive costs: \footnotesize $pq = (t+\widetilde{p})q  $
 \end{itemize}
-\item[-] Some trade policy instruments as well (quota license price)
-\footnotesize
-$$pq = (t+\widetilde{p})q  $$
 \end{itemize}
 \end{itemize}
 \end{frame}
@@ -170,18 +168,22 @@ $$pq = (t+\widetilde{p})q  $$
 
 \begin{frame}
 \frametitle{Our paper in one question (and 3 answers)}
+
 \begin{itemize}
-\item \textbf{Do additive transport costs matter?} \\ \vspace{0.2cm}
-\item[$\Rightarrow$] \textbf{Yes, they do} \vspace{0.1cm}
+\item  \textbf{Do additive transport costs matter?} \vspace{0.1cm}
 \begin{itemize}
-\item[-] An empirical decomposition of the structure of transport costs \vspace{0.1cm}
-\item[-] Using the US imports database over 1974-2013 (air/vessel)\vspace{0.1cm}
+\item[-] Provide an empirical decomposition of the structure of transport costs \vspace{0.1cm}
+\item[-] Using the US imports database over 1974-2013 (air/vessel)\vspace{0.2cm}
 \end{itemize}
+\item[$\Rightarrow$] \textbf{Yes, they do} \vspace{0.1cm}
+
 \item[(1)] \textbf{In terms of size}: Additive costs are sizeable \vspace{0.1cm}
 \begin{itemize}
 %\footnotesize{
-\item[-] Iceberg cost: 2.5\% of the export price in air, and 3.2\% in vessel (mean value over 1974-2013) \vspace{0.1cm}
 \item[-] Additive cost: 1.8\% and 2.9\% of the export price, in air / vessel \vspace{0.1cm}
+%\item[-] Iceberg cost: 2.5\% of the export price in air, and 3.2\% in vessel (mean value over 1974-2013) \vspace{0.1cm}
+\item[-] Roughly 50\% of the overall transport costs \vspace{0.1cm}
+
 %}
 \end{itemize}
 \item[(2)] \textbf{In terms of quality of fit}: With the additive component included, \vspace{0.1cm}
@@ -258,7 +260,7 @@ $$pq = (t+\widetilde{p})q  $$
 \item[-] US imports, long time period: Broad view of international trade flows \vspace{0.1cm}
 \item[-] A reliable database, already used by Hummels (2007), but on a shorter length of time \vspace{0.1cm}
 \item[-] Have both the import and the export prices  \vspace{0.1cm}
-\item[$\Rightarrow$] Allows the estimate the levels of both the ad-valorem and the additive trade costs  \vspace{0.1cm}
+\item[$\Rightarrow$] Allows the estimate the levels of both the ad-valorem and the additive transport costs  \vspace{0.1cm}
 \begin{itemize}
 \item[$\neq$] Irrarazabal et al. (2015)
 \end{itemize}
@@ -274,7 +276,9 @@ $$pq = (t+\widetilde{p})q  $$
 $$p = \tau \widetilde{p} + t, \qquad \text{with}\quad \tau \geq 1,\quad t \geq 0$$
 \item For product $k$, from country $i$  \vspace{0.1cm}
 \item Rewrite to get:
-$$\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}}$$
+\begin{equation}
+\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:basis_equation}
+\end{equation}
 \item[$\Rightarrow$] For each year over 1974-2013 (at the $k=$ 5-digit classification level) \vspace{0.1cm}
 \begin{itemize}
 \item[-] The equation is also mode (air or vessel)- specific
@@ -309,8 +313,8 @@ $$\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde
 
 \begin{frame}[label=slide_estimation_method]
 \begin{itemize}
-\item Given the constraint $\frac{p_{ik}}{\widetilde{p}_{ik}} -1>0$, the error term should be always positive and multiplicative \vspace{0.1cm}
-\item[$\Rightarrow$] The equation of interest becomes:
+\item Given the constraint $\frac{p_{ik}}{\widetilde{p}_{ik}} >1$, the error term should be always positive and multiplicative \vspace{0.1cm}
+\item[$\Rightarrow$] The equation of interest (\ref{eq:basis_equation}) becomes:
 \footnotesize
 $$\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{s(k)} -1+\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})$$
 \normalsize
@@ -521,7 +525,7 @@ $$\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}, \qqu
 \end{frame}
 
 
-\begin{frame}[label = slide_compeffects_strategy]
+\begin{frame} [label = slide_compeffects_strategy]
 \frametitle{Eliminating composition effects: Our strategy}
 \begin{itemize}
 \item Based on our estimates of additive/multiplicative transport costs (TC) \hyperlink{app_compeffects_strategy}{\beamergotobutton{Comparison with Hummels (2007)}}\vspace{0.1cm}
@@ -532,13 +536,14 @@ $$\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}, \qqu
 \begin{itemize}
 \item[-] By the mean of a time fixed-effect \vspace{0.1cm}
 \item[-] For both the additive \& the multiplicative TC components \vspace{0.1cm}
-\item[-] Build a unified measure of ``total'' transport costs (agglomerate the two components), also both fitted and unfitted \vspace{0.1cm}
+\item[-] Build a unified measure of ``total'' transport costs (agglomerate the two components), also both fitted and unfitted \vspace{0.2cm}
 %\item[-] From which we extract the fitted ``total'' transport cost measure \vspace{0.1cm}
 \end{itemize}
-\item What explains the decrease of transport costs over time?
+\item What explains the decrease of transport costs over time?  \vspace{0.1cm}
 \begin{itemize}
-\item[-] Is it mostly due to the composition of trade (product quality/weight, less distant countries of origin...) \vspace{0.1cm}
-\item[-] or to the ``pure'' transports costs dimension (e.g., handling costs) ?
+\item[-] Composition effects vs ``Pure'' TC changes? \vspace{0.1cm}
+%\item[-] Is it mostly due to the composition of trade (product quality/weight, less distant countries of origin...) \vspace{0.1cm}
+%\item[-] or to the ``pure'' transports costs dimension (e.g., handling costs) ?
 \end{itemize}
 \item[$\Rightarrow$] Compare the unfitted TC component to the fitted one (composition effects excluded) \vspace{0.1cm}
 \end{itemize}
@@ -567,13 +572,20 @@ $$\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}, \qqu
 \begin{frame}
 \frametitle{Time trends in transport costs: Comments}
 \begin{itemize}
-\item International transport costs have substantially reduced over the period (1974-2013) \vspace{0.1cm}
+\item A strong reduction of transport costs over the period (1974-2013) \vspace{0.1cm}
 \begin{itemize}
+\footnotesize
 \item[-] By 50\% in Air and 60\% in Ocean transport \vspace{0.1cm}
 \item[-] Consistent with the literature, see Lafourcade \& Thisse (2011) \vspace{0.1cm}
 \item[-] Roughly same order of magnitude for both the ad-valorem and the additive component  \vspace{0.1cm}
+\normalsize
 \end{itemize}
-\item \textbf{Not much evidence of a difference between the ``raw'' and the ``pure'' TC components }\vspace{0.1cm}
+\item \textbf{Trade composition effects: A minor role in accounting for the time trend of TC}\vspace{0.1cm}
+\begin{itemize}
+\footnotesize
+\item[-] Not much evidence of a difference between the ``raw'' and the ``pure'' TC components \vspace{0.1cm}
+\normalsize
+\end{itemize}
 \item In Air transport \vspace{0.1cm}
 \begin{itemize}
 \footnotesize
@@ -921,7 +933,7 @@ Five differences with our method  \vspace{0.1cm}
 \ln TC_{ikt} \equiv \ln\left(\frac{p_{ikt}-\widetilde{p}_{ikt}}{\widetilde{p}_{ikt}}  \right) = \Delta_{ikt} - \beta \ln \widetilde{p}_{ikt} \label{eq:hummels2}
 \end{equation}
 \begin{itemize}
-\item[-] with $\Delta_{ikt} \equiv \delta+ \sum_{i,k}\alpha_{ik}.\mathbb{1}_{ik}+ \sum_{t}\gamma_{t}.\mathbb{1}_{t} + \epsilon_{ikt}$ 
+\item[-] with $\Delta_{ikt} \equiv \delta+ \sum_{i,k}\alpha_{ik}.\mathbb{1}_{ik}+ \sum_{t}\gamma_{t}.\mathbb{1}_{t} + \epsilon_{ikt}$
 \end{itemize}
 \normalsize
 \item Encompasses the two extreme cases of only ad-valorem costs / only additive costs
