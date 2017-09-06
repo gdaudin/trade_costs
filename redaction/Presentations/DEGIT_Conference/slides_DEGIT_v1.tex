@@ -317,8 +317,8 @@ $$p = \tau \widetilde{p} + t, \qquad \text{with}\quad \tau \geq 1,\quad t \geq 0
 \item[-] $\tau_i$, $\tau_{s(k)}$, $t_i$, $t_{s(k)}$ are the parameters (i.e. fixed effects) to be estimated
 \end{itemize}
 \normalsize
-\item A non-linear equation (due to the additive costs)  
-\item[$\Rightarrow$] Estimation using non-linear squares 
+\item A non-linear equation (due to the additive costs)
+\item[$\Rightarrow$] Estimation using non-linear squares
 \end{itemize}
 \end{frame}
 
@@ -362,7 +362,7 @@ $$\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}, \qqu
 \item  Taking the weighted average over the sector-country dimension, we finally get, by year and transport mode: \vspace{0.1cm}
 \begin{itemize}
 \item[-] With only iceberg costs: $\widehat{\tau}^{ice}$ \vspace{0.1cm}
-\item[-] When additive costs are included: $\widehat{\tau}^{adv}$, $\widehat{t}$  
+\item[-] When additive costs are included: $\widehat{\tau}^{adv}$, $\widehat{t}$
 
 \end{itemize}
 \end{itemize}
@@ -440,7 +440,7 @@ $$\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}, \qqu
 \end{itemize}
 \item Opening the black box of transport costs \vspace{0.1cm}
 \begin{itemize}
-\item[-] Iceberg cost: 2.5\% and 3.2\% of the export price in Air \& Vessel resp.  
+\item[-] Iceberg cost: 2.5\% and 3.2\% of the export price in Air \& Vessel resp.
 \item[-] Additive cost: 1.8\% and 2.9\% of the export price \vspace{0.1cm}
 \end{itemize}
 \item[$\Rightarrow$] Valuable insights for related papers more theoretically-oriented, in need for calibration
@@ -540,7 +540,7 @@ $$\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}, \qqu
 {graph_composition_all.pdf}
 \end{center}
 \end{figure}
-\hyperlink{slide_compeffects_results}{\beamergotobutton{Back to slide}}
+\hyperlink{slide_compeffects_results}{\beamergotobutton{Back to slide}} \hyperlink{app_compeffects_Hummels_rob}{\beamergotobutton{Robustness check}}
 \end{frame}
 
 
@@ -720,7 +720,7 @@ $$\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i} \times \tau_{s(k)} -1+\fra
 \item[-] $\tau_i$, $\tau_{s(k)}$, $t_i$, $t_{s(k)}$ are the parameters (i.e. fixed effects) to be estimated
 \end{itemize}
 \item A non-linear equation (due to the additive costs)  \vspace{0.1cm}
-\item[$\Rightarrow$] Estimation using non-linear squares 
+\item[$\Rightarrow$] Estimation using non-linear squares
 
 \end{itemize}
 \hyperlink{slide_empirical_strategy}{\beamergotobutton{Back to Slide}}
@@ -930,7 +930,7 @@ Terms A \& I &  0.575 & 0.590 & 0.571 & 0.491 & 0.462 & 0.56 \\ \hline
 \begin{frame}[label = app_compeffects_strategy]
 \frametitle{Composition effects: Our strategy}
 \begin{itemize}
-\item Start with our estimates of add. \& adv. transport costs (TC) 
+\item Start with our estimates of add. \& adv. transport costs (TC)
 \begin{itemize}
 \footnotesize
 \item[-] That vary over time ($t$)/product ($k$) /origin country ($i$) (by transport mode): $\widehat{\tau}_{ikt}, \widehat{t}_{ikt}$ \vspace{0.1cm}
@@ -1045,7 +1045,7 @@ Reformulating Hummels's (2007) method  \vspace{0.1cm}
 \end{frame}
 
 
-\begin{frame}
+\begin{frame}[label = app_compeffects_Hummels2]
 %\frametitle{Composition effects: Comparing with Hummels (2007) (cont')}
 Five differences with our method  \vspace{0.1cm}
 \footnotesize
@@ -1060,7 +1060,7 @@ Five differences with our method  \vspace{0.1cm}
 \item[-] Hummels (2007): The unweighed average value over the $i,k$ dimension \vspace{0.1cm}
 \item[$\neq$] We weight each flow by its relative value in total trade flows observed in 1974 \vspace{0.1cm}
 \item[-] Not much of a difference provided the weighting scheme in value is constant over time \vspace{0.1cm}
-\item[-] Robustness to the alternative weighting scheme (apply Hummels's (2007) method) in progress
+\item[-] Results robust to the alternative weighting scheme (apply Hummels's (2007) method) \hyperlink{app_compeffects_Hummels_rob}{\beamergotobutton{See}}
 \end{itemize}
 
 \end{enumerate}
@@ -1116,6 +1116,24 @@ $$\ln\left(p_{ikt}-\widetilde{p}_{ikt}\right) = \Delta_{ikt} ~~\leftrightarrow~~
 \end{frame}
 
 
+\begin{frame}[label = app_compeffects_Hummels_rob]
+\textbf{Excluding the composition effects: Robustness check}
+\begin{itemize}
+\item Applying Hummel's (2007) weighting scheme rather than ours \hyperlink{slide_compeffects_figure}{\beamergotobutton{Compare}}
+\begin{itemize}
+\item[-] Take the unweighed average value over the $i,k$ dimension to get the fitted $TC$ measure
+\end{itemize}
+\end{itemize}
+\begin{figure}[htbp]
+%\caption{Transport costs (with and without composition effects)}
+%\label{fig:totalTC_compeffects_excl}
+\begin{center}
+\includegraphics[height=6cm]
+{graph_composition_all_np.pdf}
+\end{center}
+\end{figure}
 
+\hyperlink{app_compeffects_Hummels2}{\beamergotobutton{Back to slide}}
+\end{frame}
 
 \end{document}
