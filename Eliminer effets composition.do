@@ -262,8 +262,12 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	
 	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
 	
-	collapse (mean) terme_A_predict, by(year)
-	rename terme_A_predict terme_`type_TC'_`mode'_np
+	predict ln_terme_`type_TC'_predict
+	generate terme_`type_TC'_predict=exp(ln_terme_`type_TC'_predict)
+	
+	
+	collapse (mean) terme_`type_TC'_predict, by(year)
+	rename terme_`type_TC'_predict terme_`type_TC'_`mode'_np
 	label var terme_`type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
 	
 	
@@ -707,7 +711,14 @@ end
 ***********LANCER LES PROGRAMMES********************
 
 
+eliminer_effets_composition ves all obs
 eliminer_effets_composition ves all I
+* eliminer_effets_composition ves all A
+eliminer_effets_composition air all obs
+eliminer_effets_composition air all I
+* * eliminer_effets_composition air all A
+aggreg all
+
 
 
 
