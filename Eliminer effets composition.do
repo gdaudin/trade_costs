@@ -301,7 +301,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 			local n=`n'+1
 	}
 	
-	gen terme_`type_TC'_`mode'_1974_np=terme_`type_TC'_`mode'_np[1]
+	gen terme_`type_TC'_`mode'_74_np=terme_`type_TC'_`mode'_np[1]
 	drop if year==1974
 
 *	list
@@ -476,7 +476,7 @@ if "`type_TC'"== "A" {
 	keep year effet_fixe ecart_type terme_`type_TC'_`mode'_np
 	bys year : keep if _n==1
 	sort year
-	gen terme_`type_TC'_`mode'_1974_np=terme_`type_TC'_`mode'_np[1]
+	gen terme_`type_TC'_`mode'_74_np=terme_`type_TC'_`mode'_np[1]
 	drop if year==1974
 	quietly levelsof year, local (liste_year) clean
 	
