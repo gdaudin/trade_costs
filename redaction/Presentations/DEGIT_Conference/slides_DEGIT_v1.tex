@@ -204,7 +204,7 @@ Lise Patureau \\
 \begin{itemize}
 \item[(3)] \textbf{In accounting for the time trend of transport costs} \vspace{0.2cm}
 \begin{itemize}
-\item[-] The importance of modelling the additive component of transport costs \vspace{0.1cm}
+\item[-] The modelling of the additive component of transport costs is key \vspace{0.1cm}
 \item[-] Because it changes the result of excluding the trade composition effects when characterizing the time trend \vspace{0.1cm}
 \begin{itemize}
 \item[$\ast$] The decrease in TC over time is mostly attributable to the decrease in the ``pure'' transport costs,  \vspace{0.1cm}
@@ -280,12 +280,12 @@ Lise Patureau \\
 \begin{itemize}
 \item Relate the import price $p$ to the export price $\widetilde{p}$ given both additive (per-kg) costs $t$ and ad-valorem costs $\tau$:
 $$p = \tau \widetilde{p} + t, \qquad \text{with}\quad \tau \geq 1,\quad t \geq 0$$
-\item For a product $k$, from country $i$ (for a given transport mode)   \vspace{0.1cm}
+\item From country $i$, for a product $k$ (at the $k=$ 5-digit classification level, and for a given transport mode)   \vspace{0.1cm}
 \item Rewrite to get:
 \begin{equation}
 \frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:basis_equation}
 \end{equation}
-\item[$\Rightarrow$] For each year over 1974-2013 (at the $k=$ 5-digit classification level) \vspace{0.1cm}
+\item[$\Rightarrow$] For each year over 1974-2013\vspace{0.1cm}
 \begin{itemize}
 \item[-] The equation is also mode (air or vessel) - specific
 \end{itemize}
@@ -294,6 +294,7 @@ $$p = \tau \widetilde{p} + t, \qquad \text{with}\quad \tau \geq 1,\quad t \geq 0
 
 \begin{frame}[label = slide_empirical_strategy]
 \frametitle{Empirical specification (2)}
+\textbf{Obtain the estimated equation}
 \begin{itemize}
 \item Make some simplifying assumptions \hyperlink{app_empirical_strategy}{\beamergotobutton{More details}}  \vspace{0.1cm}
 \begin{itemize}
@@ -323,12 +324,12 @@ $$p = \tau \widetilde{p} + t, \qquad \text{with}\quad \tau \geq 1,\quad t \geq 0
 
 \begin{frame}
 \frametitle{Empirical specification (3)}
-\textbf{How to characterize the importance of additive costs relatively to iceberg?} \vspace{0.1cm}
+\textbf{How to characterize the importance of additive costs relatively to ad-valorem?} \vspace{0.1cm}
 \begin{itemize}
 \item Estimate Equation (\ref{eq:est_equation}) constraining $t=0$ \vspace{0.1cm}
 \item[$\Rightarrow$] Estimate \textit{two} models\vspace{0.1cm}
 %\begin{itemize}
-\item[(A)] With only ad-valorem costs:
+\item[(A)] With additive costs excluded (only ad-valorem costs):
 \footnotesize
 \begin{equation}
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{s(k)}-1 \right) + \epsilon^{ice}_{ik} \label{eq:model_nlI}
@@ -360,16 +361,23 @@ $$\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}, \qqu
 \end{itemize}
 \item  Taking the weighted average over the sector-country dimension, we finally get, by year and transport mode: \vspace{0.1cm}
 \begin{itemize}
-\item[-] When additive costs are included: $\widehat{\tau}^{adv}$, $\widehat{t}$  \vspace{0.1cm}
-\item[-] With only iceberg costs: $\widehat{\tau}^{ice}$
+\item[-] With only iceberg costs: $\widehat{\tau}^{ice}$ \vspace{0.1cm}
+\item[-] When additive costs are included: $\widehat{\tau}^{adv}$, $\widehat{t}$  
+
 \end{itemize}
 \end{itemize}
 \end{frame}
 
+\begin{frame}
+\frametitle{Question, and answers}
+\begin{itemize}
+\item Do additive costs matter? \vspace{0.5cm}
+\item How we answer (yes) to this question
+\end{itemize}
+\end{frame}
 
-
-\begin{frame}[label=slide_results_summary]
-\frametitle{Do additive costs matter? Our answers}
+\begin{frame}[label=slide_result1]
+\frametitle{Result 1: Size of additive transport costs \hyperlink{app_result1}{\beamergotobutton{More on this}} }
 \begin{itemize}
 \item Estimate the values of both the ad-valorem and the additive components \vspace{0.1cm}
 \begin{itemize}
@@ -416,8 +424,7 @@ $$\widehat{\tau}^{adv}_{is} = \widehat{\tau_{i}} \times \widehat{\tau_{s}}, \qqu
   \end{table}%
  \end{frame}
 
-\begin{frame}[label=slide_result1]
-\frametitle{Result 1: Size of additive transport costs \hyperlink{app_result1}{\beamergotobutton{More on this}} }
+\begin{frame}
 \begin{itemize}
 \item \textbf{International transport costs: A sizeable additive component}  \vspace{0.2cm}
 \begin{itemize}
