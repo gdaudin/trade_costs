@@ -315,7 +315,8 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	label var effetfixe_`type_TC'_`mode' "pure_FE_`type_TC'_`mode'"
 	label var ecart_type_`type_TC'_`mode' "ecart_type_`type_TC'_`mode'"
 	
-	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode'  terme_`type_TC'_`mode'_np
+	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode' ///
+			terme_`type_TC'_`mode'_np terme_`type_TC'_`mode'_74_np
 	
 	sort year
 *	list
@@ -442,12 +443,18 @@ if "`type_TC'"== "A" {
 	display "nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')"
 	
 	replace yearly_share = yearly_share*100000
-	
-	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
+******	Ce bout là soit fait l'estimation, soit la récupère si elle a déjà été faite.
+*	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	*nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=val], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 	
-	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
+*	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
 	
+	
+
+	estimates use estimate_deter_couts_add_`mode'_`type_TC'.ster
+
+	
+*******
 	predict ln_terme_A_predict
 	generate terme_A_predict=exp(ln_terme_A_predict)
 	twoway (scatter ln_terme_A_predict ln_terme_A)
@@ -506,7 +513,8 @@ if "`type_TC'"== "A" {
 	rename ecart_type ecart_type_A_`mode'
 	label var ecart_type_A_`mode' "Écart type du pure_FE_A_`mode'"
 	
-	keep year effetfixe_A_`mode' ecart_type_A_`mode' terme_`type_TC'_`mode'_np
+	keep year effetfixe_A_`mode' ecart_type_A_`mode' ///
+			terme_A_`mode'_np terme_A_`mode'_74_np
 
 	sort year
 	save database_pureTC_`mode'_`sitc'_`type_TC'.dta, replace
@@ -630,6 +638,9 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 	replace terme_`type_TC'_`mode'_mp = 100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
+
+	
+	
 	*replace ecart_type_`type_TC'_`mode' = 100*(terme_`type_TC'_`mode'_74*exp(ecart_type_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
 	
 	gen terme_95_`type_TC'_`mode'_mp=100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'+1.96*ecart_type_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)
@@ -640,6 +651,14 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	
 	label var terme_`type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
 	label var ecart_type_`type_TC'_`mode' "ecart_type_TC_`type_TC'_`mode'"
+	
+	egen blink = mean(terme_`type_TC'_`mode'_74_np)
+	replace terme_`type_TC'_`mode'_74_np=blink
+	drop blink
+	
+	replace terme_`type_TC'_`mode'_np=terme_`type_TC'_`mode'_74_np if year==1974
+	replace terme_`type_TC'_`mode'_np=100*(terme_`type_TC'_`mode'_np-1)/(terme_`type_TC'_`mode'_74_np-1)
+	label var terme_`type_TC'_`mode'_np "pure_TC_`type_TC'_`mode'_np"
 }
 
 
@@ -656,6 +675,16 @@ if "`type_TC'"== "A" {
 	
 	label var terme_`type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
 	label var ecart_type_`type_TC'_`mode' "ecart_type_TC_`type_TC'_`mode'"
+	
+	egen blink = mean(terme_`type_TC'_`mode'_74_np)
+	replace terme_`type_TC'_`mode'_74_np=blink
+	drop blink
+	
+	replace terme_`type_TC'_`mode'_np=terme_`type_TC'_`mode'_74_np if year==1974
+	replace terme_`type_TC'_`mode'_np=100*terme_`type_TC'_`mode'_np/terme_`type_TC'_`mode'_74_np
+	
+	label var terme_`type_TC'_`mode'_np "pure_TC_`type_TC'_`mode'_np"
+	
 }
 
 
@@ -717,10 +746,10 @@ end
 
 eliminer_effets_composition ves all obs
 eliminer_effets_composition ves all I
-* eliminer_effets_composition ves all A
+eliminer_effets_composition ves all A
 eliminer_effets_composition air all obs
 eliminer_effets_composition air all I
-* * eliminer_effets_composition air all A
+eliminer_effets_composition air all A
 aggreg all
 
 
