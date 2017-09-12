@@ -1,5 +1,5 @@
 \select@language {english}
-\contentsline {subsection}{\numberline {A}Additive-costs only Model }{3}{subsection.0.1}
-\contentsline {subsection}{\numberline {B}Transport Cost Estimates: Yearly Detailed Results}{4}{subsection.0.2}
-\contentsline {subsubsection}{\numberline {B.1}3-Digits Level Product Classification}{4}{subsubsection.0.2.1}
-\contentsline {subsection}{\numberline {C}Eliminating the composition effects: Primary vs. Maufacturing sector}{7}{subsection.0.3}
+\contentsline {subsection}{\numberline {A}Three models: Comparison }{3}{subsection.0.1}
+\contentsline {subsection}{\numberline {B}Transport Cost Estimates: Yearly Detailed Results}{7}{subsection.0.2}
+\contentsline {subsubsection}{\numberline {B.1}3-Digits Level Product Classification}{7}{subsubsection.0.2.1}
+\contentsline {subsection}{\numberline {C}Eliminating the composition effects: Primary vs. Maufacturing sector}{10}{subsection.0.3}

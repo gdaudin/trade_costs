@@ -1,9 +1,12 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.7.25)  2 AUG 2017 14:29
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.12.9)  12 SEP 2017 18:53
 entering extended mode
-**./online_appendix_dhp2017.tex
-(online_appendix_dhp2017.tex
-LaTeX2e <2017-04-15>
-Babel <3.12> and hyphenation patterns for 75 language(s) loaded.
+**//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Git_Hub/
+trade_costs/redaction/online_appendix_dhp2017.tex
+
+(//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Git_Hub/t
+rade_costs/redaction/online_appendix_dhp2017.tex
+LaTeX2e <2014/05/01>
+Babel <3.9l> and hyphenation patterns for 68 languages loaded.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\elsarticle\elsarticle.cls"
 Document Class: elsarticle 2009/09/17, 1.2.0: Elsevier Ltd
 \@bls=\dimen102
@@ -25,25 +28,33 @@ File: size11.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 \bibindent=\dimen103
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
-Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
-Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
-Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg"
-File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
-Package graphics Info: Driver file: pdftex.def on input line 99.
+Package graphics Info: Driver file: pdftex.def on input line 91.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-def\pdftex.def"
-File: pdftex.def 2017/06/24 v1.0g Graphics/color driver for pdftex
+("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+)
+\Gread@gobject=\count87
 ))
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
@@ -60,13 +71,13 @@ LaTeX Font Info:    Try loading font information for U+psy on input line 64.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\psnfss\upsy.fd"
 File: upsy.fd 2001/06/04 font definitions for U/psy.
 ))
-\c@tnote=\count87
-\c@fnote=\count88
-\c@cnote=\count89
-\c@ead=\count90
-\c@author=\count91
+\c@tnote=\count88
+\c@fnote=\count89
+\c@cnote=\count90
+\c@ead=\count91
+\c@author=\count92
 \@eadauthor=\toks15
-\c@affn=\count92
+\c@affn=\count93
 \absbox=\box26
 \keybox=\box27
 \Columnwidth=\dimen106
@@ -78,100 +89,77 @@ File: upsy.fd 2001/06/04 font definitions for U/psy.
 \@sep=\skip43
 \@@sep=\skip44
 
-(online_appendix_dhp2017.spl)
+(\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
+rade_costs\redaction\online_appendix_dhp2017.spl)
 ("C:\Program Files\MiKTeX 2.9\tex\latex\natbib\natbib.sty"
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip45
 \bibsep=\skip46
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count93
+\c@NAT@ctr=\count94
 )
 \splwrite=\write3
-\openout3 = `online_appendix_dhp2017.spl'.
-
 )
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.sty"
-Package: babel 2017/06/29 3.12 The Babel package
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel\babel.sty"
+Package: babel 2014/09/25 3.9l The Babel package
 
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\switch.def"
-File: switch.def 2017/06/29 3.12 Babel switching mechanism
-)
 *************************************
 * Local config file bblopts.cfg used
 *
-("C:\Program Files\MiKTeX 2.9\tex\latex\arabi\bblopts.cfg"
-File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
- babel
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\bblopts.cfg"
+File: bblopts.cfg 2006/07/31 v1.0 MiKTeX 'babel' configuration
 )
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel-french\frenchb.ldf"
-Language: frenchb 2017/07/08 v3.3b French support from the babel system
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel-french\frenchb.ldf"
+Language: frenchb 2014/10/25 v3.1c French support from the babel system
 
-
-Package babel-french Warning: Option `frenchb' for Babel is *deprecated*,
-(babel-french)                it might be removed sooner or later. Please
-(babel-french)                use `french' instead; reported on input line 35.
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel-french\french.ldf"
-Language: french 2017/07/08 v3.3b French support from the babel system
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\babel.def"
-File: babel.def 2017/06/29 3.12 Babel common definitions
-
-("C:\Program Files\MiKTeX 2.9\tex\generic\babel\switch.def"
-File: switch.def 2017/06/29 3.12 Babel switching mechanism
-)
-\babel@savecnt=\count94
+("C:\Program Files\MiKTeX 2.9\tex\latex\babel\babel.def"
+File: babel.def 2014/09/25 3.9l Babel common definitions
+\babel@savecnt=\count95
 \U@D=\dimen109
 )
-\FB@nonchar=\count95
-\FBcolonsp=\toks17
-\FBthinsp=\toks18
-Package babel Info: Making : an active character on input line 321.
-Package babel Info: Making ; an active character on input line 322.
-Package babel Info: Making ! an active character on input line 323.
-Package babel Info: Making ? an active character on input line 324.
-\FBguillsp=\toks19
-\FBguill@level=\count96
-\FB@everypar=\toks20
+\l@acadian = a dialect from \language\l@french 
+\l@canadien = a dialect from \language\l@french 
+\FBcolonskip=\skip47
+\FBthinskip=\skip48
+\FB@interchartokenstateORI=\count96
+Package babel Info: Making : an active character on input line 371.
+Package babel Info: Making ; an active character on input line 372.
+Package babel Info: Making ! an active character on input line 373.
+Package babel Info: Making ? an active character on input line 374.
+\FBguillskip=\skip49
+\FBguill@level=\count97
 \FB@Mht=\dimen110
-\mc@charclass=\count97
-\mc@charfam=\count98
-\mc@charslot=\count99
-\std@mcc=\count100
-\dec@mcc=\count101
-\listindentFB=\skip47
-\descindentFB=\skip48
-\labelwidthFB=\skip49
-\leftmarginFB=\skip50
+\std@mcc=\count98
+\dec@mcc=\count99
+\listindentFB=\skip50
+\labelwidthFB=\skip51
+\leftmarginFB=\skip52
 \parindentFFN=\dimen111
-\FBfnindent=\skip51
-))
+)
 ("C:\Program Files\MiKTeX 2.9\tex\latex\babel-english\english.ldf"
-Language: english 2017/06/06 v3.3r English support from the babel system
+Language: english 2012/08/20 v3.3p English support from the babel system
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
 ))
 ("C:\Program Files\MiKTeX 2.9\tex\latex\carlisle\scalefnt.sty")
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\inputenc.sty"
-Package: inputenc 2015/03/17 v1.2c Input encoding file
-\inpenc@prehook=\toks21
-\inpenc@posthook=\toks22
+Package: inputenc 2014/04/30 v1.2b Input encoding file
+\inpenc@prehook=\toks17
+\inpenc@posthook=\toks18
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\utf8.def"
-File: utf8.def 2017/01/28 v1.1t UTF-8 support for inputenc
+File: utf8.def 2014/09/29 v1.1m UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\t1enc.dfu"
-File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
-   defining Unicode char U+00A0 (decimal 160)
+File: t1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00AB (decimal 171)
-   defining Unicode char U+00AD (decimal 173)
    defining Unicode char U+00BB (decimal 187)
    defining Unicode char U+00BF (decimal 191)
    defining Unicode char U+00C0 (decimal 192)
@@ -236,94 +224,50 @@ File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
    defining Unicode char U+00FD (decimal 253)
    defining Unicode char U+00FE (decimal 254)
    defining Unicode char U+00FF (decimal 255)
-   defining Unicode char U+0100 (decimal 256)
-   defining Unicode char U+0101 (decimal 257)
    defining Unicode char U+0102 (decimal 258)
    defining Unicode char U+0103 (decimal 259)
    defining Unicode char U+0104 (decimal 260)
    defining Unicode char U+0105 (decimal 261)
    defining Unicode char U+0106 (decimal 262)
    defining Unicode char U+0107 (decimal 263)
-   defining Unicode char U+0108 (decimal 264)
-   defining Unicode char U+0109 (decimal 265)
-   defining Unicode char U+010A (decimal 266)
-   defining Unicode char U+010B (decimal 267)
    defining Unicode char U+010C (decimal 268)
    defining Unicode char U+010D (decimal 269)
    defining Unicode char U+010E (decimal 270)
    defining Unicode char U+010F (decimal 271)
    defining Unicode char U+0110 (decimal 272)
    defining Unicode char U+0111 (decimal 273)
-   defining Unicode char U+0112 (decimal 274)
-   defining Unicode char U+0113 (decimal 275)
-   defining Unicode char U+0114 (decimal 276)
-   defining Unicode char U+0115 (decimal 277)
-   defining Unicode char U+0116 (decimal 278)
-   defining Unicode char U+0117 (decimal 279)
    defining Unicode char U+0118 (decimal 280)
    defining Unicode char U+0119 (decimal 281)
    defining Unicode char U+011A (decimal 282)
    defining Unicode char U+011B (decimal 283)
-   defining Unicode char U+011C (decimal 284)
-   defining Unicode char U+011D (decimal 285)
    defining Unicode char U+011E (decimal 286)
    defining Unicode char U+011F (decimal 287)
-   defining Unicode char U+0120 (decimal 288)
-   defining Unicode char U+0121 (decimal 289)
-   defining Unicode char U+0122 (decimal 290)
-   defining Unicode char U+0123 (decimal 291)
-   defining Unicode char U+0124 (decimal 292)
-   defining Unicode char U+0125 (decimal 293)
-   defining Unicode char U+0128 (decimal 296)
-   defining Unicode char U+0129 (decimal 297)
-   defining Unicode char U+012A (decimal 298)
-   defining Unicode char U+012B (decimal 299)
-   defining Unicode char U+012C (decimal 300)
-   defining Unicode char U+012D (decimal 301)
-   defining Unicode char U+012E (decimal 302)
-   defining Unicode char U+012F (decimal 303)
    defining Unicode char U+0130 (decimal 304)
    defining Unicode char U+0131 (decimal 305)
    defining Unicode char U+0132 (decimal 306)
    defining Unicode char U+0133 (decimal 307)
-   defining Unicode char U+0134 (decimal 308)
-   defining Unicode char U+0135 (decimal 309)
-   defining Unicode char U+0136 (decimal 310)
-   defining Unicode char U+0137 (decimal 311)
    defining Unicode char U+0139 (decimal 313)
    defining Unicode char U+013A (decimal 314)
-   defining Unicode char U+013B (decimal 315)
-   defining Unicode char U+013C (decimal 316)
    defining Unicode char U+013D (decimal 317)
    defining Unicode char U+013E (decimal 318)
    defining Unicode char U+0141 (decimal 321)
    defining Unicode char U+0142 (decimal 322)
    defining Unicode char U+0143 (decimal 323)
    defining Unicode char U+0144 (decimal 324)
-   defining Unicode char U+0145 (decimal 325)
-   defining Unicode char U+0146 (decimal 326)
    defining Unicode char U+0147 (decimal 327)
    defining Unicode char U+0148 (decimal 328)
    defining Unicode char U+014A (decimal 330)
    defining Unicode char U+014B (decimal 331)
-   defining Unicode char U+014C (decimal 332)
-   defining Unicode char U+014D (decimal 333)
-   defining Unicode char U+014E (decimal 334)
-   defining Unicode char U+014F (decimal 335)
    defining Unicode char U+0150 (decimal 336)
    defining Unicode char U+0151 (decimal 337)
    defining Unicode char U+0152 (decimal 338)
    defining Unicode char U+0153 (decimal 339)
    defining Unicode char U+0154 (decimal 340)
    defining Unicode char U+0155 (decimal 341)
-   defining Unicode char U+0156 (decimal 342)
-   defining Unicode char U+0157 (decimal 343)
    defining Unicode char U+0158 (decimal 344)
    defining Unicode char U+0159 (decimal 345)
    defining Unicode char U+015A (decimal 346)
    defining Unicode char U+015B (decimal 347)
-   defining Unicode char U+015C (decimal 348)
-   defining Unicode char U+015D (decimal 349)
    defining Unicode char U+015E (decimal 350)
    defining Unicode char U+015F (decimal 351)
    defining Unicode char U+0160 (decimal 352)
@@ -332,22 +276,10 @@ File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
    defining Unicode char U+0163 (decimal 355)
    defining Unicode char U+0164 (decimal 356)
    defining Unicode char U+0165 (decimal 357)
-   defining Unicode char U+0168 (decimal 360)
-   defining Unicode char U+0169 (decimal 361)
-   defining Unicode char U+016A (decimal 362)
-   defining Unicode char U+016B (decimal 363)
-   defining Unicode char U+016C (decimal 364)
-   defining Unicode char U+016D (decimal 365)
    defining Unicode char U+016E (decimal 366)
    defining Unicode char U+016F (decimal 367)
    defining Unicode char U+0170 (decimal 368)
    defining Unicode char U+0171 (decimal 369)
-   defining Unicode char U+0172 (decimal 370)
-   defining Unicode char U+0173 (decimal 371)
-   defining Unicode char U+0174 (decimal 372)
-   defining Unicode char U+0175 (decimal 373)
-   defining Unicode char U+0176 (decimal 374)
-   defining Unicode char U+0177 (decimal 375)
    defining Unicode char U+0178 (decimal 376)
    defining Unicode char U+0179 (decimal 377)
    defining Unicode char U+017A (decimal 378)
@@ -355,40 +287,9 @@ File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
    defining Unicode char U+017C (decimal 380)
    defining Unicode char U+017D (decimal 381)
    defining Unicode char U+017E (decimal 382)
-   defining Unicode char U+01CD (decimal 461)
-   defining Unicode char U+01CE (decimal 462)
-   defining Unicode char U+01CF (decimal 463)
-   defining Unicode char U+01D0 (decimal 464)
-   defining Unicode char U+01D1 (decimal 465)
-   defining Unicode char U+01D2 (decimal 466)
-   defining Unicode char U+01D3 (decimal 467)
-   defining Unicode char U+01D4 (decimal 468)
-   defining Unicode char U+01E2 (decimal 482)
-   defining Unicode char U+01E3 (decimal 483)
-   defining Unicode char U+01E6 (decimal 486)
-   defining Unicode char U+01E7 (decimal 487)
-   defining Unicode char U+01E8 (decimal 488)
-   defining Unicode char U+01E9 (decimal 489)
-   defining Unicode char U+01EA (decimal 490)
-   defining Unicode char U+01EB (decimal 491)
-   defining Unicode char U+01F0 (decimal 496)
-   defining Unicode char U+01F4 (decimal 500)
-   defining Unicode char U+01F5 (decimal 501)
-   defining Unicode char U+0218 (decimal 536)
-   defining Unicode char U+0219 (decimal 537)
-   defining Unicode char U+021A (decimal 538)
-   defining Unicode char U+021B (decimal 539)
-   defining Unicode char U+0232 (decimal 562)
-   defining Unicode char U+0233 (decimal 563)
-   defining Unicode char U+1E02 (decimal 7682)
-   defining Unicode char U+1E03 (decimal 7683)
    defining Unicode char U+200C (decimal 8204)
-   defining Unicode char U+2010 (decimal 8208)
-   defining Unicode char U+2011 (decimal 8209)
-   defining Unicode char U+2012 (decimal 8210)
    defining Unicode char U+2013 (decimal 8211)
    defining Unicode char U+2014 (decimal 8212)
-   defining Unicode char U+2015 (decimal 8213)
    defining Unicode char U+2018 (decimal 8216)
    defining Unicode char U+2019 (decimal 8217)
    defining Unicode char U+201A (decimal 8218)
@@ -400,18 +301,14 @@ File: t1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
    defining Unicode char U+2039 (decimal 8249)
    defining Unicode char U+203A (decimal 8250)
    defining Unicode char U+2423 (decimal 9251)
-   defining Unicode char U+1E20 (decimal 7712)
-   defining Unicode char U+1E21 (decimal 7713)
 )
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ot1enc.dfu"
-File: ot1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
-   defining Unicode char U+00A0 (decimal 160)
+File: ot1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
-   defining Unicode char U+00AD (decimal 173)
    defining Unicode char U+00B8 (decimal 184)
    defining Unicode char U+00BF (decimal 191)
    defining Unicode char U+00C5 (decimal 197)
@@ -429,14 +326,6 @@ File: ot1enc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
    defining Unicode char U+0142 (decimal 322)
    defining Unicode char U+0152 (decimal 338)
    defining Unicode char U+0153 (decimal 339)
-   defining Unicode char U+0174 (decimal 372)
-   defining Unicode char U+0175 (decimal 373)
-   defining Unicode char U+0176 (decimal 374)
-   defining Unicode char U+0177 (decimal 375)
-   defining Unicode char U+0218 (decimal 536)
-   defining Unicode char U+0219 (decimal 537)
-   defining Unicode char U+021A (decimal 538)
-   defining Unicode char U+021B (decimal 539)
    defining Unicode char U+2013 (decimal 8211)
    defining Unicode char U+2014 (decimal 8212)
    defining Unicode char U+2018 (decimal 8216)
@@ -448,7 +337,7 @@ Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omsenc.dfu"
-File: omsenc.dfu 2017/01/28 v1.1t UTF-8 support for inputenc
+File: omsenc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
    defining Unicode char U+00B7 (decimal 183)
@@ -475,16 +364,16 @@ Now handling font encoding U ...
 Package: setspace 2011/12/19 v6.7a set line spacing
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\varioref.sty"
-Package: varioref 2016/02/16 v1.5c package for extended references (FMi)
-\c@vrcnt=\count102
+Package: varioref 2014/10/28 v1.5a package for extended references (FMi)
+\c@vrcnt=\count100
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\supertabular\supertabular.sty"
 Package: supertabular 2004/02/20 v4.1e the supertabular environment
-\c@tracingst=\count103
+\c@tracingst=\count101
 \ST@wd=\dimen112
-\ST@rightskip=\skip52
-\ST@leftskip=\skip53
-\ST@parfillskip=\skip54
+\ST@rightskip=\skip53
+\ST@leftskip=\skip54
+\ST@parfillskip=\skip55
 \ST@pageleft=\dimen113
 \ST@headht=\dimen114
 \ST@tailht=\dimen115
@@ -501,150 +390,147 @@ Package: supertabular 2004/02/20 v4.1e the supertabular environment
 Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\multirow\multirow.sty"
-Package: multirow 2016/11/25 v2.2 Span multiple rows of a table
-\multirow@colwidth=\skip55
-\multirow@cntb=\count104
-\multirow@dima=\skip56
 \bigstrutjot=\dimen123
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
-("C:\Program Files\MiKTeX 2.9\tex\latex\vmargin\vmargin.sty"
-Package: vmargin 2004/07/15 V2.5 set document margins (VK)
+("C:\Program Files\MiKTeX 2.9\tex\latex\ieeepes\vmargin.sty"
+Package: vmargin 1999/06/01
 
-Package: vmargin 2004/07/15 V2.5 set document margins (VK)
+Package `vmargin', V2.2, <1999/06/01>
 \PaperWidth=\dimen124
 \PaperHeight=\dimen125
 ) ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\verbatim.sty"
 Package: verbatim 2014/10/28 v1.5q LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks23
-\verbatim@line=\toks24
+\every@verbatim=\toks19
+\verbatim@line=\toks20
 \verbatim@in@stream=\read1
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\tools\array.sty"
-Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
+Package: array 2014/10/28 v2.4c Tabular extension package (FMi)
 \col@sep=\dimen126
 \extrarowheight=\dimen127
-\NC@list=\toks25
-\extratabsurround=\skip57
-\backup@length=\skip58
+\NC@list=\toks21
+\extratabsurround=\skip56
+\backup@length=\skip57
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hyperref.sty"
-Package: hyperref 2017/03/14 v6.85a Hypertext links for LaTeX
+Package: hyperref 2012/11/06 v6.83m Hypertext links for LaTeX
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-hyperref.sty"
-Package: hobsub-hyperref 2016/05/16 v1.14 Bundle oberdiek, subset hyperref (HO)
+Package: hobsub-hyperref 2012/04/25 v1.12 Bundle oberdiek, subset hyperref (HO)
 
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\hobsub-generic.sty"
-Package: hobsub-generic 2016/05/16 v1.14 Bundle oberdiek, subset generic (HO)
-Package: hobsub 2016/05/16 v1.14 Construct package bundles (HO)
-Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
-Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
-Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package: hobsub-generic 2012/04/25 v1.12 Bundle oberdiek, subset generic (HO)
+Package: hobsub 2012/04/25 v1.12 Construct package bundles (HO)
+Package hobsub Info: Skipping package `infwarerr' (already loaded).
+Package hobsub Info: Skipping package `ltxcmds' (already loaded).
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
-Package: ifvtex 2016/05/16 v1.6 Detect VTeX and its facilities (HO)
+Package: ifvtex 2010/03/01 v1.5 Detect VTeX and its facilities (HO)
 Package ifvtex Info: VTeX not detected.
-Package: intcalc 2016/05/16 v1.2 Expandable calculations with integers (HO)
-Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
-Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+Package: intcalc 2007/09/27 v1.1 Expandable calculations with integers (HO)
+Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
+Package ifpdf Info: pdfTeX in PDF mode is detected.
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
 (etexcmds)             that some package has redefined \expanded.
 (etexcmds)             In the latter case, load this package earlier.
-Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
-Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
-Package: pdftexcmds 2017/03/19 v0.25 Utility functions of pdfTeX for LuaTeX (HO
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
 Package pdftexcmds Info: LuaTeX not detected.
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-Package: pdfescape 2016/05/16 v1.14 Implements pdfTeX's escape features (HO)
-Package: bigintcalc 2016/05/16 v1.4 Expandable calculations on big integers (HO
+Package: pdfescape 2011/11/25 v1.13 Implements pdfTeX's escape features (HO)
+Package: bigintcalc 2012/04/08 v1.3 Expandable calculations on big integers (HO
 )
-Package: bitset 2016/05/16 v1.2 Handle bit-vector datatype (HO)
-Package: uniquecounter 2016/05/16 v1.3 Provide unlimited unique counter (HO)
+Package: bitset 2011/01/30 v1.1 Handle bit-vector datatype (HO)
+Package: uniquecounter 2011/01/30 v1.2 Provide unlimited unique counter (HO)
 )
 Package hobsub Info: Skipping package `hobsub' (already loaded).
-Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
-Package: hopatch 2016/05/16 v1.3 Wrapper for package hooks (HO)
-Package: xcolor-patch 2016/05/16 xcolor patch
-Package: atveryend 2016/05/16 v1.9 Hooks at the very end of document (HO)
+Package: letltxmacro 2010/09/02 v1.4 Let assignment for LaTeX macros (HO)
+Package: hopatch 2011/06/24 v1.1 Wrapper for package hooks (HO)
+Package: xcolor-patch 2011/01/30 xcolor patch
+Package: atveryend 2011/06/30 v1.8 Hooks at the very end of document (HO)
 Package atveryend Info: \enddocument detected (standard20110627).
-Package: atbegshi 2016/06/09 v1.18 At begin shipout hook (HO)
-Package: refcount 2016/05/16 v3.5 Data extraction from label references (HO)
-Package: hycolor 2016/05/16 v1.8 Color options for hyperref/bookmark (HO)
+Package: atbegshi 2011/10/05 v1.16 At begin shipout hook (HO)
+Package: refcount 2011/10/16 v3.4 Data extraction from label references (HO)
+Package: hycolor 2011/01/30 v1.7 Color options for hyperref/bookmark (HO)
 )
 ("C:\Program Files\MiKTeX 2.9\tex\generic\ifxetex\ifxetex.sty"
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\auxhook.sty"
-Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
+Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
-Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
 \@linkdim=\dimen128
-\Hy@linkcounter=\count105
-\Hy@pagecounter=\count106
+\Hy@linkcounter=\count102
+\Hy@pagecounter=\count103
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\pd1enc.def"
-File: pd1enc.def 2017/03/14 v6.85a Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count107
+\Hy@SavedSpaceFactor=\count104
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\hyperref.cfg"
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
-Package hyperref Info: Hyper figures OFF on input line 4498.
-Package hyperref Info: Link nesting OFF on input line 4503.
-Package hyperref Info: Hyper index ON on input line 4506.
-Package hyperref Info: Plain pages OFF on input line 4513.
-Package hyperref Info: Backreferencing OFF on input line 4518.
+Package hyperref Info: Hyper figures OFF on input line 4443.
+Package hyperref Info: Link nesting OFF on input line 4448.
+Package hyperref Info: Hyper index ON on input line 4451.
+Package hyperref Info: Plain pages OFF on input line 4458.
+Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4751.
-\c@Hy@tempcnt=\count108
+Package hyperref Info: Bookmarks ON on input line 4688.
+\c@Hy@tempcnt=\count105
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\url\url.sty"
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 5104.
+LaTeX Info: Redefining \url on input line 5041.
 \XeTeXLinkMargin=\dimen129
-\Fld@menulength=\count109
+\Fld@menulength=\count106
 \Field@Width=\dimen130
 \Fld@charsize=\dimen131
-Package hyperref Info: Hyper figures OFF on input line 6358.
-Package hyperref Info: Link nesting OFF on input line 6363.
-Package hyperref Info: Hyper index ON on input line 6366.
-Package hyperref Info: backreferencing OFF on input line 6373.
-Package hyperref Info: Link coloring OFF on input line 6378.
-Package hyperref Info: Link coloring with OCG OFF on input line 6383.
-Package hyperref Info: PDF/A mode OFF on input line 6388.
-LaTeX Info: Redefining \ref on input line 6428.
-LaTeX Info: Redefining \pageref on input line 6432.
-\Hy@abspage=\count110
-\c@Item=\count111
-\c@Hfootnote=\count112
+Package hyperref Info: Hyper figures OFF on input line 6295.
+Package hyperref Info: Link nesting OFF on input line 6300.
+Package hyperref Info: Hyper index ON on input line 6303.
+Package hyperref Info: backreferencing OFF on input line 6310.
+Package hyperref Info: Link coloring OFF on input line 6315.
+Package hyperref Info: Link coloring with OCG OFF on input line 6320.
+Package hyperref Info: PDF/A mode OFF on input line 6325.
+LaTeX Info: Redefining \ref on input line 6365.
+LaTeX Info: Redefining \pageref on input line 6369.
+\Hy@abspage=\count107
+\c@Item=\count108
+\c@Hfootnote=\count109
 )
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\hpdftex.def"
-File: hpdftex.def 2017/03/14 v6.85a Hyperref driver for pdfTeX
-\Fld@listcount=\count113
-\c@bookmark@seq@number=\count114
+File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
+\Fld@listcount=\count110
+\c@bookmark@seq@number=\count111
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\rerunfilecheck.sty"
-Package: rerunfilecheck 2016/05/16 v1.8 Rerun checks for auxiliary files (HO)
+Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 82.
 )
-\Hy@SectionHShift=\skip59
+\Hy@SectionHShift=\skip58
 )
 Package hyperref Info: Option `colorlinks' set `true' on input line 23.
 
@@ -660,20 +546,20 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \cmidrulesep=\dimen139
 \cmidrulekern=\dimen140
 \defaultaddspace=\dimen141
-\@cmidla=\count115
-\@cmidlb=\count116
+\@cmidla=\count112
+\@cmidlb=\count113
 \@aboverulesep=\dimen142
 \@belowrulesep=\dimen143
-\@thisruleclass=\count117
-\@lastruleclass=\count118
+\@thisruleclass=\count114
+\@lastruleclass=\count115
 \@thisrulewidth=\dimen144
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption.sty"
-Package: caption 2016/02/21 v3.3-144 Customizing captions (AR)
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\caption\caption3.sty"
-Package: caption3 2016/05/22 v1.7-166 caption3 kernel (AR)
-Package caption3 Info: TeX engine: e-TeX on input line 67.
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
 \captionmargin=\dimen145
 \captionmargin@=\dimen146
 \captionwidth=\dimen147
@@ -684,21 +570,15 @@ Package caption3 Info: TeX engine: e-TeX on input line 67.
 Package caption Info: The definition of \@makecaption has been changed,
 (caption)             frenchb will NOT customize it.
 )
-\c@ContinuedFloat=\count119
+\c@ContinuedFloat=\count116
 Package caption Info: hyperref package is loaded.
 Package caption Info: supertabular package is loaded.
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\fixltx2e.sty"
-Package: fixltx2e 2016/12/29 v2.1a fixes to LaTeX (obsolete)
-Applying: [2015/01/01] Old fixltx2e package on input line 46.
-
-
-Package fixltx2e Warning: fixltx2e is not required with releases after 2015
-(fixltx2e)                All fixes are now in the LaTeX kernel.
-(fixltx2e)                See the latexrelease package for details.
-
-Already applied: [0000/00/00] Old fixltx2e package on input line 53.
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\threeparttable\threeparttable.sty"
+Package: fixltx2e 2014/09/29 v1.1s fixes to LaTeX
+LaTeX Info: Redefining \em on input line 430.
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\threeparttable\threeparttable.sty"
 Package: threeparttable 2003/06/13  v 3.0
 \@tempboxb=\box31
 )
@@ -706,15 +586,15 @@ Package: threeparttable 2003/06/13  v 3.0
 Package: adjustbox 2012/05/21 v1.0 Adjusting TeX boxes (trim, clip, ...)
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\xkeyval\xkeyval.sty"
-Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+Package: xkeyval 2014/05/25 v2.7 package option processing (HA)
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\xkeyval\xkeyval.tex"
 ("C:\Program Files\MiKTeX 2.9\tex\generic\xkeyval\xkvutils.tex"
-\XKV@toks=\toks26
-\XKV@tempa@toks=\toks27
+\XKV@toks=\toks22
+\XKV@tempa@toks=\toks23
 )
-\XKV@depth=\count120
-File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+\XKV@depth=\count117
+File: xkeyval.tex 2014/05/25 v2.7 key=value parser (HA)
 ))
 ("C:\Program Files\MiKTeX 2.9\tex\latex\adjustbox\adjcalc.sty"
 Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
@@ -742,22 +622,25 @@ File: tc-pdftex.def 2012/05/13 v1.0 Clipping driver for pdftex
 \adjbox@Totalheight=\dimen159
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\ifoddpage\ifoddpage.sty"
-Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
-\c@checkoddpage=\count121
+Package: ifoddpage 2011/09/13 v1.0 Conditionals for odd/even page detection
+\c@checkoddpage=\count118
 )
 ("C:\Program Files\MiKTeX 2.9\tex\latex\ltxmisc\varwidth.sty"
 Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
 \@vwid@box=\box33
-\sift@deathcycles=\count122
+\sift@deathcycles=\count119
 \@vwid@loff=\dimen160
 \@vwid@roff=\dimen161
 ))
 ("C:\Program Files\MiKTeX 2.9\tex\latex\chngcntr\chngcntr.sty"
 Package: chngcntr 2009/09/02 v1.0a change counter resetting
 )
-(online_appendix_dhp2017.aux)
-\openout1 = `online_appendix_dhp2017.aux'.
+(\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
+rade_costs\redaction\online_appendix_dhp2017.aux
 
+LaTeX Warning: Label `tab:3models_diagnosis_air' multiply defined.
+
+)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 72.
 LaTeX Font Info:    ... okay on input line 72.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 72.
@@ -772,76 +655,64 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 72.
 LaTeX Font Info:    ... okay on input line 72.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 72.
 LaTeX Font Info:    ... okay on input line 72.
-
-("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
+ ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count123
+\scratchcounter=\count120
 \scratchdimen=\dimen162
 \scratchbox=\box34
-\nofMPsegments=\count124
-\nofMParguments=\count125
-\everyMPshowfont=\toks28
-\MPscratchCnt=\count126
+\nofMPsegments=\count121
+\nofMParguments=\count122
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count123
 \MPscratchDim=\dimen163
-\MPnumerator=\count127
-\makeMPintoPDFobject=\count128
-\everyMPtoPDFconversion=\toks29
-) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
-Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
-
-("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
-Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
-)
-Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
-38.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 456.
+\MPnumerator=\count124
+\makeMPintoPDFobject=\count125
+\everyMPtoPDFconversion=\toks25
 )
 LaTeX Info: Redefining \degres on input line 72.
 
 
-Package french.ldf Warning: Figures' and tables' captions might look like
-(french.ldf)                `Figure 1:' which is wrong in French.
-(french.ldf)                Check your class or packages to change this;
-(french.ldf)                reported on input line 72.
+Package frenchb.ldf Warning: Figures' and tables' captions might look like
+(frenchb.ldf)                `Figure 1:' which is wrong in French.
+(frenchb.ldf)                Check your class or packages to change this;
+(frenchb.ldf)                reported on input line 72.
 
 LaTeX Info: Redefining \dots on input line 72.
 LaTeX Info: Redefining \up on input line 72.
 
-Package french.ldf Warning: OT1 encoding should not be used for French.
-(french.ldf)                Add \usepackage[T1]{fontenc} to the preamble
-(french.ldf)                of your document; reported on input line 72.
+Package frenchb.ldf Warning: OT1 encoding should not be used for French.
+(frenchb.ldf)                Add \usepackage[T1]{fontenc} to the preamble
+(frenchb.ldf)                of your document, on input line 72.
 
 \AtBeginShipoutBox=\box35
 ("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\color.sty"
-Package: color 2016/07/10 v1.1e Standard LaTeX Color (DPC)
+Package: color 2014/10/28 v1.1a Standard LaTeX Color (DPC)
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg"
-File: color.cfg 2016/01/02 v1.6 sample color configuration
+("C:\Program Files\MiKTeX 2.9\tex\latex\00miktex\color.cfg"
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
-Package color Info: Driver file: pdftex.def on input line 147.
+Package color Info: Driver file: pdftex.def on input line 137.
 )
 Package hyperref Info: Link coloring ON on input line 72.
 
 ("C:\Program Files\MiKTeX 2.9\tex\latex\hyperref\nameref.sty"
-Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
+Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\gettitlestring.sty"
-Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
+Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count129
-LaTeX Info: Redefining \Ref on input line 515.
+\c@section@level=\count126
+LaTeX Info: Redefining \Ref on input line 513.
 )
 LaTeX Info: Redefining \ref on input line 72.
 LaTeX Info: Redefining \pageref on input line 72.
 LaTeX Info: Redefining \nameref on input line 72.
 
-(online_appendix_dhp2017.out) (online_appendix_dhp2017.out)
+(\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
+rade_costs\redaction\online_appendix_dhp2017.out)
+(\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
+rade_costs\redaction\online_appendix_dhp2017.out)
 \@outlinefile=\write4
-\openout4 = `online_appendix_dhp2017.out'.
-
 LaTeX Info: Redefining \Ref on input line 72.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: threeparttable package is loaded.
@@ -857,93 +728,122 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 88.
 
-(online_appendix_dhp2017.toc)
+(\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
+rade_costs\redaction\online_appendix_dhp2017.toc)
 \tf@toc=\write5
-\openout5 = `online_appendix_dhp2017.toc'.
-
  [1
 
 
-{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] (online_appendix_dhp2017.
-lot)
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}]
+(\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
+rade_costs\redaction\online_appendix_dhp2017.lot)
 \tf@lot=\write6
-\openout6 = `online_appendix_dhp2017.lot'.
+ [2]
+Overfull \hbox (26.153pt too wide) in paragraph at lines 137--161
+ [][] 
+ []
 
- [2] [3] [4]
-Overfull \hbox (68.74773pt too wide) in paragraph at lines 244--245
+[3]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 190.
+
+ ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 190.
+ [4
+
+]
+Overfull \hbox (29.35295pt too wide) in paragraph at lines 205--229
+ [][] 
+ []
+
+[5
+
+] [6
+
+] [7
+
+]
+Overfull \hbox (68.74773pt too wide) in paragraph at lines 337--338
  [] 
  []
 
-[5]
-Overfull \hbox (68.74773pt too wide) in paragraph at lines 307--308
+[8]
+Overfull \hbox (68.74773pt too wide) in paragraph at lines 400--401
  [] 
  []
 
-[6]
-<graph_composition_manuf.pdf, id=78, pagebox=cropbox, 397.485pt x 289.08pt>
+[9] <graph_composition_manuf.pdf, id=95, 397.485pt x 289.08pt>
 File: graph_composition_manuf.pdf Graphic file (type pdf)
+
 <use graph_composition_manuf.pdf>
-Package pdftex.def Info: graph_composition_manuf.pdf  used on input line 333. o
-n input line 333.
-Package pdftex.def Info: Requested size: 397.50221pt x 289.07999pt on input lin
-e 333.
-<graph_composition_primary.pdf, id=79, pagebox=cropbox, 397.485pt x 289.08pt>
+Package pdftex.def Info: graph_composition_manuf.pdf used on input line 426.
+(pdftex.def)             Requested size: 397.50221pt x 289.07999pt.
+
+<graph_composition_primary.pdf, id=96, 397.485pt x 289.08pt>
 File: graph_composition_primary.pdf Graphic file (type pdf)
+
 <use graph_composition_primary.pdf>
-Package pdftex.def Info: graph_composition_primary.pdf  used on input line 342.
- on input line 342.
-Package pdftex.def Info: Requested size: 397.50221pt x 289.07999pt on input lin
-e 342.
-<Share_of_primary.pdf, id=80, pagebox=cropbox, 397.485pt x 289.08pt>
+Package pdftex.def Info: graph_composition_primary.pdf used on input line 435.
+(pdftex.def)             Requested size: 397.50221pt x 289.07999pt.
+
+<Share_of_primary.pdf, id=97, 397.485pt x 289.08pt>
 File: Share_of_primary.pdf Graphic file (type pdf)
-<use Share_of_primary.pdf>
-Package pdftex.def Info: Share_of_primary.pdf  used on input line 353. on input
- line 353.
-Package pdftex.def Info: Requested size: 397.50221pt x 289.07999pt on input lin
-e 353.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 366.
- [7
+ <use Share_of_primary.pdf>
+Package pdftex.def Info: Share_of_primary.pdf used on input line 446.
+(pdftex.def)             Requested size: 397.50221pt x 289.07999pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 459.
+
+[10
 
 
 
 
- <./graph_composition_manuf.pdf>] [8 <./graph_composition_primary.pdf>]
-[9 <./Share_of_primary.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 366.
- (online_appendix_dhp2017.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 366.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 366.
+ <//filer.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Git_Hub/
+trade_costs/redaction/graph_composition_manuf.pdf>] [11 <//filer.windows.dauphi
+ne.fr/home/l/lpatureau/My_Work/Lise/trade_cost/Git_Hub/trade_costs/redaction/gr
+aph_composition_primary.pdf>] [12 <//filer.windows.dauphine.fr/home/l/lpatureau
+/My_Work/Lise/trade_cost/Git_Hub/trade_costs/redaction/Share_of_primary.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 459.
+
+(\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\Git_Hub\t
+rade_costs\redaction\online_appendix_dhp2017.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 459.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 459.
 Package rerunfilecheck Info: File `online_appendix_dhp2017.out' has not changed
 .
-(rerunfilecheck)             Checksum: AD55E3789CC2BB05EFB8C1A1D24A760D;363.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 366.
+(rerunfilecheck)             Checksum: F525F5BE3F9611F9AD3B8D6814AEDDF1;362.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 459.
  ) 
 Here is how much of TeX's memory you used:
- 9498 strings out of 493318
- 141027 string characters out of 3138995
- 270759 words of memory out of 3000000
- 12841 multiletter control sequences out of 15000+200000
+ 9207 strings out of 493705
+ 138612 string characters out of 3144558
+ 266083 words of memory out of 3000000
+ 12329 multiletter control sequences out of 15000+200000
  9893 words of font info for 34 fonts, out of 3000000 for 9000
- 1141 hyphenation exceptions out of 8191
- 36i,11n,77p,546b,423s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 1025 hyphenation exceptions out of 8191
+ 36i,11n,75p,643b,439s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><C:/Program Files/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fo
 nts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
-cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.
-pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/P
-rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Fil
-es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 
-2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pub
-lic/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfo
-nts/cm/cmti10.pfb>
-Output written on online_appendix_dhp2017.pdf (9 pages, 280022 bytes).
+1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmmi9.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/Program Files/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmsy9.pfb><C:/Program Files/MiKTeX 2.9/fonts/
+type1/public/amsfonts/cm/cmti10.pfb>
+Output written on online_appendix_dhp2017.pdf (12 pages, 272636 bytes).
 PDF statistics:
- 184 PDF objects out of 1000 (max. 8388607)
- 22 named destinations out of 1000 (max. 500000)
+ 195 PDF objects out of 1000 (max. 8388607)
+ 28 named destinations out of 1000 (max. 500000)
  48 words of extra memory for PDF output out of 10000 (max. 10000000)
 
