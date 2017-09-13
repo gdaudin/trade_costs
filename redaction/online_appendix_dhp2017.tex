@@ -119,6 +119,12 @@ SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), Fran
 	
 \subsection{Three models: Comparison \label{secoa:additive_only}}
 
+In the paper, we compare the empirical performances of two models, where only ad-valorem costs are modeled (Model (A)) and where both ad-valorem and additive costs are modeled (Model (B)). One may object that a comprehensive study of the structure of transport costs should also include the third model with only additive costs (Model (C)). This has driven us to estimate this model as well, in which case the estimated equation is written according to: $\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}\right) + \epsilon^{add}_{ik}$. The results are reported in this section. We start reporting the estimates of the transport costs components under the three models. In a second step, we report the various tests of quality of fit implemented on these models.
+
+\subsubsection{Estimation results}
+
+In this section, we report the estimation results of the three models. Results for Models (A) (ad-valorem costs only) and (B) (both ad-valorem and additive costs) are identical to those reported in the paper. We also report the estimation results for Model (C), where only additive costs are modeled. Table \ref{tab:3models_estimation_results_air} reports the results for Air transport, Table \ref{tab:3models_estimation_results_vessel} for maritime transport.
+
 %%%% RAW TABLE TO BE FOUND AT: "...\Dropbox\Papier_Lise_Guillaume\trade_cost\results\3_models"
 % modele iceberg tout seul : terme nlI
 % colonnes L à U: modèle avec les deux
@@ -132,6 +138,7 @@ SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), Fran
 
 \begin{table}[htbp]
   \centering
+   \footnotesize{
     \caption{Estimation results of the three models (Air, 3-digit level)}
   \label{tab:3models_estimation_results_air}%
     \begin{tabular}{l|c|c|c|c|c|c|c|c|c}
@@ -158,7 +165,48 @@ SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), Fran
     Median (in \%)& \multicolumn{1}{c}{4.45} & \multicolumn{1}{c}{1.82} & \multicolumn{1}{c}{3.36} & \multicolumn{1}{c}{2.27} & \multicolumn{1}{c}{1.72} & \multicolumn{1}{c}{1.39} & \multicolumn{1}{c}{1.93} & \multicolumn{1}{c}{2.72} & \multicolumn{1}{c}{2.06} \\
     Std & \multicolumn{1}{c}{0.09} & \multicolumn{1}{c}{0.08} & \multicolumn{1}{c}{0.08} & \multicolumn{1}{c}{0.10} & \multicolumn{1}{c}{0.09} & \multicolumn{1}{c}{0.06} & \multicolumn{1}{c}{0.07} & \multicolumn{1}{c}{0.07} & \multicolumn{1}{c}{0.05} \\  \hline \hline
     \end{tabular}
+    }
 \end{table}%
+
+
+\begin{table}[htbp]
+  \centering
+   \footnotesize{
+    \caption{Estimation results of the three models (Vessel, 3-digit level)}
+  \label{tab:3models_estimation_results_vessel}%
+    \begin{tabular}{l|c|c|c|c|c|c|c|c|c}
+    \hline \hline
+    \textbf{Year} & 1974  & 1980  & 1985  & 1990  & 1995  & 2000  & 2005  & 2010  & 2013 \\ \hline
+    $\# $obs. & 19007 & 17356 & 23348 & 28383 & 32146 & 36090 & 41319 & 37748 & 38473 \\
+    $\#$  origin countries & 154   & 163   & 171   & 179   & 201   & 206   & 206   & 198   & 203 \\
+    $\#$  sectors & 239   & 232   & 232   & 232   & 228   & 230   & 231   & 226   & 224 \\ \hline
+    \multicolumn{10}{l}{\textbf{Model (A) - Iceberg transport costs only} ($\widehat{\tau}^{ice}$)} \\ \hline
+    Mean (in \%) & 9.79  & 6.53  & 6.88  & 5.67  & 5.14  & 5.10  & 5.47  & 3.99  & 3.60 \\
+    Median (in \%)& 9.58  & 5.50  & 6.33  & 4.63  & 4.29  & 4.85  & 4.90  & 3.56  & 3.28 \\
+    Std & 0.05  & 0.04  & 0.04  & 0.03  & 0.03  & 0.03  & 0.03  & 0.02  & 0.02 \\ \hline
+    \multicolumn{10}{l}{\textbf{Model (B ) - With additive and ad-valorem transport costs} } \\ \hline
+     \multicolumn{10}{l}{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)} \\ \hline
+    Mean (in \%) & 5.42  & 3.08  & 4.02  & 3.31  & 2.79  & 2.49  & 2.68  & 1.95  & 2.22 \\
+    Median (in \%) & 4.93  & 2.42  & 3.60  & 2.81  & 2.53  & 2.07  & 2.08  & 1.76  & 1.82 \\
+    Std & 0.04  & 0.02  & 0.03  & 0.02  & 0.02  & 0.02  & 0.02  & 0.02  & 0.01 \\ \hline
+       \multicolumn{10}{l}{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}  \\ \hline
+    Mean (in \%)  & 5.08  & 3.38  & 3.19  & 2.73  & 2.73  & 2.80  & 3.02  & 2.47  & 1.46 \\
+    Median (in \%) & 2.94  & 2.27  & 2.06  & 1.70  & 1.82  & 2.19  & 2.16  & 1.89  & 0.76 \\
+    Std & 0.09  & 0.05  & 0.04  & 0.04  & 0.04  & 0.04  & 0.04  & 0.03  & 0.02 \\ \hline
+    \multicolumn{10}{l}{\textbf{Model (C) - With additive transport costs only} ($\widehat{t}^{add}/\widetilde{p}$)} \\ \hline
+    Mean (in \%) & 14.51 & 10.05 & 10.47 & 14.62 & 8.37  & 8.02  & 8.41  & 6.40  & 5.23 \\
+    Median (in \%)& 9.53  & 6.69  & 7.16  & 6.22  & 4.68  & 4.93  & 5.74  & 3.87  & 3.57 \\
+    Std & 0.24  & 0.17  & 0.18  & 0.30  & 0.15  & 0.16  & 0.15  & 0.15  & 0.10 \\ \hline \hline
+   \end{tabular}%
+   }
+\end{table}%
+
+Somehow unsurprisingly, the estimated size of transport costs under Model (C) is of same order of magnitude than when transport costs are modeled as ad-valorem alone (Model (A) or of both types (Model (B)). As reported in Tables \ref{tab:3models_estimation_results_air} and \ref{tab:3models_estimation_results_vessel}, we also get the downward trend of transport costs over time, in particular since 1980. In this respect, it is necessary to go further to characterize the empirical relevance of the model with addiitve costs only (Model (C)), by the mean of quality of fit diagnostic tests. This is reported in the next section.
+
+
+\subsubsection{Quality of fit diagnostic tests}
+
+In this section, we report the results various quality of fit diagnostic tests implemented on the three models. Table \ref{tab:3models_diagnosis_air} reports the results for Air transport, those for maritime transport being displayed in Table \ref{tab:3models_diagnosis_vessel}. In both tables, we report the values of the $R^2$, the Standard Error of Regression (SER), the AIC criterion  and the log-likelihood (LL) value for each of the three models. We also report the value of the log-likelihood ratio, that tests the quality of fit of the global model (Model (B)) versus either the truncated model with only iceberg cost (Model (A)) or with only additive costs (Model (C)).
 
 \begin{landscape}
 \begin{table}[htbp]
@@ -198,63 +246,33 @@ SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), Fran
 \end{landscape}
 
 
-\begin{table}[htbp]
-  \centering
-    \caption{Estimation results of the three models (Vessel, 3-digit level)}
-  \label{tab:3models_estimation_results_vessel}%
-    \begin{tabular}{l|c|c|c|c|c|c|c|c|c}
-    \hline \hline
-    \textbf{Year} & 1974  & 1980  & 1985  & 1990  & 1995  & 2000  & 2005  & 2010  & 2013 \\ \hline
-    $\# $obs. & 19007 & 17356 & 23348 & 28383 & 32146 & 36090 & 41319 & 37748 & 38473 \\
-    $\#$  origin countries & 154   & 163   & 171   & 179   & 201   & 206   & 206   & 198   & 203 \\
-    $\#$  sectors & 239   & 232   & 232   & 232   & 228   & 230   & 231   & 226   & 224 \\ \hline
-    \multicolumn{10}{l}{\textbf{Model (A) - Iceberg transport costs only} ($\widehat{\tau}^{ice}$)} \\ \hline
-    Mean (in \%) & 9.79  & 6.53  & 6.88  & 5.67  & 5.14  & 5.10  & 5.47  & 3.99  & 3.60 \\
-    Median (in \%)& 9.58  & 5.50  & 6.33  & 4.63  & 4.29  & 4.85  & 4.90  & 3.56  & 3.28 \\
-    Std & 0.05  & 0.04  & 0.04  & 0.03  & 0.03  & 0.03  & 0.03  & 0.02  & 0.02 \\ \hline
-    \multicolumn{10}{l}{\textbf{Model (B ) - With additive and ad-valorem transport costs} } \\ \hline
-     \multicolumn{10}{l}{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)} \\ \hline
-    Mean (in \%) & 5.42  & 3.08  & 4.02  & 3.31  & 2.79  & 2.49  & 2.68  & 1.95  & 2.22 \\
-    Median (in \%) & 4.93  & 2.42  & 3.60  & 2.81  & 2.53  & 2.07  & 2.08  & 1.76  & 1.82 \\
-    Std & 0.04  & 0.02  & 0.03  & 0.02  & 0.02  & 0.02  & 0.02  & 0.02  & 0.01 \\ \hline
-       \multicolumn{10}{l}{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}  \\ \hline
-    Mean (in \%)  & 5.08  & 3.38  & 3.19  & 2.73  & 2.73  & 2.80  & 3.02  & 2.47  & 1.46 \\
-    Median (in \%) & 2.94  & 2.27  & 2.06  & 1.70  & 1.82  & 2.19  & 2.16  & 1.89  & 0.76 \\
-    Std & 0.09  & 0.05  & 0.04  & 0.04  & 0.04  & 0.04  & 0.04  & 0.03  & 0.02 \\ \hline
-    \multicolumn{10}{l}{\textbf{Model (C) - With additive transport costs only} ($\widehat{t}^{add}/\widetilde{p}$)} \\ \hline
-    Mean (in \%) & 14.51 & 10.05 & 10.47 & 14.62 & 8.37  & 8.02  & 8.41  & 6.40  & 5.23 \\
-    Median (in \%)& 9.53  & 6.69  & 7.16  & 6.22  & 4.68  & 4.93  & 5.74  & 3.87  & 3.57 \\
-    Std & 0.24  & 0.17  & 0.18  & 0.30  & 0.15  & 0.16  & 0.15  & 0.15  & 0.10 \\ \hline \hline
-   \end{tabular}%
-\end{table}%
-
 \begin{landscape}
 \begin{table}[htbp]
   \centering
   \footnotesize{
   \caption{Quality-of-fit diagnostic tests of the three models (Vessel, 3-digit level)}
-    \label{tab:3models_diagnosis_air}%
+    \label{tab:3models_diagnosis_vessel}%
    \begin{tabular}{l|c|c|c|c|c|c|c|c|c}
     \hline \hline
     \textbf{Year} & \multicolumn{1}{c}{\textbf{1974}} & \multicolumn{1}{c}{\textbf{1980}} & \multicolumn{1}{c}{\textbf{1985}} & \multicolumn{1}{c}{\textbf{1990}} & \multicolumn{1}{c}{\textbf{1995}} & \multicolumn{1}{c}{\textbf{2000}} & \multicolumn{1}{c}{\textbf{2005}} & \multicolumn{1}{c}{\textbf{2010}} & \multicolumn{1}{c}{\textbf{2013}} \\ \hline
     \multicolumn{10}{l}{\textbf{$R^2$}} \\ \hline
-    Model (A) & 0,450 & 0,415 & 0,427 & 0,456 & 0,438 & 0,401 & 0,378 & 0,350 & 0,339 \\
-    Model (B) & 0,612 & 0,575 & 0,571 & 0,590 & 0,611 & 0,571 & 0,541 & 0,491 & 0,462 \\
-    Model (C ) & 0,424 & 0,401 & 0,374 & 0,429 & 0,456 & 0,431 & 0,417 & 0,358 & 0,349 \\ \hline
+    Model (A) & 0.450 & 0.415 & 0.427 & 0.456 & 0.438 & 0.401 & 0.378 & 0.350 & 0.339 \\
+    Model (B) & 0.612 & 0.575 & 0.571 & 0.590 & 0.611 & 0.571 & 0.541 & 0.491 & 0.462 \\
+    Model (C ) & 0.424 & 0.401 & 0.374 & 0.429 & 0.456 & 0.431 & 0.417 & 0.358 & 0.349 \\ \hline
     \multicolumn{10}{l}{\textbf{SER} } \\ \hline
-    Model (A) & 0,576 & 0,620 & 0,569 & 0,592 & 0,615 & 0,652 & 0,673 & 0,740 & 0,758 \\
-    Model (B) & 0,484 & 0,528 & 0,493 & 0,514 & 0,512 & 0,551 & 0,578 & 0,656 & 0,684 \\
-    Model (C ) & 1,271 & 1,339 & 1,283 & 1,326 & 1,302 & 1,319 & 1,336 & 1,392 & 1,410 \\ \hline
+    Model (A) & 0.576 & 0.620 & 0.569 & 0.592 & 0.615 & 0.652 & 0.673 & 0.740 & 0.758 \\
+    Model (B) & 0.484 & 0.528 & 0.493 & 0.514 & 0.512 & 0.551 & 0.578 & 0.656 & 0.684 \\
+    Model (C ) & 1.271 & 1.339 & 1.283 & 1.326 & 1.302 & 1.319 & 1.336 & 1.392 & 1.410 \\ \hline
     \multicolumn{10}{l}{\textbf{AIC criteria} } \\ \hline
-    Model (A) & 33328,81 & 33010,27 & 40275,70 & 51142,62 & 60414,92 & 71365,89 & 85051,02 & 84789,89 & 88191,87 \\
-    Model (B) & 27331,52 & 28067,31 & 34170,52 & 43664,74 & 49275,33 & 60475,91 & 73020,09 & 76161,33 & 80873,72 \\
-    Model (C ) & 46082,40 & 44370,26 & 58829,71 & 71461,52 & 77052,41 & 88746,51 & 103310,93 & 101166,91 & 104290,27 \\ \hline
+    Model (A) & 33328.81 & 33010.27 & 40275.70 & 51142.62 & 60414.92 & 71365.89 & 85051.02 & 84789.89 & 88191.87 \\
+    Model (B) & 27331.52 & 28067.31 & 34170.52 & 43664.74 & 49275.33 & 60475.91 & 73020.09 & 76161.33 & 80873.72 \\
+    Model (C ) & 46082.40 & 44370.26 & 58829.71 & 71461.52 & 77052.41 & 88746.51 & 103310.93 & 101166.91 & 104290.27 \\ \hline
     \multicolumn{10}{l}{\textbf{Log-likelihood}}\\ \hline
-    Model (A) & -16287,40 & -16129,13 & -19767,85 & -25169,31 & -29790,46 & -35263,95 & -42122,51 & -41998,95 & -43692,93 \\
-    Model (B) & -12985,76 & -13353,65 & -16398,26 & -21171,37 & -23905,66 & -29490,96 & -35844,04 & -37418,66 & -39751,86 \\
-    Model (C ) & -22674,20 & -21814,13 & -29045,86 & -35403,76 & -38125,20 & -43963,25 & -51245,46 & -50348,45 & -51783,14 \\ \hline
+    Model (A) & -16287.40 & -16129.13 & -19767.85 & -25169.31 & -29790.46 & -35263.95 & -42122.51 & -41998.95 & -43692.93 \\
+    Model (B) & -12985.76 & -13353.65 & -16398.26 & -21171.37 & -23905.66 & -29490.96 & -35844.04 & -37418.66 & -39751.86 \\
+    Model (C ) & -22674.20 & -21814.13 & -29045.86 & -35403.76 & -38125.20 & -43963.25 & -51245.46 & -50348.45 & -51783.14 \\ \hline
    \multicolumn{10}{l}{ \textbf{Test LL} } \\ \hline
-    Stat LL ratio (B vs A) & 6603,28 & 5550,96 & 6739,18 & 7995,88 & 11769,59 & 11545,98 & 12556,94 & 9160,56 & 7882,15 \\
+    Stat LL ratio (B vs A) & 6603.28 & 5550.96 & 6739.18 & 7995.88 & 11769.59 & 11545.98 & 12556.94 & 9160.56 & 7882.15 \\
     $\#$ restrictions & 393   & 395   & 403   & 411   & 429   & 436   & 437   & 424   & 427 \\
     p-value & 0.00  & 0.00  & 0.00  & 0.00  & 0.00  & 0.00  & 0.00  & 0.00  & 0.00 \\ \hline
     Stat LL ratio (B vs C) & 19376,88 & 16920,95 & 25295,20 & 28464,79 & 28439,08 & 28944,59 & 30802,84 & 25859,58 & 24062,55 \\
@@ -266,14 +284,15 @@ SciencesPo, Observatoire Français des Conjonctures \'{E}conomiques (OFCE), Fran
 \end{table}%
 \end{landscape}
 
+The main result that emerges is that the model with additive costs only (Model (C)) is dominated (in terms of quality of fit properties) by the model with multiplicative costs only (Model (A)), which is itself dominated by the complete model (Model (B)), whatever the type of diagnostic test considered.
 
 %\subsection{Detailed Results \label{secoa:detailed}}
 \setcounter{table}{0}
 \renewcommand{\thetable}{B.\arabic{table}}
 
 \subsection{Transport Cost Estimates: Yearly Detailed Results}
+In this section, we report the detailed results of the estimation driven at the 3-digit classification level. Table \ref{tab_oa:result_air_ally3} reports the results for each year over 1974-2013 for Air transport; Table \ref{tab_oa:result_vessel_ally3} reports similar results for Vessel. In both cases, we report the estimated values of the transport costs (weighed mean and median) when only ad-valorem costs are modeled (Model (A)) and when both additive and ad-valorem costs are modeled (Model (B)).
 
-\subsubsection{3-Digits Level Product Classification}
 \begin{landscape}
 \begin{table}[htbp]
 \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
@@ -341,7 +360,7 @@ Median & 0.8   & 0.7   & 0.6   & 0.6   & 0.5   & 0.5   & 0.5   & 0.5   & 0.5   &
 \end{table}%
 \end{landscape}
 
-
+As mentioned in the paper, the estimates for Air transport costs in 1989 lead to a surprising high value for the additive component (the additive cost is estimated to amount to $4.6\%$ of the export price, whereas it amounts to 2.5\% on average between 1974 and 1988, and to 1.7\% over the following decade 1990-2000. This can be attributed to the presence of outliers in the distribution of the additive costs estimates, with a maximum value for $\widehat{t}/\widetilde{p}$ = 10,000\%, whereas it amounts to 1,690\% on average over 1974-1988 and to 1,500\% on average over 1990-2000. Accordingly, in the paper we discard this year 1989 when we report the average values over the period of the transport costs estimates in Air transport. One can yet mention that this does not make much difference. When 1989 is included, the weighed mean transport cost value amounts to 1.9\% for the ad-valorem component ($\widehat{\tau}^{adv} = 1.9\%$, vs 1.8\% when 1989 is excluded. The weighed median value is left unchanged, as the additive component (with weighed mean and median values of $\widehat{t}/\widetilde{p} = 2.5\%$ and 1.8\%, whether 1989 is included or not.
 
 
 \begin{landscape}
@@ -411,18 +430,22 @@ Median & 2.0   & 1.8   & 1.6   & 1.3   & 2.0   & 2.0   & 2.2   & 1.6   & 2.0   &
 \setcounter{table}{0}
 \renewcommand{\thetable}{C.\arabic{table}}
 
-\subsection{Eliminating the composition effects: Primary vs. Maufacturing sector} \label{sec_oa:comp-effects}
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{C.\arabic{figure}}
+
+\subsection{Eliminating the composition effects: Primary vs. Manufacturing sector} \label{sec_oa:comp-effects}
+
+In this section, we refine the characterization of the trend patterns of international transport costs, by distinguishing the trade flows for primary goods and manufactured goods. The evolution in transport costs over time, by transport mode (overall transport costs and composition effects excluded) are reported in Figure \ref{fig:totalTC_compeffects_excl_manuf} for the manufacturing sector, and in Figure \ref{fig:totalTC_compeffects_excl_primary} for the primary goods. For sake of reading clarity, we also report the results obtained on the whole range of trade flows, in Figure \ref{fig:totalTC_compeffects_excl} (i.e., Figure 2 of the paper).
 
 
-%\todo{A mon avis, a mettre en online appendix. Expliquer comment se fait la decomposition en secteurs primaire/manuf.}
+The classification retained to categorize trade flows follows the UNCTAD classification (on STIC Revision 3). Are considered as ``primary goods'' all flows recorded as ``Food and live animals'' (First digit ``0'' in the SITC Classification), ``Beverages and tobacco'' (First digit ``1''), ``Crude materials, inedible, except fuels'' (First digit ``2''), ``Mineral fuels, lubricants and related materials'' (First digit ``3''), ``Animal and vegetable oils, fats and waxes'' (First digit ``4''), ``Pearls, precious \& semi-precious stones'' (Classified ``667'' in the SITC Classification) and ``Non-ferrous metals'' (classified ``68'' in the SITC Classification). 
 
-In this Section, we characterize the time trend in international transport costs at a more disaggregated level, by distinguishing the trade flows for primary goods and manufactured goods. The evolution in transport costs over time, by transport mode (overall transport costs and composition effects excluded) are reported in \ref{fig:totalTC_compeffects_excl_manuf} for the manufacturing sector, and in Figure \ref{fig:totalTC_compeffects_excl_primary} for the primary goods.
 
 \begin{figure}[htbp]
 \caption{Transport costs (with and without composition effects), Manufacturing}
 \label{fig:totalTC_compeffects_excl_manuf}
 \begin{center}
-\includegraphics[height=4in]
+\includegraphics[height=8cm]
 {graph_composition_manuf.pdf}
 \end{center}
 \end{figure}
@@ -431,63 +454,36 @@ In this Section, we characterize the time trend in international transport costs
 \caption{Transport costs (with and without composition effects), Primary goods}
 \label{fig:totalTC_compeffects_excl_primary}
 \begin{center}
-\includegraphics[height=4in]
+\includegraphics[height=8cm]
 {graph_composition_primary.pdf}
 \end{center}
 \end{figure}
 
+\begin{figure}[htbp]
+\caption{Transport costs (with and without composition effects)}
+\label{fig:totalTC_compeffects_excl}
+\begin{center}
+\includegraphics[height=8cm]
+{graph_composition_all.pdf}
+\end{center}
+\end{figure}
+
+As reported in Figures \ref{fig:totalTC_compeffects_excl_manuf} and \ref{fig:totalTC_compeffects_excl_primary}, the ``raw'' transport costs are (or the unfitted transport costs, in plain blue line) have regularly declined over the period in both sectors, by roughly the same order of magnitude (50\% in Air, 60\% in Vessel). However, contrasting these two broad sectors conveys a contrasted message about the role of trade composition effects in accounting for this trend pattern. Comparing Figure \ref{fig:totalTC_compeffects_excl_manuf} reports a very similar time trend decomposition than what is obtained on the whole range of goods (Figure \ref{fig:totalTC_compeffects_excl}). In Air transport, most of the decrease can be imputed to the reduction of``ceteris paribus'' transport costs (the dotted red line), trade composition effects playing virtually no role (Figure \ref{fig:totalTC_compeffects_excl_manuf}, left-hand panels (a), (b) and (c)). Trade composition effects matter more in maritime transport (Figure \ref{fig:totalTC_compeffects_excl_manuf}, right-hand panels (d), (e) and (f)), primarily in the ad-valorem component. Similarly as the conclusion drawn on the whole range of flows, the 60\% decrease in the unfitted transport costs in Vessel can de decomposed in a 50\% decrease in the ``ceteris paribus'' transport costs (fitted), the 10\% remaining to trade composition effects.
+
+The message is strikingly different when the same decomposition is driven for primary goods only. In this case, it is in air transport that composition effects do matter (Figure \ref{fig:totalTC_compeffects_excl_primary}, left-hand panels (a), (b) and (c)), while we observe not much role for them in maritime transport (Figure \ref{fig:totalTC_compeffects_excl_primary}, left-hand panels (d), (e) and (f)). In air transport further, composition effects matter by partially offsetting the decrease in the ``ceteris paribus'' transport costs (ie, implying a reduction in the ``raw'' transport costs over time much less pronounced than the fitted transport cost measures).
+
+One way to reconcile the contrasted results displayed in Figure \ref{fig:totalTC_compeffects_excl_primary} (primary goods), with respect to Figure \ref{fig:totalTC_compeffects_excl_manuf} (manufacturing) and Figure \ref{fig:totalTC_compeffects_excl} (all flows) is to investigate the share of primary goods in total flows. The results are reported in Figure \ref{fig:Share_prim_goods}. In Air transport, the share of primary goods in the total value of US imports is negligible, by around 10\% all over the period from 1974 to 2004. Primary goods make a higher proportion of trade flows in maritime transport, especially over 1974-1982 (between 40\% and 60\%). On the following sub-period though, their share has fallen to 20-30\%. Given the modest proportion of primary goods in total imports flows of the US economy, in favor of the manufactured sector, it is hence not surprising that the diagnosis made about the time trend of transport costs when all types of flows are considered, is driven by the trend patterns that occur within the manufacturing sector.
 
 
 \begin{figure}[htbp]
 \caption{Share of primary goods in the value of total US imports}
 \label{fig:Share_prim_goods}
 \begin{center}
-\includegraphics[height=4in]
+\includegraphics[height=6cm]
 {Share_of_primary.pdf}
 \end{center}
 \end{figure}
 
-%\textbf{A commenter. A mettre en Online Appendix?}
-
-
-
-[TO BE COMPLETED]
-
-
 
 
 \end{document}
-
-\subsubsection{4-Digits Level Product Classification}
-
-\begin{landscape}
-\begin{table}[htbp]
-\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
-\caption{Air: Transport costs estimates, all years, 4-digit}
-\begin{center}
-\scalebox{0.85}{\begin{tabular}{lcccccccccccccccccccc}
-\hline
-\hline
-
-
-
-
-%%%%%%%%%%%%%%%%2nd part of the table
-
-\hline\hline
-\multicolumn{20}{c}{ }  \\
-\multicolumn{20}{c}{Continued}  \\
-\hline\hline
-
-
-\hline
-\hline
-\end{tabular}}
-
-\end{center}
-\label{tab_oa:result_vessel_ally3}%
-\end{table}
-\end{landscape}
-
-
-
