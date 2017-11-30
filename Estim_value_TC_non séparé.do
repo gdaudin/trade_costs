@@ -76,6 +76,36 @@ set maxvar 32767
 
 ****** timer clear ********
 
+
+****************Calcul pour trouver les pays qui font 80% du commerce********
+
+use "$dir/data/hummels_tra.dta"
+
+keep if year==2013
+
+gen tot_val = air_val+ves_val
+
+collapse (sum) tot_val, by(iso_o)
+
+gsort - tot_val
+
+egen val_tous_pays=total(tot_val)
+
+gen share = tot_val/val_tous_pays
+
+gen share_cum = sum(share)
+
+drop if share_cum >= 0.8
+
+levelsof iso_o, local(pays_a_garder) clean
+
+global pays_a_garder "`pays_a_garder'"
+
+
+
+
+
+
 ******************************************************************
 *** FONCTION ESTIMATION NON-LINEAIRE AVEC ADDITIFS ET ICEBERG ****
 ******************************************************************
@@ -109,7 +139,7 @@ program nlcouts_IetA
 **Ici, on fait les effets fixes (à la fois dans le terme additif et le terme multiplicatif)
 	
 		foreach p in prod_pays {
-			foreach j of num 1/`nbr_`p'' {
+			forvalue j = 1/`nbr_`p'' {
 				if  1==1 {
 					tempname feA_`p'_`j'
 ***************Remplac v9				
@@ -131,7 +161,7 @@ program nlcouts_IetA
 	
 	
 			foreach p in prod_pays {
-			foreach j of num 1/`nbr_`p'' {
+			forvalue j =  1/`nbr_`p'' {
 				if 1==1 {	
 					tempname feI_`p'_`j'
 ***************Remplac v9			
@@ -186,7 +216,8 @@ args year class preci mode
 
 ****************Préparation de la base blouk
 
-use "$dir/data/hummels_tra.dta"
+use "$dir/data/hummels_tra.dta", clear
+keep if strpos("$pays_a_garder",iso_o)!=0
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
@@ -486,7 +517,7 @@ forvalues z = 2013(1)2013 {
 capture log close
 log using hummels_3digits_complet_`z'_`x', replace
 
-prep_reg `z' sitc2ns 1 `x'
+prep_reg `z' sitc2ns 3 `x'
 
 
 *erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
