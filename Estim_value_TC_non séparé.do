@@ -47,6 +47,9 @@ if "`c(hostname)'" =="lise-HP" {
 
 cd $dir
 
+capture log using Estim_value_TC_non séparé.smcl, replace
+
+
 
 ***************** Avril 2015 ***********************************************************
 *** v10 : On impose les contraintes termeA>=0 et termeI<=1 (v9)
@@ -79,29 +82,41 @@ set maxvar 32767
 
 ****************Calcul pour trouver les pays qui font 80% du commerce********
 
-use "$dir/data/hummels_tra.dta"
+capture program drop a_garder
+program a_garder
+args mode
 
-keep if year==2013
 
-gen tot_val = air_val+ves_val
 
+use "$dir/data/hummels_tra.dta", clear
+
+keep if year==2013 & mode=="`mode'"
+gen tot_val = `mode'_val
 collapse (sum) tot_val, by(iso_o)
-
 gsort - tot_val
-
 egen val_tous_pays=total(tot_val)
-
 gen share = tot_val/val_tous_pays
-
 gen share_cum = sum(share)
-
 drop if share_cum >= 0.8
-
 levelsof iso_o, local(pays_a_garder) clean
-
 global pays_a_garder "`pays_a_garder'"
 
+*************Idem pour les produits
+use "$dir/data/hummels_tra.dta", clear
 
+keep if year==2013 & mode=="`mode'"
+gen tot_val = `mode'_val
+gen sitc2_3 = substr(sitc2,1,3)
+collapse (sum) tot_val, by(sitc2_3)
+gsort - tot_val
+egen val_tous_sitc=total(tot_val)
+gen share = tot_val/val_tous_sitc
+gen share_cum = sum(share)
+drop if share_cum >= 0.8
+levelsof sitc2_3, local(sitc_a_garder) clean
+global sitc_a_garder "`sitc_a_garder'"
+
+end
 
 
 
@@ -213,11 +228,15 @@ args year class preci mode
 * Hummels : sitc2
 * On utilise class pour indiquer que c'est non séparé
 
+a_garder `mode'
+macro dir
+
 
 ****************Préparation de la base blouk
 
 use "$dir/data/hummels_tra.dta", clear
-keep if strpos("$pays_a_garder",iso_o)!=0
+
+
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
@@ -227,9 +246,19 @@ keep if year==`year'
 keep if mode=="`mode'"
 rename sitc2 product
 replace product = substr(product,1,`preci')
+egen total_trade = total(`mode'_val)
+keep if strpos("$pays_a_garder",iso_o)!=0
+keep if strpos("$sitc_a_garder",product)!=0
+
+
+egen study_trade = total(`mode'_val)
+gen share_of_trade = study_trade/total_trade
+tab share_of_trade
 
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
+
+
 
 generate prod_pays = product + "_" + iso_o
 
@@ -242,7 +271,7 @@ generate prod_pays = product + "_" + iso_o
 *****************************************************************************
 
 
-
+/*
 display "Nombre avant bas et haut " _N
 
 bys product: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
@@ -251,6 +280,8 @@ drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2
 
 
 display "Nombre après bas et haut " _N
+
+*/
 
 egen prix_min = min(prix_trsp2), by(product)
 egen prix_max = max(prix_trsp2), by(product)
@@ -281,7 +312,7 @@ local nbr_prod_expost=r(max)
 drop group_prod
 display "Nombre de produits : `nbr_prod_expost'" 
 
-
+*/
 timer clear
 
 
@@ -515,7 +546,7 @@ forvalues z = 2013(1)2013 {
 
 
 capture log close
-log using hummels_3digits_complet_`z'_`x', replace
+log using hummels_3digits_complet_non_séparé_`z'_`x', replace
 
 prep_reg `z' sitc2ns 3 `x'
 
