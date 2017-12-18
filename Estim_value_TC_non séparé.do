@@ -84,13 +84,13 @@ set maxvar 32767
 
 capture program drop a_garder
 program a_garder
-args mode
+args mode year
 
 
 
 use "$dir/data/hummels_tra.dta", clear
 
-keep if year==2013 & mode=="`mode'"
+keep if year==`year' & mode=="`mode'"
 gen tot_val = `mode'_val
 collapse (sum) tot_val, by(iso_o)
 gsort - tot_val
@@ -104,7 +104,7 @@ global pays_a_garder "`pays_a_garder'"
 *************Idem pour les produits
 use "$dir/data/hummels_tra.dta", clear
 
-keep if year==2013 & mode=="`mode'"
+keep if year==`year' & mode=="`mode'"
 gen tot_val = `mode'_val
 gen sitc2_3 = substr(sitc2,1,3)
 collapse (sum) tot_val, by(sitc2_3)
@@ -228,7 +228,7 @@ args year class preci mode
 * Hummels : sitc2
 * On utilise class pour indiquer que c'est non séparé
 
-a_garder `mode'
+a_garder `mode' `year'
 macro dir
 
 
@@ -542,7 +542,7 @@ foreach x in `mode' {
 
 *foreach z in `year' {
 
-forvalues z = 2013(1)2013 {
+forvalues z = 1974(1)2013 {
 
 
 capture log close
