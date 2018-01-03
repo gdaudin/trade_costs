@@ -543,6 +543,7 @@ foreach x in `mode' {
 *foreach z in `year' {
 
 forvalues z = 1974(1)2013 {
+**2006 ne semble pas converger. Pourtant on a bien les résultats ?
 
 
 capture log close
