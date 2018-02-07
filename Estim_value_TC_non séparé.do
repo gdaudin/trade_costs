@@ -417,7 +417,7 @@ timer on 3
 display "nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
 *nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
-nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
+nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(600) parameters(`liste_parametres' ) initial (`initial')
 
 
 capture	generate rc=_rc
@@ -542,7 +542,7 @@ foreach x in `mode' {
 
 *foreach z in `year' {
 
-forvalues z = 1974(1)2013 {
+forvalues z = 2006(1)2006 {
 **2006 ne semble pas converger. Pourtant on a bien les résultats ?
 
 
