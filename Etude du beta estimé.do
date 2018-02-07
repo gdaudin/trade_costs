@@ -31,10 +31,36 @@ capture log using "`c(current_time)' `c(current_date)'"
 
 use "$dir/results/estimTC.dta", clear
 
-gen beta =(terme_I-1)/(terme_A+terme_I-1)
+gen beta =(terme_A)/(terme_A+terme_I-1)
 *Si on prend le TC observé, cela ne marche pas !!
 
-histogram beta if year==2000 & mode=="ves", kdensity
+foreach pond in yes no {
+	foreach year in 1974 1994 2013 {
+		foreach mode in ves air {
+			if "`pond'"=="no" histogram beta if year==`year' & mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
+			title ("`year' (`mode')") /// 
+			saving (`year'_`mode', replace)
+			if "`pond'"=="yes" histogram beta [fweight=val] if year==`year' & mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
+			title ("`year' (`mode')") ///
+			saving (`year'_`mode', replace)
+		}
+	}
+	graph combine 1974_ves.gph 1994_ves.gph 2013_ves.gph 1974_air.gph 1994_air.gph 2013_air.gph, ///
+	ycommon xcommon col(3) ///
+	note("Ponderation by value of flow: `pond'") ///
+	saving("$dir/results/Etude_beta_pond_`pond'.pdf", replace)
+	
+	foreach year in 1974 1994 2013 {
+		foreach mode in ves air {
+			erase `year'_`mode'.gph
+		}
+	}
+	
+	
+	
+	
+}
+
 
 
 
