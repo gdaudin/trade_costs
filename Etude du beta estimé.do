@@ -1,6 +1,6 @@
 
 
-version 15.1
+*version 15.1
 
 clear all
 *set mem 800m
@@ -33,7 +33,7 @@ use "$dir/results/estimTC.dta", clear
 
 gen beta =(terme_A)/(terme_A+terme_I-1)
 *Si on prend le TC observé, cela ne marche pas !!
-
+label var beta "share of additive costs"
 
 
 egen val_tot_year=total(val), by(year mode)
@@ -43,11 +43,12 @@ foreach pond in yes no {
 	
 	foreach mode in ves air {
 		if "`pond'"=="no" histogram beta if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
-		title ("`year' (`mode')") /// 
-		saving (_`mode', replace)
+		title ("`mode'") /// 
+		saving ("$dir/results/Etude_beta_pond_`pond'_TOT_`mode'.pdf", replace)
+		
 		if "`pond'"=="yes" histogram beta [fweight=share_y_val] if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
 		title ("`mode'") ///
-		saving ("$dir/results/Etude_beta_pond_TOT_`pond'_`mode'.pdf", replace) ///
+		saving ("$dir/results/Etude_beta_pond_`pond'_TOT_`mode'.pdf", replace) 
 		note("Ponderation by share of yearly value of flow : `pond'")
 	}	
 }
