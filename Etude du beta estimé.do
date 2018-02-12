@@ -34,6 +34,25 @@ use "$dir/results/estimTC.dta", clear
 gen beta =(terme_A)/(terme_A+terme_I-1)
 *Si on prend le TC observé, cela ne marche pas !!
 
+
+
+egen val_tot_year=total(val), by(year mode)
+gen share_y_val = round((val/val_tot_year)*100000)
+
+foreach pond in yes no {
+	
+	foreach mode in ves air {
+		if "`pond'"=="no" histogram beta if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
+		title ("`year' (`mode')") /// 
+		saving (_`mode', replace)
+		if "`pond'"=="yes" histogram beta [fweight=share_y_val] if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
+		title ("`mode'") ///
+		saving ("$dir/results/Etude_beta_pond_TOT_`pond'_`mode'.pdf", replace) ///
+		note("Ponderation by share of yearly value of flow : `pond'")
+	}	
+}
+
+/*
 foreach pond in yes no {
 	foreach year in 1974 1994 2013 {
 		foreach mode in ves air {
@@ -54,15 +73,8 @@ foreach pond in yes no {
 		foreach mode in ves air {
 			erase `year'_`mode'.gph
 		}
-	}
-	
-	
-	
-	
+	}	
 }
-
-
-
 
 
 
