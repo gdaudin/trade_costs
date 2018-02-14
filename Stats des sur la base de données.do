@@ -41,10 +41,30 @@ sum nb_par_sitc2_c_y_m, det
 
 
 ** En moyenne, chaque observation a 182 co-obs dans la même catg sitc2 3d, pays, mode, année
+** En moyenne, chaque dollar importé a 143 obs au sein d'une catg
 
 ** Autres éléments d'info:
 ** Par catg sitc2 à digits, pays, mode, année : 4 observations
-** En moyenne, chaque dollar importé a 143 obs au sein d'une catg
+
+
+* Si on supprime la dimension pays
+
+use $dir/data/hummels_tra, clear
+
+gen sitc2_3d = substr(sitc2,1,3)
+
+bys year sitc2_3d mode: gen nb_par_sitc2_y_m = _N
+sum nb_par_sitc2_y_m, det
+gen val=air_val+ves_val
+sum nb_par_sitc2_y_m [fw=val], det
+
+bys year sitc2_3d mode : keep if _n==1
+
+sum nb_par_sitc2_y_m, det
+
+
+** En moyenne, chaque observation a 255 co-obs dans la même catg sitc2 3d, mode, année
+** En moyenne, chaque dollar importé a 320 obs au sein d'une catg sitc2 3d, mode, année
 
 *** Répond à la question de l'endogénéité entre tauik, til et prix fob ik
 
@@ -113,13 +133,19 @@ export excel using base_statsdes_bycountry_byproduct, firstrow(variables) replac
 
 ********************************************************************
 *** Faire un programme qui calcule l'écart cif-fob observé / prédit*** 
+*** De même que le prix fob et le cout additif en monetaire
 
 capture program drop stats_des
 program stats_des
-	args year mode
-
+	args year mode 
 
 use "$dir/results/estimTC.dta", clear
+save "$dir/results/estimTC_3d.dta", replace
+
+local db 3d 4d
+
+foreach i of local db {
+use "$dir/results/estimTC_`i'.dta", clear
 
 * Base qui synthétise les résultats des estimations sur 3 digits, en intégrant en plus les variables observées
 
@@ -129,6 +155,7 @@ keep if mode=="`mode'"
 gen prix_trsp = prix_caf/prix_fob -1
 gen termeAetI = terme_A+terme_I-1
 gen termeiceberg = terme_iceberg -1
+gen addcost= terme_A*prix_fob
 
 local type prix_trsp termeAetI termeiceberg
 
@@ -138,7 +165,7 @@ foreach i of local type {
 	
 
 
-local type prix_trsp termeAetI termeiceberg lnprix_trsp lntermeAetI lntermeiceberg
+local type prix_trsp termeAetI termeiceberg lnprix_trsp lntermeAetI lntermeiceberg prix_fob addcost
 keep `type' year mode val
 
 foreach x in `type' {
@@ -160,24 +187,26 @@ foreach x in `type' {
 keep if _n ==1
 
 
-save "$dir/results/describe_db_`year'_`mode'", replace 
+save "$dir/results/describe_db_`year'_`mode'_`i'", replace 
 
+}
+erase "$dir/results/estimTC_3d.dta"
 
 end
 
 ******************************
-*** Lancer le programme
+*** Lancer le programme, sur 3 digits et 4 digits
 
 set more off
-local mode ves air
+local mode ves air 
+
 
 foreach x in `mode' {
 
-	*foreach z in `year' {
 		foreach z of num 1974(1)2013 {
 		
 		
-		stats_des `z' `x'
+		stats_des `z' `x' 
 		
 	
 	}
@@ -194,33 +223,36 @@ cd $dir/results/
 
 set more off
 local mode ves air
-
+local classif 3d 4d
 
 foreach x in `mode' {
 
-	use describe_db_1974_`x', clear
+	foreach z in `classif' {
+		use describe_db_1974_`x'_`z', clear
 	
 	
-	save compil_describedb_`x', replace
-	erase describe_db_1974_`x'.dta
+		save compil_describedb_`x'_`z', replace
+		erase describe_db_1974_`x'_`z'.dta
 	
+	}
 }
 
 * Les années ultérieures
 
 
 foreach x in `mode' {
+foreach k in `classif' {
 
 	foreach z of num 1975(1)2013 {
 	
-		use compil_describedb_`x', clear
-		append using describe_db_`z'_`x'
+		use compil_describedb_`x'_`k', clear
+		append using describe_db_`z'_`x'_`k'
 		
-		save compil_describedb_`x', replace
-		erase describe_db_`z'_`x'.dta
+		save compil_describedb_`x'_`k', replace
+		erase describe_db_`z'_`x'_`k'.dta
 	
 	}
-
+}
 }
 
 
@@ -228,14 +260,16 @@ foreach x in `mode' {
 
 * Pour 3 digits
 local mode ves air
-
+local classif 3d 4d
 
 foreach x in `mode' {
-	use compil_describedb_`x', clear
+foreach k in `classif' {
+
+	use compil_describedb_`x'_`k', clear
 	
 	display "Mode de transport = `x'" 
 	
-		foreach  y of varlist prix_trsp* termeAetI* termeiceberg* lnprix_trsp* lntermeAetI* lntermeiceberg* {
+		foreach  y of varlist prix_trsp* termeAetI* termeiceberg* prix_fob* addcost* lnprix_trsp* lntermeAetI* lntermeiceberg* {
 		
 		quietly sum `y'
 		generate `y'_meanperiod = r(mean)
@@ -243,18 +277,24 @@ foreach x in `mode' {
 		
 		}
 	
-	save compil_describedb_`x', replace
-	
+	save compil_describedb_`x'_`k', replace
+	}
 	
 }
 
 
+** stop here, check that it works
+
+
 use compil_describedb_ves, clear
 
-*edit mode *_mp_meanperiod *_med_meanperiod *uwm_meanperiod *uwmed_meanperiod in 1
-edit mode prix_trsp_med_meanperiod termeAetI_med_meanperiod termeiceberg_med_meanperiod in 1
+edit mode prix_trsp_mp_meanperiod termeAetI_mp_meanperiod termeiceberg_mp_meanperiod prix_fob_mp_meanperiod addcost_mp_meanperiod in 1
 
-edit mode year lnprix_trsp_uwm lntermeiceberg_uwm  lntermeAetI_uwm
+*edit mode *_mp_meanperiod *_med_meanperiod *uwm_meanperiod *uwmed_meanperiod in 1
+edit mode prix_trsp_med_meanperiod termeAetI_med_meanperiod termeiceberg_med_meanperiod prix_fob_med_meanperiod addcost_med_meanperiod in 1
+
+* check égalité des termes observés et prédits en log
+edit mode year lnprix_trsp_uwm lntermeiceberg_uwm  lntermeAetI_uwm 
 
 *use compil_describedb_ves, clear
 *edit mode *_mp_meanperiod  *_med_meanperiod *uwm_meanperiod *uwmed_meanperiod in 1
