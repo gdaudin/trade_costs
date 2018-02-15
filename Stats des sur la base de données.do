@@ -190,7 +190,6 @@ foreach x in `type' {
 	
 }
 
-
 keep year mode mp* med* et* min* max* uwm* 
 
 keep if _n ==1
@@ -214,7 +213,8 @@ local classif 3d 4d
 foreach x in `mode' {
 	foreach k in `classif' {
 
-		foreach z of num 1974(1)2013 {
+		*foreach z of num 1974(1)2013 {
+		foreach z of num 1974  {
 				
 		stats_des `z' `x' `k'
 		
