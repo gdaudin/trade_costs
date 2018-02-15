@@ -19,6 +19,10 @@ if ("`c(hostname)'" =="????") global dir \\filer.windows.dauphine.fr\home\l\lpat
 
 if "`c(username)'" =="guillaumedaudin" global dir  "~/Documents/Recherche/Trade Costs/Results"
 
+if "`c(hostname)'" =="LABP112" {
+    global dir C:\Users\lpatureau\Dropbox\trade_cost\results
+}
+
 cd "$dir"
 
 

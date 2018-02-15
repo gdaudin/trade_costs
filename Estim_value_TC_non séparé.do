@@ -45,6 +45,10 @@ if "`c(hostname)'" =="lise-HP" {
 	global dir C:\Users\lise\Dropbox\trade_cost
 }
 
+if "`c(hostname)'" =="LABP112" {
+    global dir C:\Users\lpatureau\Dropbox\trade_cost
+}
+
 cd $dir
 
 capture log using Estim_value_TC_non séparé.smcl, replace

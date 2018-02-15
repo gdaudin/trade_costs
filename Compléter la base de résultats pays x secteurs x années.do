@@ -23,6 +23,9 @@ if ("`c(hostname)'" =="LAB0271A") 	global dir C:\Users\lpatureau\Dropbox\trade_c
 
 if ("`c(hostname)'" =="lise-HP") global dir C:\Users\lise\Dropbox\trade_cost
 
+if "`c(hostname)'" =="LABP112" {
+    global dir C:\Users\lpatureau\Dropbox\trade_cost
+}
 
 	 
 ***Au lieu de changer le working directory pour s'adapter à nous deux, je fais en sorte qu'il n'y ait
