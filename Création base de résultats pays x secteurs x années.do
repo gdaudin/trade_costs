@@ -19,14 +19,31 @@ if ("`c(hostname)'" =="????") global dir \\filer.windows.dauphine.fr\home\l\lpat
 
 if "`c(username)'" =="guillaumedaudin" global dir  "~/Documents/Recherche/Trade Costs/Results"
 
+if "`c(hostname)'" =="LABP112" {
+    global dir C:\Users\lpatureau\Dropbox\trade_cost\results
+}
+
 cd "$dir"
 
+
+capture program drop creer_estimTC
+program creer_estimTC
+args preci
+** Exemple creer_estimTC 3
 *** Lancer le programme d'estimation de la 2e étape
 
 ** on est en 3 digits **
-local preci 3
 
-forvalues year =1974(1)2013 {
+if `preci' == 3 local estimTC estimTC
+if `preci' == 4 local estimTC estimTC_4d
+
+
+
+
+if `preci' == 3 local liste_year 1974(1)2013
+if `preci' == 4 local liste_year 1974 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013
+
+foreach year of numlist `liste_year' {
 
 disp "year = `year'"
 
@@ -66,12 +83,12 @@ gen year = `year'
 if "`mode'" !="air" | `year' !=1974 {
 
 	save temp, replace
-	use estimTC, clear
+	use `estimTC', clear
 	append using temp
 	erase temp.dta
 }
 	
-save estimTC, replace
+save `estimTC', replace
 }
 *log close
 }
@@ -80,33 +97,33 @@ save estimTC, replace
 
 ** Bug sur "name" à partir de 2005,jamais renseigné
 
-use estimTC, clear
+use `estimTC', clear
 
 sort iso_o year
 foreach x in iso_o {
-
-forvalues z = 2005(1)2013 {
-
-
-replace name = name[_n-1] if iso_o == `x' & year ==`z'
+	forvalues z = 2005(1)2013 {
+		replace name = name[_n-1] if iso_o == `x' & year ==`z'
+	}
 }
 
-}
-
-save estimTC, replace
+save `estimTC', replace
 
 ** Bug sur "name" à partir de 2011 sur iso_o "SDN"
 
-use estimTC, clear
+use `estimTC', clear
 
 replace name = "Sudan" if iso_o =="SDN" 
 bys iso_o: count if name==""
 
-save estimTC, replace
+save `estimTC', replace
 
 * Sauver sur la dropbox
-use estimTC, clear
+use `estimTC', clear
 
-if ("`c(hostname)'" =="????") save "C:\Users\lpatureau\Dropbox\trade_cost\results\estimTC.dta", replace
-if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") save  ~/dropbox/trade_cost/results/estimTC.dta, replace
+if ("`c(hostname)'" =="????") save "C:\Users\lpatureau\Dropbox\trade_cost\results\`estimTC'.dta", replace
+if ("`c(username)'" =="guillaumedaudin") save  ~/dropbox/trade_cost/results/`estimTC'.dta, replace
 
+end
+
+creer_estimTC 3
+creer_estimTC 4
