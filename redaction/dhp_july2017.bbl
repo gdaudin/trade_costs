@@ -1,4 +1,4 @@
-\begin{thebibliography}{28}
+\begin{thebibliography}{29}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -109,6 +109,11 @@
 \textsc{Lashkaripour, A.} (2017), \enquote{Estimating the International
   Transport Cost Elasticity}, Mimeo Department of Economics, Indiana
   University.
+
+\bibitem[{Levinson(2016)}]{levinson2016box}
+\textsc{Levinson, M.} (2016), \emph{The Box: How the Shipping Container Made
+  the World Smaller and the World Economy Bigger, with a new chapter by the
+  author}, Princeton University Press.
 
 \bibitem[{Limao and Venables(2001)}]{limao_venables}
 \textsc{Limao, N.} and \textsc{Venables, A.} (2001), \enquote{Infrastructure,
