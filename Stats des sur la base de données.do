@@ -72,8 +72,6 @@ sum nb_par_sitc2_y_m, det
 
 *** Répond à la question de l'endogénéité entre tauik, til et prix fob ik
 
-
-
 * Mettre en avant hétérogénéité des termes A et I entre pays d'origine / entre secteurs
 
 * Stats des dans la dimension secteur
@@ -314,10 +312,24 @@ use meanperiod_describedb_`x'_`k', clear
 
 gen sitc2 = "`k'"
 
-keep mode sitc2 avg_mp_prix_trsp avg_med_prix_trsp avg_mp_termeiceberg avg_med_termeiceberg avg_mp_terme_A avg_med_terme_A avg_mp_terme_I avg_med_terme_I avg_mp_prix_fob avg_med_prix_fob avg_mp_addcost avg_med_addcost
+#delimit ;
+keep mode sitc2 avg_mp_prix_trsp avg_med_prix_trsp avg_mp_termeiceberg avg_med_termeiceberg 
+		avg_mp_terme_A avg_med_terme_A avg_mp_terme_I avg_med_terme_I 
+		avg_uwm_prix_trsp avg_uwm_termeiceberg avg_uwm_terme_A avg_uwm_terme_I avg_uwm_prix_fob avg_uwm_addcost
+		avg_uwmed_prix_trsp avg_uwmed_termeiceberg avg_uwmed_terme_A avg_uwmed_terme_I 
+		avg_mp_prix_fob avg_med_prix_fob avg_uwm_prix_fob avg_uwmed_prix_fob   
+		avg_mp_addcost avg_med_addcost avg_uwm_addcost avg_uwmed_addcost ;
 
 
-order sitc2 mode avg_mp_termeiceberg avg_med_termeiceberg avg_mp_terme_I avg_med_terme_I avg_mp_terme_A avg_med_terme_A avg_mp_addcost avg_med_addcost avg_mp_prix_trsp avg_med_prix_trsp avg_mp_prix_fob avg_med_prix_fob
+order sitc2 mode avg_uwm_termeiceberg avg_uwmed_termeiceberg avg_mp_termeiceberg avg_med_termeiceberg 
+		avg_uwm_terme_I avg_uwmed_terme_I avg_mp_terme_I avg_med_terme_I 
+		avg_uwm_terme_A avg_uwmed_terme_A avg_mp_terme_A avg_med_terme_A 
+		avg_uwm_addcost avg_uwmed_addcost avg_mp_addcost avg_med_addcost 
+		avg_uwm_prix_trsp avg_uwmed_prix_trsp avg_mp_prix_trsp avg_med_prix_trsp 
+		avg_uwm_prix_trsp avg_uwmed_prix_trsp avg_mp_prix_fob avg_med_prix_fob ;
+
+#delimit cr
+
 save temp_`x'_`k', replace
 }
 }
@@ -327,20 +339,57 @@ append using temp_air_3d
 append using temp_ves_4d
 append using temp_air_4d
 
-replace avg_mp_termeiceberg = 100*avg_mp_termeiceberg
-replace avg_mp_terme_I = 100*(avg_mp_terme_I-1)
-replace avg_mp_terme_A = 100*avg_mp_terme_A
-replace avg_mp_prix_trsp = 100*avg_mp_prix_trsp
+local type mp med uwm uwmed
 
-replace avg_med_termeiceberg = 100*avg_med_termeiceberg
-replace avg_med_terme_I = 100*(avg_med_terme_I-1)
-replace avg_med_terme_A = 100*avg_med_terme_A
-replace avg_med_prix_trsp = 100*avg_med_prix_trsp
+foreach x in `type' {
 
+replace avg_`x'_termeiceberg = 100*avg_`x'_termeiceberg
+replace avg_`x'_terme_I = 100*(avg_`x'_terme_I-1)
+replace avg_`x'_terme_A = 100*avg_`x'_terme_A
+replace avg_`x'_prix_trsp = 100*avg_`x'_prix_trsp
+
+foreach z in termeiceberg terme_I terme_A prix_trsp prix_fob addcost {
+
+rename avg_`x'_`z' `x'_`z' 
+}
+
+}
 
 save Tab1_estimationresults, replace
 export excel using Tab1_estimationresults, firstrow(variables) replace
 
+**** Avoir les résultats pour 2004 pour comparaison avec Irarrazabal et al.
+
+local mode air ves
+local classif 3d  
+
+foreach x in `mode' {
+foreach k in `classif' {
+
+use describe_db_2004_`x'_`k', clear
+
+gen sitc2 = "`k'"
+
+#delimit ;
+keep mode year sitc2 mp_prix_trsp med_prix_trsp uwm_prix_trsp uwmed_prix_trsp mp_prix_fob med_prix_fob uwm_prix_fob uwmed_prix_fob 
+	mp_addcost med_addcost uwm_addcost uwmed_addcost mp_terme_A med_terme_A uwm_terme_A uwmed_terme_A 
+	mp_terme_I med_terme_I uwm_terme_I uwmed_terme_I mp_termeiceberg med_termeiceberg uwm_termeiceberg uwmed_termeiceberg ;
+	
+#delimit cr
+save temp2004_`x'_`k', replace
+
+}
+}
+
+use temp2004_ves_3d, clear
+
+append using temp2004_air_3d
+
+
+save results_2004, replace
+
+use results_2004, clear
+export excel using results_2004, firstrow(variables) replace
 
 * Eliminer bases temporaires
 
@@ -362,6 +411,7 @@ foreach x in `mode' {
 foreach k in `classif' {
 
 	erase temp_`x'_`k'.dta
+	erase temp2004_`x'_`k'.dta
 
 }
 }

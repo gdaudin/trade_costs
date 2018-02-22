@@ -1,4 +1,4 @@
-\begin{thebibliography}{30}
+\begin{thebibliography}{28}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -26,12 +26,6 @@
 \bibitem[{Bosker \emph{et~al.}(2018)}]{bosker2018ice}
 \textsc{Bosker, M.}, \textsc{Buringh, E.} \emph{et~al.} (2018), \enquote{Ice
   (berg) transport costs}, Technical report, CEPR Discussion Papers.
-
-\bibitem[{Corlay \emph{et~al.}(2017)}]{corlay_2017}
-\textsc{Corlay, G.}, \textsc{Dupraz, S.}, \textsc{Labonne, C.}, \textsc{Muller,
-  A.}, \textsc{Antonin, C.} and \textsc{Daudin, G.} (2017), \enquote{Comment:
-  Inferring trade costs from trade booms and trade busts}, \emph{International
-  Economics}, vol. 152: pp. 1 -- 8.
 
 \bibitem[{Daudin(2003)}]{daudin_logistique_2003}
 \textsc{Daudin, G.} (2003), \enquote{La logistique de la mondialisation},
@@ -87,11 +81,6 @@
   (2015), \enquote{The Tip of the Iceberg: A Quantitative Framework for
   Estimating Trade Costs}, \emph{The Review of Economics and Statistics},
   vol.~97 \,n\textsuperscript{o}~4: pp. 777--792.
-
-\bibitem[{Jacks \emph{et~al.}(2008)}]{Jacks08}
-\textsc{Jacks, D.~S.}, \textsc{Meissner, C.~M.} and \textsc{Novy, D.} (2008),
-  \enquote{Trade Costs, 1870-2000}, \emph{American Economic Review, Papers and
-  Proceedings}, vol.~98 \,n\textsuperscript{o}~2: pp. 529--534.
 
 \bibitem[{Kropf and Saur\'{e}(2016)}]{Kropf-Saure-JIE-2016}
 \textsc{Kropf, A.} and \textsc{Saur\'{e}, P.} (2016), \enquote{Fixed costs per
