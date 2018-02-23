@@ -448,10 +448,10 @@ if "`type_TC'"== "A" {
 	
 	replace yearly_share = yearly_share*100000
 ******	Ce bout là soit fait l'estimation, soit la récupère si elle a déjà été faite.
-*	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
-	*nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=val], iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
+
 	
-*	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
+	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
 	
 	
 
@@ -623,9 +623,9 @@ if "`type_TC'"== "obs_Hummels"  {
 	sort year
 
 	
-	replace effetfixe_obs_Hummels_ves=0 if year==1974
-	egen niv_1974=max(terme_obs_ves_mp)
-	gen blif = niv_1974+ effetfixe_obs_Hummels_ves
+	replace effetfixe_obs_Hummels_`mode'=0 if year==1974
+	egen niv_1974=max(terme_obs_`mode'_mp)
+	gen blif = niv_1974+ effetfixe_obs_Hummels_`mode'
 	graph twoway (line  blif year) if year <=2004
 	
 
