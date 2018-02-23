@@ -1,4 +1,4 @@
-\begin{thebibliography}{28}
+\begin{thebibliography}{26}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -26,14 +26,6 @@
 \bibitem[{Bosker \emph{et~al.}(2018)}]{bosker2018ice}
 \textsc{Bosker, M.}, \textsc{Buringh, E.} \emph{et~al.} (2018), \enquote{Ice
   (berg) transport costs}, Technical report, CEPR Discussion Papers.
-
-\bibitem[{Daudin(2003)}]{daudin_logistique_2003}
-\textsc{Daudin, G.} (2003), \enquote{La logistique de la mondialisation},
-  \emph{Revue de l'OFCE},  \,n\textsuperscript{o}~4: pp. 409--435.
-
-\bibitem[{Daudin(2005)}]{daudin_transactions_2005}
-\textsc{Daudin, G.} (2005), \enquote{Les transactions de la mondialisation},
-  \emph{Revue de l'OFCE},  \,n\textsuperscript{o}~1: pp. 221--262.
 
 \bibitem[{Disdier and Head(2008)}]{Disdier_Head08}
 \textsc{Disdier, A.-C.} and \textsc{Head, K.} (2008), \enquote{The Puzzling
