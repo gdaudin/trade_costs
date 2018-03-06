@@ -203,11 +203,11 @@ label var vfvhat  "fitted ad valorem rate"
 label var afv_wgt "expenditure/import value"
 label var vfv_wgt "expenditure/import value"
 
-tsline  afvhat afv_wgt, ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight") clpattern(solid longdash) xlabel("1974,1984,1994,2004")
+tsline afvhat afv_wgt  , ytitle("% of value shipped") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004")
 quietly capture graph save resultats_finaux/figure5_comme_hummels.gph, replace
 quietly capture graph export resultats_finaux/figure5_comme_hummels.pdf, replace
 
-tsline  vfvhat vfv_wgt, ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight") clpattern(solid longdash) xlabel("1974,1984,1994,2004")
+tsline vfvhat vfv_wgt   , ytitle("% of value shipped") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004")
 
 quietly capture graph save resultats_finaux/figure6_comme_hummels.gph, replace
 quietly capture graph export resultats_finaux/figure6_comme_hummels.pdf, replace
