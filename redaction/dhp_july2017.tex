@@ -541,7 +541,7 @@ Mean & 2.6 & 2.0 & 1.8 & 1.3 & 1.5 & 1.1 & 1.0  \\
 Median & 1.1 & 0.5 & 0.8 & 0.5 & 0.6 & 0.4 & 0.5  \\
 %\multicolumn{1}{l}{Standard Error} & 0.040 & 0.041 & 0.033 & 0.028 & 0.024 & 0.020  \\
 \hline
-\# observations & 14,955 & 16,118 & 24,958 & 35,027 & ??? & 40,279 & 39,351  \\
+\# observations & 14,955 & 16,118 & 24,958 & 35,027 & 36,990 & 40,279 & 39,351  \\
 \hline\hline
 \multicolumn{8}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs. Statistics are obtained weighting each observation by its share in trade (mode-dependent). Additive term expressed in fraction of fas price.}}}
 \end{tabular}%
@@ -580,7 +580,7 @@ Mean  & 5.1 & 3.4 & 2.7 & 2.8 & 2.9 & 2.5 & 1.5  \\
 Median & 2.9 & 2.3 & 1.7 & 2.2 & 1.9 & 1.9 & 0.8 \\
 %Standard Error & 0.085 & 0.046 & 0.040 & 0.043 & 0.025 & 0.020 \\
 \hline
- \# observations & 19,007 & 17,356 & 28,383 & 36,090 & ??? & 37,748 & 38,473 \\
+ \# observations & 19,007 & 17,356 & 28,383 & 36,090 & 37,757 & 37,748 & 38,473 \\
 \hline\hline
 \multicolumn{8}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs. Statistics are obtained weighting each observation by its share in trade (mode-dependent). Additive term expressed in fraction of fas price.}}}
 \end{tabular}%
@@ -874,10 +874,13 @@ In this section, we detail our methodology to extract the time trend in the ``ce
 \end{equation*}
 
 Based on this equation, we deduce after estimation that:
-\begin{eqnarray*}
-\text{For the year 1974}&& \widehat{\tau}_{is74} = \exp(\delta +\alpha_i+\beta_s), \\
-\text{For any year}~t> 1974&& \widehat{\tau}_{ist} = \exp(\delta +\alpha_i+\beta_s)\times \exp(\gamma_t)
-\end{eqnarray*}
+
+\[\left\{
+  \begin{array}{lcl}
+  \text{For the year 1974:} &&  \widehat{\tau}_{is74} = \exp(\delta +\alpha_i+\beta_s), \\
+  \text{For any year }t> 1974:&& \widehat{\tau}_{ist} = \exp(\delta +\alpha_i+\beta_s)\times \exp(\gamma_t) \\
+  \end{array}
+\right.\]
 
 From this, we obtain the following recursive link: $\widehat{\tau}_{ist} = \widehat{\tau}_{is74}\exp(\gamma_t)$. Given that $\tau >1$, we can rewrite to get the percentage change between year 1974 and any year $t>1974$:
 \begin{equation*}
@@ -891,10 +894,12 @@ As such, the index of transport costs in year $t$ (relative to the reference yea
 \noindent that is, Equation (\ref{eq:comp_effects_adv}) with $\bar{\tau}_{1974} = \exp(\delta + \sum_i \alpha_i + \sum_k \beta_k$) the mean (ad-valorem) transport cost in 1974.
 
 \paragraph{For the additive component} After estimating Equation (\ref{eq:compeffects_add}), we can re-build the additive component according to:
-\begin{eqnarray*}
-\text{For the year 1974}&&\widehat{t}_{is74}=  \delta + \alpha_i+ \beta_s, \\
-\text{For any year}~t> 1974&&\widehat{t}_{ist}=\left(\delta + \alpha_i+ \beta_s\right).\exp(\gamma_t)
-\end{eqnarray*}
+\[\left\{
+  \begin{array}{lcl}
+\text{For the year 1974:}&&\widehat{t}_{is74}=  \delta + \alpha_i+ \beta_s, \\
+\text{For any year}~t> 1974:&&\widehat{t}_{ist}=\left(\delta + \alpha_i+ \beta_s\right).\exp(\gamma_t)
+\end{array}
+\right.\]
 
 From this, we deduce the recursive link: $\widehat{t}_{ist} = \widehat{t}_{is74} \times \exp(\gamma_t)$. Given the constraint $t>0$, we then obtain the percentage change from 1974 from:
 

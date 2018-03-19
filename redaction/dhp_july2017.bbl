@@ -1,4 +1,4 @@
-\begin{thebibliography}{26}
+\begin{thebibliography}{27}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -16,6 +16,12 @@
 \textsc{Anderson, J.} and \textsc{Van~Wincoop, E.} (2004), \enquote{Trade
   Costs}, \emph{Journal of Economic Literature}, vol.~42
   \,n\textsuperscript{o}~3: pp. 691--751.
+
+\bibitem[{Arvis \emph{et~al.}(2016)}]{arvis2016trade}
+\textsc{Arvis, J.-F.}, \textsc{Duval, Y.}, \textsc{Shepherd, B.},
+  \textsc{Utoktham, C.} and \textsc{Raj, A.} (2016), \enquote{Trade costs in
+  the developing world: 1996--2010}, \emph{World Trade Review}, vol.~15
+  \,n\textsuperscript{o}~3: pp. 451--474.
 
 \bibitem[{Behar and Venables(2011)}]{Behar_Venables}
 \textsc{Behar, A.} and \textsc{Venables, A.~J.} (2011), \enquote{Transport
