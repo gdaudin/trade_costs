@@ -230,16 +230,27 @@ label var vfvhat_index  "fitted ad valorem rate, 100 in 1974"
 label var afv_wgt_index "expenditure/import value, 100 in 1974"
 label var vfv_wgt_index "expenditure/import value, 100 in 1974"
 
-tsline afvhat_index afv_wgt_index  , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") legend(stack)
+twoway (line  afvhat_index year,  clpattern(solid) color(navy)) ///
+	   (line  afv_wgt_index year, clpattern( longdash) color(sienna)) ///
+	   (lfit  afvhat_index year, clpattern(solid) color(navy)) ///
+	   (lfit  afv_wgt_index year, clpattern( longdash) color(sienna)) ///
+	   , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014") legend(stack)
 quietly capture graph save resultats_finaux/figure5_comme_hummels_base100.gph, replace
 quietly capture graph export resultats_finaux/figure5_comme_hummels_base100.pdf, replace
 
-tsline vfvhat_index vfv_wgt_index   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") legend(stack)
+twoway (line  vfvhat_index year,  clpattern(solid) color(navy)) ///
+	   (line  vfv_wgt_index year, clpattern( longdash) color(sienna)) ///
+	   (lfit  vfvhat_index year, clpattern(solid) color(navy)) ///
+	   (lfit  vfv_wgt_index year, clpattern( longdash) color(sienna)) ///  
+	   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014") legend(stack)
 
+	   
+	   
+	   
 quietly capture graph save resultats_finaux/figure6_comme_hummels_base100.gph, replace
 quietly capture graph export resultats_finaux/figure6_comme_hummels_base100.pdf, replace
 
-blif
+
 
 
 
@@ -248,6 +259,6 @@ blif
 
 erase temp.dta
 erase temp1.dta
-erase predictedrates.dta
+*erase predictedrates.dta
 
 
