@@ -30,3 +30,4 @@ _temp.pdf
 *.blg
 *.bbl
 /redaction/dhp_july2017.bbl
+*.log
