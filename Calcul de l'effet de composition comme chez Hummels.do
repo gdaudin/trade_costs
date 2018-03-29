@@ -231,18 +231,18 @@ label var afv_wgt_index "expenditure/import value, 100 in 1974"
 label var vfv_wgt_index "expenditure/import value, 100 in 1974"
 
 twoway (line  afvhat_index year,  clpattern(solid) color(navy)) ///
-	   (line  afv_wgt_index year, clpattern( longdash) color(sienna)) ///
-	   (lfit  afvhat_index year, clpattern(solid) color(navy)) ///
+	   (line  afv_wgt_index year, clpattern( longdash) color(sienna)  ) ///
+	   (lfit  afvhat_index year, clpattern(solid) color(navy) ) ///
 	   (lfit  afv_wgt_index year, clpattern( longdash) color(sienna)) ///
-	   , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014") legend(stack)
+	   , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014") legend(stack order (1 2))
 quietly capture graph save resultats_finaux/figure5_comme_hummels_base100.gph, replace
 quietly capture graph export resultats_finaux/figure5_comme_hummels_base100.pdf, replace
 
 twoway (line  vfvhat_index year,  clpattern(solid) color(navy)) ///
-	   (line  vfv_wgt_index year, clpattern( longdash) color(sienna)) ///
-	   (lfit  vfvhat_index year, clpattern(solid) color(navy)) ///
-	   (lfit  vfv_wgt_index year, clpattern( longdash) color(sienna)) ///  
-	   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014") legend(stack)
+	   (line  vfv_wgt_index year, clpattern( longdash) color(sienna) ) ///
+	   (lfit  vfvhat_index year, clpattern(solid) color(navy) ) ///
+	   (lfit  vfv_wgt_index year, clpattern( longdash) color(sienna)  ) ///  
+	   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014") legend(stack order(1 2))
 
 	   
 	   
@@ -251,7 +251,7 @@ quietly capture graph save resultats_finaux/figure6_comme_hummels_base100.gph, r
 quietly capture graph export resultats_finaux/figure6_comme_hummels_base100.pdf, replace
 
 
-
+ save "/Users/guillaumedaudin/Documents/Recherche/Trade Costs/results/effet_composition_hummels.dta", replace
 
 
 
@@ -259,6 +259,6 @@ quietly capture graph export resultats_finaux/figure6_comme_hummels_base100.pdf,
 
 erase temp.dta
 erase temp1.dta
-*erase predictedrates.dta
+erase predictedrates.dta
 
 
