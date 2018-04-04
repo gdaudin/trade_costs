@@ -1,4 +1,4 @@
-\begin{thebibliography}{27}
+\begin{thebibliography}{26}
 \newcommand{\enquote}[1]{``\,#1\,''}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
@@ -37,11 +37,6 @@
 \textsc{Disdier, A.-C.} and \textsc{Head, K.} (2008), \enquote{The Puzzling
   Persistence of the Distance Effect on Bilateral Trade}, \emph{The Review of
   Economics and Statistics}, vol.~90 \,n\textsuperscript{o}~1: pp. 37--48.
-
-\bibitem[{Glaeser and Kohlhase(2004)}]{Glaeser04}
-\textsc{Glaeser, E.~L.} and \textsc{Kohlhase, J.~E.} (2004), \enquote{Cities,
-  regions and the decline of transport costs}, \emph{Papers in Regional
-  Science}, vol.~83: pp. 197--228.
 
 \bibitem[{Head and Mayer(2004)}]{Head_Mayer04}
 \textsc{Head, K.} and \textsc{Mayer, T.} (2004), \enquote{The empirics of
