@@ -41,7 +41,7 @@ g terme_I = terme_I_w/val*100
 g tot_costs_estimated= terme_A+terme_I
 
 replace mode = "(a) Air" if mode=="air"
-replace mode = "(b) Ves" if mode=="ves"
+replace mode = "(b) Vessel" if mode=="ves"
 
 
 
@@ -52,7 +52,7 @@ graph export "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\trade_cost\Figure1.e
 =======
 twoway (line tot_costs_estimated year) (lfit tot_costs_estimated year), ///
 			ytitle("In % of fas price") yscale(range(0 12)) ylabel(0 (3) 12) xtitle(Year) ///
-			xscale(range(1973 2013)) xlabel(1974 1980 (10) 2000 2013) by(mode,  note("1989 is ommited for air") legend(off))
+			xscale(range(1973 2013)) xlabel(1974 1980 (10) 2000 2013) by(mode,  note("1989 is ommited for Air") legend(off))
 
 graph export "$dirgit/redaction/Figure1_Trend_of_total_TC_by_mode.pdf", as(pdf) replace
 >>>>>>> 76f4a6da89bc69c663e87828f07028581571ffaa
