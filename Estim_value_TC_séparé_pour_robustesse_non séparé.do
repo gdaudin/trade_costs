@@ -567,7 +567,7 @@ forvalues z = 1974(1)2013 {
 capture log close
 log using hummels_3digits_complet_séparé_pour_robustesse_`z'_`x', replace
 
-prep_reg `z' sitc2ns 3 `x'
+prep_reg `z' sitc2separe 3 `x'
 
 
 *erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
