@@ -51,9 +51,6 @@ if "`c(hostname)'" =="LABP112" {
 
 cd $dir
 
-capture log using Estim_value_TC_non séparé.smcl, replace
-
-
 
 ***************** Avril 2015 ***********************************************************
 *** v10 : On impose les contraintes termeA>=0 et termeI<=1 (v9)
@@ -533,7 +530,7 @@ capture generate machine =  "`c(hostname)'__`c(username)'"
 timer clear
 
 
-save "$dir/results/blouk_`year'_`class'_`preci'_`mode'", replace
+save "$dir/results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
 
 
@@ -565,7 +562,7 @@ forvalues z = 1974(1)2013 {
 
 
 capture log close
-log using hummels_3digits_complet_séparé_pour_robustesse_`z'_`x', replace
+log using hummels_3d_séparé_pour_robustesse_`z'_`x', replace
 
 prep_reg `z' sitc2separe 3 `x'
 

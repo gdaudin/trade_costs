@@ -53,9 +53,9 @@ dis "year = " `year'
 dis "\# digits= " `preci'
 dis "mode = `mode'"
 
-use "$dir//blouk_`year'_`class'_`preci'_`mode'.dta", clear
+use "$dir//results_estimTC_`year'_`class'_`preci'_`mode'.dta", clear
 
-*use blouk_2009_sitc2_3_air, clear
+*use results_estimTC_2009_sitc2_3_air, clear
 
 * nb obs = variable nbr_obs utilisées dans l'estimation
 * nb de pays dans l'estimation

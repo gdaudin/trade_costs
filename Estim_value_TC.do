@@ -809,7 +809,7 @@ capture generate machine =  "`c(hostname)'__`c(username)'"
 timer clear
 
 
-save "$dir/results/blouk_`year'_`class'_`preci'_`mode'", replace
+save "$dir/results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
 
 

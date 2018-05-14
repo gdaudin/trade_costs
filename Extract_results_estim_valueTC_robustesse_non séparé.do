@@ -54,7 +54,7 @@ dis "exercice = " `exo'
 dis "\# digits= " `preci'
 dis "mode = `mode'"
 
-use "$dir//blouk_`year'_`exo'_`preci'_`mode'.dta", clear
+use "$dir//results_estimTC_`year'_`exo'_`preci'_`mode'.dta", clear
 
 
 * stop here, continuer
