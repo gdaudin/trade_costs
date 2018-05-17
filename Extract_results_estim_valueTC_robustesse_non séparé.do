@@ -41,7 +41,12 @@ set more off
 
 
 ** Programme pour sortir les résultats
-* conditionnel à l'année, au mode de transport et à l'exercice (spéré non séparé)
+* conditionnel à l'année, au mode de transport et à l'exercice (séparé non séparé)
+
+
+**** STOP HERE, A FAIRE - attention au nom des fichiers de résultats ******
+
+titi
 
 capture program drop get_table
 

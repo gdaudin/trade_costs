@@ -125,8 +125,8 @@ keep if _n==1
 
 
 
-*save "E:\Lise\BQR_Lille\Hummels\resultats\results_estim_`year'_`class'_`preci'_`mode'", replace
-save "$dir\3_models\results_estim_`year'_`class'_`preci'_`mode'", replace
+*save "E:\Lise\BQR_Lille\Hummels\resultats\extract_results_estimTC_`year'_`class'_`preci'_`mode'", replace
+save "$dir\3_models\extract_results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
 ** Ajouter informations : Année, mode, degré de classification
 
@@ -145,8 +145,8 @@ order year digits mode nbr_obs nbr_iso_o nbr_prod terme_nlI_mp terme_nlI_med ter
 
 # delimit cr
 
-*save "E:\Lise\BQR_Lille\Hummels\resultats\results_estim_`year'_`class'_`preci'_`mode'", replace
-save "$dir\3_models\results_estim_`year'_`class'_`preci'_`mode'", replace
+*save "E:\Lise\BQR_Lille\Hummels\resultats\extract_results_estimTC_`year'_`class'_`preci'_`mode'", replace
+save "$dir\3_models\extract_results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
 
 end
@@ -216,7 +216,7 @@ local preci 3
 
 
 foreach x in air ves {
-use results_estim_1974_sitc2_`preci'_`x', clear
+use extract_results_estimTC_1974_sitc2_`preci'_`x', clear
 
 
 save table_`preci'_`x', replace
@@ -235,7 +235,7 @@ foreach k in `preci' {
 forvalues z = 1975(1)2013 {
 
 use table_`k'_`x', clear
-append using results_estim_`z'_sitc2_`k'_`x'
+append using extract_results_estimTC_`z'_sitc2_`k'_`x'
 
 save table_`k'_`x', replace
 
@@ -270,7 +270,7 @@ local preci 4
 
 
 foreach x in air ves {
-use results_estim_1974_sitc2_`preci'_`x', clear
+use extract_results_estimTC_1974_sitc2_`preci'_`x', clear
 
 
 save table_`preci'_`x', replace
@@ -289,7 +289,7 @@ foreach k in `preci' {
 forvalues z = 1977(4)2013 {
 
 use table_`k'_`x', clear
-append using results_estim_`z'_sitc2_`k'_`x'
+append using extract_results_estimTC_`z'_sitc2_`k'_`x'
 
 save table_`k'_`x', replace
 
