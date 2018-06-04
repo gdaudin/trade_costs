@@ -231,8 +231,8 @@ use table_`k'_3_`x', clear
 gen model = "`k'"
 gen nbdigits = 3
 
-keep avg* mode model nbdigits
-order mode model nbdigits avg_terme_A_mp avg_terme_A_med avg_terme_I_mp avg_terme_I_med avg_Rp2_nl avg_ecr_nl avg_aic_nl avg_logL_nl
+keep avg* mode model nbdigits nbr_obs
+order mode model nbdigits nbr_obs avg_terme_A_mp avg_terme_A_med avg_terme_I_mp avg_terme_I_med avg_Rp2_nl avg_ecr_nl avg_aic_nl avg_logL_nl
 keep if _n==1
 
 
