@@ -74,24 +74,9 @@ gen nbr_prod = r(max)
 drop _
 
 
-** Attention il manque min et max dans estimation iceberg / I et A alone
-
-sum terme_iceberg  [fweight=`mode'_val], det 	
-gen terme_nlI_min = r(min)
-gen terme_nlI_max = r(max)
-
-
-sum terme_I  [fweight=`mode'_val], det 	
-gen terme_I_min = r(min)
-gen terme_I_max = r(max)
-
-sum terme_A  [fweight=`mode'_val], det 	
-gen terme_A_min = r(min)
-gen terme_A_max = r(max)
-
 ** Génerer Ecart-type de la régression
 
-local model nlI nlA nl
+local model nl
 
 foreach x in `model'  {
 gen prediction_`x' = ln(predict_`x'-1)
