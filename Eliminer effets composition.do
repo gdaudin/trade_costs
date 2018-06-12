@@ -746,7 +746,7 @@ end
 
 
 ***********LANCER LES PROGRAMMES********************
-
+/*
 
 eliminer_effets_composition ves all obs
 eliminer_effets_composition ves all I
@@ -758,23 +758,27 @@ aggreg all
 
 
 
+*/
 
-/*
 
-foreach secteur in  /*all primary*/ manuf {
-	eliminer_effets_composition air "`secteur'"  A
-	eliminer_effets_composition air "`secteur'"  I
-	eliminer_effets_composition air "`secteur'"  obs
-	eliminer_effets_composition ves "`secteur'"  A
-	eliminer_effets_composition ves "`secteur'"  I
-	eliminer_effets_composition ves "`secteur'"  obs
+
+
+
+
+foreach secteur in  /*all*/ primary manuf {
+	eliminer_effets_composition air `"secteur"'  A
+	eliminer_effets_composition air `"secteur"'  I
+	eliminer_effets_composition air `"secteur"'  obs
+	eliminer_effets_composition ves `"secteur"'  A
+	eliminer_effets_composition ves `"secteur"'  I
+	eliminer_effets_composition ves `"secteur"'  obs
 }
 
-foreach secteur in all primary manuf  {
+foreach secteur in /*all*/ primary manuf  {
 	aggreg `secteur'
 }
 
-*/
+
 
 
 
