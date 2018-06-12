@@ -278,7 +278,9 @@ erase temp_`k'_3_`x'.dta
 
 
 ***************************************
-*** Faire une table avec toutes les années en ns et separée
+*** Faire une table avec toutes les années en ns et separé
+*** Etudier la corrélation entre part additif en non séparé sur toute la période
+*** A peu près ok pour Air mais pas bonne pour Vessel
 ***************************************
 
 foreach x in air ves {
@@ -292,9 +294,60 @@ foreach x in air ves {
 	generate share_A_med = terme_A_med/(terme_A_med + terme_I_med-1)
 	keep share* model year
 	reshape wide share_A_mp share_A_med, i(year) j(model) string
-	save table_ns&separe_3_`x'.dta, replace
+	*save table_ns&separe_3_`x'.dta, replace
 }
 
+
+
+
+***************************************
+*** Faire une table avec toutes les années en ns et separé
+*** Comparer le trend pour terme_A en séparé / non séparé
+*** Idem pour terme_I
+***************************************
+
+
+foreach x in air ves {
+
+	use table_sitc2ns_3_`x', clear
+	gen model="ns"
+	append using table_sitc2separe_3_`x'
+	replace model="separe" if model==""
+	
+	keep terme_A_mp terme_A_med terme_I_mp terme_I_med model year
+	
+	* In percent of the export price
+	foreach k in terme_A_mp terme_A_med {
+		replace `k' = 100*`k'
+		}
+	
+	foreach k in terme_I_mp terme_I_med {
+		replace `k' = 100*(`k'-1)
+		}
+
+	reshape wide terme_A_mp terme_A_med terme_I_mp terme_I_med , i(year) j(model) string
+	
+
+	destring year, replace
+	gen t = year - 1973
+	*tostring year, replace
+	
+	foreach k in terme_A terme_I {
+	
+	regress `k'_mpns t
+	
+	*twoway lfit `k'_mpsepare t || lfit `k'_mpns t, xtitle("Year") ytitle("In % of the fas price") title("`k', `x'") legend(label(1 "Separated FE") label(2 "No separated FE")) 
+	
+	*scatter terme_A_mpns t || lfit terme_A_mpns t 
+	*scatter terme_A_mpsepare t || lfit terme_A_mpsepare t
+    *scatter terme_A_mpsepare t || lfit terme_A_mpsepare t || lfit terme_A_mpns t
+	twoway lfit `k'_mpsepare year || lfit `k'_mpns year, xtitle("Year") ytitle("In % of the fas price") title("`k', `x'") legend(label(1 "Separated FE") label(2 "No separated FE")) 
+	
+	
+	quietly capture graph export graph_robustesse_ns_`k'_`x'.pdf, replace
+
+	}
+	}
 
 
 
