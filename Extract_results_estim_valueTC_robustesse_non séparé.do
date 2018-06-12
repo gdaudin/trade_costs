@@ -15,7 +15,7 @@ version 14.2
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/Documents/Recherche/trade costs/results
+	global dir ~/Dropbox/trade_cost/results
 }
 
 
@@ -207,7 +207,7 @@ save "$dir\robustesse_non_separe\table_`k'_3_`x'", replace
 
 }
 }
-	
+
 	
 	
 
@@ -252,14 +252,14 @@ foreach x in air ves {
 
 foreach k in sitc2ns sitc2separe {
 
-use table_synthese_robustesse_nonsepare, clear
-append using temp_`k'_3_`x'
+	use table_synthese_robustesse_nonsepare, clear
+	append using temp_`k'_3_`x'
 
-bys mode model: keep if _n==1
+	bys mode model: keep if _n==1
 
-save table_synthese_robustesse_nonsepare, replace
+	save table_synthese_robustesse_nonsepare, replace
 
-}
+	}
 }
 
 export excel using table_synthese_robustesse_nonsepare, replace firstrow(varlabels)
@@ -275,6 +275,26 @@ erase temp_`k'_3_`x'.dta
 
 }
 }
+
+
+***************************************
+*** Faire une table avec toutes les années en ns et separée
+***************************************
+
+foreach x in air ves {
+
+	use table_sitc2ns_3_`x', clear
+	gen model="ns"
+	append using table_sitc2separe_3_`x'
+	replace model="separé" if model==""
+	drop avg*
+	generate share_A_mp = terme_A_mp/(terme_A_mp + terme_I_mp-1)
+	generate share_A_med = terme_A_med/(terme_A_med + terme_I_med-1)
+	keep share* model year
+	reshape wide share_A_mp share_A_med, i(year) j(model) string
+	save table_ns&separe_3_`x'.dta, replace
+}
+
 
 
 
