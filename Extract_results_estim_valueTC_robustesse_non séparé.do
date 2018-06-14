@@ -316,6 +316,10 @@ foreach x in air ves {
 	
 	keep terme_A_mp terme_A_med terme_I_mp terme_I_med model year
 	
+		
+	generate share_A_mp = terme_A_mp/(terme_A_mp + terme_I_mp-1)
+	generate share_A_med = terme_A_med/(terme_A_med + terme_I_med-1)
+
 	* In percent of the export price
 	foreach k in terme_A_mp terme_A_med {
 		replace `k' = 100*`k'
@@ -324,27 +328,33 @@ foreach x in air ves {
 	foreach k in terme_I_mp terme_I_med {
 		replace `k' = 100*(`k'-1)
 		}
-
-	reshape wide terme_A_mp terme_A_med terme_I_mp terme_I_med , i(year) j(model) string
+	
+	reshape wide terme_A_mp terme_A_med terme_I_mp terme_I_med share_A_mp share_A_med, i(year) j(model) string
 	
 
 	destring year, replace
 	gen t = year - 1973
 	*tostring year, replace
 	
-	foreach k in terme_A terme_I {
+	foreach k in terme_A terme_I share_A {
 	
-	regress `k'_mpns t
+	foreach z in mp med {
+	regress `k'_`z'ns t
 	
 	*twoway lfit `k'_mpsepare t || lfit `k'_mpns t, xtitle("Year") ytitle("In % of the fas price") title("`k', `x'") legend(label(1 "Separated FE") label(2 "No separated FE")) 
 	
 	*scatter terme_A_mpns t || lfit terme_A_mpns t 
 	*scatter terme_A_mpsepare t || lfit terme_A_mpsepare t
     *scatter terme_A_mpsepare t || lfit terme_A_mpsepare t || lfit terme_A_mpns t
-	twoway lfit `k'_mpsepare year || lfit `k'_mpns year, xtitle("Year") ytitle("In % of the fas price") title("`k', `x'") legend(label(1 "Separated FE") label(2 "No separated FE")) 
+	
+	twoway (lfit `k'_`z'separe year, color(black))(line `k'_`z'separe year, color(black) lpattern(_)) (lfit `k'_`z'ns year, color(gs10)) (line `k'_`z'ns year, color(gs10) lpattern(-)) , xtitle("Year") ytitle("In % of the fas price") ///
+	title("`k', `x'") legend(label(1 "Separated FE (trend)") label(2 "Separated FE") label(3 "No separated FE (trend)") label(4 "No separated FE")) 
 	
 	
-	quietly capture graph export graph_robustesse_ns_`k'_`x'.pdf, replace
+	
+	quietly capture graph export graph_robustesse_ns_`z'_`k'_`x'.pdf, replace
+	
+	}
 
 	}
 	}
