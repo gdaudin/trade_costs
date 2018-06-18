@@ -341,14 +341,21 @@ foreach x in air ves {
 	foreach z in mp med {
 	regress `k'_`z'ns t
 	
+	
+	if "`k'" == "terme_A" local title "Additive term"
+	if "`k'" == "terme_I" local title "Multiplicative term"
+	if "`x'" == "ves" local modetitle "Vessel"
+	if "`x'" == "air" local modetitle "Air"
+	
+	
 	*twoway lfit `k'_mpsepare t || lfit `k'_mpns t, xtitle("Year") ytitle("In % of the fas price") title("`k', `x'") legend(label(1 "Separated FE") label(2 "No separated FE")) 
 	
 	*scatter terme_A_mpns t || lfit terme_A_mpns t 
 	*scatter terme_A_mpsepare t || lfit terme_A_mpsepare t
     *scatter terme_A_mpsepare t || lfit terme_A_mpsepare t || lfit terme_A_mpns t
 	
-	twoway (lfit `k'_`z'separe year, color(black))(line `k'_`z'separe year, color(black) lpattern(_)) (lfit `k'_`z'ns year, color(gs10)) (line `k'_`z'ns year, color(gs10) lpattern(-)) , xtitle("Year") ytitle("In % of the fas price") ///
-	title("`k', `x'") legend(label(1 "Separated FE (trend)") label(2 "Separated FE") label(3 "No separated FE (trend)") label(4 "No separated FE")) 
+	twoway (lfit `k'_`z'separe year, color(black) lpattern(-))(line `k'_`z'separe year, color(black) ) (lfit `k'_`z'ns year, lpattern(-) color(gs10)) (line `k'_`z'ns year, color(gs10) ) , xtitle("Year") ytitle("In % of the fas price") ///
+	title("`title', `modetitle'") legend(on order (2 4) label(1 "Separated FE (trend)") label(2 "Separated FE (baseline)") label(3 "No separated FE (trend)") label(4 "No separated FE")) 
 	
 	
 	
