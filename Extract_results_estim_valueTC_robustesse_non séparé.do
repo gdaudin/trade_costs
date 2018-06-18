@@ -20,16 +20,16 @@ if "`c(username)'" =="guillaumedaudin" {
 
 
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost/results
+	global dir C:/Users/lpatureau/Dropbox/trade_cost/results
 }
 
 
 if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost/results
+	global dir C:/Users/lise/Dropbox/trade_cost/results
 }
 
 if "`c(hostname)'" =="LABP112" {
-    global dir C:\Users\lpatureau\Dropbox\trade_cost\results
+    global dir C:/Users/lpatureau/Dropbox/trade_cost/results
 }
 
 cd "$dir"
@@ -54,7 +54,7 @@ args year exo preci mode
 dis "year = " `year'
 dis "exercice =  `exo'"
 * sitc2ns ou sitc2separe
-dis "\# digits= " `preci'
+dis "/# digits= " `preci'
 dis "mode = `mode'"
 
 use results_estimTC_`year'_`exo'_`preci'_`mode'.dta, clear
@@ -113,8 +113,8 @@ keep if _n==1
 
 
 
-*save "E:\Lise\BQR_Lille\Hummels\resultats\results_estim_`year'_`class'_`preci'_`mode'", replace
-save "$dir\robustesse_non_separe\results_estim_`year'_`exo'_`preci'_`mode'", replace
+*save "E:/Lise/BQR_Lille/Hummels/resultats/results_estim_`year'_`class'_`preci'_`mode'", replace
+save "$dir/robustesse_non_separe/results_estim_`year'_`exo'_`preci'_`mode'", replace
 
 ** Ajouter informations : Année, mode, degré de classification
 
@@ -132,8 +132,8 @@ order year digits mode nbr_obs nbr_iso_o nbr_prod
 
 # delimit cr
 
-*save "E:\Lise\BQR_Lille\Hummels\resultats\results_estim_`year'_`class'_`preci'_`mode'", replace
-save "$dir\robustesse_non_separe\results_estim_`year'_`exo'_`preci'_`mode'", replace
+*save "E:/Lise/BQR_Lille/Hummels/resultats/results_estim_`year'_`class'_`preci'_`mode'", replace
+save "$dir/robustesse_non_separe/results_estim_`year'_`exo'_`preci'_`mode'", replace
 
 
 end
@@ -159,10 +159,10 @@ foreach x in air ves {
 
 get_table 1974 `k' 3 `x'
 
-use "$dir\robustesse_non_separe\results_estim_1974_`k'_3_`x'", clear
+use "$dir/robustesse_non_separe/results_estim_1974_`k'_3_`x'", clear
 
 
-save "$dir\robustesse_non_separe\table_`k'_3_`x'", replace
+save "$dir/robustesse_non_separe/table_`k'_3_`x'", replace
 
 }
 }
@@ -180,10 +180,10 @@ forvalues z = 1975(1)2013 {
 
 get_table `z' `k' 3 `x'
 
-use "$dir\robustesse_non_separe\table_`k'_3_`x'", clear
-append using "$dir\robustesse_non_separe\results_estim_`z'_`k'_3_`x'"
+use "$dir/robustesse_non_separe/table_`k'_3_`x'", clear
+append using "$dir/robustesse_non_separe/results_estim_`z'_`k'_3_`x'"
 
-save "$dir\robustesse_non_separe\table_`k'_3_`x'", replace
+save "$dir/robustesse_non_separe/table_`k'_3_`x'", replace
 
 }
 }
@@ -196,14 +196,14 @@ foreach x in air ves {
 
 foreach k in sitc2ns sitc2separe {
 
-use "$dir\robustesse_non_separe\table_`k'_3_`x'"
+use "$dir/robustesse_non_separe/table_`k'_3_`x'"
 
 foreach var in terme_A_mp terme_A_med terme_I_mp terme_I_med nbr_iso_o nbr_prod Rp2_nl ecr_nl aic_nl logL_nl {
 		egen avg_`var' = mean(`var')
 	
 }
 	
-save "$dir\robustesse_non_separe\table_`k'_3_`x'", replace
+save "$dir/robustesse_non_separe/table_`k'_3_`x'", replace
 
 }
 }
