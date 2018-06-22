@@ -344,6 +344,7 @@ foreach x in air ves {
 	
 	if "`k'" == "terme_A" local title "Additive term"
 	if "`k'" == "terme_I" local title "Multiplicative term"
+	if "`k'" == "share_A" local title "Share of the additive term"
 	if "`x'" == "ves" local modetitle "Vessel"
 	if "`x'" == "air" local modetitle "Air"
 	
