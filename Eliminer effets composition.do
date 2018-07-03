@@ -173,7 +173,7 @@ save start_year_`mode'_`sitc'_`type_TC', replace
 * La base pour stocker les résultats des estimations
 * On enlève 1974, c'est l'année de référence, les EF sont estimés par rapport à cette année là
 
-**************************DÉBUT DE L'ANALYSE PROPROMENT DITE
+**************************DÉBUT DE L'ANALYSE PROPREMENT DITE
 
 use "$dir/results/estimTC.dta", clear
 
