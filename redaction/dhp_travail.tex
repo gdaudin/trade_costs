@@ -89,7 +89,6 @@
 
 
 \title{\textsc{International Transport costs:\\New Findings from modeling additive costs}\thanks{We are grateful to participants at ETSG 17\textsuperscript{th} meetings in Helsinki, DEGIT XXII in Paris School of Economics, and participants at seminars of the University of California-Irvine, the Universities of Paris-Dauphine Paris-I and Nancy for very useful discussions.
-
 Finally, any remaining errors are ours.
 This paper features an online appendix containing additional results and available on the authors' websites.}}
 
@@ -263,21 +262,20 @@ In the same vein, \citet{limao_venables} highlight the importance of infrastruct
 
 Exploiting this dataset also has (at least) three advantages.
 First, it comes from a single, homogenous and trustworthy customs source.
- This limits the measurement error bias.
+This limits the measurement error bias.
 Based on customs declarations, the US Imports Database inventories all imports (both values and quantities), by country of origin, to the United states at the HS 10-digit level, with a concordance code to the SITC 5-digit coding system.
-This will be crucial to compute transport costs, as we detail below.
-In addition, the database reports information regarding freight, insurance and handling expenditures by transportation mode, ocean (or ``vessel'') and air.
+%This will be crucial to compute transport costs, as we detail below.
+In addition, the database reports information regarding freight, insurance and handling expenditures by transportation mode, land/ocean (or ``vessel'') and air.
 We will make use of this to enlighten potential differences in the dynamics of transport costs across transportation mode.
-Second, using this dataset allows us to have both the import price and the export price for the same good (for a given origin country).
+Second, this dataset provides both the import price and the export price for the same good (for a given origin country).
 This is highly valuable, as it gives us a direct measure of international transport costs (at the country/sector level), from which we can estimate separately the \textit{levels} of both the iceberg costs and of the additive costs, in contrast to \cite{Irrazabal_2015}.
-Third, this dataset is available over a long time span, which we exploit by providing an analysis of the trend patterns of international transport costs over the period 1974-2013.
-Note that, as mentioned by \cite{Lafourcade_Thisse}, our transport costs measures is based on actual trade flows, i.e.
+Third, this dataset is available over a long time span, which we exploit by providing an analysis of the trend patterns of international transport costs over the period 1974-2013.\footnote{Note that, as mentioned by \cite{Lafourcade_Thisse}, our transport costs measures is based on actual trade flows, i.e.
 ignoring those flows that did not happen because of presumably prohibitive transport costs.
-In light of this, the estimated values that we obtain can be viewed as the lower bounds of the ``true'' transport costs.\smallskip
+In light of this, the estimated values that we obtain can be viewed as the lower bounds of the ``potential'' transport costs.} \smallskip
 
 
-We estimate international transport costs at the 3-digit classification level, even if data series on the cif and fas prices are available at the 5-digit classification level.
 As detailed below, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time.
+We estimate international transport costs at the 3-digit classification level, even if data series on the cif and fas prices are available at the 5-digit classification level.
 Yet, we ensure the robustness of these results by conducting the estimations at the 4-digit level for some selected years.\footnote{The selected years for the 4-digit level estimations are: 1974, 1977, 1981, 1985, 1989, 1993, 1997, 2001, 2005, 2009, 2013.
 Comparing different levels of aggregation is useful to check differences and the presence of biases precisely due to aggregation.
 However, we obtain no substantial difference between the estimation results conducted at the 3 and 4-digit levels.
@@ -285,17 +283,16 @@ Estimation results at the 4-digit classification level are reported in Appendix 
 
 \subsection{Estimating transport costs: Empirical specification}
 
-\paragraph{The estimated equation} In this section, our purpose is to provide time-varying estimates of the size of ad-valorem and additive costs among total transport costs.
-To do so, we start from the equation that expresses the price $p$ of a good paid by the importer (import, or cif price) as a function of the producer price $\widetilde{p}$ (export, or fas price), given both per-kg ($t$) and ad-valorem ($\tau$) transport costs, according to:
+\paragraph{The estimated equation} In this section, our purpose is to provide time-varying estimates of the size of ad-valorem transport costs and additive transport costs costs.
+To do so, we start from the equation that expresses the price $p$ (per kg) of a good paid by the importer (import, or cif price) as a function of the producer price $\widetilde{p}$ (per kg) (export, or fas price), given both additive (or per kg) transport costs ($t$) and ad-valorem ($\tau$) transport costs, according to:
 
 \begin{equation}
 p = \tau \widetilde{p}+ t \label{eq:base}
 \end{equation}
 
-\noindent As usual in the literature, the iceberg trade costs are denoted $\tau$ (with  $\tau \geq 1$, $\tau=1$ meaning no ad-valorem trade costs), while additive trade costs are labeled $t$ (with $t \geq 0$, $t=0$ implying no additive costs).
+\noindent As is usual in the literature, the iceberg trade costs are denoted $\tau$ (with  $\tau \geq 1$, $\tau=1$ meaning no ad-valorem trade costs), while additive trade costs are labeled $t$ (with $t \geq 0$, $t=0$ implying no additive costs).
  Let us denote $i$ the origin country, and $k$, the product at the 5-digit level.
-Transforming the above equation (\ref{eq:base}) as ratio in order to get the percentage change in prices induced by transportation, we thus get the following baseline specification at the root of our estimation (skipping the year and transport-mode dimensions in the notations for reading convenience):
-%\footnote{\textbf{Why do we consider the ratio not the difference, with cif price on the LHS and p fas RHS? To be answered?}}
+Transforming the above equation (\ref{eq:base}) into a ratio in order to get the percentage change in prices induced by transportation (and get rid of the kg unit), we get the following baseline specification at the root of our estimation (skipping the year and transport-mode dimensions in the notations for reading convenience):
 
 \begin{equation}
 \frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
@@ -332,12 +329,13 @@ Considered in logs, the above equation becomes:
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \times \tau_{k}+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:equation0}
 \end{equation}
 
-The non-linearity of Equation (\ref{eq:equation0}) implies that it cannot be estimated using standard linear estimators.
+Equation (\ref{eq:equation0}) is non linear.
+It cannot be estimated using standard linear estimators.
 All estimates are thus performed using non-linear least squares.\footnote{The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations.
 The intuitive criterion for convergence is that the sum of squares of residuals does not increase from one iteration to the next.
 See \cite{Woolridge-Book-2001} for more details.} Yet, the use of a nonlinear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time.
 Confronted to this arbitrage, we estimate international transport costs at the 3-digit level as our benchmark classification, even though data series are available at the 5-digit classification level ($k$).
-In other words, this amounts making the additional assumption, that all 5-digit products $k$ in a 3-digit sector $s$ share the
+This amounts making the additional assumption, that all 5-digit products $k$ in a 3-digit sector $s$ share the
 same structure of costs.\footnote{One way to gauge the relevance of this assumption is to provide a decomposition variance exercise on the observed cif-fas price.
 As reported in Appendix \ref{app:decomp_variance}, the share of the observed variance that is accounted for by the between-sector ($s$) variance is roughly similar to the between-product ($k$) variance.}$^{,}$\footnote{One may object that we could preserve the estimation at the 5-digit level by running an OLS estimation on the equation taken in level, i.e.
 on the basis of Equation (\ref{eq:base_estimee}), specifying the error term additively.
@@ -388,9 +386,7 @@ Rather, our aim is to provide an accounting breakdown of transport costs between
 Otherwise stated, conditional to an export price and a transport mode, the gap between the export price declared to the custom data and the import price recorded by the US administration is beyond the firm's control.
 In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
 
-%\textbf{pas encore completement clair.
-Veut-on dire que ce qui est pbtique, c'est que TC reagisse a ptilde? Je crois que ce qu'on veut dire, c'est que le fait que ptilde change en fonction des TC ne change pas les TC, le cif price s'ajuste proportionnellement? Si c'est ca, c'est vrai seulement si les couts sont advalorem...
-Pour dire que les firmes peuvent difficilement influencer le prix du transport au niveau 3d, on pourrait donner des stats des la dessus? Par produit 3d/pays, par secteur 3d tous pays, etc...?}\smallskip
+%\textbf{pas encore completement clair. Veut-on dire que ce qui est pbtique, c'est que TC reagisse a ptilde? Je crois que ce qu'on veut dire, c'est que le fait que ptilde change en fonction des TC ne change pas les TC, le cif price s'ajuste proportionnellement? Si c'est ca, c'est vrai seulement si les couts sont advalorem...Pour dire que les firmes peuvent difficilement influencer le prix du transport au niveau 3d, on pourrait donner des stats des la dessus? Par produit 3d/pays, par secteur 3d tous pays, etc...?}\smallskip
 
 
 After estimating Equation (\ref{eq:model_IetA}), we can re-built a measure of each component, $\widehat{\tau}^{adv}_{is(k)} = \widehat{\tau_{i}} \times \widehat{\tau}_{s(k)}$ for the ad-valorem cost and $\widehat{t}_{is(k)} = \widehat{t}_{i} + \widehat{t}_{s(k)}$ for the additive cost, that are country-sector specific, by year and transport mode.
@@ -821,7 +817,7 @@ Table \ref{tab:robustness_separability} reports a summary of the results, consid
 
 \begin{table}[htbp]
   \centering
-  \caption{Robustness to the separability assumption (Average over the period)}
+  \caption{Robustness to the separability assumption (Average over the period) - restricted sample}
 \begin{center}
     \begin{tabular}{lcc|cc}
     \hline \hline
