@@ -99,6 +99,7 @@ program eliminer_effets_composition
 args mode sitc type_TC
 local type_TCm `type_TC'
 if "`type_TC'"=="obs_Hummels" local type_TCm obs
+assert "`sitc'"=="manuf" | "`sitc'"=="primary" | "`sitc'"=="all"
 
 *Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all A
 
@@ -172,7 +173,7 @@ save start_year_`mode'_`sitc'_`type_TC', replace
 * La base pour stocker les résultats des estimations
 * On enlève 1974, c'est l'année de référence, les EF sont estimés par rapport à cette année là
 
-**************************DÉBUT DE L'ANALYSE PROPROMENT DITE
+**************************DÉBUT DE L'ANALYSE PROPREMENT DITE
 
 use "$dir/results/estimTC.dta", clear
 
@@ -764,14 +765,16 @@ aggreg all
 
 
 
+*local liste_secteurs all
+local liste_secteurs primary manuf
 
-foreach secteur in  /*all*/ primary manuf {
-	eliminer_effets_composition air `"secteur"'  A
-	eliminer_effets_composition air `"secteur"'  I
-	eliminer_effets_composition air `"secteur"'  obs
-	eliminer_effets_composition ves `"secteur"'  A
-	eliminer_effets_composition ves `"secteur"'  I
-	eliminer_effets_composition ves `"secteur"'  obs
+foreach secteur of local  liste_secteurs {
+	eliminer_effets_composition air `secteur'  A
+	eliminer_effets_composition air `secteur'  I
+	eliminer_effets_composition air `secteur'  obs
+	eliminer_effets_composition ves `secteur'  A
+	eliminer_effets_composition ves `secteur'  I
+	eliminer_effets_composition ves `secteur'  obs
 }
 
 foreach secteur in /*all*/ primary manuf  {
