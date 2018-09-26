@@ -2,5 +2,5 @@
 \contentsline {subsection}{\numberline {A}Three models: Comparison }{3}{subsection.0.1}
 \contentsline {subsubsection}{\numberline {A.1}Estimation results}{3}{subsubsection.0.1.1}
 \contentsline {subsubsection}{\numberline {A.2}Quality of fit diagnostic tests}{3}{subsubsection.0.1.2}
-\contentsline {subsection}{\numberline {B}Transport Cost Estimates: Yearly Detailed Results}{7}{subsection.0.2}
-\contentsline {subsection}{\numberline {C}Eliminating the composition effects: Primary vs. Manufacturing sector}{11}{subsection.0.3}
+\contentsline {subsection}{\numberline {B}Transport Cost Estimates: Yearly Detailed Results}{8}{subsection.0.2}
+\contentsline {subsection}{\numberline {C}Eliminating the composition effects: Primary vs. Manufacturing sector}{12}{subsection.0.3}

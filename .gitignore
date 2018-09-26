@@ -31,3 +31,7 @@ _temp.pdf
 *.bbl
 /redaction/dhp_july2017.bbl
 *.log
+*.toc
+*.lot
+*.dvi
+*.aux
