@@ -73,8 +73,8 @@
 \title{\textbf{International Transport costs:\\New Findings from modeling additive costs}\\Online Appendix (Not for Publication)}
 
 \urlstyle{rm}
-\author{Guillaume Daudin\footnote{\noindent Universit\'{e} Paris-Dauphine \& PSL University, IRD, LEDa, UMR 225, DIAL, 75016 PARIS, FRANCE \newline
-Sciences Po, Observatoire Fran\c{c}ais des Conjonctures \'{E}conomiques (OFCE), 75014 PARIS, FRANCE; email: \url{guillaume.daudin@dauphine.fr}} \qquad \quad Jérôme Héricourt\footnote{\noindent Université de Lille - LEM-CNRS (UMR 9221) and CEPII; email: \url{jerome.hericourt@univ-lille.fr}} \qquad \quad Lise Patureau\footnote{\noindent Corresponding author. Universit\'{e} Paris-Dauphine \& PSL University, LEDa, 75016 PARIS, FRANCE ; email: \url{lise.patureau@dauphine.fr}}}
+\author{Guillaume Daudin\footnote{\noindent Universit\'{e} Paris-Dauphine, PSL University, IRD, LEDa, UMR 225, DIAL, 75016 PARIS, FRANCE \newline
+Sciences Po, Observatoire Fran\c{c}ais des Conjonctures \'{E}conomiques (OFCE), 75014 PARIS, FRANCE; email: \url{guillaume.daudin@dauphine.fr}} \qquad \quad Jérôme Héricourt\footnote{\noindent Université de Lille - LEM-CNRS (UMR 9221) and CEPII; email: \url{jerome.hericourt@univ-lille.fr}} \qquad \quad Lise Patureau\footnote{\noindent Corresponding author. Universit\'{e} Paris-Dauphine, PSL University, LEDa, 75016 PARIS, FRANCE ; email: \url{lise.patureau@dauphine.fr}}}
 %\date{\vspace{-5ex}}
 
 %Modèle additif seul DONE
@@ -120,13 +120,14 @@ Sciences Po, Observatoire Fran\c{c}ais des Conjonctures \'{E}conomiques (OFCE), 
 \subsection{Three models: Comparison \label{secoa:additive_only}}
 
 The paper compares the empirical performances of two models: one with only ad-valorem costs (Model (A)) and one with where both ad-valorem and additive costs (Model (B)).
-In the interest of comprehensiveness, this appendix looks at a model with only additive costs (Model (C)).
-The estimated equation is: $\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}\right) + \epsilon^{add}_{ik}$. \\
-We first compare estimates of the transport costs components under the three models. In a second step, we report quality of fit tests for the three models.
+In the interest of comprehensiveness,  we also estimate the model with only additive costs (Model (C)), in which case the estimated equation is: 
+$$\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}\right) + \epsilon^{add}_{ik}$$
+
+This section is devoted to presenting the results. Precisely, we first compare the estimates of the transport costs components under the three models. In a second step, we report quality of fit tests for the three models.
 
 \subsubsection{Estimation results}
 
-In this section, we report the estimation results of the three models. We also report the estimation results for Model (C), where only additive costs are modeled. Table \ref{tab:3models_estimation_results_air} reports the results for air transport, Table \ref{tab:3models_estimation_results_vessel} for vessel transport.
+In this section, we report the estimation results of the three models: Model (A) (with only ad-valorem costs), Model (B) (with both additive and ad-valorem) and Model (C) (with only additive costs). Table \ref{tab:3models_estimation_results_air} reports the results for air transport, Table \ref{tab:3models_estimation_results_vessel} for vessel transport.
 
 %%%% RAW TABLE TO BE FOUND AT: "...\Dropbox\Papier_Lise_Guillaume\trade_cost\results\3_models"
 % modele iceberg tout seul : terme nlI
@@ -203,7 +204,7 @@ In this section, we report the estimation results of the three models. We also r
    }
 \end{table}%
 
-Results for Models (A) (ad-valorem costs only) and (B) (both ad-valorem and additive costs) are identical to those reported in the paper. Somewhat unsurprisingly, the estimated size of transport costs under Model (C) is of same order of magnitude as in Models (A) and (B). We also observe a downward trend of transport costs over time, in particular since 1980.\\
+Results for Models (A) and (B) are identical to those reported in the paper. Unsurprisingly, the estimated size of overall transport costs under Model (C) is of same order of magnitude as in Models (A) and (B). We also observe a downward trend of transport costs over time, in particular since 1980.\\
 
 
 
@@ -238,10 +239,10 @@ To go further into the comparison of the empirical relevance of our three empiri
     Model (C) & \multicolumn{1}{c}{-20074.1} & \multicolumn{1}{c}{-22217.2} & \multicolumn{1}{c}{-27251.4} & \multicolumn{1}{c}{-34355.3} & \multicolumn{1}{c}{-41634.3} & \multicolumn{1}{c}{-49625.4} & \multicolumn{1}{c}{-61533.0} & \multicolumn{1}{c}{-64339.5} & \multicolumn{1}{c}{-63316.6} \\ \hline
     \multicolumn{10}{l}{\textbf{Test LL} }\\ \hline
     Stat LL ratio (B vs A) & \multicolumn{1}{c}{4809.7} & \multicolumn{1}{c}{5980.6} & \multicolumn{1}{c}{7257.3} & \multicolumn{1}{c}{9168.7} & \multicolumn{1}{c}{13548.7} & \multicolumn{1}{c}{13105.7} & \multicolumn{1}{c}{11760.4} & \multicolumn{1}{c}{6938.6} & \multicolumn{1}{c}{6541.2} \\
-    \textbackslash{}\# restrictions & \multicolumn{1}{c}{16929} & \multicolumn{1}{c}{18098} & \multicolumn{1}{c}{21893} & \multicolumn{1}{c}{26948} & \multicolumn{1}{c}{33032} & \multicolumn{1}{c}{37027} & \multicolumn{1}{c}{43811} & \multicolumn{1}{c}{42289} & \multicolumn{1}{c}{41364} \\
+    \textbackslash{}\# restrictions & \multicolumn{1}{c}{355} & \multicolumn{1}{c}{369} & \multicolumn{1}{c}{376} & \multicolumn{1}{c}{393} & \multicolumn{1}{c}{424} & \multicolumn{1}{c}{426} & \multicolumn{1}{c}{428} & \multicolumn{1}{c}{426} & \multicolumn{1}{c}{422} \\
     p-value & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} \\ \hline
     Stat LL ratio (B vs C) & \multicolumn{1}{c}{4948.4} & \multicolumn{1}{c}{4954.0} & \multicolumn{1}{c}{6564.5} & \multicolumn{1}{c}{8961.8} & \multicolumn{1}{c}{11597.4} & \multicolumn{1}{c}{12837.0} & \multicolumn{1}{c}{15764.7} & \multicolumn{1}{c}{17062.0} & \multicolumn{1}{c}{13896.9} \\
-    \textbackslash{}\# restrictions & \multicolumn{1}{c}{16929} & \multicolumn{1}{c}{18098} & \multicolumn{1}{c}{21893} & \multicolumn{1}{c}{26948} & \multicolumn{1}{c}{33032} & \multicolumn{1}{c}{37027} & \multicolumn{1}{c}{43811} & \multicolumn{1}{c}{42289} & \multicolumn{1}{c}{41364} \\
+    \textbackslash{}\# restrictions & \multicolumn{1}{c}{355} & \multicolumn{1}{c}{369} & \multicolumn{1}{c}{376} & \multicolumn{1}{c}{393} & \multicolumn{1}{c}{424} & \multicolumn{1}{c}{426} & \multicolumn{1}{c}{428} & \multicolumn{1}{c}{426} & \multicolumn{1}{c}{422} \\
     p-value & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} \\ \hline \hline
 \end{tabular}%
 }
@@ -287,7 +288,7 @@ To go further into the comparison of the empirical relevance of our three empiri
 \end{table}%
 \end{landscape}
 
-The model with additive costs only (Model (C)) is consistently dominated (in terms of quality of fit properties) by the model with multiplicative costs only (Model (A)), which is itself consistently dominated by the complete model (Model (B)), whatever the type of diagnostic test considered. That justifies our choice to disregard Model (C) in the main text.
+For all years and whatever the transport mode considered, the model with additive costs only (Model (C)) is consistently dominated (in terms of quality of fit properties) by the model with multiplicative costs only (Model (A)), which is itself consistently dominated by the complete model (Model (B)), whatever the type of diagnostic test considered. That justifies our choice to disregard Model (C) in the main text.
 
 %\subsection{Detailed Results \label{secoa:detailed}}
 \newpage
@@ -473,10 +474,10 @@ Are considered as ``primary goods'' all flows recorded as ``Food and live animal
 \end{center}
 \end{figure}
 
-As reported in Figures \ref{fig:totalTC_compeffects_excl_manuf} and \ref{fig:totalTC_compeffects_excl_primary}, the ``raw'' transport costs and the unfitted transport costs, in the red dashed line plain have regularly declined over the period in both sectors, by roughly the same order of magnitude (50\% in air, 60\% in vessel). However the role of trade composition effects in accounting for this trend pattern differs depending on the sector.\\
-Figure \ref{fig:totalTC_compeffects_excl_manuf} (for manufactures) reports a very similar time trend decomposition than what is obtained on the whole range of goods (Figure \ref{fig:totalTC_compeffects_excl}).  In air transport, most of the decrease can be imputed to the reduction of``ceteris paribus'' transport costs (the blue continuous line), trade composition effects playing virtually no role (Figure \ref{fig:totalTC_compeffects_excl_manuf}, left-hand panels (a), (b) and (c)). Trade composition effects matter more in vessel transport (Figure \ref{fig:totalTC_compeffects_excl_manuf}, right-hand panels (d), (e) and (f)), primarily in the ad-valorem component. As for the whole range of flows, the 60\% decrease in the unfitted transport costs in vessel can de decomposed in a 50\% decrease in the ``ceteris paribus'' transport costs (fitted), the 10\% remaining to trade composition effects.
+As reported in Figures \ref{fig:totalTC_compeffects_excl_manuf} and \ref{fig:totalTC_compeffects_excl_primary}, both the ``pure'' transport costs and the unfitted measure, in the red dashed have regularly declined over the period in both sectors, by roughly the same order of magnitude (50\% in air, 60\% in vessel for overall transport costs, panels (c) and (f)). However the role of trade composition effects in accounting for this trend pattern differs depending on the sector.\\
+In the manufacturing sector, Figure \ref{fig:totalTC_compeffects_excl_manuf}) reports a very similar time trend decomposition than what is obtained on the whole range of goods (Figure \ref{fig:totalTC_compeffects_excl}).  In air transport, most of the decrease can be imputed to the reduction of``ceteris paribus'' transport costs (the blue continuous line), trade composition effects playing virtually no role (Figure \ref{fig:totalTC_compeffects_excl_manuf}, left-hand panels (a), (b) and (c)). Trade composition effects matter more in vessel transport (Figure \ref{fig:totalTC_compeffects_excl_manuf}, right-hand panels (d), (e) and (f)), primarily in the ad-valorem component. As for the whole range of flows, the 60\% decrease in the unfitted transport costs in vessel can de decomposed in a 50\% decrease in the ``ceteris paribus'' transport costs (fitted), the 10\% remaining to trade composition effects.
 
-The situation is strikingly for primary goods only. In this case, it is in air transport that composition effects do matter (Figure \ref{fig:totalTC_compeffects_excl_primary}, left-hand panels (a), (b) and (c)), while we observe not much role for them in vessel transport (Figure \ref{fig:totalTC_compeffects_excl_primary}, left-hand panels (d), (e) and (f)). Furthermore, in air transport, composition effects matter by partially offsetting the decrease in the ``ceteris paribus'' transport costs (ie, implying a reduction in the ``raw'' transport costs over time much less pronounced than the fitted transport cost measures).
+The situation is strikingly different for primary goods only. In this case, it is in air transport that composition effects do matter (Figure \ref{fig:totalTC_compeffects_excl_primary}, left-hand panels (a), (b) and (c)), while we observe not much role for them in vessel transport (Figure \ref{fig:totalTC_compeffects_excl_primary}, left-hand panels (d), (e) and (f)). Furthermore, in air transport, composition effects matter by partially offsetting the decrease in the ``ceteris paribus'' transport costs (ie, implying a reduction in the ``raw'' transport costs over time much less pronounced than the fitted transport cost measures).
 
 One explanation for the similarity between the results for the manufacturing goods trade and for total trade can be found in the share of primary goods in total flows as reported in Figure \ref{fig:Share_prim_goods}. In air transport, the share of primary goods in the total value of US imports is very small, around 10\%. Primary goods make a higher proportion of trade flows in vessel transport, especially over 1974-1982 (between 40\% and 60\%). On the following sub-period though, their share has fallen to 20-30\%. Given the modest proportion of primary goods in total import flows of the US economy compared to the manufactured sector, it is hence not surprising that the diagnosis made about the time trend of transport costs when all types of flows are considered is driven by the trend patterns that occur within the manufacturing sector.
 
