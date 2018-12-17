@@ -344,8 +344,8 @@ foreach x in air ves {
 	
 	if "`k'" == "terme_A" local title "Additive term"
 	if "`k'" == "terme_I" local title "Multiplicative term"
-	if "`x'" == "ves" local modetitle "Vessel"
-	if "`x'" == "air" local modetitle "Air"
+	if "`x'" == "ves" local modetitle "vessel"
+	if "`x'" == "air" local modetitle "air"
 	
 	
 	*twoway lfit `k'_mpsepare t || lfit `k'_mpns t, xtitle("Year") ytitle("In % of the fas price") title("`k', `x'") legend(label(1 "Separated FE") label(2 "No separated FE")) 
