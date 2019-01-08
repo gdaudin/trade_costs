@@ -54,9 +54,12 @@ program decompo_var
 	
 	foreach mode in air ves {
 	
+	if "`mode'"== "air" local title_graph  "Air"
+	if "`mode'"== "ves" local title_graph  "Ves"
+	
 		twoway (line  share_var_inter_produit year) (line  share_var_inter_secteur year) (line  share_var_inter_pays year) /*(line  product_country_variance year)*/ ///
 				if mode=="`mode'", ///
-				legend(label(1 "Share of between product variance") label(3 "Share of between country variance") label(2 "Share of between secteur variance")  /*label(3 "Share of between product x country variance")*/ ///
+				legend(label(1 "Share of between-product variance") label(3 "Share of between-country variance") label(2 "Share of between-sector variance")  /*label(3 "Share of between product x country variance")*/ ///
 				rows(3)) ///
 				title("`mode'") name("`mode'", replace)
 					
@@ -70,7 +73,7 @@ end
 
 
 
-use "$dir/data/hummels_tra.dta", clear
+use "$dir/database/hummels_tra.dta", clear
 
 gen sector = substr(sitc2,1,3)
 
@@ -83,7 +86,7 @@ keep year mode sd_tot-share_var_inter_secteur
 
 export delimited 	"$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_brut.csv", replace
 
-use "$dir/data/hummels_tra.dta", clear
+use "$dir/database/hummels_tra.dta", clear
 
 gen sector = substr(sitc2,1,3)
 

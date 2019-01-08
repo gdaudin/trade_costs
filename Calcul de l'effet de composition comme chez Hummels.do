@@ -251,8 +251,30 @@ quietly capture graph save resultats_finaux/figure6_comme_hummels_base100.gph, r
 quietly capture graph export resultats_finaux/figure6_comme_hummels_base100.pdf, replace
 
 
- save "/Users/guillaumedaudin/Documents/Recherche/Trade Costs/results/effet_composition_hummels.dta", replace
+save "/Users/guillaumedaudin/Documents/Recherche/Trade Costs/results/effet_composition_hummels.dta", replace
 
+
+if "`c(username)'" =="guillaumedaudin" {
+	global dir ~/dropbox/trade_cost
+}
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox\trade_cost
+}
+
+
+if "`c(hostname)'" =="lise-HP" {
+	global dir C:\Users\lise\Dropbox\trade_cost
+}
+
+if "`c(hostname)'" =="LABP112" {
+    global dir C:\Users\lpatureau\Dropbox\trade_cost
+}
+
+
+
+save "$dir/results/effet_composition_hummels.dta", replace
 
 
 
