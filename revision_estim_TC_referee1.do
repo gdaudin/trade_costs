@@ -31,6 +31,7 @@ if "`c(hostname)'" =="LABP112" {
 	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data /* pour aller chercher la base de données au départ */ 
 }
 
+global dir C:\Users\lise\Dropbox\trade_cost\JEGeo
 
 *cd $dir
 
@@ -377,6 +378,17 @@ capture program drop do_reg
 program do_reg
 args year class preci mode
 
+
+*** Pour stocker les résultats
+
+gen sector = ""
+gen iso_o = ""
+gen beta=.
+
+save  $dir/results/results_beta_referee1, replace
+
+*** Faire les régressions
+
 use $dir/database/tempHS10_`year'_`class'_`preci'_`mode', clear
 
 g lprix_trsp2 = ln(prix_trsp2)
@@ -388,7 +400,6 @@ label variable lprix_fob "log(prix_fob)"
 
 * stocker les résultats
 gen beta=.
-local n 1
 
 count
 
@@ -397,33 +408,56 @@ count
 quietly levelsof iso_o, local(liste_iso_o) clean
 quietly levelsof sector, local(liste_sector) clean
 
-
+save temp, replace
 
 foreach i in `liste_iso_o' {
+
+	use temp, clear
+	
 	keep if iso_o=="`i'"
+	
+	save temp_`i', replace
 	
 	foreach k in `liste_sector' {
 	
+	use temp_`i', clear
 	keep if sector =="`k'"
+	save temp_`i'_`k', replace
 	
-	 
-	save temp, replace
-	
-	gen nbr_obs=_N
+	}
+	erase temp_`i'.dta
+	}
 
-	* cas où c'est non vide
-	if nbr_obs !=0 {
+foreach i in `liste_iso_o' {
+foreach k in `liste_sector' {
+
+use temp_`i'_`k', clear
+
+local nb = _N
+
+ * il faut que la base soit non vide
+if `nb' !=0 {
 
 egen group_dentry=group(dist_entry)
 su group_dentry, meanonly	
 local nbr_dentry=r(max)
 display "For sector `k', country `i': Nombre de district of entry = `nbr_dentry'" 
 
+
 egen group_product=group(hs)
 su group_product, meanonly	
 local nbr_product=r(max)
 display "For sector `k', country `i': Nombre de products (HS 10) = `nbr_product'" 
 
+local nbr_var = `nbr_product' + `nbr_dentry' +1
+
+disp "nb of explicatives"
+disp "`nbr_var'"
+
+* il faut plus d'observations que de nombre de variables explicatives pour faire la régression
+	
+
+	if `nb' > `nbr_var' {
 
 *** Génerer les effets fixes produit / district of entry
 * On fait la régression par couple pays/secteur donc pas la peine de mettre des EF secteur / pays
@@ -441,27 +475,38 @@ reg lprix_trsp2 lprix_fob product2-product`nbr_product' dist_entry1-dist_entry`n
 capture matrix X= e(b)
 
 replace beta=X[1,`n'] if iso_o==`i' & sector==`k'
-local n = `n'+1
 
-}
 
-else {
 
-replace beta=0 if iso_o==`i' & sector==`k'
-}
-	
 }
 }
 
+keep iso_o sector beta 
+keep if _n==1
 
-** Synthétiser les résultats
-bys iso_o sector: keep if _n==1
-keep beta iso_o sector
+save temp_`i'_`k', replace
 
+}
+}
+
+*** Stocker les résultats
+
+
+foreach i in `liste_iso_o'  {
+foreach k in `liste_sector' {
+
+
+use $dir/results/results_beta_referee1, clear
+append using $dir/temp_`i'_`k'
 save $dir/results/results_beta_referee1, replace
 
+*erase temp_`i'_`k'.dta
+}
 
-erase temp.dta
+}
+*erase temp.dta
+
+
 
 end
 
