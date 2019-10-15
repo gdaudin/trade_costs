@@ -16,24 +16,32 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 
+/* Fixe Lise */
 if "`c(hostname)'" =="LAB0271A" {
 	global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
 	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data
+	global dir_temp \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results_revision /* pour stocker les base temporaires */
+	global dir_results C:\Users\lpatureau\Dropbox\trade_cost\JEGeo\results
 }
 
-
+/* Vieux portable Lise */
 if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost
+	global dir C:\Users\lise\Dropbox\trade_cost\JEGeo
 }
 
+/* Nouveau portable Lise */
 if "`c(hostname)'" =="LABP112" {
     global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
 	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data /* pour aller chercher la base de données au départ */ 
+	global dir_temp \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results_revision /* pour stocker les base temporaires */
 }
 
-global dir C:\Users\lise\Dropbox\trade_cost\JEGeo
+
+
+
 
 *cd $dir
+
 
 capture log using "`c(current_time)' `c(current_date)'"
 
@@ -378,16 +386,17 @@ capture program drop do_reg
 program do_reg
 args year class preci mode
 
-
 *** Pour stocker les résultats
-
+clear
 gen sector = ""
 gen iso_o = ""
 gen beta=.
 
-save  $dir/results/results_beta_referee1, replace
+save  $dir_results\results_beta_`year'_`class'_`preci'_`mode', replace
 
 *** Faire les régressions
+
+cd $dir_temp
 
 use $dir/database/tempHS10_`year'_`class'_`preci'_`mode', clear
 
@@ -441,12 +450,15 @@ if `nb' !=0 {
 egen group_dentry=group(dist_entry)
 su group_dentry, meanonly	
 local nbr_dentry=r(max)
+*local nbr_dentry_min=r(min)
 display "For sector `k', country `i': Nombre de district of entry = `nbr_dentry'" 
 
 
 egen group_product=group(hs)
 su group_product, meanonly	
 local nbr_product=r(max)
+local nbr_product_min=r(min)
+
 display "For sector `k', country `i': Nombre de products (HS 10) = `nbr_product'" 
 
 local nbr_var = `nbr_product' + `nbr_dentry' +1
@@ -462,19 +474,23 @@ disp "`nbr_var'"
 *** Génerer les effets fixes produit / district of entry
 * On fait la régression par couple pays/secteur donc pas la peine de mettre des EF secteur / pays
 
-*tab(iso_o), gen(country)
 tab(hs),gen(product)
 tab(dist_entry),gen(dist_entry)
 
-*tab(sector), gen(sector)
-
-
+* Attention il y a des cas où un seul produit HS 10 importé, exemple ARG 2005 secteur 785
+if `nbr_product' > `nbr_product_min' {
+ /*& (`nbr_dentry' > `nbr_dentry_min' ) */ 
 reg lprix_trsp2 lprix_fob product2-product`nbr_product' dist_entry1-dist_entry`nbr_dentry'
 
+}
+
+if `nbr_product' == `nbr_product_min' /* =1*/ {
+reg lprix_trsp2 lprix_fob dist_entry1-dist_entry`nbr_dentry'
+}
 
 capture matrix X= e(b)
 
-replace beta=X[1,`n'] if iso_o==`i' & sector==`k'
+replace beta=X[1,1] if iso_o=="`i'" & sector=="`k'"
 
 
 
@@ -491,21 +507,22 @@ save temp_`i'_`k', replace
 
 *** Stocker les résultats
 
-
 foreach i in `liste_iso_o'  {
 foreach k in `liste_sector' {
 
 
-use $dir/results/results_beta_referee1, clear
-append using $dir/temp_`i'_`k'
-save $dir/results/results_beta_referee1, replace
+use $dir_results\results_beta_`year'_`class'_`preci'_`mode', clear
+append using $dir_temp\temp_`i'_`k'
+save $dir_results\results_beta_`year'_`class'_`preci'_`mode', replace
 
-*erase temp_`i'_`k'.dta
+erase $dir_temp/temp_`i'_`k'.dta
 }
 
 }
-*erase temp.dta
+erase $dir_temp/temp.dta
 
+histogram beta, title("Distribution of beta, `year', `mode', `preci' digits") 
+graph export $dir_results/histogram_beta_`year'_`class'_`preci'_`mode'.pdf, replace
 
 
 end
@@ -526,18 +543,19 @@ cd $dir
 
 
 set more off
-local mode air  /* ves */
-local year 2005
+local mode air ves
+*local year 2005 
 
 
 foreach x in `mode' {
 
-foreach z in `year' {
+forvalues z = 2006(1)2013 {
+*foreach z in 2005 {
 
 capture log close
 log using results_estim_TC_referee1_`z'_`x', replace
 
-*prep_reg `z' sitc2 3 `x'
+prep_reg `z' sitc2 3 `x'
 do_reg `z' sitc2 3 `x'
 
 
