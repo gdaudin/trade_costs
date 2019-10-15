@@ -20,8 +20,9 @@ if "`c(username)'" =="guillaumedaudin" {
 if "`c(hostname)'" =="LAB0271A" {
 	global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
 	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data
-	global dir_temp \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results_revision /* pour stocker les base temporaires */
-	global dir_results C:\Users\lpatureau\Dropbox\trade_cost\JEGeo\results
+	global dir_temp \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results_revision /* pour stocker les bases temporaires */
+	*global dir_results C:\Users\lpatureau\Dropbox\trade_cost\JEGeo\results
+	global dir_results \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results_revision\non_linear
 }
 
 /* Vieux portable Lise */
@@ -379,6 +380,72 @@ save $dir/database/tempHS10_`year'_`class'_`preci'_`mode', replace
 
 end
 
+******************************************************************
+*** FONCTION ESTIMATION NON-LINEAIRE DU BETA ****
+******************************************************************
+
+capture program drop nlestim_beta
+program nlestim_beta
+	version 14
+	su group_iso_o, meanonly	
+	local nbr_iso_o=r(max)
+	
+	su group_prod, meanonly	
+	local nbr_prod=r(max)
+	
+	su group_dentry, meanonly	
+	local nbr_dentry=r(max)
+	local nbr_var = `nbr_iso_o'+`nbr_prod'+`nbr_dentry' -1 +2 /*+11*/
+		
+	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
+	local n 1
+	
+	
+	foreach var in lprix_trsp2  lprix_fob  {
+		local `var' : word `n' of `varlist'
+		local n = `n'+1
+	}
+
+	local n 1
+		
+	capture drop blif
+	generate double blif =0
+
+		
+**Ici, on fait les effets fixes (produit-pays-point d'entrée)
+	
+		foreach p in iso_o prod dist_entry {
+			foreach j of num 1/`nbr_`p'' {
+				if "`p'"!="iso_o" | `j'!=1 {
+					tempname fe_`p'_`j'
+					scalar `fe_`p'_`j'' =`at'[1,`n']
+************************
+
+					replace blif = blif + `fe_`p'_`j'' * `p'_`j'
+					local n = `n'+1
+				}
+			}
+		}
+	
+	tempname x
+	scalar `x' =`at'[1,`n']
+
+
+	replace blif =blif+ `lprix_fob'*(1/(1+exp(`x'))
+
+* v10 on modifie la forme fonctionnelle
+* de cette façon les erreurs sont bien centrées sur 0
+	replace `lprix_trsp2' = blif
+	
+*Si je mets des "*" dans le terme_I, il me faut une constante
+*Mais dans la forme fonctionnelle, il n'y a pas de constante, donc pas besoin ?
+	
+	
+end
+**********************************************************************
+************** FIN FONCTION
+**********************************************************************	
+
 *** PROGRAMME DE REGRESSION **********
 
 
@@ -454,14 +521,19 @@ local nbr_dentry=r(max)
 display "For sector `k', country `i': Nombre de district of entry = `nbr_dentry'" 
 
 
-egen group_product=group(hs)
-su group_product, meanonly	
-local nbr_product=r(max)
-local nbr_product_min=r(min)
+egen group_prod=group(hs)
+su group_prod, meanonly	
+local nbr_prod=r(max)
+local nbr_prod_min=r(min)
+
+egen group_iso_o=group(iso_o)
+su group_iso_o, meanonly	
+local nbr_iso_o =r(max)
+local nbr_iso_o_min=r(min)
 
 display "For sector `k', country `i': Nombre de products (HS 10) = `nbr_product'" 
 
-local nbr_var = `nbr_product' + `nbr_dentry' +1
+local nbr_var = `nbr_product' + `nbr_dentry' + `nbr_iso_o' +1
 
 disp "nb of explicatives"
 disp "`nbr_var'"
@@ -477,16 +549,7 @@ disp "`nbr_var'"
 tab(hs),gen(product)
 tab(dist_entry),gen(dist_entry)
 
-* Attention il y a des cas où un seul produit HS 10 importé, exemple ARG 2005 secteur 785
-if `nbr_product' > `nbr_product_min' {
- /*& (`nbr_dentry' > `nbr_dentry_min' ) */ 
-reg lprix_trsp2 lprix_fob product2-product`nbr_product' dist_entry1-dist_entry`nbr_dentry'
-
-}
-
-if `nbr_product' == `nbr_product_min' /* =1*/ {
-reg lprix_trsp2 lprix_fob dist_entry1-dist_entry`nbr_dentry'
-}
+nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
 capture matrix X= e(b)
 
