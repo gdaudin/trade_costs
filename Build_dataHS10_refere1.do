@@ -17,6 +17,7 @@ set maxvar 32767
 
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/dropbox/2013 -- trade_cost -- dropbox/JEGeo
+	global dir_db ~/Documents/Recherche/2013 -- Trade Costs -- local/data
 }
 
 
@@ -24,9 +25,6 @@ if "`c(username)'" =="guillaumedaudin" {
 if "`c(hostname)'" =="LAB0271A" {
 	global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
 	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data
-	global dir_temp \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results_revision /* pour stocker les bases temporaires */
-	*global dir_results C:\Users\lpatureau\Dropbox\trade_cost\JEGeo\results
-	global dir_results \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results_revision\non_linear
 }
 
 /* Vieux portable Lise */
@@ -37,8 +35,7 @@ if "`c(hostname)'" =="lise-HP" {
 /* Nouveau portable Lise */
 if "`c(hostname)'" =="LABP112" {
     global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
-	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data /* pour aller chercher la base de données au départ */ 
-	global dir_temp \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results_revision /* pour stocker les base temporaires */
+	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data /* pour aller chercher la base de données au départ */
 }
 
 
@@ -48,7 +45,7 @@ if "`c(hostname)'" =="LABP112" {
 *cd $dir
 
 
-cd $dir_db\New_years
+cd "$dir_db/New_years"
 
 
 ** STEP 1: CONSTITUER BASE ADDITIONAL YEARS: 2005, 2006, 2008, 2010 à 2013
@@ -76,6 +73,8 @@ save new_`x', replace
 ** Nettoyer a minima
 
 use new_`x', clear
+
+blif
 
 * renommer les variables
 drop  cards_mo con_qy1_mo con_qy2_mo con_val_mo dut_val_mo cal_dut_mo con_cha_mo con_cif_mo gen_* 
