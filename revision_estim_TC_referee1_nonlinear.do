@@ -19,9 +19,9 @@ if "`c(username)'" =="guillaumedaudin" {
 /* Fixe Lise */
 if "`c(hostname)'" =="LAB0271A" {
 	*global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
-	global dir_db C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\database		/* base de données */
-	global dir_temp C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\temp		/* pour stocker les bases temporaires */
-	global dir_results C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\results /* résultats */
+	global dir_db C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database		/* base de données */
+	global dir_temp C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\temp		/* pour stocker les bases temporaires */
+	global dir_results C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\results /* résultats */
 }
 
 /* Vieux portable Lise */
@@ -30,7 +30,7 @@ if "`c(hostname)'" =="lise-HP" {
 }
 
 /* Nouveau portable Lise */
-if "`c(hostname)'" =="LABP112" {
+if "`c(hostname)'" =="MSOP112C" {
     global dir_db C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\database
 	global dir_temp C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\temp/* pour stocker les bases temporaires */
 	global dir_results C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\results
@@ -67,7 +67,13 @@ program prep_reg
 args year class preci mode
 
 
-use "$dir_db/base_hs10_newyears.dta"
+use "$dir_db\base_hs10_newyears.dta"
+
+/* POUR TESTER */
+
+keep if iso_o=="FRA"
+
+*** A ENLEVER ENSUITE
 
 keep if year==`year'
 keep if mode=="`mode'"
@@ -78,8 +84,10 @@ drop if sector==""
 
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
+
+rename hs product
  
-label var hs "HS 10 classification"
+label var product "HS 10 classification"
 
 * Nettoyer la base de données
 
@@ -132,7 +140,7 @@ program nlestim_beta
 	
 	su group_dentry, meanonly	
 	local nbr_dentry=r(max)
-	local nbr_var = `nbr_prod'+`nbr_dentry' -1 +2 /*+11*/  /* -1 pour produit de référence, + 2 pour ??? */
+	local nbr_var = `nbr_prod'+`nbr_dentry' -1 +2 /*+11*/  /* -1 pour produit de référence, + 2 pour ln cttrp2 ln prixfob */
 		
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 	local n 1
@@ -151,9 +159,9 @@ program nlestim_beta
 		
 **Ici, on fait les effets fixes (produit-pays-point d'entrée)
 	
-		foreach p in iso_o prod dist_entry {
+		foreach p in prod dentry {
 			foreach j of num 1/`nbr_`p'' {
-				if "`p'"!="iso_o" | `j'!=1 {
+				if "`p'"!="prod" | `j'!=1 {
 					tempname fe_`p'_`j'
 					scalar `fe_`p'_`j'' =`at'[1,`n']
 ************************
@@ -190,7 +198,6 @@ args year class preci mode
 clear
 gen sector = ""
 gen iso_o = ""
-gen beta=.
 
 save  $dir_results\results_beta_`year'_`class'_`preci'_`mode', replace
 
@@ -249,19 +256,64 @@ local nbr_dentry=r(max)
 display "For sector `k', country `i': Nombre de district of entry = `nbr_dentry'" 
 
 
-egen group_prod=group(hs)
+egen group_prod=group(product)
 su group_prod, meanonly	
 local nbr_prod=r(max)
 local nbr_prod_min=r(min)
 
-egen group_iso_o=group(iso_o)
-su group_iso_o, meanonly	
-local nbr_iso_o =r(max)
-local nbr_iso_o_min=r(min)
 
+** Initialiser les listes des variables, des paramètres, des valeurs initiales
+
+* Produits HS 10
+quietly levelsof product, local (liste_prod) clean
+quietly tabulate product, gen (prod_)
+	
+* District of entry
+quietly levelsof dist_entry, local(liste_dentry) clean
+quietly tabulate dist_entry, gen(dentry_)
+
+
+
+foreach i in prod dentry	{
+
+	* Liste des variables
+	local liste_variables_`i' 
+	forvalue j =  1/`nbr_`i'' {
+		if "`i'" !="prod" | `j' !=1 {
+			local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
+		}
+		}
+		
+		
+	* Liste des paramètres associés
+	
+	local liste_parametres_`i'
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" | `j'!=1 {			
+				local liste_parametres_`i'  `liste_parametres_`i'' fe_`i'_`j'
+			}
+		}
+		
+	* Initialiser les valeurs initiales
+	local initial_`i'
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" |`j'!=1 {
+				local initial_`i'  `initial_`i'' fe_`i'_`j' 0.5
+****ln(0.05) = -3
+				}
+			}
+
+	}
+
+macro dir
+	
+local liste_variables `liste_variables_prod' `liste_variables_dentry'
+local liste_parametres `liste_parametres_prod' `liste_parametres_dentry' x
+local initial `initial_prod' `initial_dentry' x 0
+	
 display "For sector `k', country `i': Nombre de products (HS 10) = `nbr_product'" 
 
-local nbr_var = `nbr_product' + `nbr_dentry' + `nbr_iso_o' +1
+local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1
 
 disp "nb of explicatives"
 disp "`nbr_var'"
@@ -270,31 +322,24 @@ disp "`nbr_var'"
 	
 
 	if `nb' > `nbr_var' {
+	
 
-*** Génerer les effets fixes produit / district of entry
-* On fait la régression par couple pays/secteur donc pas la peine de mettre des EF secteur / pays
-
-tab(hs),gen(product)
-tab(dist_entry),gen(dist_entry)
+disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
 nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
-capture matrix X= e(b)
-
-replace beta=X[1,1] if iso_o=="`i'" & sector=="`k'"
-
-
+blouf
 
 }
 }
 
-keep iso_o sector beta 
-keep if _n==1
+*keep iso_o sector beta 
+*keep if _n==1
 
 save temp_`i'_`k', replace
 
 }
-}
+
 
 *** Stocker les résultats
 
@@ -322,26 +367,16 @@ end
 ******* FIN DES PROGRAMMES ****************************************************************
 *******************************************************************************************
 
-**** lancer les programmes **************
-
-* A FAIRE UNE FOIS POUR TOUTES
-*program build_database
-
-
-* PREPARER ET LANCER LES REGRESSIONS- Uniquement sur les années 2005 à 2013
-
-cd $dir
-
 
 set more off
-local mode air ves
+local mode air  /* ves*/
 *local year 2005 
 
 
 foreach x in `mode' {
 
-forvalues z = 2006(1)2013 {
-*foreach z in 2005 {
+*forvalues z = 2005(1)2013 {
+foreach z in 2005 {
 
 capture log close
 log using results_estim_TC_referee1_`z'_`x', replace
