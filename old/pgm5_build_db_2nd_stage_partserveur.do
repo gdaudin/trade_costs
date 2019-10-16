@@ -14,8 +14,8 @@ set more off
 set maxvar 32767
 
 if "`c(hostname)'" =="MacBook-Pro-Lysandre.local" {
-	global dir ~/dropbox/trade_cost
-	cd "~/Documents/Recherche/Trade Costs/Results/raw_results_sept15"
+	global dir ~/dropbox/2013 -- trade_cost -- dropbox
+	cd "~/Documents/Recherche/2013 -- Trade Costs -- local/Results/raw_results_sept15"
 }
 
 

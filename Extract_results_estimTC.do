@@ -15,7 +15,7 @@ version 14.2
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/Documents/Recherche/trade costs/results
+	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local/results
 }
 
 
@@ -173,7 +173,7 @@ program from_result_to_table
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/Dropbox/trade_cost/results
+	global dir ~/dropbox/2013 -- trade_cost -- dropbox/results
 }
 
 

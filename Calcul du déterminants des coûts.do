@@ -13,7 +13,7 @@ set maxvar 32767
 
 
 
-if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") global dir ~/dropbox/trade_cost
+if ("`c(hostname)'" =="MacBook-Pro-Lysandre.local") global dir ~/dropbox/2013 -- trade_cost -- dropbox
 if ("`c(hostname)'" =="LAB0271A") 	global dir C:\Users\lpatureau\Dropbox\trade_cost
 if ("`c(hostname)'" =="lise-HP") global dir C:\Users\lise\Dropbox\trade_cost
 

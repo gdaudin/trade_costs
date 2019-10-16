@@ -15,21 +15,21 @@ version 14.2
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/Dropbox/trade_cost/results
+	global dir ~/dropbox/2013 -- trade_cost -- dropbox/results
 }
 
 
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:/Users/lpatureau/Dropbox/trade_cost/results
+	global dir C:/Users/lpatureau/dropbox/2013 -- trade_cost -- dropbox/results
 }
 
 
 if "`c(hostname)'" =="lise-HP" {
-	global dir C:/Users/lise/Dropbox/trade_cost/results
+	global dir C:/Users/lise/dropbox/2013 -- trade_cost -- dropbox/results
 }
 
 if "`c(hostname)'" =="LABP112" {
-    global dir C:/Users/lpatureau/Dropbox/trade_cost/results
+    global dir C:/Users/lpatureau/dropbox/2013 -- trade_cost -- dropbox/results
 }
 
 cd "$dir"
