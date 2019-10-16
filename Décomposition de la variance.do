@@ -1,6 +1,6 @@
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/trade_cost
+	global dir ~/dropbox/2013 -- trade_cost -- dropbox
 }
 
 

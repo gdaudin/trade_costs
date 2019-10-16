@@ -17,7 +17,7 @@ set maxvar 32767
 
 if ("`c(hostname)'" =="????") global dir \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\results
 
-if "`c(username)'" =="guillaumedaudin" global dir  "~/Documents/Recherche/Trade Costs/Results"
+if "`c(username)'" =="guillaumedaudin" global dir  "~/Documents/Recherche/2013 -- Trade Costs -- local/Results"
 
 if "`c(hostname)'" =="LABP112" {
     global dir C:\Users\lpatureau\Dropbox\trade_cost\results
@@ -121,7 +121,7 @@ save `estimTC', replace
 use `estimTC', clear
 
 if ("`c(hostname)'" =="????") save "C:\Users\lpatureau\Dropbox\trade_cost\results\`estimTC'.dta", replace
-if ("`c(username)'" =="guillaumedaudin") save  ~/dropbox/trade_cost/results/`estimTC'.dta, replace
+if ("`c(username)'" =="guillaumedaudin") save  ~/dropbox/2013 -- trade_cost -- dropbox/results/`estimTC'.dta, replace
 
 end
 

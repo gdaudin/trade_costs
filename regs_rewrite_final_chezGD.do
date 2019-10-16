@@ -11,7 +11,7 @@ set mem 2000m
 
 *use ${DIR}sitcreallysmall_allyears
 
-use "/Users/guillaumedaudin/Dropbox/trade_cost/data/Hummels_JEP_data/Table2_Figure5_6/sitcreallysmall_allyears.dta"
+use "/Users/guillaumedaudin/dropbox/2013 -- trade_cost -- dropbox/data/Hummels_JEP_data/Table2_Figure5_6/sitcreallysmall_allyears.dta"
 
 
 drop if substr(sitc2,1,1)=="9"

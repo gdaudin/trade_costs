@@ -25,7 +25,7 @@ set maxvar 32767
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/trade_cost/results/New_years
+	global dir ~/dropbox/2013 -- trade_cost -- dropbox/results/New_years
 }
 
 

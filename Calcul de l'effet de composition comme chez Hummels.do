@@ -1,6 +1,6 @@
 
 **À partir de regs_rewrite_final.do + figure5_6 chez Hummels
-**Qui est là : /Users/guillaumedaudin/Dropbox/trade_cost/data/Hummels_JEP_data/Table2_Figure5_6
+**Qui est là : /Users/guillaumedaudin/dropbox/2013 -- trade_cost -- dropbox/data/Hummels_JEP_data/Table2_Figure5_6
 
 version 15
 
@@ -11,12 +11,12 @@ capture log close
 *set mem 2000m
 
 *global DIR c:\david\decline\finaldata\regs/
-cd "~/Dropbox/trade_cost"
+cd "~/dropbox/2013 -- trade_cost -- dropbox"
 
 
 *use ${DIR}sitcreallysmall_allyears
 
-use   "~/Dropbox/trade_cost/data/hummels_tra.dta"
+use   "~/dropbox/2013 -- trade_cost -- dropbox/data/hummels_tra.dta"
 rename iso2 ctry
 
 drop if substr(sitc2,1,1)=="9"
@@ -251,7 +251,7 @@ quietly capture graph save resultats_finaux/figure6_comme_hummels_base100.gph, r
 quietly capture graph export resultats_finaux/figure6_comme_hummels_base100.pdf, replace
 
 
- save "/Users/guillaumedaudin/Documents/Recherche/Trade Costs/results/effet_composition_hummels.dta", replace
+ save "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/results/effet_composition_hummels.dta", replace
 
 
 

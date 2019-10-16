@@ -1,8 +1,8 @@
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/Dropbox/trade_cost
-	global dirgit ~/Documents/Recherche/Trade Costs/trade_costs_github/trade_costs
+	global dir ~/dropbox/2013 -- trade_cost -- dropbox
+	global dirgit ~/Documents/Recherche/2013 -- Trade Costs -- local/trade_costs_github/trade_costs
 }
 
 
