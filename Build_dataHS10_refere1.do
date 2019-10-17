@@ -23,26 +23,9 @@ if "`c(username)'" =="guillaumedaudin" {
 
 /* Fixe Lise */
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
-	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data
+	global dir C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database
+	global dir_db \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\database
 }
-
-/* Vieux portable Lise */
-if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost\JEGeo
-}
-
-/* Nouveau portable Lise */
-if "`c(hostname)'" =="LABP112" {
-    global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
-	global dir_db C:\Users\lpatureau\Dropbox\trade_cost\data /* pour aller chercher la base de données au départ */
-}
-
-
-
-
-
-*cd $dir
 
 
 cd "$dir_db/New_years"
@@ -298,9 +281,11 @@ foreach i in air ves {
 
 drop if prix_fob==.
 
-erase temp.dta
+
 destring year, replace
 
 save base_hs10_newyears, replace
-save $dir/database/base_hs10_newyears, replace
+save $dir/base_hs10_newyears, replace
 
+erase $dir_db/base_hs10_newyears.dta
+erase temp.dta

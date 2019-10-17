@@ -69,12 +69,6 @@ args year class preci mode
 
 use "$dir_db\base_hs10_newyears.dta"
 
-/* POUR TESTER */
-
-keep if iso_o=="FRA"
-
-*** A ENLEVER ENSUITE
-
 keep if year==`year'
 keep if mode=="`mode'"
 rename `class' sector
@@ -119,6 +113,14 @@ display "Nombre de produits (`preci' digits) : `nbr_sector_exante'"
 bysort sector: drop if _N<=5
 
 
+g lprix_trsp2 = ln(prix_trsp2)
+label variable lprix_trsp2 "log(prix_caf/prix_fob)"
+label variable prix_trsp2 "prix_caf/prix_fob"
+
+g lprix_fob = ln(prix_fob)
+label variable lprix_fob "log(prix_fob)"
+
+
 save $dir_db/tempHS10_`year'_`class'_`preci'_`mode', replace
 
 
@@ -142,6 +144,8 @@ program nlestim_beta
 	local nbr_dentry=r(max)
 	local nbr_var = `nbr_prod'+`nbr_dentry' -1 +2 /*+11*/  /* -1 pour produit de référence, + 2 pour ln cttrp2 ln prixfob */
 		
+	macro list
+
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 	local n 1
 	
@@ -176,7 +180,7 @@ program nlestim_beta
 	scalar `x' =`at'[1,`n']
 
 
-	replace blif =blif+ `lprix_fob'*(1/(1+exp(`x'))
+	replace blif =blif+ `lprix_fob'*(1/(1+exp(`x')))
 
 * on impose que beta est compris entre 0 et 1 via la fonction logistique
 	replace `lprix_trsp2' = blif
@@ -198,8 +202,9 @@ args year class preci mode
 clear
 gen sector = ""
 gen iso_o = ""
+gen beta = .
 
-save  $dir_results\results_beta_`year'_`class'_`preci'_`mode', replace
+save  $dir_results\results_beta_contraint_`year'_`class'_`preci'_`mode', replace
 
 *** Faire les régressions
 
@@ -207,60 +212,52 @@ cd $dir_temp
 
 use $dir_db/tempHS10_`year'_`class'_`preci'_`mode', clear
 
-g lprix_trsp2 = ln(prix_trsp2)
-label variable lprix_trsp2 "log(prix_caf/prix_fob)"
-label variable prix_trsp2 "prix_caf/prix_fob"
-
-g lprix_fob = ln(prix_fob)
-label variable lprix_fob "log(prix_fob)"
-
-* on fait la régression par secteur-pays: On ne garde que les observations pertinentes
-
+gen beta    = .
 quietly levelsof iso_o, local(liste_iso_o) clean
 quietly levelsof sector, local(liste_sector) clean
 
+
 save temp, replace
 
+
+** On crée les bases par pays/secteur 
 foreach i in `liste_iso_o' {
 
 	use temp, clear
-	
 	keep if iso_o=="`i'"
-	
 	save temp_`i', replace
 	
 	foreach k in `liste_sector' {
-	
-	use temp_`i', clear
-	keep if sector =="`k'"
-	save temp_`i'_`k', replace
-	
+		use temp_`i', clear
+		keep if sector =="`k'"
+		save temp_`i'_`k', replace
 	}
 	erase temp_`i'.dta
 	}
-
-foreach i in `liste_iso_o' {
+	
+** Travail sur la base pays/secteur	
+	
+foreach ii in `liste_iso_o' {
 foreach k in `liste_sector' {
 
-use temp_`i'_`k', clear
+	use temp_`ii'_`k', clear
 
-local nb = _N
+	local nb = _N
 
- * il faut que la base soit non vide
-if `nb' !=0 {
+	* il faut que la base soit non vide
+	if `nb' !=0 {
+	
+	disp "ok base non vide"
 
 egen group_dentry=group(dist_entry)
 su group_dentry, meanonly	
 local nbr_dentry=r(max)
-*local nbr_dentry_min=r(min)
-display "For sector `k', country `i': Nombre de district of entry = `nbr_dentry'" 
+display "For sector `k', country `ii': Nombre de district of entry = `nbr_dentry'" 
 
 
 egen group_prod=group(product)
 su group_prod, meanonly	
 local nbr_prod=r(max)
-local nbr_prod_min=r(min)
-
 
 ** Initialiser les listes des variables, des paramètres, des valeurs initiales
 
@@ -271,8 +268,6 @@ quietly tabulate product, gen (prod_)
 * District of entry
 quietly levelsof dist_entry, local(liste_dentry) clean
 quietly tabulate dist_entry, gen(dentry_)
-
-
 
 foreach i in prod dentry	{
 
@@ -303,59 +298,77 @@ foreach i in prod dentry	{
 				}
 			}
 
-	}
+	} /* Fin de la boucle d'initialisation  */ 
 
-macro dir
+
 	
 local liste_variables `liste_variables_prod' `liste_variables_dentry'
 local liste_parametres `liste_parametres_prod' `liste_parametres_dentry' x
 local initial `initial_prod' `initial_dentry' x 0
 	
-display "For sector `k', country `i': Nombre de products (HS 10) = `nbr_product'" 
+macro dir
 
-local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1
+display "For sector `k', country `ii': Nombre de products (HS 10) = `nbr_prod'" 
+display "For sector `k', country `ii': Nombre de districts of entry = `nbr_dentry'" 
+
+local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1 /* -1 pour EF produit initial, +1 pour lprixfob */
 
 disp "nb of explicatives"
 disp "`nbr_var'"
 
 * il faut plus d'observations que de nombre de variables explicatives pour faire la régression
-	
-
 	if `nb' > `nbr_var' {
 	
+	disp "ok assez d'observations par rapport aux explicatives"
+	
+		disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
-disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
+		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
-nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
+		* Récupérer le résultat sur le beta
+capture	matrix X= e(b)
+gen coeff_x = .
 
-blouf
+matrix list X 
+disp "`nbr_var'"
+
+
+* le coefficient x sur ln prix fob arrive en dernier
+replace coeff_x=X[1,`nbr_var'] 
+
+replace beta = 1/(1+exp(coeff_x)) 
+
+} /* Fin de la boucle si on fait la régression */ 
+} /* Fin de la boucle si base non vide */
+
+
+
+** Récupérer le beta estimé
+keep iso_o sector beta 
+keep if _n==1
+
+
+save temp_`ii'_`k', replace
+
+
 
 }
 }
-
-*keep iso_o sector beta 
-*keep if _n==1
-
-save temp_`i'_`k', replace
-
-}
-
-
-*** Stocker les résultats
 
 foreach i in `liste_iso_o'  {
 foreach k in `liste_sector' {
 
 
-use $dir_results\results_beta_`year'_`class'_`preci'_`mode', clear
+use $dir_results\results_beta_contraint_`year'_`class'_`preci'_`mode', clear
 append using $dir_temp\temp_`i'_`k'
-save $dir_results\results_beta_`year'_`class'_`preci'_`mode', replace
+save $dir_results\results_beta_contraint_`year'_`class'_`preci'_`mode', replace
 
 erase $dir_temp/temp_`i'_`k'.dta
 }
 
 }
 erase $dir_temp/temp.dta
+
 
 histogram beta, title("Distribution of beta, `year', `mode', `preci' digits") 
 graph export $dir_results/histogram_beta_`year'_`class'_`preci'_`mode'.pdf, replace
@@ -369,14 +382,14 @@ end
 
 
 set more off
-local mode air  /* ves*/
+local mode air  ves
 *local year 2005 
 
 
 foreach x in `mode' {
 
-*forvalues z = 2005(1)2013 {
-foreach z in 2005 {
+forvalues z = 2005(1)2013 {
+*foreach z in 2005 {
 
 capture log close
 log using results_estim_TC_referee1_`z'_`x', replace
