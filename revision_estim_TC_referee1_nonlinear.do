@@ -69,6 +69,12 @@ args year class preci mode
 
 use "$dir_db\base_hs10_newyears.dta"
 
+*** JUSTE POUR TESTER
+
+keep if iso_o =="FRA"
+
+*** A ENLEVER ENSUITE
+
 keep if year==`year'
 keep if mode=="`mode'"
 rename `class' sector
@@ -213,6 +219,9 @@ cd $dir_temp
 use $dir_db/tempHS10_`year'_`class'_`preci'_`mode', clear
 
 gen beta    = .
+gen coeff_x = .
+gen predit = .
+
 quietly levelsof iso_o, local(liste_iso_o) clean
 quietly levelsof sector, local(liste_sector) clean
 
@@ -304,7 +313,7 @@ foreach i in prod dentry	{
 	
 local liste_variables `liste_variables_prod' `liste_variables_dentry'
 local liste_parametres `liste_parametres_prod' `liste_parametres_dentry' x
-local initial `initial_prod' `initial_dentry' x 0
+local initial `initial_prod' `initial_dentry' x 100
 	
 macro dir
 
@@ -323,11 +332,14 @@ disp "`nbr_var'"
 	
 		disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
-		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
+		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(500) parameters(`liste_parametres' ) initial (`initial')
 
-		* Récupérer le résultat sur le beta
+* Récupérer le résultat sur le beta
 capture	matrix X= e(b)
-gen coeff_x = .
+
+* Récupérer le predict de la régression
+capture	predict blink
+replace predit = blink
 
 matrix list X 
 disp "`nbr_var'"
@@ -344,7 +356,7 @@ replace beta = 1/(1+exp(coeff_x))
 
 
 ** Récupérer le beta estimé
-keep iso_o sector beta 
+keep iso_o sector beta coeff_x predit lprix_trsp2
 keep if _n==1
 
 
@@ -370,7 +382,7 @@ erase $dir_temp/temp_`i'_`k'.dta
 erase $dir_temp/temp.dta
 
 
-histogram beta, title("Distribution of beta, `year', `mode', `preci' digits") 
+histogram beta, title("Distribution of beta, `year', `mode', `preci' digits") freq
 graph export $dir_results/histogram_beta_`year'_`class'_`preci'_`mode'.pdf, replace
 
 
@@ -382,14 +394,14 @@ end
 
 
 set more off
-local mode air  ves
+local mode air ves
 *local year 2005 
 
 
 foreach x in `mode' {
 
-forvalues z = 2005(1)2013 {
-*foreach z in 2005 {
+*forvalues z = 2005(1)2013 {
+foreach z in 2005 {
 
 capture log close
 log using results_estim_TC_referee1_`z'_`x', replace
