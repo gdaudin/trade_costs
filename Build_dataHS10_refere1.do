@@ -164,7 +164,7 @@ label var iso2 "ISO 2 country code (origin)"
 label var iso_d "Importing country (iso3)"
 label var iso_o "Exporting country (iso3)"
 
-save base_hs10_newyears.dat, replace
+save base_hs10_newyears.dta, replace
 
 ******************************************************************************
 *** STEP 2.3: Introduire éuqlivalence HS10 - SITC2 (la clé de classification dans hummels_tra)
