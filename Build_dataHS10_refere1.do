@@ -249,6 +249,12 @@ generate mode="ves"
 save temp, replace
 
 replace mode="air"
+preserve
+append using temp
+save temp, replace
+restore
+
+replace mode=="cnt"
 append using temp
 
 
@@ -257,7 +263,7 @@ generate prix_caf=.
 generate prix_trsp=.
 generate prix_trsp2=.
 
-foreach i in air ves {
+foreach i in air ves cnt {
 	replace prix_fob = `i'_val/`i'_wgt if mode=="`i'"
 	replace prix_caf = (`i'_val+`i'_cha)/`i'_wgt if mode=="`i'"
 	replace prix_trsp=(prix_caf-prix_fob)/prix_fob if mode=="`i'"
@@ -279,5 +285,5 @@ destring year, replace
 save base_hs10_newyears, replace
 save "$dir/base_hs10_newyears.dta", replace
 
-erase $dir_db/base_hs10_newyears.dta
+erase "$dir_db/base_hs10_newyears.dta"
 erase temp.dta
