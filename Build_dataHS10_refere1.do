@@ -37,10 +37,11 @@ cd "$dir_db/New_years"
 ** Step 1.1. Partir des nouvelles années en HS 10 **
 ** Garder le port d'entrée
  
-local base IMDBR0512 IMDBR0612 IMDBR0712 IMDBR0812 IMDBR0912 IMDBR1012 IMDBR1112 IMDBR1212 IMDBR1312 
+local base IMDBR0512 /*IMDBR0612 IMDBR0712 IMDBR0812 IMDBR0912 IMDBR1012 IMDBR1112 IMDBR1212 IMDBR1312 */
  
 foreach x in `base' {
 clear
+unzipfile `base.zip', replace
 infix str10	commodity 1-10 str6	cty_code 11-14 str2	cty_subco 15-16 str2	dist_entry 	17-18 str2	dist_unlad 	19-20 str2	rate_prov	21-22 int	year 23-26 int	month 	27-28 /*
 */ str15 cards_mo 29-43 double	con_qy1_mo 	44-58 double con_qy2_mo 59-73 double con_val_mo 74-88 double	dut_val_mo 	89-103 double	cal_dut_mo 	104-118 double	con_cha_mo 	119-133 /*
 */double con_cif_mo 134-148 double	gen_qy1_mo 	149-163 double	gen_qy2_mo 164-178 double gen_val_mo 179-193 double	gen_cha_mo 	194-208 double	gen_cif_mo 	209-223 double	air_val_mo 	224-238 /*
@@ -51,46 +52,36 @@ infix str10	commodity 1-10 str6	cty_code 11-14 str2	cty_subco 15-16 str2	dist_en
 */ double	cnt_wgt_yr 	659-673 double	cnt_cha_yr 	674-688  using `x'.txt
 
 compress
-save new_`x', replace
+save new_`x'.dta, replace
+erase `base'.txt
 
 ** Nettoyer a minima
 
-use new_`x', clear
+use new_`x'.dta, clear
 
-blif
+
 
 * renommer les variables
 drop  cards_mo con_qy1_mo con_qy2_mo con_val_mo dut_val_mo cal_dut_mo con_cha_mo con_cif_mo gen_* 
 drop air_val_mo air_wgt_mo air_cha_mo ves_val_mo ves_wgt_mo ves_cha_mo cnt_val_mo cnt_wgt_mo cnt_cha_mo
-drop cnt_* cty_subco dist_unlad rate_prov month cal_dut_yr cards_yr
+drop cty_subco dist_unlad rate_prov month cal_dut_yr cards_yr
 
 rename cty_code country 
 rename commodity hs
-rename con_qy1_yr con_qy1
-rename con_qy2_yr con_qy2 
-rename con_val_yr con_val 
-rename ves_val_yr ves_val
-rename air_val_yr air_val
-rename con_cha_yr con_cha
-rename ves_cha_yr ves_cha
-rename air_cha_yr air_cha
-rename air_wgt_yr air_wgt
-rename ves_wgt_yr ves_wgt
 rename dut_val_yr duty 
+rename *_yr *
 
-
-
-save new_`x', replace
+save new_`x'.dta, replace
 }
 
 ** Compiler les années à partir de 2005 en une même base
 ** Start in 2005
-use new_IMDBR0512, clear
+use new_IMDBR0512.dta, clear
 
-save $dir_db\base_hs10_newyears, replace
+save "$dir_db/base_hs10_newyears.dta", replace
 
 
-
+/*
 foreach x in new_IMDBR0612 new_IMDBR0712 new_IMDBR0812 new_IMDBR0912 new_IMDBR1012 new_IMDBR1112 new_IMDBR1212 new_IMDBR1312 { 
  
 
@@ -101,9 +92,10 @@ append using `x'
 save $dir_db\base_hs10_newyears, replace
 
 }
+*/
 
 foreach x in `base' {
-erase new_`x'.dta 
+	erase new_`x'.dta 
 }
 
 
@@ -114,7 +106,7 @@ erase new_`x'.dta
 ** Les données du US Census sont au départ en code à 4 chiffres
 ** Conversion en iso2 via Schedule C (see US census foreign trade website)
 
-cd $dir_db
+cd "$dir_db"
  
 clear 
 insheet using countrycodes_use.txt, delimiter(";") 
@@ -126,14 +118,14 @@ sort country
 save temp, replace
 
 
-use base_hs10_newyears, clear
+use base_hs10_newyears.dta, clear
 sort country
 merge m:1 country using temp
 drop if _merge==2
 drop _merge
 
 
-save base_hs10_newyears, replace
+save base_hs10_newyears.dta, replace
 erase temp.dta
 
 ** Ajouter code iso3
@@ -172,7 +164,7 @@ label var iso2 "ISO 2 country code (origin)"
 label var iso_d "Importing country (iso3)"
 label var iso_o "Exporting country (iso3)"
 
-save base_hs10_newyears, replace
+save base_hs10_newyears.dat, replace
 
 ******************************************************************************
 *** STEP 2.3: Introduire éuqlivalence HS10 - SITC2 (la clé de classification dans hummels_tra)
@@ -285,7 +277,7 @@ drop if prix_fob==.
 destring year, replace
 
 save base_hs10_newyears, replace
-save $dir/base_hs10_newyears, replace
+save "$dir/base_hs10_newyears.dta", replace
 
 erase $dir_db/base_hs10_newyears.dta
 erase temp.dta
