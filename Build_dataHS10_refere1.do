@@ -254,7 +254,7 @@ append using temp
 save temp, replace
 restore
 
-replace mode=="cnt"
+replace mode="cnt"
 append using temp
 
 
@@ -282,8 +282,8 @@ drop if prix_fob==.
 
 destring year, replace
 
-save base_hs10_newyears, replace
-save "$dir/base_hs10_newyears.dta", replace
+*save base_hs10_newyears, replace
+save "$dir_db/base_hs10_newyears.dta", replace
 
-erase "$dir_db/base_hs10_newyears.dta"
+erase "$dir/base_hs10_newyears.dta"
 erase temp.dta
