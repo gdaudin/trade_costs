@@ -316,7 +316,10 @@ foreach i in prod dentry	{
 	
 local liste_variables `liste_variables_prod' `liste_variables_dentry'
 local liste_parametres `liste_parametres_prod' `liste_parametres_dentry' x
-local initial `initial_prod' `initial_dentry' x 100
+local initial `initial_prod' `initial_dentry' x 0
+*Les résultats dépendent de la valeur initiale de x. Trop grand, et beta colle à 0
+*Trop petit, et beta colle à 1
+*difficile de trouver de l'intermédiaire...
 	
 macro dir
 
@@ -335,7 +338,7 @@ disp "`nbr_var'"
 	
 		disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
-		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(500) parameters(`liste_parametres' ) initial (`initial')
+		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial')
 
 * Récupérer le résultat sur le beta
 capture	matrix X= e(b)
@@ -344,7 +347,7 @@ capture	matrix X= e(b)
 capture	predict blink
 replace predit = blink
 
-matrix list X 
+*matrix list X 
 disp "`nbr_var'"
 
 
@@ -352,6 +355,8 @@ disp "`nbr_var'"
 replace coeff_x=X[1,`nbr_var'] 
 
 replace beta = 1/(1+exp(coeff_x)) 
+summarize beta 
+blif
 
 } /* Fin de la boucle si on fait la régression */ 
 } /* Fin de la boucle si base non vide */
