@@ -1,5 +1,4 @@
 
-
 *version 15.1
 
 clear all
@@ -13,6 +12,10 @@ set maxvar 32767
 
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/dropbox/2013 -- trade_cost -- dropbox/JEGeo
+	global dir_db ~/Documents/Recherche/2013 -- Trade Costs -- local/data
+	global dir_temp ~/Documents/Recherche/2013 -- Trade Costs -- local/temp
+	global dir_results ~/Documents/Recherche/2013 -- Trade Costs -- local/results
+	
 }
 
 
@@ -67,7 +70,7 @@ program prep_reg
 args year class preci mode
 
 
-use "$dir_db\base_hs10_newyears.dta"
+use "$dir_db/base_hs10_newyears.dta"
 
 *** JUSTE POUR TESTER
 
@@ -127,7 +130,7 @@ g lprix_fob = ln(prix_fob)
 label variable lprix_fob "log(prix_fob)"
 
 
-save $dir_db/tempHS10_`year'_`class'_`preci'_`mode', replace
+save "$dir_db/tempHS10_`year'_`class'_`preci'_`mode'.dta", replace
 
 
 end
@@ -210,13 +213,13 @@ gen sector = ""
 gen iso_o = ""
 gen beta = .
 
-save  $dir_results\results_beta_contraint_`year'_`class'_`preci'_`mode', replace
+save  "$dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode'.dta", replace
 
 *** Faire les régressions
 
-cd $dir_temp
+cd "$dir_temp"
 
-use $dir_db/tempHS10_`year'_`class'_`preci'_`mode', clear
+use "$dir_db/tempHS10_`year'_`class'_`preci'_`mode'.dta", clear
 
 gen beta    = .
 gen coeff_x = .
@@ -371,9 +374,9 @@ foreach i in `liste_iso_o'  {
 foreach k in `liste_sector' {
 
 
-use $dir_results\results_beta_contraint_`year'_`class'_`preci'_`mode', clear
-append using $dir_temp\temp_`i'_`k'
-save $dir_results\results_beta_contraint_`year'_`class'_`preci'_`mode', replace
+use $dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode', clear
+append using $dir_temp/temp_`i'_`k'
+save "$dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode'.dt", replace
 
 erase $dir_temp/temp_`i'_`k'.dta
 }
