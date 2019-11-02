@@ -322,7 +322,7 @@ local initial  x 0 `initial_prod' `initial_dentry'
 *Trop petit, et beta colle à 1
 *difficile de trouver de l'intermédiaire... 0 à l'air bien. 
 	
-macro dir
+*macro dir
 
 display "For sector `k', country `ii': Nombre de products (HS 10) = `nbr_prod'" 
 display "For sector `k', country `ii': Nombre de districts of entry = `nbr_dentry'" 
@@ -333,9 +333,15 @@ disp "nb of explicatives"
 disp "`nbr_var'"
 
 * il faut plus d'observations que de nombre de variables explicatives pour faire la régression
-	if `nb' > `nbr_var' {
+
+*if `nb' > `nbr_var' {
+**la barre est-elle bien assez haut ?
+
+if `nb' > 2*`nbr_var' {
+	disp "ok assez d'observations par rapport aux explicatives : `nb'/`nbr_var'"
 	
-	disp "ok assez d'observations par rapport aux explicatives"
+	
+	*histogram prix_trsp2, by(dist_entry) freq
 	
 		disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
@@ -359,7 +365,7 @@ replace coeff_x=X[1,1]
 
 replace beta = 1/(1+exp(coeff_x)) 
 summarize beta 
-blif
+
 
 } /* Fin de la boucle si on fait la régression */ 
 } /* Fin de la boucle si base non vide */
