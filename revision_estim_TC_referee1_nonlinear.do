@@ -164,14 +164,19 @@ program nlestim_beta
 		local n = `n'+1
 	}
 
-	local n 1
+	
 		
+**Début de l'évaluation		
 	tempvar blif
-	generate double `blif' =0 `if'
+	tempname x
+	* on impose que beta est compris entre 0 et 1 via la fonction logistique
+	scalar `x' =`at'[1,1]
+	generate double `blif' =`lprix_fob'*(1/(1+exp(`x'))) `if'
 
 		
 **Ici, on fait les effets fixes (produit-pays-point d'entrée)
-	
+
+local n 2
 		foreach p in prod dentry {
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="prod" | `j'!=1 {
@@ -185,13 +190,9 @@ program nlestim_beta
 			}
 		}
 	
-	tempname x
-	scalar `x' =`at'[1,`n']
+	
 
 
-	replace `blif' =`blif'+ `lprix_fob'*(1/(1+exp(`x'))) `if'
-
-* on impose que beta est compris entre 0 et 1 via la fonction logistique
 	replace `lprix_trsp2' = `blif' `if'
 	
 	
@@ -315,8 +316,8 @@ foreach i in prod dentry	{
 
 	
 local liste_variables `liste_variables_prod' `liste_variables_dentry'
-local liste_parametres `liste_parametres_prod' `liste_parametres_dentry' x
-local initial `initial_prod' `initial_dentry' x 0
+local liste_parametres x `liste_parametres_prod' `liste_parametres_dentry'
+local initial  x 0 `initial_prod' `initial_dentry'
 *Les résultats dépendent de la valeur initiale de x. Trop grand, et beta colle à 0
 *Trop petit, et beta colle à 1
 *difficile de trouver de l'intermédiaire... 0 à l'air bien. 
@@ -354,7 +355,7 @@ disp "`nbr_var'"
 
 
 * le coefficient x sur ln prix fob arrive en dernier
-replace coeff_x=X[1,`nbr_var'] 
+replace coeff_x=X[1,1] 
 
 replace beta = 1/(1+exp(coeff_x)) 
 summarize beta 
