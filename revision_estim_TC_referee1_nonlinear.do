@@ -166,8 +166,8 @@ program nlestim_beta
 
 	local n 1
 		
-	capture drop blif
-	generate double blif =0
+	tempvar blif
+	generate double `blif' =0 `if'
 
 		
 **Ici, on fait les effets fixes (produit-pays-point d'entrée)
@@ -179,7 +179,7 @@ program nlestim_beta
 					scalar `fe_`p'_`j'' =`at'[1,`n']
 ************************
 
-					replace blif = blif + `fe_`p'_`j'' * `p'_`j'
+					replace `blif' = `blif' + `fe_`p'_`j'' * `p'_`j' `if'
 					local n = `n'+1
 				}
 			}
@@ -189,10 +189,10 @@ program nlestim_beta
 	scalar `x' =`at'[1,`n']
 
 
-	replace blif =blif+ `lprix_fob'*(1/(1+exp(`x')))
+	replace `blif' =`blif'+ `lprix_fob'*(1/(1+exp(`x'))) `if'
 
 * on impose que beta est compris entre 0 et 1 via la fonction logistique
-	replace `lprix_trsp2' = blif
+	replace `lprix_trsp2' = `blif' `if'
 	
 	
 end
@@ -319,7 +319,7 @@ local liste_parametres `liste_parametres_prod' `liste_parametres_dentry' x
 local initial `initial_prod' `initial_dentry' x 0
 *Les résultats dépendent de la valeur initiale de x. Trop grand, et beta colle à 0
 *Trop petit, et beta colle à 1
-*difficile de trouver de l'intermédiaire...
+*difficile de trouver de l'intermédiaire... 0 à l'air bien. 
 	
 macro dir
 
@@ -338,8 +338,10 @@ disp "`nbr_var'"
 	
 		disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
-		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial')
-
+		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
+*Ne marche pas avec lnlsq(0)
+		
+		
 * Récupérer le résultat sur le beta
 capture	matrix X= e(b)
 
