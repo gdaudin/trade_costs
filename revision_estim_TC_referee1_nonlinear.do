@@ -343,7 +343,7 @@ if `nb' > 2*`nbr_var' {
 	
 	*histogram prix_trsp2, by(dist_entry) freq
 	
-		disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
+*		disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
 		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
 *Ne marche pas avec lnlsq(0)
@@ -377,7 +377,7 @@ keep iso_o sector beta coeff_x predit lprix_trsp2
 keep if _n==1
 
 
-save temp_`ii'_`k', replace
+save `temp_`ii'_`k'.dta', replace
 
 
 
@@ -385,22 +385,22 @@ save temp_`ii'_`k', replace
 }
 
 foreach i in `liste_iso_o'  {
-foreach k in `liste_sector' {
+	foreach k in `liste_sector' {
 
 
-use $dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode', clear
-append using $dir_temp/temp_`i'_`k'
-save "$dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode'.dt", replace
+		use "$dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode'.dta", clear
+		append using "$dir_temp/temp_`i'_`k'.dta"
+		save "$dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode'.dta", replace
 
-erase $dir_temp/temp_`i'_`k'.dta
+		erase "$dir_temp/temp_`i'_`k'.dta"
+	}
+
 }
-
-}
-erase $dir_temp/temp.dta
+erase "$dir_temp/temp.dta"
 
 
 histogram beta, title("Distribution of beta, `year', `mode', `preci' digits") freq
-graph export $dir_results/histogram_beta_`year'_`class'_`preci'_`mode'.pdf, replace
+graph export "$dir_results/histogram_beta_`year'_`class'_`preci'_`mode'.pdf", replace
 
 
 end
