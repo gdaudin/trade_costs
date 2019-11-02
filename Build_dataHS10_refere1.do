@@ -175,7 +175,7 @@ save base_hs10_newyears.dta, replace
 
 ** On garde les 6 premiers chiffres, on convertit ensuite en sitc Rev2
 
-use base_hs10_newyears, clear
+use base_hs10_newyears.dta, clear
 
 gen hs6=substr(hs,1,6)
 
@@ -285,5 +285,5 @@ destring year, replace
 *save base_hs10_newyears, replace
 save "$dir_db/base_hs10_newyears.dta", replace
 
-erase "$dir/base_hs10_newyears.dta"
+*erase "$dir/base_hs10_newyears.dta"
 erase temp.dta
