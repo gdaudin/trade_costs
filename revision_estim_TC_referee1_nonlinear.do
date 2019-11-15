@@ -81,7 +81,8 @@ keep if iso_o =="FRA"
 keep if year==`year'
 keep if mode=="`mode'"
 rename `class' sector
-replace sector = substr(sector,1,`preci')
+replace sector = substr(sector,1,3)
+** on est au niveau SITC 3d
 
 drop if sector==""
 
@@ -89,8 +90,10 @@ label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
 rename hs product
+replace product = substr(product,1,`preci')
+* On se laisse de la marge de manoeuvre sur HS 6, HS4, HS10 (mais on sait que ça ne marche pas en HS 10)
  
-label var product "HS 10 classification"
+label var product "HS `preci' classification"
 
 * Nettoyer la base de données
 
@@ -117,7 +120,7 @@ egen group_sector=group(sector)
 su group_sector, meanonly	
 drop group_sector
 local nbr_sector_exante=r(max)
-display "Nombre de produits (`preci' digits) : `nbr_sector_exante'" 
+display "Nombre de produits (3 digits) : `nbr_sector_exante'" 
 
 bysort sector: drop if _N<=5
 
@@ -130,7 +133,7 @@ g lprix_fob = ln(prix_fob)
 label variable lprix_fob "log(prix_fob)"
 
 
-save "$dir_db/tempHS10_`year'_`class'_`preci'_`mode'.dta", replace
+save "$dir_db/temp_`year'_`class'_HS`preci'_`mode'.dta", replace
 
 
 end
@@ -214,13 +217,13 @@ gen sector = ""
 gen iso_o = ""
 gen beta = .
 
-save  "$dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode'.dta", replace
+save  "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace
 
 *** Faire les régressions
 
 cd "$dir_temp"
 
-use "$dir_db/tempHS10_`year'_`class'_`preci'_`mode'.dta", clear
+use "$dir_db/temp_`year'_`class'_HS`preci'_`mode'.dta", clear
 
 gen beta    = .
 gen coeff_x = .
@@ -274,7 +277,7 @@ local nbr_prod=r(max)
 
 ** Initialiser les listes des variables, des paramètres, des valeurs initiales
 
-* Produits HS 10
+* Produits HS niveau finesse classification `preci'
 quietly levelsof product, local (liste_prod) clean
 quietly tabulate product, gen (prod_)
 	
@@ -324,7 +327,7 @@ local initial  x 0 `initial_prod' `initial_dentry'
 	
 *macro dir
 
-display "For sector `k', country `ii': Nombre de products (HS 10) = `nbr_prod'" 
+display "For sector `k', country `ii': Nombre de products (HS `preci') = `nbr_prod'" 
 display "For sector `k', country `ii': Nombre de districts of entry = `nbr_dentry'" 
 
 local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1 /* -1 pour EF produit initial, +1 pour lprixfob */
@@ -388,9 +391,9 @@ foreach i in `liste_iso_o'  {
 	foreach k in `liste_sector' {
 
 
-		use "$dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode'.dta", clear
+		use "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", clear
 		append using "$dir_temp/temp_`i'_`k'.dta"
-		save "$dir_results/results_beta_contraint_`year'_`class'_`preci'_`mode'.dta", replace
+		save "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace
 
 		erase "$dir_temp/temp_`i'_`k'.dta"
 	}
@@ -399,8 +402,8 @@ foreach i in `liste_iso_o'  {
 erase "$dir_temp/temp.dta"
 
 
-histogram beta, title("Distribution of beta, `year', `mode', `preci' digits") freq
-graph export "$dir_results/histogram_beta_`year'_`class'_`preci'_`mode'.pdf", replace
+histogram beta, title("Distribution of beta, `year', `mode', HS`preci' digits") freq
+graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'.pdf", replace
 
 
 end
@@ -423,8 +426,8 @@ foreach z in 2005 {
 capture log close
 log using results_estim_TC_referee1_`z'_`x', replace
 
-prep_reg `z' sitc2 3 `x'
-do_reg `z' sitc2 3 `x'
+prep_reg `z' sitc2 10 `x'
+do_reg `z' sitc2 10 `x'
 
 
 log close

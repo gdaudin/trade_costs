@@ -1,0 +1,885 @@
+{smcl}
+{txt}{sf}{ul off}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\lpatureau\Documents\Git\trade_costs\results_estim_TC_referee1_2005_air.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}15 Nov 2019, 10:39:16
+{txt}(14,703,873 observations deleted)
+(507,078 observations deleted)
+(19,064 observations deleted)
+{res}{txt}(44,697 real changes made)
+(1,174 observations deleted)
+{res}{txt}(0 real changes made)
+Nombre avant bas et haut 44697
+(4,266 observations deleted)
+Nombre après bas et haut 40431
+Nombre de produits (3 digits) : 213
+(101 observations deleted)
+(note: file C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database/temp_2005_sitc2_HS10_air.dta not found)
+file C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database/temp_2005_sitc2_HS10_air.dta saved
+(note: dataset contains 0 observations)
+(note: file C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\results/results_beta_contraint_2005_sitc2_HS10_air.dta not found)
+file C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\results/results_beta_contraint_2005_sitc2_HS10_air.dta saved
+{res}C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\temp
+{txt}(40,330 missing values generated)
+(40,330 missing values generated)
+(40,330 missing values generated)
+(note: file temp.dta not found)
+file temp.dta saved
+(0 observations deleted)
+(note: file temp_FRA.dta not found)
+file temp_FRA.dta saved
+(40,324 observations deleted)
+(note: file temp_FRA_001.dta not found)
+file temp_FRA_001.dta saved
+(40,294 observations deleted)
+(note: file temp_FRA_024.dta not found)
+file temp_FRA_024.dta saved
+(40,319 observations deleted)
+(note: file temp_FRA_034.dta not found)
+file temp_FRA_034.dta saved
+(40,323 observations deleted)
+(note: file temp_FRA_037.dta not found)
+file temp_FRA_037.dta saved
+(40,315 observations deleted)
+(note: file temp_FRA_048.dta not found)
+file temp_FRA_048.dta saved
+(40,317 observations deleted)
+(note: file temp_FRA_054.dta not found)
+file temp_FRA_054.dta saved
+(40,312 observations deleted)
+(note: file temp_FRA_056.dta not found)
+file temp_FRA_056.dta saved
+(40,315 observations deleted)
+(note: file temp_FRA_058.dta not found)
+file temp_FRA_058.dta saved
+(40,322 observations deleted)
+(note: file temp_FRA_061.dta not found)
+file temp_FRA_061.dta saved
+(40,308 observations deleted)
+(note: file temp_FRA_062.dta not found)
+file temp_FRA_062.dta saved
+(40,321 observations deleted)
+(note: file temp_FRA_072.dta not found)
+file temp_FRA_072.dta saved
+(40,287 observations deleted)
+(note: file temp_FRA_073.dta not found)
+file temp_FRA_073.dta saved
+(40,310 observations deleted)
+(note: file temp_FRA_074.dta not found)
+file temp_FRA_074.dta saved
+(40,315 observations deleted)
+(note: file temp_FRA_075.dta not found)
+file temp_FRA_075.dta saved
+(40,321 observations deleted)
+(note: file temp_FRA_081.dta not found)
+file temp_FRA_081.dta saved
+(40,283 observations deleted)
+(note: file temp_FRA_098.dta not found)
+file temp_FRA_098.dta saved
+(40,145 observations deleted)
+(note: file temp_FRA_112.dta not found)
+file temp_FRA_112.dta saved
+(40,318 observations deleted)
+(note: file temp_FRA_122.dta not found)
+file temp_FRA_122.dta saved
+(40,315 observations deleted)
+(note: file temp_FRA_211.dta not found)
+file temp_FRA_211.dta saved
+(40,298 observations deleted)
+(note: file temp_FRA_233.dta not found)
+file temp_FRA_233.dta saved
+(40,320 observations deleted)
+(note: file temp_FRA_248.dta not found)
+file temp_FRA_248.dta saved
+(40,314 observations deleted)
+(note: file temp_FRA_266.dta not found)
+file temp_FRA_266.dta saved
+(40,319 observations deleted)
+(note: file temp_FRA_267.dta not found)
+file temp_FRA_267.dta saved
+(40,324 observations deleted)
+(note: file temp_FRA_268.dta not found)
+file temp_FRA_268.dta saved
+(40,315 observations deleted)
+(note: file temp_FRA_269.dta not found)
+file temp_FRA_269.dta saved
+(40,316 observations deleted)
+(note: file temp_FRA_273.dta not found)
+file temp_FRA_273.dta saved
+(40,311 observations deleted)
+(note: file temp_FRA_278.dta not found)
+file temp_FRA_278.dta saved
+(40,320 observations deleted)
+(note: file temp_FRA_287.dta not found)
+file temp_FRA_287.dta saved
+(40,322 observations deleted)
+(note: file temp_FRA_291.dta not found)
+file temp_FRA_291.dta saved
+(40,191 observations deleted)
+(note: file temp_FRA_292.dta not found)
+file temp_FRA_292.dta saved
+(40,290 observations deleted)
+(note: file temp_FRA_334.dta not found)
+file temp_FRA_334.dta saved
+(40,320 observations deleted)
+(note: file temp_FRA_423.dta not found)
+file temp_FRA_423.dta saved
+(40,315 observations deleted)
+(note: file temp_FRA_424.dta not found)
+file temp_FRA_424.dta saved
+(40,322 observations deleted)
+(note: file temp_FRA_431.dta not found)
+file temp_FRA_431.dta saved
+(40,310 observations deleted)
+(note: file temp_FRA_511.dta not found)
+file temp_FRA_511.dta saved
+(40,280 observations deleted)
+(note: file temp_FRA_512.dta not found)
+file temp_FRA_512.dta saved
+(40,233 observations deleted)
+(note: file temp_FRA_513.dta not found)
+file temp_FRA_513.dta saved
+(40,158 observations deleted)
+(note: file temp_FRA_514.dta not found)
+file temp_FRA_514.dta saved
+(40,178 observations deleted)
+(note: file temp_FRA_515.dta not found)
+file temp_FRA_515.dta saved
+(40,225 observations deleted)
+(note: file temp_FRA_516.dta not found)
+file temp_FRA_516.dta saved
+(40,292 observations deleted)
+(note: file temp_FRA_522.dta not found)
+file temp_FRA_522.dta saved
+(40,297 observations deleted)
+(note: file temp_FRA_523.dta not found)
+file temp_FRA_523.dta saved
+(40,312 observations deleted)
+(note: file temp_FRA_524.dta not found)
+file temp_FRA_524.dta saved
+(40,258 observations deleted)
+(note: file temp_FRA_531.dta not found)
+file temp_FRA_531.dta saved
+(40,311 observations deleted)
+(note: file temp_FRA_532.dta not found)
+file temp_FRA_532.dta saved
+(40,212 observations deleted)
+(note: file temp_FRA_533.dta not found)
+file temp_FRA_533.dta saved
+(40,055 observations deleted)
+(note: file temp_FRA_541.dta not found)
+file temp_FRA_541.dta saved
+(40,148 observations deleted)
+(note: file temp_FRA_551.dta not found)
+file temp_FRA_551.dta saved
+(39,810 observations deleted)
+(note: file temp_FRA_553.dta not found)
+file temp_FRA_553.dta saved
+(40,270 observations deleted)
+(note: file temp_FRA_554.dta not found)
+file temp_FRA_554.dta saved
+(40,318 observations deleted)
+(note: file temp_FRA_572.dta not found)
+file temp_FRA_572.dta saved
+(40,091 observations deleted)
+(note: file temp_FRA_582.dta not found)
+file temp_FRA_582.dta saved
+(40,006 observations deleted)
+(note: file temp_FRA_583.dta not found)
+file temp_FRA_583.dta saved
+(40,305 observations deleted)
+(note: file temp_FRA_584.dta not found)
+file temp_FRA_584.dta saved
+(40,304 observations deleted)
+(note: file temp_FRA_585.dta not found)
+file temp_FRA_585.dta saved
+(40,312 observations deleted)
+(note: file temp_FRA_591.dta not found)
+file temp_FRA_591.dta saved
+(40,275 observations deleted)
+(note: file temp_FRA_592.dta not found)
+file temp_FRA_592.dta saved
+(40,128 observations deleted)
+(note: file temp_FRA_598.dta not found)
+file temp_FRA_598.dta saved
+(40,157 observations deleted)
+(note: file temp_FRA_611.dta not found)
+file temp_FRA_611.dta saved
+(40,185 observations deleted)
+(note: file temp_FRA_612.dta not found)
+file temp_FRA_612.dta saved
+(40,306 observations deleted)
+(note: file temp_FRA_613.dta not found)
+file temp_FRA_613.dta saved
+(40,073 observations deleted)
+(note: file temp_FRA_621.dta not found)
+file temp_FRA_621.dta saved
+(40,170 observations deleted)
+(note: file temp_FRA_625.dta not found)
+file temp_FRA_625.dta saved
+(39,735 observations deleted)
+(note: file temp_FRA_628.dta not found)
+file temp_FRA_628.dta saved
+(40,314 observations deleted)
+(note: file temp_FRA_633.dta not found)
+file temp_FRA_633.dta saved
+(40,313 observations deleted)
+(note: file temp_FRA_634.dta not found)
+file temp_FRA_634.dta saved
+(40,190 observations deleted)
+(note: file temp_FRA_635.dta not found)
+file temp_FRA_635.dta saved
+(40,220 observations deleted)
+(note: file temp_FRA_641.dta not found)
+file temp_FRA_641.dta saved
+(40,161 observations deleted)
+(note: file temp_FRA_642.dta not found)
+file temp_FRA_642.dta saved
+(40,108 observations deleted)
+(note: file temp_FRA_651.dta not found)
+file temp_FRA_651.dta saved
+(39,396 observations deleted)
+(note: file temp_FRA_652.dta not found)
+file temp_FRA_652.dta saved
+(39,381 observations deleted)
+(note: file temp_FRA_653.dta not found)
+file temp_FRA_653.dta saved
+(39,923 observations deleted)
+(note: file temp_FRA_654.dta not found)
+file temp_FRA_654.dta saved
+(40,049 observations deleted)
+(note: file temp_FRA_655.dta not found)
+file temp_FRA_655.dta saved
+(40,037 observations deleted)
+(note: file temp_FRA_656.dta not found)
+file temp_FRA_656.dta saved
+(39,954 observations deleted)
+(note: file temp_FRA_657.dta not found)
+file temp_FRA_657.dta saved
+(39,567 observations deleted)
+(note: file temp_FRA_658.dta not found)
+file temp_FRA_658.dta saved
+(40,180 observations deleted)
+(note: file temp_FRA_659.dta not found)
+file temp_FRA_659.dta saved
+(40,298 observations deleted)
+(note: file temp_FRA_661.dta not found)
+file temp_FRA_661.dta saved
+(40,306 observations deleted)
+(note: file temp_FRA_662.dta not found)
+file temp_FRA_662.dta saved
+(40,154 observations deleted)
+(note: file temp_FRA_663.dta not found)
+file temp_FRA_663.dta saved
+(40,178 observations deleted)
+(note: file temp_FRA_664.dta not found)
+file temp_FRA_664.dta saved
+(40,102 observations deleted)
+(note: file temp_FRA_665.dta not found)
+file temp_FRA_665.dta saved
+(40,132 observations deleted)
+(note: file temp_FRA_666.dta not found)
+file temp_FRA_666.dta saved
+(40,284 observations deleted)
+(note: file temp_FRA_667.dta not found)
+file temp_FRA_667.dta saved
+(40,322 observations deleted)
+(note: file temp_FRA_671.dta not found)
+file temp_FRA_671.dta saved
+(40,322 observations deleted)
+(note: file temp_FRA_672.dta not found)
+file temp_FRA_672.dta saved
+(40,288 observations deleted)
+(note: file temp_FRA_673.dta not found)
+file temp_FRA_673.dta saved
+(40,288 observations deleted)
+(note: file temp_FRA_674.dta not found)
+file temp_FRA_674.dta saved
+(40,313 observations deleted)
+(note: file temp_FRA_677.dta not found)
+file temp_FRA_677.dta saved
+(40,190 observations deleted)
+(note: file temp_FRA_678.dta not found)
+file temp_FRA_678.dta saved
+(40,303 observations deleted)
+(note: file temp_FRA_679.dta not found)
+file temp_FRA_679.dta saved
+(40,314 observations deleted)
+(note: file temp_FRA_681.dta not found)
+file temp_FRA_681.dta saved
+(40,230 observations deleted)
+(note: file temp_FRA_682.dta not found)
+file temp_FRA_682.dta saved
+(40,291 observations deleted)
+(note: file temp_FRA_683.dta not found)
+file temp_FRA_683.dta saved
+(40,227 observations deleted)
+(note: file temp_FRA_684.dta not found)
+file temp_FRA_684.dta saved
+(40,324 observations deleted)
+(note: file temp_FRA_687.dta not found)
+file temp_FRA_687.dta saved
+(40,303 observations deleted)
+(note: file temp_FRA_689.dta not found)
+file temp_FRA_689.dta saved
+(40,293 observations deleted)
+(note: file temp_FRA_691.dta not found)
+file temp_FRA_691.dta saved
+(40,260 observations deleted)
+(note: file temp_FRA_692.dta not found)
+file temp_FRA_692.dta saved
+(40,266 observations deleted)
+(note: file temp_FRA_693.dta not found)
+file temp_FRA_693.dta saved
+(39,879 observations deleted)
+(note: file temp_FRA_694.dta not found)
+file temp_FRA_694.dta saved
+(39,900 observations deleted)
+(note: file temp_FRA_695.dta not found)
+file temp_FRA_695.dta saved
+(40,127 observations deleted)
+(note: file temp_FRA_696.dta not found)
+file temp_FRA_696.dta saved
+(40,107 observations deleted)
+(note: file temp_FRA_697.dta not found)
+file temp_FRA_697.dta saved
+(39,462 observations deleted)
+(note: file temp_FRA_699.dta not found)
+file temp_FRA_699.dta saved
+(40,320 observations deleted)
+(note: file temp_FRA_711.dta not found)
+file temp_FRA_711.dta saved
+(40,315 observations deleted)
+(note: file temp_FRA_712.dta not found)
+file temp_FRA_712.dta saved
+(40,162 observations deleted)
+(note: file temp_FRA_713.dta not found)
+file temp_FRA_713.dta saved
+(40,062 observations deleted)
+(note: file temp_FRA_714.dta not found)
+file temp_FRA_714.dta saved
+(39,845 observations deleted)
+(note: file temp_FRA_716.dta not found)
+file temp_FRA_716.dta saved
+(40,141 observations deleted)
+(note: file temp_FRA_718.dta not found)
+file temp_FRA_718.dta saved
+(40,245 observations deleted)
+(note: file temp_FRA_721.dta not found)
+file temp_FRA_721.dta saved
+(40,208 observations deleted)
+(note: file temp_FRA_723.dta not found)
+file temp_FRA_723.dta saved
+(40,168 observations deleted)
+(note: file temp_FRA_724.dta not found)
+file temp_FRA_724.dta saved
+(40,262 observations deleted)
+(note: file temp_FRA_725.dta not found)
+file temp_FRA_725.dta saved
+(40,234 observations deleted)
+(note: file temp_FRA_726.dta not found)
+file temp_FRA_726.dta saved
+(40,225 observations deleted)
+(note: file temp_FRA_727.dta not found)
+file temp_FRA_727.dta saved
+(39,838 observations deleted)
+(note: file temp_FRA_728.dta not found)
+file temp_FRA_728.dta saved
+(40,095 observations deleted)
+(note: file temp_FRA_736.dta not found)
+file temp_FRA_736.dta saved
+(40,208 observations deleted)
+(note: file temp_FRA_737.dta not found)
+file temp_FRA_737.dta saved
+(39,915 observations deleted)
+(note: file temp_FRA_741.dta not found)
+file temp_FRA_741.dta saved
+(39,999 observations deleted)
+(note: file temp_FRA_742.dta not found)
+file temp_FRA_742.dta saved
+(39,775 observations deleted)
+(note: file temp_FRA_743.dta not found)
+file temp_FRA_743.dta saved
+(40,073 observations deleted)
+(note: file temp_FRA_744.dta not found)
+file temp_FRA_744.dta saved
+(39,933 observations deleted)
+(note: file temp_FRA_745.dta not found)
+file temp_FRA_745.dta saved
+(38,703 observations deleted)
+(note: file temp_FRA_749.dta not found)
+file temp_FRA_749.dta saved
+(40,268 observations deleted)
+(note: file temp_FRA_751.dta not found)
+file temp_FRA_751.dta saved
+(39,694 observations deleted)
+(note: file temp_FRA_752.dta not found)
+file temp_FRA_752.dta saved
+(40,099 observations deleted)
+(note: file temp_FRA_759.dta not found)
+file temp_FRA_759.dta saved
+(40,282 observations deleted)
+(note: file temp_FRA_761.dta not found)
+file temp_FRA_761.dta saved
+(40,307 observations deleted)
+(note: file temp_FRA_762.dta not found)
+file temp_FRA_762.dta saved
+(40,261 observations deleted)
+(note: file temp_FRA_763.dta not found)
+file temp_FRA_763.dta saved
+(39,441 observations deleted)
+(note: file temp_FRA_764.dta not found)
+file temp_FRA_764.dta saved
+(39,892 observations deleted)
+(note: file temp_FRA_771.dta not found)
+file temp_FRA_771.dta saved
+(39,157 observations deleted)
+(note: file temp_FRA_772.dta not found)
+file temp_FRA_772.dta saved
+(39,975 observations deleted)
+(note: file temp_FRA_773.dta not found)
+file temp_FRA_773.dta saved
+(40,091 observations deleted)
+(note: file temp_FRA_774.dta not found)
+file temp_FRA_774.dta saved
+(40,179 observations deleted)
+(note: file temp_FRA_775.dta not found)
+file temp_FRA_775.dta saved
+(39,808 observations deleted)
+(note: file temp_FRA_776.dta not found)
+file temp_FRA_776.dta saved
+(39,282 observations deleted)
+(note: file temp_FRA_778.dta not found)
+file temp_FRA_778.dta saved
+(40,321 observations deleted)
+(note: file temp_FRA_781.dta not found)
+file temp_FRA_781.dta saved
+(39,936 observations deleted)
+(note: file temp_FRA_784.dta not found)
+file temp_FRA_784.dta saved
+(40,177 observations deleted)
+(note: file temp_FRA_785.dta not found)
+file temp_FRA_785.dta saved
+(40,306 observations deleted)
+(note: file temp_FRA_786.dta not found)
+file temp_FRA_786.dta saved
+(40,292 observations deleted)
+(note: file temp_FRA_791.dta not found)
+file temp_FRA_791.dta saved
+(39,849 observations deleted)
+(note: file temp_FRA_792.dta not found)
+file temp_FRA_792.dta saved
+(40,303 observations deleted)
+(note: file temp_FRA_793.dta not found)
+file temp_FRA_793.dta saved
+(40,060 observations deleted)
+(note: file temp_FRA_812.dta not found)
+file temp_FRA_812.dta saved
+(39,808 observations deleted)
+(note: file temp_FRA_821.dta not found)
+file temp_FRA_821.dta saved
+(39,468 observations deleted)
+(note: file temp_FRA_831.dta not found)
+file temp_FRA_831.dta saved
+(39,942 observations deleted)
+(note: file temp_FRA_842.dta not found)
+file temp_FRA_842.dta saved
+(38,518 observations deleted)
+(note: file temp_FRA_843.dta not found)
+file temp_FRA_843.dta saved
+(40,162 observations deleted)
+(note: file temp_FRA_844.dta not found)
+file temp_FRA_844.dta saved
+(39,104 observations deleted)
+(note: file temp_FRA_845.dta not found)
+file temp_FRA_845.dta saved
+(39,927 observations deleted)
+(note: file temp_FRA_846.dta not found)
+file temp_FRA_846.dta saved
+(39,982 observations deleted)
+(note: file temp_FRA_847.dta not found)
+file temp_FRA_847.dta saved
+(39,862 observations deleted)
+(note: file temp_FRA_848.dta not found)
+file temp_FRA_848.dta saved
+(39,897 observations deleted)
+(note: file temp_FRA_851.dta not found)
+file temp_FRA_851.dta saved
+(40,244 observations deleted)
+(note: file temp_FRA_871.dta not found)
+file temp_FRA_871.dta saved
+(39,986 observations deleted)
+(note: file temp_FRA_872.dta not found)
+file temp_FRA_872.dta saved
+(40,269 observations deleted)
+(note: file temp_FRA_873.dta not found)
+file temp_FRA_873.dta saved
+(38,294 observations deleted)
+(note: file temp_FRA_874.dta not found)
+file temp_FRA_874.dta saved
+(40,192 observations deleted)
+(note: file temp_FRA_881.dta not found)
+file temp_FRA_881.dta saved
+(40,270 observations deleted)
+(note: file temp_FRA_882.dta not found)
+file temp_FRA_882.dta saved
+(40,312 observations deleted)
+(note: file temp_FRA_883.dta not found)
+file temp_FRA_883.dta saved
+(40,097 observations deleted)
+(note: file temp_FRA_884.dta not found)
+file temp_FRA_884.dta saved
+(40,008 observations deleted)
+(note: file temp_FRA_885.dta not found)
+file temp_FRA_885.dta saved
+(39,865 observations deleted)
+(note: file temp_FRA_892.dta not found)
+file temp_FRA_892.dta saved
+(39,404 observations deleted)
+(note: file temp_FRA_893.dta not found)
+file temp_FRA_893.dta saved
+(39,969 observations deleted)
+(note: file temp_FRA_894.dta not found)
+file temp_FRA_894.dta saved
+(40,198 observations deleted)
+(note: file temp_FRA_895.dta not found)
+file temp_FRA_895.dta saved
+(40,046 observations deleted)
+(note: file temp_FRA_896.dta not found)
+file temp_FRA_896.dta saved
+(40,069 observations deleted)
+(note: file temp_FRA_897.dta not found)
+file temp_FRA_897.dta saved
+(39,969 observations deleted)
+(note: file temp_FRA_898.dta not found)
+file temp_FRA_898.dta saved
+(39,885 observations deleted)
+(note: file temp_FRA_899.dta not found)
+file temp_FRA_899.dta saved
+(40,322 observations deleted)
+(note: file temp_FRA_941.dta not found)
+file temp_FRA_941.dta saved
+(40,304 observations deleted)
+(note: file temp_FRA_951.dta not found)
+file temp_FRA_951.dta saved
+ok base non vide
+For sector 001, country FRA: Nombre de district of entry = 4
+For sector 001, country FRA: Nombre de products (HS 10) = 3
+For sector 001, country FRA: Nombre de districts of entry = 4
+nb of explicatives
+7
+(5 observations deleted)
+file temp_FRA_001.dta saved
+ok base non vide
+For sector 024, country FRA: Nombre de district of entry = 9
+For sector 024, country FRA: Nombre de products (HS 10) = 14
+For sector 024, country FRA: Nombre de districts of entry = 9
+nb of explicatives
+23
+(35 observations deleted)
+file temp_FRA_024.dta saved
+ok base non vide
+For sector 034, country FRA: Nombre de district of entry = 4
+For sector 034, country FRA: Nombre de products (HS 10) = 8
+For sector 034, country FRA: Nombre de districts of entry = 4
+nb of explicatives
+12
+(10 observations deleted)
+file temp_FRA_034.dta saved
+ok base non vide
+For sector 037, country FRA: Nombre de district of entry = 5
+For sector 037, country FRA: Nombre de products (HS 10) = 4
+For sector 037, country FRA: Nombre de districts of entry = 5
+nb of explicatives
+9
+(6 observations deleted)
+file temp_FRA_037.dta saved
+ok base non vide
+For sector 048, country FRA: Nombre de district of entry = 7
+For sector 048, country FRA: Nombre de products (HS 10) = 8
+For sector 048, country FRA: Nombre de districts of entry = 7
+nb of explicatives
+15
+(14 observations deleted)
+file temp_FRA_048.dta saved
+ok base non vide
+For sector 054, country FRA: Nombre de district of entry = 6
+For sector 054, country FRA: Nombre de products (HS 10) = 9
+For sector 054, country FRA: Nombre de districts of entry = 6
+nb of explicatives
+15
+(12 observations deleted)
+file temp_FRA_054.dta saved
+ok base non vide
+For sector 056, country FRA: Nombre de district of entry = 8
+For sector 056, country FRA: Nombre de products (HS 10) = 6
+For sector 056, country FRA: Nombre de districts of entry = 8
+nb of explicatives
+14
+(17 observations deleted)
+file temp_FRA_056.dta saved
+ok base non vide
+For sector 058, country FRA: Nombre de district of entry = 6
+For sector 058, country FRA: Nombre de products (HS 10) = 13
+For sector 058, country FRA: Nombre de districts of entry = 6
+nb of explicatives
+19
+(14 observations deleted)
+file temp_FRA_058.dta saved
+ok base non vide
+For sector 061, country FRA: Nombre de district of entry = 5
+For sector 061, country FRA: Nombre de products (HS 10) = 6
+For sector 061, country FRA: Nombre de districts of entry = 5
+nb of explicatives
+11
+(7 observations deleted)
+file temp_FRA_061.dta saved
+ok base non vide
+For sector 062, country FRA: Nombre de district of entry = 11
+For sector 062, country FRA: Nombre de products (HS 10) = 6
+For sector 062, country FRA: Nombre de districts of entry = 11
+nb of explicatives
+17
+(21 observations deleted)
+file temp_FRA_062.dta saved
+ok base non vide
+For sector 072, country FRA: Nombre de district of entry = 7
+For sector 072, country FRA: Nombre de products (HS 10) = 3
+For sector 072, country FRA: Nombre de districts of entry = 7
+nb of explicatives
+10
+(8 observations deleted)
+file temp_FRA_072.dta saved
+ok base non vide
+For sector 073, country FRA: Nombre de district of entry = 14
+For sector 073, country FRA: Nombre de products (HS 10) = 11
+For sector 073, country FRA: Nombre de districts of entry = 14
+nb of explicatives
+25
+(42 observations deleted)
+file temp_FRA_073.dta saved
+ok base non vide
+For sector 074, country FRA: Nombre de district of entry = 8
+For sector 074, country FRA: Nombre de products (HS 10) = 7
+For sector 074, country FRA: Nombre de districts of entry = 8
+nb of explicatives
+15
+(19 observations deleted)
+file temp_FRA_074.dta saved
+ok base non vide
+For sector 075, country FRA: Nombre de district of entry = 5
+For sector 075, country FRA: Nombre de products (HS 10) = 9
+For sector 075, country FRA: Nombre de districts of entry = 5
+nb of explicatives
+14
+(14 observations deleted)
+file temp_FRA_075.dta saved
+ok base non vide
+For sector 081, country FRA: Nombre de district of entry = 4
+For sector 081, country FRA: Nombre de products (HS 10) = 4
+For sector 081, country FRA: Nombre de districts of entry = 4
+nb of explicatives
+8
+(8 observations deleted)
+file temp_FRA_081.dta saved
+ok base non vide
+For sector 098, country FRA: Nombre de district of entry = 17
+For sector 098, country FRA: Nombre de products (HS 10) = 16
+For sector 098, country FRA: Nombre de districts of entry = 17
+nb of explicatives
+33
+(46 observations deleted)
+file temp_FRA_098.dta saved
+ok base non vide
+For sector 112, country FRA: Nombre de district of entry = 29
+For sector 112, country FRA: Nombre de products (HS 10) = 16
+For sector 112, country FRA: Nombre de districts of entry = 29
+nb of explicatives
+45
+ok assez d'observations par rapport aux explicatives : 185/45
+(obs = 185)
+
+Iteration 0:  residual SS = {res} 46.03549
+{txt}Iteration 1:  residual SS = {res} 16.90664
+{txt}Iteration 2:  residual SS = {res} 14.35328
+{txt}Iteration 3:  residual SS = {res} 14.35322
+{txt}Iteration 4:  residual SS = {res} 4.331369
+{txt}Iteration 5:  residual SS = {res} 4.331369
+
+
+{txt}      Source {c |}      SS            df       MS
+{hline 13}{c +}{hline 34}{col 53}Number of obs = {res}       185
+{txt}       Model {c |} {res} 3.1895958         43  .074176647{txt}{col 53}R-squared     = {res}    0.4241
+{txt}    Residual {c |} {res} 4.3313689        141  .030718928{txt}{col 53}Adj R-squared = {res}    0.2485
+{txt}{hline 13}{c +}{hline 34}{col 53}Root MSE      =  {res} .1752682
+{txt}       Total {c |} {res} 7.5209647        184  .040874808{txt}{col 53}Res. dev.     =  {res}-169.5701
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1} lprix_trsp2{col 14}{c |}      Coef.{col 26}   Std. Err.{col 38}      t{col 46}   P>|t|{col 54}     [95% Con{col 67}f. Interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+          /x {c |}{col 14}{res}{space 2} 414.7919{col 26}{space 2}        .{col 37}{space 1}       .{col 46}{space 3}    .{col 54}{space 4}        .{col 67}{space 3}        .
+{txt}  /fe_prod_2 {c |}{col 14}{res}{space 2} .0747822{col 26}{space 2} .1358855{col 37}{space 1}    0.55{col 46}{space 3}0.583{col 54}{space 4}-.1938541{col 67}{space 3} .3434186
+{txt}  /fe_prod_3 {c |}{col 14}{res}{space 2} .1404092{col 26}{space 2}  .047137{col 37}{space 1}    2.98{col 46}{space 3}0.003{col 54}{space 4} .0472226{col 67}{space 3} .2335959
+{txt}  /fe_prod_4 {c |}{col 14}{res}{space 2}-.0034025{col 26}{space 2} .0560402{col 37}{space 1}   -0.06{col 46}{space 3}0.952{col 54}{space 4}-.1141902{col 67}{space 3} .1073852
+{txt}  /fe_prod_5 {c |}{col 14}{res}{space 2} .0477302{col 26}{space 2} .0844558{col 37}{space 1}    0.57{col 46}{space 3}0.573{col 54}{space 4} -.119233{col 67}{space 3} .2146935
+{txt}  /fe_prod_6 {c |}{col 14}{res}{space 2} .5478672{col 26}{space 2} .1876936{col 37}{space 1}    2.92{col 46}{space 3}0.004{col 54}{space 4} .1768098{col 67}{space 3} .9189246
+{txt}  /fe_prod_7 {c |}{col 14}{res}{space 2} .0530854{col 26}{space 2}  .111791{col 37}{space 1}    0.47{col 46}{space 3}0.636{col 54}{space 4}-.1679177{col 67}{space 3} .2740885
+{txt}  /fe_prod_8 {c |}{col 14}{res}{space 2}-.0422712{col 26}{space 2} .0730497{col 37}{space 1}   -0.58{col 46}{space 3}0.564{col 54}{space 4}-.1866855{col 67}{space 3} .1021431
+{txt}  /fe_prod_9 {c |}{col 14}{res}{space 2} .0066712{col 26}{space 2} .1857815{col 37}{space 1}    0.04{col 46}{space 3}0.971{col 54}{space 4}-.3606062{col 67}{space 3} .3739486
+{txt} /fe_prod_10 {c |}{col 14}{res}{space 2}  .055406{col 26}{space 2} .0765119{col 37}{space 1}    0.72{col 46}{space 3}0.470{col 54}{space 4}-.0958528{col 67}{space 3} .2066649
+{txt} /fe_prod_11 {c |}{col 14}{res}{space 2} .1353232{col 26}{space 2} .1857815{col 37}{space 1}    0.73{col 46}{space 3}0.468{col 54}{space 4}-.2319542{col 67}{space 3} .5026006
+{txt} /fe_prod_12 {c |}{col 14}{res}{space 2} .0607405{col 26}{space 2} .0677554{col 37}{space 1}    0.90{col 46}{space 3}0.372{col 54}{space 4}-.0732073{col 67}{space 3} .1946883
+{txt} /fe_prod_13 {c |}{col 14}{res}{space 2}-.0889076{col 26}{space 2} .1878807{col 37}{space 1}   -0.47{col 46}{space 3}0.637{col 54}{space 4}-.4603349{col 67}{space 3} .2825198
+{txt} /fe_prod_14 {c |}{col 14}{res}{space 2} .0621326{col 26}{space 2} .0733227{col 37}{space 1}    0.85{col 46}{space 3}0.398{col 54}{space 4}-.0828213{col 67}{space 3} .2070865
+{txt} /fe_prod_15 {c |}{col 14}{res}{space 2} .0085334{col 26}{space 2} .1863356{col 37}{space 1}    0.05{col 46}{space 3}0.964{col 54}{space 4}-.3598394{col 67}{space 3} .3769061
+{txt} /fe_prod_16 {c |}{col 14}{res}{space 2} .0312577{col 26}{space 2} .0697098{col 37}{space 1}    0.45{col 46}{space 3}0.655{col 54}{space 4}-.1065539{col 67}{space 3} .1690692
+{txt}/fe_dentry_1 {c |}{col 14}{res}{space 2} .2176147{col 26}{space 2} .0741903{col 37}{space 1}    2.93{col 46}{space 3}0.004{col 54}{space 4} .0709455{col 67}{space 3} .3642839
+{txt}/fe_dentry_2 {c |}{col 14}{res}{space 2} .0179751{col 26}{space 2} .0616105{col 37}{space 1}    0.29{col 46}{space 3}0.771{col 54}{space 4}-.1038246{col 67}{space 3} .1397748
+{txt}/fe_dentry_3 {c |}{col 14}{res}{space 2} .2424303{col 26}{space 2} .1124242{col 37}{space 1}    2.16{col 46}{space 3}0.033{col 54}{space 4} .0201754{col 67}{space 3} .4646851
+{txt}/fe_dentry_4 {c |}{col 14}{res}{space 2} .1504077{col 26}{space 2} .0868386{col 37}{space 1}    1.73{col 46}{space 3}0.085{col 54}{space 4}-.0212662{col 67}{space 3} .3220817
+{txt}/fe_dentry_5 {c |}{col 14}{res}{space 2}-.0257744{col 26}{space 2} .1879088{col 37}{space 1}   -0.14{col 46}{space 3}0.891{col 54}{space 4}-.3972573{col 67}{space 3} .3457084
+{txt}/fe_dentry_6 {c |}{col 14}{res}{space 2} .2151065{col 26}{space 2} .0997645{col 37}{space 1}    2.16{col 46}{space 3}0.033{col 54}{space 4}  .017879{col 67}{space 3}  .412334
+{txt}/fe_dentry_7 {c |}{col 14}{res}{space 2} .0575372{col 26}{space 2} .1116313{col 37}{space 1}    0.52{col 46}{space 3}0.607{col 54}{space 4}-.1631501{col 67}{space 3} .2782246
+{txt}/fe_dentry_8 {c |}{col 14}{res}{space 2}  .340817{col 26}{space 2} .0711824{col 37}{space 1}    4.79{col 46}{space 3}0.000{col 54}{space 4} .2000943{col 67}{space 3} .4815397
+{txt}/fe_dentry_9 {c |}{col 14}{res}{space 2}-.0270715{col 26}{space 2} .1439989{col 37}{space 1}   -0.19{col 46}{space 3}0.851{col 54}{space 4}-.3117474{col 67}{space 3} .2576044
+{txt}/fe_dentr~10 {c |}{col 14}{res}{space 2}  .106478{col 26}{space 2} .0671562{col 37}{space 1}    1.59{col 46}{space 3}0.115{col 54}{space 4}-.0262853{col 67}{space 3} .2392413
+{txt}/fe_dentr~11 {c |}{col 14}{res}{space 2}-.0976165{col 26}{space 2} .1814961{col 37}{space 1}   -0.54{col 46}{space 3}0.592{col 54}{space 4}-.4564218{col 67}{space 3} .2611888
+{txt}/fe_dentr~12 {c |}{col 14}{res}{space 2} .3282553{col 26}{space 2} .1324482{col 37}{space 1}    2.48{col 46}{space 3}0.014{col 54}{space 4} .0664143{col 67}{space 3} .5900963
+{txt}/fe_dentr~13 {c |}{col 14}{res}{space 2}  .040256{col 26}{space 2} .0632616{col 37}{space 1}    0.64{col 46}{space 3}0.526{col 54}{space 4}-.0848079{col 67}{space 3} .1653198
+{txt}/fe_dentr~14 {c |}{col 14}{res}{space 2} .1456366{col 26}{space 2} .0530594{col 37}{space 1}    2.74{col 46}{space 3}0.007{col 54}{space 4} .0407417{col 67}{space 3} .2505314
+{txt}/fe_dentr~15 {c |}{col 14}{res}{space 2} .2473488{col 26}{space 2} .1752682{col 37}{space 1}    1.41{col 46}{space 3}0.160{col 54}{space 4}-.0991444{col 67}{space 3} .5938419
+{txt}/fe_dentr~16 {c |}{col 14}{res}{space 2} .0667068{col 26}{space 2}  .065271{col 37}{space 1}    1.02{col 46}{space 3}0.309{col 54}{space 4}-.0623295{col 67}{space 3} .1957432
+{txt}/fe_dentr~17 {c |}{col 14}{res}{space 2} .1645015{col 26}{space 2} .1036809{col 37}{space 1}    1.59{col 46}{space 3}0.115{col 54}{space 4}-.0404686{col 67}{space 3} .3694715
+{txt}/fe_dentr~18 {c |}{col 14}{res}{space 2} .1250521{col 26}{space 2} .0742241{col 37}{space 1}    1.68{col 46}{space 3}0.094{col 54}{space 4}-.0216838{col 67}{space 3}  .271788
+{txt}/fe_dentr~19 {c |}{col 14}{res}{space 2} .4626802{col 26}{space 2} .1325947{col 37}{space 1}    3.49{col 46}{space 3}0.001{col 54}{space 4} .2005495{col 67}{space 3} .7248109
+{txt}/fe_dentr~20 {c |}{col 14}{res}{space 2} .4362025{col 26}{space 2} .1814961{col 37}{space 1}    2.40{col 46}{space 3}0.018{col 54}{space 4} .0773972{col 67}{space 3} .7950078
+{txt}/fe_dentr~21 {c |}{col 14}{res}{space 2} .0279827{col 26}{space 2} .0734557{col 37}{space 1}    0.38{col 46}{space 3}0.704{col 54}{space 4}-.1172342{col 67}{space 3} .1731996
+{txt}/fe_dentr~22 {c |}{col 14}{res}{space 2}  .119664{col 26}{space 2} .0676775{col 37}{space 1}    1.77{col 46}{space 3}0.079{col 54}{space 4}-.0141298{col 67}{space 3} .2534577
+{txt}/fe_dentr~23 {c |}{col 14}{res}{space 2} .3564135{col 26}{space 2} .1261544{col 37}{space 1}    2.83{col 46}{space 3}0.005{col 54}{space 4} .1070148{col 67}{space 3} .6058121
+{txt}/fe_dentr~24 {c |}{col 14}{res}{space 2} .0912234{col 26}{space 2} .0815246{col 37}{space 1}    1.12{col 46}{space 3}0.265{col 54}{space 4}-.0699452{col 67}{space 3}  .252392
+{txt}/fe_dentr~25 {c |}{col 14}{res}{space 2} .1407808{col 26}{space 2} .1287413{col 37}{space 1}    1.09{col 46}{space 3}0.276{col 54}{space 4} -.113732{col 67}{space 3} .3952936
+{txt}/fe_dentr~26 {c |}{col 14}{res}{space 2} .1007824{col 26}{space 2} .0643694{col 37}{space 1}    1.57{col 46}{space 3}0.120{col 54}{space 4}-.0264714{col 67}{space 3} .2280362
+{txt}/fe_dentr~27 {c |}{col 14}{res}{space 2} .3337683{col 26}{space 2} .1110178{col 37}{space 1}    3.01{col 46}{space 3}0.003{col 54}{space 4} .1142937{col 67}{space 3} .5532428
+{txt}/fe_dentr~28 {c |}{col 14}{res}{space 2} .2278495{col 26}{space 2} .0811534{col 37}{space 1}    2.81{col 46}{space 3}0.006{col 54}{space 4} .0674148{col 67}{space 3} .3882843
+{txt}/fe_dentr~29 {c |}{col 14}{res}{space 2}      .44{col 26}{space 2} .1325947{col 37}{space 1}    3.32{col 46}{space 3}0.001{col 54}{space 4} .1778693{col 67}{space 3} .7021307
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+  Parameter x taken as constant term in model & ANOVA table
+(185 real changes made)
+45
+(185 real changes made)
+(185 real changes made)
+
+    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 8}beta {c |}{res}        185           0           0          0          0
+{txt}(184 observations deleted)
+file temp_FRA_112.dta saved
+ok base non vide
+For sector 122, country FRA: Nombre de district of entry = 8
+For sector 122, country FRA: Nombre de products (HS 10) = 3
+For sector 122, country FRA: Nombre de districts of entry = 8
+nb of explicatives
+11
+(11 observations deleted)
+file temp_FRA_122.dta saved
+ok base non vide
+For sector 211, country FRA: Nombre de district of entry = 4
+For sector 211, country FRA: Nombre de products (HS 10) = 12
+For sector 211, country FRA: Nombre de districts of entry = 4
+nb of explicatives
+16
+(14 observations deleted)
+file temp_FRA_211.dta saved
+ok base non vide
+For sector 233, country FRA: Nombre de district of entry = 9
+For sector 233, country FRA: Nombre de products (HS 10) = 9
+For sector 233, country FRA: Nombre de districts of entry = 9
+nb of explicatives
+18
+(31 observations deleted)
+file temp_FRA_233.dta saved
+ok base non vide
+For sector 248, country FRA: Nombre de district of entry = 6
+For sector 248, country FRA: Nombre de products (HS 10) = 8
+For sector 248, country FRA: Nombre de districts of entry = 6
+nb of explicatives
+14
+(9 observations deleted)
+file temp_FRA_248.dta saved
+ok base non vide
+For sector 266, country FRA: Nombre de district of entry = 6
+For sector 266, country FRA: Nombre de products (HS 10) = 9
+For sector 266, country FRA: Nombre de districts of entry = 6
+nb of explicatives
+15
+(15 observations deleted)
+file temp_FRA_266.dta saved
+ok base non vide
+For sector 267, country FRA: Nombre de district of entry = 7
+For sector 267, country FRA: Nombre de products (HS 10) = 6
+For sector 267, country FRA: Nombre de districts of entry = 7
+nb of explicatives
+13
+(10 observations deleted)
+file temp_FRA_267.dta saved
+ok base non vide
+For sector 268, country FRA: Nombre de district of entry = 5
+For sector 268, country FRA: Nombre de products (HS 10) = 4
+For sector 268, country FRA: Nombre de districts of entry = 5
+nb of explicatives
+9
+(5 observations deleted)
+file temp_FRA_268.dta saved
+ok base non vide
+For sector 269, country FRA: Nombre de district of entry = 6
+For sector 269, country FRA: Nombre de products (HS 10) = 5
+For sector 269, country FRA: Nombre de districts of entry = 6
+nb of explicatives
+11
+(14 observations deleted)
+file temp_FRA_269.dta saved
+ok base non vide
+For sector 273, country FRA: Nombre de district of entry = 7
+For sector 273, country FRA: Nombre de products (HS 10) = 8
+For sector 273, country FRA: Nombre de districts of entry = 7
+nb of explicatives
+15
+(13 observations deleted)
+file temp_FRA_273.dta saved
+ok base non vide
+For sector 278, country FRA: Nombre de district of entry = 8
+For sector 278, country FRA: Nombre de products (HS 10) = 9
+For sector 278, country FRA: Nombre de districts of entry = 8
+nb of explicatives
+17
+(18 observations deleted)
+file temp_FRA_278.dta saved
+ok base non vide
+For sector 287, country FRA: Nombre de district of entry = 6
+For sector 287, country FRA: Nombre de products (HS 10) = 2
+For sector 287, country FRA: Nombre de districts of entry = 6
+nb of explicatives
+8
+(9 observations deleted)
+file temp_FRA_287.dta saved
+ok base non vide
+For sector 291, country FRA: Nombre de district of entry = 5
+For sector 291, country FRA: Nombre de products (HS 10) = 6
+For sector 291, country FRA: Nombre de districts of entry = 5
+nb of explicatives
+11
+(7 observations deleted)
+file temp_FRA_291.dta saved
+ok base non vide
+For sector 292, country FRA: Nombre de district of entry = 20
+For sector 292, country FRA: Nombre de products (HS 10) = 42
+For sector 292, country FRA: Nombre de districts of entry = 20
+nb of explicatives
+62
+ok assez d'observations par rapport aux explicatives : 139/62
+(obs = 139)
+
+Iteration 0:  residual SS = {res} 51.61716
+{txt}Iteration 1:  residual SS = {res} 9.697696
+{txt}Iteration 2:  
