@@ -25,6 +25,7 @@ if "`c(hostname)'" =="LAB0271A" {
 	global dir_db C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database		/* base de données */
 	global dir_temp C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\temp		/* pour stocker les bases temporaires */
 	global dir_results C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\results /* résultats */
+	global dir_git C:\Users\lpatureau\Documents\Git\trade_costs /* stocker les .smcl */
 }
 
 /* Vieux portable Lise */
@@ -43,10 +44,13 @@ if "`c(hostname)'" =="MSOP112C" {
 
 
 
+
+
 *cd $dir
+capture log close
 
+log using "$dir_git/`c(current_date)'"
 
-capture log using "`c(current_time)' `c(current_date)'"
 
 set more off
 
@@ -423,17 +427,14 @@ foreach x in `mode' {
 *forvalues z = 2005(1)2013 {
 foreach z in 2005 {
 
-capture log close
-log using results_estim_TC_referee1_`z'_`x', replace
+prep_reg `z' sitc2 6 `x'
+do_reg `z' sitc2 6 `x'
 
-prep_reg `z' sitc2 10 `x'
-do_reg `z' sitc2 10 `x'
 
+
+
+}
+}
 
 log close
-
-}
-}
-
-
 
