@@ -374,7 +374,7 @@ disp "`nbr_var'"
 * le coefficient x sur ln prix fob arrive en dernier
 replace coeff_x=X[1,1] 
 
-replace beta = 1/(1+exp(coeff_x)) 
+replace beta = - 1/(1+exp(coeff_x)) 
 summarize beta 
 
 
