@@ -49,7 +49,7 @@ if "`c(hostname)'" =="MSOP112C" {
 *cd $dir
 capture log close
 
-log using "$dir_git/`c(current_date)'"
+log using "$dir_git/`c(current_date)'", append 
 
 
 set more off
@@ -107,15 +107,15 @@ label var product "HS `preci' classification"
 
 display "Nombre avant bas et haut " _N
 
-bys sector: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
-bys sector: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
-drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
+bys sector: egen c_95_prix_trsp = pctile(prix_trsp),p(95)
+bys sector: egen c_05_prix_trsp = pctile(prix_trsp),p(05)
+drop if prix_trsp < c_05_prix_trsp | prix_trsp > c_95_prix_trsp 
 
 
 display "Nombre après bas et haut " _N
 
-*egen prix_min = min(prix_trsp2), by(sector)
-*egen prix_max = max(prix_trsp2), by(sector)
+*egen prix_min = min(prix_trsp), by(sector)
+*egen prix_max = max(prix_trsp), by(sector)
 
 **********Sur le produits
 
@@ -132,6 +132,10 @@ bysort sector: drop if _N<=5
 g lprix_trsp2 = ln(prix_trsp2)
 label variable lprix_trsp2 "log(prix_caf/prix_fob)"
 label variable prix_trsp2 "prix_caf/prix_fob"
+
+g lprix_trsp = ln(prix_trsp)
+label variable lprix_trsp "log((prix_caf - prix_fob)/prix_fob)"
+label variable prix_trsp "(prix_caf - prix_fob)/prix_fob"
 
 g lprix_fob = ln(prix_fob)
 label variable lprix_fob "log(prix_fob)"
@@ -166,7 +170,7 @@ program nlestim_beta
 	local n 1
 	
 	
-	foreach var in lprix_trsp2  lprix_fob  {
+	foreach var in lprix_trsp  lprix_fob  {
 		local `var' : word `n' of `varlist'
 		local n = `n'+1
 	}
@@ -178,7 +182,7 @@ program nlestim_beta
 	tempname x
 	* on impose que beta est compris entre 0 et 1 via la fonction logistique
 	scalar `x' =`at'[1,1]
-	generate double `blif' =`lprix_fob'*(1/(1+exp(`x'))) `if'
+	generate double `blif' =`lprix_fob'*(-1/(1+exp(`x'))) `if'
 
 		
 **Ici, on fait les effets fixes (produit-pays-point d'entrée)
@@ -200,7 +204,7 @@ local n 2
 	
 
 
-	replace `lprix_trsp2' = `blif' `if'
+	replace `lprix_trsp' = `blif' `if'
 	
 	
 end
@@ -348,14 +352,14 @@ if `nb' > 2*`nbr_var' {
 	disp "ok assez d'observations par rapport aux explicatives : `nb'/`nbr_var'"
 	
 	
-	*histogram prix_trsp2, by(dist_entry) freq
+	*histogram prix_trsp, by(dist_entry) freq
 	
-*		disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
+*		disp "nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
-		nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
+		nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
 *Ne marche pas avec lnlsq(0)
-		
-		
+
+	
 * Récupérer le résultat sur le beta
 capture	matrix X= e(b)
 
@@ -380,7 +384,7 @@ summarize beta
 
 
 ** Récupérer le beta estimé
-keep iso_o sector beta coeff_x predit lprix_trsp2
+keep iso_o sector beta coeff_x predit lprix_trsp
 keep if _n==1
 
 
@@ -427,8 +431,8 @@ foreach x in `mode' {
 *forvalues z = 2005(1)2013 {
 foreach z in 2005 {
 
-prep_reg `z' sitc2 6 `x'
-do_reg `z' sitc2 6 `x'
+prep_reg `z' sitc2 10 `x'
+do_reg `z' sitc2 10 `x'
 
 
 

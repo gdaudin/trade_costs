@@ -1,0 +1,405 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}C:\Users\lpatureau\Documents\Git\trade_costs/15 Nov 2019.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}15 Nov 2019, 10:52:20
+{txt}
+{com}. 
+. 
+. set more off
+{txt}
+{com}. 
+. 
+. *----------------------------------------------------------
+. *** START FROM NEW YEARS 2005-2013
+. *----------------------------------------------------------
+. 
+. *****************************************************************
+. *** STEP 1: BUILD THE DATASET ***********************************
+. *****************************************************************
+. 
+. **** See Program Build_dataHS10_refere1.do *****
+. 
+. ******************************************************
+. *** STEP 2: PREPARER LA BASE  pour la régression *****
+. ******************************************************
+. 
+. capture program drop prep_reg
+{txt}
+{com}. program prep_reg
+{txt}  1{com}. args year class preci mode
+{txt}  2{com}. 
+. 
+. use "$dir_db/base_hs10_newyears.dta"
+{txt}  3{com}. 
+. *** JUSTE POUR TESTER
+. 
+. keep if iso_o =="FRA"
+{txt}  4{com}. 
+. *** A ENLEVER ENSUITE
+. 
+. keep if year==`year'
+{txt}  5{com}. keep if mode=="`mode'"
+{txt}  6{com}. rename `class' sector
+{txt}  7{com}. replace sector = substr(sector,1,3)
+{txt}  8{com}. ** on est au niveau SITC 3d
+. 
+. drop if sector==""
+{txt}  9{com}. 
+. label variable iso_d "pays importateur"
+{txt} 10{com}. label variable iso_o "pays exportateur"
+{txt} 11{com}. 
+. rename hs product
+{txt} 12{com}. replace product = substr(product,1,`preci')
+{txt} 13{com}. * On se laisse de la marge de manoeuvre sur HS 6, HS4, HS10 (mais on sait que ça ne marche pas en HS 10)
+.  
+. label var product "HS `preci' classification"
+{txt} 14{com}. 
+. * Nettoyer la base de données
+. 
+. *****************************************************************************
+. * On enlève en bas et en haut 
+. *****************************************************************************
+. 
+. display "Nombre avant bas et haut " _N
+{txt} 15{com}. 
+. bys sector: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
+{txt} 16{com}. bys sector: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
+{txt} 17{com}. drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
+{txt} 18{com}. 
+. 
+. display "Nombre après bas et haut " _N
+{txt} 19{com}. 
+. *egen prix_min = min(prix_trsp2), by(sector)
+. *egen prix_max = max(prix_trsp2), by(sector)
+. 
+. **********Sur le produits
+. 
+. *codebook sector
+. egen group_sector=group(sector)
+{txt} 20{com}. su group_sector, meanonly       
+{txt} 21{com}. drop group_sector
+{txt} 22{com}. local nbr_sector_exante=r(max)
+{txt} 23{com}. display "Nombre de produits (3 digits) : `nbr_sector_exante'" 
+{txt} 24{com}. 
+. bysort sector: drop if _N<=5
+{txt} 25{com}. 
+. 
+. g lprix_trsp2 = ln(prix_trsp2)
+{txt} 26{com}. label variable lprix_trsp2 "log(prix_caf/prix_fob)"
+{txt} 27{com}. label variable prix_trsp2 "prix_caf/prix_fob"
+{txt} 28{com}. 
+. g lprix_fob = ln(prix_fob)
+{txt} 29{com}. label variable lprix_fob "log(prix_fob)"
+{txt} 30{com}. 
+. 
+. save "$dir_db/temp_`year'_`class'_HS`preci'_`mode'.dta", replace
+{txt} 31{com}. 
+. 
+. end
+{txt}
+{com}. 
+. ******************************************************************
+. *** FONCTION ESTIMATION NON-LINEAIRE DU BETA ****
+. ******************************************************************
+. 
+. capture program drop nlestim_beta
+{txt}
+{com}. program nlestim_beta
+{txt}  1{com}.         version 14
+{txt}  2{com}.         
+.         ** Estimation par pays d'origine / secteur 3 ou 4 digits
+.         ** Estimer beta is
+.         ** Hétérogénéité dans les districts of entry + produits HS 10
+.         su group_prod, meanonly 
+{txt}  3{com}.         local nbr_prod=r(max)
+{txt}  4{com}.         
+.         su group_dentry, meanonly       
+{txt}  5{com}.         local nbr_dentry=r(max)
+{txt}  6{com}.         local nbr_var = `nbr_prod'+`nbr_dentry' -1 +2 /*+11*/  /* -1 pour produit de référence, + 2 pour ln cttrp2 ln prixfob */
+{txt}  7{com}.                 
+.         macro list
+{txt}  8{com}. 
+.         syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
+{txt}  9{com}.         local n 1
+{txt} 10{com}.         
+.         
+.         foreach var in lprix_trsp2  lprix_fob  {c -(}
+{txt} 11{com}.                 local `var' : word `n' of `varlist'
+{txt} 12{com}.                 local n = `n'+1
+{txt} 13{com}.         {c )-}
+{txt} 14{com}. 
+.         
+.                 
+. **Début de l'évaluation               
+.         tempvar blif
+{txt} 15{com}.         tempname x
+{txt} 16{com}.         * on impose que beta est compris entre 0 et 1 via la fonction logistique
+.         scalar `x' =`at'[1,1]
+{txt} 17{com}.         generate double `blif' =`lprix_fob'*(1/(1+exp(`x'))) `if'
+{txt} 18{com}. 
+.                 
+. **Ici, on fait les effets fixes (produit-pays-point d'entrée)
+. 
+. local n 2
+{txt} 19{com}.                 foreach p in prod dentry {c -(}
+{txt} 20{com}.                         foreach j of num 1/`nbr_`p'' {c -(}
+{txt} 21{com}.                                 if "`p'"!="prod" | `j'!=1 {c -(}
+{txt} 22{com}.                                         tempname fe_`p'_`j'
+{txt} 23{com}.                                         scalar `fe_`p'_`j'' =`at'[1,`n']
+{txt} 24{com}. ************************
+. 
+.                                         replace `blif' = `blif' + `fe_`p'_`j'' * `p'_`j' `if'
+{txt} 25{com}.                                         local n = `n'+1
+{txt} 26{com}.                                 {c )-}
+{txt} 27{com}.                         {c )-}
+{txt} 28{com}.                 {c )-}
+{txt} 29{com}.         
+.         
+. 
+. 
+.         replace `lprix_trsp2' = `blif' `if'
+{txt} 30{com}.         
+.         
+. end
+{txt}
+{com}. **********************************************************************
+. ************** FIN FONCTION
+. **********************************************************************  
+. 
+. *** PROGRAMME DE REGRESSION **********
+. 
+. 
+. capture program drop do_reg
+{txt}
+{com}. program do_reg
+{txt}  1{com}. args year class preci mode
+{txt}  2{com}. 
+. *** Pour stocker les résultats
+. clear
+{txt}  3{com}. gen sector = ""
+{txt}  4{com}. gen iso_o = ""
+{txt}  5{com}. gen beta = .
+{txt}  6{com}. 
+. save  "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace
+{txt}  7{com}. 
+. *** Faire les régressions
+. 
+. cd "$dir_temp"
+{txt}  8{com}. 
+. use "$dir_db/temp_`year'_`class'_HS`preci'_`mode'.dta", clear
+{txt}  9{com}. 
+. gen beta    = .
+{txt} 10{com}. gen coeff_x = .
+{txt} 11{com}. gen predit = .
+{txt} 12{com}. 
+. quietly levelsof iso_o, local(liste_iso_o) clean
+{txt} 13{com}. quietly levelsof sector, local(liste_sector) clean
+{txt} 14{com}. 
+. 
+. save temp, replace
+{txt} 15{com}. 
+. 
+. ** On crée les bases par pays/secteur 
+. foreach i in `liste_iso_o' {c -(}
+{txt} 16{com}. 
+.         use temp, clear
+{txt} 17{com}.         keep if iso_o=="`i'"
+{txt} 18{com}.         save temp_`i', replace
+{txt} 19{com}.         
+.         foreach k in `liste_sector' {c -(}
+{txt} 20{com}.                 use temp_`i', clear
+{txt} 21{com}.                 keep if sector =="`k'"
+{txt} 22{com}.                 save temp_`i'_`k', replace
+{txt} 23{com}.         {c )-}
+{txt} 24{com}.         erase temp_`i'.dta
+{txt} 25{com}.         {c )-}
+{txt} 26{com}.         
+. ** Travail sur la base pays/secteur     
+.         
+. foreach ii in `liste_iso_o' {c -(}
+{txt} 27{com}. foreach k in `liste_sector' {c -(}
+{txt} 28{com}. 
+.         use temp_`ii'_`k', clear
+{txt} 29{com}. 
+.         local nb = _N
+{txt} 30{com}. 
+.         * il faut que la base soit non vide
+.         if `nb' !=0 {c -(}
+{txt} 31{com}.         
+.         disp "ok base non vide"
+{txt} 32{com}. 
+. egen group_dentry=group(dist_entry)
+{txt} 33{com}. su group_dentry, meanonly       
+{txt} 34{com}. local nbr_dentry=r(max)
+{txt} 35{com}. display "For sector `k', country `ii': Nombre de district of entry = `nbr_dentry'" 
+{txt} 36{com}. 
+. 
+. egen group_prod=group(product)
+{txt} 37{com}. su group_prod, meanonly 
+{txt} 38{com}. local nbr_prod=r(max)
+{txt} 39{com}. 
+. ** Initialiser les listes des variables, des paramètres, des valeurs initiales
+. 
+. * Produits HS niveau finesse classification `preci'
+. quietly levelsof product, local (liste_prod) clean
+{txt} 40{com}. quietly tabulate product, gen (prod_)
+{txt} 41{com}.         
+. * District of entry
+. quietly levelsof dist_entry, local(liste_dentry) clean
+{txt} 42{com}. quietly tabulate dist_entry, gen(dentry_)
+{txt} 43{com}. 
+. foreach i in prod dentry        {c -(}
+{txt} 44{com}. 
+.         * Liste des variables
+.         local liste_variables_`i' 
+{txt} 45{com}.         forvalue j =  1/`nbr_`i'' {c -(}
+{txt} 46{com}.                 if "`i'" !="prod" | `j' !=1 {c -(}
+{txt} 47{com}.                         local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
+{txt} 48{com}.                 {c )-}
+{txt} 49{com}.                 {c )-}
+{txt} 50{com}.                 
+.                 
+.         * Liste des paramètres associés
+.         
+.         local liste_parametres_`i'
+{txt} 51{com}.                 forvalue j =  1/`nbr_`i'' {c -(}
+{txt} 52{com}.                         if  "`i'" !="prod" | `j'!=1 {c -(}                   
+{txt} 53{com}.                                 local liste_parametres_`i'  `liste_parametres_`i'' fe_`i'_`j'
+{txt} 54{com}.                         {c )-}
+{txt} 55{com}.                 {c )-}
+{txt} 56{com}.                 
+.         * Initialiser les valeurs initiales
+.         local initial_`i'
+{txt} 57{com}.                 forvalue j =  1/`nbr_`i'' {c -(}
+{txt} 58{com}.                         if  "`i'" !="prod" |`j'!=1 {c -(}
+{txt} 59{com}.                                 local initial_`i'  `initial_`i'' fe_`i'_`j' 0.5
+{txt} 60{com}. ****ln(0.05) = -3
+.                                 {c )-}
+{txt} 61{com}.                         {c )-}
+{txt} 62{com}. 
+.         {c )-} /* Fin de la boucle d'initialisation  */ 
+{txt} 63{com}. 
+. 
+.         
+. local liste_variables `liste_variables_prod' `liste_variables_dentry'
+{txt} 64{com}. local liste_parametres x `liste_parametres_prod' `liste_parametres_dentry'
+{txt} 65{com}. local initial  x 0 `initial_prod' `initial_dentry'
+{txt} 66{com}. *Les résultats dépendent de la valeur initiale de x. Trop grand, et beta colle à 0
+. *Trop petit, et beta colle à 1
+. *difficile de trouver de l'intermédiaire... 0 à l'air bien. 
+.         
+. *macro dir
+. 
+. display "For sector `k', country `ii': Nombre de products (HS `preci') = `nbr_prod'" 
+{txt} 67{com}. display "For sector `k', country `ii': Nombre de districts of entry = `nbr_dentry'" 
+{txt} 68{com}. 
+. local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1 /* -1 pour EF produit initial, +1 pour lprixfob */
+{txt} 69{com}. 
+. disp "nb of explicatives"
+{txt} 70{com}. disp "`nbr_var'"
+{txt} 71{com}. 
+. * il faut plus d'observations que de nombre de variables explicatives pour faire la régression
+. 
+. *if `nb' > `nbr_var' {c -(}
+. **la barre est-elle bien assez haut ?
+. 
+. if `nb' > 2*`nbr_var' {c -(}
+{txt} 72{com}.         disp "ok assez d'observations par rapport aux explicatives : `nb'/`nbr_var'"
+{txt} 73{com}.         
+.         
+.         *histogram prix_trsp2, by(dist_entry) freq
+.         
+. *               disp "nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
+. 
+.                 nl estim_beta  @ lprix_trsp2 lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
+{txt} 74{com}. *Ne marche pas avec lnlsq(0)
+.                 
+.                 
+. * Récupérer le résultat sur le beta
+. capture matrix X= e(b)
+{txt} 75{com}. 
+. * Récupérer le predict de la régression
+. capture predict blink
+{txt} 76{com}. replace predit = blink
+{txt} 77{com}. 
+. *matrix list X 
+. disp "`nbr_var'"
+{txt} 78{com}. 
+. 
+. * le coefficient x sur ln prix fob arrive en dernier
+. replace coeff_x=X[1,1] 
+{txt} 79{com}. 
+. replace beta = 1/(1+exp(coeff_x)) 
+{txt} 80{com}. summarize beta 
+{txt} 81{com}. 
+. 
+. {c )-} /* Fin de la boucle si on fait la régression */ 
+{txt} 82{com}. {c )-} /* Fin de la boucle si base non vide */
+{txt} 83{com}. 
+. 
+. 
+. ** Récupérer le beta estimé
+. keep iso_o sector beta coeff_x predit lprix_trsp2
+{txt} 84{com}. keep if _n==1
+{txt} 85{com}. 
+. 
+. save `temp_`ii'_`k'.dta', replace
+{txt} 86{com}. 
+. 
+. 
+. {c )-}
+{txt} 87{com}. {c )-}
+{txt} 88{com}. 
+. foreach i in `liste_iso_o'  {c -(}
+{txt} 89{com}.         foreach k in `liste_sector' {c -(}
+{txt} 90{com}. 
+. 
+.                 use "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", clear
+{txt} 91{com}.                 append using "$dir_temp/temp_`i'_`k'.dta"
+{txt} 92{com}.                 save "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace
+{txt} 93{com}. 
+.                 erase "$dir_temp/temp_`i'_`k'.dta"
+{txt} 94{com}.         {c )-}
+{txt} 95{com}. 
+. {c )-}
+{txt} 96{com}. erase "$dir_temp/temp.dta"
+{txt} 97{com}. 
+. 
+. histogram beta, title("Distribution of beta, `year', `mode', HS`preci' digits") freq
+{txt} 98{com}. graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'.pdf", replace
+{txt} 99{com}. 
+. 
+. end
+{txt}
+{com}. 
+. *******************************************************************************************
+. ******* FIN DES PROGRAMMES ****************************************************************
+. *******************************************************************************************
+. 
+. 
+. set more off
+{txt}
+{com}. local mode air ves
+{txt}
+{com}. *local year 2005 
+. 
+. 
+. foreach x in `mode' {c -(}
+{txt}  2{com}. 
+. *forvalues z = 2005(1)2013 {c -(}
+. foreach z in 2005 {c -(}
+{txt}  3{com}. 
+. capture log close
+{txt}  4{com}. 
+. prep_reg `z' sitc2 10 `x'
+{txt}  5{com}. do_reg `z' sitc2 10 `x'
+{txt}  6{com}. 
+. 
+. 
+. 
+. {c )-}
+{txt}  7{com}. {c )-}
+{smcl}
+{com}{sf}{ul off}
