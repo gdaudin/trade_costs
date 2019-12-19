@@ -78,7 +78,7 @@ use "$dir_db/base_hs10_newyears.dta"
 
 *** JUSTE POUR TESTER
 
-keep if iso_o =="FRA"
+*keep if iso_o =="FRA"
 
 *** A ENLEVER ENSUITE
 
@@ -429,10 +429,12 @@ local mode air ves
 foreach x in `mode' {
 
 *forvalues z = 2005(1)2013 {
-foreach z in 2005 {
+foreach z in 2008 2013 {
 
-prep_reg `z' sitc2 10 `x'
-do_reg `z' sitc2 10 `x'
+
+** On se met en HS8 pour être cohérent avec 1ere étape ensuite
+prep_reg `z' sitc2 8 `x'
+do_reg `z' sitc2 8 `x'
 
 
 
@@ -441,4 +443,5 @@ do_reg `z' sitc2 10 `x'
 }
 
 log close
+
 
