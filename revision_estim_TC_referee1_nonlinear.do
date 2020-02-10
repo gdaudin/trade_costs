@@ -25,7 +25,10 @@ if "`c(hostname)'" =="LAB0271A" {
 	global dir_db C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database		/* base de données */
 	global dir_temp C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\temp		/* pour stocker les bases temporaires */
 	global dir_results C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\results /* résultats */
-	global dir_git C:\Users\lpatureau\Documents\Git\trade_costs /* stocker les .smcl */
+	*global dir_git C:\Users\lpatureau\Documents\Git\trade_costs /* stocker les .smcl */
+	
+	** temporairement
+	global dir_git \\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Git\trade_costs
 }
 
 /* Vieux portable Lise */
@@ -428,8 +431,8 @@ local mode air ves
 
 foreach x in `mode' {
 
-*forvalues z = 2005(1)2013 {
-foreach z in 2008 2013 {
+forvalues z = 2005(1)2013 {
+*foreach z in 2008 2013 {
 
 
 ** On se met en HS8 pour être cohérent avec 1ere étape ensuite
