@@ -240,11 +240,19 @@ gen beta    = .
 gen coeff_x = .
 gen predit = .
 
-quietly levelsof iso_o, local(liste_iso_o) clean
+
+*quietly levelsof iso_o, local(liste_iso_o) clean
+
+** JUSTE POUR TESTER SUR DEUX PAYS
+
+local liste_iso_o FRA GBR
+
+* ok la suite on garde tous les secteurs
 quietly levelsof sector, local(liste_sector) clean
 
 
 save temp, replace
+
 
 
 ** On crée les bases par pays/secteur 
@@ -261,6 +269,7 @@ foreach i in `liste_iso_o' {
 	}
 	erase temp_`i'.dta
 	}
+
 	
 ** Travail sur la base pays/secteur	
 	
@@ -268,6 +277,9 @@ foreach ii in `liste_iso_o' {
 foreach k in `liste_sector' {
 
 	use temp_`ii'_`k', clear
+	
+	disp "couple pays d'origine = `ii'- secteur = `k'"
+	
 
 	local nb = _N
 
@@ -402,11 +414,18 @@ foreach i in `liste_iso_o'  {
 	foreach k in `liste_sector' {
 
 
-		use "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", clear
-		append using "$dir_temp/temp_`i'_`k'.dta"
-		save "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace
 
+		use "$dir_temp/temp_`i'_`k'.dta", clear
+		if _N >0 {
+		
+
+			append using "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta"
+		
+			save "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace	
+		}
+		
 		erase "$dir_temp/temp_`i'_`k'.dta"
+	
 	}
 
 }
@@ -436,7 +455,7 @@ forvalues z = 2005(1)2013 {
 
 
 ** On se met en HS8 pour être cohérent avec 1ere étape ensuite
-prep_reg `z' sitc2 8 `x'
+*prep_reg `z' sitc2 8 `x'
 do_reg `z' sitc2 8 `x'
 
 
