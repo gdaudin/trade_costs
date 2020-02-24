@@ -37,11 +37,14 @@ cd "$dir_db/New_years"
 ** Step 1.1. Partir des nouvelles années en HS 10 **
 ** Garder le port d'entrée
  
-local base IMDBR0512 /*IMDBR0612 IMDBR0712 IMDBR0812 IMDBR0912 IMDBR1012 IMDBR1112 IMDBR1212 IMDBR1312 */
- 
+local base IMDBR0512 IMDBR0612 IMDBR0712 IMDBR0812 IMDBR0912 IMDBR1012 IMDBR1112 IMDBR1212 IMDBR1312
+
+
 foreach x in `base' {
 clear
-unzipfile `base.zip', replace
+unzipfile `x'.zip, replace
+local file `x'
+if "`x'"== "IMDBR1212" local file IMP_DETL
 infix str10	commodity 1-10 str6	cty_code 11-14 str2	cty_subco 15-16 str2	dist_entry 	17-18 str2	dist_unlad 	19-20 str2	rate_prov	21-22 int	year 23-26 int	month 	27-28 /*
 */ str15 cards_mo 29-43 double	con_qy1_mo 	44-58 double con_qy2_mo 59-73 double con_val_mo 74-88 double	dut_val_mo 	89-103 double	cal_dut_mo 	104-118 double	con_cha_mo 	119-133 /*
 */double con_cif_mo 134-148 double	gen_qy1_mo 	149-163 double	gen_qy2_mo 164-178 double gen_val_mo 179-193 double	gen_cha_mo 	194-208 double	gen_cif_mo 	209-223 double	air_val_mo 	224-238 /*
@@ -49,11 +52,11 @@ infix str10	commodity 1-10 str6	cty_code 11-14 str2	cty_subco 15-16 str2	dist_en
 */ double cnt_cha_mo 344-358 double	cards_yr 359-373 double	con_qy1_yr 	374-388 double	con_qy2_yr 	389-403 double	con_val_yr 	404-418 double	dut_val_yr 	419-433 double	cal_dut_yr 	434-448 /*
 */ double con_cha_yr 449-463 double con_cif_yr 464-478 double	gen_qy1_yr 	479-493 double	gen_qy2_yr 	494-508 double	gen_val_yr 	509-523 double	gen_cha_yr 	524-538 double	gen_cif_yr 	539-553 /*
 */ double	air_val_yr 	554-568 double	air_wgt_yr 	569-583 double	air_cha_yr 	584-598 double	ves_val_yr 	599-613 double	ves_wgt_yr 	614-628 double	ves_cha_yr 	629-643 double	cnt_val_yr 	644-658 /*
-*/ double	cnt_wgt_yr 	659-673 double	cnt_cha_yr 	674-688  using `x'.txt
+*/ double	cnt_wgt_yr 	659-673 double	cnt_cha_yr 	674-688  using `file'.txt
 
 compress
 save new_`x'.dta, replace
-erase `base'.txt
+erase `file'.txt
 
 ** Nettoyer a minima
 
