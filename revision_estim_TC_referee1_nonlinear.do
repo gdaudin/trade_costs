@@ -52,7 +52,7 @@ if "`c(hostname)'" =="MSOP112C" {
 *cd $dir
 capture log close
 
-log using "$dir_git/`c(current_date)'", append 
+log using "$dir_git\`c(current_date)'", append 
 
 
 set more off
@@ -77,7 +77,7 @@ program prep_reg
 args year class preci mode
 
 
-use "$dir_db/base_hs10_newyears.dta"
+use "$dir_db/base_hs10_newyears.dta", clear
 
 *** JUSTE POUR TESTER
 
@@ -241,11 +241,11 @@ gen coeff_x = .
 gen predit = .
 
 
-*quietly levelsof iso_o, local(liste_iso_o) clean
+quietly levelsof iso_o, local(liste_iso_o) clean
 
 ** JUSTE POUR TESTER SUR DEUX PAYS
 
-local liste_iso_o FRA GBR
+*local liste_iso_o FRA GBR
 
 * ok la suite on garde tous les secteurs
 quietly levelsof sector, local(liste_sector) clean
@@ -455,7 +455,7 @@ forvalues z = 2005(1)2013 {
 
 
 ** On se met en HS8 pour être cohérent avec 1ere étape ensuite
-*prep_reg `z' sitc2 8 `x'
+prep_reg `z' sitc2 8 `x'
 do_reg `z' sitc2 8 `x'
 
 
