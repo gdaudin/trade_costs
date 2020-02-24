@@ -84,18 +84,18 @@ use new_IMDBR0512.dta, clear
 save "$dir_db/base_hs10_newyears.dta", replace
 
 
-/*
+
 foreach x in new_IMDBR0612 new_IMDBR0712 new_IMDBR0812 new_IMDBR0912 new_IMDBR1012 new_IMDBR1112 new_IMDBR1212 new_IMDBR1312 { 
  
 
-use $dir_db\base_hs10_newyears, clear
+use "$dir_db/base_hs10_newyears", clear
 
 append using `x'
 
-save $dir_db\base_hs10_newyears, replace
+save "$dir_db/base_hs10_newyears", replace
 
 }
-*/
+
 
 foreach x in `base' {
 	erase new_`x'.dta 
