@@ -241,11 +241,12 @@ gen coeff_x = .
 gen predit = .
 
 
-quietly levelsof iso_o, local(liste_iso_o) clean
 
-** JUSTE POUR TESTER SUR DEUX PAYS
-
+** JUSTE POUR TESTER SUR DEUX PAYS (ou pas...)
 *local liste_iso_o FRA GBR
+quietly levelsof iso_o, local(liste_iso_o) clean
+***************
+
 
 * ok la suite on garde tous les secteurs
 quietly levelsof sector, local(liste_sector) clean
@@ -431,9 +432,13 @@ foreach i in `liste_iso_o'  {
 }
 erase "$dir_temp/temp.dta"
 
+use "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", clear
 
-histogram beta, title("Distribution of beta, `year', `mode', HS`preci' digits") freq
-graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'.pdf", replace
+
+if _N !=0 {
+	histogram beta, title("Distribution of beta, `year', `mode', HS`preci' digits") freq
+	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'.pdf", replace
+}
 
 
 end
