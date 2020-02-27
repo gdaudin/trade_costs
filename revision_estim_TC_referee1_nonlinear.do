@@ -79,6 +79,8 @@ args year class preci mode
 
 use "$dir_db/base_hs10_newyears.dta", clear
 
+drop if prix_fob==prix_caf
+
 *** JUSTE POUR TESTER
 
 *keep if iso_o =="FRA"
@@ -345,9 +347,7 @@ foreach i in prod dentry	{
 local liste_variables `liste_variables_prod' `liste_variables_dentry'
 local liste_parametres x `liste_parametres_prod' `liste_parametres_dentry'
 local initial  x 0 `initial_prod' `initial_dentry'
-*Les résultats dépendent de la valeur initiale de x. Trop grand, et beta colle à 0
-*Trop petit, et beta colle à 1
-*difficile de trouver de l'intermédiaire... 0 à l'air bien. 
+
 	
 *macro dir
 
@@ -356,8 +356,7 @@ display "For sector `k', country `ii': Nombre de districts of entry = `nbr_dentr
 
 local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1 /* -1 pour EF produit initial, +1 pour lprixfob */
 
-disp "nb of explicatives"
-disp "`nbr_var'"
+disp "nb of explicatives : `nbr_var'"
 
 * il faut plus d'observations que de nombre de variables explicatives pour faire la régression
 
