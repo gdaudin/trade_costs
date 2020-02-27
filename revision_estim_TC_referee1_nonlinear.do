@@ -52,7 +52,7 @@ if "`c(hostname)'" =="MSOP112C" {
 *cd $dir
 capture log close
 
-log using "$dir_git/`c(current_date)'", append 
+log using "$dir_temp/`c(current_date)'", append 
 
 
 set more off
