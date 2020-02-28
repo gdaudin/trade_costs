@@ -322,29 +322,29 @@ foreach pays_sector in `liste_pays_sector' {
 		forvalue j =  1/`nbr_`i'' {
 			if "`i'" !="prod" | `j' !=1 {
 				local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
-			}
-			}
+		}
+	}
 			
 			
 		* Liste des paramètres associés
 		
-		local liste_parametres_`i'
-			forvalue j =  1/`nbr_`i'' {
-				if  "`i'" !="prod" | `j'!=1 {			
-					local liste_parametres_`i'  `liste_parametres_`i'' fe_`i'_`j'
-				}
-			}
+	local liste_parametres_`i'
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" | `j'!=1 {			
+				local liste_parametres_`i'  `liste_parametres_`i'' fe_`i'_`j'
+		}
+	}
 			
 		* Initialiser les valeurs initiales
-		local initial_`i'
-			forvalue j =  1/`nbr_`i'' {
-				if  "`i'" !="prod" |`j'!=1 {
-					local initial_`i'  `initial_`i'' fe_`i'_`j' 0.5
+	local initial_`i'
+		forvalue j =  1/`nbr_`i'' {
+			if  "`i'" !="prod" |`j'!=1 {
+				local initial_`i'  `initial_`i'' fe_`i'_`j' 0.5
 	****ln(0.05) = -3
-					}
-				}
-	
-		} /* Fin de la boucle d'initialisation  */ 
+			}
+		}
+
+	} /* Fin de la boucle d'initialisation  */ 
 	
 	
 		
@@ -411,7 +411,7 @@ foreach pays_sector in `liste_pays_sector' {
 	
 	
 	
-	}
+*	}
 }
 
 **J’intégre cela dans la boucle précédente
@@ -446,10 +446,10 @@ use "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", c
 if _N !=0 {
 	histogram beta, title("Distribution of beta, `year', `mode', HS`preci' digits, no weight") freq
 	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__noweight.pdf", replace
-	generale freg_in_dollars=round(`mode'_val)
+	generate freg_in_dollars=round(`mode'_val)
 	histogram beta [fweight=freg_in_dollars], title("Distribution of beta, `year', `mode', HS`preci' digits, val weight")
 	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__valweight.pdf", replace
-	generale freg_in_kg=round(`mode'_wgt)
+	generate freg_in_kg=round(`mode'_wgt)
 	histogram beta [fweight=freg_in_kg], title("Distribution of beta, `year', `mode', HS`preci' digits, val weight")
 	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__massweight.pdf", replace
 }
