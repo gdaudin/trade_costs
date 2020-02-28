@@ -257,8 +257,9 @@ quietly levelsof sector, local(liste_sector) clean
 save temp, replace
 
 
-
+/*
 ** On crée les bases par pays/secteur 
+**Cela me semble singulièrement ineficace. J’enlève... 
 foreach i in `liste_iso_o' {
 
 	use temp, clear
@@ -273,142 +274,146 @@ foreach i in `liste_iso_o' {
 	erase temp_`i'.dta
 	}
 
-	
+*/	
 ** Travail sur la base pays/secteur	
 	
 foreach ii in `liste_iso_o' {
-foreach k in `liste_sector' {
-
-	use temp_`ii'_`k', clear
+	foreach k in `liste_sector' {
 	
-	disp "couple pays d'origine = `ii'- secteur = `k'"
-	
-
-	local nb = _N
-
-	* il faut que la base soit non vide
-	if `nb' !=0 {
-	
-	disp "ok base non vide"
-
-egen group_dentry=group(dist_entry)
-su group_dentry, meanonly	
-local nbr_dentry=r(max)
-display "For sector `k', country `ii': Nombre de district of entry = `nbr_dentry'" 
-
-
-egen group_prod=group(product)
-su group_prod, meanonly	
-local nbr_prod=r(max)
-
-** Initialiser les listes des variables, des paramètres, des valeurs initiales
-
-* Produits HS niveau finesse classification `preci'
-quietly levelsof product, local (liste_prod) clean
-quietly tabulate product, gen (prod_)
-	
-* District of entry
-quietly levelsof dist_entry, local(liste_dentry) clean
-quietly tabulate dist_entry, gen(dentry_)
-
-foreach i in prod dentry	{
-
-	* Liste des variables
-	local liste_variables_`i' 
-	forvalue j =  1/`nbr_`i'' {
-		if "`i'" !="prod" | `j' !=1 {
-			local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
-		}
-		}
+		use temp, clear
 		
+		disp "couple pays d'origine = `ii'- secteur = `k'"
+		keep if iso_o=="`i'"
+		keep if sector =="`k'"
 		
-	* Liste des paramètres associés
 	
-	local liste_parametres_`i'
+		local nb = _N
+	
+		* il faut que la base soit non vide
+		if `nb' !=0 {
+		
+		disp "ok base non vide"
+	
+	egen group_dentry=group(dist_entry)
+	su group_dentry, meanonly	
+	local nbr_dentry=r(max)
+	display "For sector `k', country `ii': Nombre de district of entry = `nbr_dentry'" 
+	
+	
+	egen group_prod=group(product)
+	su group_prod, meanonly	
+	local nbr_prod=r(max)
+	
+	** Initialiser les listes des variables, des paramètres, des valeurs initiales
+	
+	* Produits HS niveau finesse classification `preci'
+	quietly levelsof product, local (liste_prod) clean
+	quietly tabulate product, gen (prod_)
+		
+	* District of entry
+	quietly levelsof dist_entry, local(liste_dentry) clean
+	quietly tabulate dist_entry, gen(dentry_)
+	
+	foreach i in prod dentry	{
+	
+		* Liste des variables
+		local liste_variables_`i' 
 		forvalue j =  1/`nbr_`i'' {
-			if  "`i'" !="prod" | `j'!=1 {			
-				local liste_parametres_`i'  `liste_parametres_`i'' fe_`i'_`j'
+			if "`i'" !="prod" | `j' !=1 {
+				local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
 			}
-		}
+			}
+			
+			
+		* Liste des paramètres associés
 		
-	* Initialiser les valeurs initiales
-	local initial_`i'
-		forvalue j =  1/`nbr_`i'' {
-			if  "`i'" !="prod" |`j'!=1 {
-				local initial_`i'  `initial_`i'' fe_`i'_`j' 0.5
-****ln(0.05) = -3
+		local liste_parametres_`i'
+			forvalue j =  1/`nbr_`i'' {
+				if  "`i'" !="prod" | `j'!=1 {			
+					local liste_parametres_`i'  `liste_parametres_`i'' fe_`i'_`j'
 				}
 			}
-
-	} /* Fin de la boucle d'initialisation  */ 
-
-
+			
+		* Initialiser les valeurs initiales
+		local initial_`i'
+			forvalue j =  1/`nbr_`i'' {
+				if  "`i'" !="prod" |`j'!=1 {
+					local initial_`i'  `initial_`i'' fe_`i'_`j' 0.5
+	****ln(0.05) = -3
+					}
+				}
 	
-local liste_variables `liste_variables_prod' `liste_variables_dentry'
-local liste_parametres x `liste_parametres_prod' `liste_parametres_dentry'
-local initial  x 0 `initial_prod' `initial_dentry'
-
-	
-*macro dir
-
-display "For sector `k', country `ii': Nombre de products (HS `preci') = `nbr_prod'" 
-display "For sector `k', country `ii': Nombre de districts of entry = `nbr_dentry'" 
-
-local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1 /* -1 pour EF produit initial, +1 pour lprixfob */
-
-disp "nb of explicatives : `nbr_var'"
-
-* il faut plus d'observations que de nombre de variables explicatives pour faire la régression
-
-*if `nb' > `nbr_var' {
-**la barre est-elle bien assez haut ?
-
-if `nb' > 2*`nbr_var' {
-	disp "ok assez d'observations par rapport aux explicatives : `nb'/`nbr_var'"
+		} /* Fin de la boucle d'initialisation  */ 
 	
 	
-	*histogram prix_trsp, by(dist_entry) freq
+		
+	local liste_variables `liste_variables_prod' `liste_variables_dentry'
+	local liste_parametres x `liste_parametres_prod' `liste_parametres_dentry'
+	local initial  x 0 `initial_prod' `initial_dentry'
 	
-*		disp "nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
-
-		nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
-*Ne marche pas avec lnlsq(0)
-
+		
+	*macro dir
 	
-* Récupérer le résultat sur le beta
-capture	matrix X= e(b)
-
-* Récupérer le predict de la régression
-capture	predict blink
-replace predit = blink
-
-*matrix list X 
-disp "`nbr_var'"
-
-
-* le coefficient x sur ln prix fob arrive en dernier
-replace coeff_x=X[1,1] 
-
-replace beta = - 1/(1+exp(coeff_x)) 
-summarize beta 
-
-
-} /* Fin de la boucle si on fait la régression */ 
-} /* Fin de la boucle si base non vide */
-
-
-
-** Récupérer le beta estimé
-keep iso_o sector beta coeff_x predit lprix_trsp
-keep if _n==1
-
-
-save `temp_`ii'_`k'.dta', replace
-
-
-
+	display "For sector `k', country `ii': Nombre de products (HS `preci') = `nbr_prod'" 
+	display "For sector `k', country `ii': Nombre de districts of entry = `nbr_dentry'" 
+	
+	local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1 /* -1 pour EF produit initial, +1 pour lprixfob */
+	
+	disp "nb of explicatives : `nbr_var'"
+	
+	* il faut plus d'observations que de nombre de variables explicatives pour faire la régression
+	
+	*if `nb' > `nbr_var' {
+	**la barre est-elle bien assez haut ?
+	
+	if `nb' > 2*`nbr_var' {
+		disp "ok assez d'observations par rapport aux explicatives : `nb'/`nbr_var'"
+		
+		
+		*histogram prix_trsp, by(dist_entry) freq
+		
+	*		disp "nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
+	
+			nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
+	*Ne marche pas avec lnlsq(0)
+	
+		
+	* Récupérer le résultat sur le beta
+	capture	matrix X= e(b)
+	
+	* Récupérer le predict de la régression
+	capture	predict blink
+	replace predit = blink
+	
+	*matrix list X 
+	disp "`nbr_var'"
+	
+	
+	* le coefficient x sur ln prix fob arrive en dernier
+	replace coeff_x=X[1,1] 
+	
+	replace beta = - 1/(1+exp(coeff_x)) 
+	summarize beta 
+	
+		** Récupérer le beta estimé
+	keep iso_o sector beta coeff_x predit lprix_trsp
+	keep if _n==1
+	append using "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta"
+	save "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace	
+	
+	
+	} /* Fin de la boucle si on fait la régression */ 
+	} /* Fin de la boucle si base non vide */
+		
+	*save `temp_`ii'_`k'.dta', replace
+	
+	
+	
+	}
 }
-}
+
+**J’intégre cela dans la boucle précédente
+/*
 
 foreach i in `liste_iso_o'  {
 	foreach k in `liste_sector' {
@@ -429,6 +434,8 @@ foreach i in `liste_iso_o'  {
 	}
 
 }
+
+*/
 erase "$dir_temp/temp.dta"
 
 use "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", clear
