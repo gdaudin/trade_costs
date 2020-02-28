@@ -253,6 +253,9 @@ quietly levelsof iso_o, local(liste_iso_o) clean
 * ok la suite on garde tous les secteurs
 quietly levelsof sector, local(liste_sector) clean
 
+generate pays_sector=iso_o+ "--" + sector
+
+quietly levelsof pays_sector, local(liste_pays_sector) clean
 
 save temp, replace
 
@@ -277,27 +280,25 @@ foreach i in `liste_iso_o' {
 */	
 ** Travail sur la base pays/secteur	
 	
-foreach pays in `liste_iso_o' {
-	foreach k in `liste_sector' {
+foreach pays_sector in `liste_pays_sector' {
 	
 		use temp, clear
 		
-		disp "couple pays d'origine = `pays'- secteur = `k'"
-		keep if iso_o=="`pays'"
-		keep if sector =="`k'"
+		disp "couple pays--sector `pays_sector’
+		keep if pays_sector=="`pays_sector'"
 		
 	
 		local nb = _N
 	
-		* il faut que la base soit non vide
-		if `nb' !=0 {
+	*	* il faut que la base soit non vide
+	*	if `nb' !=0 {
 		
 		disp "ok base non vide"
 	
 	egen group_dentry=group(dist_entry)
 	su group_dentry, meanonly	
 	local nbr_dentry=r(max)
-	display "For sector `k', country `pays': Nombre de district of entry = `nbr_dentry'" 
+	display "For `pays_sector': Nombre de district of entry = `nbr_dentry'" 
 	
 	
 	egen group_prod=group(product)
@@ -354,8 +355,8 @@ foreach pays in `liste_iso_o' {
 		
 	*macro dir
 	
-	display "For sector `k', country `pays': Nombre de products (HS `preci') = `nbr_prod'" 
-	display "For sector `k', country `pays': Nombre de districts of entry = `nbr_dentry'" 
+	display "For `pays_sector': Nombre de products (HS `preci') = `nbr_prod'" 
+	display "For `pays_sector': Nombre de districts of entry = `nbr_dentry'" 
 	
 	local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1 /* -1 pour EF produit initial, +1 pour lprixfob */
 	
@@ -403,7 +404,7 @@ foreach pays in `liste_iso_o' {
 	
 	
 	} /* Fin de la boucle si on fait la régression */ 
-	} /* Fin de la boucle si base non vide */
+*	} /* Fin de la boucle si base non vide */
 		
 	*save `temp_`ii'_`k'.dta', replace
 	
