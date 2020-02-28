@@ -395,10 +395,10 @@ foreach pays_sector in `liste_pays_sector' {
 	
 	replace beta = - 1/(1+exp(coeff_x)) 
 	summarize beta 
-	blif
+	
 		** Récupérer le beta estimé
 	*keep iso_o sector beta coeff_x predit lprix_trsp `mode'_val 
-	collapse (sum) `mode'_val `mode'_weigt by iso_o sector beta coeff_x predit lprix_trsp
+	collapse (sum) `mode'_val `mode'_wgt, by (iso_o sector beta coeff_x)
 	keep if _n==1
 	append using "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta"
 	save "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace	
@@ -446,9 +446,12 @@ use "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", c
 if _N !=0 {
 	histogram beta, title("Distribution of beta, `year', `mode', HS`preci' digits, no weight") freq
 	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__noweight.pdf", replace
-	generale freg_in_dollars=round(`mode'_weight)
+	generale freg_in_dollars=round(`mode'_val)
 	histogram beta [fweight=freg_in_dollars], title("Distribution of beta, `year', `mode', HS`preci' digits, val weight")
-	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__noweight.pdf", replace
+	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__valweight.pdf", replace
+	generale freg_in_kg=round(`mode'_wgt)
+	histogram beta [fweight=freg_in_kg], title("Distribution of beta, `year', `mode', HS`preci' digits, val weight")
+	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__massweight.pdf", replace
 }
 
 
