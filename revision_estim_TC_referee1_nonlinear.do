@@ -277,13 +277,13 @@ foreach i in `liste_iso_o' {
 */	
 ** Travail sur la base pays/secteur	
 	
-foreach i in `liste_iso_o' {
+foreach pays in `liste_iso_o' {
 	foreach k in `liste_sector' {
 	
 		use temp, clear
 		
-		disp "couple pays d'origine = `i'- secteur = `k'"
-		keep if iso_o=="`i'"
+		disp "couple pays d'origine = `pays'- secteur = `k'"
+		keep if iso_o=="`pays'"
 		keep if sector =="`k'"
 		
 	
@@ -297,7 +297,7 @@ foreach i in `liste_iso_o' {
 	egen group_dentry=group(dist_entry)
 	su group_dentry, meanonly	
 	local nbr_dentry=r(max)
-	display "For sector `k', country `i': Nombre de district of entry = `nbr_dentry'" 
+	display "For sector `k', country `pays': Nombre de district of entry = `nbr_dentry'" 
 	
 	
 	egen group_prod=group(product)
@@ -354,8 +354,8 @@ foreach i in `liste_iso_o' {
 		
 	*macro dir
 	
-	display "For sector `k', country `i': Nombre de products (HS `preci') = `nbr_prod'" 
-	display "For sector `k', country `i': Nombre de districts of entry = `nbr_dentry'" 
+	display "For sector `k', country `pays': Nombre de products (HS `preci') = `nbr_prod'" 
+	display "For sector `k', country `pays': Nombre de districts of entry = `nbr_dentry'" 
 	
 	local nbr_var = `nbr_prod' -1 + `nbr_dentry' +1 /* -1 pour EF produit initial, +1 pour lprixfob */
 	
