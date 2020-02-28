@@ -284,7 +284,7 @@ foreach pays_sector in `liste_pays_sector' {
 	
 		use temp, clear
 		
-		disp "couple pays--sector `pays_sector’
+		disp "couple pays--sector `pays_sector'"
 		keep if pays_sector=="`pays_sector'"
 		
 	
