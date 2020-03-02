@@ -13,7 +13,7 @@ set maxvar 32767
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/dropbox/2013 -- trade_cost -- dropbox/JEGeo
 	global dir_db ~/Documents/Recherche/2013 -- Trade Costs -- local/data
-	global dir_temp ~/Documents/Recherche/2013 -- Trade Costs -- local/temp
+	global dir_temp ~/Downloads/temp_stata
 	global dir_results ~/Documents/Recherche/2013 -- Trade Costs -- local/results
 	
 }
