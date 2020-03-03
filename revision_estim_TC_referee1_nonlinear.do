@@ -440,7 +440,7 @@ foreach i in `liste_iso_o'  {
 */
 erase "$dir_temp/temp.dta"
 
-use "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", clear
+use "$dir_results/referee1/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", clear
 
 
 if _N !=0 {
