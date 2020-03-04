@@ -43,7 +43,7 @@ rename sitc2 sector
 replace sector = substr(sector,1,3)
 bys year iso_o sector : keep if _N==1
 keep if year >=2005
-save temp_hummels_trad.dta, replace
+save temp_hummels_tra.dta, replace
 
 use "$dir/data/base_hs10_newyears.dta", clear
 
@@ -57,5 +57,5 @@ merge 1:1 year sector iso_o using temp_hummels_trad.dta, force
 
 
 
-erase temp_hummels_trad.dta, replace
+erase temp_hummels_tra.dta, replace
 
