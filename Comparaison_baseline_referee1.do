@@ -11,7 +11,7 @@ if "`c(username)'" =="guillaumedaudin" {
 
 /* Fixe Lise */
 if "`c(hostname)'" =="LAB0271A" {
-	global dir_baseline_results ??????
+	global dir_baseline_results ???
 	}
 
 /* Vieux portable Lise */
@@ -21,7 +21,9 @@ if "`c(hostname)'" =="lise-HP" {
 
 /* Nouveau portable Lise */
 if "`c(hostname)'" =="MSOP112C" {
-    global dir_baseline_results ??????
+    global dir_baseline_results C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\results\baseline
+	global dir_referee1 C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\results\referee1
+	global dir C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage
 	}
 
 
