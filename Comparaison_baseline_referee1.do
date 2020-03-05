@@ -125,8 +125,13 @@ generate beta_baseline_med = r(p50)
 summarize beta_baseline [fweight=`mode'_val], det
 generate beta_baseline_mean_pond = r(mean)
 generate beta_baseline_med_pond = r(p50)
+generate blif = iso_o+product
+levelsof blif
+generate Nb_cx3ds_baseline = r(r)
+label var Nb_cx3ds_baseline "Number of country x 3 digit sector included in the baseline"
+drop blif
 
-keep mode couverture_baseline-beta_baseline_med_pond
+keep mode couverture_baseline-Nb_cx3ds_baseline
 keep if _n==1
 gen year=`year'
 
@@ -144,8 +149,14 @@ generate beta_med = r(p50)
 summarize beta [fweight=`mode'_val], det
 generate beta_mean_pond = r(mean)
 generate beta_med_pond = r(p50)
+generate blif = iso_o+sector
+levelsof blif
+generate Nb_cx3ds = r(r)
+label var Nb_cx3ds "Number of country x 3 digit sector included in referee1 test"
+drop blif
 
-keep couverture_referee1-beta_med_pond
+
+keep couverture_referee1-Nb_cx3ds
 keep if _n==1
 gen year=`year'
 gen mode="`mode'"
@@ -168,8 +179,11 @@ foreach year of num 2005/2013 {
 }
 
 use "$dir_comparaison/stats_comp.dta", clear
-gen referee1_as_share_baseline=couverture_referee1/couverture_baseline
+gen referee1_as_value_share_baseline=couverture_referee1/couverture_baseline
+gen referee1_nb_pairs_share_baseline=Nb_cx3ds/Nb_cx3ds_baseline
 sort mode year
+
+save "$dir_comparaison/stats_comp.dta", replace
 
 graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baseline_mean) ///
 			 (scatter beta_mean_pond beta_baseline_mean_pond) (lfit beta_mean_pond beta_baseline_mean_pond) ///
@@ -180,12 +194,13 @@ graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baselin
 graph export "$dir_comparaison/scatter_comparaison.pdf", replace
 
 
-graph twoway (connected beta_baseline_mean year, lpattern(solid) lcolor(red)) (connected beta_mean year, lpattern(dash) lcolor(red)) ///
-			 (connected beta_baseline_mean_pond year, lpattern(solid) lcolor(green) ) (connected beta_mean_pond year, lpattern(dash) lcolor(green)) ///
-			 (connected beta_baseline_med year, lpattern(solid) lcolor(blue)) (connected beta_med year, lpattern(dash) lcolor(blue)) ///
-			 (connected beta_baseline_med_pond year, lpattern(solid) lcolor(black)) (connected beta_med_pond year, lpattern(dash) lcolor(black)), ///
-				by(mode)
-
+keep year mode beta*
+reshape long beta_, i(year mode) j(type) string
+gen method="referee1"
+replace method="baseline" if strmatch(type,"baseline*")!=0
+replace type = substr(type, 10,.) if strmatch(type,"baseline*")!=0
+reshape wide beta_,i(year mode type) j(method) string
+graph twoway (connected beta_baseline year) (connected beta_referee1 year), by(mode type)
 
 
 graph export "$dir_comparaison/scatter_chronology.pdf", replace
