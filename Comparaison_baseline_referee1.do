@@ -3,6 +3,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_baseline_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/baseline"
 	global dir_referee1 "~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1"
 	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
+	global dir_temp ~/Downloads/temp_stata
 	
 	
 }
@@ -27,7 +28,7 @@ if "`c(hostname)'" =="MSOP112C" {
 
 	
 	
-	
+
 ************Comparaison de base
 use "$dir/data/hummels_tra.dta", clear
 contract year iso_o sitc2 mode
@@ -80,19 +81,31 @@ drop if mode=="cnt"
 contract year iso_o sector mode
 
 merge 1:1 year sector iso_o mode using temp_hummels_tra.dta, force
-erase temp_hummels_tra.dta, replace
+erase temp_hummels_tra.dta
 
 ***********************
+
 	
-	
-local year 2013
-local mode ves
+local year 2005
+local mode air
 
 
 use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 rename product sector
-bys iso_o sector : keep if _N==1
-merge 1:1 iso_o sector using "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta"
+bys iso_o sector : keep if _n==1
+generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
+save "$dir_temp/baseline.dta", replace
+
+use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+bys iso_o sector : keep if _n==1
+
+merge 1:1 iso_o sector using "$dir_temp/baseline.dta"
+
+erase "$dir_temp/baseline.dta"
+
+graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
+	title("For `year', `mode'")
+
 
 
 
