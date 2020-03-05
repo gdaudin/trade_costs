@@ -3,6 +3,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_baseline_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/baseline"
 	global dir_referee1 "~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1"
 	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
+	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaison_baseline_referee1"
 	global dir_temp ~/Downloads/temp_stata
 	
 	
@@ -111,7 +112,7 @@ erase "$dir_temp/baseline.dta"
 graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
 	title("For `year', `mode'")
 
-graph export "$dir_referee1/scatter_`year'_`mode'.pdf", replace
+graph export "$dir_comparaison/scatter_`year'_`mode'.pdf", replace
 
 use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 
@@ -129,9 +130,9 @@ keep mode couverture_baseline-beta_baseline_med_pond
 keep if _n==1
 gen year=`year'
 
-capture append using "$dir_referee1/stats_comp.dta"
+capture append using "$dir_comparaison/stats_comp.dta"
 
-save "$dir_referee1/stats_comp.dta", replace
+save "$dir_comparaison/stats_comp.dta", replace
 
 use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
 
@@ -150,15 +151,15 @@ gen year=`year'
 gen mode="`mode'"
 
 
-merge 1:1 year mode using "$dir_referee1/stats_comp.dta"
+merge 1:1 year mode using "$dir_comparaison/stats_comp.dta"
 drop _merge
 
-save $dir_referee1/stats_comp.dta", replace
+save "$dir_comparaison/stats_comp.dta", replace
 
 end
 
 
-capture erase "$dir_referee1/stats_comp.dta"
+capture erase "$dir_comparaison/stats_comp.dta"
 
 foreach year of num 2005/2013 {
 	foreach mode in air ves {
@@ -166,7 +167,7 @@ foreach year of num 2005/2013 {
 	}
 }
 
-use "$dir_referee1/stats_comp.dta", clear
+use "$dir_comparaison/stats_comp.dta", clear
 gen referee1_as_share_baseline=couverture_referee1/couverture_baseline
 sort mode year
 
@@ -176,7 +177,7 @@ graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baselin
 			 (scatter beta_med_pond beta_baseline_med_pond) (lfit beta_med_pond beta_baseline_med_pond), ///
 			 ytitle("baseline") xtitle("referee1")
 			 
-graph export "$dir_referee1/scatter_comparaison.pdf", replace
+graph export "$dir_comparaison/scatter_comparaison.pdf", replace
 
 
 graph twoway (connected beta_baseline_mean year, lpattern(solid) lcolor(red)) (connected beta_mean year, lpattern(dash) lcolor(red)) ///
@@ -187,4 +188,4 @@ graph twoway (connected beta_baseline_mean year, lpattern(solid) lcolor(red)) (c
 
 
 
-graph export "$dir_referee1/scatter_chronology.pdf", replace
+graph export "$dir_comparaison/scatter_chronology.pdf", replace
