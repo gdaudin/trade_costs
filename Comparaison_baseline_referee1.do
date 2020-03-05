@@ -27,7 +27,7 @@ if "`c(hostname)'" =="MSOP112C" {
 
 
 	
-	
+/*
 
 ************Comparaison de base
 use "$dir/data/hummels_tra.dta", clear
@@ -84,10 +84,15 @@ merge 1:1 year sector iso_o mode using temp_hummels_tra.dta, force
 erase temp_hummels_tra.dta
 
 ***********************
-
+*/
 	
-local year 2005
-local mode air
+	
+	
+capture program drop comparaison
+program comparaison
+args year mode 
+
+
 
 
 use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
@@ -106,14 +111,80 @@ erase "$dir_temp/baseline.dta"
 graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
 	title("For `year', `mode'")
 
+graph export "$dir_referee1/scatter_`year'_`mode'.pdf", replace
+
+use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+
+generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
+egen couverture_baseline=total(`mode'_val)
+gen Nb_baseline=_N
+summarize beta_baseline, det
+generate beta_baseline_mean = r(mean)
+generate beta_baseline_med = r(p50)
+summarize beta_baseline [fweight=`mode'_val], det
+generate beta_baseline_mean_pond = r(mean)
+generate beta_baseline_med_pond = r(p50)
+
+keep mode couverture_baseline-beta_baseline_med_pond
+keep if _n==1
+gen year=`year'
+
+capture append using "$dir_referee1/stats_comp.dta"
+
+save "$dir_referee1/stats_comp.dta", replace
+
+use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+
+egen couverture_referee1=total(`mode'_val)
+gen Nb_referee1=_N
+summarize beta, det
+generate beta_mean = r(mean)
+generate beta_med = r(p50)
+summarize beta [fweight=`mode'_val], det
+generate beta_mean_pond = r(mean)
+generate beta_med_pond = r(p50)
+
+keep couverture_referee1-beta_med_pond
+keep if _n==1
+gen year=`year'
+gen mode="`mode'"
+
+
+merge 1:1 year mode using "$dir_referee1/stats_comp.dta"
+drop _merge
+
+save $dir_referee1/stats_comp.dta", replace
+
+end
+
+
+capture erase "$dir_referee1/stats_comp.dta"
+
+foreach year of num 2005/2013 {
+	foreach mode in air ves {
+	comparaison `year' `mode'
+	}
+}
+
+use "$dir_referee1/stats_comp.dta", clear
+gen referee1_as_share_baseline=couverture_referee1/couverture_baseline
+sort mode year
+
+graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baseline_mean) ///
+			 (scatter beta_mean_pond beta_baseline_mean_pond) (lfit beta_mean_pond beta_baseline_mean_pond) ///
+			 (scatter beta_med beta_baseline_med) (lfit beta_med beta_baseline_med) ///
+			 (scatter beta_med_pond beta_baseline_med_pond) (lfit beta_med_pond beta_baseline_med_pond), ///
+			 ytitle("baseline") xtitle("referee1")
+			 
+graph export "$dir_referee1/scatter_comparaison.pdf", replace
+
+
+graph twoway (connected beta_baseline_mean year, lpattern(solid) lcolor(red)) (connected beta_mean year, lpattern(dash) lcolor(red)) ///
+			 (connected beta_baseline_mean_pond year, lpattern(solid) lcolor(green) ) (connected beta_mean_pond year, lpattern(dash) lcolor(green)) ///
+			 (connected beta_baseline_med year, lpattern(solid) lcolor(blue)) (connected beta_med year, lpattern(dash) lcolor(blue)) ///
+			 (connected beta_baseline_med_pond year, lpattern(solid) lcolor(black)) (connected beta_med_pond year, lpattern(dash) lcolor(black)), ///
+				by(mode)
 
 
 
-
-
-
-
-
-
-
-
+graph export "$dir_referee1/scatter_chronology.pdf", replace
