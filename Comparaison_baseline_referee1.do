@@ -200,7 +200,15 @@ gen method="referee1"
 replace method="baseline" if strmatch(type,"baseline*")!=0
 replace type = substr(type, 10,.) if strmatch(type,"baseline*")!=0
 reshape wide beta_,i(year mode type) j(method) string
+
+
 graph twoway (connected beta_baseline year) (connected beta_referee1 year), by(mode type)
 
 
 graph export "$dir_comparaison/scatter_chronology.pdf", replace
+
+
+graph twoway (scatter beta_referee1 beta_baseline) (lfit beta_referee1 beta_baseline), ///
+			 ytitle("baseline") xtitle("referee1") by(mode type)
+			 
+graph export "$dir_comparaison/scatter_comparaison_by_type.pdf", replace
