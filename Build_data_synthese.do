@@ -267,5 +267,7 @@ label var iso2 "ISO 2 country code (origin)"
 label var iso_d "Importing country (iso3)"
 label var iso_o "Exporting country (iso3)"
 
+rename con_cif_yr con_cif 
+**Je ne sais pas pourquoi, mais c’était comme cela avant :)
 
 save hummels_tra, replace
