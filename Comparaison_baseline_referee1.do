@@ -15,21 +15,17 @@ if "`c(hostname)'" =="LAB0271A" {
 	global dir_baseline_results ???
 	}
 
-/* Vieux portable Lise */
-if "`c(hostname)'" =="lise-HP" {
-	global dir_baseline_results ??????
-}
-
 /* Nouveau portable Lise */
 if "`c(hostname)'" =="MSOP112C" {
-    global dir_baseline_results C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\results\baseline
-	global dir_referee1 C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\results\referee1
-	global dir C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage
+    global dir_baseline_results C:\Lise\trade_cost_work\results\baseline
+	global dir_referee1 C:\Lise\trade_cost_work\results\referee1
+	global dir C:\Lise\trade_cost_work
+	global dir_data C:\Lise\trade_cost_work\data
 	}
 
 
 
-	
+
 /*
 
 ************Comparaison de base
@@ -88,14 +84,18 @@ erase temp_hummels_tra.dta
 
 ***********************
 */
+
 	
+** Faire tourner sur toutes les années /mode
+
+
 	
+******************************************************
+******************************************************
 	
 capture program drop comparaison
 program comparaison
 args year mode 
-
-
 
 
 use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear

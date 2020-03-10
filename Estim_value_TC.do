@@ -29,18 +29,23 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/dropbox/2013 -- trade_cost -- local
 }
 
-
+** Fixe Lise bureau
 if "`c(hostname)'" =="LAB0271A" {
 	global dir C:\Users\lpatureau\Dropbox\trade_cost
 }
 
-
+/* Vieux portable Lise
 if "`c(hostname)'" =="lise-HP" {
 	global dir C:\Users\lise\Dropbox\trade_cost
 }
+*/
 
-if "`c(hostname)'" =="LABP112" {
+/* Nouveau portable Lise */
+
+if "`c(hostname)'" =="MSOP112C" {
     global dir C:\Users\lpatureau\Dropbox\trade_cost
+	
+	
 }
 cd $dir
 
@@ -296,24 +301,71 @@ end
 ************** FIN FONCTION
 **********************************************************************	
 
+*********************************************************************
+*** PROGRAMME SELECTION BASE DE DONNEES
+*** REVISION JEGeo
+*********************************************************************
 
+	
+* Programme qui permet de faire tourner la régression baseline sur le même sample
+* que le sample méthode estimation du référé 1
+capture program drop same_sample
+
+program same_sample
+args year mode
+
+use $dir_data\hummels_tra, clear
+keep if year ==`year'
+keep if mode ==`mode'
+
+rename product sector
+
+save $dir_data\temp_hummels_tra, replace
+
+cd $dir\referee1
+
+use temp_hummels_tra, clear
+
+count
+
+sort iso_o sector
+
+merge m:1 /*year mode */ iso_o sector using results_beta_contraint_`year'_sitc2_HS8_`mode'
+
+keep if _merge==3
+
+count
+* temp_hummels_tra est année-secteur spécifique, sinon ça fait un merge compliqué
+* on doit logiquement avoir bcp moins d'observations
+save temp_hummels_tra, replace
+
+end
+	
 
 **********************************************************************
 ************** PROGRAMME PREPARATION BASE DE DONNEES 
 **********************************************************************	
 
-
 capture program drop prep_reg
 program prep_reg
 
-args year class preci mode
+* Soumission JEGeo
+*args year class preci mode
+
 * exemple : prep_reg 2006 sitc2 3 air
 * Hummels : sitc2
 
+* Révision JEGeo
+* On ajoute le choix de la base de données
+args choix_method year class preci mode 
 
 ****************Préparation de la base blouk
 
-use "$dir/data/hummels_tra.dta"
+*use "$dir/data/hummels_tra.dta"
+if `choix_method' == 1 {
+
+* On est sur l'ancienne méthode
+use "$dir/data/hummels_tra.dta", clear
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
@@ -327,7 +379,17 @@ replace product = substr(product,1,`preci')
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
+}
 
+elseif `choix_method'==2 {
+
+* faire tourner le pgm de sélection de la base
+
+same_sample `year' `mode'
+use temp_hummels_tra, clear
+
+
+}
 * Nettoyer la base de donnÈes
 
 *****************************************************************************
