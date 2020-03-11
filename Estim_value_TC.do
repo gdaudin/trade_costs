@@ -43,11 +43,9 @@ if "`c(hostname)'" =="lise-HP" {
 /* Nouveau portable Lise */
 
 if "`c(hostname)'" =="MSOP112C" {
-    global dir_baseline_results C:\Lise\trade_costs\results\baseline
-	global dir_referee1 C:\Lise\trade_costs\results\referee1
+  
 	global dir C:\Lise\trade_costs
-	global dir_data C:\Lise\trade_costs\data
-	
+	global dir_data C:\Lise\trade_costs\data	
 	
 }
 cd $dir
@@ -304,121 +302,6 @@ end
 ************** FIN FONCTION
 **********************************************************************	
 
-*********************************************************************
-*** PROGRAMME SELECTION BASE DE DONNEES
-*** REVISION JEGeo
-*********************************************************************
-
-	
-* Etape PRELIMINAIRE: CONSTITUER BASE POUR FAIRE tourner la régression baseline sur le même sample
-* que le sample méthode estimation du référé 1
-
-capture program drop build_same_sample
-
-program build_same_sample
-args class preci
-
-cd $dir_data
-use hummels_tra, clear
-
-
-* On part directement sur SITC2, 3 digits
-rename `class' sector
-replace sector = substr(sector,1,`preci')
-
-sort iso_o sector
-save temp_hummels_tra, replace
-
-count
-
-* Initier la base: 2005, air et vessel
-
-use $dir_referee1\results_beta_contraint_2005_sitc2_HS8_air, clear
-
-gen year=2005
-gen mode ="air"
-
-save temp, replace
-
-use temp_hummels_tra, clear
-merge m:1 year mode iso_o sector using temp
-
-keep if _merge==3
-
-count
-drop _merge
-* temp_hummels_tra est année-secteur spécifique, sinon ça fait un merge compliqué
-* on doit logiquement avoir bcp moins d'observations
-save db_samesample_`class'_`preci', replace
-
-
-use $dir_referee1\results_beta_contraint_2005_sitc2_HS8_air, clear
-
-gen year=2005
-gen mode ="ves"
-
-save temp, replace
-
-use db_samesample_`class'_`preci', clear
-append using temp
-
-
-count
-
-* temp_hummels_tra est année-secteur spécifique, sinon ça fait un merge compliqué
-* on doit logiquement avoir bcp moins d'observations
-save db_samesample_`class'_`preci', replace
-erase temp.dta
-
-** Les années ultérieures
-forvalues x = 2006(1)2013 {
-
-foreach z in air ves {
-
-use $dir_referee1\results_beta_contraint_`x'_sitc2_HS8_`z', clear
-
-gen year=`x'
-gen mode ="`z'"
-
-save temp, replace
-
-use temp_hummels_tra, clear
-keep if year==`x'
-keep if mode=="`z'"
-
-
-merge m:1 iso_o sector using temp
-
-keep if _merge==3
-
-count
-drop _merge
-* temp_hummels_tra est année-secteur spécifique, sinon ça fait un merge compliqué
-* on doit logiquement avoir bcp moins d'observations
-save temp_`x'_`z', replace
-
-use db_samesample_`class'_`preci', clear
-
-count 
-append using temp_`x'_`z'
-
-count
-
-save db_samesample_`class'_`preci', replace
-erase temp_`x'_`z'.dta
-}
-
-}
-
-
-* mise en conformité avec hummels_tra
-rename sector `class'
-save db_samesample_`class'_`preci', replace
-
-erase temp_hummels_tra.dta
-
-end
-
 
 **********************************************************************
 ************** PROGRAMME PREPARATION BASE DE DONNEES 
@@ -437,11 +320,24 @@ program prep_reg
 * On ajoute le choix de la base de données
 args database year class preci mode 
 
+
+** Définir macro pour lieu de stockage des résultats selon base utilisée
+if "`database'"=="hummels_tra" {
+	global stock_results C:\Lise\trade_costs\results\baseline
+}
+
+if "`database'"=="db_samesample_`class'_`preci'" {
+	global stock_results C:\Lise\trade_costs\results\referee1\oldmethod
+}
+
 ****************Préparation de la base blouk
 
+*** Si on utilise méthode ancienne sur database soumission (large)
+** database = hummels_tra
 
-* Base soumission
-*use "$dir/data/hummels_tra.dta", clear
+*** Si on utilise méthode ancienne sur base révision selon méthode référé 1 (plus petite)
+** database = db_samesample_`class'_`preci'
+
 
 * Base révision même sample
 use $dir_data\`database', clear
@@ -729,13 +625,7 @@ generate Duree_estimation_secondes = r(t1)
 generate machine =  "`c(hostname)'__`c(username)'"
 
 
-if "`database'"=="hummels_tra" {
-save "$dir_baseline_results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
-}
-
-if "`database'"=="db_samesample_`class'_`preci'" {
-save "$dir_referee1/oldmethod_samesample/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
-}
+save "$stock_results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 */
 
@@ -829,16 +719,7 @@ generate Duree_estimation_secondes = r(t2)
 capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
-
-if "`database'"=="hummels_tra" {
-save "$dir_baseline_results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
-
-}
-
-if "`database'"=="db_samesample_`class'_`preci'" {
-save "$dir_referee1/oldmethod_samesample/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
-
-}
+save "$stock_results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
 
 * ------------------------------------------------
 ******** ESTIMATION AVEC COUTS ADDITIF ET ICEBERG
@@ -950,118 +831,10 @@ capture generate machine =  "`c(hostname)'__`c(username)'"
 
 timer clear
 
-if "`database'"=="hummels_tra" {
-save "$dir_baseline_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
-}
 
-
-if "`database'"=="db_samesample_`class'_`preci'" {
-save "$dir_referee1/oldmethod_samesample/results_estimTC_`year'_`class'_`preci'_`mode'", replace
-}
+save "$stock_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
 
 
 end
-
-
-***********************************************************************
-***********************************************************************
-***********************************************************************
-***********************************************************************
-
-***** 			FAIRE TOURNER LES PROGRAMMES   ************************
-
-
-***********************************************************************
-***********************************************************************
-***********************************************************************
-***********************************************************************
-
-
-***********************************************************************
-*** 1. CONSTRUIRE LA MEME BASE DE DONNEES SUR ESTIMATION "ORIGINAL METHOD"
-*** ET "REFEREE 1 METHOD"
-***********************************************************************
-
-* SITC2, 3 digits
-build_same_sample sitc2 3
-* génère db_samesample_sitc2_3.dta
-
-* SITC2, 4 digits
-build_same_sample sitc2 4
-* génère db_samesample_sitc2_4.dta
-
-*******************************************************
-***** LANCER LES ESTIMATIONS **************************
-*******************************************************
-
-
-*** 3 digits, all years ***
-
-***** VESSEL, puis AIR  *******************************
-**** toutes les années récentes (2005-2013)
-*******************************************************
-
-
-set more off
-local mode ves air
-*local year 1974 
-
-foreach x in `mode' {
-
-*foreach z in `year' {
-
-forvalues z = 1974(1)2013 {
-
-*** SOUMISSION: hummels_tra.dta
-*** REVISION, ESTIMATION BETA SELON REFERE 1 ET COMPARAISON: db_samesample.dta
-
-
-capture log close
-log using hummels_3digits_complet_`z'_`x', replace
-
-prep_reg db_samesample_sitc2_3 `z' sitc2 3 `x'
-
-
-*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
-*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
-
-log close
-
-}
-}
-
-
-
-
-********4 digits
-
-set more off
-local mode air
-local year 1974 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013
-* attention pb en 1989 air il faut passer à 300 itérations
-
-
-foreach x in `mode' {
-
-foreach z in `year' {
-
-*forvalues z = 1974(1)2013 {
-
-
-capture log close
-log using hummels_4digits_complet_`z'_`x', replace
-
-*prep_reg `z' sitc2 4 `x'
-
-prep_reg db_samesample_sitc2_4 `z' sitc2 4 `x'
-
-*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
-*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
-
-log close
-
-}
-}
-
 
