@@ -383,8 +383,7 @@ foreach pays_sector in `liste_pays_sector' {
 	* Récupérer le résultat sur le beta
 	capture	matrix X= e(b)
 	capture matrix ET=e(V)
-	
-	blouf
+
 	
 	* Récupérer le predict de la régression
 	capture	predict blink
