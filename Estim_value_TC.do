@@ -29,18 +29,24 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/dropbox/2013 -- trade_cost -- local
 }
 
-
+** Fixe Lise bureau
 if "`c(hostname)'" =="LAB0271A" {
 	global dir C:\Users\lpatureau\Dropbox\trade_cost
 }
 
-
+/* Vieux portable Lise
 if "`c(hostname)'" =="lise-HP" {
 	global dir C:\Users\lise\Dropbox\trade_cost
 }
+*/
 
-if "`c(hostname)'" =="LABP112" {
-    global dir C:\Users\lpatureau\Dropbox\trade_cost
+/* Nouveau portable Lise */
+
+if "`c(hostname)'" =="MSOP112C" {
+  
+	global dir C:\Lise\trade_costs
+	global dir_data C:\Lise\trade_costs\data	
+	
 }
 cd $dir
 
@@ -297,23 +303,44 @@ end
 **********************************************************************	
 
 
-
 **********************************************************************
 ************** PROGRAMME PREPARATION BASE DE DONNEES 
 **********************************************************************	
 
-
 capture program drop prep_reg
 program prep_reg
 
-args year class preci mode
+* Soumission JEGeo
+*args year class preci mode
+
 * exemple : prep_reg 2006 sitc2 3 air
 * Hummels : sitc2
 
+* Révision JEGeo
+* On ajoute le choix de la base de données
+args database year class preci mode 
+
+
+** Définir macro pour lieu de stockage des résultats selon base utilisée
+if "`database'"=="hummels_tra" {
+	global stock_results C:\Lise\trade_costs\results\baseline
+}
+
+if "`database'"=="db_samesample_`class'_`preci'" {
+	global stock_results C:\Lise\trade_costs\results\referee1\oldmethod
+}
 
 ****************Préparation de la base blouk
 
-use "$dir/data/hummels_tra.dta"
+*** Si on utilise méthode ancienne sur database soumission (large)
+** database = hummels_tra
+
+*** Si on utilise méthode ancienne sur base révision selon méthode référé 1 (plus petite)
+** database = db_samesample_`class'_`preci'
+
+
+* Base révision même sample
+use $dir_data\`database', clear
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
@@ -326,7 +353,6 @@ replace product = substr(product,1,`preci')
 
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
-
 
 * Nettoyer la base de donnÈes
 
@@ -599,7 +625,7 @@ generate Duree_estimation_secondes = r(t1)
 generate machine =  "`c(hostname)'__`c(username)'"
 
 
-save "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
+save "$stock_results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 
 */
 
@@ -693,10 +719,7 @@ generate Duree_estimation_secondes = r(t2)
 capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
-
-save "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
-
-
+save "$stock_results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
 
 * ------------------------------------------------
 ******** ESTIMATION AVEC COUTS ADDITIF ET ICEBERG
@@ -809,81 +832,9 @@ capture generate machine =  "`c(hostname)'__`c(username)'"
 timer clear
 
 
-save "$dir/results/baseline/results_estimTC_`year'_`class'_`preci'_`mode'", replace
+save "$stock_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
 
 
 end
-
-
-
-*******************************************************
-***** LANCER LES ESTIMATIONS **************************
-*******************************************************
-
-
-*** 3 digits, all years ***
-
-***** VESSEL, puis AIR  *******************************
-**** toutes les années récentes (2005-2013)
-*******************************************************
-
-/*
-set more off
-local mode ves air
-*local year 1974 
-
-foreach x in `mode' {
-
-*foreach z in `year' {
-
-forvalues z = 1974(1)2013 {
-
-
-capture log close
-log using hummels_3digits_complet_`z'_`x', replace
-
-prep_reg `z' sitc2 3 `x'
-
-
-*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
-*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
-
-log close
-
-}
-}
-*/
-
-
-
-********4 digits
-
-set more off
-local mode air
-local year 1974 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013
-* attention pb en 1989 air il faut passer à 300 itérations
-
-
-foreach x in `mode' {
-
-foreach z in `year' {
-
-*forvalues z = 1974(1)2013 {
-
-
-capture log close
-log using hummels_4digits_complet_`z'_`x', replace
-
-prep_reg `z' sitc2 4 `x'
-
-
-*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
-*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
-
-log close
-
-}
-}
-
 

@@ -12,22 +12,30 @@ if "`c(username)'" =="guillaumedaudin" {
 
 /* Fixe Lise */
 if "`c(hostname)'" =="LAB0271A" {
-	global dir_baseline_results ??????
+	global dir_baseline_results ???
 	}
-
-/* Vieux portable Lise */
-if "`c(hostname)'" =="lise-HP" {
-	global dir_baseline_results ??????
-}
 
 /* Nouveau portable Lise */
 if "`c(hostname)'" =="MSOP112C" {
-    global dir_baseline_results ??????
+
+	* baseline results sur hummels_tra dans son intégralité
+    * global dir_baseline_results C:\Lise\trade_costs\results\baseline
+	
+	*résultats méthode soumission sur même base que celle méthode référé 1
+	global dir_baseline_results C:\Lise\trade_costs\results\referee1\oldmethod
+	
+	* résultats selon méthode référé 1
+	global dir_referee1 C:\Lise\trade_costs\results\referee1
+	
+
+	
+	global dir C:\Lise\trade_costs
+	global dir_data C:\Lise\trade_costs\data
 	}
 
 
 
-	
+
 /*
 
 ************Comparaison de base
@@ -86,17 +94,22 @@ erase temp_hummels_tra.dta
 
 ***********************
 */
+
 	
+** Faire tourner sur toutes les années /mode
+
+
 	
+******************************************************
+******************************************************
 	
 capture program drop comparaison
 program comparaison
 args year mode 
 
 
-
-
 use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+
 rename product sector
 bys iso_o sector : keep if _n==1
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
