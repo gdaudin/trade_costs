@@ -19,12 +19,12 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 
-/* Fixe Lise */
+/* Fixe Lise - Trvail sur MyWork*/
 if "`c(hostname)'" =="LAB0271A" {
-	*global dir C:\Users\lpatureau\Dropbox\trade_cost\JEGeo
-	global dir_db C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database		/* base de données */
-	global dir_temp C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\temp		/* pour stocker les bases temporaires */
-	global dir_results C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\results /* résultats */
+	global dir \\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\JEGeo
+	global dir_db \\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\JEGeo\data		/* base de données */
+	global dir_temp \\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\JEGeo\temp		/* pour stocker les bases temporaires */
+	global dir_results \\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\JEGeo\results /* résultats */
 	*global dir_git C:\Users\lpatureau\Documents\Git\trade_costs /* stocker les .smcl */
 	
 	** temporairement
@@ -230,7 +230,7 @@ gen sector = ""
 gen iso_o = ""
 gen beta = .
 
-save  "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace
+save  "$dir_results/referee1/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace
 
 *** Faire les régressions
 
@@ -241,7 +241,7 @@ use "$dir_db/temp_`year'_`class'_HS`preci'_`mode'.dta", clear
 gen beta    = .
 gen coeff_x = .
 gen predit = .
-
+gen std_x = .
 
 
 ** JUSTE POUR TESTER SUR DEUX PAYS (ou pas...)
@@ -367,8 +367,9 @@ foreach pays_sector in `liste_pays_sector' {
 	*if `nb' > `nbr_var' {
 	**la barre est-elle bien assez haut ?
 	
-	if `nb' > 2*`nbr_var' {
-		disp "ok assez d'observations par rapport aux explicatives : `nb'/`nbr_var'"
+	*if `nb' > 2*`nbr_var' {
+	if `nb' > `nbr_var' +2 {
+		disp "ok assez d'observations par rapport aux explicatives nb-nb var = : `nb'-`nbr_var'"
 		
 		
 		*histogram prix_trsp, by(dist_entry) freq
@@ -381,6 +382,9 @@ foreach pays_sector in `liste_pays_sector' {
 		
 	* Récupérer le résultat sur le beta
 	capture	matrix X= e(b)
+	capture matrix ET=e(V)
+	
+	blouf
 	
 	* Récupérer le predict de la régression
 	capture	predict blink
@@ -392,16 +396,22 @@ foreach pays_sector in `liste_pays_sector' {
 	
 	* le coefficient x sur ln prix fob arrive en dernier
 	replace coeff_x=X[1,1] 
+	replace std_x = ET[1,1]^0.5
+	
+	
+	
 	
 	replace beta = - 1/(1+exp(coeff_x)) 
+	gen beta_min = - 1/(1+exp(coeff_x+1.96*std_x)) 
+	gen beta_max = - 1/(1+exp(coeff_x-1.96*std_x)) 
 	summarize beta 
 	
 		** Récupérer le beta estimé
 	*keep iso_o sector beta coeff_x predit lprix_trsp `mode'_val 
-	collapse (sum) `mode'_val `mode'_wgt, by (iso_o sector beta coeff_x)
+	collapse (sum) `mode'_val `mode'_wgt, by (iso_o sector beta beta_min beta_max coeff_x std_x )
 	keep if _n==1
-	append using "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta"
-	save "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace	
+	append using "$dir_results/referee1/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta"
+	save "$dir_results/referee1/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace	
 	
 	
 	} /* Fin de la boucle si on fait la régression */ 
@@ -426,9 +436,9 @@ foreach i in `liste_iso_o'  {
 		if _N >0 {
 		
 
-			append using "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta"
+			append using "$dir_results/referee1/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta"
 		
-			save "$dir_results/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace	
+			save "$dir_results/referee1/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta", replace	
 		}
 		
 		erase "$dir_temp/temp_`i'_`k'.dta"
@@ -445,13 +455,13 @@ use "$dir_results/referee1/results_beta_contraint_`year'_`class'_HS`preci'_`mode
 
 if _N !=0 {
 	histogram beta, title("Distribution of beta, `year', `mode', HS`preci' digits, no weight") freq
-	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__noweight.pdf", replace
+	graph export "$dir_results/referee1/histogram_beta_`year'_`class'_HS`preci'_`mode'__noweight.pdf", replace
 	generate freg_in_dollars=round(`mode'_val)
 	histogram beta [fweight=freg_in_dollars], title("Distribution of beta, `year', `mode', HS`preci' digits, val weight")
-	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__valweight.pdf", replace
+	graph export "$dir_results/referee1/histogram_beta_`year'_`class'_HS`preci'_`mode'__valweight.pdf", replace
 	generate freg_in_kg=round(`mode'_wgt)
 	histogram beta [fweight=freg_in_kg], title("Distribution of beta, `year', `mode', HS`preci' digits, val weight")
-	graph export "$dir_results/histogram_beta_`year'_`class'_HS`preci'_`mode'__massweight.pdf", replace
+	graph export "$dir_results/referee1/histogram_beta_`year'_`class'_HS`preci'_`mode'__massweight.pdf", replace
 }
 
 
