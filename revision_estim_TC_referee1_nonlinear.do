@@ -38,9 +38,9 @@ if "`c(hostname)'" =="lise-HP" {
 
 /* Nouveau portable Lise */
 if "`c(hostname)'" =="MSOP112C" {
-    global dir_db C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\database
-	global dir_temp C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\temp/* pour stocker les bases temporaires */
-	global dir_results C:\Users\Ipatureau\Dropbox\trade_cost_nonpartage\results
+    global dir_db C:\Lise\trade_costs\data
+	global dir_temp C:\Lise\trade_costs\temp/* pour stocker les bases temporaires */
+	global dir_results C:\Lise\trade_costs\results
 }
 
 
