@@ -15,6 +15,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_db ~/Documents/Recherche/2013 -- Trade Costs -- local/data
 	global dir_temp ~/Downloads/temp_stata
 	global dir_results ~/Documents/Recherche/2013 -- Trade Costs -- local/results
+	global dir_git ~/Documents/Recherche/2013 -- Trade Costs -- local/trade_costs_git
 	
 }
 
@@ -376,7 +377,7 @@ foreach pays_sector in `liste_pays_sector' {
 		
 	*		disp "nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 	
-			nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
+			capture noisily nl estim_beta  @ lprix_trsp lprix_fob `liste_variables' , eps(1e-5) iterate(500) parameters(`liste_parametres' ) initial (`initial') 
 	*Ne marche pas avec lnlsq(0)
 	
 		
@@ -394,8 +395,8 @@ foreach pays_sector in `liste_pays_sector' {
 	
 	
 	* le coefficient x sur ln prix fob arrive en dernier
-	replace coeff_x=X[1,1] 
-	replace std_x = ET[1,1]^0.5
+	capture replace coeff_x=X[1,1] 
+	capture replace std_x = ET[1,1]^0.5
 	
 	
 	
