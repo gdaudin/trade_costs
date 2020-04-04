@@ -26,7 +26,8 @@
 */
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/2013 -- trade_cost -- local
+	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
+	global dir_data ~/Documents/Recherche/2013 -- Trade Costs -- local/data
 }
 
 ** Fixe Lise bureau
@@ -48,7 +49,7 @@ if "`c(hostname)'" =="MSOP112C" {
 	global dir_data C:\Lise\trade_costs\data	
 	
 }
-cd $dir
+cd "$dir"
 
 
 ***************** Avril 2015 ***********************************************************
@@ -340,7 +341,7 @@ if "`database'"=="db_samesample_`class'_`preci'" {
 
 
 * Base révision même sample
-use $dir_data\`database', clear
+use "$dir_data/`database'", clear
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"

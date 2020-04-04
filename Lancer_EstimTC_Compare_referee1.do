@@ -23,7 +23,11 @@
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/2013 -- trade_cost -- local
+	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
+	global dir_db ~/Documents/Recherche/2013 -- Trade Costs -- local/data
+	global dir_referee1 ~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1
+	global dir_pgms ~/Documents/Recherche/2013 -- Trade Costs -- local/trade_costs_git
+	global dir_baseline_results ~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1/oldmethod
 }
 
 ** Fixe Lise bureau
@@ -79,7 +83,7 @@ capture program drop build_same_sample
 program build_same_sample
 args class preci
 
-cd $dir_data
+cd "$dir_db"
 use hummels_tra, clear
 
 
@@ -94,7 +98,7 @@ count
 
 * Initier la base: 2005, air et vessel
 
-use $dir_referee1\results_beta_contraint_2005_sitc2_HS8_air, clear
+use "$dir_referee1/results_beta_contraint_2005_sitc2_HS8_air.dta", clear
 
 gen year=2005
 gen mode ="air"
@@ -113,7 +117,7 @@ drop _merge
 save db_samesample_`class'_`preci', replace
 
 
-use $dir_referee1\results_beta_contraint_2005_sitc2_HS8_air, clear
+use "$dir_referee1/results_beta_contraint_2005_sitc2_HS8_air.dta", clear
 
 gen year=2005
 gen mode ="ves"
@@ -136,7 +140,7 @@ forvalues x = 2006(1)2013 {
 
 foreach z in air ves {
 
-use $dir_referee1\results_beta_contraint_`x'_sitc2_HS8_`z', clear
+use "$dir_referee1/results_beta_contraint_`x'_sitc2_HS8_`z'.dta", clear
 
 gen year=`x'
 gen mode ="`z'"
@@ -277,7 +281,7 @@ end
 *** ET "REFEREE 1 METHOD"
 ***********************************************************************
 
-cd $dir_pgms
+cd "$dir_pgms"
 
 * SITC2, 3 digits
 build_same_sample sitc2 3
@@ -297,8 +301,8 @@ set more off
 local mode ves air
 *local year 1974 
 
-cd $dir_pgms
-do Estim_valueTC.do
+cd "$dir_pgms"
+do Estim_value_TC.do
 
 foreach x in `mode' {
 
