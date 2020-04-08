@@ -323,12 +323,13 @@ args database year class preci mode
 
 
 ** Définir macro pour lieu de stockage des résultats selon base utilisée
+
 if "`database'"=="hummels_tra" {
-	global stock_results C:\Lise\trade_costs\results\baseline
+	global stock_results $dir/results/baseline
 }
 
 if "`database'"=="db_samesample_`class'_`preci'" {
-	global stock_results C:\Lise\trade_costs\results\referee1\oldmethod
+	global stock_results $dir/results/referee1/oldmethod
 }
 
 ****************Préparation de la base blouk
