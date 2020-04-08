@@ -106,6 +106,8 @@ gen mode ="air"
 save temp, replace
 
 use temp_hummels_tra, clear
+keep if year == 2005
+keep if mode=="air"
 merge m:1 year mode iso_o sector using temp
 
 keep if _merge==3
@@ -124,35 +126,10 @@ gen mode ="ves"
 
 save temp, replace
 
-use db_samesample_`class'_`preci', clear
-append using temp
-
-
-count
-
-* temp_hummels_tra est année-secteur spécifique, sinon ça fait un merge compliqué
-* on doit logiquement avoir bcp moins d'observations
-save db_samesample_`class'_`preci', replace
-erase temp.dta
-
-** Les années ultérieures
-forvalues x = 2006(1)2013 {
-
-foreach z in air ves {
-
-use "$dir_referee1/results_beta_contraint_`x'_sitc2_HS8_`z'.dta", clear
-
-gen year=`x'
-gen mode ="`z'"
-
-save temp, replace
-
 use temp_hummels_tra, clear
-keep if year==`x'
-keep if mode=="`z'"
-
-
-merge m:1 iso_o sector using temp
+keep if year==2005
+keep if mode=="ves"
+merge m:1 year mode iso_o sector using temp
 
 keep if _merge==3
 
@@ -160,21 +137,59 @@ count
 drop _merge
 * temp_hummels_tra est année-secteur spécifique, sinon ça fait un merge compliqué
 * on doit logiquement avoir bcp moins d'observations
-save temp_`x'_`z', replace
+save temp_2005_ves, replace
 
 use db_samesample_`class'_`preci', clear
 
 count 
-append using temp_`x'_`z'
+append using temp_2005_ves
 
 count
 
+* temp_hummels_tra est année-secteur spécifique, sinon ça fait un merge compliqué
+* on doit logiquement avoir bcp moins d'observations
 save db_samesample_`class'_`preci', replace
-erase temp_`x'_`z'.dta
-}
+
+** Les années ultérieures
+forvalues x = 2006(1)2013 {
+
+	foreach z in air ves {
+	
+	use "$dir_referee1/results_beta_contraint_`x'_sitc2_HS8_`z'.dta", clear
+	
+	gen year=`x'
+	gen mode ="`z'"
+	
+	save temp, replace
+	
+	use temp_hummels_tra, clear
+	keep if year==`x'
+	keep if mode=="`z'"
+	
+	
+	merge m:1 iso_o sector using temp
+	
+	keep if _merge==3
+	
+	count
+	drop _merge
+	* temp_hummels_tra est année-secteur spécifique, sinon ça fait un merge compliqué
+	* on doit logiquement avoir bcp moins d'observations
+	save temp_`x'_`z', replace
+	
+	use db_samesample_`class'_`preci', clear
+	
+	count 
+	append using temp_`x'_`z'
+	
+	count
+	
+	save db_samesample_`class'_`preci', replace
+	erase temp_`x'_`z'.dta
+	}
 
 }
-
+capture drop temp
 
 * mise en conformité avec hummels_tra
 rename sector `class'
