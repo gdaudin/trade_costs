@@ -117,7 +117,7 @@ drop _merge
 save db_samesample_`class'_`preci', replace
 
 
-use "$dir_referee1/results_beta_contraint_2005_sitc2_HS8_air.dta", clear
+use "$dir_referee1/results_beta_contraint_2005_sitc2_HS8_ves.dta", clear
 
 gen year=2005
 gen mode ="ves"
