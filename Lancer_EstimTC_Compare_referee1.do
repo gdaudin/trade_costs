@@ -48,7 +48,7 @@ if "`c(hostname)'" =="MSOP112C" {
 	*global dir C:\Lise\trade_costs
 	global dir_pgms C:\Users\Ipatureau\Documents\trade_costs
 	
-	
+	global dir_db C:\Lise\trade_costs\data
 	* baseline results sur hummels_tra dans son intégralité
     * global dir_baseline_results C:\Lise\trade_costs\results\baseline
 	
