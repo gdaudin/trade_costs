@@ -103,31 +103,39 @@ erase temp_hummels_tra.dta
 ******************************************************
 ******************************************************
 	
-capture program drop comparaison
-program comparaison
-args year mode 
+capture program drop comparaison_by_year_mode
+program comparaison_by_year_mode
+args year mode method1 method2
 
-
-use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
-
+if "`method1'"=="baseline" {
+	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+}	
+	
+	
 rename product sector
 bys iso_o sector : keep if _n==1
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
-save "$dir_temp/baseline.dta", replace
+save "$dir_temp/`method1'_`method2'.dta", replace
 
-use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+if "`method1'"=="referee1" {
+	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+}
+
 bys iso_o sector : keep if _n==1
 
-merge 1:1 iso_o sector using "$dir_temp/baseline.dta"
+merge 1:1 iso_o sector using "$dir_temp/`method1'_`method2'.dta"
 
-erase "$dir_temp/baseline.dta"
+erase "$dir_temp/`method1'_`method2'.dta"
 
 graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
 	title("For `year', `mode'")
 
-graph export "$dir_comparaison/scatter_`year'_`mode'.pdf", replace
+graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.pdf", replace
 
-use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+if "`method1'"=="baseline" {
+	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+}	
+
 
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
 egen couverture_baseline=total(`mode'_val)
@@ -148,11 +156,13 @@ keep mode couverture_baseline-Nb_cx3ds_baseline
 keep if _n==1
 gen year=`year'
 
-capture append using "$dir_comparaison/stats_comp.dta"
+capture append using "$dir_comparaison/stats_comp_`method1'_`method2'.dta"
 
-save "$dir_comparaison/stats_comp.dta", replace
+save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 
-use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+if "`method1'"=="referee1" {
+	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+}
 
 egen couverture_referee1=total(`mode'_val)
 gen Nb_referee1=_N
@@ -175,28 +185,27 @@ gen year=`year'
 gen mode="`mode'"
 
 
-merge 1:1 year mode using "$dir_comparaison/stats_comp.dta"
+merge 1:1 year mode using "$dir_comparaison/stats_comp_`method1'_`method2'.dta"
 drop _merge
 
-save "$dir_comparaison/stats_comp.dta", replace
+save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 
 end
 
 
-capture erase "$dir_comparaison/stats_comp.dta"
 
-foreach year of num 2005/2013 {
-	foreach mode in air ves {
-	comparaison `year' `mode'
-	}
-}
+capture program drop comparaison_graph
+program comparaison_graph
+args method1 method2
 
-use "$dir_comparaison/stats_comp.dta", clear
+
+
+use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
 gen referee1_as_value_share_baseline=couverture_referee1/couverture_baseline
 gen referee1_nb_pairs_share_baseline=Nb_cx3ds/Nb_cx3ds_baseline
 sort mode year
 
-save "$dir_comparaison/stats_comp.dta", replace
+save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 
 graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baseline_mean) ///
 			 (scatter beta_mean_pond beta_baseline_mean_pond) (lfit beta_mean_pond beta_baseline_mean_pond) ///
@@ -204,7 +213,7 @@ graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baselin
 			 (scatter beta_med_pond beta_baseline_med_pond) (lfit beta_med_pond beta_baseline_med_pond), ///
 			 ytitle("baseline") xtitle("referee1")
 			 
-graph export "$dir_comparaison/scatter_comparaison.pdf", replace
+graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.pdf", replace
 
 
 keep year mode beta*
@@ -218,10 +227,37 @@ reshape wide beta_,i(year mode type) j(method) string
 graph twoway (connected beta_baseline year) (connected beta_referee1 year), by(mode type)
 
 
-graph export "$dir_comparaison/scatter_chronology.pdf", replace
+graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.pdf", replace
 
 
 graph twoway (scatter beta_referee1 beta_baseline) (lfit beta_referee1 beta_baseline), ///
 			 ytitle("baseline") xtitle("referee1") by(mode type)
 			 
-graph export "$dir_comparaison/scatter_comparaison_by_type.pdf", replace
+graph export "$dir_comparaison/scatter_comparaison_by_type_`method1'_`method2'.pdf", replace
+
+end
+
+
+
+
+
+
+
+
+
+
+
+
+capture erase "$dir_comparaison/stats_comp_baseline_referee1.dta"
+
+foreach year of num 2005/2013 {
+	foreach mode in air ves {
+	comparaison_by_year_mode `year' `mode' baseline referee1
+	}
+}
+
+
+comparaison_graph baseline referee1
+
+
+
