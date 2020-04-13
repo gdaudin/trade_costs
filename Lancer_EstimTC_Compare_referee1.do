@@ -27,7 +27,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_db ~/Documents/Recherche/2013 -- Trade Costs -- local/data
 	global dir_referee1 ~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1
 	global dir_pgms ~/Documents/Recherche/2013 -- Trade Costs -- local/trade_costs_git
-	global dir_baseline_results ~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1/oldmethod
+	global dir_baseline_results ~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1/baselinesamplereferee1
 }
 
 ** Fixe Lise bureau
@@ -53,7 +53,7 @@ if "`c(hostname)'" =="MSOP112C" {
     * global dir_baseline_results C:\Lise\trade_costs\results\baseline
 	
 	*résultats méthode soumission sur même base que celle méthode référé 1
-	global dir_baseline_results C:\Lise\trade_costs\results\referee1\oldmethod
+	global dir_baseline_results C:\Lise\trade_costs\results\referee1\baselinesamplereferee1
 	
 	* résultats selon méthode référé 1
 	global dir_referee1 C:\Lise\trade_costs\results\referee1
@@ -346,46 +346,15 @@ log close
 ***********************************************************************
 
 
-capture erase "$dir_comparaison/stats_comp.dta"
+do "$dir_pgms/Comparaison_baseline_referee1.do"
+
+capture erase "$dir_comparaison/stats_comp_baselinesamplereferee1_referee1.dta"
 
 foreach year of num 2005/2013 {
 	foreach mode in air ves {
-	comparaison `year' `mode'
+	comparaison_by_year_mode `year' `mode' baselinesamplereferee1 referee1
 	}
 }
 
-use "$dir_comparaison/stats_comp.dta", clear
-gen referee1_as_value_share_baseline=couverture_referee1/couverture_baseline
-gen referee1_nb_pairs_share_baseline=Nb_cx3ds/Nb_cx3ds_baseline
-sort mode year
 
-save "$dir_comparaison/stats_comp.dta", replace
-
-graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baseline_mean) ///
-			 (scatter beta_mean_pond beta_baseline_mean_pond) (lfit beta_mean_pond beta_baseline_mean_pond) ///
-			 (scatter beta_med beta_baseline_med) (lfit beta_med beta_baseline_med) ///
-			 (scatter beta_med_pond beta_baseline_med_pond) (lfit beta_med_pond beta_baseline_med_pond), ///
-			 ytitle("baseline") xtitle("referee1")
-			 
-graph export "$dir_comparaison/scatter_comparaison.pdf", replace
-
-
-keep year mode beta*
-reshape long beta_, i(year mode) j(type) string
-gen method="referee1"
-replace method="baseline" if strmatch(type,"baseline*")!=0
-replace type = substr(type, 10,.) if strmatch(type,"baseline*")!=0
-reshape wide beta_,i(year mode type) j(method) string
-
-
-graph twoway (connected beta_baseline year) (connected beta_referee1 year), by(mode type)
-
-
-graph export "$dir_comparaison/scatter_chronology.pdf", replace
-
-
-graph twoway (scatter beta_referee1 beta_baseline) (lfit beta_referee1 beta_baseline), ///
-			 ytitle("baseline") xtitle("referee1") by(mode type)
-			 
-graph export "$dir_comparaison/scatter_comparaison_by_type.pdf", replace
-
+comparaison_graph baselinesamplereferee1 referee1

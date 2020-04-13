@@ -111,13 +111,20 @@ if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 }	
 	
+if "`method1'"=="baseline_samplereferee1" {
+	use "$dir_referee1/baseline_samplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+}	
+	
+	
+	
+	
 	
 rename product sector
 bys iso_o sector : keep if _n==1
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
 save "$dir_temp/`method1'_`method2'.dta", replace
 
-if "`method1'"=="referee1" {
+if "`method2'"=="referee1" {
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
 }
 
@@ -135,6 +142,11 @@ graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.pdf", r
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 }	
+
+if "`method1'"=="baseline_samplereferee1" {
+	use "$dir_referee1/baseline_samplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+}	
+	
 
 
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
@@ -160,7 +172,7 @@ capture append using "$dir_comparaison/stats_comp_`method1'_`method2'.dta"
 
 save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 
-if "`method1'"=="referee1" {
+if "`method2'"=="referee1" {
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
 }
 
@@ -245,7 +257,7 @@ end
 
 
 
-
+/*
 
 
 capture erase "$dir_comparaison/stats_comp_baseline_referee1.dta"
@@ -259,5 +271,5 @@ foreach year of num 2005/2013 {
 
 comparaison_graph baseline referee1
 
-
+*/
 
