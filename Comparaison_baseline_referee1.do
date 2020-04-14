@@ -111,8 +111,8 @@ if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 }	
 	
-if "`method1'"=="baseline_samplereferee1" {
-	use "$dir_referee1/baseline_samplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+if "`method1'"=="baselinesamplereferee1" {
+	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 }	
 	
 	
@@ -143,8 +143,8 @@ if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 }	
 
-if "`method1'"=="baseline_samplereferee1" {
-	use "$dir_referee1/baseline_samplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+if "`method1'"=="baselinesamplereferee1" {
+	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 }	
 	
 
