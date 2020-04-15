@@ -83,7 +83,7 @@ matrix Esperance_`x'_`z'=X
 matrix Var_Covariance_`x'_`z'=ET	
 
 
-drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') clear
+drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') cov(Var_Covariance_`x'_`y') clear
 
 blif
 
