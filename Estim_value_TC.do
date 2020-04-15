@@ -314,7 +314,7 @@ program prep_reg
 * Soumission JEGeo
 *args year class preci mode
 
-* exemple : prep_reg 2006 sitc2 3 air
+* exemple : prep_reg hummels_tra 2006 sitc2 3 air
 * Hummels : sitc2
 
 * Révision JEGeo
@@ -635,7 +635,7 @@ save "$stock_results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
 ******** ESTIMATION AVEC COUTS ADDITIF ONLY
 * ------------------------------------------------
 
-
+/*
 timer on 2
 
 nl couts_additif @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres_additif' ) initial (`initial_additif')
@@ -722,6 +722,8 @@ capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
 save "$stock_results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
+
+*/
 
 * ------------------------------------------------
 ******** ESTIMATION AVEC COUTS ADDITIF ET ICEBERG
@@ -832,6 +834,8 @@ capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
 timer clear
+
+global $liste_parametres `liste_parametres'
 
 
 save "$stock_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace

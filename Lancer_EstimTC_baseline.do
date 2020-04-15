@@ -15,7 +15,8 @@
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/2013 -- trade_cost -- local
+	global dir global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
+	global dir_pgms "$dir/trade_costs_git"
 }
 
 ** Fixe Lise bureau
@@ -39,6 +40,16 @@ if "`c(hostname)'" =="MSOP112C" {
 }
 
 *******************************************************
+
+
+set more off
+local mode ves air
+*local year 1974 
+
+cd $dir_pgms
+do Estim_value_TC.do
+
+
 ***** LANCER LES ESTIMATIONS **************************
 *******************************************************
 
@@ -50,32 +61,23 @@ if "`c(hostname)'" =="MSOP112C" {
 *******************************************************
 
 
-set more off
-local mode ves air
-*local year 1974 
-
-cd $dir_pgms
-do Estim_value_TC.do
-
 foreach x in `mode' {
 
-*foreach z in `year' {
-
-forvalues z = 1974(1)2013 {
-
-*** SOUMISSION: hummels_tra.dta
-
-capture log close
-log using hummels_3digits_complet_`z'_`x', replace
-
-prep_reg hummels_tra `z' sitc2 3 `x'
-
-*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
-*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
-
-log close
-
-}
+	forvalues z = 1974(1)2013 {
+	
+		*** SOUMISSION: hummels_tra.dta
+		
+		capture log close
+		log using hummels_3digits_complet_`z'_`x', replace
+		
+		prep_reg hummels_tra `z' sitc2 3 `x'
+		
+		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
+		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
+		
+		log close
+	
+	}
 }
 
 
@@ -90,25 +92,22 @@ local year 1974 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013
 
 
 foreach x in `mode' {
-
-foreach z in `year' {
-
-*forvalues z = 1974(1)2013 {
-
-
-capture log close
-log using hummels_4digits_complet_`z'_`x', replace
-
-*prep_reg `z' sitc2 4 `x'
-
-prep_reg hummels_tra `z' sitc2 4 `x'
-
-*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
-*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
-
-log close
-
-}
+	
+	foreach z in `year' {
+			
+		capture log close
+		log using hummels_4digits_complet_`z'_`x', replace
+		
+		*prep_reg `z' sitc2 4 `x'
+		
+		prep_reg hummels_tra `z' sitc2 4 `x'
+		
+		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
+		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
+		
+		log close
+	
+	}
 }
 
 
