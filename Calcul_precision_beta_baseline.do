@@ -65,7 +65,7 @@ foreach x in `mode' {
 
 	foreach z in 2013 {
 	
-		*** SOUMISSION: hummels_tra.dta
+		*** SOUMISSION: hummels_tra.dta ou db_samesample_sitc2_3
 		
 		capture log close
 		log using hummels_3digits_complet_`z'_`x', replace
@@ -84,6 +84,8 @@ matrix Var_Covariance_`x'_`z'=ET
 
 
 drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') clear
+
+blif
 
 
 
