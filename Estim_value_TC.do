@@ -837,6 +837,13 @@ timer clear
 
 global $liste_parametres `liste_parametres'
 
+global liste_parametres_prod_A 	`liste_parametres_prod_A' 
+global liste_parametres_iso_o_A `liste_parametres_iso_o_A' 
+global liste_parametres_prod_I 	`liste_parametres_prod_I' 
+global liste_parametres_iso_o_I `liste_parametres_iso_o_I' 
+global liste_iso_o `liste_iso_o'
+global liste_prod  `liste_prod'
+
 
 save "$stock_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
