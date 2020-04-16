@@ -90,8 +90,10 @@ foreach x in `mode' {
 		clear mata
 		local number_var = wordcount("$liste_iso_o")*wordcount("$liste_prod")*2+1000
 		set maxvar  `number_var'
-		use temp.dta
+		use temp.dta, clear
 		
+		local z 2013
+		local x ves
 		local prod_num=0
 		**La référence est num=1
 		foreach prod of global liste_prod {
@@ -99,12 +101,24 @@ foreach x in `mode' {
 			local iso_num=0
 			foreach iso of global liste_iso_o { 
 				local iso_num=`iso_num'+1
-				if `prod_num' !=1 {
+				preserve
+				use "$dir_data/db_samesample_sitc2_3", clear
+				keep if year==`z'
+				gen test=0
+				replace test = 1 if iso_o=="`iso'" & sitc2=="`prod'" & `x'_val!=0
+				egen test1=max(test)
+				local danssample 0
+				if test1[1]==1 local danssample 1
+				restore
+				
+				
+				
+				if `prod_num' !=1 & `danssample'==1 {
 					generate termeA_`prod'_`iso' = exp(lnfeA_prod_`prod_num')+exp(lnfeA_iso_o_`iso_num')
 					generate termeI_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
 				}
 				
-				if `prod_num' ==1 {
+				if `prod_num' ==1 & `danssample'==1 {
 					generate termeA_`prod'_`iso' = exp(lnfeA_iso_o_`iso_num')
 					generate termeI_`prod'_`iso' = exp(lnfem1I_iso_o_`iso_num')+1
 				}
@@ -114,6 +128,15 @@ foreach x in `mode' {
 		}
 		
 		drop lnfe* 
+		gen tirage= _n
+		save temp2.dta
+		keep tirage termeA*
+		reshape long termeA,i(tirage) j(prod_iso) string
+		save temp3.dta
+		use temp2.dta
+		keep tirage termeI*
+		reshape long termeA,i(tirage) j(prod_iso) string
+		merge 1:1 prod_iso using temp3.dta
 		
 	
 		blif
