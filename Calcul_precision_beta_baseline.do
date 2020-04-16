@@ -82,13 +82,15 @@ foreach x in `mode' {
 		matrix Var_Covariance_`x'_`z'=ET	
 	
 	
-		drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') cov(Var_Covariance_`x'_`y') clear
-		
+		drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') cov(Var_Covariance_`x'_`z') clear
+	
 		save temp.dta, replace
 		clear
 		clear matrix
-		set maxvar = wordcount("$liste_iso_o")*wordcount("$liste_prod")+1000
-		use temp.dat
+		clear mata
+		local number_var = wordcount("$liste_iso_o")*wordcount("$liste_prod")*2+1000
+		set maxvar  `number_var'
+		use temp.dta
 		
 		local prod_num=0
 		**La référence est num=1
@@ -110,6 +112,9 @@ foreach x in `mode' {
 				
 			}
 		}
+		
+	
+		
 	
 		blif
 	
