@@ -34,7 +34,7 @@ if "`c(hostname)'" =="lise-HP" {
 
 if "`c(hostname)'" =="MSOP112C" {
   
-	*global dir C:\Lise\trade_costs
+	global dir C:\Lise\trade_costs
 	global dir_pgms C:\Users\Ipatureau\Documents\trade_costs
 	
 }
@@ -89,6 +89,8 @@ foreach x in `mode' {
 		clear matrix
 		set maxvar = wordcount("$liste_iso_o")*wordcount("$liste_prod")+1000
 		use temp.dat
+		** .dta? pourquoi + 1000?
+		* Où sont stockées ces matrices?
 		
 		local prod_num=0
 		**La référence est num=1
@@ -100,6 +102,8 @@ foreach x in `mode' {
 				if `prod_num' !=1 {
 					generate termeA_`prod'_`iso' = exp(lnfeA_prod_`prod_num')+exp(lnfeA_iso_o_`iso_num')
 					generate termeI_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
+					
+	
 				}
 				
 				if `prod_num' ==1 {
@@ -122,4 +126,14 @@ foreach x in `mode' {
 		
 	
 }
+
+*** cela me semble bon, 
+
+* 1ere chose à faire: reste ensuite qu'à ce stade termeA = tik, il faut diviser par prix fob
+*** Dans Hummels tra, une observation par secteur 5d/pays origine / année, c'est ça?
+*** Donc, partir de Hummels tra, faire un prix fob agrégé niveau 3d (en pondérant par la valeur des flux), garder une base avec année / secteur 3d / mode/ prix fob 3d
+
+*** 2e chose: faire le merge avec cette base; car dans temp.dta, on n'a pas les variables pays : secteur; mais juste des 1, 2, etc. Donc il faut recroiser... 
+
+*** Est-ce que je vois les choses de manière juste?
 
