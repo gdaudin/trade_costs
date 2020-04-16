@@ -835,7 +835,7 @@ capture generate machine =  "`c(hostname)'__`c(username)'"
 
 timer clear
 
-global $liste_parametres `liste_parametres'
+global liste_parametres `liste_parametres'
 
 global liste_parametres_prod_A 	`liste_parametres_prod_A' 
 global liste_parametres_iso_o_A `liste_parametres_iso_o_A' 
