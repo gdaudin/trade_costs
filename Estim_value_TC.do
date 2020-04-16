@@ -329,7 +329,7 @@ if "`database'"=="hummels_tra" {
 }
 
 if "`database'"=="db_samesample_`class'_`preci'" {
-	global stock_results $dir/results/referee1/oldmethod
+	global stock_results $dir/results/referee1/baselinesamplereferee1
 }
 
 ****************Préparation de la base blouk
