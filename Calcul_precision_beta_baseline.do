@@ -83,8 +83,13 @@ foreach x in `mode' {
 	
 	
 		drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') cov(Var_Covariance_`x'_`y') clear
-	
-	
+		
+		save temp.dta, replace
+		clear
+		clear matrix
+		set maxvar = wordcount("$liste_iso_o")*wordcount("$liste_prod")+1000
+		use temp.dat
+		
 		local prod_num=0
 		**La référence est num=1
 		foreach prod of global liste_prod {
