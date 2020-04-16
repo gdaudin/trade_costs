@@ -76,20 +76,45 @@ foreach x in `mode' {
 		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
 		
 		log close
+		
+		
+		matrix Esperance_`x'_`z'=X
+		matrix Var_Covariance_`x'_`z'=ET	
+	
+	
+		drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') cov(Var_Covariance_`x'_`y') clear
+	
+	
+		local prod_num=0
+		**La référence est num=1
+		foreach prod of global liste_prod {
+			local prod_num=`prod_num'+1	
+			local iso_num=0
+			foreach iso of global liste_iso_o { 
+				local iso_num=`iso_num'+1
+				if `prod_num' !=1 {
+					generate termeA_`prod'_`iso' = exp(lnfeA_prod_`prod_num')+exp(lnfeA_iso_o_`iso_num')
+					generate termeI_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
+				}
+				
+				if `prod_num' ==1 {
+					generate termeA_`prod'_`iso' = exp(lnfeA_iso_o_`iso_num')
+					generate termeI_`prod'_`iso' = exp(lnfem1I_iso_o_`iso_num')+1
+				}
+				
+				
+			}
+		}
+	
+		blif
+	
+	
+	
 	
 	}
 	
-matrix Esperance_`x'_`z'=X
-matrix Var_Covariance_`x'_`z'=ET	
 
-
-drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') cov(Var_Covariance_`x'_`y') clear
-
-blif
-
-
-
-	
+		
 	
 }
 
