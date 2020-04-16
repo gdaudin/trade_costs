@@ -113,7 +113,7 @@ foreach x in `mode' {
 			}
 		}
 		
-	
+		drop lnfe* 
 		
 	
 		blif
