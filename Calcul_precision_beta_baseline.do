@@ -118,14 +118,32 @@ foreach x in `mode' {
 					
 				if `prod_num' !=1 & `danssample'==1 {
 					generate t_`prod'_`iso' = exp(lnfeA_prod_`prod_num')+exp(lnfeA_iso_o_`iso_num')
-					generate tau_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
-					
 				}
 				
 				if `prod_num' ==1 & `danssample'==1 {
 					generate t_`prod'_`iso' = exp(lnfeA_iso_o_`iso_num')
+				}
+		
+		
+		
+				preserve
+				drop ln*
+				xpose, clear varname
+				save temp2_t.dta,replace
+				restore
+				
+				if `prod_num' !=1 & `danssample'==1 {
+					generate tau_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
+				}
+				
+				if `prod_num' ==1 & `danssample'==1 {
 					generate tau_`prod'_`iso' = exp(lnfem1I_iso_o_`iso_num')+1
 				}
+				
+				drop ln*
+				xpose, clear varname
+				save temp2_tau.dta,replace
+				restore
 		
 		
 		
