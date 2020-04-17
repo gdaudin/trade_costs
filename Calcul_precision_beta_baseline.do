@@ -120,6 +120,23 @@ foreach x in `mode' {
 					generate termeA_`prod'_`iso' = exp(lnfeA_prod_`prod_num')+exp(lnfeA_iso_o_`iso_num')
 					generate termeI_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
 					generate beta_`prod'_`iso' = -(termeI_`prod'_`iso'-1)/(termeI_`prod'_`iso'+termeA_`prod'_`iso'-1)
+					
+					/*
+					
+					Non ce n'est pas ça, si tu regardes dans la Dropbox \trade_cost\JEGeo\investigation beta contraint référé 1, notes beta.pdf
+					beta = (t/pfob) / (tau -1 + t/pfob)
+					
+					avec beta compris entre 0 et 1, plus beta grand plus part des additifs élevée
+					
+					de plus, si tu prends estim_TC, lignes 159-166, il me semble qu'à la toute fin, ligne 161, on prend terme A = tik / prix fob
+					ce qui veut dire que les termes exp(lnfeA_prod_`prod_num')+exp(lnfeA_iso_o_`iso_num') nous donnent vraiment les "t"
+					alors que le beta c'est t/p fob
+					
+					Donc il faut bien faire ce travail d'aller chercher le prix fob à 3 digits par iso o / secteur (soupir)
+					
+					Non?
+					
+					*/
 				}
 				
 				if `prod_num' ==1 & `danssample'==1 {
