@@ -134,12 +134,16 @@ foreach x in `mode' {
 				save temp2.dta,replace
 				
 				restore
+				preserve
+				
 				collapse (p50) beta*
 				gen type = "p50beta"
-				append using save temp2.dta
+				append using temp2.dta
 				save temp2.dta,replace
 				
 				restore
+				preserve 
+				
 				collapse (p95) beta*
 				gen type = "p95beta"
 				append using save temp2.dta
