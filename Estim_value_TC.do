@@ -128,6 +128,7 @@ program nlcouts_IetA
 ************************
 
 					replace terme_A = terme_A + `feA_`p'_`j'' * `p'_`j'
+					*`p'_`j' c'est l'indicatrice
 					local n = `n'+1
 				}
 			}
