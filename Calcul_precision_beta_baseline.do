@@ -81,7 +81,7 @@ foreach x in `mode' {
 		matrix Esperance_`x'_`z'=X
 		matrix Var_Covariance_`x'_`z'=ET	
 	
-	
+		set seed 525245224
 		drawnorm $liste_parametres, n(10000) means(Esperance_`x'_`z') cov(Var_Covariance_`x'_`z') clear
 	
 		save temp.dta, replace
@@ -90,18 +90,15 @@ foreach x in `mode' {
 		clear mata
 		local number_var = wordcount("$liste_iso_o")*wordcount("$liste_prod")*2+1000
 		set maxvar  `number_var'
-		use temp.dta, clear
-		
-		local z 2013
-		local x ves
 		
 		
-		preserve
 		use "$dir_data/db_samesample_sitc2_3", clear
 		generate pair = iso_o + "_" + sitc2
 		levelsof pair, local(list_sample)
-		restore
 		
+		use temp.dta, clear
+		local z 2013
+		local x ves
 		
 		local prod_num=0
 		**La référence est prod_num=1
@@ -124,26 +121,6 @@ foreach x in `mode' {
 					generate t_`prod'_`iso' = exp(lnfeA_iso_o_`iso_num')
 				}
 		
-		
-		
-				preserve
-				drop ln*
-				xpose, clear varname
-				save temp2_t.dta,replace
-				restore
-				
-				if `prod_num' !=1 & `danssample'==1 {
-					generate tau_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
-				}
-				
-				if `prod_num' ==1 & `danssample'==1 {
-					generate tau_`prod'_`iso' = exp(lnfem1I_iso_o_`iso_num')+1
-				}
-				
-				drop ln*
-				xpose, clear varname
-				save temp2_tau.dta,replace
-				restore
 		
 		
 		
@@ -179,11 +156,42 @@ foreach x in `mode' {
 			}
 		}
 		
-		drop lnfe* 
 		
-		
-		keep  beta*
+		drop ln*
 		xpose, clear varname
+		save temp2_t.dta,replace
+		
+		
+		
+		use temp.dta, clear
+		local prod_num=0
+		**La référence est prod_num=1
+		foreach prod of global liste_prod {
+			local prod_num=`prod_num'+1	
+			local iso_num=0
+			foreach iso of global liste_iso_o { 
+				local iso_num=`iso_num'+1
+				
+				local danssample 0
+				if strpos(`"`list_sample'"',"`iso'_`prod'") !=0 local danssample 1
+				
+				
+				
+				if `prod_num' !=1 & `danssample'==1 {
+					generate tau_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
+				}
+				
+				if `prod_num' ==1 & `danssample'==1 {
+					generate tau_`prod'_`iso' = exp(lnfem1I_iso_o_`iso_num')+1
+				}
+			}
+		}
+		
+		drop ln*
+		xpose, clear varname
+		save temp2_tau.dta,replace
+		blif
+		
 		
 		
 		/*
