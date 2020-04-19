@@ -159,6 +159,8 @@ foreach x in `mode' {
 		
 		drop ln*
 		xpose, clear varname
+		rename v* t*
+		replace _varname = substr(_varname,3,.)
 		save temp2_t.dta,replace
 		
 		
@@ -189,7 +191,15 @@ foreach x in `mode' {
 		
 		drop ln*
 		xpose, clear varname
-		save temp2_tau.dta,replace
+		rename v* tau*
+		replace _varname = substr(_varname,5,.)
+		merge 1:1 _varname using temp2_t.dta
+		gen iso_o = substr(_varname,5,3)
+		gen sitc2 = substr(_varname,1,3)
+		order sitc2 iso_o _varname
+		drop _merge	
+		save temp_t_tau.dta, replace
+		merge 1:m iso_o sitc2 using "$dir_data/db_samesample_sitc2_3.dta"
 		blif
 		
 		
