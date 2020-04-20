@@ -199,10 +199,13 @@ foreach x in `mode' {
 		order sitc2 iso_o _varname
 		drop _merge	
 		save temp_t_tau.dta, replace
-		merge 1:m iso_o sitc2 using "$dir_data/db_samesample_sitc2_3.dta"
-		blif
+		use "$dir_data/db_samesample_sitc2_3.dta", clear
+		keep if year==2013
+		merge m:1 iso_o sitc2  using temp_t_tau.dta
 		
-		
+		foreach i of numlist 1(1)1000 {
+			generate beta`i' =(t`i'/prix_fob)/(tau`i' -1 + t`i'/prix_fob)
+		}		
 		
 		/*
 		reshape long termeA,i(tirage) j(prod_iso) string
