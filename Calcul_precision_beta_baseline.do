@@ -204,14 +204,14 @@ foreach x in `mode' {
 		merge m:1 iso_o sitc2  using temp_t_tau.dta
 		
 		foreach i of numlist 1(1)1000 {
-			generate beta`i' =(t`i'/prix_fob)/(tau`i' -1 + t`i'/prix_fob)
+			generate beta`i' =-(t`i'/prix_fob)/(tau`i' -1 + t`i'/prix_fob)
 		}
 		
 		save temp_beta.dta
 		
-		egen beta_05=rowpctile(beta*), p(05)
-		egen beta_50=rowpctile(beta*), p(50)
-		egen beta_95=rowpctile(beta*), p(95)
+		egen beta_baseline_05=rowpctile(beta*), p(05)
+		egen beta_baseline_50=rowpctile(beta*), p(50)
+		egen beta_baseline_95=rowpctile(beta*), p(95)
 		
 		
 		/*
