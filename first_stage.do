@@ -3,6 +3,8 @@ cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
 use hummels_tra.dta, clear
 set matsize 10000
 
+ssc install reghdfe
+
 
 keep if year >2003
 keep mode sitc2 prix_fob prix_caf prix_trsp prix_trsp2 duty iso_o year con_val ves_val air_val
@@ -131,18 +133,22 @@ reghdfe dprix_fob ds_tariff, a(cntry_sect3d sect3d_year) vce (cluster cntry_year
 *****just air
 eststo: reghdfe lprix_fob ls_tariff if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year)
 predict lprix_panel_hat_air_allFE,xbd
-eststo: xi: reghdfe lprix_fob ls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year) 
 drop FEcs FEsy
+eststo: xi: reghdfe lprix_fob ls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year) 
+
 
 eststo: reghdfe dlprix_fob dls_tariff if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year)
 predict dlprix_panel_hat_air_allFE,xbd 
-eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year)
 drop FEcs FEsy
+eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year)
+
 
 eststo: reghdfe dprix_fob ds_tariff if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year) 
-predict dprix_panel_air_hat_allFE,xbd 
-eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year)
+predict dprix_panel_air_hat_allFE,xbd
 drop FEcs FEsy
+ 
+eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year)
+
 
 *****just vessel
 
@@ -150,18 +156,21 @@ set more off
 
 eststo: reghdfe lprix_fob ls_tariff if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year)
 predict lprix_panel_hat_ves_allFE,xbd 
-eststo: xi: reghdfe lprix_fob ls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year) 
 drop FEcs FEsy
+eststo: xi: reghdfe lprix_fob ls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year) 
+
 
 eststo: reghdfe dlprix_fob dls_tariff if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year)
 predict dlprix_panel_hat_ves_allFE,xbd 
-eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year)
 drop FEcs FEsy
+eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year)
+
 
 eststo: reghdfe dprix_fob ds_tariff if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year) 
 predict dprix_panel_ves_hat_allFE,xbd
-eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year)
 drop FEcs FEsy 
+eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year)
+
 
 
 
@@ -174,7 +183,7 @@ eststo clear
 log close 
 
 
-keep sitc2 sitc2_3d iso_o year mode *prix_panel*
+keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_panel*
 save predictions_FS_panel.dta, replace
 
 ***************************************************
@@ -246,7 +255,7 @@ save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev
 
 
 use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
-save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_yearly.dta", replace
+save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
 
 
 sort iso_o year mode
@@ -256,10 +265,10 @@ sort iso_o year mode
 forvalues x=2006(1)2013{
 use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
 sort iso_o year mode
-append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_yearly.dta"
+append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta"
 order iso_o year mode sitc2 sitc2_3d
-keep sitc2 sitc2_3d iso_o year mode *prix_yearly*
-save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_yearly.dta", replace
+keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_panel*
+save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
 }
 
 
