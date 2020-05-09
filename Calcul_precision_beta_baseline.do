@@ -207,7 +207,7 @@ foreach x in `mode' {
 			generate beta`i' =-(t`i'/prix_fob)/(tau`i' -1 + t`i'/prix_fob)
 		}
 		
-		save temp_beta.dta
+		save temp_beta.dta, replace
 		
 		egen beta_baseline_05=rowpctile(beta*), p(05)
 		egen beta_baseline_50=rowpctile(beta*), p(50)
