@@ -296,7 +296,7 @@ sort iso_o year mode
 *append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta"
 append using "$dir/results/IV_referee1/prediction_FS_yearly.dta"
 order iso_o year mode sitc2 sitc2_3d
-keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_panel*
+keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
 save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
 }
