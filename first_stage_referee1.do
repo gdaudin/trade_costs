@@ -1,7 +1,7 @@
 
 *ssc install reghdfe, replace
 *ssc install estout, replace
-*ssc install ftools
+*ssc install ftools, replace
 
 
 set more off
@@ -14,9 +14,11 @@ if "`c(username)'" =="guillaumedaudin" {
 
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+
 cd "$dir/results/IV_referee1"
 
 use "$dir/data/hummels_tra.dta", clear
+*use hummels_tra.dta, clear
 set matsize 10000
 
 
@@ -77,6 +79,12 @@ egen sector_3d=group(sitc2_3d)
 
 egen cntry=group(iso_o)
 egen cntry_year=group(iso_o year)
+
+******on crée des dummies country X year
+set more off
+tab cntry_year, gen(cntry_yeard) 
+
+
 egen cntry_sect3d=group(iso_o sitc2_3d)
 egen sect3d_year=group(sitc2_3d year)
 
@@ -113,6 +121,8 @@ save "$dir/results/IV_referee1/hummels_FS.dta", replace
 ***************************************************
 ***********First-stage regressions, PANEL**********
 ***************************************************
+
+
 
 ************************
 **********panel*********
@@ -154,43 +164,48 @@ reghdfe dprix_fob ds_tariff, a(cntry_sect3d sect3d_year) vce (cluster cntry_year
 eststo: reghdfe lprix_fob ls_tariff if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year) resid
 predict lprix_panel_hat_air_allFE,xbd
 drop FEcs FEsy
-eststo: xi: reghdfe lprix_fob ls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year) 
-
+eststo: reghdfe lprix_fob ls_tariff cntry_yeard* if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) resid 
+predict lprix_panel_hat_air_allFE2,xbd
+drop FEcs FEsy
 
 eststo: reghdfe dlprix_fob dls_tariff if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year) resid
 predict dlprix_panel_hat_air_allFE,xbd 
 drop FEcs FEsy
-eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year)
+eststo: reghdfe dlprix_fob dls_tariff cntry_yeard* if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) resid
+predict dlprix_panel_hat_air_allFE2,xbd 
+drop FEcs FEsy
 
-
-eststo: reghdfe dprix_fob ds_tariff if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year) resid
+eststo: reghdfe dprix_fob ds_tariff if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year)  resid
 predict dprix_panel_air_hat_allFE,xbd
 drop FEcs FEsy
- 
-eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="air", a(cntry_sect3d sect3d_year)
-
+eststo: reghdfe dprix_fob ds_tariff cntry_yeard* if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) resid
+predict dprix_panel_hat_air_allFE2,xbd 
+drop FEcs FEsy
 
 *****just vessel
 
 set more off
 
-eststo: reghdfe lprix_fob ls_tariff if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year) resid
-predict lprix_panel_hat_ves_allFE,xbd 
+eststo: reghdfe lprix_fob ls_tariff if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year)  resid
+predict lprix_panel_hat_ves_allFE,xbd
 drop FEcs FEsy
-eststo: xi: reghdfe lprix_fob ls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year) 
+eststo: reghdfe lprix_fob ls_tariff cntry_yeard* if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) resid
+predict lprix_panel_hat_ves_allFE2,xbd
+drop FEcs FEsy
 
-
-eststo: reghdfe dlprix_fob dls_tariff if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year) resid
+eststo: reghdfe dlprix_fob dls_tariff if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year)  resid
 predict dlprix_panel_hat_ves_allFE,xbd 
 drop FEcs FEsy
-eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year)
-
+eststo: reghdfe dlprix_fob dls_tariff cntry_yeard* if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) resid
+predict dlprix_panel_hat_ves_allFE2,xbd 
+drop FEcs FEsy
 
 eststo: reghdfe dprix_fob ds_tariff if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year) vce (cluster cntry_year) resid
 predict dprix_panel_ves_hat_allFE,xbd
-drop FEcs FEsy 
-eststo: xi: reghdfe dlprix_fob dls_tariff i.cntry_year if mode=="ves", a(cntry_sect3d sect3d_year)
-
+drop FEcs FEsy
+eststo: reghdfe dprix_fob ds_tariff cntry_yeard* if mode=="ves", a(FEcs=cntry_sect3d FEsy=sect3d_year)  resid
+predict dprix_panel_hat_ves_allFE2,xbd 
+drop FEcs FEsy
 
 
 
@@ -205,6 +220,8 @@ log close
 
 keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_panel*
 save predictions_FS_panel.dta, replace
+
+stop
 
 ***************************************************
 ***********First-stage regressions, YEARLY*********
@@ -296,7 +313,7 @@ sort iso_o year mode
 *append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta"
 append using "$dir/results/IV_referee1/prediction_FS_yearly.dta"
 order iso_o year mode sitc2 sitc2_3d
-keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_panel*
+keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_yearly*
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
 save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
 }
