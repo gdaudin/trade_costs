@@ -245,8 +245,9 @@ foreach x in `mode' {
 		
 
 		
-
-		
+		erase temp_beta.dta
+		erase temp_t_tau.dta
+		erase temp2_t.dta
 		
 		
 		/*
