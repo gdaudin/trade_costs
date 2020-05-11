@@ -13,12 +13,11 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 
-*cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+*cd "$dir/results/IV_referee1"
 
-cd "$dir/results/IV_referee1"
-
-use "$dir/data/hummels_tra.dta", clear
-*use hummels_tra.dta, clear
+*use "$dir/data/hummels_tra.dta", clear
+use hummels_tra.dta, clear
 set matsize 10000
 
 
@@ -113,8 +112,8 @@ order year iso_o sitc2_3d sitc2 mode lprix_fob dlprix_fob ls_tariff dls_tariff
 
 *drop if year ==2004
 
-*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", replace
-save "$dir/results/IV_referee1/hummels_FS.dta", replace
+save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", replace
+*save "$dir/results/IV_referee1/hummels_FS.dta", replace
 
 
 
@@ -128,11 +127,11 @@ save "$dir/results/IV_referee1/hummels_FS.dta", replace
 **********panel*********
 ************************
 
-*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
-use "$dir/results/IV_referee1/hummels_FS.dta", clear
+use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+*use "$dir/results/IV_referee1/hummels_FS.dta", clear
 
-*cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1"
+cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+*cd "$dir/results/IV_referee1"
 
 capture log close
 capture eststo clear
@@ -140,6 +139,7 @@ capture drop FEcs
 capture drop FEsy
 
 log using first_stage_panel.log, replace
+
 
 set more off
 
@@ -219,19 +219,21 @@ log close
 
 
 keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_panel*
+order sitc2 sitc2_3d iso_o year mode lprix_fob  lprix_panel_hat_air_allFE lprix_panel_hat_air_allFE2 /*
+*/dlprix_fob dlprix_panel_hat_air_allFE dlprix_panel_hat_air_allFE2 dprix_fob dprix_panel_air_hat_allFE dprix_panel_hat_air_allFE2
 save predictions_FS_panel.dta, replace
 
-stop
+
 
 ***************************************************
 ***********First-stage regressions, YEARLY*********
 ***************************************************
 
-*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
-use "$dir/results/IV_referee1/hummels_FS.dta", clear
+use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+*use "$dir/results/IV_referee1/hummels_FS.dta", clear
 
-*cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1"
+cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+*cd "$dir/results/IV_referee1"
 
 
 capture log close
@@ -248,8 +250,8 @@ set more off
 set more off
 
 forvalues x=2005(1)2013{
-*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
-use "$dir/results/IV_referee1/hummels_FS.dta", clear
+use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+*use "$dir/results/IV_referee1/hummels_FS.dta", clear
 keep if year==`x'
 
 *****just air
@@ -289,17 +291,17 @@ esttab, mtitles b(%5.3f) se(%5.3f) compress r2 starlevels(c 0.1 b 0.05 a 0.01)  
 esttab, mtitles b(%5.3f) se(%5.3f) r2 starlevels({$^c$} 0.1 {$^b$} 0.05 {$^a$} 0.01) keep(ls_tariff dls_tariff ds_tariff) se tex label  title(First_stage_`x'_estimates)
 eststo clear
 
-*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
-save "$dir/results/IV_referee1/FS_`x'.dta", replace
+save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
+*save "$dir/results/IV_referee1/FS_`x'.dta", replace
 
 }
 
 
 
-*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
-use "$dir/results/IV_referee1/FS_2005.dta", replace
-*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
-save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
+use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
+*use "$dir/results/IV_referee1/FS_2005.dta", replace
+save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
+*save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
 
 
 sort iso_o year mode
@@ -307,21 +309,21 @@ sort iso_o year mode
 
 
 forvalues x=2006(1)2013{
-*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
-use "$dir/results/IV_referee1/FS_`x'.dta", clear
+use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
+*use "$dir/results/IV_referee1/FS_`x'.dta", clear
 sort iso_o year mode
-*append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta"
-append using "$dir/results/IV_referee1/prediction_FS_yearly.dta"
+append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta"
+*append using "$dir/results/IV_referee1/prediction_FS_yearly.dta"
 order iso_o year mode sitc2 sitc2_3d
 keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_yearly*
-*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
-save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
+save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta", replace
+*save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
 }
 
 
 forvalues x=2005(1)2013{
-*erase "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'.dta"
-erase "$dir/results/IV_referee1/FS_`x'.dta"
+erase "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'.dta"
+*erase "$dir/results/IV_referee1/FS_`x'.dta"
 
 }
 
