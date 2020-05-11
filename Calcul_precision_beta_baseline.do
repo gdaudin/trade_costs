@@ -207,11 +207,46 @@ foreach x in `mode' {
 			generate beta`i' =-(t`i'/prix_fob)/(tau`i' -1 + t`i'/prix_fob)
 		}
 		
+		
 		save temp_beta.dta, replace
 		
-		egen beta_baseline_05=rowpctile(beta*), p(05)
-		egen beta_baseline_50=rowpctile(beta*), p(50)
-		egen beta_baseline_95=rowpctile(beta*), p(95)
+		egen beta_baseline_05=rowpctile(beta1-beta1000), p(05)
+		egen beta_baseline_50=rowpctile(beta1-beta1000), p(50)
+		egen beta_baseline_95=rowpctile(beta1-beta1000), p(95)
+		
+		save temp_beta.dta, replace
+		
+		drop tau1-beta1000
+		drop country
+		
+		collapse (sum) `mode'_val (mean) beta_min beta_max beta_baseline_05 beta_baseline_50 beta_baseline_95,by(iso_o sitc2)
+		drop if `mode'_val==0
+		
+		gen amplitute_baseline = abs(beta_baseline_95-beta_baseline_05)
+		gen amplitute_referee1 = abs(beta_max-beta_min)
+		
+		gen ratio_amplitude = amplitute_baseline/amplitute_referee1
+		
+		gen log_ratio_amplitude=ln(ratio_amplitude)
+		hist log_ratio_amplitude
+		gen log_ratio_amplitude_censored = max(log_ratio_amplitude,-4)
+		
+		save "$dir/results/comparaison_amplitute_baseline_referee1_`z'_`x'", replace
+		
+		
+		label var log_ratio_amplitude_censored "ln(amplitude_beta_baseline/amplitude beta), censored at -4"
+
+		
+		hist log_ratio_amplitude_censored, percent start(-4) bin(20)
+		graph export "$dir/results/comparaison_amplitute_baseline_referee1_`z'_`x'.pdf", replace
+		
+		hist log_ratio_amplitude_censored [fweight=ves_val], percent start(-4) title(Weighted by value of trade flow) bin(20)
+		graph export "$dir/results/comparaison_amplitute_baseline_referee1_`z'_`x'_weighted.pdf", replace
+		
+
+		
+
+		
 		
 		
 		/*
@@ -227,11 +262,8 @@ foreach x in `mode' {
 	*/
 	
 	
-	
-	}
-	
-
 		
+	}
 	
 }
 
