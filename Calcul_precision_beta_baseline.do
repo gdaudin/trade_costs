@@ -219,8 +219,8 @@ foreach x in `mode' {
 		drop tau1-beta1000
 		drop country
 		
-		collapse (sum) `mode'_val (mean) beta_min beta_max beta_baseline_05 beta_baseline_50 beta_baseline_95,by(iso_o sitc2)
-		drop if `mode'_val==0
+		collapse (sum) `x'_val (mean) beta_min beta_max beta_baseline_05 beta_baseline_50 beta_baseline_95,by(iso_o sitc2)
+		drop if `x'_val==0
 		
 		gen amplitute_baseline = abs(beta_baseline_95-beta_baseline_05)
 		gen amplitute_referee1 = abs(beta_max-beta_min)
