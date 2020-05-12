@@ -221,6 +221,23 @@ log close
 keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_panel*
 order sitc2 sitc2_3d iso_o year mode lprix_fob  lprix_panel_hat_air_allFE lprix_panel_hat_air_allFE2 /*
 */dlprix_fob dlprix_panel_hat_air_allFE dlprix_panel_hat_air_allFE2 dprix_fob dprix_panel_air_hat_allFE dprix_panel_hat_air_allFE2
+
+scatter lprix_fob lprix_panel_hat_air_allFE
+save graph_lprix_fob1, replace
+scatter lprix_fob lprix_panel_hat_air_allFE2
+save graph_lprix_fob2, replace
+
+scatter dlprix_fob dlprix_panel_hat_air_allFE
+save graph_dlprix_fob1, replace
+scatter dlprix_fob dlprix_panel_hat_air_allFE2
+save graph_dlprix_fob2, replace
+
+scatter dprix_fob dlprix_panel_hat_air_allFE
+save graph_dprix_fob1, replace
+scatter dprix_fob dlprix_panel_hat_air_allFE2
+save graph_dprix_fob2, replace
+
+
 save predictions_FS_panel.dta, replace
 
 
