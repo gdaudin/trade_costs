@@ -234,7 +234,7 @@ foreach x in `mode' {
 		save "$dir/results/comparaison_amplitute_baseline_referee1_`z'_`x'", replace
 		
 		
-		label var log_ratio_amplitude_censored "ln(amplitude_beta_baseline/amplitude beta), censored at -4"
+		label var log_ratio_amplitude_censored "ln(size_confidence_interval_beta_baseline/size_ci_beta), censored at -4"
 
 		
 		hist log_ratio_amplitude_censored, percent start(-4) bin(20)
