@@ -57,12 +57,12 @@ label var s_tariff "tariff as share of value imported, air"
 bys sitc2 year iso_o mode: gen s_tariff_ves = duty/ves_val
 label var s_tariff "tariff as share of value imported, ves"
 
-bys sitc2 year iso_o: gen ls_tariff = ln(1+s_tariff)
-label var ls_tariff "ln(1+tariff as share of value imported, all modes)"
-bys sitc2 year iso_o mode: gen ls_tariff_air = ln(1+s_tariff_air)
-label var ls_tariff "ln(1+tariff as share of value imported, air)"
-bys sitc2 year iso_o mode: gen ls_tariff_ves = ln(1+s_tariff_ves)
-label var ls_tariff "ln(1+tariff as share of value imported, all modes)"
+bys sitc2 year iso_o: gen ls_tariff = ln(0.01+s_tariff)
+label var ls_tariff "ln(0.01+tariff as share of value imported, all modes)"
+bys sitc2 year iso_o mode: gen ls_tariff_air = ln(0.01+s_tariff_air)
+label var ls_tariff "ln(0.01+tariff as share of value imported, air)"
+bys sitc2 year iso_o mode: gen ls_tariff_ves = ln(0.01+s_tariff_ves)
+label var ls_tariff "ln(0.01+tariff as share of value imported, all modes)"
 
 **** ln-linéarisation prix_fob, mais cela impliquera d'appliquer la fonction exponentielle aux prédictions***
 gen lprix_fob= ln(prix_fob)
@@ -110,7 +110,7 @@ gen ds_tariff = d.s_tariff
 
 order year iso_o sitc2_3d sitc2 mode lprix_fob dlprix_fob ls_tariff dls_tariff
 
-*drop if year ==2004
+drop if year ==2004
 
 save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", replace
 *save "$dir/results/IV_referee1/hummels_FS.dta", replace
@@ -181,6 +181,7 @@ drop FEcs FEsy
 eststo: reghdfe dprix_fob ds_tariff cntry_yeard* if mode=="air", a(FEcs=cntry_sect3d FEsy=sect3d_year) resid
 predict dprix_panel_hat_air_allFE2,xbd 
 drop FEcs FEsy
+
 
 *****just vessel
 
