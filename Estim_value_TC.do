@@ -116,7 +116,7 @@ program nlcouts_IetA
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {
 					tempname feA_`p'_`j'
-***************Remplac v9				
+***************Remplacer v9				
 *					scalar `feA_`p'_`j'' =`at'[1,`n']
 *Si on suppose que des coûts de transport additifs, des cdt multiplicatifs, des droits
 *de douane ad valorem, des droits de douane en quantité => il faudrait "+" dans le terme_A
@@ -268,7 +268,7 @@ program nlcouts_additif
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {
 					tempname feA_`p'_`j'
-***************Remplac v9				
+***************Remplacer v9				
 *					scalar `feA_`p'_`j'' =`at'[1,`n']
 *Si on suppose que des coûts de transport additifs, des cdt multiplicatifs, des droits
 *de douane ad valorem, des droits de douane en quantité => il faudrait "+" dans le terme_A
@@ -301,7 +301,7 @@ program nlcouts_additif
 	
 end
 **********************************************************************
-************** FIN FONCTION
+************** FIN FONCTIONS
 **********************************************************************	
 
 
@@ -333,6 +333,11 @@ if "`database'"=="db_samesample_`class'_`preci'" {
 	global stock_results $dir/results/referee1/baselinesamplereferee1
 }
 
+
+if "`database'"=="predictions_FS_panel" {
+	global stock_results $dir/results/IV_referee1
+}
+
 ****************Préparation de la base blouk
 
 *** Si on utilise méthode ancienne sur database soumission (large)
@@ -341,9 +346,26 @@ if "`database'"=="db_samesample_`class'_`preci'" {
 *** Si on utilise méthode ancienne sur base révision selon méthode référé 1 (plus petite)
 ** database = db_samesample_`class'_`preci'
 
+*** Si on utilise la base IV first stage
+** database = referee1_IV
 
-* Base révision même sample
-use "$dir_data/`database'", clear
+
+
+
+if "`database'"!="predictions_FS_panel" use "$dir_data/`database'", clear
+
+
+if "`database'"=="predictions_FS_panel" {
+	use "$stock_results/`database'"
+	keep sitc2-mode lprix_panel_hat_air_allFE2 lprix_panel_hat_ves_allFE2
+	drop sitc2_3d
+	merge 1:1 sitc2-mode using "$dir_data/hummels_tra"
+	rename prix_fob prix_fob_non_instru
+	generate prix_fob = .
+	replace prix_fob=exp(lprix_panel_hat_air_allFE2) if mode=="air"
+	replace prix_fob=exp(lprix_panel_hat_ves_allFE2) if mode=="ves"
+}
+
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
