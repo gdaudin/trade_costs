@@ -115,7 +115,8 @@ if "`method1'"=="baselinesamplereferee1" {
 	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 }	
 	
-	
+
+		
 	
 	
 	
@@ -127,6 +128,11 @@ save "$dir_temp/`method1'_`method2'.dta", replace
 if "`method2'"=="referee1" {
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
 }
+
+if "`method2'"=="IV_referee1" {
+	use "$dir_baseline_results/IV_referee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+}	
+	
 
 bys iso_o sector : keep if _n==1
 
@@ -176,7 +182,12 @@ if "`method2'"=="referee1" {
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
 }
 
-egen couverture_referee1=total(`mode'_val)
+if "`method2'"=="IV_referee1" {
+	use "$dir_baseline_results/IV_referee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+}	
+	
+
+egen couverture_`method2'=total(`mode'_val)
 gen Nb_referee1=_N
 summarize beta, det
 generate beta_mean = r(mean)
@@ -187,7 +198,7 @@ generate beta_med_pond = r(p50)
 generate blif = iso_o+sector
 levelsof blif
 generate Nb_cx3ds = r(r)
-label var Nb_cx3ds "Number of country x 3 digit sector included in referee1 test"
+label var Nb_cx3ds "Number of country x 3 digit sector included in `method2' test"
 drop blif
 
 
@@ -213,8 +224,8 @@ args method1 method2
 
 
 use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
-gen referee1_as_value_share_baseline=couverture_referee1/couverture_baseline
-gen referee1_nb_pairs_share_baseline=Nb_cx3ds/Nb_cx3ds_baseline
+gen `method2'_as_value_share_`method1'=couverture_`method2'/couverture_`method1'
+gen `method2'_nb_pairs_share_`method1'=Nb_cx3ds/Nb_cx3ds_`method1'
 sort mode year
 
 save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
@@ -236,14 +247,14 @@ replace type = substr(type, 10,.) if strmatch(type,"baseline*")!=0
 reshape wide beta_,i(year mode type) j(method) string
 
 
-graph twoway (connected beta_baseline year) (connected beta_referee1 year), by(mode type)
+graph twoway (connected beta_`method1' year) (connected beta_`method2' year), by(mode type)
 
 
 graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.pdf", replace
 
 
-graph twoway (scatter beta_referee1 beta_baseline) (lfit beta_referee1 beta_baseline), ///
-			 ytitle("baseline") xtitle("referee1") by(mode type)
+graph twoway (scatter beta_`method2' beta_`method1') (lfit beta_`method2' beta_`method1'), ///
+			 ytitle("`method1'") xtitle("`method2'") by(mode type)
 			 
 graph export "$dir_comparaison/scatter_comparaison_by_type_`method1'_`method2'.pdf", replace
 
