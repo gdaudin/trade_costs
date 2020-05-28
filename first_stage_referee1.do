@@ -248,13 +248,13 @@ save predictions_FS_panel.dta, replace
 ***************************************************
 ***********First-stage regressions, YEARLY*********
 ***************************************************
+/*
 
+*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+use "$dir/results/IV_referee1/hummels_FS.dta", clear
 
-use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
-*use "$dir/results/IV_referee1/hummels_FS.dta", clear
-
-cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-*cd "$dir/results/IV_referee1"
+*cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+cd "$dir/results/IV_referee1"
 
 
 capture log close
@@ -347,6 +347,8 @@ forvalues x=2005(1)2013 {
 	erase "$dir/results/IV_referee1/FS_`x'.dta"
 }
 
+*/
 
+erase "$dir/results/IV_referee1/hummels_FS.dta"
 
 capture log close
