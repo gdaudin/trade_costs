@@ -5,6 +5,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
 	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaison_baseline_referee1"
 	global dir_temp ~/Downloads/temp_stata
+	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/"
 	
 	
 }
@@ -118,8 +119,6 @@ if "`method1'"=="baselinesamplereferee1" {
 
 		
 	
-	
-	
 rename product sector
 bys iso_o sector : keep if _n==1
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
@@ -130,7 +129,10 @@ if "`method2'"=="referee1" {
 }
 
 if "`method2'"=="IV_referee1" {
-	use "$dir_baseline_results/IV_referee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	use "$dir_results/IV_referee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	generate beta = -(terme_A/(terme_I+terme_A-1))
+	rename product sector /*Product is in fact 3 digits*/
+	drop _merge
 }	
 	
 
@@ -183,7 +185,10 @@ if "`method2'"=="referee1" {
 }
 
 if "`method2'"=="IV_referee1" {
-	use "$dir_baseline_results/IV_referee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	use "$dir_results/IV_referee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	generate beta = -(terme_A/(terme_I+terme_A-1))
+	rename product sector /*Product is in fact 3 digits*/
+	drop _merge
 }	
 	
 
@@ -202,7 +207,7 @@ label var Nb_cx3ds "Number of country x 3 digit sector included in `method2' tes
 drop blif
 
 
-keep couverture_referee1-Nb_cx3ds
+keep couverture_`method2'-Nb_cx3ds
 keep if _n==1
 gen year=`year'
 gen mode="`mode'"
@@ -221,14 +226,7 @@ capture program drop comparaison_graph
 program comparaison_graph
 args method1 method2
 
-
-
 use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
-gen `method2'_as_value_share_`method1'=couverture_`method2'/couverture_`method1'
-gen `method2'_nb_pairs_share_`method1'=Nb_cx3ds/Nb_cx3ds_`method1'
-sort mode year
-
-save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 
 graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baseline_mean) ///
 			 (scatter beta_mean_pond beta_baseline_mean_pond) (lfit beta_mean_pond beta_baseline_mean_pond) ///
@@ -241,9 +239,9 @@ graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.pdf", rep
 
 keep year mode beta*
 reshape long beta_, i(year mode) j(type) string
-gen method="referee1"
-replace method="baseline" if strmatch(type,"baseline*")!=0
-replace type = substr(type, 10,.) if strmatch(type,"baseline*")!=0
+gen method="`method2'"
+replace method="`method1'" if strmatch(type,"`method1'*")!=0
+replace type = substr(type, 10,.) if strmatch(type,"`method1'*")!=0
 reshape wide beta_,i(year mode type) j(method) string
 
 
@@ -268,19 +266,27 @@ end
 
 
 
+
 /*
 
-
-capture erase "$dir_comparaison/stats_comp_baseline_referee1.dta"
+*capture erase "$dir_comparaison/stats_comp_baseline_referee1.dta"
+capture erase "$dir_comparaison/stats_comp_baseline_IV_referee1.dta"
 
 foreach year of num 2005/2013 {
-	foreach mode in air ves {
-	comparaison_by_year_mode `year' `mode' baseline referee1
+	foreach mode in /*air*/ ves {
+	comparaison_by_year_mode `year' `mode' baseline IV_referee1
+	use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
+	gen `method2'_value_`method1'=couverture_`method2'/couverture_`method1'
+	label var `method2'_value_`method1' "Covered value of trade by method2 as a share of method1"
+	gen `method2'_nbpair_`method1'=Nb_cx3ds/Nb_cx3ds_`method1'
+	label var `method2'_nbpair_`method1' "Covered bilateral trade flows by products by method2 as a share of method1"
+	sort mode year
+	save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 	}
 }
 
-
-comparaison_graph baseline referee1
+*/
+comparaison_graph baseline IV_referee1
 
 */
 
