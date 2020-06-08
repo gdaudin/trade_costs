@@ -145,7 +145,7 @@ erase "$dir_temp/`method1'_`method2'.dta"
 graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
 	title("For `year', `mode'")
 
-graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.pdf", replace
+graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.png", replace
 
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
@@ -234,7 +234,7 @@ graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baselin
 			 (scatter beta_med_pond beta_baseline_med_pond) (lfit beta_med_pond beta_baseline_med_pond), ///
 			 ytitle("baseline") xtitle("referee1")
 			 
-graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.pdf", replace
+graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.png", replace
 
 
 keep year mode beta*
@@ -248,13 +248,13 @@ reshape wide beta_,i(year mode type) j(method) string
 graph twoway (connected beta_`method1' year) (connected beta_`method2' year), by(mode type)
 
 
-graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.pdf", replace
+graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.png", replace
 
 
 graph twoway (scatter beta_`method2' beta_`method1') (lfit beta_`method2' beta_`method1'), ///
 			 ytitle("`method1'") xtitle("`method2'") by(mode type)
 			 
-graph export "$dir_comparaison/scatter_comparaison_by_type_`method1'_`method2'.pdf", replace
+graph export "$dir_comparaison/scatter_comparaison_by_type_`method1'_`method2'.png", replace
 
 end
 
