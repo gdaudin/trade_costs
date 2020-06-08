@@ -19,11 +19,11 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_pgms $dir/trade_costs_git
 }
 
-
-
+clear
+set maxvar 120000
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1"
+cd "$dir/results/IV_referee1_panel"
 
 use "$dir/data/hummels_tra.dta", clear
 *use hummels_tra.dta, clear
@@ -32,7 +32,7 @@ set matsize 10000
 
 
 
-keep if year >2003
+*keep if year >2003
 keep mode sitc2 prix_fob prix_caf prix_trsp prix_trsp2 duty iso_o year con_val ves_val air_val
 
 duplicates tag mode year sitc2 iso_o, g(tag)
@@ -119,7 +119,7 @@ gen ds_tariff = d.s_tariff
 
 order year iso_o sitc2_3d sitc2 mode lprix_fob dlprix_fob ls_tariff dls_tariff
 
-drop if year ==2004
+*drop if year ==2004
 
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", replace
 save "$dir/hummels_FS.dta", replace
@@ -261,7 +261,7 @@ save predictions_FS_panel.dta, replace
 use "$dir/hummels_FS.dta", clear
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1"
+cd "$dir/results/IV_referee1_yearly"
 
 
 capture log close
@@ -272,7 +272,7 @@ log using first_stage_yearly.log, replace
 set more off
 
 
-forvalues x=2005(1)2013{
+forvalues x=1975(1)2013{
 	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
 	use "$dir/hummels_FS.dta", clear
 	keep if year==`x'
@@ -320,18 +320,18 @@ forvalues x=2005(1)2013{
 }
 
 
-
+local first_year 1975
 *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
-use "$dir/FS_2005.dta", replace
+use "$dir/FS_`first_year'.dta", replace
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
 save "$dir/results/IV_referee1_yearly/predictions_FS_yearly.dta", replace
 
 
 sort iso_o year mode
 
+local i = `first_year'+1
 
-
-forvalues x=2006(1)2013{
+forvalues x=`i'(1)2013{
 	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
 	use "$dir/FS_`x'.dta", clear
 	sort iso_o year mode
@@ -344,7 +344,7 @@ forvalues x=2006(1)2013{
 }
 
 
-forvalues x=2005(1)2013 {
+forvalues x=1975(1)2013 {
 	*erase "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'.dta"
 	erase "$dir/FS_`x'.dta"
 }
