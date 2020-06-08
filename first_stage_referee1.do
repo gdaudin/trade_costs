@@ -19,8 +19,8 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_pgms $dir/trade_costs_git
 }
 
-
-
+clear
+set maxvar 30000
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
 cd "$dir/results/IV_referee1"
@@ -115,7 +115,7 @@ order year iso_o sitc2_3d sitc2 mode lprix_fob dlprix_fob ls_tariff dls_tariff
 *drop if year ==2004
 
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", replace
-save "$dir/results/IV_referee1/hummels_FS.dta", replace
+save "$dir/hummels_FS.dta", replace
 
 
 
@@ -130,7 +130,7 @@ save "$dir/results/IV_referee1/hummels_FS.dta", replace
 ************************
 
 *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
-use "$dir/results/IV_referee1/hummels_FS.dta", clear
+use "$dir/hummels_FS.dta", clear
 
 ****** Fixed effects************************
 
@@ -152,7 +152,7 @@ egen cntry_mode_year=group(iso_o mode year)
 egen sect3d_mode_year=group(sitc2_3d mode year)
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1"
+cd "$dir/results/IV_referee1_panel"
 
 capture log close
 capture eststo clear
@@ -270,7 +270,7 @@ save predictions_FS_panel.dta, replace
 
 
 *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
-use "$dir/results/IV_referee1/hummels_FS.dta", clear
+use "$dir/hummels_FS.dta", clear
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
 cd "$dir/results/IV_referee1"
@@ -288,9 +288,10 @@ capture eststo clear
 set more off
 
 
+
 forvalues x=1974(1)2013{
 	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
-	use "$dir/results/IV_referee1/hummels_FS.dta", clear
+	use "$dir/hummels_FS.dta", clear
 	keep if year==`x'
 	
 	*****just air
@@ -333,43 +334,46 @@ forvalues x=1974(1)2013{
 	eststo clear
 	
 	*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
-	save "$dir/results/IV_referee1/FS_`x'.dta", replace
+	save "$dir/FS_`x'.dta", replace
 
 }
 
 
 
 *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
-use "$dir/results/IV_referee1/FS_1974.dta", replace
+
+use "$dir/FS_1974.dta", replace
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
-save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
+save "$dir/results/IV_referee1/predictions_FS_yearly.dta", replace
 
 
 sort iso_o year mode
 
 
-
 forvalues x=1975(1)2013{
+
 	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
-	use "$dir/results/IV_referee1/FS_`x'.dta", clear
+	use "$dir/FS_`x'.dta", clear
 	sort iso_o year mode
 	*append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta"
-	append using "$dir/results/IV_referee1/prediction_FS_yearly.dta"
+	append using "$dir/results/IV_referee1/predictions_FS_yearly.dta"
 	order iso_o year mode sitc2 sitc2_3d
 	keep sitc2 sitc2_3d iso_o year mode lprix_fob *prix_yearly*
 	*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta", replace
-	save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
+	save "$dir/results/IV_referee1/predictions_FS_yearly.dta", replace
 }
+
 
 
 forvalues x=1974(1)2013 {
+
 	*erase "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'.dta"
-	erase "$dir/results/IV_referee1/FS_`x'.dta"
+	erase "$dir/FS_`x'.dta"
 }
 
-*/
 
-erase "$dir/results/IV_referee1/hummels_FS.dta"
+
+erase "$dir/hummels_FS.dta"
 
 scatter lprix_fob lprix_yearly_air_hat_allFE
 graph save graph_lprix_fob_yearly_air, replace

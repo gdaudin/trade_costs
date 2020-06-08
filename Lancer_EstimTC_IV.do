@@ -59,9 +59,30 @@ do "$dir_pgms/Estim_value_TC.do"
 *******************************************************
 
 
+
 foreach mode in $modelist {
 
-	foreach  year of numlist  /*= 1974(1)*/ 2013 {
+	foreach  year of numlist  /*1974*/ 2005(1)2013 {
+	
+		*** SOUMISSION: hummels_tra.dta
+		
+		capture log close
+		log using hummels_3digits_complet_`year'_`node', replace
+		
+		prep_reg prediction_FS_yearly `year' sitc2 3 `mode'
+		
+		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
+		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
+		
+		log close
+	
+	}
+}
+
+/*
+foreach mode in $modelist {
+
+	foreach  year of numlist  /*1974*/ 2005(1)2013 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
@@ -77,7 +98,5 @@ foreach mode in $modelist {
 	
 	}
 }
-
-
-
+*/
 
