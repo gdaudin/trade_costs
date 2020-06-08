@@ -128,8 +128,8 @@ if "`method2'"=="referee1" {
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
 }
 
-if "`method2'"=="IV_referee1" {
-	use "$dir_results/IV_referee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+if "`method2'"=="IV_referee1_panel" {
+	use "$dir_results/IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
 	rename product sector /*Product is in fact 3 digits*/
 	drop _merge
@@ -167,7 +167,7 @@ summarize beta_baseline [fweight=`mode'_val], det
 generate beta_baseline_mean_pond = r(mean)
 generate beta_baseline_med_pond = r(p50)
 generate blif = iso_o+product
-levelsof blif
+quietly levelsof blif
 generate Nb_cx3ds_baseline = r(r)
 label var Nb_cx3ds_baseline "Number of country x 3 digit sector included in the baseline"
 drop blif
@@ -184,8 +184,8 @@ if "`method2'"=="referee1" {
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
 }
 
-if "`method2'"=="IV_referee1" {
-	use "$dir_results/IV_referee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+if "`method2'"=="IV_referee1_panel" {
+	use "$dir_results/IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
 	rename product sector /*Product is in fact 3 digits*/
 	drop _merge
@@ -201,7 +201,7 @@ summarize beta [fweight=`mode'_val], det
 generate beta_mean_pond = r(mean)
 generate beta_med_pond = r(p50)
 generate blif = iso_o+sector
-levelsof blif
+quietly levelsof blif
 generate Nb_cx3ds = r(r)
 label var Nb_cx3ds "Number of country x 3 digit sector included in `method2' test"
 drop blif
@@ -259,34 +259,42 @@ graph export "$dir_comparaison/scatter_comparaison_by_type_`method1'_`method2'.p
 end
 
 
+*********
+***on lance les comparaisons
+
+global method1 baseline
+global method2 IV_referee1_panel
+
+******
 
 
 
 
-
-
-
-
-/*
 
 *capture erase "$dir_comparaison/stats_comp_baseline_referee1.dta"
-capture erase "$dir_comparaison/stats_comp_baseline_IV_referee1.dta"
+erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 foreach year of num 2005/2013 {
-	foreach mode in /*air*/ ves {
-	comparaison_by_year_mode `year' `mode' baseline IV_referee1
-	use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
-	gen `method2'_value_`method1'=couverture_`method2'/couverture_`method1'
-	label var `method2'_value_`method1' "Covered value of trade by method2 as a share of method1"
-	gen `method2'_nbpair_`method1'=Nb_cx3ds/Nb_cx3ds_`method1'
-	label var `method2'_nbpair_`method1' "Covered bilateral trade flows by products by method2 as a share of method1"
-	sort mode year
-	save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
+	foreach mode in air ves {
+	comparaison_by_year_mode `year' `mode' $method1 $method2
 	}
 }
 
+
+
+use "$dir_comparaison/stats_comp_${method1}_$method2.dta", clear
+gen method2_value_method1=couverture_$method2/couverture_$method1
+label var method2_value_method1 "Covered value of trade by $method2 as a share of $method1"
+gen method2_nbpair_method1=Nb_cx3ds/Nb_cx3ds_$method1
+label var method2_nbpair_method1 "Covered bilateral trade flows by products by $method2 as a share of $method1"
+sort mode year
+save "$dir_comparaison/stats_comp_${method1}_$method2.dta", replace
+
+
+
+
 */
-comparaison_graph baseline IV_referee1
+comparaison_graph $method1 $method2
 
 */
 
