@@ -6,6 +6,13 @@
 
 set more off
 
+if "`c(username)'" =="jerome" {
+	global dir "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+
+}
+
+
+
 
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
@@ -119,7 +126,7 @@ save "$dir/results/IV_referee1/hummels_FS.dta", replace
 
 
 
-***************************************************
+/***************************************************
 ***********First-stage regressions, PANEL**********
 ***************************************************
 
@@ -243,12 +250,12 @@ graph save graph_dprix_fob2, replace
 
 save predictions_FS_panel.dta, replace
 
-
+*/
 
 ***************************************************
 ***********First-stage regressions, YEARLY*********
 ***************************************************
-/*
+
 
 *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
 use "$dir/results/IV_referee1/hummels_FS.dta", clear
@@ -264,46 +271,41 @@ log using first_stage_yearly.log, replace
 
 set more off
 
-***************pour info : air et vessel ensemble*********
-
-
-
-set more off
 
 forvalues x=2005(1)2013{
-	use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
-	*use "$dir/results/IV_referee1/hummels_FS.dta", clear
+	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+	use "$dir/results/IV_referee1/hummels_FS.dta", clear
 	keep if year==`x'
 	
 	*****just air
 	eststo: reghdfe lprix_fob ls_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
-	predict lprix_yearly_air_hat,xb 
+	*predict lprix_yearly_air_hat,xb 
 	predict lprix_yearly_air_hat_allFE,xbd 
 	drop FEcs
 	
 	eststo: reghdfe dlprix_fob dls_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
-	predict dlprix_yearly_air_hat,xb 
+	*predict dlprix_yearly_air_hat,xb 
 	predict dlprix_yearly_air_hat_allFE,xbd 
 	drop FEcs
 	
 	eststo: reghdfe dprix_fob ds_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
-	predict dprix_yearly_air_hat,xb 
+	*predict dprix_yearly_air_hat,xb 
 	predict dprix_yearly_air_hat_allFE,xbd 
 	drop FEcs
 	
 	*****just vessel
 	eststo: reghdfe lprix_fob ls_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
-	predict lprix_yearly_ves_hat,xb 
+	*predict lprix_yearly_ves_hat,xb 
 	predict lprix_yearly_ves_hat_allFE,xbd 
 	drop FEcs
 	
 	eststo: reghdfe dlprix_fob dls_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
-	predict dlprix_yearly_ves_hat,xb 
+	*predict dlprix_yearly_ves_hat,xb 
 	predict dlprix_yearly_ves_hat_allFE,xbd 
 	drop FEcs
 	
 	eststo: reghdfe dprix_fob ds_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
-	predict dprix_yearly_ves_hat,xb 
+	*predict dprix_yearly_ves_hat,xb 
 	predict dprix_yearly_ves_hat_allFE,xbd 
 	drop FEcs
 	

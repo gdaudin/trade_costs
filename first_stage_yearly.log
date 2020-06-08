@@ -1,0 +1,2128 @@
+-----------------------------------------------------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\results\IV_referee1\first_stage_yearl
+> y.log
+  log type:  text
+ opened on:   8 Jun 2020, 10:55:05
+
+. 
+. set more off
+
+. 
+. 
+. forvalues x=2005(1)2013{
+  2.         *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+.         use "$dir/results/IV_referee1/hummels_FS.dta", clear
+  3.         keep if year==`x'
+  4.         
+.         *****just air
+.         eststo: reghdfe lprix_fob ls_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+  5.         *predict lprix_yearly_air_hat,xb 
+.         predict lprix_yearly_air_hat_allFE,xbd 
+  6.         drop FEcs
+  7.         
+.         eststo: reghdfe dlprix_fob dls_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+  8.         *predict dlprix_yearly_air_hat,xb 
+.         predict dlprix_yearly_air_hat_allFE,xbd 
+  9.         drop FEcs
+ 10.         
+.         eststo: reghdfe dprix_fob ds_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+ 11.         *predict dprix_yearly_air_hat,xb 
+.         predict dprix_yearly_air_hat_allFE,xbd 
+ 12.         drop FEcs
+ 13.         
+.         *****just vessel
+.         eststo: reghdfe lprix_fob ls_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+ 14.         *predict lprix_yearly_ves_hat,xb 
+.         predict lprix_yearly_ves_hat_allFE,xbd 
+ 15.         drop FEcs
+ 16.         
+.         eststo: reghdfe dlprix_fob dls_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+ 17.         *predict dlprix_yearly_ves_hat,xb 
+.         predict dlprix_yearly_ves_hat_allFE,xbd 
+ 18.         drop FEcs
+ 19.         
+.         eststo: reghdfe dprix_fob ds_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+ 20.         *predict dprix_yearly_ves_hat,xb 
+.         predict dprix_yearly_ves_hat_allFE,xbd 
+ 21.         drop FEcs
+ 22.         
+.         set linesize 250
+ 23.         esttab, mtitles b(%5.3f) se(%5.3f) compress r2 starlevels(c 0.1 b 0.05 a 0.01)  se 
+ 24.         esttab, mtitles b(%5.3f) se(%5.3f) r2 starlevels({$^c$} 0.1 {$^b$} 0.05 {$^a$} 0.01) keep(ls_tariff dls_tariff d
+> s_tariff) se tex label  title(First_stage_`x'_estimates)
+ 25.         eststo clear
+ 26.         
+.         *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
+.         save "$dir/results/IV_referee1/FS_`x'.dta", replace
+ 27. 
+. }
+(701,874 observations deleted)
+(dropped 5004 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     41,212
+Absorbing 1 HDFE group                            F(   1,    187) =      74.46
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.5760
+                                                  Adj R-squared   =     0.4741
+                                                  Within R-sq.    =     0.0029
+Number of clusters (cntry)   =        188         Root MSE        =     1.1839
+
+                                (Std. Err. adjusted for 188 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0446009   .0051688    -8.63   0.000    -.0547976   -.0344042
+       _cons |    3.62824   .0108042   335.82   0.000     3.606926    3.649554
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7986        7986           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(50,849 missing values generated)
+(dropped 3859 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     26,821
+Absorbing 1 HDFE group                            F(   1,    148) =       8.73
+Statistics robust to heteroskedasticity           Prob > F        =     0.0036
+                                                  R-squared       =     0.2433
+                                                  Adj R-squared   =     0.0353
+                                                  Within R-sq.    =     0.0003
+Number of clusters (cntry)   =        149         Root MSE        =     1.0351
+
+                                (Std. Err. adjusted for 149 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0159964   .0054149    -2.95   0.004     -.026697   -.0052958
+       _cons |   .0926203   .0084068    11.02   0.000     .0760075    .1092332
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      5784        5784           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(65,240 missing values generated)
+(dropped 3859 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     26,821
+Absorbing 1 HDFE group                            F(   1,    148) =       4.10
+Statistics robust to heteroskedasticity           Prob > F        =     0.0446
+                                                  R-squared       =     0.5098
+                                                  Adj R-squared   =     0.3750
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        149         Root MSE        = 29610.5137
+
+                                (Std. Err. adjusted for 149 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -183.2192   90.43783    -2.03   0.045    -361.9354    -4.50294
+       _cons |   125.7779     36.163     3.48   0.001     54.31534    197.2404
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      5784        5784           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(65,240 missing values generated)
+(dropped 5167 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     40,517
+Absorbing 1 HDFE group                            F(   1,    174) =      15.09
+Statistics robust to heteroskedasticity           Prob > F        =     0.0001
+                                                  R-squared       =     0.6816
+                                                  Adj R-squared   =     0.5983
+                                                  Within R-sq.    =     0.0006
+Number of clusters (cntry)   =        175         Root MSE        =     0.9195
+
+                                (Std. Err. adjusted for 175 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |   .0158681   .0040854     3.88   0.000     .0078048    .0239314
+       _cons |   1.772561   .0093336   189.91   0.000     1.754139    1.790982
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8408        8408           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(51,544 missing values generated)
+(dropped 4328 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     28,198
+Absorbing 1 HDFE group                            F(   1,    143) =       1.44
+Statistics robust to heteroskedasticity           Prob > F        =     0.2324
+                                                  R-squared       =     0.2515
+                                                  Adj R-squared   =     0.0299
+                                                  Within R-sq.    =     0.0001
+Number of clusters (cntry)   =        144         Root MSE        =     0.7307
+
+                                (Std. Err. adjusted for 144 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0065106   .0054293    -1.20   0.232    -.0172426    .0042213
+       _cons |   .0601785   .0080414     7.48   0.000     .0442831    .0760739
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6439        6439           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(63,863 missing values generated)
+(dropped 4328 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     28,198
+Absorbing 1 HDFE group                            F(   1,    143) =       4.88
+Statistics robust to heteroskedasticity           Prob > F        =     0.0288
+                                                  R-squared       =     0.2296
+                                                  Adj R-squared   =     0.0016
+                                                  Within R-sq.    =     0.0003
+Number of clusters (cntry)   =        144         Root MSE        =    91.8684
+
+                                (Std. Err. adjusted for 144 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -5.505411    2.49316    -2.21   0.029    -10.43362   -.5772015
+       _cons |   1.847182   .9510308     1.94   0.054    -.0327132    3.727077
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6439        6439           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(63,863 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.045a                           0.016a                      
+             (0.005)                          (0.004)                       
+
+dls_tariff               -0.016a                          -0.007            
+                        (0.005)                          (0.005)            
+
+ds_tariff                         -183.219b                          -5.505b
+                                  (90.438)                          (2.493) 
+
+_cons          3.628a     0.093a   125.778a     1.773a     0.060a     1.847c
+             (0.011)    (0.008)   (36.163)    (0.009)    (0.008)    (0.951) 
+----------------------------------------------------------------------------
+N              41212      26821      26821      40517      28198      28198 
+R-sq           0.576      0.243      0.510      0.682      0.251      0.230 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2005\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.045{$^a$}&                  &                  &       0.016{$^a$}&                  &                  \\
+                    &     (0.005)      &                  &                  &     (0.004)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &      -0.016{$^a$}&                  &                  &      -0.007      &                  \\
+                    &                  &     (0.005)      &                  &                  &     (0.005)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &    -183.219{$^b$}&                  &                  &      -5.505{$^b$}\\
+                    &                  &                  &    (90.438)      &                  &                  &     (2.493)      \\
+\hline
+Observations        &       41212      &       26821      &       26821      &       40517      &       28198      &       28198      \\
+\(R^{2}\)           &       0.576      &       0.243      &       0.510      &       0.682      &       0.251      &       0.230      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2005.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2005.dta saved
+(700,706 observations deleted)
+(dropped 5018 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     42,019
+Absorbing 1 HDFE group                            F(   1,    188) =      52.89
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.5782
+                                                  Adj R-squared   =     0.4770
+                                                  Within R-sq.    =     0.0023
+Number of clusters (cntry)   =        189         Root MSE        =     1.1971
+
+                                (Std. Err. adjusted for 189 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0399585   .0054946    -7.27   0.000    -.0507975   -.0291196
+       _cons |   3.681085    .011577   317.96   0.000     3.658248    3.703923
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8132        8132           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(51,210 missing values generated)
+(dropped 3776 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     33,380
+Absorbing 1 HDFE group                            F(   1,    165) =       0.65
+Statistics robust to heteroskedasticity           Prob > F        =     0.4222
+                                                  R-squared       =     0.2479
+                                                  Adj R-squared   =     0.0677
+                                                  Within R-sq.    =     0.0001
+Number of clusters (cntry)   =        166         Root MSE        =     0.9608
+
+                                (Std. Err. adjusted for 166 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0092698     .01152    -0.80   0.422    -.0320154    .0134759
+       _cons |   .0314395   .0001685   186.56   0.000     .0311068    .0317723
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6450        6450           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(59,849 missing values generated)
+(dropped 3776 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     33,380
+Absorbing 1 HDFE group                            F(   1,    165) =       1.15
+Statistics robust to heteroskedasticity           Prob > F        =     0.2842
+                                                  R-squared       =     0.4417
+                                                  Adj R-squared   =     0.3079
+                                                  Within R-sq.    =     0.0001
+Number of clusters (cntry)   =        166         Root MSE        = 39993.9551
+
+                                (Std. Err. adjusted for 166 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -2760.138   2568.969    -1.07   0.284    -7832.426    2312.151
+       _cons |   266.3331   12.92911    20.60   0.000     240.8053    291.8609
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6450        6450           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(59,849 missing values generated)
+(dropped 5252 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     40,795
+Absorbing 1 HDFE group                            F(   1,    174) =       6.63
+Statistics robust to heteroskedasticity           Prob > F        =     0.0109
+                                                  R-squared       =     0.6744
+                                                  Adj R-squared   =     0.5886
+                                                  Within R-sq.    =     0.0003
+Number of clusters (cntry)   =        175         Root MSE        =     0.9262
+
+                                (Std. Err. adjusted for 175 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |    .011603   .0045065     2.57   0.011     .0027085    .0204975
+       _cons |   1.814352   .0103684   174.99   0.000     1.793888    1.834816
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8508        8508           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(52,434 missing values generated)
+(dropped 4320 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     33,258
+Absorbing 1 HDFE group                            F(   1,    149) =       0.03
+Statistics robust to heteroskedasticity           Prob > F        =     0.8618
+                                                  R-squared       =     0.2431
+                                                  Adj R-squared   =     0.0390
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        150         Root MSE        =     0.6917
+
+                                (Std. Err. adjusted for 150 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0018302   .0104939    -0.17   0.862    -.0225663    .0189059
+       _cons |   .0462182   .0001453   318.02   0.000      .045931    .0465054
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7064        7064           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(59,971 missing values generated)
+(dropped 4320 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     33,258
+Absorbing 1 HDFE group                            F(   1,    149) =       1.06
+Statistics robust to heteroskedasticity           Prob > F        =     0.3058
+                                                  R-squared       =     0.1746
+                                                  Adj R-squared   =    -0.0480
+                                                  Within R-sq.    =     0.0002
+Number of clusters (cntry)   =        150         Root MSE        =    99.8502
+
+                                (Std. Err. adjusted for 150 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -10.15962   9.887513    -1.03   0.306    -29.69748    9.378233
+       _cons |   1.156167   .0463857    24.93   0.000     1.064509    1.247826
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7064        7064           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(59,971 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.040a                           0.012b                      
+             (0.005)                          (0.005)                       
+
+dls_tariff               -0.009                           -0.002            
+                        (0.012)                          (0.010)            
+
+ds_tariff                         -2.8e+03                          -10.160 
+                                 (2568.969)                          (9.888) 
+
+_cons          3.681a     0.031a   266.333a     1.814a     0.046a     1.156a
+             (0.012)    (0.000)   (12.929)    (0.010)    (0.000)    (0.046) 
+----------------------------------------------------------------------------
+N              42019      33380      33380      40795      33258      33258 
+R-sq           0.578      0.248      0.442      0.674      0.243      0.175 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2006\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.040{$^a$}&                  &                  &       0.012{$^b$}&                  &                  \\
+                    &     (0.005)      &                  &                  &     (0.005)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &      -0.009      &                  &                  &      -0.002      &                  \\
+                    &                  &     (0.012)      &                  &                  &     (0.010)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &    -2.8e+03      &                  &                  &     -10.160      \\
+                    &                  &                  &  (2568.969)      &                  &                  &     (9.888)      \\
+\hline
+Observations        &       42019      &       33380      &       33380      &       40795      &       33258      &       33258      \\
+\(R^{2}\)           &       0.578      &       0.248      &       0.442      &       0.674      &       0.243      &       0.175      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2006.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2006.dta saved
+(704,950 observations deleted)
+(dropped 5150 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     40,025
+Absorbing 1 HDFE group                            F(   1,    186) =      53.05
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.5805
+                                                  Adj R-squared   =     0.4778
+                                                  Within R-sq.    =     0.0018
+Number of clusters (cntry)   =        187         Root MSE        =     1.1806
+
+                                (Std. Err. adjusted for 187 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0346559   .0047579    -7.28   0.000    -.0440424   -.0252694
+       _cons |   3.743501   .0097818   382.70   0.000     3.724204    3.762799
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7869        7869           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(48,960 missing values generated)
+(dropped 3798 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     32,226
+Absorbing 1 HDFE group                            F(   1,    160) =       3.27
+Statistics robust to heteroskedasticity           Prob > F        =     0.0724
+                                                  R-squared       =     0.2419
+                                                  Adj R-squared   =     0.0569
+                                                  Within R-sq.    =     0.0003
+Number of clusters (cntry)   =        161         Root MSE        =     0.9826
+
+                                (Std. Err. adjusted for 161 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0198788   .0109921    -1.81   0.072    -.0415872    .0018296
+       _cons |   .0624043   .0000564  1106.26   0.000     .0622929    .0625157
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6322        6322           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(56,759 missing values generated)
+(dropped 3798 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     32,226
+Absorbing 1 HDFE group                            F(   1,    160) =       0.49
+Statistics robust to heteroskedasticity           Prob > F        =     0.4863
+                                                  R-squared       =     0.3488
+                                                  Adj R-squared   =     0.1899
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        161         Root MSE        = 32351.8860
+
+                                (Std. Err. adjusted for 161 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |   997.8124   1429.938     0.70   0.486    -1826.175      3821.8
+       _cons |  -512.8583   1.263603  -405.87   0.000    -515.3538   -510.3628
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6322        6322           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(56,759 missing values generated)
+(dropped 5075 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     38,590
+Absorbing 1 HDFE group                            F(   1,    169) =      27.80
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.6773
+                                                  Adj R-squared   =     0.5900
+                                                  Within R-sq.    =     0.0012
+Number of clusters (cntry)   =        170         Root MSE        =     0.9367
+
+                                (Std. Err. adjusted for 170 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |   .0227398    .004313     5.27   0.000     .0142254    .0312542
+       _cons |   1.920609   .0097971   196.04   0.000     1.901268    1.939949
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8219        8219           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(50,395 missing values generated)
+(dropped 4312 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,633
+Absorbing 1 HDFE group                            F(   1,    144) =       0.02
+Statistics robust to heteroskedasticity           Prob > F        =     0.8863
+                                                  R-squared       =     0.2528
+                                                  Adj R-squared   =     0.0473
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        145         Root MSE        =     0.7003
+
+                                (Std. Err. adjusted for 145 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |   .0011561   .0080722     0.14   0.886    -.0147991    .0171114
+       _cons |   .0809184   .0000384  2108.45   0.000     .0808425    .0809943
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6824        6824           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(57,352 missing values generated)
+(dropped 4312 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,633
+Absorbing 1 HDFE group                            F(   1,    144) =       0.33
+Statistics robust to heteroskedasticity           Prob > F        =     0.5647
+                                                  R-squared       =     0.1257
+                                                  Adj R-squared   =    -0.1148
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        145         Root MSE        =  3358.5123
+
+                                (Std. Err. adjusted for 145 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -9.027822   15.63872    -0.58   0.565    -39.93892    21.88328
+       _cons |   21.12099    .017668  1195.44   0.000     21.08606    21.15591
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6824        6824           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(57,352 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.035a                           0.023a                      
+             (0.005)                          (0.004)                       
+
+dls_tariff               -0.020c                           0.001            
+                        (0.011)                          (0.008)            
+
+ds_tariff                          997.812                           -9.028 
+                                 (1429.938)                         (15.639) 
+
+_cons          3.744a     0.062a  -512.858a     1.921a     0.081a    21.121a
+             (0.010)    (0.000)    (1.264)    (0.010)    (0.000)    (0.018) 
+----------------------------------------------------------------------------
+N              40025      32226      32226      38590      31633      31633 
+R-sq           0.580      0.242      0.349      0.677      0.253      0.126 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2007\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.035{$^a$}&                  &                  &       0.023{$^a$}&                  &                  \\
+                    &     (0.005)      &                  &                  &     (0.004)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &      -0.020{$^c$}&                  &                  &       0.001      &                  \\
+                    &                  &     (0.011)      &                  &                  &     (0.008)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &     997.812      &                  &                  &      -9.028      \\
+                    &                  &                  &  (1429.938)      &                  &                  &    (15.639)      \\
+\hline
+Observations        &       40025      &       32226      &       32226      &       38590      &       31633      &       31633      \\
+\(R^{2}\)           &       0.580      &       0.242      &       0.349      &       0.677      &       0.253      &       0.126      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2007.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2007.dta saved
+(706,477 observations deleted)
+(dropped 5017 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     39,362
+Absorbing 1 HDFE group                            F(   1,    181) =      38.37
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.5779
+                                                  Adj R-squared   =     0.4735
+                                                  Within R-sq.    =     0.0022
+Number of clusters (cntry)   =        182         Root MSE        =     1.1989
+
+                                (Std. Err. adjusted for 182 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0386153   .0062336    -6.19   0.000    -.0509151   -.0263154
+       _cons |   3.838164   .0127639   300.70   0.000     3.812979    3.863349
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7806        7806           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(48,096 missing values generated)
+(dropped 3816 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     32,225
+Absorbing 1 HDFE group                            F(   1,    153) =       3.45
+Statistics robust to heteroskedasticity           Prob > F        =     0.0651
+                                                  R-squared       =     0.2420
+                                                  Adj R-squared   =     0.0566
+                                                  Within R-sq.    =     0.0004
+Number of clusters (cntry)   =        154         Root MSE        =     0.9769
+
+                                (Std. Err. adjusted for 154 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0245616   .0132222    -1.86   0.065    -.0506833    .0015601
+       _cons |   .0819383   .0000653  1254.25   0.000     .0818092    .0820673
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6334        6334           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(55,233 missing values generated)
+(dropped 3816 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     32,225
+Absorbing 1 HDFE group                            F(   1,    153) =       3.30
+Statistics robust to heteroskedasticity           Prob > F        =     0.0714
+                                                  R-squared       =     0.4724
+                                                  Adj R-squared   =     0.3434
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        154         Root MSE        = 30125.0836
+
+                                (Std. Err. adjusted for 154 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -222.9471   122.8211    -1.82   0.071    -465.5913    19.69719
+       _cons |   471.8048   .0912069  5172.91   0.000     471.6246     471.985
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6334        6334           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(55,233 missing values generated)
+(dropped 5088 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     37,847
+Absorbing 1 HDFE group                            F(   1,    162) =      14.57
+Statistics robust to heteroskedasticity           Prob > F        =     0.0002
+                                                  R-squared       =     0.6789
+                                                  Adj R-squared   =     0.5920
+                                                  Within R-sq.    =     0.0008
+Number of clusters (cntry)   =        163         Root MSE        =     0.9279
+
+                                (Std. Err. adjusted for 163 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |   .0182141   .0047725     3.82   0.000     .0087897    .0276385
+       _cons |   2.017305   .0108744   185.51   0.000     1.995831    2.038779
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8063        8063           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(49,611 missing values generated)
+(dropped 4292 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,465
+Absorbing 1 HDFE group                            F(   1,    139) =       0.18
+Statistics robust to heteroskedasticity           Prob > F        =     0.6686
+                                                  R-squared       =     0.2578
+                                                  Adj R-squared   =     0.0528
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        140         Root MSE        =     0.7041
+
+                                (Std. Err. adjusted for 140 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |   .0043092   .0100453     0.43   0.669    -.0155521    .0241705
+       _cons |   .1008942   .0000816  1237.04   0.000      .100733    .1010555
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6807        6807           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(55,993 missing values generated)
+(dropped 4292 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,465
+Absorbing 1 HDFE group                            F(   1,    139) =       0.35
+Statistics robust to heteroskedasticity           Prob > F        =     0.5533
+                                                  R-squared       =     0.3431
+                                                  Adj R-squared   =     0.1617
+                                                  Within R-sq.    =     0.0001
+Number of clusters (cntry)   =        140         Root MSE        =   377.9698
+
+                                (Std. Err. adjusted for 140 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |   25.90159   43.58058     0.59   0.553    -60.26496    112.0681
+       _cons |   1.186596   .0496654    23.89   0.000     1.088399    1.284794
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6807        6807           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(55,993 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.039a                           0.018a                      
+             (0.006)                          (0.005)                       
+
+dls_tariff               -0.025c                           0.004            
+                        (0.013)                          (0.010)            
+
+ds_tariff                         -222.947c                          25.902 
+                                 (122.821)                         (43.581) 
+
+_cons          3.838a     0.082a   471.805a     2.017a     0.101a     1.187a
+             (0.013)    (0.000)    (0.091)    (0.011)    (0.000)    (0.050) 
+----------------------------------------------------------------------------
+N              39362      32225      32225      37847      31465      31465 
+R-sq           0.578      0.242      0.472      0.679      0.258      0.343 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2008\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.039{$^a$}&                  &                  &       0.018{$^a$}&                  &                  \\
+                    &     (0.006)      &                  &                  &     (0.005)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &      -0.025{$^c$}&                  &                  &       0.004      &                  \\
+                    &                  &     (0.013)      &                  &                  &     (0.010)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &    -222.947{$^c$}&                  &                  &      25.902      \\
+                    &                  &                  &   (122.821)      &                  &                  &    (43.581)      \\
+\hline
+Observations        &       39362      &       32225      &       32225      &       37847      &       31465      &       31465      \\
+\(R^{2}\)           &       0.578      &       0.242      &       0.472      &       0.679      &       0.258      &       0.343      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2008.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2008.dta saved
+(710,339 observations deleted)
+(dropped 4768 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     37,547
+Absorbing 1 HDFE group                            F(   1,    174) =      25.11
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.5848
+                                                  Adj R-squared   =     0.4810
+                                                  Within R-sq.    =     0.0013
+Number of clusters (cntry)   =        175         Root MSE        =     1.1977
+
+                                (Std. Err. adjusted for 175 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0295246    .005892    -5.01   0.000    -.0411537   -.0178956
+       _cons |   3.865113   .0119401   323.71   0.000     3.841547    3.888679
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7508        7508           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(46,049 missing values generated)
+(dropped 3641 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,042
+Absorbing 1 HDFE group                            F(   1,    149) =       0.66
+Statistics robust to heteroskedasticity           Prob > F        =     0.4184
+                                                  R-squared       =     0.2334
+                                                  Adj R-squared   =     0.0425
+                                                  Within R-sq.    =     0.0001
+Number of clusters (cntry)   =        150         Root MSE        =     1.0030
+
+                                (Std. Err. adjusted for 150 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0091611   .0112897    -0.81   0.418    -.0314697    .0131474
+       _cons |   .0174245   6.05e-06  2882.32   0.000     .0174126    .0174365
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6189        6189           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(52,554 missing values generated)
+(dropped 3641 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,042
+Absorbing 1 HDFE group                            F(   1,    149) =       1.02
+Statistics robust to heteroskedasticity           Prob > F        =     0.3148
+                                                  R-squared       =     0.4561
+                                                  Adj R-squared   =     0.3207
+                                                  Within R-sq.    =     0.0002
+Number of clusters (cntry)   =        150         Root MSE        = 43878.4439
+
+                                (Std. Err. adjusted for 150 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -3917.633    3884.21    -1.01   0.315    -11592.88    3757.616
+       _cons |  -438.7236   7.278313   -60.28   0.000    -453.1057   -424.3416
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6189        6189           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(52,554 missing values generated)
+(dropped 5035 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     36,133
+Absorbing 1 HDFE group                            F(   1,    167) =       8.98
+Statistics robust to heteroskedasticity           Prob > F        =     0.0032
+                                                  R-squared       =     0.6775
+                                                  Adj R-squared   =     0.5891
+                                                  Within R-sq.    =     0.0005
+Number of clusters (cntry)   =        168         Root MSE        =     0.9450
+
+                                (Std. Err. adjusted for 168 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |   .0150177   .0050127     3.00   0.003     .0051211    .0249142
+       _cons |   1.999059   .0113926   175.47   0.000     1.976567    2.021551
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7773        7773           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(47,463 missing values generated)
+(dropped 4214 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     30,352
+Absorbing 1 HDFE group                            F(   1,    140) =       0.61
+Statistics robust to heteroskedasticity           Prob > F        =     0.4357
+                                                  R-squared       =     0.2576
+                                                  Adj R-squared   =     0.0512
+                                                  Within R-sq.    =     0.0001
+Number of clusters (cntry)   =        141         Root MSE        =     0.7237
+
+                                (Std. Err. adjusted for 141 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |   -.007272   .0093031    -0.78   0.436    -.0256648    .0111208
+       _cons |  -.0140692   .0001064  -132.27   0.000    -.0142795    -.013859
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6602        6602           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(53,244 missing values generated)
+(dropped 4214 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     30,352
+Absorbing 1 HDFE group                            F(   1,    140) =       1.22
+Statistics robust to heteroskedasticity           Prob > F        =     0.2720
+                                                  R-squared       =     0.4457
+                                                  Adj R-squared   =     0.2917
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        141         Root MSE        =   375.1532
+
+                                (Std. Err. adjusted for 141 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |   17.23747   15.62952     1.10   0.272    -13.66294    48.13787
+       _cons |  -1.280587   .0222989   -57.43   0.000    -1.324674   -1.236501
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6602        6602           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(53,244 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.030a                           0.015a                      
+             (0.006)                          (0.005)                       
+
+dls_tariff               -0.009                           -0.007            
+                        (0.011)                          (0.009)            
+
+ds_tariff                         -3.9e+03                           17.237 
+                                 (3884.210)                         (15.630) 
+
+_cons          3.865a     0.017a  -438.724a     1.999a    -0.014a    -1.281a
+             (0.012)    (0.000)    (7.278)    (0.011)    (0.000)    (0.022) 
+----------------------------------------------------------------------------
+N              37547      31042      31042      36133      30352      30352 
+R-sq           0.585      0.233      0.456      0.678      0.258      0.446 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2009\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.030{$^a$}&                  &                  &       0.015{$^a$}&                  &                  \\
+                    &     (0.006)      &                  &                  &     (0.005)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &      -0.009      &                  &                  &      -0.007      &                  \\
+                    &                  &     (0.011)      &                  &                  &     (0.009)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &    -3.9e+03      &                  &                  &      17.237      \\
+                    &                  &                  &  (3884.210)      &                  &                  &    (15.630)      \\
+\hline
+Observations        &       37547      &       31042      &       31042      &       36133      &       30352      &       30352      \\
+\(R^{2}\)           &       0.585      &       0.233      &       0.456      &       0.678      &       0.258      &       0.446      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2009.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2009.dta saved
+(707,638 observations deleted)
+(dropped 5068 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     39,487
+Absorbing 1 HDFE group                            F(   1,    180) =      27.11
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.5841
+                                                  Adj R-squared   =     0.4800
+                                                  Within R-sq.    =     0.0015
+Number of clusters (cntry)   =        181         Root MSE        =     1.2031
+
+                                (Std. Err. adjusted for 181 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0308322   .0059216    -5.21   0.000    -.0425169   -.0191475
+       _cons |   3.848346   .0118572   324.56   0.000     3.824949    3.871743
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7906        7906           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(46,810 missing values generated)
+(dropped 3697 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,073
+Absorbing 1 HDFE group                            F(   1,    150) =       0.81
+Statistics robust to heteroskedasticity           Prob > F        =     0.3689
+                                                  R-squared       =     0.2432
+                                                  Adj R-squared   =     0.0542
+                                                  Within R-sq.    =     0.0001
+Number of clusters (cntry)   =        151         Root MSE        =     0.9737
+
+                                (Std. Err. adjusted for 151 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |   -.011388   .0126346    -0.90   0.369    -.0363528    .0135768
+       _cons |   -.012023   .0005487   -21.91   0.000    -.0131072   -.0109389
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6209        6209           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(55,224 missing values generated)
+(dropped 3697 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,073
+Absorbing 1 HDFE group                            F(   1,    150) =       1.24
+Statistics robust to heteroskedasticity           Prob > F        =     0.2668
+                                                  R-squared       =     0.1420
+                                                  Adj R-squared   =    -0.0722
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        151         Root MSE        = 21691.4106
+
+                                (Std. Err. adjusted for 151 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |   -709.082   636.2069    -1.11   0.267    -1966.167    548.0025
+       _cons |   29.59687   5.889612     5.03   0.000     17.95956    41.23419
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6209        6209           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(55,224 missing values generated)
+(dropped 5136 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     36,506
+Absorbing 1 HDFE group                            F(   1,    166) =       6.02
+Statistics robust to heteroskedasticity           Prob > F        =     0.0152
+                                                  R-squared       =     0.6702
+                                                  Adj R-squared   =     0.5802
+                                                  Within R-sq.    =     0.0003
+Number of clusters (cntry)   =        167         Root MSE        =     0.9374
+
+                                (Std. Err. adjusted for 167 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |   .0113581    .004628     2.45   0.015     .0022208    .0204954
+       _cons |   2.004608   .0104028   192.70   0.000     1.984069    2.025147
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7825        7825           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(49,791 missing values generated)
+(dropped 4315 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     29,760
+Absorbing 1 HDFE group                            F(   1,    143) =       0.00
+Statistics robust to heteroskedasticity           Prob > F        =     0.9867
+                                                  R-squared       =     0.2555
+                                                  Adj R-squared   =     0.0479
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        144         Root MSE        =     0.7058
+
+                                (Std. Err. adjusted for 144 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |   .0001449   .0086673     0.02   0.987    -.0169876    .0172774
+       _cons |   .0187249   .0002648    70.71   0.000     .0182014    .0192483
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6491        6491           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(56,537 missing values generated)
+(dropped 4315 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     29,760
+Absorbing 1 HDFE group                            F(   1,    143) =       0.13
+Statistics robust to heteroskedasticity           Prob > F        =     0.7144
+                                                  R-squared       =     0.2394
+                                                  Adj R-squared   =     0.0273
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        144         Root MSE        =   270.4943
+
+                                (Std. Err. adjusted for 144 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |   6.614689    18.0419     0.37   0.714     -29.0486    42.27797
+       _cons |   .4647272    .110476     4.21   0.000     .2463502    .6831042
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6491        6491           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(56,537 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.031a                           0.011b                      
+             (0.006)                          (0.005)                       
+
+dls_tariff               -0.011                            0.000            
+                        (0.013)                          (0.009)            
+
+ds_tariff                         -709.082                            6.615 
+                                 (636.207)                         (18.042) 
+
+_cons          3.848a    -0.012a    29.597a     2.005a     0.019a     0.465a
+             (0.012)    (0.001)    (5.890)    (0.010)    (0.000)    (0.110) 
+----------------------------------------------------------------------------
+N              39487      31073      31073      36506      29760      29760 
+R-sq           0.584      0.243      0.142      0.670      0.256      0.239 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2010\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.031{$^a$}&                  &                  &       0.011{$^b$}&                  &                  \\
+                    &     (0.006)      &                  &                  &     (0.005)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &      -0.011      &                  &                  &       0.000      &                  \\
+                    &                  &     (0.013)      &                  &                  &     (0.009)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &    -709.082      &                  &                  &       6.615      \\
+                    &                  &                  &   (636.207)      &                  &                  &    (18.042)      \\
+\hline
+Observations        &       39487      &       31073      &       31073      &       36506      &       29760      &       29760      \\
+\(R^{2}\)           &       0.584      &       0.243      &       0.142      &       0.670      &       0.256      &       0.239      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2010.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2010.dta saved
+(705,734 observations deleted)
+(dropped 5120 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     40,438
+Absorbing 1 HDFE group                            F(   1,    186) =      12.35
+Statistics robust to heteroskedasticity           Prob > F        =     0.0006
+                                                  R-squared       =     0.5869
+                                                  Adj R-squared   =     0.4845
+                                                  Within R-sq.    =     0.0006
+Number of clusters (cntry)   =        187         Root MSE        =     1.1938
+
+                                (Std. Err. adjusted for 187 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0191928   .0054616    -3.51   0.001    -.0299674   -.0084183
+       _cons |   3.962362   .0106697   371.37   0.000     3.941313    3.983411
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8031        8031           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(47,763 missing values generated)
+(dropped 3840 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     32,272
+Absorbing 1 HDFE group                            F(   1,    150) =       0.19
+Statistics robust to heteroskedasticity           Prob > F        =     0.6610
+                                                  R-squared       =     0.2412
+                                                  Adj R-squared   =     0.0530
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        151         Root MSE        =     0.9674
+
+                                (Std. Err. adjusted for 151 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |   .0045112   .0102662     0.44   0.661     -.015774    .0247963
+       _cons |   .0748478   .0003976   188.23   0.000     .0740621    .0756335
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6412        6412           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(55,929 missing values generated)
+(dropped 3840 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     32,272
+Absorbing 1 HDFE group                            F(   1,    150) =       0.30
+Statistics robust to heteroskedasticity           Prob > F        =     0.5832
+                                                  R-squared       =     0.1711
+                                                  Adj R-squared   =    -0.0345
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        151         Root MSE        = 15176.7993
+
+                                (Std. Err. adjusted for 151 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |   121.3883   220.7368     0.55   0.583    -314.7668    557.5434
+       _cons |   39.79052   1.379151    28.85   0.000     37.06545    42.51559
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6412        6412           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(55,929 missing values generated)
+(dropped 5139 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     37,374
+Absorbing 1 HDFE group                            F(   1,    170) =      13.72
+Statistics robust to heteroskedasticity           Prob > F        =     0.0003
+                                                  R-squared       =     0.6741
+                                                  Adj R-squared   =     0.5851
+                                                  Within R-sq.    =     0.0006
+Number of clusters (cntry)   =        171         Root MSE        =     0.9382
+
+                                (Std. Err. adjusted for 171 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |   .0159665   .0043111     3.70   0.000     .0074563    .0244766
+       _cons |   2.096395   .0095286   220.01   0.000     2.077586    2.115205
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8018        8018           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(50,827 missing values generated)
+(dropped 4307 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     30,429
+Absorbing 1 HDFE group                            F(   1,    148) =       0.02
+Statistics robust to heteroskedasticity           Prob > F        =     0.8871
+                                                  R-squared       =     0.2584
+                                                  Adj R-squared   =     0.0514
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        149         Root MSE        =     0.6868
+
+                                (Std. Err. adjusted for 149 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0013284   .0093397    -0.14   0.887    -.0197847     .017128
+       _cons |    .081494   .0004777   170.59   0.000       .08055     .082438
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6640        6640           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(57,772 missing values generated)
+(dropped 4307 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     30,429
+Absorbing 1 HDFE group                            F(   1,    148) =       1.24
+Statistics robust to heteroskedasticity           Prob > F        =     0.2677
+                                                  R-squared       =     0.1755
+                                                  Adj R-squared   =    -0.0547
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        149         Root MSE        =   762.6551
+
+                                (Std. Err. adjusted for 149 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -36.81547   33.08881    -1.11   0.268     -102.203    28.57207
+       _cons |   3.792277   .2381489    15.92   0.000     3.321666    4.262888
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6640        6640           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(57,772 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.019a                           0.016a                      
+             (0.005)                          (0.004)                       
+
+dls_tariff                0.005                           -0.001            
+                        (0.010)                          (0.009)            
+
+ds_tariff                          121.388                          -36.815 
+                                 (220.737)                         (33.089) 
+
+_cons          3.962a     0.075a    39.791a     2.096a     0.081a     3.792a
+             (0.011)    (0.000)    (1.379)    (0.010)    (0.000)    (0.238) 
+----------------------------------------------------------------------------
+N              40438      32272      32272      37374      30429      30429 
+R-sq           0.587      0.241      0.171      0.674      0.258      0.175 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2011\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.019{$^a$}&                  &                  &       0.016{$^a$}&                  &                  \\
+                    &     (0.005)      &                  &                  &     (0.004)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &       0.005      &                  &                  &      -0.001      &                  \\
+                    &                  &     (0.010)      &                  &                  &     (0.009)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &     121.388      &                  &                  &     -36.815      \\
+                    &                  &                  &   (220.737)      &                  &                  &    (33.089)      \\
+\hline
+Observations        &       40438      &       32272      &       32272      &       37374      &       30429      &       30429      \\
+\(R^{2}\)           &       0.587      &       0.241      &       0.171      &       0.674      &       0.258      &       0.175      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2011.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2011.dta saved
+(706,224 observations deleted)
+(dropped 5045 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     40,202
+Absorbing 1 HDFE group                            F(   1,    184) =      36.21
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.5783
+                                                  Adj R-squared   =     0.4732
+                                                  Within R-sq.    =     0.0019
+Number of clusters (cntry)   =        185         Root MSE        =     1.2081
+
+                                (Std. Err. adjusted for 185 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0354062   .0058838    -6.02   0.000    -.0470146   -.0237978
+       _cons |   3.960163   .0116625   339.56   0.000     3.937153    3.983172
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8023        8023           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(47,509 missing values generated)
+(dropped 3805 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     32,492
+Absorbing 1 HDFE group                            F(   1,    153) =       3.26
+Statistics robust to heteroskedasticity           Prob > F        =     0.0729
+                                                  R-squared       =     0.2341
+                                                  Adj R-squared   =     0.0441
+                                                  Within R-sq.    =     0.0003
+Number of clusters (cntry)   =        154         Root MSE        =     0.9915
+
+                                (Std. Err. adjusted for 154 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0240224   .0133029    -1.81   0.073    -.0503035    .0022588
+       _cons |   .0338516    .000339    99.87   0.000      .033182    .0345212
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6459        6459           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(55,219 missing values generated)
+(dropped 3805 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     32,492
+Absorbing 1 HDFE group                            F(   1,    153) =       4.51
+Statistics robust to heteroskedasticity           Prob > F        =     0.0353
+                                                  R-squared       =     0.1123
+                                                  Adj R-squared   =    -0.1079
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        154         Root MSE        = 28888.3683
+
+                                (Std. Err. adjusted for 154 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -300.4351   141.5018    -2.12   0.035    -579.9848   -20.88546
+       _cons |   58.72661   .9854367    59.59   0.000     56.77979    60.67343
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6459        6459           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(55,219 missing values generated)
+(dropped 5093 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     37,257
+Absorbing 1 HDFE group                            F(   1,    165) =       9.09
+Statistics robust to heteroskedasticity           Prob > F        =     0.0030
+                                                  R-squared       =     0.6770
+                                                  Adj R-squared   =     0.5888
+                                                  Within R-sq.    =     0.0005
+Number of clusters (cntry)   =        166         Root MSE        =     0.9346
+
+                                (Std. Err. adjusted for 166 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |    .014307   .0047456     3.01   0.003     .0049371    .0236769
+       _cons |    2.12936   .0106182   200.54   0.000     2.108395    2.150325
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7993        7993           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(50,454 missing values generated)
+(dropped 4294 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     30,591
+Absorbing 1 HDFE group                            F(   1,    147) =       1.38
+Statistics robust to heteroskedasticity           Prob > F        =     0.2419
+                                                  R-squared       =     0.2605
+                                                  Adj R-squared   =     0.0538
+                                                  Within R-sq.    =     0.0001
+Number of clusters (cntry)   =        148         Root MSE        =     0.6886
+
+                                (Std. Err. adjusted for 148 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0096303   .0081966    -1.17   0.242    -.0258288    .0065681
+       _cons |   .0181941   .0003625    50.20   0.000     .0174778    .0189103
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6684        6684           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(57,120 missing values generated)
+(dropped 4294 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     30,591
+Absorbing 1 HDFE group                            F(   1,    147) =       0.54
+Statistics robust to heteroskedasticity           Prob > F        =     0.4656
+                                                  R-squared       =     0.2257
+                                                  Adj R-squared   =     0.0092
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        148         Root MSE        =   653.2108
+
+                                (Std. Err. adjusted for 148 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -3.758319   5.137635    -0.73   0.466    -13.91148    6.394846
+       _cons |  -3.772467   .0544286   -69.31   0.000     -3.88003   -3.664903
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6684        6684           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(57,120 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.035a                           0.014a                      
+             (0.006)                          (0.005)                       
+
+dls_tariff               -0.024c                          -0.010            
+                        (0.013)                          (0.008)            
+
+ds_tariff                         -300.435b                          -3.758 
+                                 (141.502)                          (5.138) 
+
+_cons          3.960a     0.034a    58.727a     2.129a     0.018a    -3.772a
+             (0.012)    (0.000)    (0.985)    (0.011)    (0.000)    (0.054) 
+----------------------------------------------------------------------------
+N              40202      32492      32492      37257      30591      30591 
+R-sq           0.578      0.234      0.112      0.677      0.261      0.226 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2012\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.035{$^a$}&                  &                  &       0.014{$^a$}&                  &                  \\
+                    &     (0.006)      &                  &                  &     (0.005)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &      -0.024{$^c$}&                  &                  &      -0.010      &                  \\
+                    &                  &     (0.013)      &                  &                  &     (0.008)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &    -300.435{$^b$}&                  &                  &      -3.758      \\
+                    &                  &                  &   (141.502)      &                  &                  &     (5.138)      \\
+\hline
+Observations        &       40202      &       32492      &       32492      &       37257      &       30591      &       30591      \\
+\(R^{2}\)           &       0.578      &       0.234      &       0.112      &       0.677      &       0.261      &       0.226      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2012.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2012.dta saved
+(707,538 observations deleted)
+(dropped 5040 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     38,785
+Absorbing 1 HDFE group                            F(   1,    179) =      33.68
+Statistics robust to heteroskedasticity           Prob > F        =     0.0000
+                                                  R-squared       =     0.5826
+                                                  Adj R-squared   =     0.4778
+                                                  Within R-sq.    =     0.0017
+Number of clusters (cntry)   =        180         Root MSE        =     1.2044
+
+                                (Std. Err. adjusted for 180 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |  -.0335309   .0057775    -5.80   0.000    -.0449317   -.0221301
+       _cons |    4.01664   .0114484   350.85   0.000     3.994049    4.039231
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      7783        7783           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est1 stored)
+(47,612 missing values generated)
+(dropped 3838 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,851
+Absorbing 1 HDFE group                            F(   1,    151) =       4.15
+Statistics robust to heteroskedasticity           Prob > F        =     0.0435
+                                                  R-squared       =     0.2365
+                                                  Adj R-squared   =     0.0466
+                                                  Within R-sq.    =     0.0003
+Number of clusters (cntry)   =        152         Root MSE        =     0.9905
+
+                                (Std. Err. adjusted for 152 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0253464   .0124487    -2.04   0.043    -.0499424   -.0007503
+       _cons |   .0409899   .0000812   504.78   0.000     .0408294    .0411503
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6342        6342           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est2 stored)
+(54,546 missing values generated)
+(dropped 3838 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     31,851
+Absorbing 1 HDFE group                            F(   1,    151) =       5.35
+Statistics robust to heteroskedasticity           Prob > F        =     0.0221
+                                                  R-squared       =     0.1246
+                                                  Adj R-squared   =    -0.0931
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        152         Root MSE        = 31117.2361
+
+                                (Std. Err. adjusted for 152 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |  -470.1741   203.2794    -2.31   0.022    -871.8134   -68.53483
+       _cons |  -40.21703   .0113313 -3549.19   0.000    -40.23942   -40.19464
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6342        6342           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est3 stored)
+(54,546 missing values generated)
+(dropped 5028 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     37,408
+Absorbing 1 HDFE group                            F(   1,    170) =      14.80
+Statistics robust to heteroskedasticity           Prob > F        =     0.0002
+                                                  R-squared       =     0.6815
+                                                  Adj R-squared   =     0.5943
+                                                  Within R-sq.    =     0.0008
+Number of clusters (cntry)   =        171         Root MSE        =     0.9370
+
+                                (Std. Err. adjusted for 171 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   lprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ls_tariff |   .0178659   .0046433     3.85   0.000     .0086999    .0270318
+       _cons |   2.136523   .0104073   205.29   0.000     2.115979    2.157068
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      8042        8042           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est4 stored)
+(48,989 missing values generated)
+(dropped 4301 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     30,904
+Absorbing 1 HDFE group                            F(   1,    146) =       3.15
+Statistics robust to heteroskedasticity           Prob > F        =     0.0781
+                                                  R-squared       =     0.2415
+                                                  Adj R-squared   =     0.0295
+                                                  Within R-sq.    =     0.0003
+Number of clusters (cntry)   =        147         Root MSE        =     0.6907
+
+                                (Std. Err. adjusted for 147 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+  dlprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+  dls_tariff |  -.0156268   .0088087    -1.77   0.078    -.0330359    .0017822
+       _cons |   .0123003   .0000466   264.07   0.000     .0122082    .0123923
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6752        6752           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est5 stored)
+(55,493 missing values generated)
+(dropped 4301 singleton observations)
+(MWFE estimator converged in 1 iterations)
+
+HDFE Linear regression                            Number of obs   =     30,904
+Absorbing 1 HDFE group                            F(   1,    146) =       0.01
+Statistics robust to heteroskedasticity           Prob > F        =     0.9309
+                                                  R-squared       =     0.1273
+                                                  Adj R-squared   =    -0.1167
+                                                  Within R-sq.    =     0.0000
+Number of clusters (cntry)   =        147         Root MSE        =   503.9109
+
+                                (Std. Err. adjusted for 147 clusters in cntry)
+------------------------------------------------------------------------------
+             |               Robust
+   dprix_fob |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+   ds_tariff |   .5816032   6.690903     0.09   0.931    -12.64193    13.80514
+       _cons |   1.766134   .0173095   102.03   0.000     1.731924    1.800343
+------------------------------------------------------------------------------
+
+Absorbed degrees of freedom:
+------------------------------------------------------+
+  Absorbed FE | Categories  - Redundant  = Num. Coefs |
+--------------+---------------------------------------|
+ cntry_sect3d |      6752        6752           0    *|
+------------------------------------------------------+
+* = FE nested within cluster; treated as redundant for DoF computation
+(est6 stored)
+(55,493 missing values generated)
+
+----------------------------------------------------------------------------
+                 (1)        (2)        (3)        (4)        (5)        (6) 
+                est1       est2       est3       est4       est5       est6 
+----------------------------------------------------------------------------
+ls_tariff     -0.034a                           0.018a                      
+             (0.006)                          (0.005)                       
+
+dls_tariff               -0.025b                          -0.016c           
+                        (0.012)                          (0.009)            
+
+ds_tariff                         -470.174b                           0.582 
+                                 (203.279)                          (6.691) 
+
+_cons          4.017a     0.041a   -40.217a     2.137a     0.012a     1.766a
+             (0.011)    (0.000)    (0.011)    (0.010)    (0.000)    (0.017) 
+----------------------------------------------------------------------------
+N              38785      31851      31851      37408      30904      30904 
+R-sq           0.583      0.236      0.125      0.682      0.242      0.127 
+----------------------------------------------------------------------------
+Standard errors in parentheses
+c p<0.1, b p<0.05, a p<0.01
+
+\begin{table}[htbp]\centering
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\caption{First\_stage\_2013\_estimates}
+\begin{tabular}{l*{6}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{est1}&\multicolumn{1}{c}{est2}&\multicolumn{1}{c}{est3}&\multicolumn{1}{c}{est4}&\multicolumn{1}{c}{est5}&\multicolumn{1}{c}{est6}\\
+\hline
+ln(0.01+tariff as share of value imported, all modes)&      -0.034{$^a$}&                  &                  &       0.018{$^a$}&                  &                  \\
+                    &     (0.006)      &                  &                  &     (0.005)      &                  &                  \\
+[1em]
+dls\_tariff          &                  &      -0.025{$^b$}&                  &                  &      -0.016{$^c$}&                  \\
+                    &                  &     (0.012)      &                  &                  &     (0.009)      &                  \\
+[1em]
+ds\_tariff           &                  &                  &    -470.174{$^b$}&                  &                  &       0.582      \\
+                    &                  &                  &   (203.279)      &                  &                  &     (6.691)      \\
+\hline
+Observations        &       38785      &       31851      &       31851      &       37408      &       30904      &       30904      \\
+\(R^{2}\)           &       0.583      &       0.236      &       0.125      &       0.682      &       0.242      &       0.127      \\
+\hline\hline
+\multicolumn{7}{l}{\footnotesize Standard errors in parentheses}\\
+\multicolumn{7}{l}{\footnotesize {$^c$} p<0.1, {$^b$} p<0.05, {$^a$} p<0.01}\\
+\end{tabular}
+\end{table}
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2013.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/FS_2013.dta saved
+
+. 
+. 
+. 
+. *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
+. use "$dir/results/IV_referee1/FS_2005.dta", replace
+
+. *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
+. save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
+(note: file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta not found)
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+
+. 
+. 
+. sort iso_o year mode
+
+. 
+. 
+. 
+. forvalues x=2006(1)2013{
+  2.         *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
+.         use "$dir/results/IV_referee1/FS_`x'.dta", clear
+  3.         sort iso_o year mode
+  4.         *append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta"
+.         append using "$dir/results/IV_referee1/prediction_FS_yearly.dta"
+  5.         order iso_o year mode sitc2 sitc2_3d
+  6.         keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_yearly*
+  7.         *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta", replace
+.         save "$dir/results/IV_referee1/prediction_FS_yearly.dta", replace
+  8. }
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+file C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1/prediction_FS_yearly.dta saved
+
+. 
+. 
+. forvalues x=2005(1)2013 {
+  2.         *erase "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'.dta"
+.         erase "$dir/results/IV_referee1/FS_`x'.dta"
+  3. }
+
+. 
+. */
+. 
+. erase "$dir/results/IV_referee1/hummels_FS.dta"
+
+. 
+. capture log close
