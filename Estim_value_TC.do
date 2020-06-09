@@ -335,9 +335,13 @@ if "`database'"=="db_samesample_`class'_`preci'" {
 
 
 if "`database'"=="predictions_FS_panel" {
-	global stock_results $dir/results/IV_referee1
+	global stock_results $dir/results/IV_referee1_panel
 }
 
+
+if "`database'"=="predictions_FS_yearly" {
+	global stock_results $dir/results/IV_referee1_yearly
+}
 ****************Préparation de la base blouk
 
 *** Si on utilise méthode ancienne sur database soumission (large)
@@ -352,7 +356,7 @@ if "`database'"=="predictions_FS_panel" {
 
 
 
-if "`database'"!="predictions_FS_panel" use "$dir_data/`database'", clear
+if "`database'"!="predictions_FS_panel" & "`database'"!="predictions_FS_yearly" use "$dir_data/`database'", clear
 
 
 if "`database'"=="predictions_FS_panel" {
@@ -364,6 +368,17 @@ if "`database'"=="predictions_FS_panel" {
 	generate prix_fob = .
 	replace prix_fob=exp(lprix_panel_hat_air_allFE2) if mode=="air"
 	replace prix_fob=exp(lprix_panel_hat_ves_allFE2) if mode=="ves"
+}
+
+if "`database'"=="predictions_FS_yearly" {
+	use "$stock_results/`database'"
+	keep year mode sitc2 iso_o lprix_yearly_air_hat_allFE lprix_yearly_ves_hat_allFE
+	order sitc2 year iso_o mode
+	merge 1:1 sitc2 year mode iso_o using "$dir_data/hummels_tra"
+	rename prix_fob prix_fob_non_instru
+	generate prix_fob = .
+	replace prix_fob=exp(lprix_yearly_air_hat_allFE) if mode=="air"
+	replace prix_fob=exp(lprix_yearly_ves_hat_allFE) if mode=="ves"
 }
 
 
