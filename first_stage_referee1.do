@@ -20,10 +20,10 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 clear
-set maxvar 30000
+set maxvar 120000
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1"
+cd "$dir/results/IV_referee1_panel"
 
 use "$dir/data/hummels_tra.dta", clear
 *use hummels_tra.dta, clear
@@ -273,20 +273,15 @@ save predictions_FS_panel.dta, replace
 use "$dir/hummels_FS.dta", clear
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1"
-
-
-
-
-log using first_stage_yearly.log, replace
-set more off
+cd "$dir/results/IV_referee1_yearly"
 
 
 capture log close
 capture eststo clear
 
-set more off
+log using first_stage_yearly.log, replace
 
+set more off
 
 
 forvalues x=1974(1)2013{
@@ -344,7 +339,7 @@ forvalues x=1974(1)2013{
 
 use "$dir/FS_1974.dta", replace
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
-save "$dir/results/IV_referee1/predictions_FS_yearly.dta", replace
+save "$dir/results/IV_referee1_yearly/predictions_FS_yearly.dta", replace
 
 
 sort iso_o year mode
@@ -356,11 +351,11 @@ forvalues x=1975(1)2013{
 	use "$dir/FS_`x'.dta", clear
 	sort iso_o year mode
 	*append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta"
-	append using "$dir/results/IV_referee1/predictions_FS_yearly.dta"
+	append using "$dir/results/IV_referee1_yearly/predictions_FS_yearly.dta"
 	order iso_o year mode sitc2 sitc2_3d
 	keep sitc2 sitc2_3d iso_o year mode lprix_fob *prix_yearly*
 	*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta", replace
-	save "$dir/results/IV_referee1/predictions_FS_yearly.dta", replace
+	save "$dir/results/IV_referee1_yearly/predictions_FS_yearly.dta", replace
 }
 
 
