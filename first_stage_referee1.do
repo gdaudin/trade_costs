@@ -20,10 +20,10 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 clear
-set maxvar 120000
+set maxvar 30000
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1_panel"
+cd "$dir/results/IV_referee1"
 
 use "$dir/data/hummels_tra.dta", clear
 *use hummels_tra.dta, clear
@@ -76,32 +76,25 @@ label var ls_tariff "ln(0.01+tariff as share of value imported, all modes)"
 **** ln-linéarisation prix_fob, mais cela impliquera d'appliquer la fonction exponentielle aux prédictions***
 gen lprix_fob= ln(prix_fob)
 
-****** Fixed effects************************
+
 ****on crée le niveau sectoriel 3 digit***
 
 gen sitc2_3d= substr(sitc2, 1, 3)
 
-****On crée tous les FE utiles
+
+****On crée tous les groupes utiles pourles FE
 
 egen sector_3d=group(sitc2_3d)
 
 egen cntry=group(iso_o)
-egen cntry_year=group(iso_o year)
 
-******on crée des dummies country X year
-set more off
-tab cntry_year, gen(cntry_yeard) 
-
-
-egen cntry_sect3d=group(iso_o sitc2_3d)
-egen sect3d_year=group(sitc2_3d year)
 
 egen cntry_sect5d=group(iso_o sitc2)
 egen cntry_sect5d_mode=group(iso_o sitc2 mode)
 
+egen cntry_sect3d=group(iso_o sitc2_3d)
+
 egen cntry_sect3d_mode=group(iso_o sitc2_3d mode)
-egen cntry_mode_year=group(iso_o mode year)
-egen sect3d_mode_year=group(sitc2_3d mode year)
 
 
 **** First_dif****
@@ -138,6 +131,25 @@ save "$dir/hummels_FS.dta", replace
 
 *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
 use "$dir/hummels_FS.dta", clear
+
+****** Fixed effects************************
+
+******on crée les FE utiles
+set more off
+
+egen cntry_year=group(iso_o year)
+tab cntry_year, gen(cntry_yeard) 
+
+
+egen cntry_sect3d=group(iso_o sitc2_3d)
+egen sect3d_year=group(sitc2_3d year)
+
+egen cntry_sect5d=group(iso_o sitc2)
+egen cntry_sect5d_mode=group(iso_o sitc2 mode)
+
+egen cntry_sect3d_mode=group(iso_o sitc2_3d mode)
+egen cntry_mode_year=group(iso_o mode year)
+egen sect3d_mode_year=group(sitc2_3d mode year)
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
 cd "$dir/results/IV_referee1_panel"
@@ -261,18 +273,23 @@ save predictions_FS_panel.dta, replace
 use "$dir/hummels_FS.dta", clear
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-cd "$dir/results/IV_referee1_yearly"
+cd "$dir/results/IV_referee1"
+
+
+
+
+log using first_stage_yearly.log, replace
+set more off
 
 
 capture log close
 capture eststo clear
 
-log using first_stage_yearly.log, replace
-
 set more off
 
 
-forvalues x=1975(1)2013{
+
+forvalues x=1974(1)2013{
 	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
 	use "$dir/hummels_FS.dta", clear
 	keep if year==`x'
@@ -283,7 +300,7 @@ forvalues x=1975(1)2013{
 	predict lprix_yearly_air_hat_allFE,xbd 
 	drop FEcs
 	
-	eststo: reghdfe dlprix_fob dls_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+	/*eststo: reghdfe dlprix_fob dls_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
 	*predict dlprix_yearly_air_hat,xb 
 	predict dlprix_yearly_air_hat_allFE,xbd 
 	drop FEcs
@@ -291,7 +308,7 @@ forvalues x=1975(1)2013{
 	eststo: reghdfe dprix_fob ds_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
 	*predict dprix_yearly_air_hat,xb 
 	predict dprix_yearly_air_hat_allFE,xbd 
-	drop FEcs
+	drop FEcs*/
 	
 	*****just vessel
 	eststo: reghdfe lprix_fob ls_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
@@ -299,7 +316,7 @@ forvalues x=1975(1)2013{
 	predict lprix_yearly_ves_hat_allFE,xbd 
 	drop FEcs
 	
-	eststo: reghdfe dlprix_fob dls_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+	/*eststo: reghdfe dlprix_fob dls_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
 	*predict dlprix_yearly_ves_hat,xb 
 	predict dlprix_yearly_ves_hat_allFE,xbd 
 	drop FEcs
@@ -308,10 +325,12 @@ forvalues x=1975(1)2013{
 	*predict dprix_yearly_ves_hat,xb 
 	predict dprix_yearly_ves_hat_allFE,xbd 
 	drop FEcs
-	
+	*/
 	set linesize 250
 	esttab, mtitles b(%5.3f) se(%5.3f) compress r2 starlevels(c 0.1 b 0.05 a 0.01)  se 
-	esttab, mtitles b(%5.3f) se(%5.3f) r2 starlevels({$^c$} 0.1 {$^b$} 0.05 {$^a$} 0.01) keep(ls_tariff dls_tariff ds_tariff) se tex label  title(First_stage_`x'_estimates)
+	*esttab, mtitles b(%5.3f) se(%5.3f) r2 starlevels({$^c$} 0.1 {$^b$} 0.05 {$^a$} 0.01) keep(ls_tariff dls_tariff ds_tariff) se tex label  title(First_stage_`x'_estimates)
+	esttab, mtitles b(%5.3f) se(%5.3f) r2 starlevels({$^c$} 0.1 {$^b$} 0.05 {$^a$} 0.01) keep(ls_tariff) se tex label  title(First_stage_`x'_estimates)
+
 	eststo clear
 	
 	*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
@@ -320,37 +339,46 @@ forvalues x=1975(1)2013{
 }
 
 
-local first_year 1975
+
 *use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
-use "$dir/FS_`first_year'.dta", replace
+
+use "$dir/FS_1974.dta", replace
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
-save "$dir/results/IV_referee1_yearly/predictions_FS_yearly.dta", replace
+save "$dir/results/IV_referee1/predictions_FS_yearly.dta", replace
 
 
 sort iso_o year mode
 
-local i = `first_year'+1
 
-forvalues x=`i'(1)2013{
+forvalues x=1975(1)2013{
+
 	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
 	use "$dir/FS_`x'.dta", clear
 	sort iso_o year mode
 	*append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta"
-	append using "$dir/results/IV_referee1_yearly/predictions_FS_yearly.dta"
+	append using "$dir/results/IV_referee1/predictions_FS_yearly.dta"
 	order iso_o year mode sitc2 sitc2_3d
-	keep sitc2 sitc2_3d iso_o year mode lprix_fob dlprix_fob dprix_fob *prix_yearly*
+	keep sitc2 sitc2_3d iso_o year mode lprix_fob *prix_yearly*
 	*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta", replace
-	save "$dir/results/IV_referee1_yearly/predictions_FS_yearly.dta", replace
+	save "$dir/results/IV_referee1/predictions_FS_yearly.dta", replace
 }
 
 
-forvalues x=1975(1)2013 {
+
+forvalues x=1974(1)2013 {
+
 	*erase "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'.dta"
 	erase "$dir/FS_`x'.dta"
 }
 
-*/
+
 
 erase "$dir/hummels_FS.dta"
+
+scatter lprix_fob lprix_yearly_air_hat_allFE
+graph save graph_lprix_fob_yearly_air, replace
+
+scatter lprix_fob lprix_yearly_ves_hat_allFE
+graph save graph_lprix_fob_yearly_ves, replace
 
 capture log close
