@@ -1,4 +1,4 @@
-
+	
 
 *************************************************
 * Programme : Lancer les estimations 
@@ -67,7 +67,7 @@ foreach mode in $modelist {
 		*** SOUMISSION: hummels_tra.dta
 		
 		capture log close
-		log using hummels_3digits_complet_`year'_`node', replace
+		log using hummels_3digits_complet_`year'_`mode', replace
 		
 		prep_reg predictions_FS_yearly `year' sitc2 3 `mode'
 		
