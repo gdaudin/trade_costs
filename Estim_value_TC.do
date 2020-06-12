@@ -773,14 +773,14 @@ timer on 3
 
 * attention on durçit la règle pour 1987, vessel
 *nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
-noisily capture nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
+capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
 
 capture	generate rc=_rc
 *capture	predict predict
 capture	predict blink_nl
 
-gen predict_nl = exp(blink_nl)+1 
+capture gen predict_nl = exp(blink_nl)+1 
 *capture	generate predict=exp(lpredict)	
 capture	generate converge=e(converge)
 *capture generate R2 = e(r2)
