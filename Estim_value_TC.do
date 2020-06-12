@@ -773,116 +773,120 @@ timer on 3
 
 * attention on durçit la règle pour 1987, vessel
 *nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
-capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
+
+capture noisily {
+
+	nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
+				parameters(`liste_parametres' ) initial (`initial')
+	
+	generate rc=_rc
+	*capture	predict predict
+	predict blink_nl
+	
+	gen predict_nl = exp(blink_nl)+1 
+	*capture	generate predict=exp(lpredict)	
+	generate converge=e(converge)
+	*capture generate R2 = e(r2)
+	generate t = terme_A*prix_fob
+	
+	** Mesurer le fit du modèle
+	** (1) Coefficient R2
+	*capture correlate lnprix_obs lnpredit_nl
+	correlate ln_ratio_minus1 blink_nl
+	generate Rp2_nl = r(rho)^2
 
 
-capture	generate rc=_rc
-*capture	predict predict
-capture	predict blink_nl
+	order iso_o iso_d product prix_fob prix_trsp2 converge predict lpredict terme* t /* e_t_rho* predict_calcul couts FE* 	*/
 
-capture gen predict_nl = exp(blink_nl)+1 
-*capture	generate predict=exp(lpredict)	
-capture	generate converge=e(converge)
-*capture generate R2 = e(r2)
-capture generate t = terme_A*prix_fob
-
-** Mesurer le fit du modèle
-** (1) Coefficient R2
-*capture correlate lnprix_obs lnpredit_nl
-capture correlate ln_ratio_minus1 blink_nl
-capture generate Rp2_nl = r(rho)^2
-
-noisily capture  order iso_o iso_d product prix_fob prix_trsp2 converge predict lpredict terme* t /* e_t_rho* predict_calcul couts FE* 	*/
-
-capture	matrix X= e(b)
-capture matrix ET=e(V)
-local nbr_var = e(k)/2
-
-generate nbr_obs=e(N)
-bysort product : generate nbr_obs_prod=_N
-bysort iso_o : generate nbr_obs_iso=_N
-generate  coef_iso_A =.
-generate  coef_iso_I =.
-generate  coef_prod_A =.
-generate  coef_prod_I =.
-generate  ecart_type_iso_A=.
-generate  ecart_type_iso_I=.
-generate  ecart_type_prod_A=.
-generate  ecart_type_prod_I=.
-
-
-** Mesurer le fit du modèle (cont')
-gen aic_nl= .
-gen logL_nl = .
-
-estat ic
-capture matrix Z= r(S)
-
-* (2) AIC 
-replace aic_nl = Z[1,5]
-
-* (3) log-likelihood
-replace logL_nl = Z[1,3]
-
-
-display "`liste_variables'"
-local n 1
-local m = `nbr_var'+1
-foreach i in `liste_variables' {
-	if strmatch("`i'","*prod*")==1 {
-		quietly replace coef_prod_A =exp(X[1,`n']) if `i'==1
-		quietly replace coef_prod_I =exp(X[1,`m'])+1 if `i'==1
-		quietly replace ecart_type_prod_A =ET[`n',`n']^0.5 if `i'==1
-		quietly replace ecart_type_prod_I =ET[`m',`m']^0.5 if `i'==1
-	}
-	if strmatch("`i'","*iso*")==1 {
-		quietly replace coef_iso_A =exp(X[1,`n']) if `i'==1
-		quietly replace coef_iso_I =exp(X[1,`m'])+1 if `i'==1
-		quietly replace ecart_type_iso_A =ET[`n',`n']^0.5 if `i'==1
-		quietly replace ecart_type_iso_I =ET[`m',`m']^0.5 if `i'==1
+	matrix X= e(b)
+	capture matrix ET=e(V)
+	local nbr_var = e(k)/2
+	
+	generate nbr_obs=e(N)
+	bysort product : generate nbr_obs_prod=_N
+	bysort iso_o : generate nbr_obs_iso=_N
+	generate  coef_iso_A =.
+	generate  coef_iso_I =.
+	generate  coef_prod_A =.
+	generate  coef_prod_I =.
+	generate  ecart_type_iso_A=.
+	generate  ecart_type_iso_I=.
+	generate  ecart_type_prod_A=.
+	generate  ecart_type_prod_I=.
+	
+	
+	** Mesurer le fit du modèle (cont')
+	gen aic_nl= .
+	gen logL_nl = .
+	
+	estat ic
+	matrix Z= r(S)
+	
+	* (2) AIC 
+	replace aic_nl = Z[1,5]
+	
+	* (3) log-likelihood
+	replace logL_nl = Z[1,3]
+	
+	
+	display "`liste_variables'"
+	local n 1
+	local m = `nbr_var'+1
+	foreach i in `liste_variables' {
+		if strmatch("`i'","*prod*")==1 {
+			quietly replace coef_prod_A =exp(X[1,`n']) if `i'==1
+			quietly replace coef_prod_I =exp(X[1,`m'])+1 if `i'==1
+			quietly replace ecart_type_prod_A =ET[`n',`n']^0.5 if `i'==1
+			quietly replace ecart_type_prod_I =ET[`m',`m']^0.5 if `i'==1
+		}
+		if strmatch("`i'","*iso*")==1 {
+			quietly replace coef_iso_A =exp(X[1,`n']) if `i'==1
+			quietly replace coef_iso_I =exp(X[1,`m'])+1 if `i'==1
+			quietly replace ecart_type_iso_A =ET[`n',`n']^0.5 if `i'==1
+			quietly replace ecart_type_iso_I =ET[`m',`m']^0.5 if `i'==1
+		}
+		
+		local n = `n'+1
+		local m = `m'+1
 	}
 	
-	local n = `n'+1
-	local m = `m'+1
+	sum terme_A  [fweight=`mode'_val], det
+	generate terme_A_mp = r(mean)
+	generate terme_A_med = r(p50)
+	generate terme_A_et = r(sd)
+	gen terme_A_min = r(min)
+	gen terme_A_max = r(max)
+	
+	sum terme_I  [fweight=`mode'_val], det 	
+	generate terme_I_mp = r(mean)
+	generate terme_I_med = r(p50)
+	generate terme_I_et=r(sd)
+	gen terme_I_min = r(min)
+	gen terme_I_max = r(max)
+	
+	duplicates report
+	
+	
+	timer off 2
+	timer list 2
+	
+	drop Duree_estimation_secondes
+	generate Duree_estimation_secondes = r(t2)
+	generate machine =  "`c(hostname)'__`c(username)'"
+	
+	
+	timer clear
+	
+	global liste_parametres `liste_parametres'
+	
+	global liste_parametres_prod_A 	`liste_parametres_prod_A' 
+	global liste_parametres_iso_o_A `liste_parametres_iso_o_A' 
+	global liste_parametres_prod_I 	`liste_parametres_prod_I' 
+	global liste_parametres_iso_o_I `liste_parametres_iso_o_I' 
+	global liste_iso_o `liste_iso_o'
+	global liste_prod  `liste_prod'
+
 }
-
-sum terme_A  [fweight=`mode'_val], det
-generate terme_A_mp = r(mean)
-generate terme_A_med = r(p50)
-generate terme_A_et = r(sd)
-gen terme_A_min = r(min)
-gen terme_A_max = r(max)
-
-sum terme_I  [fweight=`mode'_val], det 	
-generate terme_I_mp = r(mean)
-generate terme_I_med = r(p50)
-generate terme_I_et=r(sd)
-gen terme_I_min = r(min)
-gen terme_I_max = r(max)
-
-duplicates report
-
-
-timer off 2
-timer list 2
-
-capture drop Duree_estimation_secondes
-generate Duree_estimation_secondes = r(t2)
-capture generate machine =  "`c(hostname)'__`c(username)'"
-
-
-timer clear
-
-global liste_parametres `liste_parametres'
-
-global liste_parametres_prod_A 	`liste_parametres_prod_A' 
-global liste_parametres_iso_o_A `liste_parametres_iso_o_A' 
-global liste_parametres_prod_I 	`liste_parametres_prod_I' 
-global liste_parametres_iso_o_I `liste_parametres_iso_o_I' 
-global liste_iso_o `liste_iso_o'
-global liste_prod  `liste_prod'
-
-
 save "$stock_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
 
