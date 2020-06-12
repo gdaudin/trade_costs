@@ -774,12 +774,12 @@ timer on 3
 * attention on durçit la règle pour 1987, vessel
 *nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
-capture noisily {
 
-	nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
+
+capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
 	
-	generate rc=_rc
+if _rc==. {
 	*capture	predict predict
 	predict blink_nl
 	
@@ -887,6 +887,16 @@ capture noisily {
 	global liste_prod  `liste_prod'
 
 }
+
+if _rc!=. {
+		generate rc=_rc
+		keep if _n==1
+		keep product sector year mode rc terme_A terme_I `mode'_val
+		replace terme_A==.
+		replace terme_I==.
+		replace `mode'_val==.
+}
+
 save "$stock_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
 
 
