@@ -892,9 +892,9 @@ if _rc!=. {
 		generate rc=_rc
 		keep if _n==1
 		keep product year mode rc terme_A terme_I `mode'_val
-		replace terme_A==.
-		replace terme_I==.
-		replace `mode'_val==.
+		replace terme_A=.
+		replace terme_I=.
+		replace `mode'_val=.
 }
 
 save "$stock_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
