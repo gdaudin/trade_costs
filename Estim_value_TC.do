@@ -891,7 +891,7 @@ if _rc==. {
 if _rc!=. {
 		generate rc=_rc
 		keep if _n==1
-		keep product sector year mode rc terme_A terme_I `mode'_val
+		keep product year mode rc terme_A terme_I `mode'_val
 		replace terme_A==.
 		replace terme_I==.
 		replace `mode'_val==.
