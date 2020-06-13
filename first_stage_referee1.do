@@ -8,7 +8,7 @@ set more off
 
 if "`c(username)'" =="jerome" {
 	global dir "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
-
+	set maxvar 32000
 }
 
 
@@ -17,10 +17,11 @@ if "`c(username)'" =="jerome" {
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
 	global dir_pgms $dir/trade_costs_git
+	set maxvar 120000
 }
 
 clear
-set maxvar 120000
+
 
 *cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
 cd "$dir/results/IV_referee1_panel"
@@ -283,6 +284,9 @@ log using first_stage_yearly.log, replace
 
 set more off
 
+capture drop FEcs
+
+
 
 forvalues x=1974(1)2013{
 	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
@@ -377,3 +381,206 @@ scatter lprix_fob lprix_yearly_ves_hat_allFE
 graph save graph_lprix_fob_yearly_ves, replace
 
 capture log close
+
+
+
+***************************************************
+***********First-stage regressions, YEARLY*********
+***************************************************
+
+**************************************************
+*****this part of the program stores main*********
+*****features of FS regressions in a separate DB**
+**************************************************
+
+*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+use "$dir/hummels_FS.dta", clear
+
+*cd "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+cd "$dir/results/IV_referee1_yearly"
+
+
+capture log close
+capture eststo clear
+
+log using first_stage_parameters_yearly.log, replace
+
+set more off
+
+capture drop FEcs
+
+***************************
+**********Air**************
+***************************
+
+forvalues x=1974(1)2013{
+	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+	use "$dir/hummels_FS.dta", clear
+	keep if year==`x'
+	keep if mode=="air"
+	
+reghdfe lprix_fob ls_tariff if mode=="air", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+mat beta=e(b)
+svmat double beta, names(matcol)
+mat variance=e(V)
+
+svmat double variance, names(matcol)
+gen sd = sqrt(variancels_tariff)
+drop *cons
+
+mat r_square= e(r2)
+svmat double r_square, names(matcol)
+rename r_squarec1 r_square
+
+mat adj_r_square= e(r2_a)
+svmat double adj_r_square, names(matcol)
+rename adj_r_squarec1 adj_r_square
+
+mat r_square_within= e(r2_within)
+svmat double r_square_within, names(matcol)
+rename r_square_withinc1 r_square_within
+
+keep if betals_tariff~=.
+keep year mode betals_tariff sd r_square adj_r_square r_square_within
+rename betals_tariff beta_FS
+	
+*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
+save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_air.dta", replace
+
+}
+
+
+
+*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
+
+use "$dir/results/IV_referee1_yearly/FS_parameters_1974_air.dta", replace
+*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
+save "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta", replace
+
+
+sort year 
+
+*OK jusque là
+
+forvalues x=1975(1)2013{
+
+	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
+	use "$dir/results/IV_referee1_yearly/FS_parameters_`x'_air.dta", clear
+	sort year mode
+	*append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta"
+	append using "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta"
+	*order iso_o year mode sitc2 sitc2_3d
+	*keep sitc2 sitc2_3d iso_o year mode lprix_fob *prix_yearly*
+	*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta", replace
+	save "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta", replace
+}
+
+
+
+forvalues x=1974(1)2013 {
+
+	*erase "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'.dta"
+	erase "$dir/results/IV_referee1_yearly/FS_parameters_`x'_air.dta"
+}
+
+
+
+*********************
+*****Vessel**********
+*********************
+
+capture drop FEcs
+
+set more off
+
+forvalues x=1974(1)2013{
+	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\hummels_FS.dta", clear
+	use "$dir/hummels_FS.dta", clear
+	keep if year==`x'
+	keep if mode=="ves"
+	
+reghdfe lprix_fob ls_tariff if mode=="ves", a(FEcs= cntry_sect3d) vce (cluster cntry) resid
+mat beta=e(b)
+svmat double beta, names(matcol)
+mat variance=e(V)
+
+svmat double variance, names(matcol)
+gen sd = sqrt(variancels_tariff)
+drop *cons
+
+mat r_square= e(r2)
+svmat double r_square, names(matcol)
+rename r_squarec1 r_square
+
+mat adj_r_square= e(r2_a)
+svmat double adj_r_square, names(matcol)
+rename adj_r_squarec1 adj_r_square
+
+mat r_square_within= e(r2_within)
+svmat double r_square_within, names(matcol)
+rename r_square_withinc1 r_square_within
+
+keep if betals_tariff~=.
+keep year mode betals_tariff sd r_square adj_r_square r_square_within
+rename betals_tariff beta_FS
+	
+*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
+save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_ves.dta", replace
+
+}
+
+
+
+*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_2005.dta", clear
+
+use "$dir/results/IV_referee1_yearly/FS_parameters_1974_ves.dta", replace
+*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\prediction_FS_yearly.dta", replace
+save "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta", replace
+
+
+sort year 
+
+*OK jusque là
+
+forvalues x=1975(1)2013{
+
+	*use "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", clear
+	use "$dir/results/IV_referee1_yearly/FS_parameters_`x'_ves.dta", clear
+	sort year mode
+	*append using "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta"
+	append using "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta"
+	*order iso_o year mode sitc2 sitc2_3d
+	*keep sitc2 sitc2_3d iso_o year mode lprix_fob *prix_yearly*
+	*save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\predictions_FS_yearly.dta", replace
+	save "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta", replace
+}
+
+
+
+forvalues x=1974(1)2013 {
+
+	*erase "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'.dta"
+	erase "$dir/results/IV_referee1_yearly/FS_parameters_`x'_ves.dta"
+}
+
+
+use "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta", clear
+append using "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta"
+sort mode year
+order year mode
+save "$dir/results/IV_referee1_yearly/FS_parameters_yearly.dta", 
+
+scatter scatter beta_FS year if mode=="air"
+graph save graph_param_yearly_air, replace
+
+scatter beta_FS year if mode=="ves"
+graph save graph_param_yearly_ves, replace
+
+
+erase "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta"
+erase "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta"
+
+erase "$dir/hummels_FS.dta"
+
+capture log close
+
