@@ -1,0 +1,133 @@
+\documentclass[a4paper,12pt]{article}
+
+%\usepackage[pdftex]{graphicx}
+\usepackage{amsmath}
+%\usepackage[latin1]{inputenc}
+%\usepackage{hyperref}
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%%GD Quand je mets usepackage[utf8]{inputenc} je n'arrive plus à compiler la biblio
+%J'ai essayé de débuger : je n'y suis pas arrivé
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{lscape}
+\usepackage[round]{natbib}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{vmargin}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage[tableposition=top]{caption}
+\usepackage{amsfonts}
+\usepackage{bbold}
+\usepackage{bbm}
+\usepackage[flushleft]{threeparttable}
+%\usepackage{bbold}
+%\usepackage[T1]{fontenc}
+% JH : impossible de compiler avec le package bbold, remplacé par amsfonts
+% LP : impossible de compiler avec le package bbold, remplacé par bbm
+\usepackage{upgreek}
+\usepackage{comment}
+\includecomment{commentGD}
+\usepackage[draft]{todonotes}
+%\usepackage[disable]{todonotes}
+%%GDPour cacher les notes, \usepackage[disable]{todonotes}
+
+\usepackage{setspace}
+
+%\usepackage[nolists, figuresfirst]{endfloat}
+%\usepackage{sidefloat}
+
+\setlength{\abovecaptionskip}{-8pt}
+
+%\usepackage[usenames]{color}
+%\definecolor{grey}{rgb}{0.35,0.35,0.35}
+%\definecolor{webdarkblue}{rgb}{0,0,0.4}
+%\definecolor{orange}{rgb}{0.7,0.2,0.05}
+
+
+%\usepackage[pdfcreator={PDFLaTeX}, pdfproducer={PDFLaTeX}, pdfstartview=FitH, pdfpagemode=UseOutlines, pagebackref=false, colorlinks={true},
+%citecolor={webdarkblue}, linkcolor={webdarkblue},
+%urlcolor={webdarkblue}]{hyperref}
+
+
+
+%\addtolength{\oddsidemargin}{-0.4in}
+%\addtolength{\evensidemargin}{-0.4in}
+%\addtolength{\textwidth}{0.8in} \addtolength{\topmargin}{-0.85in}
+%\addtolength{\textheight}{1.7in}
+\renewcommand{\baselinestretch}{1.2}
+
+\newcommand\cites[1]{\citeauthor{#1}'s\ (\citeyear{#1})}
+
+\newcommand\citeh[1]{\citeauthor{#1}'\ (\citeyear{#1})}
+
+\setmarginsrb{3cm}{2cm}{3cm}{2cm}{0,5cm}{0,5cm}{0,3cm}{0,5cm}
+
+
+
+% commands
+
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bd}{\begin{description}}
+\newcommand{\ed}{\end{description}}
+\newcommand{\beqa}{\begin{eqnarray}}
+\newcommand{\eeqa}{\end{eqnarray}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\bigskip}
+\newcommand{\A}{$^a$}
+\newcommand{\B}{$^b$}
+\newcommand{\C}{$^c$}
+
+\renewcommand{\baselinestretch}{1.2}
+%\doublespacing
+
+%\linespread{1.6}
+
+%\newcommand{\note}[1]{\footnote{\begin{doublespace}#1\end{doublespace}}}
+
+
+\begin{document}
+
+
+
+
+\title{\textsc{International Transport costs:\\New Findings from modeling additive costs}\thanks{We are grateful to Holger G\"{o}rg, S\'{e}bastien Jean and Vincent Vicard for their insightful comments. The paper has greatly benefited from remarks from the participants at ETSG 17\textsuperscript{th} (Helsinki), DEGIT XXII (Paris), seminars at the universities of California-Irvine, Paris-Dauphine, Paris-I and Nancy and the Kiel Institute for the World Economy.
+Any remaining errors are ours. This paper was partly funded by a university grant from Lille-I University. It features an online appendix containing additional results, available on the authors' websites.}}
+
+\author{Guillaume \textsc{Daudin}\thanks{%
+University Paris-Dauphine \& PSL University, IRD, LEDa, UMR 225, DIAL, 75016 Paris, France; email: \url{guillaume.daudin@dauphine.psl.eu}}  \qquad J\'{e}r\^{o}me \textsc{H\'{e}ricourt} \thanks{Universit\'{e} de Lille - LEM-CNRS UMR 9221, France \& CEPII, France; email: \url{jerome.hericourt@univ-lille.fr}}\qquad Lise \textsc{Patureau}\thanks{Corresponding author.
+University Paris-Dauphine \& PSL University, LEDa, 75016 Paris, France;  email: \url{lise.patureau@dauphine.psl.eu} } }
+
+
+\date{January 2019}
+ \maketitle
+\bigskip
+
+\begin{abstract}
+This paper investigates the pattern of international transport costs over time, using information contained in the US imports flows from 1974 to 2013. First, we document the importance of the per-unit component of transport costs. It represents between one-third and one-half of overall transport costs. Second, allowing for time-varying per-unit costs, we find that the downward trend in international transport costs comes from the reduction in “pure” transport costs over time, with trade composition effects playing a minor role. In both aspects, our results point to the importance of the additive component in accounting for international transport costs.
+\end{abstract}
+
+
+\thispagestyle{empty} \pagestyle{plain} \setcounter{page}{1}
+
+\bigskip
+
+
+\noindent \emph{JEL classification}: F10, N70, R40 \\
+\noindent \emph{Keywords}: Transport costs estimates, non-linear econometrics, period 1974-2013, additive costs, trade composition effects
+
+{\normalsize \vspace{0cm} }
+
+{\normalsize \titlepage }
+
+{\normalsize \newpage }
+
+\end{document}
+

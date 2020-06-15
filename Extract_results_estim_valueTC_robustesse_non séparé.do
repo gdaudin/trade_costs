@@ -12,7 +12,7 @@ version 14.2
 ** 	Mai 2018 
 ** -------------------------------------------------------------
 
-
+version 14
 
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/dropbox/2013 -- trade_cost -- dropbox/results
@@ -37,9 +37,9 @@ cd "$dir"
 
 clear all
 set mem 700m
-*set matsize 8000
+set matsize 8000
 set more off
-*set maxvar 32767
+set maxvar 32767
 
 
 ** Programme pour sortir les résultats
@@ -114,7 +114,7 @@ keep if _n==1
 
 
 *save "E:/Lise/BQR_Lille/Hummels/resultats/results_estim_`year'_`class'_`preci'_`mode'", replace
-save "$dir/robustesse_non_separe/results_estim_`year'_`exo'_`preci'_`mode'", replace
+save "$dir/robustesse_non_separe/selected_results_estim_`year'_`exo'_`preci'_`mode'", replace
 
 ** Ajouter informations : Année, mode, degré de classification
 
@@ -133,7 +133,7 @@ order year digits mode nbr_obs nbr_iso_o nbr_prod
 # delimit cr
 
 *save "E:/Lise/BQR_Lille/Hummels/resultats/results_estim_`year'_`class'_`preci'_`mode'", replace
-save "$dir/robustesse_non_separe/results_estim_`year'_`exo'_`preci'_`mode'", replace
+save "$dir/robustesse_non_separe/selected_results_estim_`year'_`exo'_`preci'_`mode'", replace
 
 
 end
@@ -159,7 +159,7 @@ foreach x in air ves {
 
 get_table 1974 `k' 3 `x'
 
-use "$dir/robustesse_non_separe/results_estim_1974_`k'_3_`x'", clear
+use "$dir/robustesse_non_separe/selected_results_estim_1974_`k'_3_`x'", clear
 
 
 save "$dir/robustesse_non_separe/table_`k'_3_`x'", replace
@@ -181,7 +181,7 @@ forvalues z = 1975(1)2013 {
 get_table `z' `k' 3 `x'
 
 use "$dir/robustesse_non_separe/table_`k'_3_`x'", clear
-append using "$dir/robustesse_non_separe/results_estim_`z'_`k'_3_`x'"
+append using "$dir/robustesse_non_separe/selected_results_estim_`z'_`k'_3_`x'"
 
 save "$dir/robustesse_non_separe/table_`k'_3_`x'", replace
 
@@ -344,8 +344,8 @@ foreach x in air ves {
 	
 	if "`k'" == "terme_A" local title "Additive term"
 	if "`k'" == "terme_I" local title "Multiplicative term"
-	if "`x'" == "ves" local modetitle "Vessel"
-	if "`x'" == "air" local modetitle "Air"
+	if "`x'" == "ves" local modetitle "vessel"
+	if "`x'" == "air" local modetitle "air"
 	
 	
 	*twoway lfit `k'_mpsepare t || lfit `k'_mpns t, xtitle("Year") ytitle("In % of the fas price") title("`k', `x'") legend(label(1 "Separated FE") label(2 "No separated FE")) 
@@ -361,10 +361,207 @@ foreach x in air ves {
 	
 	quietly capture graph export graph_robustesse_ns_`z'_`k'_`x'.pdf, replace
 	
+	
+	
+	
 	}
 
 	}
 	}
 
 
+	
+	
+***************************************
+*** Faire un graphique pour évaluer la dispersion de la part des additifs
+*** Répliquer Figure 3 du papier
+*** Pour chaque cas, séparable / non-séparable
+***************************************
+
+
+** Il faut repartir des bases par année car on n'a pas l'information sur la valeur sinon
+
+** On crée une base pour le cas séparable / une base pour le cas non-séparable
+
+*capture program drop creer_estimTC_robustesse
+*program creer_estimTC_robustesse
+
+cd "$dir"
+
+foreach exo in sitc2ns sitc2separe {
+
+
+** Première année, 1974, initialisation de la base
+
+foreach mode in air ves {
+
+	use results_estimTC_1974_`exo'_3_`mode'.dta, clear
+
+	keep product prix_caf prix_fob `mode'_val `mode'_wgt iso_o name terme_I terme_A coef_iso_A coef_iso_I contig-distwces mode 
+	rename `mode'_val val
+	rename `mode'_wgt wgt
+	label var val "Value"
+	label var wgt "Weight"
+	rename product sector
+	
+
+keep if mode =="`mode'"
+
+gen prix_caf_pond = prix_caf*wgt
+gen prix_fob_pond = prix_fob*wgt
+
+bys sector iso_o mode : gen nbr_prod=_N
+
+collapse (sum) prix_caf_pond prix_fob_pond val wgt, by(sector iso_o name terme_I terme_A coef_iso_A coef_iso_I contig-distwces mode nbr_prod)
+
+gen prix_caf = prix_caf_pond/wgt
+gen prix_fob = prix_fob_pond/wgt
+
+drop prix_caf_pond prix_fob_pond
+
+gen nbdigits = 3
+gen year = 1974
+
+
+
+** Créer la base de résultats
+
+save "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3_`mode'", replace
+* On augmente la base des années ultérieures
+
+*** Les années ultérieures
+
+local liste_year 1975(1)2013
+
+foreach year of numlist `liste_year' {
+
+disp "year = `year'"
+
+	use results_estimTC_`year'_`exo'_3_`mode'.dta, clear
+
+	keep product prix_caf prix_fob `mode'_val `mode'_wgt iso_o name terme_I terme_A coef_iso_A coef_iso_I contig-distwces mode 
+	rename `mode'_val val
+	rename `mode'_wgt wgt
+	label var val "Value"
+	label var wgt "Weight"
+	rename product sector
+	
+
+keep if mode =="`mode'"
+
+gen prix_caf_pond = prix_caf*wgt
+gen prix_fob_pond = prix_fob*wgt
+
+bys sector iso_o mode : gen nbr_prod=_N
+
+collapse (sum) prix_caf_pond prix_fob_pond val wgt, by(sector iso_o name terme_I terme_A coef_iso_A coef_iso_I contig-distwces mode nbr_prod)
+
+gen prix_caf = prix_caf_pond/wgt
+gen prix_fob = prix_fob_pond/wgt
+
+drop prix_caf_pond prix_fob_pond
+
+gen nbdigits = 3
+gen year = `year'
+
+save temp, replace
+	use "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3_`mode'", clear
+	append using temp, force
+	
+
+save "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3_`mode'", replace
+sleep 1000
+
+erase temp.dta
+}
+*log close
+}
+}
+
+*** Faire une base par modele qui englobe les deux modes
+
+foreach exo in sitc2ns sitc2separe {
+
+use "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3_air"
+
+append using "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3_ves"
+
+save "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3"
+
+
+foreach mode in air ves {
+erase "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3_`mode'.dta"
+}
+}
+
+
+*** Corriger de certains "bugs" comme pour estimTC
+
+
+foreach exo in sitc2ns sitc2separe {
+
+** Bug sur "name" à partir de 2005,jamais renseigné
+
+use "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3", clear
+
+sort iso_o year
+foreach x in iso_o {
+	forvalues z = 2005(1)2013 {
+		replace name = name[_n-1] if iso_o == `x' & year ==`z'
+	}
+}
+
+
+save "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3d", replace
+
+** Bug sur "name" à partir de 2011 sur iso_o "SDN"
+
+use "$dir\robustesse_non_separe\estimTC_robustesse_`exo'_3", clear
+
+replace name = "Sudan" if iso_o =="SDN" 
+bys iso_o: count if name==""
+
+save "$dir/robustesse_non_separe\estimTC_robustesse_`k'_3'.dta", replace
+
+
+
+}
+
+
+
+
+**** Construire le graphique de dispersion de la part des additifs
+
+
+cd "$dir/robustesse_non_separe"
+
+foreach k in sitc2ns sitc2separe {
+
+use estimTC_robustesse_`k'_3.dta, clear
+
+gen beta =(terme_A)/(terme_A+terme_I-1)
+	
+label var beta "Share of additive costs"
+
+
+egen val_tot_year=total(val), by(year mode)
+gen share_y_val = round((val/val_tot_year)*100000)
+
+foreach mode in ves air {
+
+	if "`k'" == "sitc2ns" local title "Non separability assumption"
+	if "`k'" == "sitc2separe" local title "Separability assumption (baseline)"
+	if "`mode'"== "ves" local modetitle "Vessel"
+	if "`mode'" == "air" local modetitle "Air"
+
+
+	
+	histogram beta if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) xtitle("Share of additive costs") ytitle("Density") title("`title', `modetitle'")
+	graph export Etude_beta_nopond_`k'_`mode'.pdf, replace
+
+	histogram beta [fweight=share_y_val] if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) xtitle("Share of additive costs") ytitle("Density") title("`title', `modetitle'")
+	graph export Etude_beta_pond_`k'_`mode'.pdf, replace
+
+}
+}
 

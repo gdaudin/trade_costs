@@ -198,10 +198,10 @@ clear
 use predictedrates
 tsset year, yearly 
 
-label var afvhat  "fitted ad valorem rate"
-label var vfvhat  "fitted ad valorem rate"
-label var afv_wgt "expenditure/import value"
-label var vfv_wgt "expenditure/import value"
+label var afvhat  "Fitted ad-valorem rate"
+label var vfvhat  "Fitted ad-valorem rate"
+label var afv_wgt "Expenditure/import value"
+label var vfv_wgt "Expenditure/import value"
 
 tsline afvhat afv_wgt  , ytitle("% of value shipped") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014")
 quietly capture graph save resultats_finaux/figure5_comme_hummels.gph, replace
@@ -225,10 +225,10 @@ gen vfv_wgt_index = (vfv_wgt/vfv_wgt[1])*100
 
 
 
-label var afvhat_index  "fitted ad valorem rate, 100 in 1974"
-label var vfvhat_index  "fitted ad valorem rate, 100 in 1974"
-label var afv_wgt_index "expenditure/import value, 100 in 1974"
-label var vfv_wgt_index "expenditure/import value, 100 in 1974"
+label var afvhat_index  "Fitted ad-valorem rate, 100 in 1974"
+label var vfvhat_index  "Fitted ad-valorem rate, 100 in 1974"
+label var afv_wgt_index "Expenditure/import value, 100 in 1974"
+label var vfv_wgt_index "Expenditure/import value, 100 in 1974"
 
 twoway (line  afvhat_index year,  clpattern(solid) color(navy)) ///
 	   (line  afv_wgt_index year, clpattern( longdash) color(sienna)  ) ///
@@ -253,6 +253,28 @@ quietly capture graph export resultats_finaux/figure6_comme_hummels_base100.pdf,
 
  save "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/results/effet_composition_hummels.dta", replace
 
+
+if "`c(username)'" =="guillaumedaudin" {
+	global dir ~/dropbox/trade_cost
+}
+
+
+if "`c(hostname)'" =="LAB0271A" {
+	global dir C:\Users\lpatureau\Dropbox\trade_cost
+}
+
+
+if "`c(hostname)'" =="lise-HP" {
+	global dir C:\Users\lise\Dropbox\trade_cost
+}
+
+if "`c(hostname)'" =="LABP112" {
+    global dir C:\Users\lpatureau\Dropbox\trade_cost
+}
+
+
+
+save "$dir/results/effet_composition_hummels.dta", replace
 
 
 
