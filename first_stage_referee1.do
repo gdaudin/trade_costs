@@ -3,7 +3,7 @@
 *ssc install estout, replace
 *ssc install ftools, replace
 
-
+clear all
 set more off
 
 if "`c(username)'" =="jerome" {
@@ -440,8 +440,14 @@ mat r_square_within= e(r2_within)
 svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
+mat F_stat=e(F) 
+svmat double F_stat, names(matcol)
+rename F_statc1 F_stat
+
+gen t_student = beta/sd
+
 keep if betals_tariff~=.
-keep year mode betals_tariff sd r_square adj_r_square r_square_within
+keep year mode betals_tariff sd t_student F_stat r_square adj_r_square r_square_within 
 rename betals_tariff beta_FS
 	
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
@@ -520,8 +526,14 @@ mat r_square_within= e(r2_within)
 svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
+mat F_stat=e(F) 
+svmat double F_stat, names(matcol)
+rename F_statc1 F_stat
+
+gen t_student = beta/sd
+
 keep if betals_tariff~=.
-keep year mode betals_tariff sd r_square adj_r_square r_square_within
+keep year mode betals_tariff sd t_student F_stat r_square adj_r_square r_square_within 
 rename betals_tariff beta_FS
 	
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
@@ -567,10 +579,15 @@ forvalues x=1974(1)2013 {
 use "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta", clear
 append using "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta"
 sort mode year
-order year mode
-save "$dir/results/IV_referee1_yearly/FS_parameters_yearly.dta", 
+order year mode beta_FS sd t_student F_stat r_square adj_r_square r_square_within 
+save "$dir/results/IV_referee1_yearly/FS_parameters_yearly.dta",replace
 
-scatter scatter beta_FS year if mode=="air"
+****a few useful descriptive statistics*****
+tabstat beta_FS sd t_student F_stat adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+tabstat beta_FS sd t_student F_stat adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+
+
+scatter beta_FS year if mode=="air"
 graph save graph_param_yearly_air, replace
 
 scatter beta_FS year if mode=="ves"
