@@ -2,6 +2,7 @@
 *ssc install reghdfe, replace
 *ssc install estout, replace
 *ssc install ftools, replace
+*ssc install latab, replace
 
 clear all
 set more off
@@ -585,6 +586,10 @@ save "$dir/results/IV_referee1_yearly/FS_parameters_yearly.dta",replace
 ****a few useful descriptive statistics*****
 tabstat beta_FS sd t_student F_stat adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 tabstat beta_FS sd t_student F_stat adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+
+****a few useful descriptive statistics in LaTex Tables*****
+latabstat beta_FS sd t_student F_stat adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+latabstat beta_FS sd t_student F_stat adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
 
 scatter beta_FS year if mode=="air"
