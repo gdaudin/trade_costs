@@ -354,14 +354,14 @@ The main result that emerges is that the model with additive costs only is domin
 More details of these results are given in the Online Appendix.}
 
 
-One may be concerned that the specification of Equations (\ref{eq:model_IetA}) or (\ref{eq:model_nlI}) might be subject to an endogeneity bias, as the price set by the exporter may vary depending on the transport cost burden.
-Studies on the pricing-to-market behavior of firms (see \citealp{Krugman-87}) show that we cannot exclude that the export price set by the firm ($\widetilde{p}_{ik}$) is partly endogenous to the size of transport costs (for instance, the exporting firm absorbing (part of) the transport costs by reducing the FAS price).
-This is not an issue here, as we are not interested in causal inference.
-Rather, our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components.
+%One may be concerned that the specification of Equations (\ref{eq:model_IetA}) or (\ref{eq:model_nlI}) might be subject to an endogeneity bias, as the price set by the exporter may vary depending on the transport cost burden.
+%Studies on the pricing-to-market behavior of firms (see \citealp{Krugman-87}) show that we cannot exclude that the export price set by the firm ($\widetilde{p}_{ik}$) is partly endogenous to the size of transport costs (for instance, the exporting firm absorbing (part of) the transport costs by reducing the FAS price).
+%This is not an issue here, as we are not interested in causal inference.
+%Rather, our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components.
 
 %However, we consider as a reasonable assumption that the exporting firm cannot influence the international transport cost sector, that would imply a causal effect of the firm's prices on the transport costs value, except in the choice between air and vessel transport (that is beyond our scope of analysis).
-Otherwise stated, conditional to an export price and a transport mode, the gap between the export price declared to the custom data and the import price recorded by the US administration is beyond the firm's control.
-In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
+%Otherwise stated, conditional to an export price and a transport mode, the gap between the export price declared to the custom data and the import price recorded by the US administration is beyond the firm's control.
+%In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
 
 %\textbf{pas encore completement clair. Veut-on dire que ce qui est pbtique, c'est que TC reagisse a ptilde? Je crois que ce qu'on veut dire, c'est que le fait que ptilde change en fonction des TC ne change pas les TC, le cif price s'ajuste proportionnellement? Si c'est ca, c'est vrai seulement si les couts sont advalorem...Pour dire que les firmes peuvent difficilement influencer le prix du transport au niveau 3d, on pourrait donner des stats des la dessus? Par produit 3d/pays, par secteur 3d tous pays, etc...?}\smallskip
 
@@ -517,6 +517,21 @@ On the contrary, they represent a sizable and structural dimension of internatio
 If the share of additive costs in total costs roughly amounts to 48\% (42\%) in vessel (air) transport on average, one can further notice that it varies substantially over time, from a minimum of 30\% to a maximum of 60\% depending on the year considered.
 In the next section, we further investigate the importance of the (varying pattern of) additive costs, as regards the determinants of transport costs time trends.
 
+\paragraph{Endogeneity concerns} One may be concerned that the specification of Equations (\ref{eq:model_IetA}) or (\ref{eq:model_nlI}) might be subject to an endogeneity bias, as the price set by the exporter may vary depending on the transport cost burden.
+Studies on the pricing-to-market behavior of firms (see \citealp{Krugman-87}) show that we cannot exclude that the export price set by the firm ($\widetilde{p}_{ik}$) is partly endogenous to the size of transport costs (for instance, the exporting firm absorbing (part of) the transport costs by reducing the FAS price). Besides, related concerns may arise from productivity-sorting model in \citet{melitz} or the quality-sorting model in \citet{baldwin_harrigan}: more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair.
+
+It is true we are not interested in causal inference, since our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components. However, the latter can be biased by the abovementioned endogeneity issues since they imply that $\frac{1}{\widetilde{p}_{ik}}$ is correlated in one direction on another with residuals $\epsilon_{ik}$.
+
+
+XXX propose firss stage equation, explain IVs XXX ICI XXX
+
+XXX provide results 2nd stage
+
+%However, we consider as a reasonable assumption that the exporting firm cannot influence the international transport cost sector, that would imply a causal effect of the firm's prices on the transport costs value, except in the choice between air and vessel transport (that is beyond our scope of analysis).
+%Otherwise stated, conditional to an export price and a transport mode, the gap between the export price declared to the custom data and the import price recorded by the US administration is beyond the firm's control.
+%In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
+
+ 
 
 
 \section{Transport costs time trends: the role of the additive component}\label{sec:results_trends}
