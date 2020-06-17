@@ -441,11 +441,12 @@ mat r_square_within= e(r2_within)
 svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
+gen t_student = beta/sd
+
 mat F_stat=e(F) 
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-gen t_student = beta/sd
 
 keep if betals_tariff~=.
 keep year mode betals_tariff sd t_student F_stat r_square adj_r_square r_square_within 
@@ -553,7 +554,6 @@ save "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta", replace
 
 sort year 
 
-*OK jusque là
 
 forvalues x=1975(1)2013{
 

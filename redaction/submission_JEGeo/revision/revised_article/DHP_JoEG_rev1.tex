@@ -517,21 +517,71 @@ On the contrary, they represent a sizable and structural dimension of internatio
 If the share of additive costs in total costs roughly amounts to 48\% (42\%) in vessel (air) transport on average, one can further notice that it varies substantially over time, from a minimum of 30\% to a maximum of 60\% depending on the year considered.
 In the next section, we further investigate the importance of the (varying pattern of) additive costs, as regards the determinants of transport costs time trends.
 
-\paragraph{Endogeneity concerns} One may be concerned that the specification of Equations (\ref{eq:model_IetA}) or (\ref{eq:model_nlI}) might be subject to an endogeneity bias, as the price set by the exporter may vary depending on the transport cost burden.
-Studies on the pricing-to-market behavior of firms (see \citealp{Krugman-87}) show that we cannot exclude that the export price set by the firm ($\widetilde{p}_{ik}$) is partly endogenous to the size of transport costs (for instance, the exporting firm absorbing (part of) the transport costs by reducing the FAS price). Besides, related concerns may arise from productivity-sorting model in \citet{melitz} or the quality-sorting model in \citet{baldwin_harrigan}: more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair.
+\paragraph{Endogeneity concerns} One may be concerned that the specification of Equations (\ref{eq:model_IetA}) or (\ref{eq:model_nlI}) might be subject to an endogeneity bias, as the price set by the exporter may vary depending on the transport cost burden. Studies on the pricing-to-market behavior of firms (see \citealp{Krugman-87}) show that we cannot exclude that the export price set by the firm ($\widetilde{p}_{ik}$) is partly endogenous to the size of transport costs (for instance, the exporting firm absorbing (part of) the transport costs by reducing the FAS price). 
+Besides, related concerns may arise from productivity-sorting model in \citet{melitz} or the quality-sorting model in \citet{baldwin_harrigan}: more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair. In addition, there is also the possibility that bigger firms might impact transport costs, due to their ability of bargaining discounts for larger shipped volumes.
 
-It is true we are not interested in causal inference, since our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components. However, the latter can be biased by the abovementioned endogeneity issues since they imply that $\frac{1}{\widetilde{p}_{ik}}$ is correlated in one direction on another with residuals $\epsilon_{ik}$.
+It is true we are not interested in causal inference, since our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components. However, the latter can be biased by the aforementioned endogeneity issues since they imply that $\frac{1}{\widetilde{p}_{ik}}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. This may ultimately harm the estimation of $\widehat{t}/\widetilde{p}$ and consequently, $\widehat{\tau}$.
+
+Therefore, we propose to compare our main estimates with those stemming from a two-stage least-squares procedure. Put differently, we will replace in the right-hand side of Equation (\ref{eq:model_IetA}) $\widetilde{p}$ by predicted values stemming from the following equation:
+
+\begin{equation}
+\ln\left(\widetilde{p}_{ik}\right)= \beta IV_{ik} +\lambda_{is(k)}+ \mu_{ik} \label{eq:first_stage}
+\end{equation}
+
+\noindent where $\lambda_{is(k)}$ represents country-3-digit sector fixed effects, and $IV_{ik} $ the instrumental variable used to purge $\widetilde{p}_{ik}$ from endogeneity issues. Following common practice in the literature, we will use as instrument 5-digit product-specific tariff rates, or alternatively, a combination between the latter and lagged fas prices (XXX TO BE DONE XXX). Consistently with our overall estimation strategy, Equation (\ref{eq:first_stage}) is estimated on a yearly basis.
+
+Tables \ref{tab: FS_air} and \ref{tab: FS_ves} report summary results of these first stage regressions:
 
 
-XXX propose firss stage equation, explain IVs XXX ICI XXX
+\begin{table}[htbp]\centering
+\caption{Summary Results for First-Stage Regressions - Air\label{tab: FS_air}}
+\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+\textbf{variable } & \textbf{mean} & \textbf{p25} & \textbf{p50} & \textbf{p75} & \textbf{sd} & \textbf{min} & \textbf{max} \\
+\hline
+   $\beta_{IV}$ &    -0.0858 &    -0.1247 &    -0.0944 &    -0.0362 &     0.0469 &    -0.1741 &    -0.0128 \\
+        $sd_{\beta}$  &     0.0184 &     0.0139 &     0.0197 &     0.0237 &     0.0082 &     0.0048 &     0.0331 \\
+  Student t  &    -5.2255 &    -6.5428 &    -5.2703 &    -3.7943 &     2.4782 &   -11.4557 &    -0.4184 \\
+    F stat  &    33.2938 &    14.4215 &    27.7801 &    42.8707 &    28.1280 &     0.1751 &   131.2323 \\
+  adj R²  &     0.4845 &     0.4712 &     0.4768 &     0.4934 &     0.0227 &     0.4452 &     0.5472 \\
+  R² within &     0.0025 &     0.0015 &     0.0023 &     0.0036 &     0.0016 &     0.0000 &     0.0064 \\
+\hline
+\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} }}
+\end{tabular}
+\end{table}
 
-XXX provide results 2nd stage
+
+\begin{table}[htbp]\centering
+\caption{Summary Results for First-Stage Regressions -Ves\label{tab: FS_ves} }
+\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+\textbf{variable } & \textbf{      mean} & \textbf{       p25} & \textbf{ p50} & \textbf{p75} & \textbf{sd} & \textbf{       min} & \textbf{       max} \\
+\hline
+   $\beta_{IV}$ &     0.0584 &     0.0180 &     0.0733 &     0.0846 &     0.0349 &    -0.0010 &     0.1147 \\
+       $sd_{\beta}$  &     0.0124 &     0.0108 &     0.0138 &     0.0155 &     0.0047 &     0.0041 &     0.0195 \\
+  Student t  &     4.5161 &     3.3592 &     4.8718 &     5.5721 &     1.9626 &    -0.0781 &     8.9563 \\
+    F stat  &    24.1509 &    11.4029 &    23.7486 &    31.0489 &    17.2397 &     0.0061 &    80.2158 \\
+  adj R² &     0.5856 &     0.5767 &     0.5878 &     0.5960 &     0.0172 &     0.5364 &     0.6323 \\
+  R² within &     0.0020 &     0.0006 &     0.0021 &     0.0032 &     0.0015 &     0.0000 &     0.0062 \\
+\hline
+\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} }}
+\end{tabular}
+\end{table}
+
+Both Tables suggest that custom duties are a very good predictor of fas prices $\widetilde{p}_{ik}$, with strong significance. The F-statistic for significance of the instrument in the first-stage is on average well above 10, the ``rule-of-thumb'' threshold value recommended by \citet{staiger_stock} as a test for weak instrumentation.
+
+XXX on peut aussi ajouter des graphs des beta estimés ici, peut-être éventuellement avec les IC XXX 
+
+XXX Reste ici l'épineux problème de la différence de signe entre les deux modes de transport; avant de creuser, voir si on ne résoudrait pas le problème avec l'IV combinant duties et lagged prices XXX
+
+Provided that the instrument used in Equation \ref{eq:first_stage} displays the right statistical properties, we can confidently re-inject the predictions it produces for $\widetilde{p}_{ik}$ on the right-hand side of Equation (\ref{eq:model_IetA}\footnote{Note that, since the predictions are expressed in logarithms, they are transformed through the exponential function before their implementation in Equation (\ref{eq:model_IetA}.} to produce a 2SLS-type of estimation. Results are displayed below, as well as a measure of the gap with our main estimates. 
+
+XXX We expect the gap to be very small XXX
+
 
 %However, we consider as a reasonable assumption that the exporting firm cannot influence the international transport cost sector, that would imply a causal effect of the firm's prices on the transport costs value, except in the choice between air and vessel transport (that is beyond our scope of analysis).
 %Otherwise stated, conditional to an export price and a transport mode, the gap between the export price declared to the custom data and the import price recorded by the US administration is beyond the firm's control.
 %In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
 
- 
+
 
 
 \section{Transport costs time trends: the role of the additive component}\label{sec:results_trends}
