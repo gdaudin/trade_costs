@@ -779,7 +779,8 @@ timer on 3
 capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
 	
-if _rc==. {
+if _rc==0 {
+	display "La Regression a tourné"
 	*capture	predict predict
 	predict blink_nl
 	
@@ -888,7 +889,7 @@ if _rc==. {
 
 }
 
-if _rc!=. {
+if _rc!=0 {
 		generate rc=_rc
 		keep if _n==1
 		keep product year mode rc terme_A terme_I `mode'_val
