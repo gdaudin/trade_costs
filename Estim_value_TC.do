@@ -797,7 +797,7 @@ if _rc==0 {
 	generate Rp2_nl = r(rho)^2
 
 
-	order iso_o iso_d product prix_fob prix_trsp2 converge predict lpredict terme* t /* e_t_rho* predict_calcul couts FE* 	*/
+	order iso_o iso_d product prix_fob prix_trsp2 converge /*predict lpredict*/ predict_nl terme* t /* e_t_rho* predict_calcul couts FE* 	*/
 
 	matrix X= e(b)
 	capture matrix ET=e(V)

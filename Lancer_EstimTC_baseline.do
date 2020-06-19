@@ -15,7 +15,7 @@
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
+	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
 	global dir_pgms "$dir/trade_costs_git"
 }
 
@@ -46,8 +46,7 @@ set more off
 local mode ves air
 *local year 1974 
 
-cd $dir_pgms
-do Estim_value_TC.do
+do "$dir_pgms/Estim_value_TC.do"
 
 
 ***** LANCER LES ESTIMATIONS **************************
