@@ -134,6 +134,15 @@ if "`method2'"=="IV_referee1_panel" {
 	rename product sector /*Product is in fact 3 digits*/
 	drop _merge
 }	
+
+
+if "`method2'"=="IV_referee1_yearly" {
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	generate beta = -(terme_A/(terme_I+terme_A-1))
+	rename product sector /*Product is in fact 3 digits*/
+	drop _merge
+}	
+	
 	
 
 bys iso_o sector : keep if _n==1
@@ -189,7 +198,15 @@ if "`method2'"=="IV_referee1_panel" {
 	generate beta = -(terme_A/(terme_I+terme_A-1))
 	rename product sector /*Product is in fact 3 digits*/
 	drop _merge
+}
+
+if "`method2'"=="IV_referee1_yearly" {
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	generate beta = -(terme_A/(terme_I+terme_A-1))
+	rename product sector /*Product is in fact 3 digits*/
+	drop _merge
 }	
+		
 	
 
 egen couverture_`method2'=total(`mode'_val)
@@ -263,7 +280,8 @@ end
 ***on lance les comparaisons
 
 global method1 baseline
-global method2 IV_referee1_panel
+*global method2 IV_referee1_panel
+global method2 IV_referee1_yearly
 
 ******
 
@@ -272,7 +290,7 @@ global method2 IV_referee1_panel
 
 
 *capture erase "$dir_comparaison/stats_comp_baseline_referee1.dta"
-erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
+capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 foreach year of num 2005/2013 {
 	foreach mode in air ves {
