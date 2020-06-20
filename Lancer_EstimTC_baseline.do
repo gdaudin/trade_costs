@@ -62,7 +62,7 @@ do "$dir_pgms/Estim_value_TC.do"
 
 foreach x in `mode' {
 
-	forvalues z = 1974(1)2013 {
+	forvalues z = 1979(1)2004 /*1974(1)2013*/ {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
@@ -85,8 +85,8 @@ foreach x in `mode' {
 ********4 digits
 
 set more off
-local mode air
-local year 1974 1977 1981 1985 1989 1993 1997 2001 2005 2009 2013
+local mode air ves
+local year 1974 1977 1981 1985 1989 1993 1997 2001 /*2005 2009 2013*/
 * attention pb en 1989 air il faut passer à 300 itérations
 
 
