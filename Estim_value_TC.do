@@ -779,7 +779,8 @@ timer on 3
 capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
 	
-if _rc==0 {
+local result_reg = _rc
+if `result_reg' ==0 {
 	display "La Regression a tourné"
 	*capture	predict predict
 	predict blink_nl
@@ -871,7 +872,7 @@ if _rc==0 {
 	timer off 2
 	timer list 2
 	
-	drop Duree_estimation_secondes
+	capture drop Duree_estimation_secondes
 	generate Duree_estimation_secondes = r(t2)
 	generate machine =  "`c(hostname)'__`c(username)'"
 	
@@ -886,11 +887,14 @@ if _rc==0 {
 	global liste_parametres_iso_o_I `liste_parametres_iso_o_I' 
 	global liste_iso_o `liste_iso_o'
 	global liste_prod  `liste_prod'
+	
+	drop prod_*
+	drop iso_o_*
 
 }
 
-if _rc!=0 {
-		generate rc=_rc
+if `result_reg' !=0 { {
+		generate rc=`result_reg' 
 		keep if _n==1
 		keep product year mode rc terme_A terme_I `mode'_val
 		replace terme_A=.
