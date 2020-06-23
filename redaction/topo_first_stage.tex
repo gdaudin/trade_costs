@@ -1,0 +1,143 @@
+\documentclass[11pt,twoside, authoryear]{elsarticle}
+\usepackage[frenchb, english]{babel}
+\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{fontenc}
+%\usepackage[ansinew]{inputenc}
+\usepackage{setspace}
+\usepackage{babel,varioref}
+\usepackage{supertabular}
+\usepackage{graphicx}
+%\usepackage[pdftex]{graphicx}
+%\DeclareGraphicsExtensions{.pdf,.mps,.png,.jpg,.eps}
+\usepackage{lscape}
+\usepackage[authoryear]{natbib}
+%\usepackage[frenchb,english]{babel}
+\usepackage{multirow}
+\usepackage{ifthen}
+%\usepackage{harvard}
+\usepackage{vmargin}
+\usepackage{verbatim}
+\usepackage{array}
+%\usepackage[authoryear]{natbib}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=Black, citecolor=blue, urlcolor=blue}
+%\setmarginsrb{2cm}{2cm}{2cm}{2cm}{0cm}{0cm}{0cm}{0cm}
+\usepackage{booktabs,caption,fixltx2e}
+
+\usepackage[flushleft]{threeparttable}
+
+%\usepackage{titling}
+
+%\setlength{\droptitle}{-10em}   % This is your set screw
+
+
+\makeatletter
+\def\ps@pprintTitle{%
+  \let\@oddhead\@empty
+  \let\@evenhead\@empty
+  \let\@oddfoot\@empty
+  \let\@evenfoot\@oddfoot
+}
+\makeatother
+\usepackage{adjustbox}
+\usepackage{chngcntr}
+\counterwithin{table}{section}
+%\usepackage[round]{natbib}
+
+%\renewcommand{\thesection}{\Alph{section}}
+
+% \newcommand\section[1]{%
+%   \refstepcounter{section}%
+%   \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+%   \sectionmark{#1}}
+%   }
+
+
+% % \refstepcounter{section}%
+% %   \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+% %   \sectionmark{#1}}
+
+
+
+%   \newcommand\subsection[1]{%
+%   \refstepcounter{subsection}%
+%   \addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}#1}%
+%   %\subsectionmark{#1}
+%   }
+
+%\EnableSectionsInLOFT
+
+
+
+\begin{document}
+
+\section{Some insights about IV specification}
+
+
+\subsection{Reasoning 1}
+
+
+The question we deal with, is the functional form of the first stage equation, where we instrument the fas price with duties as suggested by Referee 1.
+
+Denoting $i$ the origin country, $k$ the product at the HS6 level, and reasoning on a yearly basis, if we assume that the fas price $\widetilde{p}_{ik}$ decomposes in two components, say $\bar{p}_{ik}$ the ``firm-specific'' price (related to its cost and pricing strategy) and $\tau^d_{ik}$ the tax duty (out of the firm's hands) according to :
+
+$$\widetilde{p}_{ik} = (1+\tau^d_{is(k)})\bar{p}_{ik}$$
+
+\noindent with $s(k)$ the 3-digit classification (the disaggregation level for tax duties in the database) as a function of the HS6 product classification. Then, taking the total differential around some reference point (referred with the subscript $0$):
+
+\begin{eqnarray}
+&&\Delta \widetilde{p}_{ik} = \Delta \bar{p}_{ik}\times (1+\tau^d_{is(k)0}) + \bar{p}_{ik0}\times \Delta \tau^d_{is(k)} \\
+\Leftrightarrow &&\frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}} = \Delta \bar{p}_{ik} \frac{1+\tau^d_{is(k)0}}{\bar{p}_{ik0}(1+\tau^d_{is(k)0})} +\frac{\Delta \tau^d_{is(k)0}}{1+\tau_{is(k)0}^d} \\
+\Leftrightarrow &&\frac{\Delta \widetilde{p}_{ik0}}{\widetilde{p}_{ik0}} =  \frac{\Delta \bar{p}_{ik}}{\bar{p}_{ik0}} +\frac{\Delta \tau^d_{is(k)}}{1+\tau_{ik0}^d} \label{eq:firststage}
+\end{eqnarray}
+
+The intuition behind the Referee 1's endogeneity concerns, is that we need to eliminate from the fas price, any endogenous component that might me related to transport costs. To do so, the referee suggests that we instrument the export price by tariff rates. Put it in plain words, this suggests to run the first-stage regression based on Equation (\ref{eq:firststage}) according to:
+
+$$\frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}} = \alpha \frac{\Delta \tau^d_{is(k)}}{1+\tau_{is(k)0}^d} + \gamma_{i} +\gamma_{k}+\epsilon_{ik}$$
+
+Or equivalently, taking logs:
+$$\Delta \log \widetilde{p}_{ik}= \alpha\frac{\Delta \tau^d_{is(k)}}{1+\tau_{is(k)0}^d} +\gamma_{i} +\gamma_{k}+\epsilon_{ik}$$
+
+
+\noindent with the LHS being the growth rate of the fas price, the first term in the RHS the hange in duty tax rates, the second and third terms fixed effects to capture the ``firm-specific price'' $\bar{p}$, $\epsilon_{ik}$ being the residual.
+
+If this reasoning is correct,
+\begin{itemize}
+\item we should take as predicted value only the predicted price WITHOUT the fixed effects:
+$$\widehat{\frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}}} = \alpha\frac{\Delta \tau^d_{is(k)}}{1+\tau_{is(k)0}^d} $$
+\item and we should expect a positive sign between $\Delta \log \widetilde{p}_{ik}$ and $\frac{\Delta \tau^d_{is(k)}}{1+\tau_{is(k)0}^d} $, with the estimated value of $\alpha$ close to 1.
+\end{itemize}
+
+Once this is done, rebuilt the instrumented fas price at time $t$ (for clarity, we re-write te temporal index here):
+
+\begin{eqnarray*}
+\widehat{\widetilde{p}}_{ikt} = \widetilde{p}_{ikt-1}+ \widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}}
+\end{eqnarray*}
+
+with $\widehat{\widetilde{p}}_{ikt}$ the instrumented fas price at time $t$, for product $k$ from country $i$; $\widetilde{p}_{ikt-1}$ the observed lagged fas price for the same $i,k$ couple; and $ \widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}}$ the predicted growth rate of the export price based on duty changes.
+
+
+
+\subsection{Reasoning 2}
+
+
+If we come back to my initial idea when discussing together last week, I started from the link between the cif price, the fas price and tax duty.
+Denoting $i$ the origin country, $k$ the product at the HS6 level, and reasoning on a yearly basis,
+
+$$p_{ik} = (1+\tau^d_{is(k)})\widetilde{p}_{ik}$$
+
+Taking the total differential around some reference point (referred with the subscript $0$):
+
+\begin{eqnarray*}
+&&\Delta p_{ik} = (1+\tau^d_{is(k)0})\Delta \widetilde{p}_{ik} + \widetilde{p}_{ik0}\Delta \tau^d_{is(k)}\\
+\Leftrightarrow && \frac{\Delta p_{ik}}{p_{ik0}} = \frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}} + \frac{\Delta \tau^d_{is(k)}}{1+\tau^d_{is(k)0}}
+\end{eqnarray*}
+
+The reasoning I held last time was the following: Suppose that the firm does adjust its fas price to duty changes, this mitigates the impact of duty tax changes on the import price. In the extreme case, where the firm fully compensates such that $\frac{\Delta p_{ik}}{p_{ik0}} = 0$, we should get:
+
+$$\frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}} = - \frac{\Delta \tau^d_{is(k)}}{1+\tau^d_{is(k)0}}$$
+
+In this reasoning, we should regress the growth rate of the fas price on the change in tax duty, expecting a negative sign. But if the idea is to take the exogenous component of the fas price, then I am a little bit lost... Shouldn't we take the part of the fas price that is NOT explained by duty changes? 
+
+
+\end{document}
