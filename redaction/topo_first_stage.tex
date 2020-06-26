@@ -73,71 +73,127 @@
 
 \section{Some insights about IV specification}
 
+\subsection{A note on prices}
 
-\subsection{Reasoning 1}
+We have three prices: the (US) consumer price, say $p^{c}_{ik}$, the ``import'' or  cif price (at the entrance of the US) $p_{ik}$ and the fas price (at the export gate in the origin country) $\widetilde{p}_{ik}$, denoting $i$ the origin country, $k$ the product at the 8 or 5 digit level, and reasoning on a yearly basis, and $s(k)$ the 3-digit classification the product $k$ belongs to. Further, if we denote $\tau^d_{ik}$ the duty tax rate paid when the good crosses the US border, then we have:
+
+\begin{eqnarray*}
+&&p^c_{ik} = (1+\tau^d_{is(k)})p_{ik} \\
+with && p_{ik}  = \tau_{is(k)} \widetilde{p}_{ik} +t_{is(k)}
+\end{eqnarray*}
 
 
-The question we deal with, is the functional form of the first stage equation, where we instrument the fas price with duties as suggested by Referee 1.
 
-Denoting $i$ the origin country, $k$ the product at the HS6 level, and reasoning on a yearly basis, if we assume that the fas price $\widetilde{p}_{ik}$ decomposes in two components, say $\bar{p}_{ik}$ the ``firm-specific'' price (related to its cost and pricing strategy) and $\tau^d_{ik}$ the tax duty (out of the firm's hands) according to :
+\subsection{Specification of the first stage equation}
 
-$$\widetilde{p}_{ik} = (1+\tau^d_{is(k)})\bar{p}_{ik}$$
 
-\noindent with $s(k)$ the 3-digit classification (the disaggregation level for tax duties in the database) as a function of the HS6 product classification. Then, taking the total differential around some reference point (referred with the subscript $0$):
+The question we deal with, is the functional form of the first stage equation, where we instrument the fas price with duties as suggested by Referee 1. The idea is that firms might react to changes in duty tax rates which have nothing to do with transport costs changes. In this respect, considering the predicted part of the fas price related to tax duty is likely to solve potential endogeneity biases.
 
-\begin{eqnarray}
-&&\Delta \widetilde{p}_{ik} = \Delta \bar{p}_{ik}\times (1+\tau^d_{is(k)0}) + \bar{p}_{ik0}\times \Delta \tau^d_{is(k)} \\
-\Leftrightarrow &&\frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}} = \Delta \bar{p}_{ik} \frac{1+\tau^d_{is(k)0}}{\bar{p}_{ik0}(1+\tau^d_{is(k)0})} +\frac{\Delta \tau^d_{is(k)0}}{1+\tau_{is(k)0}^d} \\
-\Leftrightarrow &&\frac{\Delta \widetilde{p}_{ik0}}{\widetilde{p}_{ik0}} =  \frac{\Delta \bar{p}_{ik}}{\bar{p}_{ik0}} +\frac{\Delta \tau^d_{is(k)}}{1+\tau_{ik0}^d} \label{eq:firststage}
-\end{eqnarray}
+Denoting $i$ the origin country, $k$ the product at the 8/5 digit level, and reasoning on a yearly basis, if we assume that the fas price $\widetilde{p}_{ik}$ decomposes in two components, say $\bar{p}_{ik}$ the ``firm-specific'' price (related to its cost and pricing strategy) and $\tau^d_{ik}$ the tax duty (out of the firm's hands) according to :
 
-The intuition behind the Referee 1's endogeneity concerns, is that we need to eliminate from the fas price, any endogenous component that might me related to transport costs. To do so, the referee suggests that we instrument the export price by tariff rates. Put it in plain words, this suggests to run the first-stage regression based on Equation (\ref{eq:firststage}) according to:
+\begin{equation}
+\widetilde{p}_{ikt} = (1+\tau^d_{is(k)t})^\alpha \left(\bar{p}_{ikt}\right)^\beta \label{eq:link_fas_duty}
+\end{equation}
 
-$$\frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}} = \alpha \frac{\Delta \tau^d_{is(k)}}{1+\tau_{is(k)0}^d} + \gamma_{i} +\gamma_{k}+\epsilon_{ik}$$
+\noindent with $s(k)$ the 3-digit classification (the disaggregation level for tax duties in the database) as a function of the HS8 (or 5 digit) product classification
+
+\subsubsection{First-stage equation in first difference \label{ssec:first_diff}}
+
+One option to specify the functional form of the first stage is to take the total differential around some reference point at time $t-1$, with $\Delta $ the difference operator ($\Delta\widetilde{p}_{ikt} = \widetilde{p}_{ikt} - \widetilde{p}_{ikt-1}$ and so on):
+\begin{eqnarray*}
+&&\Delta \widetilde{p}_{ikt} = \beta \bar{p}_{ikt-1}^{\beta-1}(1+\tau^d_{is(k)t-1})\Delta \bar{p}_{ikt} + \alpha \bar{p}^\beta_{ikt-1} (1+\tau^d_{ikt-1})^{\alpha-1}\Delta \tau^d_{is(k)t}  \\
+\Leftrightarrow &&\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}} = \beta \frac{\Delta \bar{p}_{ikt}}{\widetilde{p}_{ikt-1}} \frac{(1+\tau^d_{is(k)t-1})^\alpha \bar{p}_{ikt-1}^\beta}{\bar{p}^\beta_{ikt-1}(1+\tau^d_{is(k)t-1})^\alpha} +\alpha \frac{\Delta \tau^d_{is(k)t-1}}{1+\tau_{is(k)t-1}^d}\frac{(1+\tau^d_{is(k)t-1})^\alpha \bar{p}_{ikt-1}^\beta}{\bar{p}^\beta_{ikt-1}(1+\tau^d_{is(k)t-1})^\alpha} \end{eqnarray*}
+
+leading to:
+\begin{equation}
+\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}} =  \beta \frac{\Delta \bar{p}_{ikt}}{\bar{p}_{ikt-1}} +\alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{ikt-1}^d} \label{eq:firststage_Deltalog}
+\end{equation}
+
+The intuition behind the Referee 1's endogeneity concerns, is that we need to eliminate from the fas price, any endogenous component that might me related to transport costs. To do so, the referee suggests that we instrument the export price by tariff rates. Put it in plain words, this suggests to run the first-stage regression based on Equation (\ref{eq:firststage_Deltalog}) according to:
+
+$$\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}} = \alpha \frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} + \gamma_{i} +\gamma_{k}+\epsilon_{ik}$$
 
 Or equivalently, taking logs:
-$$\Delta \log \widetilde{p}_{ik}= \alpha\frac{\Delta \tau^d_{is(k)}}{1+\tau_{is(k)0}^d} +\gamma_{i} +\gamma_{k}+\epsilon_{ik}$$
+$$\Delta \log \widetilde{p}_{ikt}= \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\gamma_{k}+\epsilon_{ikt}$$
 
 
-\noindent with the LHS being the growth rate of the fas price, the first term in the RHS the hange in duty tax rates, the second and third terms fixed effects to capture the ``firm-specific price'' $\bar{p}$, $\epsilon_{ik}$ being the residual.
+\noindent with the LHS being the growth rate of the fas price (between $t$ and $t-1$), the first term in the RHS the change in duty tax rates, the second and third terms fixed effects to capture changes in the ``firm-specific price'' $\bar{p}_{ik}$, $\epsilon_{ik}$ being the residual. Notice though that the structure of fixed effects should remain consistent between the first and the second stages. This implies to rather consider the following functional form of the first-stage equation:
+
+\begin{equation}
+\Delta \log \widetilde{p}_{ikt} = \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\gamma_{s}+\epsilon_{ikt} \label{eq:firststage_Deltalog}
+\end{equation}
 
 If this reasoning is correct,
 \begin{itemize}
 \item we should take as predicted value only the predicted price WITHOUT the fixed effects:
-$$\widehat{\frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}}} = \alpha\frac{\Delta \tau^d_{is(k)}}{1+\tau_{is(k)0}^d} $$
-\item and we should expect a positive sign between $\Delta \log \widetilde{p}_{ik}$ and $\frac{\Delta \tau^d_{is(k)}}{1+\tau_{is(k)0}^d} $, with the estimated value of $\alpha$ close to 1.
+$$\widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}} = \widehat{\alpha}\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} $$
+\item and we should expect a value of the coefficient $\widehat{\alpha}$ between $\Delta \log \widetilde{p}_{ikt}$ and $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} $ between $-1$ and $0$, depending on the degree of ``pricing-to-market'' of firms.
+    \begin{itemize}
+    \item[-] $\alpha = 0$ corresponds to the case where the firm does not adjust its fas price to the change in tax duty, that would cancel out the influence of the tax duty change on the price paid by the US consumers; this rather corresponds to small firms which do not have enough market power to manipulate their prices following changes in international competition;
+    \item[-] $\alpha <0$ corresponds to the degree of``pricing-to-market'' as the firm offsets the impact of the tax change of the price paid by the final consumer by adjusting her producer price in the opposite direction of the tax change,
+    \item[-] with $\alpha = -1$ being the extreme case of ``full PTM'' where the firm fully compensates the tax duty change. As shown by Berman, Martin, Mayer (REStats 2012), this is more likely larger firms.
+    \end{itemize}
 \end{itemize}
 
-Once this is done, rebuilt the instrumented fas price at time $t$ (for clarity, we re-write te temporal index here):
+Once this is done, we rebuilt the instrumented fas price at time $t$:
 
 \begin{eqnarray*}
 \widehat{\widetilde{p}}_{ikt} = \widetilde{p}_{ikt-1}+ \widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}}
 \end{eqnarray*}
 
-with $\widehat{\widetilde{p}}_{ikt}$ the instrumented fas price at time $t$, for product $k$ from country $i$; $\widetilde{p}_{ikt-1}$ the observed lagged fas price for the same $i,k$ couple; and $ \widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}}$ the predicted growth rate of the export price based on duty changes.
+with $\widehat{\widetilde{p}}_{ikt}$ the instrumented fas price at time $t$, for product $k$ from country $i$; $\widetilde{p}_{ikt-1}$ the observed lagged fas price for the same $i,k$ couple; and $ \widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}}$ the predicted growth rate of the fas price based on duty changes.
+
+\subsection{First-stage equation in level}
+
+Alternatively, one can specify the first-stage equation in log levels. Taking Equation (\ref{eq:link_fas_duty}) into log:
+
+$$\log \widetilde{p}_{ikt} =\alpha \log (1+\tau^d_{is(k)t}) + \beta \left(\bar{p}_{ikt}\right) $$
+
+Leading to the following functional form of the first-stage equation (to be run on a yearly basis, by transport mode)
+
+\begin{equation}
+\log \widetilde{p}_{ikt} =\alpha \log (1+\tau^d_{is(k)t}) + \gamma_i +\gamma_s +\epsilon_{ikt}  \label{eq:FS_loglevel_cross_section}
+\end{equation} 
+
+If we rather adopt a panel approach, the first-stage equation is modified by adding a year fixed effect, according to:
+
+\begin{equation}
+\log \widetilde{p}_{ikt} =\alpha \log (1+\tau^d_{is(k)t}) + \gamma_i +\gamma_s +\gamma_t +\epsilon_{ikt}  \label{eq:FS_loglevel_panel}
+\end{equation} 
+
+\subsubsection{Introducing price inertia}
+
+As suggested by the referee, one cannot exclude price inertia, such that current prices depend on past prices; the ``inertia'' part of the fas price being exogenous to current transport costs changes, it could be also considered in the predicted price at the first stage. One can introduce price inertia in Equation (\ref{eq:link_fas_duty}) by considering that the price component depends on the past price $\widetilde{p}_{ikt-1}$ and the ``firm-specific'' component, according to:
+$$\widetilde{p}_{ikt} = (1+\tau^d_{is(k)t})^\alpha (\left[\bar{p}_{ikt-1}(\widetilde{p}_{ikt-1}, \omega_{ikt})\right]^\beta $$
+Specifically, using a Cobb-Douglas specification
+\begin{equation}
+\widetilde{p}_{ikt} = \left[1+\tau^d_{is(k)t}\right]^\alpha \widetilde{p}^{\beta_1}_{ikt-1}\omega_{ikt}^{\beta_2} \label{eq:link_fas_duty_inertia}
+\end{equation}
+
+Taking Equation (\ref{eq:link_fas_duty_inertia}) into logs:
+
+$$\log \widetilde{p}_{ikt} = \alpha \log\left(1+\tau^d_{is(k)t}\right) + \beta_1 \log \widetilde{p}_{ikt-1}+ \beta_2\log \omega_{ikt}$$
+
+leading to the following specification of the first-stage equation (in cross section):
+
+\begin{eqnarray}
+\log \widetilde{p}_{ikt} &=& \alpha \log\left(1+\tau^d_{is(k)t}\right) + \beta_1 \log \widetilde{p}_{ikt-1}+ \gamma_i +\gamma_s +\epsilon_{ikt} \label{eq:FS_loglevel_cross_section_inertia}   \\
+\log \widetilde{p}_{ikt} &=& \alpha \log\left(1+\tau^d_{is(k)t}\right) + \beta_1 \log \widetilde{p}_{ikt-1}+ \gamma_i +\gamma_s + \gamma_t+ \epsilon_{ikt} \label{eq:FS_loglevel_cross_section_panel}
+\end{eqnarray}
+
+
+\subsubsection{Obtaining the instrumented fas price}
+
+As last step, we take as instrument the part of the fas price that is predicted by the sum of the tax duty and the past prices components (if considered):
+
+$$\widehat{\log \widetilde{p}}_{ikt} = \widehat{ \alpha} \log\left(1+\tau^d_{is(k)t}\right) +  \widehat{\beta_1}\ \log \widetilde{p}_{ikt-1} $$
+
+\noindent with $ \widehat{ \alpha}$ and possibly $ \widehat{\beta}_1$ the estimated coefficients at the first stage (depending on the specification considered, with or without price inertia, in panel or in cross-section).
+
+In contrast with the differential approach (Section \ref{ssec:first_diff}), this specification has the advantage to directly yield the instrumented price in log, from which we can deduce the fas price in level (which intervenes in the second-stage equation) by taking the exponential.
 
 
 
-\subsection{Reasoning 2}
-
-
-If we come back to my initial idea when discussing together last week, I started from the link between the cif price, the fas price and tax duty.
-Denoting $i$ the origin country, $k$ the product at the HS6 level, and reasoning on a yearly basis,
-
-$$p_{ik} = (1+\tau^d_{is(k)})\widetilde{p}_{ik}$$
-
-Taking the total differential around some reference point (referred with the subscript $0$):
-
-\begin{eqnarray*}
-&&\Delta p_{ik} = (1+\tau^d_{is(k)0})\Delta \widetilde{p}_{ik} + \widetilde{p}_{ik0}\Delta \tau^d_{is(k)}\\
-\Leftrightarrow && \frac{\Delta p_{ik}}{p_{ik0}} = \frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}} + \frac{\Delta \tau^d_{is(k)}}{1+\tau^d_{is(k)0}}
-\end{eqnarray*}
-
-The reasoning I held last time was the following: Suppose that the firm does adjust its fas price to duty changes, this mitigates the impact of duty tax changes on the import price. In the extreme case, where the firm fully compensates such that $\frac{\Delta p_{ik}}{p_{ik0}} = 0$, we should get:
-
-$$\frac{\Delta \widetilde{p}_{ik}}{\widetilde{p}_{ik0}} = - \frac{\Delta \tau^d_{is(k)}}{1+\tau^d_{is(k)0}}$$
-
-In this reasoning, we should regress the growth rate of the fas price on the change in tax duty, expecting a negative sign. But if the idea is to take the exogenous component of the fas price, then I am a little bit lost... Shouldn't we take the part of the fas price that is NOT explained by duty changes? 
 
 
 \end{document}
