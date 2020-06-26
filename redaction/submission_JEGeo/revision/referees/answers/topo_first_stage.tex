@@ -153,13 +153,13 @@ Leading to the following functional form of the first-stage equation (to be run 
 
 \begin{equation}
 \log \widetilde{p}_{ikt} =\alpha \log (1+\tau^d_{is(k)t}) + \gamma_i +\gamma_s +\epsilon_{ikt}  \label{eq:FS_loglevel_cross_section}
-\end{equation} 
+\end{equation}
 
 If we rather adopt a panel approach, the first-stage equation is modified by adding a year fixed effect, according to:
 
 \begin{equation}
 \log \widetilde{p}_{ikt} =\alpha \log (1+\tau^d_{is(k)t}) + \gamma_i +\gamma_s +\gamma_t +\epsilon_{ikt}  \label{eq:FS_loglevel_panel}
-\end{equation} 
+\end{equation}
 
 \subsubsection{Introducing price inertia}
 
@@ -174,7 +174,7 @@ Taking Equation (\ref{eq:link_fas_duty_inertia}) into logs:
 
 $$\log \widetilde{p}_{ikt} = \alpha \log\left(1+\tau^d_{is(k)t}\right) + \beta_1 \log \widetilde{p}_{ikt-1}+ \beta_2\log \omega_{ikt}$$
 
-leading to the following specification of the first-stage equation (in cross section):
+leading to the following specification of the first-stage equation (in cross section and in panel respectively):
 
 \begin{eqnarray}
 \log \widetilde{p}_{ikt} &=& \alpha \log\left(1+\tau^d_{is(k)t}\right) + \beta_1 \log \widetilde{p}_{ikt-1}+ \gamma_i +\gamma_s +\epsilon_{ikt} \label{eq:FS_loglevel_cross_section_inertia}   \\
@@ -192,7 +192,9 @@ $$\widehat{\log \widetilde{p}}_{ikt} = \widehat{ \alpha} \log\left(1+\tau^d_{is(
 
 In contrast with the differential approach (Section \ref{ssec:first_diff}), this specification has the advantage to directly yield the instrumented price in log, from which we can deduce the fas price in level (which intervenes in the second-stage equation) by taking the exponential.
 
+\subsection{To sum up}
 
+What would be my ``preferred'' first-stage equation: Equation (\ref{eq:FS_loglevel_cross_section_inertia}) because i) in log level, so do not need to rebuild the level from the first difference + consistent with our second stage in log level as well; ii) in cross-section, run on a yearly basis, here again consistent with our second-stage equation. But need to be pragmatic as well... 
 
 
 
