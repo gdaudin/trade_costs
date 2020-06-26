@@ -421,7 +421,7 @@ forvalues x=1975(1)2013{
 	keep if year==`x'
 	keep if mode=="air"
 	
-reghdfe dlprix_fob ds_tariff_lise if mode=="air", a(FEcs= cntry_sect3d)  vce (cluster cntry) resid
+reghdfe dlprix_fob ds_tariff_lise if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry_sect3d) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
@@ -508,7 +508,9 @@ forvalues x=1975(1)2013{
 	keep if year==`x'
 	keep if mode=="ves"
 	
-reghdfe dlprix_fob ds_tariff_lise if mode=="ves", a(FEcs= cntry_sect3d)  vce (cluster cntry) resid
+
+	
+reghdfe dlprix_fob ds_tariff_lise if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry_sect3d) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
