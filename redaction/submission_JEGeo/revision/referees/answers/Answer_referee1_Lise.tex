@@ -239,9 +239,13 @@ imposing Assumptions (a) and (b), outlined above.}
 
 \textbf{I report here the referee's footnote: Should we deal with this? If he/she is not convinced because small sub-sample, do it on a much larger sample? This would better convince him that the separability assumption is not an issue.}: \textit{The authors do check the robustness of their results w.r.t. the separability assumption, but this only done for a small sub-sample.}
 
+\textbf{GD20200629 Ce n’est pas un si petit sample que cela (surtout en terme de valeurs -- comparer avec le sample sur lequel on peut faire sa propre méthode)}
+
 
 
 \textbf{There is also a point here, about the degree of sectoral classification. In our paper, $k$ = 5 digit and $s(k)$ = 3 digit. He/she suggests that, in the estimated equation, $k$ = 10 digit and $s(k)$= 5 digit. Which means, having an estimated $\beta$ specific to the origin country-5-digit level. I need to have a refresher on this: What have we done finally? and why?}
+
+\textbf{Dans revision_estim_TC_referee1_nonlinear.do, il me semble qu’on fait 8 et 3. on peut effectivement faire sa méthode en 10 et 3 (ou 10 et 5)}
 
 
 XXX Say something about the fact that in the original US-custom data, the finest degree of sectoral classification is 8-digit, not 10? XXX
@@ -274,14 +278,18 @@ Precisely, by year and transport mode, this implies running the estimation for e
 \paragraph{a) The advantages are not as important as suggested by the referee}
 \begin{itemize}
 \item[Advantage 1]: One is not compelled to assume separability between the country-component and the product-component of transport costs.
-\item[$\Rightarrow$] Answer can be in 2 parts: 1) This is not a strong assumption - better convince him/her: Run the robustness to the separability assumption on a larger sample and show that the estimated $\beta$ is not that different between the two methods. 2) Compare the estimated $\beta$ between our original method and the referee's one. \textbf{Where are the results comparing the estimates of the $\beta$, in value? I don't find these results anymore...}
+\item[$\Rightarrow$] Answer can be in 2 parts: 1) This is not a strong assumption - better convince him/her: Run the robustness to the separability assumption on a larger sample and show that the estimated $\beta$ is not that different between the two methods. 2) Compare the estimated $\beta$ between our original method and the referee's one. \
+\textbf{Where are the results comparing the estimates of the $\beta$, in value? I don't find these results anymore...}
+\textbf{GD20200629 -- Voir le plan des do. Pour comparaison scatter_chronology_baselinesamplereferee1_referee1.pdf (sur le même sample))}
 
 
 
 
 \item[Advantage 2]: There is a handful of instruments (HS-8 product-specific tariff rates or lagged prices) to instrument fas prices
 \item[$\Rightarrow$] Answer: When we instrument fas prices at the 5-digit level using tax duties (still using our own methodology), we do not obtain much different results. \textbf{But he/she suggests to do it on HS-8 fas prices, not 5-digit prices, and to imply his estimated equation. Have we done that?}
+\textbf{GD20200629 Cela ne semble pas vrai. Il y a quelque années en HS8, plus en HS6. Mais pas sur toute la durée}
 \item[Advantage 3]: A more transparent comparison with Hummel (2007): How to answer to this point? Re-read the paper to see if we are clear enough?
+\textbf{GD20200629 changer la manière dont on présente en mettant les beta en avant ?}
 \end{itemize}
 
 \paragraph{b) The costs are high}
@@ -291,11 +299,14 @@ Precisely, by year and transport mode, this implies running the estimation for e
 \item Information about the port of entry are only available in the recent years (\textbf{since when? why? before, we rely on Hummel's data set, but we could buy the original US custom data for 1974-2004? Or even in those dataset it does not exist?}). In our view, the historical coverage is interesting per se, as it provides useful insights about how transport costs have evolved over time, and most importantly how the specific values of the additive and ad-valorem transport costs components have evolved over time. Eliminating this dimension of the paper would be detrimental to its value-added.
 \item As underlined before, the method is run country by country, and 3-digit sector by 3-digit sector, exploiting the variability within each country-3d sector across 8-d sub-sectors and ports of entry. Yet, it appears that for many couples (country, 3-digit sector), there is too few variability across sub-sectors (even at the HS-6 digit classification) or ports en entry given the number of fixed effects included in the regression, such that estimation can not be run. This can be seen comparing the number of observations by year/ transport mode with our method / with the referee's method reported in Table XXX \textbf{TO DO}. Put it differently, this methodology discards countries which export a limited range of goods to the US and/or which arrive in the USA through the same ports of entry. In this respect, the induced selection bias reduces the general scope of the transport costs estimates.
 
+\textbf{GD20200629 Les données commencent en 1989. On va demander}
+
     As a direct consequence of this, for things to be comparable across methods, we re-run our estimation strategy on the same sample of observations as the one used in the referee's method.
 
     \end{enumerate}
 \item[Concern 2] The suggested estimation method implicitly assumes that transport costs of say, tissues, have nothing in common whether those goods comes from France or from Bangladesh; or that transport costs that apply to imported goods from France have no common component across sectors; in both cases, one might view this as a disputable assumption. By contrast, we suppose that transport costs are sector-country specific. \textbf{FAIRE REFERENCE A DES PAPIERS EN TRADE QUI ONT DES TRADE COSTS Pays-spécifique?}
 \item[Concern 3] The suggested estimation method does not allow to recover the values of each component of transport costs separately, but only the relative shares; while our methodology drives an estimate for each component ($\tau$, $t$) from which we can deduce the relative share of each. In this respect, we gain in generality. \textbf{DEEPEN this for the Big picture part}.
+\textbf{GD20200629 Je ne comprends pas. Si on a les parts et les coûts totaux, on peut reconstruire $\tau$, $t$}
 \item[Concern 4] The suggested method features less accuracy in the estimation of the $\beta$. Considering the value of the $\beta$ by itself, there is no criteria to discriminate between the value estimated with our method and the one obtained with the suggested method (when, of course, run on the same sample). Things are more clear-cut in terms of accuracy of the estimation. Specifically, our method yields a more precise estimation of the $\beta$ than the referee's method. To develop on this, for each year and transport mode:
     \begin{itemize}
     \item With the referee's method, we estimate one value for the share of additive component $beta$ at the $i,s$ level denoted $\hat{\beta}^{ref}_{is(k)}$ associated with a standard deviation $SD_{is}$. From this, we can deduce the 5- 95\% threshold values through:
