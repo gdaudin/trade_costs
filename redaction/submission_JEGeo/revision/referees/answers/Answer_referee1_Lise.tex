@@ -110,7 +110,12 @@ University Paris-Dauphine \& PSL University, LEDa, 75016 Paris, France;  email: 
 
 \section{Critique 1: Empirical Strategy}
 
-\subsection{Deriving the share of additive costs in total transport costs \label{ssec:interpret_beta}}
+\subsection{Clarifying some technical points \label{ssec:technical_points}}
+
+
+\subsubsection{Deriving the share of additive costs in total transport costs \label{ssec:interpret_beta}}
+
+
 With $i$ the origin country, $k$ the product category at the HS6 level (and reasoning at the year- transport mode level), $p_{ik}$ the import (cif) price and $\tilde{p}_{ik}$ the export (fas) price, transport costs $f_{ik}\equiv \frac{p_{ik}- \tilde{p}_{ik}}{\tilde{p}_{ik}} $ are written in Hummel's terminology as:
 
 
@@ -157,7 +162,41 @@ This shows that $\beta_{ik}$ can be interpreted as the share of additive costs i
 
 $$\beta_{ik} = \frac{\frac{t_{is(k)}}{\tilde{p}_{ik}}}{\tau_{is(k)}-1 + \frac{t_{is(k)}}{\tilde{p}_{is(k)}}} $$
 
-\subsection{Coming back to the Referee's 1 concern}
+\subsection{Share vs level}
+
+Starting from the above reasoning, the referee proposes to estimate the elasticity of transport costs with respect to the unit price, equivalently the share of additive costs in total costs. Specifically, the referee suggests to estimate for each industry-country the following regression:
+
+$$\ln f_{ikd}= \beta_{is(k)} \ln \widetilde{p}_{ikd} + \text{Controls}_{ikd} +\epsilon_{ikd}$$
+
+The question is then, how to recover the levels of additive / multiplicative transports costs $t_{is(k)}$ and $\tau_{is(k)}$. Denoting $\widehat{\beta}_{is(k)}$ the estimated $\beta$ from the referee's method for a given sector-country $i,s(k)$, one can solve the following two-equation system:
+
+\begin{eqnarray}
+p_{ik} &=& \tau_{is(k)}\widetilde{p}_{ik} +t_{is(k)} \label{eq:system1}\\
+\frac{t_{is(k)}}{(\tau_{is(k)}-1)\widetilde{p}_{ik}} &=& \widehat{\beta}_{is(k)}  \label{eq:system2}
+\end{eqnarray}
+
+\noindent with $p_{ik}$ and $\widetilde{p}_{ik}$ the cif and fas prices observed in our dataset (conditional on a given year-transport mode). With 2 equations and 2 endogenous variables, the system might be solved. Specifically, with $\widehat{\beta}$ being estimated at the \textit{sector} $s$- country $i$ level, and $\widetilde{p}_{ik}$ at the \textit{product} $k$-country level, this implies that $t$ and $\tau$ are product-country $i,k$ specific (not sector-country $s,k$ specific). \textbf{from this point of view, this is a finer characterization of transport costs, so better from this point of view...}
+
+To show this properly, start from Equation (\ref{eq:system2}) to express additive costs according to:
+$$t_ik = \frac{ \widehat{\beta}_{is(k)}}{1- \widehat{\beta}_{is(k)}} \left[\tau_{is(k)}-1\right]\widetilde{p}_{ik} $$
+
+With $\widetilde{p}_{ik} $ being product-country specific, $t_ik$ is necessarily product-country specific ($i,k$, not $i,s(k)$). Plugging this into Equation (\ref{eq:system1}):
+
+$$p_{ik} = \tau_{is(k)} \widetilde{p}_{ik} + \frac{ \widehat{\beta}_{is(k)}}{1- \widehat{\beta}_{is(k)}} \left[\tau_{is(k)}-1\right]\widetilde{p}_{ik} $$
+
+Solving for $\tau$, one finally obtains the solutions for the ad-valorem and additive transport costs components:
+
+\begin{eqnarray}
+\tau_{ik} & =& (1-\widehat{\beta}_{is(k)}) \frac{p_{ik}}{\widetilde{p}_{ik} } + \widehat{\beta}_{is(k)} \label{eq:tau_method_ref1}\\
+t_ik &=& \frac{ \widehat{\beta}_{is(k)}}{1- \widehat{\beta}_{is(k)}} \left[\tau_{is(k)}-1\right]\widetilde{p}_{ik} \label{eq:t_method_ref1}
+\end{eqnarray}
+
+
+Two points can be made. First, we can check that if $\widehat{\beta}_{is(k)}=0$, then $p_{ik} = \tau_{ik} \widetilde{p}_{ik}$ (Equation \ref{eq:tau_method_ref1}) and $t_{ik} = 0$ (Equation \ref{eq:t_method_ref2}), all transport costs are ad-valorem. Conversely, if $\widehat{\beta}_{is(k)}=1$, then $p_{ik} = \widetilde{p}_{ik} + t_{ik} $ (Equation \ref{eq:tau_method_ref2}) and $\tau_{ik} = 0$ (Equation \ref{eq:t_method_ref1}). Second, and most importantly, the method allows to recover the levels of both transport costs components at the product-country level $i,k$, even though the share of additive costs in total costs is estimated at the sector-country level. 
+
+
+
+\subsection{Coming back to the Referee's 1 concerns}
 
 In italics, I report the Referee's comment. Into brackets in bold characters inserted into the referee's statement, my comment.
 
@@ -187,28 +226,22 @@ The three points raised by the referee are all equally important, and we answer 
 
 
 
-\paragraph{(i) On the assumptions underlining our empirical approach}
-Our main empirical equation and its underlying assumptions regarding the separability of transport costs between their country- and product-level components draw on the one proposed by Irarrazabal, Moxnes and Opromolla (the Review of Economics and Statistics, 2015) to estimate the share of additive costs in a firm-level context. It relies on a simple theoretical framework with minimal assumptions, and is compatible with most approaches within the so-called category of ``New Trade Theories''. \textbf{Not sure of what it means? } More importantly, this formulation allows us recovering explicitly the \textbf{levels of}, respectively, additive and multiplicative costs. Despite its formal elegance and simplicity, this is not possible in such a straightforward manner with the Hummels' methodology, which only recovers the \textbf{share} of additive in total transport costs. \textbf{elaborate on this in the Big Picture part.}
-
-Nevertheless, to take full account of the referee’s remark, we decided run an additional set of estimations based on the Hummel's methodogy as proposed by the referee, based on Equation (\ref{eq:estimation_ref1}). This is developed in Section XX of this letter.
-
-\textbf{We need to explain why not in the main text, but in the (online?) appendix}
-
-\paragraph{(ii) On the use of non-linear least squares (NLS)}
+\paragraph{(i) On the use of non-linear least squares (NLS)}
 As highlighted by the referee, our estimated equation imposes to use non-linear estimation methods, such as Non-Linear Least Squares. However, even with another formulation, such as the one suggested by the referee in Equation (\ref{eq:estimation_ref1}), we would still be constrained to resort to non-linear estimators. This is due to the restrictions imposed \textit{ex-ante} on parameters, i.e. $\tau \geq 1$ and $t \geq 0$, the latter meaning simply we constrain both types of trade costs to be non-negative. Without these restrictions, standard linear, least squares estimates often deliver aberrant values with more than mild quality-of-fit \textbf{[insert examples here]}
 We do acknowledge this is a very important point, which was not made clear enough in the initial version, and did our best to make the pint clear in the revised version \textbf{[see page XX : XX insert quote XX].}
 
+
+\paragraph{(ii) On the assumptions underlining our empirical approach}
+Our main empirical equation and its underlying assumptions regarding the separability of transport costs between their country- and product-level components draw on the one proposed by Irarrazabal, Moxnes and Opromolla (the Review of Economics and Statistics, 2015) to estimate the share of additive costs in a firm-level context. It relies on a simple theoretical framework with minimal assumptions, and is compatible with most approaches within the so-called category of ``New Trade Theories''. \textbf{Not sure of what it means? } Nevertheless, to take full account of the referee’s remark, we decided run an additional set of estimations based on the Hummel's methodogy as proposed by the referee, based on Equation (\ref{eq:estimation_ref1}). We yet came to the conclusion that this method faces some important limitations, as we develop in Section XXX of this letter. As a result, we have decided to maintain our estimation strategy as the benchmark method in the main body of the paper. We hope that our letter will convince the referee of the relevance of this choice. 
+
+\textbf{Methode du refere: en annexe? annexe online? rien du tout dans le papier?}
+
+
+
 \paragraph{(iii) Endogeneity problem}
-Indeed, this is a very important point. The referee states that, based on theoretical insights by Melitz (Econometrica, 2003) or Baldwin and Harrigan (AER, 2011), $1/\tilde{p}_{ik}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. In other words, more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair. We obviously do not question this conceptual issue. However, it is worth noting that a good deal of the bias (actually, the part relating to the quality effect) is going to appear identically in the CIF ($p$) and the FAS ($\tilde{p}$) prices. Consequently, since our dependent variable is based on a ratio between the former and the latter, the (reverse causality) bias cancels out. That said, remains the possibility that bigger firms may impact transport costs, due to their ability of bargaining discounts for larger shipped volumes.
+Indeed, this is a very important point. The referee states that, based on theoretical insights by Melitz (Econometrica, 2003) or Baldwin and Harrigan (AER, 2011), $1/\tilde{p}_{ik}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. In other words, more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair. We obviously do not question this conceptual issue. However, it is worth noting that a good deal of the bias (actually, the part relating to the quality effect) is going to appear identically in the CIF ($p$) and the FAS ($\tilde{p}$) prices. Consequently, since our dependent variable is based on a ratio between the former and the latter, the (reverse causality) bias cancels out. That said, remains the possibility that bigger firms may impact transport costs, due to their ability of bargaining discounts for larger shipped volumes. Following the referee's advice, we decided therefore to provide some IV-estimates to provide a clean assessment of the size of the potential bias.
 
-
-Following the referee's advice, we decided therefore to provide some IV-estimates to provide a clean assessment of the size of the potential bias.
-
-\textbf{careful, there is two points regarding endogeneity: (i), we should estimate the $\beta$ according to the referee's method based on the intrumented fas price (at the HS8 level, if tax duty are available at this disaggregation level) - WE HAVE NOT DONE THAT; (ii), if we maintain our empirical strategy (which we do), we should instrument the fas price at the 5-digit level - WHICH WE ARE TRYING TO DO.}
-
-
-
-XXX At some point, explain HS10 duty do not exist, contrary to what the referee asserts. At best, it was HS6 or HS8 XXX
+\paragraph{Summary} We decided to answer to these two last concerns (ii) and (iii) in a separate manner. Specifically, we run the referee's proposed estimation method without relying on instrumental variables (and preserving the same sector-level degree of aggregation, as exposed); this way, the results are comparable with our benchmark results of the submitted version, the only change being the estimation strategy. In a second step, we implement IV methods on fas prices at the $k=$ 5-digit level, still based on our original estimation strategy. This allows us a direct comparison of the results obtained in the submitted version (NLS OLS regression) with those obtained with IV.
 
 
 \subsection{Exploring Referee's alternative functional form}
@@ -239,18 +272,7 @@ imposing Assumptions (a) and (b), outlined above.}
 
 \textbf{I report here the referee's footnote: Should we deal with this? If he/she is not convinced because small sub-sample, do it on a much larger sample? This would better convince him that the separability assumption is not an issue.}: \textit{The authors do check the robustness of their results w.r.t. the separability assumption, but this only done for a small sub-sample.}
 
-\textbf{GD20200629 Ce n’est pas un si petit sample que cela (surtout en terme de valeurs -- comparer avec le sample sur lequel on peut faire sa propre méthode)}
-
-
-
-\textbf{There is also a point here, about the degree of sectoral classification. In our paper, $k$ = 5 digit and $s(k)$ = 3 digit. He/she suggests that, in the estimated equation, $k$ = 10 digit and $s(k)$= 5 digit. Which means, having an estimated $\beta$ specific to the origin country-5-digit level. I need to have a refresher on this: What have we done finally? and why?}
-
-\textbf{Dans revision_estim_TC_referee1_nonlinear.do, il me semble qu’on fait 8 et 3. on peut effectivement faire sa méthode en 10 et 3 (ou 10 et 5)}
-
-
-XXX Say something about the fact that in the original US-custom data, the finest degree of sectoral classification is 8-digit, not 10? XXX
-
-\subsubsection{What we do}
+\paragraph{What we do}
 
 Our estimated equation is written as Equation (\ref{eq:equation0}) with $s$= 3 (or 4) digit and $k$=5 digit (based on Hummel's original dataset from 1974-2004). We thus exploit the variability of transport costs between countries and between 3-digit sectors (conditional on a year and a transport mode, air or vessel). To sum up our methodology:
 \begin{itemize}
@@ -267,11 +289,11 @@ Our estimated equation is written as Equation (\ref{eq:equation0}) with $s$= 3 (
 $$\hat{\beta}_{ik} = \frac{\frac{\hat{t}_{is(k)}}{\tilde{p}_{ik}}}{\tau_{is(k)}-1 + \frac{t_{is(k)}}{\tilde{p}_{is(k)}}} $$
 \end{itemize}
 
-\subsubsection{What the referee suggests to do}
+\paragraph{What the referee suggests to do}
 
-The estimation strategy suggested by the referee starts from Equation (\ref{eq:Hummels}) linking transport costs and unit prices as assumed in Hummels (2007). As shown in Subsection (\ref{ssec:interpret_beta}), the elasticity of transport costs to unit prices $\beta_{ik}$ in Equation (\ref{eq:Hummels}), also corresponds to the share of additive costs in total transport costs. The share of aditive costs can hence be encovered by regressing transport costs on unit (ie, fas) prices. Specifically, the referee suggests to run the estimation based on Equation (\ref{eq:estimation_ref1}).
+The estimation strategy suggested by the referee starts from Equation (\ref{eq:Hummels}) linking transport costs and unit prices as assumed in Hummels (2007). As shown in Subsection (\ref{ssec:interpret_beta}), the elasticity of transport costs to unit prices $\beta_{ik}$ in Equation (\ref{eq:Hummels}), also corresponds to the share of additive costs in total transport costs. The share of additive costs can hence be uncovered by regressing transport costs on unit (ie, fas) prices. Specifically, the referee suggests to run the estimation based on Equation (\ref{eq:estimation_ref1}).
 
-Precisely, by year and transport mode, this implies running the estimation for each country of origin $i$ and each sector $s(k)$ = 3 digit sector (\textbf{why 3-digit? and not 5 as suggested by the referee?}, exploiting the variability between sub-sectors at the 8 digit level ($k$) and between ports of entry in the US ($d$).
+Precisely, by year and transport mode, this implies running the estimation for each country of origin $i$ and each sector $s(k)$ = 3 digit sector, exploiting the variability between sub-sectors at the 10 digit level ($k$) and between ports of entry in the US ($d$).\footnote{Notice that the referee suggests to run his/her proposed estimation strategy considering sectoral aggregation at the 5-digit level (with $k=10$), while we followed his suggestion considering the 3-digit level. We made this choice in view of being able to compare the pros and cons of the referee's method versus ours. Both methods require a difference in the sectoral degree at which either the share (Referee's method) or the level (our method) of additive costs are estimated ($s$) and the classification degree at the product level ($k$). In Hummels' (2007) database, which we use until 2004, the finest degree of classification is at the 5-degree level until 2004. For comparability reasons, we maintain the same degree of classification $k=5$ for the following years (based on the original Census dataset). As a result, transport costs are estimated at the 3-digit level as benchmark estimate, exploiting heterogenity at the 5-digit level (for a given origin country, and conditional on year and transport mode). This has driven us to retain $s=3$ when implementing the referee's method, in view of preserving comparability between both strategies.}
 
 \subsubsection{Strategy of answer}
 
@@ -280,17 +302,20 @@ Precisely, by year and transport mode, this implies running the estimation for e
 \item[Advantage 1]: One is not compelled to assume separability between the country-component and the product-component of transport costs.
 \item[$\Rightarrow$] Answer can be in 2 parts: 1) This is not a strong assumption - better convince him/her: Run the robustness to the separability assumption on a larger sample and show that the estimated $\beta$ is not that different between the two methods. 2) Compare the estimated $\beta$ between our original method and the referee's one. \
 \textbf{Where are the results comparing the estimates of the $\beta$, in value? I don't find these results anymore...}
-\textbf{GD20200629 -- Voir le plan des do. Pour comparaison scatter_chronology_baselinesamplereferee1_referee1.pdf (sur le même sample))}
+\textbf{GD20200629 -- Voir le plan des do. Pour comparaison scatter-chronology-baselinesamplereferee1-referee1.pdf (sur le même sample))}
 
 
 
+\textbf{stop here}
 
-\item[Advantage 2]: There is a handful of instruments (HS-8 product-specific tariff rates or lagged prices) to instrument fas prices
+\item[Advantage 2]: There is a handful of instruments (HS-10 product-specific tariff rates or lagged prices) to instrument fas prices
 \item[$\Rightarrow$] Answer: When we instrument fas prices at the 5-digit level using tax duties (still using our own methodology), we do not obtain much different results. \textbf{But he/she suggests to do it on HS-8 fas prices, not 5-digit prices, and to imply his estimated equation. Have we done that?}
 \textbf{GD20200629 Cela ne semble pas vrai. Il y a quelque années en HS8, plus en HS6. Mais pas sur toute la durée}
 \item[Advantage 3]: A more transparent comparison with Hummel (2007): How to answer to this point? Re-read the paper to see if we are clear enough?
-\textbf{GD20200629 changer la manière dont on présente en mettant les beta en avant ?}
+\textbf{GD20200629 changer la manière dont on presente en mettant les beta en avant ?}
 \end{itemize}
+
+
 
 \paragraph{b) The costs are high}
 \begin{itemize}
