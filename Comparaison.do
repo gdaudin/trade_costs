@@ -280,6 +280,8 @@ end
 ***on lance les comparaisons
 
 global method1 baseline
+*global method1 baselinesamplereferee1
+*global method2 referee1
 *global method2 IV_referee1_panel
 global method2 IV_referee1_yearly
 
