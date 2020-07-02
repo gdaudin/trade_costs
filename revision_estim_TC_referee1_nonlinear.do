@@ -483,9 +483,10 @@ forvalues z = 2005(1)2013 {
 *foreach z in 2008 2013 {
 
 
-** On se met en HS8 pour être cohérent avec 1ere étape ensuite
-prep_reg `z' sitc2 8 `x'
-do_reg `z' sitc2 8 `x'
+** On se met en HS8 pour être cohérent avec 1ere étape duty ensuite
+** GD20200629 Finalement, le first stage (de l’instrumentation) ne marche pas en 8 digit. Donc on essaye précision maximale : 10
+prep_reg `z' sitc2 10 `x'
+do_reg `z' sitc2 10 `x'
 
 
 
