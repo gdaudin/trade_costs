@@ -433,14 +433,15 @@ forvalues x=1975(1)2013{
 	keep if year==`x'
 	keep if mode=="air"
 	
-reghdfe lprix_fob llprix_fob ds_tariff_lise if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
+reghdfe lprix_fob llprix_fob ls_tariff if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd = sqrt(varianceds_tariff_lise)
-drop *cons **lprix_fob
+gen sd_tariff = sqrt(variancels_tariff)
+gen sd_lag_prix_fob =  sqrt(variancellprix_fob)
+drop *cons 
 
 mat r_square= e(r2)
 svmat double r_square, names(matcol)
@@ -454,7 +455,8 @@ mat r_square_within= e(r2_within)
 svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
-gen t_student = beta/sd
+gen t_student_lag_pfob = betallprix_fob/sd_lag_prix_fob
+gen t_student_tariff= betals_tariff/sd_tariff 
 
 
 
@@ -462,16 +464,18 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test ds_tariff_lise=0 
+test ls_tariff=0 
 
-mat F_stat_IV=r(F) 
-svmat double F_stat_IV, names(matcol)
-rename F_stat_IVc1 F_stat_IV
+mat F_stat_tariff=r(F) 
+
+svmat double F_stat_tariff, names(matcol)
+rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betads_tariff_lise~=.
-keep year mode betads_tariff_lise sd t_student F_stat F_stat_IV r_square adj_r_square r_square_within
-rename betads_tariff_lise beta_FS
+keep if betals_tariff~=.
+keep year mode betallprix_fob sd_lag_prix_fob t_student_lag_pfob betals_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betals_tariff beta_FS_tariff
+rename betallprix_fob beta_lag_price
 	
 *save "C:\Users\jerome\Dropbox\Papier_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_air.dta", replace
@@ -530,14 +534,15 @@ forvalues x=1975(1)2013{
 	
 
 	
-reghdfe lprix_fob llprix_fob ds_tariff_lise if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
+reghdfe lprix_fob llprix_fob ls_tariff if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd = sqrt(varianceds_tariff_lise)
-drop *cons **lprix_fob
+gen sd_tariff = sqrt(variancels_tariff)
+gen sd_lag_prix_fob =  sqrt(variancellprix_fob)
+drop *cons 
 
 mat r_square= e(r2)
 svmat double r_square, names(matcol)
@@ -551,7 +556,8 @@ mat r_square_within= e(r2_within)
 svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
-gen t_student = beta/sd
+gen t_student_lag_pfob = betallprix_fob/sd_lag_prix_fob
+gen t_student_tariff= betals_tariff/sd_tariff 
 
 
 
@@ -559,17 +565,19 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test ds_tariff_lise=0 
+test ls_tariff=0 
 
-mat F_stat_IV=r(F) 
-svmat double F_stat_IV, names(matcol)
-rename F_stat_IVc1 F_stat_IV
+mat F_stat_tariff=r(F) 
+
+svmat double F_stat_tariff, names(matcol)
+rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betads_tariff_lise~=.
-keep year mode betads_tariff_lise sd t_student F_stat F_stat_IV r_square adj_r_square r_square_within
-rename betads_tariff_lise beta_FS
-	
+keep if betals_tariff~=.
+keep year mode betallprix_fob sd_lag_prix_fob t_student_lag_pfob betals_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betals_tariff beta_FS_tariff
+rename betallprix_fob beta_lag_price
+
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_ves.dta", replace
 
@@ -612,28 +620,35 @@ forvalues x=1975(1)2013 {
 use "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta", clear
 append using "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta"
 sort mode year
-order year mode beta_FS sd t_student F_stat r_square adj_r_square r_square_within 
+order year mode beta_lag_price sd_lag_prix_fob t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
 save "$dir/results/IV_referee1_yearly/FS_parameters_yearly.dta",replace
 
 ****a few useful descriptive statistics*****
-tabstat beta_FS sd t_student F_stat F_stat_IV adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
-tabstat beta_FS sd t_student F_stat F_stat_IV adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+tabstat beta_lag_price sd_lag_prix_fob t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+tabstat beta_lag_price sd_lag_prix_fob t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
 ****a few useful descriptive statistics in LaTex Tables*****
-latabstat beta_FS sd t_student F_stat F_stat_IV adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
-latabstat beta_FS sd t_student F_stat F_stat_IV  adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+latabstat beta_lag_price sd_lag_prix_fob t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+latabstat beta_lag_price sd_lag_prix_fob t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
 
-scatter beta_FS sd year if mode=="air"
-graph save graph_param_yearly_air, replace
+scatter beta_lag_price year if mode=="air"
+graph save graph_lag_yearly_air, replace
 
-scatter beta_FS sd year if mode=="ves"
-graph save graph_param_yearly_ves, replace
+scatter beta_lag_price year if mode=="ves"
+graph save graph_lag_yearly_ves, replace
+
+scatter beta_FS_tariff sd_tariff year if mode=="air"
+graph save graph_tariff_yearly_air, replace
+
+scatter beta_FS_tariff sd_tariff year if mode=="ves"
+graph save graph_tariff_yearly_ves, replace
 
 
 erase "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta"
 erase "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta"
 
+stop 
 
 erase "$dir/hummels_FS.dta"
 
