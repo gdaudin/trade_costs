@@ -89,13 +89,13 @@ with && p_{ik}  = \tau_{is(k)} \widetilde{p}_{ik} +t_{is(k)}
 
 The question we deal with, is the functional form of the first stage equation, where we instrument the fas price with duties as suggested by Referee 1. The idea is that firms might react to changes in duty tax rates which have nothing to do with transport costs changes. In this respect, considering the predicted part of the fas price related to tax duty is likely to solve potential endogeneity biases.
 
-Denoting $i$ the origin country, $k$ the product at the 8/5 digit level, and reasoning on a yearly basis, if we assume that the fas price $\widetilde{p}_{ik}$ decomposes in two components, say $\bar{p}_{ik}$ the ``firm-specific'' price (related to its cost and pricing strategy) and $\tau^d_{ik}$ the tax duty (out of the firm's hands) according to :
+Denoting $i$ the origin country, $k$ the product at the 5 digit level, and reasoning on a yearly basis, if we assume that the fas price $\widetilde{p}_{ik}$ decomposes in two components, say $\bar{p}_{ik}$ the ``firm-specific'' price (related to its cost and pricing strategy) and $\tau^d_{ik}$ the tax duty (out of the firm's hands) according to :
 
 \begin{equation}
 \widetilde{p}_{ikt} = (1+\tau^d_{is(k)t})^\alpha \left(\bar{p}_{ikt}\right)^\beta \label{eq:link_fas_duty}
 \end{equation}
 
-\noindent with $s(k)$ the 3-digit classification (the disaggregation level for tax duties in the database) as a function of the HS8 (or 5 digit) product classification
+\noindent with $s(k)$ the 3-digit classification as a function of the 5-digit product classification.
 
 \subsubsection{First-stage equation in first difference \label{ssec:first_diff}}
 
@@ -126,7 +126,7 @@ $$\Delta \log \widetilde{p}_{ikt}= \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{i
 If this reasoning is correct,
 \begin{itemize}
 \item we should take as predicted value only the predicted price WITHOUT the fixed effects:
-$$\widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}} = \widehat{\alpha}\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} $$
+$$\left(\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}\right)^{IV} = \widehat{\alpha}\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} $$
 \item and we should expect a value of the coefficient $\widehat{\alpha}$ between $\Delta \log \widetilde{p}_{ikt}$ and $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} $ between $-1$ and $0$, depending on the degree of ``pricing-to-market'' of firms.
     \begin{itemize}
     \item[-] $\alpha = 0$ corresponds to the case where the firm does not adjust its fas price to the change in tax duty, that would cancel out the influence of the tax duty change on the price paid by the US consumers; this rather corresponds to small firms which do not have enough market power to manipulate their prices following changes in international competition;
@@ -138,10 +138,10 @@ $$\widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}} = \widehat{
 Once this is done, we rebuilt the instrumented fas price at time $t$:
 
 \begin{eqnarray*}
-\widehat{\widetilde{p}}_{ikt} = \widetilde{p}_{ikt-1}+ \widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}}
+\widehat{\widetilde{p}}_{ikt} = \widetilde{p}_{ikt-1}\left[1 + \left(\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}\right)^{IV}\right]
 \end{eqnarray*}
 
-with $\widehat{\widetilde{p}}_{ikt}$ the instrumented fas price at time $t$, for product $k$ from country $i$; $\widetilde{p}_{ikt-1}$ the observed lagged fas price for the same $i,k$ couple; and $ \widehat{\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}}$ the predicted growth rate of the fas price based on duty changes.
+with $\widehat{\widetilde{p}}_{ikt}$ the instrumented fas price at time $t$, for product $k$ from country $i$; $\widetilde{p}_{ikt-1}$ the observed lagged fas price for the same $i,k$ couple; and $ \left(\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}}\right)^{IV}$ the predicted growth rate of the fas price based on duty changes.
 
 \subsection{First-stage equation in level}
 
@@ -194,7 +194,7 @@ In contrast with the differential approach (Section \ref{ssec:first_diff}), this
 
 \subsection{To sum up}
 
-What would be my ``preferred'' first-stage equation: Equation (\ref{eq:FS_loglevel_cross_section_inertia}) because i) in log level, so do not need to rebuild the level from the first difference + consistent with our second stage in log level as well; ii) in cross-section, run on a yearly basis, here again consistent with our second-stage equation. But need to be pragmatic as well... 
+What would be my ``preferred'' first-stage equation: Equation (\ref{eq:FS_loglevel_cross_section_inertia}) because i) in log level, so do not need to rebuild the level from the first difference + consistent with our second stage in log level as well; ii) in cross-section, run on a yearly basis, here again consistent with our second-stage equation. But need to be pragmatic as well...
 
 
 
