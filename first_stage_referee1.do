@@ -433,13 +433,13 @@ forvalues x=1975(1)2013{
 	keep if year==`x'
 	keep if mode=="air"
 	
-reghdfe lprix_fob llprix_fob ls_tariff if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
+reghdfe lprix_fob llprix_fob ds_tariff if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(variancels_tariff)
+gen sd_tariff = sqrt(varianceds_tariff)
 gen sd_lag_prix_fob =  sqrt(variancellprix_fob)
 drop *cons 
 
@@ -456,7 +456,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob/sd_lag_prix_fob
-gen t_student_tariff= betals_tariff/sd_tariff 
+gen t_student_tariff= betads_tariff/sd_tariff 
 
 
 
@@ -464,7 +464,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test ls_tariff=0 
+test ds_tariff=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -472,9 +472,9 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betals_tariff~=.
-keep year mode betallprix_fob sd_lag_prix_fob t_student_lag_pfob betals_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betals_tariff beta_FS_tariff
+keep if betads_tariff~=.
+keep year mode betallprix_fob sd_lag_prix_fob t_student_lag_pfob betads_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betads_tariff beta_FS_tariff
 rename betallprix_fob beta_lag_price
 	
 *save "C:\Users\jerome\Dropbox\Papier_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
@@ -534,13 +534,13 @@ forvalues x=1975(1)2013{
 	
 
 	
-reghdfe lprix_fob llprix_fob ls_tariff if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
+reghdfe lprix_fob llprix_fob ds_tariff if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(variancels_tariff)
+gen sd_tariff = sqrt(varianceds_tariff)
 gen sd_lag_prix_fob =  sqrt(variancellprix_fob)
 drop *cons 
 
@@ -557,7 +557,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob/sd_lag_prix_fob
-gen t_student_tariff= betals_tariff/sd_tariff 
+gen t_student_tariff= betads_tariff/sd_tariff 
 
 
 
@@ -565,7 +565,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test ls_tariff=0 
+test ds_tariff=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -573,9 +573,9 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betals_tariff~=.
-keep year mode betallprix_fob sd_lag_prix_fob t_student_lag_pfob betals_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betals_tariff beta_FS_tariff
+keep if betads_tariff~=.
+keep year mode betallprix_fob sd_lag_prix_fob t_student_lag_pfob betads_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betads_tariff beta_FS_tariff
 rename betallprix_fob beta_lag_price
 
 *save "C:\Users\jerome\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev\FS_`x'", replace
