@@ -23,7 +23,10 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 
-/* Fixe Lise */
+
+** Juillet 2020: Lise, je mets tout sur mon OneDrive
+
+/* Fixe Lise A FAIRE */
 if "`c(hostname)'" =="LAB0271A" {
 	global dir C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database
 	global dir_data \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\database
@@ -31,6 +34,17 @@ if "`c(hostname)'" =="LAB0271A" {
 	global dir_temp ????
 }
 
+
+/* Dell portable Lise Lise */
+if "`c(hostname)'" =="LAB0271A" {
+	global dir "C:\Users\Ipatureau\Dropbox\trade_cost\JEGeo"
+	global dir_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
+	global dir_external_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
+	/* To update for two new files within "data"
+	- New_years file with original Census data + countrycodes_use.txt +
+	- Hummels_JEP_data that includes hummels_tra + country_codes_v2.dta*/ 
+	global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+}
 
 cd "$dir_external_data/New_years"
 

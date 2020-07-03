@@ -1,3 +1,7 @@
+*** Programme de comparaison des résultats entre notre façon d'estimer les transport costs, et celle proposée par le référé 1
+*** Juillet 2020
+
+
 
 if "`c(username)'" =="guillaumedaudin" {
 	global dir_baseline_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/baseline"
@@ -11,27 +15,35 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 
-/* Fixe Lise */
+*** Juillet 2020: Lise, je mets tout sur mon OneDrive
+
+/* Fixe Lise P112*/
 if "`c(hostname)'" =="LAB0271A" {
-	global dir_baseline_results ???
+	 
+	/*  A FAIRE */ 
 	}
 
 /* Nouveau portable Lise */
 if "`c(hostname)'" =="MSOP112C" {
 
 	* baseline results sur hummels_tra dans son intégralité
-    * global dir_baseline_results C:\Lise\trade_costs\results\baseline
-	
-	*résultats méthode soumission sur même base que celle méthode référé 1
-	global dir_baseline_results C:\Lise\trade_costs\results\referee1\oldmethod
-	
+    global dir_baseline_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+		
 	* résultats selon méthode référé 1
-	global dir_referee1 C:\Lise\trade_costs\results\referee1
+	global dir_referee1 "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
 	
-
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
 	
-	global dir C:\Lise\trade_costs
-	global dir_data C:\Lise\trade_costs\data
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
 	}
 
 
@@ -279,9 +291,20 @@ end
 *********
 ***on lance les comparaisons
 
+/* method1 peut être "baseline" (nos benchmark results) 
+ou "baselinesamplereferee1" = notre methode sur le sample issu de la méthode du référé 1
+
+method2 peut être "referee1" (methode OLS référé 1)
+ou "IV_referee1_panel" (??)
+ou "IV_referee1_yearly" (??)
+
+*/ 
+
 global method1 baseline
+global method2 referee1
+
 *global method2 IV_referee1_panel
-global method2 IV_referee1_yearly
+*global method2 IV_referee1_yearly
 
 ******
 
@@ -311,7 +334,7 @@ save "$dir_comparaison/stats_comp_${method1}_$method2.dta", replace
 
 
 
-*/
+/*
 comparaison_graph $method1 $method2
 
 */

@@ -22,11 +22,24 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 
-/* Fixe Lise */
+** Juillet 2020: Lise, je mets tout sur mon OneDrive
+
+
+/* Fixe Lise A FAIRE */
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost_nonpartage\database
-	global dir_db \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\database
+	global dir C:\Users\Ipatureau\Dropbox\trade_cost\JEGeo
+	global dir_data \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\data
+	global dir_temp \\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\temp /* A créer */ 
 }
+
+/* Dell portable Lise */
+if "`c(hostname)'" =="LAB0271A" {
+	global dir "C:\Users\Ipatureau\Dropbox\trade_cost\JEGeo"
+	global dir_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
+	global dir_base "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data" /* pour l'instant je ne vois pas de difference avec le dossier data ? voir avec Guillaume */
+	global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+}
+
 
 
 cd "$dir_data"
@@ -35,6 +48,8 @@ cd "$dir_data"
 ** STEP 1: CONSTITUER BASE ADDITIONAL YEARS: 2005-2013 (Finalement, c’est fait ailleurs)
 ********************************************************************************
 
+
+** base_new_years.zip est générée par build_new_years.do, à faire tourner avant **
 
 unzipfile base_new_years.zip
 use base_new_years.dta, replace
