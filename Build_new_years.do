@@ -72,7 +72,7 @@ foreach x in $base {
 	erase `file'.txt
 	
 	**Vérification pour les mois puis nettoyage
-	assert month=12
+	assert month==12
 	drop *_mo
 	**
 	
@@ -103,6 +103,9 @@ The data for vessel and air exports and general imports represent waterborne and
 	rename cty_code country 
 	rename commodity hs
 	rename cal_dut_yr duty 
+	label var hs "Anciennement commodity"
+	label var duty "Anciennement cal_dut_yr"
+	label var country "Anciennement cty_code"
 	rename *_yr *
 	
 	save "$dir_temp/new_`x'.dta", replace
