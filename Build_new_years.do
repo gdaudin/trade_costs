@@ -74,6 +74,7 @@ foreach x in $base {
 	**Vérification pour les mois puis nettoyage
 	assert month==12
 	drop *_mo
+	drop month
 	**
 	
 	assert gen_cif_yr==gen_val_yr+gen_cha_yr
