@@ -55,6 +55,30 @@ unzipfile base_new_years.zip
 use base_new_years.dta, replace
 erase base_new_years.dta
 
+***** Vérifications diverses
+assert ves_wgt>=cnt_wgt /*suggère que cnt est bien un sous-ensemble de ves*/
+
+****Quelques variables d’intérêt
+gen duty_rate = duty/con_val
+label var duty_rate "cal_dut_yr/con_val -- estimate"
+
+****Des variables en moins
+drop con*
+drop cnt*
+drop duty
+drop dut_val
+
+gen ves_qy1 = ves_val*gen_qy1/gen_val
+label var ves_qy1 "ves_val*gen_qy1/gen_val --- Assume that quantites to dollars are the same for all transportation modes"
+gen ves_qy2 = ves_val*gen_qy2/gen_val
+label var ves_qy2 "ves_val*gen_qy2/gen_val --- Assume that quantites to dollars are the same for all transportation modes"
+
+gen air_qy1 = air_val*gen_qy1/gen_val
+label var air_qy1 "air_val*gen_qy1/gen_val --- Assume that quantites to dollars are the same for all transportation modes"
+gen air_qy2 = air_val*gen_qy2/gen_val
+label var air_qy2 "air_val*gen_qy2/gen_val --- Assume that quantites to dollars are the same for all transportation modes"
+drop gen_*
+
 
 *** STEP 1.3: Construire l'écart prix cif/fob
 ******************************************************************************
@@ -67,45 +91,42 @@ erase base_new_years.dta
 ** On calcule un écart cif/fob pour chaque mode de transport
 
 
+preserve
 generate mode="ves"
+drop air_*
+rename ves_* *
+drop if val==. | val==0 | wgt==0
 save "$dir_temp/temp.dta", replace
 
-replace mode="air"
-preserve
+restore
+generate mode="air"
+drop ves_*
+rename air_* * 
+drop if val==. | val==0 | wgt==0
 append using "$dir_temp/temp.dta"
 save "$dir_temp/temp.dta", replace
-restore
 
+/*
 replace mode="cnt"
 append using "$dir_temp/temp.dta"
+*/
 
 
-generate prix_fob=.
-generate prix_caf=.
-generate prix_trsp=.
-generate prix_trsp2=.
-
-foreach i in air ves cnt {
-	replace prix_fob = `i'_val/`i'_wgt if mode=="`i'"
-	replace prix_caf = (`i'_val+`i'_cha)/`i'_wgt if mode=="`i'"
-	replace prix_trsp=(prix_caf-prix_fob)/prix_fob if mode=="`i'"
-	replace prix_trsp2=prix_caf/prix_fob
-	label variable prix_trsp "(prix_caf-prix_fob)/prix_fob"
-	label variable prix_trsp2 "prix_caf/prix_fob"
-}
-
-
-** De cette façon là, prix_fob est missing pour l'observation par mode "air" si tout le transport se fait par "ves"
-** Et réciproquement
-
-
-drop if prix_fob==.
-
+generate prix_fob_wgt = val/wgt
+generate prix_caf_wgt = (val+cha)/wgt
+generate prix_fob_qy1 = val/qy1
+generate prix_caf_qy1 = (val+cha)/qy1
+generate prix_fob_qy2 = val/qy2
+generate prix_caf_qy2 = (val+cha)/qy2
+generate prix_trsp=(prix_caf_wgt-prix_fob_wgt)/prix_fob_wgt if mode=="`i'"
+generate prix_trsp2=prix_caf_wgt/prix_fob_wgt
+label variable prix_trsp "(prix_caf_wgt-prix_fob_wgt)/prix_fob_wgt"
+label variable prix_trsp2 "prix_caf_wgt/prix_fob_wgt"
 
 destring year, replace
 
 *save base_hs10_newyears, replace
-save "$dir_base/base_hs10_newyears.dta", replace
+save "$dir_data/base_hs10_newyears.dta", replace
 
 *erase "$dir/base_hs10_newyears.dta"
 erase "$dir_temp/temp.dta"
