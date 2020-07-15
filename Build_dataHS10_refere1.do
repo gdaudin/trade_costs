@@ -57,16 +57,24 @@ erase base_new_years.dta
 
 ***** Vérifications diverses
 assert ves_wgt>=cnt_wgt /*suggère que cnt est bien un sous-ensemble de ves*/
+assert con_val==gen_val, rc0 /*en 2010, c’est 3,8% des observations) ; 4,1% sur 2005-2013*/
+assert gen_val==ves_val+air_val, rc0 /*en 2010 : 12,3%* 12,3% sur 2005-2013*/
+assert ves_val==0 | air_val==0, rc0 /*7% des flux sur 2005-2013*/
+assert (ves_val==0 | air_val==0) & (ves_val==gen_val | air_val==gen_val), rc0 /*19% sur 2005-2013*/
 
 ****Quelques variables d’intérêt
 gen duty_rate = duty/con_val
 label var duty_rate "cal_dut_yr/con_val -- estimate"
+
+
 
 ****Des variables en moins
 drop con*
 drop cnt*
 drop duty
 drop dut_val
+
+assert gen_qy1 !=0, rc0 /*24% de qy1 manquant*/
 
 gen ves_qy1 = ves_val*gen_qy1/gen_val
 label var ves_qy1 "ves_val*gen_qy1/gen_val --- Assume that quantites to dollars are the same for all transportation modes"
