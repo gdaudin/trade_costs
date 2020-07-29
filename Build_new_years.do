@@ -71,16 +71,42 @@ foreach x in $base {
 	
 	erase `file'.txt
 	
-	** Nettoyer a minima
+	**Vérification pour les mois puis nettoyage
+	assert month==12
+	drop *_mo
+	drop month
+	**
+	
+	assert gen_cif_yr==gen_val_yr+gen_cha_yr
+	*Cela montre que les "charges", ce sont les coûts de transport
+	
+	
+	/*Choses fausses
+	assert gen_cha_yr==ves_cha_yr+air_cha_yr+cnt_cha_yr
+	assert gen_cha_yr==ves_cha_yr+air_cha_yr
+	assert dut_val_yr == 0 | dut_val_yr==con_val_yr
+	assert abs(gen_cha_yr-ves_cha_yr-air_cha_yr)<= 0.5*gen_cha_yr
+	assert abs(gen_cha_yr-ves_cha_yr-air_cha_yr)<= 0.01*gen_cha_yr
+	C’est normal, parce que (15 de https://www.census.gov/foreign-trade/guide/sec2.html) 
+	The data for "all methods of transportation" include exports and general imports by vessel, air, truck, rail, air mail, parcel post, and other methods of transportation.
+The data for vessel and air exports and general imports represent waterborne and airborne shipments only (merchandise actually leaving or arriving in the United States aboard a vessel or an aircraft).
+	*/
+	
+	
 
 	* renommer les variables
+	/*
 	drop  cards_mo con_qy1_mo con_qy2_mo con_val_mo dut_val_mo cal_dut_mo con_cha_mo con_cif_mo gen_* 
 	drop air_val_mo air_wgt_mo air_cha_mo ves_val_mo ves_wgt_mo ves_cha_mo cnt_val_mo cnt_wgt_mo cnt_cha_mo
 	drop cty_subco dist_unlad rate_prov month cal_dut_yr cards_yr
+	*/
 	
 	rename cty_code country 
 	rename commodity hs
-	rename dut_val_yr duty 
+	rename cal_dut_yr duty 
+	label var hs "Anciennement commodity"
+	label var duty "Anciennement cal_dut_yr"
+	label var country "Anciennement cty_code"
 	rename *_yr *
 	
 	save "$dir_temp/new_`x'.dta", replace
