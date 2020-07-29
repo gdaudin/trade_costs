@@ -66,12 +66,13 @@ assert (ves_val==0 | air_val==0) & (ves_val==gen_val | air_val==gen_val), rc0 /*
 gen duty_rate = duty/con_val
 label var duty_rate "cal_dut_yr/con_val -- estimate"
 
-
+label var duty "Attention ! C’est pour ves+air"
+label var con_val "Attention ! C’est pour ves+air"
 
 ****Des variables en moins
-drop con*
+drop con_qy1 con_qy2
 drop cnt*
-drop duty
+*drop duty
 drop dut_val
 
 assert gen_qy1 !=0, rc0 /*24% de qy1 manquant*/
