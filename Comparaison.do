@@ -121,7 +121,7 @@ program comparaison_by_year_mode
 args year mode method1 method2
 
 if "`method1'"=="baseline" {
-	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
 }	
 	
 if "`method1'"=="baselinesamplereferee1" {
@@ -169,7 +169,7 @@ graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
 graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.png", replace
 
 if "`method1'"=="baseline" {
-	use "$dir_baseline_results/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	use "$dir_baseline_results/results_estimTC_`year'prod5_sect3_`mode'.dta", clear
 }	
 
 if "`method1'"=="baselinesamplereferee1" {

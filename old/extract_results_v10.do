@@ -201,7 +201,7 @@ cd "\\filer.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\Trade_costs\result
 local preci 3
 
 foreach x in ves {
-use results_estim_1974_sitc2_`preci'_`x', clear
+use results_estim_1974_prod5_sect`preci'_`x', clear
 
 
 save table_`preci'_`x', replace
@@ -229,7 +229,7 @@ foreach k in `preci' {
 foreach z in `year' {
 
 use table_`k'_`x', clear
-append using results_estim_`z'_sitc2_`k'_`x'
+append using results_estim_`z'_prod5_sect`k'_`x'
 
 save table_`k'_`x', replace
 
@@ -260,7 +260,7 @@ export excel using table_`k'_`x', replace firstrow(varlabels)
 local preci 3
 
 foreach x in ves {
-use results_estim_2006_sitc2_`preci'_`x', clear
+use results_estim_2006_prod5_sect`preci'_`x', clear
 
 
 save table_`preci'_`x'_bis, replace
@@ -285,7 +285,7 @@ foreach k in `preci' {
 foreach z in `year' {
 
 use table_`k'_`x'_bis, clear
-append using results_estim_`z'_sitc2_`k'_`x'
+append using results_estim_`z'_prod5_sect`k'_`x'
 
 save table_`k'_`x'_bis, replace
 
