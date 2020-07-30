@@ -89,9 +89,9 @@ program nlcouts_IetA
 	version 12
 	su group_iso_o, meanonly	
 	local nbr_iso_o=r(max)
-	su group_prod, meanonly	
-	local nbr_prod=r(max)
-	local nbr_var = `nbr_iso_o'+`nbr_prod'-1 +2 /*+11*/
+	su group_sect, meanonly	
+	local nbr_sect=r(max)
+	local nbr_var = `nbr_iso_o'+`nbr_sect'-1 +2 /*+11*/
 		
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 	local n 1
@@ -112,7 +112,7 @@ program nlcouts_IetA
 		
 **Ici, on fait les effets fixes (à la fois dans le terme additif et le terme multiplicatif)
 	
-		foreach p in iso_o prod {
+		foreach p in iso_o sect {
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {
 					tempname feA_`p'_`j'
@@ -135,7 +135,7 @@ program nlcouts_IetA
 		}
 	
 	
-			foreach p in iso_o prod {
+			foreach p in iso_o sect {
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {	
 					tempname feI_`p'_`j'
@@ -185,9 +185,9 @@ program nlcouts_iceberg
 	version 12
 	su group_iso_o, meanonly	
 	local nbr_iso_o=r(max)
-	su group_prod, meanonly	
-	local nbr_prod=r(max)
-	local nbr_var = `nbr_iso_o'+`nbr_prod'-1 +2 /*+11*/
+	su group_sect, meanonly	
+	local nbr_sect=r(max)
+	local nbr_var = `nbr_iso_o'+`nbr_sect'-1 +2 /*+11*/
 		
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 	local n 1
@@ -205,7 +205,7 @@ program nlcouts_iceberg
 	
 **Ici, on fait les effets fixes 
 	
-			foreach p in iso_o prod {
+			foreach p in iso_o sect {
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {	
 					tempname feI_`p'_`j'
@@ -243,9 +243,9 @@ program nlcouts_additif
 	version 12
 	su group_iso_o, meanonly	
 	local nbr_iso_o=r(max)
-	su group_prod, meanonly	
-	local nbr_prod=r(max)
-	local nbr_var = `nbr_iso_o'+`nbr_prod'-1 +2 /*+11*/
+	su group_sect, meanonly	
+	local nbr_sect=r(max)
+	local nbr_var = `nbr_iso_o'+`nbr_sect'-1 +2 /*+11*/
 		
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 	local n 1
@@ -264,7 +264,7 @@ program nlcouts_additif
 		
 **Ici, on fait les effets fixes (dans le terme additif)
 	
-		foreach p in iso_o prod {
+		foreach p in iso_o sect {
 			foreach j of num 1/`nbr_`p'' {
 				if "`p'"!="iso_o" | `j'!=1 {
 					tempname feA_`p'_`j'
@@ -322,10 +322,15 @@ program prep_reg
 * On ajoute le choix de la base de données
 args database year class preci mode 
 
+**On va changer en prep_reg hummels_tra 2006 5 3 air ou prep_reg base_hs10_newyears 2005 10 3 air 
+
+**"class" donne la précision des produits. "preci" donne la précision des secteurs
+
+
 
 ** Définir macro pour lieu de stockage des résultats selon base utilisée
 
-if "`database'"=="hummels_tra" {
+if "`database'"=="hummels_tra" | "`database'"=="base_hs10_newyears" {
 	global stock_results $dir/results/baseline
 }
 
@@ -358,6 +363,12 @@ if "`database'"=="predictions_FS_yearly" {
 
 if "`database'"!="predictions_FS_panel" & "`database'"!="predictions_FS_yearly" use "$dir_data/`database'", clear
 
+if "`database'"=="base_hs10_newyears" {
+	generate prix_fob=prix_fob_wgt
+	generate prix_caf=prix_caf_wgt
+}
+	
+
 
 if "`database'"=="predictions_FS_panel" {
 	use "$stock_results/`database'"
@@ -388,8 +399,8 @@ if "`database'"=="predictions_FS_yearly" {
 
 keep if year==`year'
 keep if mode=="`mode'"
-rename `class' product
-replace product = substr(product,1,`preci')
+if "`database'"=="hummels_tra" generate sector = substr(sitc,1,`preci')
+if "`database'"=="base_hs10_newyears" generate sector = substr(hs,1,`preci')
 
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
@@ -404,41 +415,42 @@ label variable iso_o "pays exportateur"
 
 display "Nombre avant bas et haut " _N
 
-bys product: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
-bys product: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
+bys sector: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
+bys sector: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
 drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
 
 
 display "Nombre après bas et haut " _N
 
-egen prix_min = min(prix_trsp2), by(product)
-egen prix_max = max(prix_trsp2), by(product)
+egen prix_min = min(prix_trsp2), by(sector)
+egen prix_max = max(prix_trsp2), by(sector)
 
 g lprix_trsp2 = ln(prix_trsp2)
 label variable lprix_trsp2 "log(prix_caf/prix_fob)"
 *g lprix_trsp2 = ln(prix_trsp2)
 
+/*
 g ldist = ln(dist)
 label variable ldist "log(distance)"
+*/
+**********Sur les secteurs
 
-**********Sur le produits
-
-codebook product
+codebook sector
 
 
-egen group_prod=group(product)
-su group_prod, meanonly	
-drop group_prod
-local nbr_prod_exante=r(max)
-display "Nombre de produits : `nbr_prod_exante'" 
+egen group_sect=group(sector)
+su group_sect, meanonly	
+local nbr_sect_exante=r(max)
+display "Nombre de secteurs ex ante: `nbr_sect_exante'" 
+drop group_sect
 
-bysort product: drop if _N<=5
+bysort sector: drop if _N<=5
 
-egen group_prod=group(product)
-su group_prod, meanonly	
-local nbr_prod_expost=r(max)
-drop group_prod
-display "Nombre de produits : `nbr_prod_expost'" 
+egen group_sect=group(sector)
+su group_sect, meanonly	
+local nbr_sect_expost=r(max)
+display "Nombre de secteurs ex post: `nbr_sect_expost'" 
+drop group_sect
 
 
 *** Tester le pgm
@@ -466,12 +478,12 @@ drop if total_product <= seuil_product
 timer clear
 
 
-*Pour nombre de product
-quietly egen group_prod=group(product)
-su group_prod, meanonly	
-local nbr_prod=r(max)
-quietly levelsof product, local (liste_prod) clean
-quietly tabulate product, gen (prod_)
+*Pour nombre de secteurs
+quietly egen group_sect=group(sector)
+su group_sect, meanonly	
+local nbr_sect=r(max)
+quietly levelsof sector, local (liste_sect) clean
+quietly tabulate sector, gen (sect_)
 	
 *Pour nombre d'iso_o
 quietly egen group_iso_o=group(iso_o)
@@ -483,10 +495,10 @@ quietly tabulate iso_o, gen(iso_o_)
 
 
 
-foreach i in prod iso_o	{
+foreach i in sect iso_o	{
 	local liste_variables_`i' 
 	forvalue j =  1/`nbr_`i'' {
-		if "`i'" !="prod" | `j' !=1 {
+		if "`i'" !="sect" | `j' !=1 {
 			local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
 		}
 	}
@@ -496,7 +508,7 @@ foreach i in prod iso_o	{
 
 		local liste_parametres_`i'_A
 		forvalue j =  1/`nbr_`i'' {
-			if  "`i'" !="prod" | `j'!=1 {			
+			if  "`i'" !="sect" | `j'!=1 {			
 				local liste_parametres_`i'_A  `liste_parametres_`i'_A' lnfeA_`i'_`j'
 			}
 		}
@@ -504,7 +516,7 @@ foreach i in prod iso_o	{
 
 		local liste_parametres_`i'_I
 		forvalue j =  1/`nbr_`i'' {
-			if  "`i'" !="prod" | `j'!=1 {			
+			if  "`i'" !="sect" | `j'!=1 {			
 				local liste_parametres_`i'_I  `liste_parametres_`i'_I' lnfem1I_`i'_`j'
 			}
 		}
@@ -515,7 +527,7 @@ foreach i in prod iso_o	{
 	foreach g in A I {
 		local initial_`i'_`g'
 		forvalue j =  1/`nbr_`i'' {
-			if  "`i'" !="prod" |`j'!=1 {
+			if  "`i'" !="sect" |`j'!=1 {
 				if "`g'" =="A" {
 *out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1 
 					local initial_`i'_`g'  `initial_`i'_`g'' lnfeA_`i'_`j' -3
@@ -532,7 +544,7 @@ foreach i in prod iso_o	{
 foreach g in A {
 		local initial_additif_`i'_`g'
 		forvalue j =  1/`nbr_`i'' {
-			if  "`i'" !="prod" |`j'!=1 {
+			if  "`i'" !="sect" |`j'!=1 {
 				if "`g'" =="A" {
 *out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1 
 					local initial_additif_`i'_`g'  `initial_additif_`i'_`g'' lnfeA_`i'_`j' 
@@ -551,20 +563,20 @@ gen ln_ratio_minus1 = ln(prix_trsp2 -1)
 
 
 
-local liste_variables `liste_variables_prod' `liste_variables_iso_o'
+local liste_variables `liste_variables_sect' `liste_variables_iso_o'
 
 ** pour estimation NL both A & I
-local liste_parametres `liste_parametres_prod_A' `liste_parametres_iso_o_A' `liste_parametres_prod_I' `liste_parametres_iso_o_I'  
-local initial `initial_prod_A' `initial_iso_d_A' `initial_prod_I' `initial_iso_d_I' 
+local liste_parametres `liste_parametres_sect_A' `liste_parametres_iso_o_A' `liste_parametres_sect_I' `liste_parametres_iso_o_I'  
+local initial `initial_sect_A' `initial_iso_d_A' `initial_sect_I' `initial_iso_d_I' 
 
 ** pour estimation NL iceberg only
-local liste_parametres_iceberg `liste_parametres_prod_I' `liste_parametres_iso_o_I'  
-local initial_iceberg `initial_prod_I' `initial_iso_d_I' 
+local liste_parametres_iceberg `liste_parametres_sect_I' `liste_parametres_iso_o_I'  
+local initial_iceberg `initial_sect_I' `initial_iso_d_I' 
 
 ** pour estimation NL additif only
-local liste_parametres_additif `liste_parametres_prod_A' `liste_parametres_iso_o_A' 
-local initial_additif `initial_prod_A' `initial_iso_d_A' 
-*local initial_additif `initial_additif_prod_A' `initial_additif_iso_d_A'
+local liste_parametres_additif `liste_parametres_sect_A' `liste_parametres_iso_o_A' 
+local initial_additif `initial_sect_A' `initial_iso_d_A' 
+*local initial_additif `initial_additif_sect_A' `initial_additif_iso_d_A'
 
 
 /*
@@ -798,23 +810,23 @@ if `result_reg' ==0 {
 	generate Rp2_nl = r(rho)^2
 
 
-	order iso_o iso_d product prix_fob prix_trsp2 converge /*predict lpredict*/ predict_nl terme* t /* e_t_rho* predict_calcul couts FE* 	*/
+	order iso_o iso_d sector prix_fob prix_trsp2 converge /*predict lpredict*/ predict_nl terme* t /* e_t_rho* predict_calcul couts FE* 	*/
 
 	matrix X= e(b)
 	capture matrix ET=e(V)
 	local nbr_var = e(k)/2
 	
 	generate nbr_obs=e(N)
-	bysort product : generate nbr_obs_prod=_N
+	bysort sector : generate nbr_obs_sect=_N
 	bysort iso_o : generate nbr_obs_iso=_N
 	generate  coef_iso_A =.
 	generate  coef_iso_I =.
-	generate  coef_prod_A =.
-	generate  coef_prod_I =.
+	generate  coef_sect_A =.
+	generate  coef_sect_I =.
 	generate  ecart_type_iso_A=.
 	generate  ecart_type_iso_I=.
-	generate  ecart_type_prod_A=.
-	generate  ecart_type_prod_I=.
+	generate  ecart_type_sect_A=.
+	generate  ecart_type_sect_I=.
 	
 	
 	** Mesurer le fit du modèle (cont')
@@ -835,11 +847,11 @@ if `result_reg' ==0 {
 	local n 1
 	local m = `nbr_var'+1
 	foreach i in `liste_variables' {
-		if strmatch("`i'","*prod*")==1 {
-			quietly replace coef_prod_A =exp(X[1,`n']) if `i'==1
-			quietly replace coef_prod_I =exp(X[1,`m'])+1 if `i'==1
-			quietly replace ecart_type_prod_A =ET[`n',`n']^0.5 if `i'==1
-			quietly replace ecart_type_prod_I =ET[`m',`m']^0.5 if `i'==1
+		if strmatch("`i'","*sect*")==1 {
+			quietly replace coef_sect_A =exp(X[1,`n']) if `i'==1
+			quietly replace coef_sect_I =exp(X[1,`m'])+1 if `i'==1
+			quietly replace ecart_type_sect_A =ET[`n',`n']^0.5 if `i'==1
+			quietly replace ecart_type_sect_I =ET[`m',`m']^0.5 if `i'==1
 		}
 		if strmatch("`i'","*iso*")==1 {
 			quietly replace coef_iso_A =exp(X[1,`n']) if `i'==1
@@ -881,14 +893,14 @@ if `result_reg' ==0 {
 	
 	global liste_parametres `liste_parametres'
 	
-	global liste_parametres_prod_A 	`liste_parametres_prod_A' 
+	global liste_parametres_sect_A 	`liste_parametres_sect_A' 
 	global liste_parametres_iso_o_A `liste_parametres_iso_o_A' 
-	global liste_parametres_prod_I 	`liste_parametres_prod_I' 
+	global liste_parametres_sect_I 	`liste_parametres_sect_I' 
 	global liste_parametres_iso_o_I `liste_parametres_iso_o_I' 
 	global liste_iso_o `liste_iso_o'
-	global liste_prod  `liste_prod'
+	global liste_sect  `liste_sect'
 	
-	drop prod_*
+	drop sect_*
 	drop iso_o_*
 
 }
@@ -896,15 +908,18 @@ if `result_reg' ==0 {
 if `result_reg' !=0 { {
 		generate rc=`result_reg' 
 		keep if _n==1
-		keep product year mode rc terme_A terme_I `mode'_val
+		keep sector year mode rc terme_A terme_I `mode'_val
 		replace terme_A=.
 		replace terme_I=.
 		replace `mode'_val=.
 }
 
-save "$stock_results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
+save "$stock_results/results_estimTC_`year'_sect`class'_prod`preci'_`mode'", replace
 
 
 
 end
 
+
+*test
+prep_reg base_hs10_newyears 2005 10 3 air
