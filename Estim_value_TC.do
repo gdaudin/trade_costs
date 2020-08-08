@@ -400,11 +400,17 @@ if "`database'"=="predictions_FS_yearly" {
 keep if year==`year'
 keep if mode=="`mode'"
 if "`database'"=="hummels_tra" generate sector = substr(sitc,1,`preci')
-if "`database'"=="base_hs10_newyears" generate sector = substr(hs,1,`preci')
-
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
+if "`database'"=="base_hs10_newyears" {
+	generate sector = substr(hs,1,`preci')
+	collapse (sum) val wgt cha qy1 qy2 (first) sector sitc2 hs6, by(iso_o hs mode)
+	gen prix_caf = (val+cha)/wgt
+	gen prix_fob = (val+cha)/wgt
+	gen prix_trsp=cha/val
+	gen prix_trsp2 = (val+cha)/val
+}
 * Nettoyer la base de donnÈes
 
 *****************************************************************************
@@ -567,15 +573,15 @@ local liste_variables `liste_variables_sect' `liste_variables_iso_o'
 
 ** pour estimation NL both A & I
 local liste_parametres `liste_parametres_sect_A' `liste_parametres_iso_o_A' `liste_parametres_sect_I' `liste_parametres_iso_o_I'  
-local initial `initial_sect_A' `initial_iso_d_A' `initial_sect_I' `initial_iso_d_I' 
+local initial `initial_sect_A' `initial_iso_o_A' `initial_sect_I' `initial_iso_o_I' 
 
 ** pour estimation NL iceberg only
 local liste_parametres_iceberg `liste_parametres_sect_I' `liste_parametres_iso_o_I'  
-local initial_iceberg `initial_sect_I' `initial_iso_d_I' 
+local initial_iceberg `initial_sect_I' `initial_iso_o_I' 
 
 ** pour estimation NL additif only
 local liste_parametres_additif `liste_parametres_sect_A' `liste_parametres_iso_o_A' 
-local initial_additif `initial_sect_A' `initial_iso_d_A' 
+local initial_additif `initial_sect_A' `initial_iso_o_A' 
 *local initial_additif `initial_additif_sect_A' `initial_additif_iso_d_A'
 
 
@@ -810,7 +816,7 @@ if `result_reg' ==0 {
 	generate Rp2_nl = r(rho)^2
 
 
-	order iso_o iso_d sector prix_fob prix_trsp2 converge /*predict lpredict*/ predict_nl terme* t /* e_t_rho* predict_calcul couts FE* 	*/
+	order iso_o sector prix_fob prix_trsp2 converge /*predict lpredict*/ predict_nl terme* t /* e_t_rho* predict_calcul couts FE* 	*/
 
 	matrix X= e(b)
 	capture matrix ET=e(V)
@@ -923,3 +929,6 @@ end
 
 *test
 prep_reg base_hs10_newyears 2005 10 3 air
+**sans collapse -- 175 secteurs, 810,822 observations : trop long. Après 72h, je n’en suis qu’à 11 itérations (sur la petite machine)
+**avec collapse -- 174 secteurs,  84,275 observations (seulement !?) -- Non, en fait c’est si le collapse est sur sector en 5 digits
+**avec collapse -- 174 secteurs,  171,179 observations (seulement aussi, d’ailleurs : j’ai vérifié et c’est bien cela. Il y a beaucoup de différences dans les "cards" et "district of entry". Sans duplicates, c’est duplicates report mode hs iso_o dist_entry cards dist_unlad rate_prov cty_subco
