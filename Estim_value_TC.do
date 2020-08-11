@@ -870,14 +870,14 @@ if `result_reg' ==0 {
 		local m = `m'+1
 	}
 	
-	sum terme_A  [fweight=`mode'_val], det
+	sum terme_A  [fweight=val], det
 	generate terme_A_mp = r(mean)
 	generate terme_A_med = r(p50)
 	generate terme_A_et = r(sd)
 	gen terme_A_min = r(min)
 	gen terme_A_max = r(max)
 	
-	sum terme_I  [fweight=`mode'_val], det 	
+	sum terme_I  [fweight=val], det 	
 	generate terme_I_mp = r(mean)
 	generate terme_I_med = r(p50)
 	generate terme_I_et=r(sd)
@@ -914,10 +914,10 @@ if `result_reg' ==0 {
 if `result_reg' !=0 { {
 		generate rc=`result_reg' 
 		keep if _n==1
-		keep sector year mode rc terme_A terme_I `mode'_val
+		keep sector year mode rc terme_A terme_I val
 		replace terme_A=.
 		replace terme_I=.
-		replace `mode'_val=.
+		replace val=.
 }
 
 save "$stock_results/results_estimTC_`year'_sect`class'_prod`preci'_`mode'", replace
