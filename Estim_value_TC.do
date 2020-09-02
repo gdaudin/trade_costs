@@ -920,7 +920,7 @@ if `result_reg' !=0 { {
 		replace val=.
 }
 
-save "$stock_results/results_estimTC_`year'_sect`class'_prod`preci'_`mode'", replace
+save "$stock_results/results_estimTC_`year'_prod`class'_sect`preci'_`mode'", replace
 
 
 
@@ -928,7 +928,7 @@ end
 
 
 *test
-prep_reg base_hs10_newyears 2005 10 3 air
+*prep_reg base_hs10_newyears 2005 10 3 air
 **sans collapse -- 175 secteurs, 810,822 observations : trop long. Après 72h, je n’en suis qu’à 11 itérations (sur la petite machine)
 **avec collapse -- 174 secteurs,  84,275 observations (seulement !?) -- Non, en fait c’est si le collapse est sur sector en 5 digits
 **avec collapse -- 174 secteurs,  171,179 observations (seulement aussi, d’ailleurs : j’ai vérifié et c’est bien cela. Il y a beaucoup de différences dans les "cards" et "district of entry". Sans duplicates, c’est duplicates report mode hs iso_o dist_entry cards dist_unlad rate_prov cty_subco

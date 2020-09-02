@@ -1,4 +1,5 @@
 *** Programme de comparaison des résultats entre notre façon d'estimer les transport costs, et celle proposée par le référé 1
+*** Étendu à d’autres comparaisons
 *** Juillet 2020
 
 
@@ -7,7 +8,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_baseline_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/baseline"
 	global dir_referee1 "~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1"
 	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
-	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaison_baseline_referee1"
+	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
 	global dir_temp ~/Downloads/temp_stata
 	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/"
 	
@@ -122,6 +123,8 @@ args year mode method1 method2
 
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
+	rename `mode'_val val
+	drop *_val
 }	
 	
 if "`method1'"=="baselinesamplereferee1" {
@@ -134,10 +137,16 @@ if "`method1'"=="baselinesamplereferee1" {
 rename product sector
 bys iso_o sector : keep if _n==1
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
+
 save "$dir_temp/`method1'_`method2'.dta", replace
 
 if "`method2'"=="referee1" {
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+}
+
+if "`method2'"=="baseline10" {
+	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
+	generate beta = -(terme_A/(terme_I+terme_A-1))
 }
 
 if "`method2'"=="IV_referee1_panel" {
@@ -169,7 +178,9 @@ graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
 graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.png", replace
 
 if "`method1'"=="baseline" {
-	use "$dir_baseline_results/results_estimTC_`year'prod5_sect3_`mode'.dta", clear
+	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
+	rename `mode'_val val
+	drop *_val	
 }	
 
 if "`method1'"=="baselinesamplereferee1" {
@@ -179,12 +190,12 @@ if "`method1'"=="baselinesamplereferee1" {
 
 
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
-egen couverture_baseline=total(`mode'_val)
+egen couverture_baseline=total(val)
 gen Nb_baseline=_N
 summarize beta_baseline, det
 generate beta_baseline_mean = r(mean)
 generate beta_baseline_med = r(p50)
-summarize beta_baseline [fweight=`mode'_val], det
+summarize beta_baseline [fweight=val], det
 generate beta_baseline_mean_pond = r(mean)
 generate beta_baseline_med_pond = r(p50)
 generate blif = iso_o+product
@@ -217,16 +228,21 @@ if "`method2'"=="IV_referee1_yearly" {
 	generate beta = -(terme_A/(terme_I+terme_A-1))
 	rename product sector /*Product is in fact 3 digits*/
 	drop _merge
-}	
+}
+
+if "`method2'"=="baseline10" {
+	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
+	generate beta = -(terme_A/(terme_I+terme_A-1))
+}
 		
 	
 
-egen couverture_`method2'=total(`mode'_val)
+egen couverture_`method2'=total(val)
 gen Nb_referee1=_N
 summarize beta, det
 generate beta_mean = r(mean)
 generate beta_med = r(p50)
-summarize beta [fweight=`mode'_val], det
+summarize beta [fweight=val], det
 generate beta_mean_pond = r(mean)
 generate beta_med_pond = r(p50)
 generate blif = iso_o+sector
@@ -288,8 +304,9 @@ graph export "$dir_comparaison/scatter_comparaison_by_type_`method1'_`method2'.p
 end
 
 
-*********
+*****************************************************************************************
 ***on lance les comparaisons
+*****************************************************************************************
 
 /* method1 peut être "baseline" (nos benchmark results) 
 ou "baselinesamplereferee1" = notre methode sur le sample issu de la méthode du référé 1
@@ -300,22 +317,26 @@ ou "IV_referee1_yearly" (??)
 
 */ 
 
-global method1 baseline
-global method2 referee1
+*global method1 baseline
+*global method2 referee1
 
 *global method2 IV_referee1_panel
 *global method2 IV_referee1_yearly
 
 ******
 
+global method1 baseline
+global method2 baseline10
 
+**Où "baseline 10" c’est celle avec les produits à 10 digits.
 
 
 
 *capture erase "$dir_comparaison/stats_comp_baseline_referee1.dta"
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
-foreach year of num 2005/2013 {
+*foreach year of num 2005/2013 {
+foreach year of num 2005/2012 {
 	foreach mode in air ves {
 	comparaison_by_year_mode `year' `mode' $method1 $method2
 	}
