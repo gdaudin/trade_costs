@@ -278,11 +278,11 @@ gen dls_tariff = d.ls_tariff
 
 gen s_tariff= duty_rate
 
-gen ds_tariff = d.s_tariff
+gen s_tariff = d.s_tariff
 
-gen growth_tariff = ds_tariff/l.s_tariff
+gen growth_tariff = s_tariff/l.s_tariff
 
-gen ds_tariff_lise = ds_tariff/(1+l.s_tariff)
+gen s_tariff_lise = s_tariff/(1+l.s_tariff)
 
 gen llprix_fob_wgt =  l.lprix_fob_wgt
 *(1,073,692 missing values generated)) 
@@ -333,14 +333,14 @@ forvalues x=2006(1)2013{
 	keep if year==`x'
 	keep if mode=="air"
 	
-reghdfe lprix_fob_wgt llprix_fob_wgt growth_tariff if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
+reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(variancegrowth_tariff)
+gen sd_tariff = sqrt(variances_tariff)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
 
@@ -357,7 +357,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
-gen t_student_tariff= betagrowth_tariff/sd_tariff 
+gen t_student_tariff= betas_tariff/sd_tariff 
 
 
 
@@ -365,7 +365,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test growth_tariff=0 
+test s_tariff=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -373,11 +373,11 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betagrowth_tariff~=.
+keep if betas_tariff~=.
 
-keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betagrowth_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-*keep year mode betagrowth_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betagrowth_tariff beta_FS_tariff
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betas_tariff beta_FS_tariff
 rename betallprix_fob_wgt beta_lag_price
 	
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_air.dta", replace
@@ -427,13 +427,13 @@ forvalues x=2006(1)2013{
 	
 
 	
-reghdfe lprix_fob_wgt llprix_fob_wgt growth_tariff if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
+reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(variancegrowth_tariff)
+gen sd_tariff = sqrt(variances_tariff)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
 
@@ -450,7 +450,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
-gen t_student_tariff= betagrowth_tariff/sd_tariff 
+gen t_student_tariff= betas_tariff/sd_tariff 
 
 
 
@@ -458,7 +458,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test growth_tariff=0 
+test s_tariff=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -466,10 +466,10 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betagrowth_tariff~=.
-keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betagrowth_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-*keep year mode betagrowth_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betagrowth_tariff beta_FS_tariff
+keep if betas_tariff~=.
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betas_tariff beta_FS_tariff
 rename betallprix_fob_wgt beta_lag_price
 
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_ves.dta", replace
@@ -544,14 +544,14 @@ forvalues x=2006(1)2013{
 	use "$dir/hummels_FS_HS10.dta", clear
 	keep if year==`x'
 	
-reghdfe lprix_fob_wgt llprix_fob_wgt growth_tariff, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
+reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(variancegrowth_tariff)
+gen sd_tariff = sqrt(variances_tariff)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
 
@@ -568,7 +568,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
-gen t_student_tariff= betagrowth_tariff/sd_tariff 
+gen t_student_tariff= betas_tariff/sd_tariff 
 
 
 
@@ -576,7 +576,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test growth_tariff=0 
+test s_tariff=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -584,11 +584,11 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betagrowth_tariff~=.
+keep if betas_tariff~=.
 
-keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betagrowth_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-*keep year mode betagrowth_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betagrowth_tariff beta_FS_tariff
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betas_tariff beta_FS_tariff
 rename betallprix_fob_wgt beta_lag_price
 	
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta", replace
