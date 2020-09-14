@@ -143,6 +143,7 @@ erase temp_hummels_tra.dta
 
 method2 peut être 
 - "referee1" (methode OLS référé 1), s=3 k=10
+- "baseline10" (nos benchmark results en s=3 digits, k=10 digits)
 - "IV_referee1_panel" (??)
 - "IV_referee1_yearly" (??)
 
@@ -184,12 +185,12 @@ if "`method2'"=="referee1" {
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS10_`mode'.dta", clear
 }
 
-/*
+
 if "`method2'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
 }
-*/
+
 
 if "`method2'"=="IV_referee1_panel" {
 	use "$dir_results/IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
@@ -301,12 +302,12 @@ if "`method2'"=="IV_referee1_yearly" {
 	drop _merge
 }
 
-/*
+
 if "`method2'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
 }
-*/	
+	
 	
 
 egen couverture_`method2'=total(val)
@@ -347,6 +348,7 @@ capture program drop comparaison_graph
 program comparaison_graph
 args method1 method2
 
+
 use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
 
 
@@ -365,7 +367,22 @@ keep year mode beta*
 reshape long beta_, i(year mode) j(type) string
 gen method="`method2'"
 replace method="`method1'" if strmatch(type,"`method1'*")!=0
+
+* faire les différents cas possibles
+if method=="baseline" {
 replace type = substr(type, 10,.) if strmatch(type,"`method1'*")!=0
+}
+
+if method=="baseline10" {
+replace type = substr(type, 12,.) if strmatch(type,"`method1'*")!=0
+}
+
+if method=="baselinesamplereferee1" {
+replace type = substr(type, 24,.) if strmatch(type,"`method1'*")!=0
+}
+
+
+
 reshape wide beta_,i(year mode type) j(method) string
 
 
@@ -388,16 +405,16 @@ end
 *****************************************************************************************
 
 
-*global method1 baseline
-*global method2 referee1
-
-*global method2 IV_referee1_panel
-*global method2 IV_referee1_yearly
+global method1 baseline
+*global method1 baseline10
 
 ******
 
-global method1 baseline10
-global method2 referee1
+
+*global method2 IV_referee1_panel
+*global method2 IV_referee1_yearly
+global method2 baseline10
+*global method2 referee1
 
 **Où "baseline 10" c’est celle avec les produits à 10 digits.
 
