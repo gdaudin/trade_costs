@@ -251,11 +251,11 @@ egen couverture_`method1'=total(val)
 
 gen Nb_baseline=_N
 summarize beta_baseline, det
-generate beta_baseline_mean = r(mean)
-generate beta_baseline_med = r(p50)
+generate beta_`method1'_mean = r(mean)
+generate beta_`method1'_med = r(p50)
 summarize beta_baseline [fweight=val], det
-generate beta_baseline_mean_pond = r(mean)
-generate beta_baseline_med_pond = r(p50)
+generate beta_`method1'_mean_pond = r(mean)
+generate beta_`method1'_med_pond = r(p50)
 generate blif = iso_o+sector
 quietly levelsof blif
 generate Nb_cx3ds_baseline = r(r)
@@ -342,23 +342,19 @@ save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 end
 
 
-
+*** A FAIRE APRES PGM comparaison_by_year_mode
 capture program drop comparaison_graph
 program comparaison_graph
 args method1 method2
-
-
-local method1 baseline10
-local method2 referee1
 
 use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
 
 
 
-graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baseline_mean) ///
-			 (scatter beta_mean_pond beta_baseline_mean_pond) (lfit beta_mean_pond beta_baseline_mean_pond) ///
-			 (scatter beta_med beta_baseline_med) (lfit beta_med beta_baseline_med) ///
-			 (scatter beta_med_pond beta_baseline_med_pond) (lfit beta_med_pond beta_baseline_med_pond), ///
+graph twoway (scatter beta_mean beta_`method1'_mean) (lfit beta_mean beta_`method1'_mean) ///
+			 (scatter beta_mean_pond beta_`method1'_mean_pond) (lfit beta_mean_pond beta_`method1'_mean_pond) ///
+			 (scatter beta_med beta_`method1'_med) (lfit beta_med beta_`method1'_med) ///
+			 (scatter beta_med_pond beta_`method1'_med_pond) (lfit beta_med_pond beta_`method1'_med_pond), ///
 			 ytitle("`method1'") xtitle("`method2'")
 			 
 graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.png", replace
@@ -372,7 +368,7 @@ replace method="`method1'" if strmatch(type,"`method1'*")!=0
 replace type = substr(type, 10,.) if strmatch(type,"`method1'*")!=0
 reshape wide beta_,i(year mode type) j(method) string
 
-toto
+
 graph twoway (connected beta_`method1' year) (connected beta_`method2' year), by(mode type)
 
 
@@ -427,9 +423,9 @@ label var method2_nbpair_method1 "Covered bilateral trade flows by products by $
 sort mode year
 save "$dir_comparaison/stats_comp_${method1}_$method2.dta", replace
 
-/* Pb sur les graphiques sur baseline10 as methode1
+* Pb sur les graphiques sur baseline10 as methode1
 
 comparaison_graph $method1 $method2
 
-*/
+
 
