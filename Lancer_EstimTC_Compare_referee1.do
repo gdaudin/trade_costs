@@ -2,17 +2,16 @@
 *************************************************
 * Programme Révision JEGeo
 
-*** Trois parties
+*** DEUX PARTIES
 
 *** 1. Construire la base de données identique entre les deux méthodes d'estimation 
 
-*** 2. Lancer les estimations "old method"
+*** 2. Lancer les estimations "old method" sur la base restreinte (celle de la méthode Référé 1)
 
 *	Pour estimer les additive & iceberg trade costs
 * 	Méthode estimation "old" (comme soumission) mais sur base réduite issue méthode référé 1
 
-*** 3. Comparer les résultats
-*** Entre méthode "old" et "referee 1", sur la même base
+*** A ACTUALISER POUR INSERER CONTROLE FINESSE NIVEAU PRODUIT *****
 *
 *	Mars 2020
 * 
@@ -118,6 +117,7 @@ drop _merge
 * on doit logiquement avoir bcp moins d'observations
 save db_samesample_`class'_`preci', replace
 
+*** ACTUALISER POUR HS10 ****
 
 use "$dir_referee1/results_beta_contraint_2005_sitc2_HS8_ves.dta", clear
 
@@ -154,6 +154,8 @@ save db_samesample_`class'_`preci', replace
 forvalues x = 2006(1)2013 {
 
 	foreach z in air ves {
+	
+	*** ACTUALISER POUR HS10 ****
 	
 	use "$dir_referee1/results_beta_contraint_`x'_sitc2_HS8_`z'.dta", clear
 	
@@ -199,12 +201,6 @@ erase temp_hummels_tra.dta
 
 end
 
-******************************************************
-**** PROGRAMME COMPARAISON DES RESULTATS
-******************************************************
-******************************************************
-	
-*Dans .do extérieur (do "$dir_pgms/Comparaison_baseline_referee1.do")
 
 ***********************************************************************
 ***********************************************************************
@@ -262,21 +258,3 @@ log close
 }
 }
 
-
-***********************************************************************
-***** 3. COMPARER LES RESULTATS ***************************************
-***********************************************************************
-
-
-do "$dir_pgms/Comparaison_baseline_referee1.do"
-
-capture erase "$dir_comparaison/stats_comp_baselinesamplereferee1_referee1.dta"
-
-foreach year of num 2005/2013 {
-	foreach mode in air ves {
-	comparaison_by_year_mode `year' `mode' baselinesamplereferee1 referee1
-	}
-}
-
-
-comparaison_graph baselinesamplereferee1 referee1
