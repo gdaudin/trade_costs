@@ -1,9 +1,11 @@
 
-*ssc install reghdfe, replace
-*ssc install estout, replace
-*ssc install ftools, replace
-*ssc install latab, replace
-*ssc install asgen, replace
+/*ssc install reghdfe, replace
+ssc install estout, replace
+ssc install ftools, replace
+ssc install latab, replace
+ssc install asgen, replace
+ssc install _gwtmean, replace
+*/
 
 clear all
 set more off
@@ -14,8 +16,11 @@ if "`c(username)'" =="jerome" {
 }
 
 
+if "`c(username)'" =="coadministrateur" {
 
-
+	global dir "C:\Users\coadministrateur\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev"
+	set maxvar 32000
+}
 
 
 if "`c(username)'" =="hericourt" {
@@ -171,18 +176,47 @@ drop tag
 
 ***1./weighted average pour duty_rate avant par district of entry, car on a besoin d'une moyenne pondérée*** 
 
-sort iso_o year mode hs10 dist_entry 
-bysort iso_o year mode hs10 sitc2 dist_entry : asgen wm_duty_rate = duty_rate, weights(val)
-*bysort iso_o year mode hs10 sitc2 dist_entry : asgen wm_prix_fob_wgt = prix_fob_wgt, weights(val)
+sort iso_o year mode hs10 dist_entry
+bysort iso_o year mode hs10: egen wm_duty_rate = wtmean(duty_rate), weight(val)
+ 
+*bysort iso_o year mode hs10 sitc2: asgen wm_duty_rate = duty_rate, weights(val)
+*bysort iso_o year mode hs10 sitc2: egen wm_duty_rate_bis = wtmean(duty_rate), weight(val)
+*les 2 commandes ci-dessus donnent exactement le même résultat*
 
-bys iso_o year mode hs10 sitc2 dist_entry : egen sum_val=sum(val)
-bys iso_o year mode hs10 sitc2 dist_entry : egen sum_wgt=sum(wgt)
+*bysort iso_o year mode hs10 sitc2 dist_entry : asgen wm_duty_rate = duty_rate, weights(val)
+
+order year mode hs10 sitc2 iso_o wm_* duty_rate
+
+bys iso_o year mode hs10: egen sum_val=sum(val)
+bys iso_o year mode hs10: egen sum_wgt=sum(wgt)
 
 
-collapse (mean) sum* *duty_rate, by(iso_o year mode hs10 sitc2 dist_entry)
-*10,141,169 obs
+collapse (mean) sum* *duty_rate prix_fob_wgt, by(iso_o year mode hs10 sitc2)
+rename prix_fob_wgt prix_fob_unweighted
+*3,023,539 obs
 
-bys iso_o year mode hs10 sitc2 dist_entry : gen prix_fob_wgt = sum_val/sum_wgt
+/*pwcorr wm* duty_rate
+
+             | wm_dut~e duty_r~e
+-------------+------------------
+wm_duty_rate |   1.0000 
+   duty_rate |   0.9936   1.0000 
+   */
+
+
+bys iso_o year mode hs10 sitc2: gen prix_fob_wgt = sum_val/sum_wgt
+
+/*
+
+ pwcorr prix_fob*
+
+             | prix_f~d prix_f~t
+-------------+------------------
+prix_fob_u~d |   1.0000 
+prix_fob_wgt |   0.8786   1.0000 
+
+
+*/
 
 drop duty_rate
 
@@ -200,7 +234,7 @@ use "$dir/hummels_FS_HS10.dta", clear
 
 ***** tariff AVE
 
-bys iso_o mode year hs10 sitc2 dist_entry: gen ls_tariff = ln(0.01+duty_rate)
+bys iso_o mode year hs10 sitc2: gen ls_tariff = ln(0.01+duty_rate)
 label var ls_tariff "ln(0.01+tariff as share of value imported)"
 
 
@@ -213,9 +247,15 @@ gen lprix_fob_wgt= ln(prix_fob_wgt)
 
 gen sitc2_3d= substr(sitc2, 1, 3)
 
+*****on crée le niveau sectoriel 5 digit***
+
+gen sitc2_5d= substr(sitc2, 1, 5)
+
 ****On crée tous les groupes utiles pourles FE
 
 egen sector_3d=group(sitc2_3d)
+
+egen sector_5d=group(sitc2_5d)
 
 egen cntry=group(iso_o)
 
@@ -223,7 +263,7 @@ egen cntry=group(iso_o)
 
 *egen dist=group(dist_entry)
 
-egen panel=group(iso_o mode hs10 sitc2 dist_entry)
+egen panel=group(iso_o mode hs10 sitc2)
 
 drop if panel==.
 drop if sector_3d==.
@@ -238,15 +278,14 @@ gen dls_tariff = d.ls_tariff
 
 gen s_tariff= duty_rate
 
-gen ds_tariff = d.s_tariff
+gen s_tariff = d.s_tariff
 
-gen growth_tariff = ds_tariff/l.s_tariff
+gen growth_tariff = s_tariff/l.s_tariff
 
-gen ds_tariff_lise = ds_tariff/(1+l.s_tariff)
+gen s_tariff_lise = s_tariff/(1+l.s_tariff)
 
 gen llprix_fob_wgt =  l.lprix_fob_wgt
-*(4,607,912 missing values generated) everywhere
-
+*(1,073,692 missing values generated)) 
 
 
 *order year iso_o hs3 hs5 hs10 mode dist_entry lprix_fob dlprix_fob ls_tariff dls_tariff
@@ -270,7 +309,7 @@ use "$dir/hummels_FS_HS10.dta", clear
 cd "$dir/results/IV_referee1_yearly"
 
 keep if llprix_fob_wgt~=.
-**(4,607,912 observations deleted)
+**((1,073,692 observations deleted)
 
 
 capture log close
@@ -294,14 +333,14 @@ forvalues x=2006(1)2013{
 	keep if year==`x'
 	keep if mode=="air"
 	
-reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
+reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(varianceds_tariff_lise)
+gen sd_tariff = sqrt(variances_tariff)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
 
@@ -318,7 +357,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
-gen t_student_tariff= betads_tariff_lise/sd_tariff 
+gen t_student_tariff= betas_tariff/sd_tariff 
 
 
 
@@ -326,7 +365,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test ds_tariff_lise=0 
+test s_tariff=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -334,11 +373,11 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betads_tariff_lise~=.
+keep if betas_tariff~=.
 
-keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betads_tariff_lise sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-*keep year mode betads_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betads_tariff_lise beta_FS_tariff
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betas_tariff beta_FS_tariff
 rename betallprix_fob_wgt beta_lag_price
 	
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_air.dta", replace
@@ -388,13 +427,13 @@ forvalues x=2006(1)2013{
 	
 
 	
-reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (cluster cntry) resid
+reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(varianceds_tariff_lise)
+gen sd_tariff = sqrt(variances_tariff)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
 
@@ -411,7 +450,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
-gen t_student_tariff= betads_tariff_lise/sd_tariff 
+gen t_student_tariff= betas_tariff/sd_tariff 
 
 
 
@@ -419,7 +458,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test ds_tariff_lise=0 
+test s_tariff=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -427,10 +466,10 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betads_tariff_lise~=.
-keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betads_tariff_lise sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-*keep year mode betads_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betads_tariff_lise beta_FS_tariff
+keep if betas_tariff~=.
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betas_tariff beta_FS_tariff
 rename betallprix_fob_wgt beta_lag_price
 
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_ves.dta", replace
@@ -495,6 +534,118 @@ graph save graph_tariff_yearly_ves, replace
 
 erase "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta"
 erase "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta"
+
+
+**********************************
+**********Both modes**************
+**********************************
+
+forvalues x=2006(1)2013{
+	use "$dir/hummels_FS_HS10.dta", clear
+	keep if year==`x'
+	
+reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
+
+mat beta=e(b)
+svmat double beta, names(matcol)
+mat variance=e(V)
+
+svmat double variance, names(matcol)
+gen sd_tariff = sqrt(variances_tariff)
+gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
+drop *cons 
+
+mat r_square= e(r2)
+svmat double r_square, names(matcol)
+rename r_squarec1 r_square
+
+mat adj_r_square= e(r2_a)
+svmat double adj_r_square, names(matcol)
+rename adj_r_squarec1 adj_r_square
+
+mat r_square_within= e(r2_within)
+svmat double r_square_within, names(matcol)
+rename r_square_withinc1 r_square_within
+
+gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
+gen t_student_tariff= betas_tariff/sd_tariff 
+
+
+
+mat F_stat=e(F) 
+svmat double F_stat, names(matcol)
+rename F_statc1 F_stat
+
+test s_tariff=0 
+
+mat F_stat_tariff=r(F) 
+
+svmat double F_stat_tariff, names(matcol)
+rename F_stat_tariffc1 F_stat_tariff
+
+
+keep if betas_tariff~=.
+
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betas_tariff beta_FS_tariff
+rename betallprix_fob_wgt beta_lag_price
+	
+save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta", replace
+
+}
+
+
+
+
+use "$dir/results/IV_referee1_yearly/FS_parameters_2006_both.dta", replace
+save "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta", replace
+
+
+sort year 
+
+*OK jusque là
+
+forvalues x=2007(1)2013{
+
+	use "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta", clear
+	sort year mode
+	append using "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta"
+	save "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta", replace
+}
+
+
+
+
+****a few useful descriptive statistics*****
+tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+
+****a few useful descriptive statistics in LaTex Tables*****
+latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+
+
+
+scatter beta_lag_price year
+graph save graph_lag_yearly_both, replace
+
+scatter beta_FS_tariff sd_tariff year
+graph save graph_tariff_yearly_both, replace
+
+
+
+
+sort year 
+
+*OK jusque là
+
+
+forvalues x=2006(1)2013 {
+
+	erase "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta"
+}
+
+
+
 capture log close
 stop 
 
