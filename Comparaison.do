@@ -16,12 +16,33 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 
-*** Juillet 2020: Lise, je mets tout sur mon OneDrive
+*** Juillet 2020: Lise, tout sur mon OneDrive
 
 /* Fixe Lise P112*/
 if "`c(hostname)'" =="LAB0271A" {
 	 
-	/*  A FAIRE */ 
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	 
+	 
+	 
 	}
 
 /* Nouveau portable Lise */
@@ -113,6 +134,21 @@ erase temp_hummels_tra.dta
 ** Faire tourner sur toutes les années /mode
 
 
+
+/* method1 peut être
+
+- "baseline" (nos benchmark results en s=3 digits, k=5 digits)
+- "baseline10" (nos benchmark results en s=3 digits, k=10 digits)
+- "baselinesamplereferee1" = notre methode sur le sample issu de la méthode du référé 1, en s=3, k=5 ou 10 (A ACTUALISER)
+
+method2 peut être 
+- "referee1" (methode OLS référé 1), s=3 k=10
+- "baseline10" (nos benchmark results en s=3 digits, k=10 digits)
+- "IV_referee1_panel" (??)
+- "IV_referee1_yearly" (??)
+
+*/ 
+
 	
 ******************************************************
 ******************************************************
@@ -125,29 +161,36 @@ if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
 	rename `mode'_val val
 	drop *_val
+	rename product sector
 }	
 	
 if "`method1'"=="baselinesamplereferee1" {
 	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	
 }	
 	
-
+if "`method1'"=="baseline10" {
+	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
+}	
 		
 	
-rename product sector
 bys iso_o sector : keep if _n==1
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
 
 save "$dir_temp/`method1'_`method2'.dta", replace
 
 if "`method2'"=="referee1" {
-	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+	*use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+	*** Actualisé EN HS10
+	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS10_`mode'.dta", clear
 }
+
 
 if "`method2'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
 }
+
 
 if "`method2'"=="IV_referee1_panel" {
 	use "$dir_results/IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
@@ -172,48 +215,77 @@ merge 1:1 iso_o sector using "$dir_temp/`method1'_`method2'.dta"
 
 erase "$dir_temp/`method1'_`method2'.dta"
 
+
+*** Comparaison des beta
 graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
 	title("For `year', `mode'")
 
 graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.png", replace
 
+
+
+*** Statistiques
+
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
 	rename `mode'_val val
 	drop *_val	
+		
+	rename product sector 
 }	
+
 
 if "`method1'"=="baselinesamplereferee1" {
 	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	** A ACTUALISER
+}	
+	
+if "`method1'"=="baseline10" {
+	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
+
 }	
 	
 
 
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
-egen couverture_baseline=total(val)
+egen couverture_`method1'=total(val)
+
 gen Nb_baseline=_N
 summarize beta_baseline, det
-generate beta_baseline_mean = r(mean)
-generate beta_baseline_med = r(p50)
+generate beta_`method1'_mean = r(mean)
+generate beta_`method1'_med = r(p50)
 summarize beta_baseline [fweight=val], det
-generate beta_baseline_mean_pond = r(mean)
-generate beta_baseline_med_pond = r(p50)
-generate blif = iso_o+product
+generate beta_`method1'_mean_pond = r(mean)
+generate beta_`method1'_med_pond = r(p50)
+generate blif = iso_o+sector
 quietly levelsof blif
 generate Nb_cx3ds_baseline = r(r)
-label var Nb_cx3ds_baseline "Number of country x 3 digit sector included in the baseline"
+
+
+label var Nb_cx3ds_baseline "Number of country x 3 digit sector included in the `method1'"
+label var couverture_`method1' "Total value of trade flows covered in the `method1'"
+
 drop blif
 
-keep mode couverture_baseline-Nb_cx3ds_baseline
+keep mode couverture_`method1'-Nb_cx3ds_baseline
 keep if _n==1
 gen year=`year'
+gen methode1 = "`method1'"
 
 capture append using "$dir_comparaison/stats_comp_`method1'_`method2'.dta"
 
+
 save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 
+
 if "`method2'"=="referee1" {
-	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+	*use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
+	* Actualisé en HS 10, sept. 2020
+	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS10_`mode'.dta", clear
+	
+	rename `mode'_val val
+	*drop *_val
+
 }
 
 if "`method2'"=="IV_referee1_panel" {
@@ -230,11 +302,12 @@ if "`method2'"=="IV_referee1_yearly" {
 	drop _merge
 }
 
+
 if "`method2'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
 }
-		
+	
 	
 
 egen couverture_`method2'=total(val)
@@ -249,6 +322,7 @@ generate blif = iso_o+sector
 quietly levelsof blif
 generate Nb_cx3ds = r(r)
 label var Nb_cx3ds "Number of country x 3 digit sector included in `method2' test"
+label var couverture_`method2' "Total value of trade flows covered in `method2' test"
 drop blif
 
 
@@ -257,36 +331,58 @@ keep if _n==1
 gen year=`year'
 gen mode="`mode'"
 
+gen methode2 = "`method2'"
+
 
 merge 1:1 year mode using "$dir_comparaison/stats_comp_`method1'_`method2'.dta"
 drop _merge
+
 
 save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 
 end
 
 
-
+*** A FAIRE APRES PGM comparaison_by_year_mode
 capture program drop comparaison_graph
 program comparaison_graph
 args method1 method2
 
+
 use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
 
-graph twoway (scatter beta_mean beta_baseline_mean) (lfit beta_mean beta_baseline_mean) ///
-			 (scatter beta_mean_pond beta_baseline_mean_pond) (lfit beta_mean_pond beta_baseline_mean_pond) ///
-			 (scatter beta_med beta_baseline_med) (lfit beta_med beta_baseline_med) ///
-			 (scatter beta_med_pond beta_baseline_med_pond) (lfit beta_med_pond beta_baseline_med_pond), ///
-			 ytitle("baseline") xtitle("referee1")
+
+
+graph twoway (scatter beta_mean beta_`method1'_mean) (lfit beta_mean beta_`method1'_mean) ///
+			 (scatter beta_mean_pond beta_`method1'_mean_pond) (lfit beta_mean_pond beta_`method1'_mean_pond) ///
+			 (scatter beta_med beta_`method1'_med) (lfit beta_med beta_`method1'_med) ///
+			 (scatter beta_med_pond beta_`method1'_med_pond) (lfit beta_med_pond beta_`method1'_med_pond), ///
+			 ytitle("`method1'") xtitle("`method2'")
 			 
 graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.png", replace
 
 
-keep year mode beta*
+keep year mode beta* 
+
 reshape long beta_, i(year mode) j(type) string
 gen method="`method2'"
 replace method="`method1'" if strmatch(type,"`method1'*")!=0
+
+* faire les différents cas possibles
+if method=="baseline" {
 replace type = substr(type, 10,.) if strmatch(type,"`method1'*")!=0
+}
+
+if method=="baseline10" {
+replace type = substr(type, 12,.) if strmatch(type,"`method1'*")!=0
+}
+
+if method=="baselinesamplereferee1" {
+replace type = substr(type, 24,.) if strmatch(type,"`method1'*")!=0
+}
+
+
+
 reshape wide beta_,i(year mode type) j(method) string
 
 
@@ -308,25 +404,17 @@ end
 ***on lance les comparaisons
 *****************************************************************************************
 
-/* method1 peut être "baseline" (nos benchmark results) 
-ou "baselinesamplereferee1" = notre methode sur le sample issu de la méthode du référé 1
 
-method2 peut être "referee1" (methode OLS référé 1)
-ou "IV_referee1_panel" (??)
-ou "IV_referee1_yearly" (??)
-
-*/ 
-
-*global method1 baseline
-*global method2 referee1
-
-*global method2 IV_referee1_panel
-*global method2 IV_referee1_yearly
+global method1 baseline
+*global method1 baseline10
 
 ******
 
-global method1 baseline
+
+*global method2 IV_referee1_panel
+*global method2 IV_referee1_yearly
 global method2 baseline10
+*global method2 referee1
 
 **Où "baseline 10" c’est celle avec les produits à 10 digits.
 
@@ -347,16 +435,14 @@ foreach year of num 2005/2012 {
 use "$dir_comparaison/stats_comp_${method1}_$method2.dta", clear
 gen method2_value_method1=couverture_$method2/couverture_$method1
 label var method2_value_method1 "Covered value of trade by $method2 as a share of $method1"
-gen method2_nbpair_method1=Nb_cx3ds/Nb_cx3ds_$method1
+gen method2_nbpair_method1=Nb_cx3ds/Nb_cx3ds_baseline
 label var method2_nbpair_method1 "Covered bilateral trade flows by products by $method2 as a share of $method1"
 sort mode year
 save "$dir_comparaison/stats_comp_${method1}_$method2.dta", replace
 
+* Pb sur les graphiques sur baseline10 as methode1
 
-
-
-/*
 comparaison_graph $method1 $method2
 
-*/
+
 

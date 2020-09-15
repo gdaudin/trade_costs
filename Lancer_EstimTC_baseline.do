@@ -43,7 +43,7 @@ if "`c(hostname)'" =="MSOP112C" {
 
 
 set more off
-local mode ves air
+local mode /*ves*/ air
 *local year 1974 
 
 do "$dir_pgms/Estim_value_TC.do"
@@ -59,17 +59,17 @@ do "$dir_pgms/Estim_value_TC.do"
 **** toutes les années récentes (2005-2013)
 *******************************************************
 
+/*
+foreach m in `mode' {
 
-foreach x in `mode' {
-
-	forvalues z = 1979(1)2004 /*1974(1)2013*/ {
+	forvalues y = 2013/2013 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
 		capture log close
-		log using hummels_3digits_complet_`z'_`x', replace
+		log using log_prep_reg_base_hs10_newyears_`y'_10_3_`m', replace
 		
-		prep_reg hummels_tra `z' sitc2 3 `x'
+		if `y' !=2005 | "`m'"!="air" prep_reg base_hs10_newyears `y' 10 3 `m'
 		
 		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
@@ -78,28 +78,28 @@ foreach x in `mode' {
 	
 	}
 }
-
+*/
 
 
 
 ********4 digits
 
 set more off
-local mode air ves
-local year 1974 1977 1981 1985 1989 1993 1997 2001 /*2005 2009 2013*/
-* attention pb en 1989 air il faut passer à 300 itérations
+local mode air ves /*ves*/
+local year /*1974 1977 1981 1985 1989 1993 1997 2001*/ 2005 2009 2013
+* attention pb en 1989 air il faut passer à 300 itérations pour 5/3
 
 
-foreach x in `mode' {
+foreach m in `mode' {
 	
-	foreach z in `year' {
+	foreach y in `year' {
 			
 		capture log close
-		log using hummels_4digits_complet_`z'_`x', replace
+		log using log_prep_reg_base_hs10_newyears_`y'_10_4_`m', replace
 		
-		*prep_reg `z' sitc2 4 `x'
+		*prep_reg `y' sitc2 4 `m'
 		
-		prep_reg hummels_tra `z' sitc2 4 `x'
+		prep_reg base_hs10_newyears `y' 10 4 `m'
 		
 		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
