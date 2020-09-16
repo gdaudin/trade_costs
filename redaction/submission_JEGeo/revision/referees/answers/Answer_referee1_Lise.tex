@@ -118,12 +118,12 @@ equations refer to the revised version.
 
 \begin{itemize}
 \item Based on your comment 1.2 (\textit{The aggregation problem}), the benchmark set-up now retains $s=3$ and $k=10$ for the industry/product aggregation levels respectively. It is true that the original annual Census data reports trade at the origin country-HS 10 product-district level of aggregation. Our initial choice of retaining $s=3$ at the sectoral level, $k=5$ at the product level was driven by the use of Hummel's dataset available over 1974-2004 with $k=5$ the finest degree of aggregation. We yet agree with the referee that jumping from $k=10$ to $k=5$ digits at the product level is detrimental to our ability to exploit useful variation in the data. In line with the referee's comment, we now run the estimation by considering $k$ at the HS10 classification level, not 5. \textbf{We come back to this point in Section XXX of the letter.}
-    
+
     This has important consequences in terms of database. In the submitted version, we used the original Hummel's database (available on his webpage from 1974 to 2003, which we completed by the US Bureau of census import database over the period 2005-2013. In Hummels' (2007) database, which we use until 2004, the finest degree of classification is at the 5-degree level until 2004. For comparability reasons over time, we have adopted the same degree of classification $k=5$ for the following years (based on the original Census dataset). As a result, in the submitted version, transport costs are estimated at the 3-digit sector level as benchmark estimate, exploiting product heterogeneity at the 5-digit level (for a given origin country, and conditional on year and transport mode).
-    
+
     Switching to $k=10$ as benchmark disaggregation level for the product dimension requires to resort on US Census dataset only. As first step, we have re-run the estimation over the years for which we already had the data (2005-2013). In parallel, we have bought older years from the Census bureau, as well as the more recent years 2014-2019. However, the Census bureau can provide data disaggregated at the $k=10$ product level only starting in 1989. This deprives us from the very first years 1974-1988. For this period, we can only resort on Hummel's dataset, with $k=5$ the finest product level category. This notably induces us to maintain $s=3$ as the benchmark disaggregation level for the sectoral dimension for the whole period. This allows us to preserve (as far as possible) the largest time coverage - even though switching from $s=3, k=5$ (1974-1988) to $s=3, k=10$) (1989-2019) undoubtedly constitutes a significant break. \textbf{What do we do with that?}
-    
-    
+
+
 
 \item Based on your comment 1.1 (\textit{The aggregation problem}), the benchmark regression (non-linear least squares) is now completed by a two-stage procedure, where the fas price is instrumented by tax duties and the lag price \textbf{(See Section XXX).}
 
@@ -162,9 +162,9 @@ is rather detrimental in my opinion.}
 The three points raised by the referee indeed deserve careful consideration.
 
 \paragraph{(i) On the assumptions underlining our empirical approach}
-Our main empirical equation and its underlying assumptions regarding the separability of transport costs between their country- and product-level components draw on the one proposed by Irarrazabal, Moxnes and Opromolla in the Review of Economics and Statistics (2015) to estimate the share of additive costs in a firm-level context. It relies on a simple theoretical framework with minimal assumptions, and is compatible with most approaches within the so-called category of ``New Trade Theories''. 
+Our main empirical equation and its underlying assumptions regarding the separability of transport costs between their country- and product-level components draw on the one proposed by Irarrazabal, Moxnes and Opromolla in the Review of Economics and Statistics (2015) to estimate the share of additive costs in a firm-level context. It relies on a simple theoretical framework with minimal assumptions, and is compatible with most approaches within the so-called category of ``New Trade Theories''.
 
-Further, we already provide a robustness check for this separative assumption, in Section XXX of the paper (\textbf{Table 2, submitted version}). We check the robustness of our results to the separability assumption by re-running the estimation without the separability assumption. This comes at the cost of a substantial increase in the number of fixed effects to include in the regression. Based on the numbers of countries and sectors reported in \textbf{Table 1 of the submitted version} (188 countries, 230 3-digit sectors), it would mean including 86,480 fixed effects ($188\times230\times2$ for the two additive and multiplicative costs) rather than ``only'' 836 ($(188+230)\times 2$). This is not tractable computationally. For this reason, we have decided to run the robustness check on a reduced sample. If it is smaller in terms of observations (2,381 for Air, 2,798 for Vessel on average over the period 1974-2013, vs around 29,000 on the complete sample, see Table 1 ), it yet remains quite large in terms of trade coverage, as the selected countries and sectors (at the 3-digit level) constitute 80\% of the total value of flows (on a yearly basis). As we conclude at the end of Section XXX , whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs are very similar whether estimated under the separability assumption or not. Given that the restricted sample covers 80\% of the total trade flows of the US economy, we hope to convince you that this result can be extended to the whole dataset. 
+Further, we already provide a robustness check for this separative assumption, in Section XXX of the paper (\textbf{Table 2, submitted version}). We check the robustness of our results to the separability assumption by re-running the estimation without the separability assumption. This comes at the cost of a substantial increase in the number of fixed effects to include in the regression. Based on the numbers of countries and sectors reported in \textbf{Table 1 of the submitted version} (188 countries, 230 3-digit sectors), it would mean including 86,480 fixed effects ($188\times230\times2$ for the two additive and multiplicative costs) rather than ``only'' 836 ($(188+230)\times 2$). This is not tractable computationally. For this reason, we have decided to run the robustness check on a reduced sample. If it is smaller in terms of observations (2,381 for Air, 2,798 for Vessel on average over the period 1974-2013, vs around 29,000 on the complete sample, see Table 1 ), it yet remains quite large in terms of trade coverage, as the selected countries and sectors (at the 3-digit level) constitute 80\% of the total value of flows (on a yearly basis). As we conclude at the end of Section XXX , whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs are very similar whether estimated under the separability assumption or not. Given that the restricted sample covers 80\% of the total trade flows of the US economy, we hope to convince you that this result can be extended to the whole dataset.
 
 
 \paragraph{(ii) On the use of non-linear least squares (NLS)}
@@ -204,16 +204,14 @@ district-of-entry variation in $f_{ik}$ and $p_{ik}$. Estimating the above equat
 obviously require that the authors do not aggregate up the raw Census data
 across all districts and all 10-digit products pertaining to the same 5-digit category.}
 
-\textit{The first advantage of this so-called Hummel's Approach is that the above
-regression can be estimated separately for various country-industry pairs, without
-imposing Assumptions (a) $\tau_{ik} = \tau_i\tau_{k}$, and (b) $t_{ik} = t_i+ t_{k}$.}
 
+The estimation strategy suggested by the referee starts from Equation (\ref{eq:Hummels}) linking transport costs and unit prices as assumed in Hummels (2007). As shown in Subsection (\ref{ssec:interpret_beta}), the elasticity of transport costs to unit prices $\beta_{ik}$ (in absolute value) also corresponds to the share of additive costs in total transport costs. The share of additive costs can hence be uncovered by regressing transport costs on unit (ie, fas) prices. Specifically, the referee suggests to run the estimation based on Equation (\ref{eq:estimation_ref1}).
 
-Precisely, by year and transport mode, this implies running the estimation for each country of origin $i$ and each sector $s(k)$ = 3 digit sector, exploiting the variability between sub-sectors at the 10-digit level ($k$) and between ports of entry in the US ($d$). We have implemented the referee's method over the years for which we already have the data, i.e. the years 2005-2013 (already used in the submitted version). 
+Precisely, by year and transport mode, this implies running the estimation for each country of origin $i$ and each sector $s(k)$ = 3 digit sector, exploiting the variability between sub-sectors at the 10-digit level ($k$) and between ports of entry in the US ($d$). We have implemented the referee's method over the years for which we already have the data, i.e. the years 2005-2013 (already used in the submitted version).
 
 Notice that we are aware of the referee's suggestion to run his/her estimation strategy considering sectoral aggregation at the 5-digit level (with $k=10$). We yet keep considering sectors at the 3-digit aggregation level, in view of being able to compare the pros and cons of the referee's method versus ours, including those years for which the finest disaggregation level is $k=5$ (i.e., the original Hummel's dataset \textbf{over 1974-1988, as the US Bureau of census import database starts in 1989.})
 
-Despite its interest, implementing the referee's method uncovered some drawbacks, that in our view, outweighs those of our method (in particular associated with \textit{Assumptions (a) $\tau_{ik} = \tau_i\tau_{k}$, and (b) $t_{ik} = t_i+ t_{k}$.}) We develop our results and conclusion in what follows.
+Despite its interest, implementing the referee's method uncovered some drawbacks, that in our view, outweighs those of our method (in particular associated with \textit{Assumptions (a) $\tau_{ik} = \tau_i\tau_{k}$, and (b) $t_{ik} = t_i+ t_{k}$.}) We develop our results and conclusion by answering each argument made by the referee at a time.
 
 %
 %\paragraph{What we do}
@@ -240,22 +238,25 @@ Despite its interest, implementing the referee's method uncovered some drawbacks
 %Precisely, by year and transport mode, this implies running the estimation for each country of origin $i$ and each sector $s(k)$ = 3 digit sector, exploiting the variability between sub-sectors at the 10 digit level ($k$) and between ports of entry in the US ($d$).\footnote{The referee suggests to run his/her proposed estimation strategy considering sectoral aggregation at the 5-digit level (with $k=10$). We followed his suggestion but considering the 3-digit level. We made this choice in view of being able to compare the pros and cons of the referee's method versus ours. In Hummels' (2007) database, which we use until 2004, the finest degree of classification is at the 5-degree level until 2004. For comparability reasons over time, we adopt the same degree of classification $k=5$ for the following years (based on the original Census dataset). As a result, transport costs are estimated at the 3-digit level as benchmark estimate, exploiting heterogeneity at the 5-digit level (for a given origin country, and conditional on year and transport mode). This has driven us to retain $s=3$ when implementing the referee's method, in view of preserving comparability between both strategies.}
 
 
-\textbf{stop here}
-
-
-
 \paragraph{a) The advantages of the referee's method are not as important as suggested}
+
+
 \begin{itemize}
-\item[Advantage 1]: One is not compelled to assume separability between the country-component and the product-component of transport costs.
-\item[$\Rightarrow$] Answer can be in 2 parts: 1) This is not a strong assumption - better convince him/her: Run the robustness to the separability assumption on a larger sample and show that the estimated $\beta$ is not that different between the two methods. \textbf{Show that this is not a so small sample, and compare it with the sample induced by the referee's method} 2) Compare the estimated $\beta$ between our original method and the referee's one. \
-\textbf{Where are the results comparing the estimates of the $\beta$, in value? I don't find these results anymore...}
-\textbf{GD20200629 -- Voir le plan des do. Pour comparaison scatter-chronology-baselinesamplereferee1-referee1.pdf (sur le même sample))}
+\item \textit{The first advantage of this so-called Hummel's Approach is that the above
+regression can be estimated separately for various country-industry pairs, without
+imposing Assumptions (a) $\tau_{ik} = \tau_i\tau_{k}$, and (b) $t_{ik} = t_i+ t_{k}$.} Our answer is twofold. 
+
+First, the separability assumption does not seem to be a strong assumption. This is based on the conclusion drawn from the robustness check on a reduced sample (in the submitted version, considering $s=3, k=5$, and in the revised version, considering $s=3, k=10$). If it is smaller in terms of observations,\footnote{In the restricted sample, we have around 25 sectors from 14 countries for Air transport, vs 230 sectors from 190 countries in the large sample; and around 50 sectors from 20 countries for Vessel, vs 600 sectors from 190 countries in the complete sample). Given that the reduced sample makes for 80\% of the total value of trade flows, this suggests that the vast majority of US imports comes from a selected range of countries, in a selected range of sectors.} it yet remains quite large in terms of trade coverage, as the selected countries and sectors (at the 3-digit level) constitute 80\% of the total value of flows (on a yearly basis). As we conclude at the end of Section XXX, whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs are very similar whether estimated under the separability assumption or not. Given that the restricted sample covers 80\% of the total trade flows of the US economy, we hope to convince you that this result can be extended to the whole dataset.
 
 
-\item[Advantage 2]: There is a handful of instruments (HS-10 product-specific tariff rates or lagged prices) to instrument fas prices
-\item[$\Rightarrow$] Answer: As exposed below, our strategy of answer has been to treat the two points (estimation strategy / potential endogeneity bias) separately. Since our investigation on the estimation strategy has led us to discard this method as the benchmark one, we need not to instrument fas prices at the HS 10 level, our method featuring a $k=$5-digit classification level. \textbf{However, when run at the HS-5 product level, the IV method does not yield results that are much different from the benchmark OLS results, as shown in Table XXX.}
+Second, the referee's method imposes a drastic selection of countries / sectors to be included in the estimation. Specifically, since the estimation method is run at the sector-origin country level (on top of being year-mode specific), the number of flows within each country-sector pair should be large enough to more than cover the number of $k$- product and $d$- entry port fixed effects. This substantially reduces the number of point estimates, as well as the value of trade flows covered relative to the  benchmark method, as summarized in Table . 
 
-\item[Advantage 3]: A more transparent comparison with Hummel (2007): \textbf{changer la maniere dont on presente en mettant les beta en avant ?}
+
+
+\item \textit{The second advantage is that there is a handful of [] instruments (e.g., HS-10 product-specific tariff rates or lagged prices), which the authors can use to overcome the endogeneity problem.}  We agree with this point, but we can also handle the instrumentation of fas prices at the HS-10 level with our method - which we do in the revised version. We thank the referee for pointing this out.
+
+
+\item \textit{The third advantage is that, by adopting this approach, the comparison between the paper [...] and those in Hummels (2007) would become more transparent.} Again, we deeply thank the referee for  \textbf{changer la maniere dont on presente en mettant les beta en avant ?}
 \end{itemize}
 
 
