@@ -70,7 +70,10 @@ if "`c(hostname)'" =="MSOP112C" {
 
 
 
+set more off
 
+	
+	
 /*
 
 ************Comparaison de base
@@ -157,6 +160,7 @@ capture program drop comparaison_by_year_mode
 program comparaison_by_year_mode
 args year mode method1 method2
 
+
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
 	rename `mode'_val val
@@ -176,6 +180,7 @@ if "`method1'"=="baseline10" {
 	
 bys iso_o sector : keep if _n==1
 generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
+
 
 save "$dir_temp/`method1'_`method2'.dta", replace
 
@@ -207,14 +212,13 @@ if "`method2'"=="IV_referee1_yearly" {
 	drop _merge
 }	
 	
-	
+
 
 bys iso_o sector : keep if _n==1
 
 merge 1:1 iso_o sector using "$dir_temp/`method1'_`method2'.dta"
 
 erase "$dir_temp/`method1'_`method2'.dta"
-
 
 *** Comparaison des beta
 graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
@@ -261,9 +265,11 @@ generate blif = iso_o+sector
 quietly levelsof blif
 generate Nb_cx3ds_baseline = r(r)
 
-
 label var Nb_cx3ds_baseline "Number of country x 3 digit sector included in the `method1'"
 label var couverture_`method1' "Total value of trade flows covered in the `method1'"
+
+** pourquoi ça ne marche plus ??? Nb_cx3ds_baseline est totalement missing??? *** 
+toto
 
 drop blif
 
@@ -271,6 +277,8 @@ keep mode couverture_`method1'-Nb_cx3ds_baseline
 keep if _n==1
 gen year=`year'
 gen methode1 = "`method1'"
+
+
 
 capture append using "$dir_comparaison/stats_comp_`method1'_`method2'.dta"
 
@@ -311,6 +319,24 @@ if "`method2'"=="baseline10" {
 	
 
 egen couverture_`method2'=total(val)
+
+
+egen group_sect=group(sector)
+su group_sect, meanonly	
+gen Nb_sector=r(max)
+
+drop group_sect
+label var Nb_sector "Nb of sectors in `method2'" 
+
+egen group_iso=group(iso_o)
+su group_iso, meanonly	
+gen Nb_iso=r(max)
+
+drop group_iso
+label var Nb_iso "Nb of origin countries in `method2'" 
+
+
+
 gen Nb_referee1=_N
 summarize beta, det
 generate beta_mean = r(mean)
@@ -326,7 +352,7 @@ label var couverture_`method2' "Total value of trade flows covered in `method2' 
 drop blif
 
 
-keep couverture_`method2'-Nb_cx3ds
+keep Nb_iso Nb_sector couverture_`method2'-Nb_cx3ds
 keep if _n==1
 gen year=`year'
 gen mode="`mode'"
@@ -405,16 +431,16 @@ end
 *****************************************************************************************
 
 
-global method1 baseline
-*global method1 baseline10
+*global method1 baseline
+global method1 baseline10
 
 ******
 
 
 *global method2 IV_referee1_panel
 *global method2 IV_referee1_yearly
-global method2 baseline10
-*global method2 referee1
+*global method2 baseline10
+global method2 referee1
 
 **Où "baseline 10" c’est celle avec les produits à 10 digits.
 
@@ -434,11 +460,17 @@ foreach year of num 2005/2012 {
 
 use "$dir_comparaison/stats_comp_${method1}_$method2.dta", clear
 gen method2_value_method1=couverture_$method2/couverture_$method1
-label var method2_value_method1 "Covered value of trade by $method2 as a share of $method1"
+label var method2_value_method1 "Covered value of trade flows by $method2 as a share of $method1"
 gen method2_nbpair_method1=Nb_cx3ds/Nb_cx3ds_baseline
 label var method2_nbpair_method1 "Covered bilateral trade flows by products by $method2 as a share of $method1"
 sort mode year
 save "$dir_comparaison/stats_comp_${method1}_$method2.dta", replace
+
+
+
+cd "$dir_comparaison"
+use stats_comp_${method1}_$method2.dta
+export excel using stats_comp_${method1}_$method2.xls, firstrow(varl) replace
 
 * Pb sur les graphiques sur baseline10 as methode1
 
