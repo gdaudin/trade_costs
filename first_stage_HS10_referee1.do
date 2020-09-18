@@ -48,12 +48,13 @@ drop if duty_rate ==.
 
 rename hs hs10
 drop if hs10==""
+drop if hs6==""
 
 sort mode year sitc2 hs10 iso_o
 order year mode hs* sitc2 iso_o dist* val duty qy1 qy2 prix*
 
 
-************************************************
+/************************************************
 *****test de recalcul du prix_fob***************
 ************************************************
 
@@ -73,7 +74,7 @@ cd "$dir/data"
 
 
 
-
+*/
 
 ***********************************************************************
 **a bit of investigation on the different dimensions of heterogeneity**
@@ -176,8 +177,8 @@ drop tag
 
 ***1./weighted average pour duty_rate avant par district of entry, car on a besoin d'une moyenne pondérée*** 
 
-sort iso_o year mode hs10 dist_entry
-bysort iso_o year mode hs10: egen wm_duty_rate = wtmean(duty_rate), weight(val)
+sort iso_o year mode hs6 dist_entry
+bysort iso_o year mode hs6: egen wm_duty_rate = wtmean(duty_rate), weight(val)
  
 *bysort iso_o year mode hs10 sitc2: asgen wm_duty_rate = duty_rate, weights(val)
 *bysort iso_o year mode hs10 sitc2: egen wm_duty_rate_bis = wtmean(duty_rate), weight(val)
@@ -185,13 +186,13 @@ bysort iso_o year mode hs10: egen wm_duty_rate = wtmean(duty_rate), weight(val)
 
 *bysort iso_o year mode hs10 sitc2 dist_entry : asgen wm_duty_rate = duty_rate, weights(val)
 
-order year mode hs10 sitc2 iso_o wm_* duty_rate
+order year mode hs6 sitc2 iso_o wm_* duty_rate
 
-bys iso_o year mode hs10: egen sum_val=sum(val)
-bys iso_o year mode hs10: egen sum_wgt=sum(wgt)
+bys iso_o year mode hs6: egen sum_val=sum(val)
+bys iso_o year mode hs6: egen sum_wgt=sum(wgt)
 
 
-collapse (mean) sum* *duty_rate prix_fob_wgt, by(iso_o year mode hs10 sitc2)
+collapse (mean) sum* *duty_rate prix_fob_wgt, by(iso_o year mode hs6 sitc2)
 rename prix_fob_wgt prix_fob_unweighted
 *3,023,539 obs
 
@@ -204,7 +205,7 @@ wm_duty_rate |   1.0000
    */
 
 
-bys iso_o year mode hs10 sitc2: gen prix_fob_wgt = sum_val/sum_wgt
+bys iso_o year mode hs6 sitc2: gen prix_fob_wgt = sum_val/sum_wgt
 
 /*
 
@@ -234,7 +235,7 @@ use "$dir/hummels_FS_HS10.dta", clear
 
 ***** tariff AVE
 
-bys iso_o mode year hs10 sitc2: gen ls_tariff = ln(0.01+duty_rate)
+bys iso_o mode year hs6 sitc2: gen ls_tariff = ln(0.01+duty_rate)
 label var ls_tariff "ln(0.01+tariff as share of value imported)"
 
 
@@ -263,7 +264,7 @@ egen cntry=group(iso_o)
 
 *egen dist=group(dist_entry)
 
-egen panel=group(iso_o mode hs10 sitc2)
+egen panel=group(iso_o mode hs6 sitc2)
 
 drop if panel==.
 drop if sector_3d==.
@@ -278,11 +279,11 @@ gen dls_tariff = d.ls_tariff
 
 gen s_tariff= duty_rate
 
-gen s_tariff = d.s_tariff
+gen ds_tariff = d.s_tariff
 
-gen growth_tariff = s_tariff/l.s_tariff
+gen growth_tariff = ds_tariff/l.s_tariff
 
-gen s_tariff_lise = s_tariff/(1+l.s_tariff)
+gen ds_tariff_lise = ds_tariff/(1+l.s_tariff)
 
 gen llprix_fob_wgt =  l.lprix_fob_wgt
 *(1,073,692 missing values generated)) 
@@ -333,14 +334,14 @@ forvalues x=2006(1)2013{
 	keep if year==`x'
 	keep if mode=="air"
 	
-reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
+reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise if mode=="air", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(variances_tariff)
+gen sd_tariff = sqrt(varianceds_tariff_lise)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
 
@@ -357,7 +358,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
-gen t_student_tariff= betas_tariff/sd_tariff 
+gen t_student_tariff= betads_tariff_lise/sd_tariff 
 
 
 
@@ -365,7 +366,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test s_tariff=0 
+test ds_tariff_lise=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -373,11 +374,11 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betas_tariff~=.
+keep if betads_tariff_lise~=.
 
-keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betas_tariff beta_FS_tariff
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betads_tariff_lise sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betads_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betads_tariff_lise beta_Fds_tariff_lise
 rename betallprix_fob_wgt beta_lag_price
 	
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_air.dta", replace
@@ -427,13 +428,13 @@ forvalues x=2006(1)2013{
 	
 
 	
-reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
+reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise if mode=="ves", a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(variances_tariff)
+gen sd_tariff = sqrt(varianceds_tariff_lise)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
 
@@ -450,7 +451,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
-gen t_student_tariff= betas_tariff/sd_tariff 
+gen t_student_tariff= betads_tariff_lise/sd_tariff 
 
 
 
@@ -458,7 +459,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test s_tariff=0 
+test ds_tariff_lise=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -466,10 +467,10 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betas_tariff~=.
-keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betas_tariff beta_FS_tariff
+keep if betads_tariff_lise~=.
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betads_tariff_lise sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betads_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betads_tariff_lise beta_Fds_tariff_lise
 rename betallprix_fob_wgt beta_lag_price
 
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_ves.dta", replace
@@ -505,16 +506,16 @@ forvalues x=2006(1)2013 {
 use "$dir/results/IV_referee1_yearly/FS_parameters_ves_yearly.dta", clear
 append using "$dir/results/IV_referee1_yearly/FS_parameters_air_yearly.dta"
 sort mode year
-order year mode beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+order year mode beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
 save "$dir/results/IV_referee1_yearly/FS_parameters_yearly_HS10.dta",replace
 
 ****a few useful descriptive statistics*****
-tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
-tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
 ****a few useful descriptive statistics in LaTex Tables*****
-latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
-latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="air", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if mode =="ves", s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
 
 
@@ -525,10 +526,10 @@ scatter beta_lag_price year if mode=="ves"
 graph save graph_lag_yearly_ves, replace
 
 
-scatter beta_FS_tariff sd_tariff year if mode=="air"
+scatter beta_Fds_tariff_lise sd_tariff year if mode=="air"
 graph save graph_tariff_yearly_air, replace
 
-scatter beta_FS_tariff sd_tariff year if mode=="ves"
+scatter beta_Fds_tariff_lise sd_tariff year if mode=="ves"
 graph save graph_tariff_yearly_ves, replace
 
 
@@ -544,14 +545,14 @@ forvalues x=2006(1)2013{
 	use "$dir/hummels_FS_HS10.dta", clear
 	keep if year==`x'
 	
-reghdfe lprix_fob_wgt llprix_fob_wgt s_tariff, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
+reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
 mat beta=e(b)
 svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
-gen sd_tariff = sqrt(variances_tariff)
+gen sd_tariff = sqrt(varianceds_tariff_lise)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
 
@@ -568,7 +569,7 @@ svmat double r_square_within, names(matcol)
 rename r_square_withinc1 r_square_within
 
 gen t_student_lag_pfob = betallprix_fob_wgt/sd_lag_prix_fob_wgt
-gen t_student_tariff= betas_tariff/sd_tariff 
+gen t_student_tariff= betads_tariff_lise/sd_tariff 
 
 
 
@@ -576,7 +577,7 @@ mat F_stat=e(F)
 svmat double F_stat, names(matcol)
 rename F_statc1 F_stat
 
-test s_tariff=0 
+test ds_tariff_lise=0 
 
 mat F_stat_tariff=r(F) 
 
@@ -584,11 +585,11 @@ svmat double F_stat_tariff, names(matcol)
 rename F_stat_tariffc1 F_stat_tariff
 
 
-keep if betas_tariff~=.
+keep if betads_tariff_lise~=.
 
-keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betas_tariff sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-*keep year mode betas_tariff sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
-rename betas_tariff beta_FS_tariff
+keep year mode betallprix_fob_wgt sd_lag_prix_fob_wgt t_student_lag_pfob betads_tariff_lise sd_tariff t_student_lag_pfob  t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+*keep year mode betads_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff r_square adj_r_square r_square_within
+rename betads_tariff_lise beta_Fds_tariff_lise
 rename betallprix_fob_wgt beta_lag_price
 	
 save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta", replace
@@ -618,17 +619,17 @@ forvalues x=2007(1)2013{
 
 
 ****a few useful descriptive statistics*****
-tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
 ****a few useful descriptive statistics in LaTex Tables*****
-latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_FS_tariff sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
+latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
 
 
 scatter beta_lag_price year
 graph save graph_lag_yearly_both, replace
 
-scatter beta_FS_tariff sd_tariff year
+scatter beta_Fds_tariff_lise sd_tariff year
 graph save graph_tariff_yearly_both, replace
 
 
