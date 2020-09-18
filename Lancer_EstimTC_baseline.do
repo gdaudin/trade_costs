@@ -83,6 +83,8 @@ foreach m in `mode' {
 
 
 ********4 digits
+**Cela ne marche pas lorsque les produits sont à 10-digits : c’est trop long
+**7 jours pour 18 itérations sur 2005 par exemple
 
 set more off
 local mode air ves /*ves*/
