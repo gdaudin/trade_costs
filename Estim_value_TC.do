@@ -46,7 +46,7 @@ if "`c(hostname)'" =="lise-HP" {
 if "`c(hostname)'" =="MSOP112C" {
   
 	global dir C:\Lise\trade_costs
-	global dir_data C:\Lise\trade_costs\data	
+	global dir_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
 	
 }
 cd "$dir"
@@ -334,7 +334,7 @@ if "`database'"=="hummels_tra" | "`database'"=="base_hs10_newyears" {
 	global stock_results $dir/results/baseline
 }
 
-if "`database'"=="db_samesample_`class'_`preci'" {
+if "`database'"=="db_samesample_`class'_`preci'_HS10" {
 	global stock_results $dir/results/referee1/baselinesamplereferee1
 }
 
@@ -347,28 +347,38 @@ if "`database'"=="predictions_FS_panel" {
 if "`database'"=="predictions_FS_yearly" {
 	global stock_results $dir/results/IV_referee1_yearly
 }
+
 ****************Préparation de la base blouk
 
-*** Si on utilise méthode ancienne sur database soumission (large)
-** database = hummels_tra
+
+
+*** Aller chercher la base au bon endroit
+
+*** Si on utilise méthode ancienne sur database soumission (large) en s=3, k=5
+** database = hummels_tra 
+
+*** Si on utilise méthode ancienne sur database large s=3, k=10
+** database =base_hs10_newyears 
 
 *** Si on utilise méthode ancienne sur base révision selon méthode référé 1 (plus petite)
-** database = db_samesample_`class'_`preci'
+** database = db_samesample_sitc2_3_HS10
 
 *** Si on utilise la base IV first stage
 ** database = referee1_IV
 
 
+if "`database'"!="predictions_FS_panel" & "`database'"!="predictions_FS_yearly" {
+	use "$dir_data/`database'", clear
+}
 
 
-if "`database'"!="predictions_FS_panel" & "`database'"!="predictions_FS_yearly" use "$dir_data/`database'", clear
-
-if "`database'"=="base_hs10_newyears" {
+/* Pourquoi faire ça, on le fait ensuite? 
+if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS10"{
 	generate prix_fob=prix_fob_wgt
 	generate prix_caf=prix_caf_wgt
 }
+	*/
 	
-
 
 if "`database'"=="predictions_FS_panel" {
 	use "$stock_results/`database'"
@@ -393,17 +403,21 @@ if "`database'"=="predictions_FS_yearly" {
 }
 
 
+
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
 *************************
 
 keep if year==`year'
 keep if mode=="`mode'"
-if "`database'"=="hummels_tra" generate sector = substr(sitc,1,`preci')
+
+
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
-if "`database'"=="base_hs10_newyears" {
+if "`database'"=="hummels_tra" generate sector = substr(sitc,1,`preci')
+
+if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS10" {
 	generate sector = substr(hs,1,`preci')
 	collapse (sum) val wgt cha qy1 qy2 (first) sector sitc2 hs6, by(iso_o hs mode)
 	gen prix_caf = (val+cha)/wgt
@@ -412,6 +426,7 @@ if "`database'"=="base_hs10_newyears" {
 	gen prix_trsp2 = (val+cha)/val
 }
 * Nettoyer la base de donnÈes
+
 
 *****************************************************************************
 * On enlève en bas et en haut 
