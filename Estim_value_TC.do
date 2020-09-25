@@ -427,9 +427,14 @@ if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS1
 	generate sector = substr(hs,1,`preci')
 	collapse (sum) val wgt cha qy1 qy2 (first) sector sitc2 hs6, by(iso_o hs mode)
 	gen prix_caf = (val+cha)/wgt
-	gen prix_fob = (val+cha)/wgt
-	gen prix_trsp=cha/val
-	gen prix_trsp2 = (val+cha)/val
+	gen prix_fob = val/wgt
+	gen prix_trsp=cha/val  			/* (pcif - pfas) / pfas */
+	gen prix_trsp2 = (val+cha)/val	/* pcif / pfas */
+	
+
+	drop if sector==""
+	*drop if prix_fob==prix_caf
+	/* A METTRE ? */
 }
 * Nettoyer la base de donnÈes
 
@@ -585,7 +590,7 @@ foreach g in A {
 	
 }
 
-* v10, on estime le log du ratio ob -1
+* v10, on estime le log de (ratio (cif/fob) -1) = ln (TC)
 gen ln_ratio_minus1 = ln(prix_trsp2 -1)
 
 

@@ -39,9 +39,16 @@ if "`c(hostname)'" =="lise-HP" {
 
 /* Nouveau portable Lise */
 if "`c(hostname)'" =="MSOP112C" {
-    global dir_db C:\Lise\trade_costs\data
-	global dir_temp C:\Lise\trade_costs\temp/* pour stocker les bases temporaires */
-	global dir_results C:\Lise\trade_costs\results
+    global dir_db "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
+	*global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp "   	
+	*global dir_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1" /* stocker les résultats  */
+	
+	* je sauve en local les résultats et fichiers temp sinon pb de chemin d'accès
+	
+	global dir_temp "C:\Lise\trade_costs\temp"		/* pour stocker les bases temporaires */
+	global dir_results "C:\Lise\trade_costs\results" /* stocker les résultats  */
+	
+	
 }
 
 
@@ -55,13 +62,7 @@ capture log close
 
 log using "$dir_temp/`c(current_date)'", append 
 
-
 set more off
-
-
-*----------------------------------------------------------
-*** START FROM NEW YEARS 2005-2013
-*----------------------------------------------------------
 
 *****************************************************************
 *** STEP 1: BUILD THE DATASET ***********************************
@@ -77,31 +78,45 @@ capture program drop prep_reg
 program prep_reg
 args year class preci mode
 
+* class = sitc2, 
+* preci = finesse de la classification PRODUIT ICI (pas comme dans estimTC !! )
+* mode = air ou vessel
 
 use "$dir_db/base_hs10_`year'.dta", clear
 
-drop if prix_fob==prix_caf
-
 *** JUSTE POUR TESTER
-
 *keep if iso_o =="FRA"
 
-*** A ENLEVER ENSUITE
 
-keep if year==`year'
 keep if mode=="`mode'"
 rename `class' sector
 replace sector = substr(sector,1,3)
-** on est au niveau SITC 3d
+** on mène l'analyse au niveau SITC 3d
 
+
+*duplicates report iso_o hs mode dist_entry
+*on est loin de l'observation unique par iso_o hs mode dist_entry
+
+collapse (sum) val wgt cha qy1 qy2 (first) sector hs6, by(iso_o hs mode dist_entry)
+
+* 1 prix cif, fas, 1 TC par observation produit HS10, pays d'origine, mode de transport, port d'entrée
+
+gen prix_caf = (val+cha)/wgt  	/* cif price */
+gen prix_fob = val/wgt			/* fas price = valeur / poids */
+gen prix_trsp=cha/val			/* TC en termes relatifs (pcif - pfas)/pfas */
+gen prix_trsp2 = (val+cha)/val	/* ratio cif/fas price */ 
+
+/* A ajouter dans Estim TC */
 drop if sector==""
+*drop if prix_fob==prix_caf
 
-label variable iso_d "pays importateur"
+
+*label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
 rename hs product
 replace product = substr(product,1,`preci')
-* On se laisse de la marge de manoeuvre sur HS 6, HS4, HS10 (mais on sait que ça ne marche pas en HS 10)
+* On se laisse de la marge de manoeuvre sur HS 6, HS4, HS10 
  
 label var product "HS `preci' classification"
 
@@ -158,7 +173,7 @@ end
 
 capture program drop nlestim_beta
 program nlestim_beta
-	version 14
+	*version 14
 	
 	** Estimation par pays d'origine / secteur 3 ou 4 digits
 	** Estimer beta is
@@ -408,6 +423,10 @@ foreach pays_sector in `liste_pays_sector' {
 	
 		** Récupérer le beta estimé
 	*keep iso_o sector beta coeff_x predit lprix_trsp `mode'_val 
+	
+	rename val `mode'_val 
+	rename wgt `mode'_wgt
+	
 	collapse (sum) `mode'_val `mode'_wgt, by (iso_o sector beta beta_min beta_max coeff_x std_x )
 	keep if _n==1
 	append using "$dir_results/referee1/results_beta_contraint_`year'_`class'_HS`preci'_`mode'.dta"
@@ -477,10 +496,12 @@ local mode air ves
 *local year 2005 
 
 
+* Nouvelles années en HS10: 2014-2019, 2002-2004
+
 foreach x in `mode' {
 
-forvalues z = 2005(1)2013 {
-*foreach z in 2008 2013 {
+*forvalues z = 2014(1)2019 {
+foreach z in 2008 {
 
 
 ** On se met en HS8 pour être cohérent avec 1ere étape duty ensuite
