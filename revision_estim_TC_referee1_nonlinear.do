@@ -78,7 +78,7 @@ program prep_reg
 args year class preci mode
 
 
-use "$dir_db/base_hs10_newyears.dta", clear
+use "$dir_db/base_hs10_`year'.dta", clear
 
 drop if prix_fob==prix_caf
 

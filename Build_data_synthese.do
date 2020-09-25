@@ -21,6 +21,12 @@ if "`c(hostname)'" =="LAB0271A" {
 	global dir_temp ????
 }
 
+
+
+capture program drop Build_data_synthese
+program Build_data_synthese
+args year
+
 cd "$dir_data"
 ************************************************************************
 ** PGM 1 : construction de la base de données - COMPLETE, de 1974 à 2013
@@ -138,9 +144,9 @@ save hummels_tra.dta, replace
 
 cd "$dir_data"
 
-unzipfile base_new_years.zip
-use base_new_years.dta, replace
-erase base_new_years.dta
+unzipfile base_`year'.zip
+use base_`year'.dta, replace
+erase base_`year'.dta
 
 **********
 ** Step 2.2 On fait un collapse par sitc rev2/year/pays d'origine
@@ -267,7 +273,15 @@ label var iso2 "ISO 2 country code (origin)"
 label var iso_d "Importing country (iso3)"
 label var iso_o "Exporting country (iso3)"
 
-rename con_cif_yr con_cif 
+capture rename con_cif_yr con_cif 
 **Je ne sais pas pourquoi, mais c’était comme cela avant :)
 
 save hummels_tra, replace
+
+end
+
+
+foreach year of numlist 2005(1)2019 {
+	 Build_data_synthese `year'	
+} 
+

@@ -367,9 +367,15 @@ if "`database'"=="predictions_FS_yearly" {
 ** database = referee1_IV
 
 
-if "`database'"!="predictions_FS_panel" & "`database'"!="predictions_FS_yearly" {
+if "`database'"!="predictions_FS_panel" & "`database'"!="predictions_FS_yearly" & "`database'"!="base_hs10_newyears"  {
 	use "$dir_data/`database'", clear
 }
+
+if "`database'"=="base_hs10_newyears"  {
+	use "$dir_data/base_hs10_`year'", clear
+}
+
+
 
 
 /* Pourquoi faire ça, on le fait ensuite? 
