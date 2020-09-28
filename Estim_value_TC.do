@@ -32,7 +32,8 @@ if "`c(username)'" =="guillaumedaudin" {
 
 ** Fixe Lise bureau
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost
+	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_data "$dir/data"
 }
 
 /* Vieux portable Lise
