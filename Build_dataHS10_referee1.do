@@ -42,6 +42,13 @@ if "`c(hostname)'" =="LAB0271A" {
 
 
 
+capture program drop build_dataHS10_referee1
+program build_dataHS10_referee1
+args year
+
+
+
+
 cd "$dir_data"
 
 
@@ -51,12 +58,12 @@ cd "$dir_data"
 
 ** base_new_years.zip est générée par build_new_years.do, à faire tourner avant **
 
-unzipfile base_new_years.zip
-use base_new_years.dta, replace
-erase base_new_years.dta
+unzipfile base_`year'.zip
+use base_`year'.dta, replace
+erase base_`year'.dta
 
 ***** Vérifications diverses
-assert ves_wgt>=cnt_wgt /*suggère que cnt est bien un sous-ensemble de ves*/
+capture assert ves_wgt>=cnt_wgt /*suggère que cnt est bien un sous-ensemble de ves*/
 assert con_val==gen_val, rc0 /*en 2010, c’est 3,8% des observations) ; 4,1% sur 2005-2013*/
 assert gen_val==ves_val+air_val, rc0 /*en 2010 : 12,3%* 12,3% sur 2005-2013*/
 assert ves_val==0 | air_val==0, rc0 /*7% des flux sur 2005-2013*/
@@ -71,7 +78,7 @@ label var con_val "Attention ! C’est pour ves+air"
 
 ****Des variables en moins
 drop con_qy1 con_qy2
-drop cnt*
+capture drop cnt*
 *drop duty
 drop dut_val
 
@@ -135,7 +142,15 @@ label variable prix_trsp2 "prix_caf_wgt/prix_fob_wgt"
 destring year, replace
 
 *save base_hs10_newyears, replace
-save "$dir_data/base_hs10_newyears.dta", replace
+save "$dir_data/base_hs10_`year'.dta", replace
 
 *erase "$dir/base_hs10_newyears.dta"
 erase "$dir_temp/temp.dta"
+
+end
+
+
+foreach year of numlist 1998 1999 2002(1)2019 {
+	build_dataHS10_referee1 `year'	
+} 
+
