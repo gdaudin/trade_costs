@@ -43,7 +43,7 @@ if "`c(hostname)'" =="MSOP112C" {
 
 
 set more off
-local mode /*ves*/ air
+
 *local year 1974 
 
 do "$dir_pgms/Estim_value_TC.do"
@@ -58,21 +58,21 @@ do "$dir_pgms/Estim_value_TC.do"
 ***** VESSEL, puis AIR  *******************************
 **** toutes les années récentes (2005-2013)
 *******************************************************
-
+local mode ves air
 
 foreach m in `mode' {
 
-	forvalues y = 1998/1998 {
+	forvalues y = 1998/1999 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
 		capture log close
 		log using "Logs divers/log_prep_reg_base_hs10_newyears_`y'_10_3_`m'", replace
 		
-		if `y' !=2013 | "`m'"!="air" prep_reg base_hs10_newyears `y' 10 3 `m'
+		if `y' !=1998 | "`m'"!="air" prep_reg base_hs10_newyears `y' 10 3 `m'
 		
 		
-		2013 air ne converge pas 
+		*2013 air ne converge pas 
 		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
 		
