@@ -20,7 +20,7 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 
 
-/* Fixe Lise - Trvail sur MyWork*/
+/* Fixe Lise - Travail sur MyWork*/
 if "`c(hostname)'" =="LAB0271A" {
 	global dir \\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\JEGeo
 	global dir_db \\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_cost\JEGeo\data		/* base de données */
@@ -108,7 +108,8 @@ gen prix_trsp2 = (val+cha)/val	/* ratio cif/fas price */
 
 /* A ajouter dans Estim TC */
 drop if sector==""
-*drop if prix_fob==prix_caf
+drop if prix_fob==prix_caf
+* nécessaire sinon on prend le log de 0 dans l'estimation et ça enlève trop de points dans certains cas
 
 
 *label variable iso_d "pays importateur"
@@ -492,7 +493,7 @@ end
 
 
 set more off
-local mode air ves
+local mode /* air */ ves
 *local year 2005 
 
 
@@ -501,7 +502,7 @@ local mode air ves
 foreach x in `mode' {
 
 *forvalues z = 2014(1)2019 {
-foreach z in 2008 {
+foreach z in 2005 {
 
 
 ** On se met en HS8 pour être cohérent avec 1ere étape duty ensuite

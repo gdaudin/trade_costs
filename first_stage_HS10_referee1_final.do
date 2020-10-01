@@ -36,6 +36,17 @@ if "`c(username)'" =="guillaumedaudin" {
 	set maxvar 120000
 }
 
+
+/* Portable Lise */
+if "`c(hostname)'" =="MSOP112C" {
+  
+	*global dir C:\Lise\trade_costs
+	global dir "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	
+	** les résultats vont être sauvés sur mon OneDrive mais cela risque de poser des pbs (chemin d'accès trop long?)
+	** donc, il faudra les changer pour les mettre avec les autres en local dans C:\Lise\trade_costs
+}
+
 clear
 
 set more off
