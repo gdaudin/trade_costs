@@ -947,6 +947,7 @@ if `result_reg' !=0 { {
 		replace val=.
 }
 
+
 save "$stock_results/results_estimTC_`year'_prod`class'_sect`preci'_`mode'", replace
 
 

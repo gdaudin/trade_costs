@@ -21,8 +21,10 @@ if "`c(username)'" =="guillaumedaudin" {
 
 ** Fixe Lise bureau, en local sur MyWork
 if "`c(hostname)'" =="LAB0271A" {
-	global dir "\\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_costs\temp"
+	global dir "\\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_costs"
 	global dir_pgms "\\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Git\trade_costs"
+	
+	global dir_log "C:\Users\lpatureau\Dropbox\trade_cost\Log divers"
 }
 
 /* Vieux portable Lise
@@ -35,8 +37,9 @@ if "`c(hostname)'" =="lise-HP" {
 
 if "`c(hostname)'" =="MSOP112C" {
   
-	*global dir C:\Lise\trade_costs
+	* En local sur le disque dur
 	global dir_pgms C:\Users\Ipatureau\Documents\trade_costs
+	global dir_log "C:\Users\lpatureau\Dropbox\trade_cost\Log divers"
 	
 }
 
@@ -66,12 +69,22 @@ do "$dir_pgms/Estim_value_TC.do"
 
 foreach m in `mode' {
 
-	forvalues y = 2002/2019 {
+	forvalues y = 2004/2019 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
 		capture log close
-		*log using "Logs divers/log_prep_reg_base_hs10_newyears_`y'_10_3_`m'", replace
+		
+		* sauver le log file chez Guillaume
+		if "`c(username)'" =="guillaumedaudin" {
+			log using "Logs divers/log_prep_reg_base_hs10_newyears_`y'_10_3_`m'", replace
+		}
+		
+		* sauver le log file chez Lise
+		if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C"{
+			log using "$dir_log/log_prep_reg_base_`y'_10_3_`m'", replace
+		
+		}
 		
 		if `y' !=2013 | "`m'"!="air" prep_reg base_hs10_newyears `y' 10 3 `m'
 		
@@ -84,6 +97,7 @@ foreach m in `mode' {
 	
 	}
 }
+
 
 
 /*
