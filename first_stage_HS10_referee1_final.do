@@ -36,10 +36,47 @@ if "`c(username)'" =="guillaumedaudin" {
 	set maxvar 120000
 }
 
+
+/* Portable Lise */
+if "`c(hostname)'" =="MSOP112C" {
+  
+	*global dir C:\Lise\trade_costs
+	global dir "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	
+	** les résultats vont être sauvés sur mon OneDrive mais cela risque de poser des pbs (chemin d'accès trop long?)
+	** donc, il faudra les changer pour les mettre avec les autres en local dans C:\Lise\trade_costs
+}
+
 clear
 
+set more off
+
+******************************************
+*****construction nouvelle base HS10******
+******************************************
+
+use "$dir/data/base_hs10_2002.dta", replace
+save "$dir/data/base_hs10_newyears.dta", replace
+
+forvalues x=2003(1)2019{
+
+	use "$dir/data/base_hs10_`x'.dta", clear
+	append using "$dir/data/base_hs10_newyears.dta"
+	save "$dir/data/base_hs10_newyears.dta", replace
+
+}
+
+forvalues x=2002(1)2019 {
+
+	erase "$dir/data/base_hs10_`x'.dta"
+}
 
 
+set more off 
+
+******************************************
+*******program first stage****************
+******************************************
 
 use "$dir/data/base_hs10_newyears.dta", clear
 drop if mode =="cnt"
@@ -188,7 +225,6 @@ use "$dir/hummels_FS_HS10.dta", clear
 cd "$dir/results/IV_referee1_yearly"
 
 keep if llprix_fob_wgt~=.
-**((1,073,692 observations deleted)
 
 
 capture log close
@@ -207,7 +243,7 @@ capture drop FEd
 **********First stage regressions: ESTIMATES**************
 **********************************************************
 
-forvalues x=2006(1)2013{
+forvalues x=2003(1)2019{
 	use "$dir/hummels_FS_HS10.dta", clear
 	keep if year==`x'
 	
@@ -265,7 +301,7 @@ save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta", replace
 
 
 
-use "$dir/results/IV_referee1_yearly/FS_parameters_2006_both.dta", replace
+use "$dir/results/IV_referee1_yearly/FS_parameters_2003_both.dta", replace
 save "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta", replace
 
 
@@ -273,7 +309,7 @@ sort year
 
 *OK jusque là
 
-forvalues x=2007(1)2013{
+forvalues x=2004(1)2019{
 
 	use "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta", clear
 	sort year mode
@@ -306,7 +342,7 @@ sort year
 *OK jusque là
 
 
-forvalues x=2006(1)2013 {
+forvalues x=2003(1)2019 {
 
 	erase "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta"
 }
@@ -322,7 +358,7 @@ forvalues x=2006(1)2013 {
 **********************************************************
 set more off 
 
-forvalues x=2006(1)2013{
+forvalues x=2003(1)2019{
 	use "$dir/hummels_FS_HS10.dta", clear
 	keep if year==`x'
 	
@@ -338,7 +374,7 @@ save "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", replace
 
 
 
-use "$dir/results/IV_referee1_yearly/FS_predictions_2006_both.dta", replace
+use "$dir/results/IV_referee1_yearly/FS_predictions_2003_both.dta", replace
 save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly.dta", replace
 
 
@@ -346,12 +382,12 @@ sort year
 
 *OK jusque là
 
-forvalues x=2007(1)2013{
+forvalues x=2004(1)2019{
 
 	use "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", clear
 	append using "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly.dta"
 	sort iso_o year mode hs10 
-	order iso_o year mode hs10 sitc2
+	order iso_o year mode hs10 sitc2 sitc2_3d
 	keep sitc2 sitc2_3d hs10 iso_o year mode lprix_fob *prix_yearly*
 	save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly.dta", replace
 }
@@ -359,14 +395,14 @@ forvalues x=2007(1)2013{
 
 
 
-forvalues x=2006(1)2013 {
+forvalues x=2003(1)2019 {
 
 	erase "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta"
 }
 
 
 count if lprix_yearly_air_hat_allFE==.
-  *719,543, 26% of the sample
+  *719,543, 26% of the sample 2006-2013
 drop if lprix_yearly_air_hat_allFE==.
 
 capture log close
