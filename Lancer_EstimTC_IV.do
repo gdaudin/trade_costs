@@ -43,8 +43,7 @@ if "`c(hostname)'" =="MSOP112C" {
 
 
 set more off
-global modelist ves air
-*local year 1974 
+
  
 do "$dir_pgms/Estim_value_TC.do"
 
@@ -59,17 +58,20 @@ do "$dir_pgms/Estim_value_TC.do"
 *******************************************************
 
 
+global modelist ves /*air*/
+*local year 1974 
+
 
 foreach mode in $modelist {
 
-	foreach  year of numlist  /*1974*/ 2013(-1)1975 {
+	foreach  year of numlist  1998 1999 2003(1)2019 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
 		capture log close
 		log using hummels_3digits_complet_`year'_`mode', replace
 		
-		prep_reg predictions_FS_yearly `year' sitc2 3 `mode'
+		prep_reg FS_predictions_both_yearly_prod10_sect3 `year'`y' 10 3 `mode'
 		
 		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
