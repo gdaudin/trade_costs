@@ -16,7 +16,7 @@
 
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
-	global dir_pgms "$dir/trade_costs_git"
+	global dir_pgms "~/Répertoires GIT/trade_costs_git"
 }
 
 ** Fixe Lise bureau, en local sur MyWork
@@ -49,9 +49,6 @@ if "`c(hostname)'" =="MSOP112C" {
 set more off
 
 
-local mode /*ves*/ air
-*local year 1974 
-
 do "$dir_pgms/Estim_value_TC.do"
 
 
@@ -60,16 +57,19 @@ do "$dir_pgms/Estim_value_TC.do"
 *******************************************************
 
 
-*** 3 digits, all years ***
 
-***** VESSEL, puis AIR  *******************************
-**** toutes les années récentes (2002-2019)
+*local year 1974 
+
+*** À adapter suivant les besoins
+
 *******************************************************
 
-
+local mode /*ves*/ air
+local level_product 5
+local level_sector 3
 foreach m in `mode' {
 
-	forvalues y = 2004/2019 {
+	forvalues y = 1974/1978 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
@@ -77,16 +77,17 @@ foreach m in `mode' {
 		
 		* sauver le log file chez Guillaume
 		if "`c(username)'" =="guillaumedaudin" {
-			log using "Logs divers/log_prep_reg_base_hs10_newyears_`y'_10_3_`m'", replace
+			log using "Logs divers/log_prep_reg_base_hs10_newyears_`y'_`level_product'_`level_sector'_`m'", replace
 		}
 		
 		* sauver le log file chez Lise
 		if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C"{
-			log using "$dir_log/log_prep_reg_base_`y'_10_3_`m'", replace
+			log using "$dir_log/log_prep_reg_base_`y'_1`level_product'_`level_sector'_`m'", replace
 		
 		}
 		
-		if `y' !=2013 | "`m'"!="air" prep_reg base_hs10_newyears `y' 10 3 `m'
+		if `y' >=1997 prep_reg base_hs10_newyears `y' `level_product' `level_sector' `m'
+		if `y' <=1997 prep_reg hummels_tra `y' `level_product' `level_sector' `m'
 		
 		
 		* 2013 air ne converge pas 
