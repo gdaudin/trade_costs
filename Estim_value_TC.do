@@ -424,7 +424,10 @@ keep if mode=="`mode'"
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
-if "`database'"=="hummels_tra" generate sector = substr(sitc,1,`preci')
+if "`database'"=="hummels_tra" {
+	generate sector = substr(sitc,1,`preci')
+	rename `mode'_val val 
+}
 
 if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS10" {
 	generate sector = substr(hs,1,`preci')
