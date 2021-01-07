@@ -18,12 +18,14 @@ if "`c(username)'" =="guillaumedaudin" {
 
 *** Juillet 2020: Lise, tout sur mon OneDrive
 
+
 /* Fixe Lise P112*/
 if "`c(hostname)'" =="LAB0271A" {
 	 
 
 	* baseline results sur hummels_tra dans son intégralité
     global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+	
 		
 	* résultats selon méthode référé 1
 	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
@@ -163,9 +165,11 @@ args year mode method1 method2
 
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
-	rename `mode'_val val
-	drop *_val
-	rename product sector
+	
+	/* pour nettoyer les anciennes années jusqu'en 2013 */ 
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
 }	
 	
 if "`method1'"=="baselinesamplereferee1" {
@@ -174,6 +178,8 @@ if "`method1'"=="baselinesamplereferee1" {
 }	
 	
 if "`method1'"=="baseline10" {
+
+
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 }	
 		
@@ -451,7 +457,8 @@ global method2 baseline10
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 *foreach year of num 2005/2013 {
-foreach year of num 1997/1999 2002/2013 {
+*foreach year of num 1997/1999 2002/2013 {
+foreach year of num 2011/2015 {
 	foreach mode in air ves {
 	if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
 	}
