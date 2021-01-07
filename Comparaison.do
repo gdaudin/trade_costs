@@ -238,10 +238,10 @@ graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.png", r
 
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
-	rename `mode'_val val
-	drop *_val	
+	capture rename `mode'_val val
+	capture drop *_val	
 		
-	rename product sector 
+	capture rename product sector 
 }	
 
 
