@@ -269,7 +269,7 @@ label var Nb_cx3ds_baseline "Number of country x 3 digit sector included in the 
 label var couverture_`method1' "Total value of trade flows covered in the `method1'"
 
 ** pourquoi ça ne marche plus ??? Nb_cx3ds_baseline est totalement missing??? *** 
-toto
+
 
 drop blif
 
@@ -314,6 +314,7 @@ if "`method2'"=="IV_referee1_yearly" {
 if "`method2'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
+	capture drop group_sect
 }
 	
 	
@@ -432,15 +433,15 @@ end
 
 
 *global method1 baseline
-global method1 baseline10
-
+global method1 baseline
+*baseline pour baseline 5/3
 ******
 
 
 *global method2 IV_referee1_panel
 *global method2 IV_referee1_yearly
 *global method2 baseline10
-global method2 referee1
+global method2 baseline10
 
 **Où "baseline 10" c’est celle avec les produits à 10 digits.
 
@@ -450,9 +451,9 @@ global method2 referee1
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 *foreach year of num 2005/2013 {
-foreach year of num 2005/2012 {
+foreach year of num 1997/1999 2002/2013 {
 	foreach mode in air ves {
-	comparaison_by_year_mode `year' `mode' $method1 $method2
+	if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
 	}
 }
 
