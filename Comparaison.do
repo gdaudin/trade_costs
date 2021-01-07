@@ -10,7 +10,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
 	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
 	global dir_temp ~/Downloads/temp_stata
-	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/"
+	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
 	
 	
 }
@@ -212,10 +212,10 @@ if "`method2'"=="IV_referee1_panel" {
 
 
 if "`method2'"=="IV_referee1_yearly" {
-	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
-	rename product sector /*Product is in fact 3 digits*/
-	drop _merge
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
 }	
 	
 
@@ -310,10 +310,11 @@ if "`method2'"=="IV_referee1_panel" {
 }
 
 if "`method2'"=="IV_referee1_yearly" {
-	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
-	rename product sector /*Product is in fact 3 digits*/
-	drop _merge
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
+	capture drop group_sect
 }
 
 
@@ -439,15 +440,15 @@ end
 
 
 *global method1 baseline
-global method1 baseline
+global method1 baseline10
 *baseline pour baseline 5/3
 ******
 
 
 *global method2 IV_referee1_panel
-*global method2 IV_referee1_yearly
+global method2 IV_referee1_yearly
 *global method2 baseline10
-global method2 baseline10
+
 
 **Où "baseline 10" c’est celle avec les produits à 10 digits.
 
@@ -457,8 +458,8 @@ global method2 baseline10
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 *foreach year of num 2005/2013 {
-*foreach year of num 1997/1999 2002/2013 {
-foreach year of num 2011/2015 {
+foreach year of num 1998/1999 2003/2019 {
+*foreach year of num 2011/2015 {
 	foreach mode in air ves {
 	if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
 	}
