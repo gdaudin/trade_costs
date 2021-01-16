@@ -64,14 +64,12 @@ do "$dir_pgms/Estim_value_TC.do"
 
 *******************************************************
 
-local mode /*ves*/ air
+local mode ves air
 local level_product 5
 local level_sector 3
 foreach m in `mode' {
 
-	forvalues y = 1974/1978 {
-	
-		*** SOUMISSION: hummels_tra.dta
+	forvalues y = 2014/2019 {
 		
 		capture log close
 		

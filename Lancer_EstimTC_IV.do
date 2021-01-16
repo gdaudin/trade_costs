@@ -21,7 +21,10 @@ if "`c(username)'" =="guillaumedaudin" {
 
 ** Fixe Lise bureau
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost
+	*global dir "\\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_costs"
+	global dir_pgms "\\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Git\trade_costs"
+	
+	global dir_log "C:\Users\lpatureau\Dropbox\trade_cost\Log divers"
 }
 
 /* Vieux portable Lise
@@ -42,10 +45,13 @@ if "`c(hostname)'" =="MSOP112C" {
 *******************************************************
 
 
+
 set more off
 
  
 do "$dir_pgms/Estim_value_TC.do"
+
+
 
 
 ***** LANCER LES ESTIMATIONS **************************
@@ -58,13 +64,14 @@ do "$dir_pgms/Estim_value_TC.do"
 *******************************************************
 
 
-global modelist ves /*air*/
+global modelist  air /*ves*/
 *local year 1974 
 
 
 foreach mode in $modelist {
 
-	foreach  year of numlist  1998 1999 2003(1)2019 {
+	*foreach  year of numlist  1998 1999 2003(1)2019 {
+	foreach  year of numlist  2010(1)2019 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		

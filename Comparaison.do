@@ -10,7 +10,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
 	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
 	global dir_temp ~/Downloads/temp_stata
-	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/"
+	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
 	
 	
 }
@@ -18,12 +18,14 @@ if "`c(username)'" =="guillaumedaudin" {
 
 *** Juillet 2020: Lise, tout sur mon OneDrive
 
+
 /* Fixe Lise P112*/
 if "`c(hostname)'" =="LAB0271A" {
 	 
 
 	* baseline results sur hummels_tra dans son intégralité
     global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+	
 		
 	* résultats selon méthode référé 1
 	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
@@ -163,9 +165,11 @@ args year mode method1 method2
 
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
-	rename `mode'_val val
-	drop *_val
-	rename product sector
+	
+	/* pour nettoyer les anciennes années jusqu'en 2013 */ 
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
 }	
 	
 if "`method1'"=="baselinesamplereferee1" {
@@ -174,6 +178,8 @@ if "`method1'"=="baselinesamplereferee1" {
 }	
 	
 if "`method1'"=="baseline10" {
+
+
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 }	
 		
@@ -206,10 +212,10 @@ if "`method2'"=="IV_referee1_panel" {
 
 
 if "`method2'"=="IV_referee1_yearly" {
-	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
-	rename product sector /*Product is in fact 3 digits*/
-	drop _merge
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
 }	
 	
 
@@ -232,10 +238,10 @@ graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.png", r
 
 if "`method1'"=="baseline" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
-	rename `mode'_val val
-	drop *_val	
+	capture rename `mode'_val val
+	capture drop *_val	
 		
-	rename product sector 
+	capture rename product sector 
 }	
 
 
@@ -269,7 +275,7 @@ label var Nb_cx3ds_baseline "Number of country x 3 digit sector included in the 
 label var couverture_`method1' "Total value of trade flows covered in the `method1'"
 
 ** pourquoi ça ne marche plus ??? Nb_cx3ds_baseline est totalement missing??? *** 
-toto
+
 
 drop blif
 
@@ -304,16 +310,18 @@ if "`method2'"=="IV_referee1_panel" {
 }
 
 if "`method2'"=="IV_referee1_yearly" {
-	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
-	rename product sector /*Product is in fact 3 digits*/
-	drop _merge
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
+	capture drop group_sect
 }
 
 
 if "`method2'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta = -(terme_A/(terme_I+terme_A-1))
+	capture drop group_sect
 }
 	
 	
@@ -433,14 +441,14 @@ end
 
 *global method1 baseline
 global method1 baseline10
-
+*baseline pour baseline 5/3
 ******
 
 
 *global method2 IV_referee1_panel
-*global method2 IV_referee1_yearly
+global method2 IV_referee1_yearly
 *global method2 baseline10
-global method2 referee1
+
 
 **Où "baseline 10" c’est celle avec les produits à 10 digits.
 
@@ -450,9 +458,10 @@ global method2 referee1
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 *foreach year of num 2005/2013 {
-foreach year of num 2005/2012 {
+foreach year of num 1998/1999 2003/2019 {
+*foreach year of num 2011/2015 {
 	foreach mode in air ves {
-	comparaison_by_year_mode `year' `mode' $method1 $method2
+	if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
 	}
 }
 
