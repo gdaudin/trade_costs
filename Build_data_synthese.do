@@ -23,9 +23,7 @@ if "`c(hostname)'" =="LAB0271A" {
 
 
 
-capture program drop Build_data_synthese
-program Build_data_synthese
-args year
+
 
 cd "$dir_data"
 ************************************************************************
@@ -125,6 +123,11 @@ drop if prix_fob==.
 erase "$dir_temp/temp.dta"
 destring year, replace
 save hummels_tra.dta, replace 
+
+
+capture program drop Build_data_synthese
+program Build_data_synthese
+args year
 
 *----------------------------------------------------------
 *** STEP 2 - ADD NEW YEARS - ALL 2005-2013
