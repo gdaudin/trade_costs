@@ -16,7 +16,7 @@
 
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
-	global dir_pgms "$dir/trade_costs_git"
+	global dir_pgms "~/Répertoires GIT/trade_costs_git"
 }
 
 ** Fixe Lise bureau
@@ -64,21 +64,21 @@ do "$dir_pgms/Estim_value_TC.do"
 *******************************************************
 
 
-global modelist  air /*ves*/
+global modelist  air ves
 *local year 1974 
 
 
 foreach mode in $modelist {
 
 	*foreach  year of numlist  1998 1999 2003(1)2019 {
-	foreach  year of numlist  2010(1)2019 {
+	foreach  year of numlist  1974(3)2017 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
 		capture log close
 		log using hummels_3digits_complet_`year'_`mode', replace
 		
-		prep_reg FS_predictions_both_yearly_prod10_sect3 `year'`y' 10 3 `mode'
+		prep_reg FS_predictions_both_yearly_prod5_sect3 `year'`y' 10 3 `mode'
 		
 		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
