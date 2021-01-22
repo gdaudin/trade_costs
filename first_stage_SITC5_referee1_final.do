@@ -325,7 +325,7 @@ forvalues x=1975(1)2019 {
 count if lprix_yearly_air_hat_allFE==.
 drop if lprix_yearly_air_hat_allFE==.
 
-save "$dir/results/IV_referee1_yearly/FS_prediction_both_yearly_prod5_sect3.dta", replace
+save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly_prod5_sect3.dta", replace
 
 capture log close
 

@@ -345,7 +345,7 @@ if "`database'"=="predictions_FS_panel" {
 }
 
 
-if "`database'"=="FS_predictions_both_yearly_prod10_sect3" {
+if "`database'"=="FS_predictions_both_yearly_prod10_sect3" | "`database'"=="FS_predictions_both_yearly_prod5_sect3"  {
 	global stock_results $dir/results/IV_referee1_yearly
 }
 
@@ -368,7 +368,8 @@ if "`database'"=="FS_predictions_both_yearly_prod10_sect3" {
 ** database = referee1_IV
 
 
-if "`database'"!="predictions_FS_panel" & "`database'"!="FS_predictions_both_yearly_prod10_sect3" & "`database'"!="base_hs10_newyears"  {
+if "`database'"!="predictions_FS_panel" & "`database'"!="FS_predictions_both_yearly_prod10_sect3" & "`database'"!="base_hs10_newyears" /*
+	*/ & "`database'"!="FS_predictions_both_yearly_prod5_sect3"  {
 	use "$dir_data/`database'", clear
 }
 
@@ -412,6 +413,16 @@ if "`database'"=="FS_predictions_both_yearly_prod10_sect3" {
 }
 
 
+if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
+	use "$stock_results/`database'"
+	drop sitc2_3d
+	merge 1:1 sitc2 year iso_o mode using "$dir_data/hummels_tra"
+	rename prix_fob prix_fob_non_instru
+	generate prix_fob = .
+	replace prix_fob=exp(lprix_panel_hat_allFE2)
+}
+
+
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
@@ -443,7 +454,7 @@ if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS1
 	/* A METTRE ? */
 }
 
-if "`database'"=="FS_predictions_both_yearly_prod10_sect3" {
+if "`database'"=="FS_predictions_both_yearly_prod10_sect3" | "`database'"=="FS_predictions_both_yearly_prod5_sect3" {
 	generate sector = substr(hs,1,`preci')
 	collapse (sum) val wgt cha qy1 qy2 (first) sector sitc2 hs6, by(iso_o hs mode)
 	gen prix_caf = (val+cha)/wgt

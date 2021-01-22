@@ -78,7 +78,7 @@ foreach mode in $modelist {
 		capture log close
 		log using hummels_3digits_complet_`year'_`mode', replace
 		
-		prep_reg FS_predictions_both_yearly_prod5_sect3 `year'`y' 10 3 `mode'
+		prep_reg FS_predictions_both_yearly_prod5_sect3 `year'`y' 5 3 `mode'
 		
 		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
