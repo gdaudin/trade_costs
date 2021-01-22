@@ -1,11 +1,11 @@
 
-ssc install reghdfe, replace
+/*ssc install reghdfe, replace
 ssc install estout, replace
 ssc install ftools, replace
 ssc install latab, replace
 ssc install asgen, replace
 ssc install _gwtmean, replace
-
+*/
 
 clear all
 set more off
@@ -36,29 +36,18 @@ if "`c(username)'" =="guillaumedaudin" {
 	set maxvar 120000
 }
 
-
-/* Portable Lise */
-if "`c(hostname)'" =="MSOP112C" {
-  
-	*global dir C:\Lise\trade_costs
-	global dir "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
-	
-	** les résultats vont être sauvés sur mon OneDrive mais cela risque de poser des pbs (chemin d'accès trop long?)
-	** donc, il faudra les changer pour les mettre avec les autres en local dans C:\Lise\trade_costs
-}
-
 clear
 
 set more off
 
-******************************************
+/******************************************
 *****construction nouvelle base HS10******
 ******************************************
 
-use "$dir/data/base_hs10_1997.dta", replace
+use "$dir/data/base_hs10_2002.dta", replace
 save "$dir/data/base_hs10_newyears.dta", replace
 
-foreach x of numlist 1998 1999 2002(1)2019{
+forvalues x=2003(1)2019{
 
 	use "$dir/data/base_hs10_`x'.dta", clear
 	append using "$dir/data/base_hs10_newyears.dta"
@@ -66,14 +55,14 @@ foreach x of numlist 1998 1999 2002(1)2019{
 
 }
 
-/*On en a besoin pour les autres programmes : donc je les garde
 forvalues x=2002(1)2019 {
 
 	erase "$dir/data/base_hs10_`x'.dta"
 }
-*/
+
 
 set more off 
+*/
 
 ******************************************
 *******program first stage****************
@@ -244,7 +233,7 @@ capture drop FEd
 **********First stage regressions: ESTIMATES**************
 **********************************************************
 
-foreach x of numlist 1998 1999 2003(1)2019{
+forvalues x=2003(1)2019{
 	use "$dir/hummels_FS_HS10.dta", clear
 	keep if year==`x'
 	
@@ -302,7 +291,7 @@ save "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta", replace
 
 
 
-use "$dir/results/IV_referee1_yearly/FS_parameters_1998_both.dta", replace
+use "$dir/results/IV_referee1_yearly/FS_parameters_2003_both.dta", replace
 save "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta", replace
 
 
@@ -310,16 +299,16 @@ sort year
 
 *OK jusque là
 
-foreach x of numlist 1999 2003(1)2019{
+forvalues x=2004(1)2019{
 
 	use "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta", clear
 	sort year mode
 	append using "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta"
-	save "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly_prod10_sect3.dta", replace
+	save "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta", replace
 }
 
 
-
+save "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly_prod10_sect3.dta", replace
 
 ****a few useful descriptive statistics*****
 tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
@@ -332,7 +321,7 @@ latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_
 scatter beta_lag_price year
 graph save graph_lag_yearly_both, replace
 
-scatter beta_Fds_tariff_lise sd_tariff year
+scatter beta_Fds_tariff_lise year
 graph save graph_tariff_yearly_both, replace
 
 
@@ -343,13 +332,14 @@ sort year
 *OK jusque là
 
 
-foreach x of numlist 1998 1999 2003(1)2019{
+forvalues x=2003(1)2019 {
 
 	erase "$dir/results/IV_referee1_yearly/FS_parameters_`x'_both.dta"
 }
 
 
 
+erase "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta"
 
 
 
@@ -359,13 +349,13 @@ foreach x of numlist 1998 1999 2003(1)2019{
 **********************************************************
 set more off 
 
-foreach x of numlist 1998 1999 2003(1)2019{
+forvalues x=2003(1)2019{
 	use "$dir/hummels_FS_HS10.dta", clear
 	keep if year==`x'
 	
 reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
-predict lprix_yearly_hat_allFE,xbd 
+predict lprix_yearly_air_hat_allFE,xbd 
 	drop FEc FEs
 	
 save "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", replace
@@ -375,7 +365,7 @@ save "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", replace
 
 
 
-use "$dir/results/IV_referee1_yearly/FS_predictions_1998_both.dta", replace
+use "$dir/results/IV_referee1_yearly/FS_predictions_2003_both.dta", replace
 save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly.dta", replace
 
 
@@ -383,35 +373,37 @@ sort year
 
 *OK jusque là
 
-foreach x of numlist 1999 2003(1)2019{
+forvalues x=2004(1)2019{
 
 	use "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", clear
 	append using "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly.dta"
 	sort iso_o year mode hs10 
 	order iso_o year mode hs10 sitc2 sitc2_3d
 	keep sitc2 sitc2_3d hs10 iso_o year mode lprix_fob *prix_yearly*
-	save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly_prod10_sect3.dta", replace
+	save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly.dta", replace
 }
 
 
 
 
-foreach x of numlist 1998 1999 2003(1)2019{
+forvalues x=2003(1)2019 {
 
 	erase "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta"
 }
 
 
-count if lprix_yearly_hat_allFE==.
+count if lprix_yearly_air_hat_allFE==.
   *719,543, 26% of the sample 2006-2013
-drop if lprix_yearly_hat_allFE==.
+drop if lprix_yearly_air_hat_allFE==.
+
+
+save "$dir/results/IV_referee1_yearly/FS_prediction_both_yearly_prod10_sect3.dta", replace
 
 capture log close
 *stop 
 
-erase "$dir/hummels_FS_HS10.dta"
-erase "$dir/data/base_hs10_newyears.dta"
 erase "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly.dta"
-erase "$dir/results/IV_referee1_yearly/FS_parameters_both_yearly.dta"
+erase "$dir/hummels_FS_HS10.dta"
+
 
 
