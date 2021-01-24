@@ -355,7 +355,7 @@ forvalues x=2003(1)2019{
 	
 reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
-predict lprix_yearly_air_hat_allFE,xbd 
+predict lprix_yearly_hat_allFE,xbd 
 	drop FEc FEs
 	
 save "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", replace
@@ -392,9 +392,9 @@ forvalues x=2003(1)2019 {
 }
 
 
-count if lprix_yearly_air_hat_allFE==.
+count if lprix_yearly_hat_allFE==.
   *719,543, 26% of the sample 2006-2013
-drop if lprix_yearly_air_hat_allFE==.
+drop if lprix_yearly_hat_allFE==.
 
 
 save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly_prod10_sect3.dta", replace
