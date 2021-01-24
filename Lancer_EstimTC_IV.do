@@ -71,7 +71,7 @@ global modelist  air ves
 foreach mode in $modelist {
 
 	*foreach  year of numlist  1998 1999 2003(1)2019 {
-	foreach  year of numlist  1974(3)2017 {
+	foreach  year of numlist  1977(3)2017 {
 	
 		*** SOUMISSION: hummels_tra.dta
 		
