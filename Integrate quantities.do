@@ -57,10 +57,14 @@ replace unitofquantity=subinstr(unitofquantity,`"."',"",.)
 generate unit_qy2=""
 replace unit_qy2=substr(unitofquantity,strpos(unitofquantity,`","')+1,.) if strpos(unitofquantity,`","')!=0
 
-replace unitofquantity=substr(unitofquantity,1,strpos(unitofquantity,`","')-1) if 
+replace unitofquantity=substr(unitofquantity,1,strpos(unitofquantity,`","')-1) if strpos(unitofquantity,`","')!=0
 
 
 replace htsnumber=subinstr(htsnumber,`"."',"",.) 
 
+rename unitofquantity unit_qy1
 
+generate hs6=substr(htsnumber,0,6)
+
+merge m:1 hs6 using "$dir_data/hs2002_sitc2.dta"  
 
