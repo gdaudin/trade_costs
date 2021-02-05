@@ -182,10 +182,18 @@ if "`method1'"=="baseline10" {
 
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 }	
+
+
+if "`method1'"=="IV_referee1_yearly_10_3" {
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
+}	
 		
 	
 bys iso_o sector : keep if _n==1
-generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
+generate beta_method_1=-(terme_A/(terme_I+terme_A-1))
+
 
 
 save "$dir_temp/`method1'_`method2'.dta", replace
@@ -199,25 +207,31 @@ if "`method2'"=="referee1" {
 
 if "`method2'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
-	generate beta = -(terme_A/(terme_I+terme_A-1))
+	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
 }
 
 
 if "`method2'"=="IV_referee1_panel" {
 	use "$dir_results/IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
-	generate beta = -(terme_A/(terme_I+terme_A-1))
+	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
 	rename product sector /*Product is in fact 3 digits*/
 	drop _merge
 }	
 
 
-if "`method2'"=="IV_referee1_yearly" {
+if "`method2'"=="IV_referee1_yearly_10_3" {
 	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
-	generate beta = -(terme_A/(terme_I+terme_A-1))
+	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
 	*rename product sector /*Product is in fact 3 digits*/
 	*drop _merge
 }	
 	
+if "`method2'"=="IV_referee1_yearly_5_3" {
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
+	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
+}	
 
 
 bys iso_o sector : keep if _n==1
@@ -227,7 +241,7 @@ merge 1:1 iso_o sector using "$dir_temp/`method1'_`method2'.dta"
 erase "$dir_temp/`method1'_`method2'.dta"
 
 *** Comparaison des beta
-graph twoway (scatter beta beta_baseline) (lfit beta beta_baseline), ///
+graph twoway (scatter beta_method2 beta_method1) (lfit beta_method2 beta_method1), ///
 	title("For `year', `mode'")
 
 graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.png", replace
@@ -257,14 +271,14 @@ if "`method1'"=="baseline10" {
 	
 
 
-generate beta_baseline=-(terme_A/(terme_I+terme_A-1))
+generate beta_method1=-(terme_A/(terme_I+terme_A-1))
 egen couverture_`method1'=total(val)
 
 gen Nb_baseline=_N
-summarize beta_baseline, det
+summarize beta_method1, det
 generate beta_`method1'_mean = r(mean)
 generate beta_`method1'_med = r(p50)
-summarize beta_baseline [fweight=val], det
+summarize beta_method1 [fweight=val], det
 generate beta_`method1'_mean_pond = r(mean)
 generate beta_`method1'_med_pond = r(p50)
 generate blif = iso_o+sector
@@ -304,14 +318,14 @@ if "`method2'"=="referee1" {
 
 if "`method2'"=="IV_referee1_panel" {
 	use "$dir_results/IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
-	generate beta = -(terme_A/(terme_I+terme_A-1))
+	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
 	rename product sector /*Product is in fact 3 digits*/
 	drop _merge
 }
 
-if "`method2'"=="IV_referee1_yearly" {
+if "`method2'"=="IV_referee1_yearly_10_3" {
 	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
-	generate beta = -(terme_A/(terme_I+terme_A-1))
+	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
 	*rename product sector /*Product is in fact 3 digits*/
 	*drop _merge
 	capture drop group_sect
@@ -320,7 +334,7 @@ if "`method2'"=="IV_referee1_yearly" {
 
 if "`method2'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
-	generate beta = -(terme_A/(terme_I+terme_A-1))
+	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
 	capture drop group_sect
 }
 	
@@ -349,7 +363,7 @@ gen Nb_referee1=_N
 summarize beta, det
 generate beta_mean = r(mean)
 generate beta_med = r(p50)
-summarize beta [fweight=val], det
+summarize beta_method2 [fweight=val], det
 generate beta_mean_pond = r(mean)
 generate beta_med_pond = r(p50)
 generate blif = iso_o+sector
@@ -439,14 +453,15 @@ end
 *****************************************************************************************
 
 
-*global method1 baseline
-global method1 baseline10
+global method1 baseline
+*global method1 baseline10
 *baseline pour baseline 5/3
+*global method2 IV_referee1_yearly_5_3
 ******
 
 
 *global method2 IV_referee1_panel
-global method2 IV_referee1_yearly
+global method2 IV_referee1_yearly_5_3
 *global method2 baseline10
 
 
@@ -458,7 +473,7 @@ global method2 IV_referee1_yearly
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 *foreach year of num 2005/2013 {
-foreach year of num 1998/1999 2003/2019 {
+foreach year of num 2003/2019 {
 *foreach year of num 2011/2015 {
 	foreach mode in air ves {
 	if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
