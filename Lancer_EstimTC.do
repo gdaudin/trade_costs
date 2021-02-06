@@ -92,7 +92,7 @@ log close
 end
 
 
-
+/*Pour quand on a les quantités
 local mode ves air
 forvalues y = 2014/2019 {
 	foreach m in `mode' {	
@@ -100,6 +100,46 @@ forvalues y = 2014/2019 {
 	}
 
 }
+*/
+
+
+***Pour IV 5/3
+local mode ves 
+foreach  y of numlist 2012 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 5 3 FS_predictions_both_yearly_prod5_sect3
+	}
+
+}
+
+/*
+***Pour IV 10/3
+local mode ves 
+foreach  y of numlist 2012 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 5 3 FS_predictions_both_yearly_prod10_sect3
+	}
+
+}
+*/
+/*
+****Pour baseline
+local mode ves 
+foreach  y of numlist 1974/2019 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 5 3 hummels_tra
+	}
+}
+*/
+/*
+*****Pour HS10
+local mode ves 
+foreach  y of numlist 1974/2019 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 5 3 base_hs10_newyears
+	}
+}
+*/
 
 /*
 
