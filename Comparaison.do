@@ -192,7 +192,7 @@ if "`method1'"=="IV_referee1_yearly_10_3" {
 		
 	
 bys iso_o sector : keep if _n==1
-generate beta_method_1=-(terme_A/(terme_I+terme_A-1))
+generate beta_method1=-(terme_A/(terme_I+terme_A-1))
 
 
 
@@ -272,7 +272,7 @@ if "`method1'"=="baseline10" {
 
 
 generate beta_method1=-(terme_A/(terme_I+terme_A-1))
-egen couverture_`method1'=total(val)
+egen cover_`method1'=total(val)
 
 gen Nb_baseline=_N
 summarize beta_method1, det
@@ -286,14 +286,14 @@ quietly levelsof blif
 generate Nb_cx3ds_baseline = r(r)
 
 label var Nb_cx3ds_baseline "Number of country x 3 digit sector included in the `method1'"
-label var couverture_`method1' "Total value of trade flows covered in the `method1'"
+label var cover_`method1' "Total value of trade flows covered in the `method1'"
 
 ** pourquoi ça ne marche plus ??? Nb_cx3ds_baseline est totalement missing??? *** 
 
 
 drop blif
 
-keep mode couverture_`method1'-Nb_cx3ds_baseline
+keep mode cover_`method1'-Nb_cx3ds_baseline
 keep if _n==1
 gen year=`year'
 gen methode1 = "`method1'"
@@ -337,10 +337,18 @@ if "`method2'"=="baseline10" {
 	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
 	capture drop group_sect
 }
+
+if "`method2'"=="IV_referee1_yearly_5_3" {
+	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
+	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
+	capture drop group_sect
+	rename `mode'_val val 
+	capture rename product sector
+}
 	
 	
 
-egen couverture_`method2'=total(val)
+egen cover_`method2'=total(val)
 
 
 egen group_sect=group(sector)
@@ -370,11 +378,11 @@ generate blif = iso_o+sector
 quietly levelsof blif
 generate Nb_cx3ds = r(r)
 label var Nb_cx3ds "Number of country x 3 digit sector included in `method2' test"
-label var couverture_`method2' "Total value of trade flows covered in `method2' test"
+label var cover_`method2' "Total value of trade flows covered in `method2' test"
 drop blif
 
 
-keep Nb_iso Nb_sector couverture_`method2'-Nb_cx3ds
+keep Nb_iso Nb_sector cover_`method2'-Nb_cx3ds
 keep if _n==1
 gen year=`year'
 gen mode="`mode'"
@@ -476,14 +484,15 @@ capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 foreach year of num 2003/2019 {
 *foreach year of num 2011/2015 {
 	foreach mode in air ves {
-	if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
+	*if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
+	comparaison_by_year_mode `year' `mode' $method1 $method2
 	}
 }
 
 
 
 use "$dir_comparaison/stats_comp_${method1}_$method2.dta", clear
-gen method2_value_method1=couverture_$method2/couverture_$method1
+gen method2_value_method1=cover_$method2/cover_$method1
 label var method2_value_method1 "Covered value of trade flows by $method2 as a share of $method1"
 gen method2_nbpair_method1=Nb_cx3ds/Nb_cx3ds_baseline
 label var method2_nbpair_method1 "Covered bilateral trade flows by products by $method2 as a share of $method1"
