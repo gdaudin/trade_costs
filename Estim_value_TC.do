@@ -349,6 +349,15 @@ if "`database'"=="FS_predictions_both_yearly_prod10_sect3" | "`database'"=="FS_p
 	global stock_results $dir/results/IV_referee1_yearly
 }
 
+if "`database'"=="hummels_tra_qy1_qy" {
+	global stock_results $dir/results/qy1_qy
+}
+
+
+if "`database'"=="hummels_tra_qy1_wgt" {
+	global stock_results $dir/results/qy1_wgt
+}
+
 ****************Préparation de la base blouk
 
 
@@ -368,8 +377,7 @@ if "`database'"=="FS_predictions_both_yearly_prod10_sect3" | "`database'"=="FS_p
 ** database = referee1_IV
 
 
-if "`database'"!="predictions_FS_panel" & "`database'"!="FS_predictions_both_yearly_prod10_sect3" & "`database'"!="base_hs10_newyears" /*
-	*/ & "`database'"!="FS_predictions_both_yearly_prod5_sect3"  {
+if "`database'"=="hummels_tra" {
 	use "$dir_data/`database'", clear
 }
 
@@ -423,6 +431,12 @@ if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
 }
 
 
+if "`database'"=="hummels_tra_qy1_qy" | "`database'"=="hummels_tra_qy1_wgt" {
+	use "$dir_data/hummels_tra"
+	bys sitc2 iso_o year : drop if _N==2
+}
+
+
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
@@ -435,9 +449,17 @@ keep if mode=="`mode'"
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
-if "`database'"=="hummels_tra" {
+if "`database'"=="hummels_tra" | "`database'"=="hummels_tra_qy1_wgt"{
 	generate sector = substr(sitc,1,`preci')
 	rename `mode'_val val 
+}
+
+
+if "`database'"=="hummels_tra_qy1_qy"{
+	generate sector = substr(sitc,1,`preci')
+	rename `mode'_val val 
+	
+	blif
 }
 
 if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS10" {

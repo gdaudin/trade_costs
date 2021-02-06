@@ -64,40 +64,42 @@ do "$dir_pgms/Estim_value_TC.do"
 
 *******************************************************
 
-local mode ves air
-local level_product 5
-local level_sector 3
-foreach m in `mode' {
+capture program drop EstimTC
+program EstimTC
+args year mode level_product level_sector bdd
 
-	forvalues y = 2014/2019 {
-		
-		capture log close
-		
-		* sauver le log file chez Guillaume
-		if "`c(username)'" =="guillaumedaudin" {
-			log using "Logs divers/log_prep_reg_base_hs10_newyears_`y'_`level_product'_`level_sector'_`m'", replace
-		}
-		
-		* sauver le log file chez Lise
-		if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C"{
-			log using "$dir_log/log_prep_reg_base_`y'_1`level_product'_`level_sector'_`m'", replace
-		
-		}
-		
-		if `y' >=1997 prep_reg base_hs10_newyears `y' `level_product' `level_sector' `m'
-		if `y' <=1997 prep_reg hummels_tra `y' `level_product' `level_sector' `m'
-		
-		
-		* 2013 air ne converge pas 
-		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
-		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
-		
-		log close
+capture log close
 	
-	}
+* sauver le log file chez Guillaume
+if "`c(username)'" =="guillaumedaudin" {
+	log using "Logs divers/log_prep_reg_base_hs10_newyears_`year'_`level_product'_`level_sector'_`mode'", replace
 }
+	
+* sauver le log file chez Lise
+if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C"{
+	log using "$dir_log/log_prep_reg_base_`year'_1`level_product'_`level_sector'_`mode'", replace
+}
+	
+prep_reg `bdd' `year' `level_product' `level_sector' `mode'
+	
+	
+	* 2013 air ne converge pas 
+
+log close
 
 
+
+end
+
+
+
+local mode ves air
+forvalues y = 2014/2019 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 5 3 hummels_tra_qy1_qy
+	}
+
+}
 
 /*
 
