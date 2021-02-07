@@ -72,12 +72,12 @@ capture log close
 	
 * sauver le log file chez Guillaume
 if "`c(username)'" =="guillaumedaudin" {
-	log using "Logs divers/log_prep_reg_base_hs10_newyears_`year'_`level_product'_`level_sector'_`mode'", replace
+	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level'_`product'_`level_sector'_`bdd'", replace
 }
 	
 * sauver le log file chez Lise
 if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C"{
-	log using "$dir_log/log_prep_reg_base_`year'_1`level_product'_`level_sector'_`mode'", replace
+	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level'_`product'_`level_sector'_`bdd'", replace
 }
 	
 prep_reg `bdd' `year' `level_product' `level_sector' `mode'
@@ -92,26 +92,26 @@ log close
 end
 
 
-/*Pour quand on a les quantités
+*Pour quand on a les quantités
 local mode ves air
-forvalues y = 2014/2019 {
+forvalues y = 1974/2019 {
 	foreach m in `mode' {	
 	EstimTC `y' `m' 5 3 hummels_tra_qy1_qy
+	EstimTC `y' `m' 5 3 hummels_tra_qy1_wgt
 	}
-
 }
-*/
+
 
 
 ***Pour IV 5/3
-local mode ves 
+/*local mode ves 
 foreach  y of numlist 2012 {
 	foreach m in `mode' {	
 	EstimTC `y' `m' 5 3 FS_predictions_both_yearly_prod5_sect3
 	}
 
 }
-
+*/
 /*
 ***Pour IV 10/3
 local mode ves 
