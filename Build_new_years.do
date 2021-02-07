@@ -272,12 +272,12 @@ drop tt0 t0 sitc2_1 sitc2_2 tt
 rename hs2002 hs6
 duplicates report hs6
 
-save hs_sitc2, replace
+save hs2002_sitc2, replace
 
 ** Merge avec base
 
 use base_`year', clear
-merge m:1 hs6 using hs_sitc2
+merge m:1 hs6 using hs2002_sitc2
 
 count if _merge==1
 egen _=group(hs6) if _merge==1

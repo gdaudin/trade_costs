@@ -349,6 +349,15 @@ if "`database'"=="FS_predictions_both_yearly_prod10_sect3" | "`database'"=="FS_p
 	global stock_results $dir/results/IV_referee1_yearly
 }
 
+if "`database'"=="hummels_tra_qy1_qy" {
+	global stock_results $dir/results/qy1_qy
+}
+
+
+if "`database'"=="hummels_tra_qy1_wgt" {
+	global stock_results $dir/results/qy1_wgt
+}
+
 ****************Préparation de la base blouk
 
 
@@ -368,13 +377,17 @@ if "`database'"=="FS_predictions_both_yearly_prod10_sect3" | "`database'"=="FS_p
 ** database = referee1_IV
 
 
-if "`database'"!="predictions_FS_panel" & "`database'"!="FS_predictions_both_yearly_prod10_sect3" & "`database'"!="base_hs10_newyears" /*
-	*/ & "`database'"!="FS_predictions_both_yearly_prod5_sect3"  {
+if "`database'"=="hummels_tra" {
 	use "$dir_data/`database'", clear
+	keep if year==`year'
+	keep if mode=="`mode'"
+	generate sector = substr(sitc,1,`preci')
 }
 
 
 if "`database'"=="base_hs10_newyears"  {
+	keep if year==`year'
+	keep if mode=="`mode'"
 	use "$dir_data/base_hs10_`year'", clear
 }
 
@@ -391,6 +404,8 @@ if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS1
 
 if "`database'"=="predictions_FS_panel" {
 	use "$stock_results/`database'"
+	keep if year==`year'
+	keep if mode=="`mode'"
 	keep sitc2-mode lprix_panel_hat_air_allFE2 lprix_panel_hat_ves_allFE2
 	drop sitc2_3d
 	merge 1:1 sitc2-mode using "$dir_data/hummels_tra"
@@ -402,9 +417,10 @@ if "`database'"=="predictions_FS_panel" {
 
 if "`database'"=="FS_predictions_both_yearly_prod10_sect3" {
 	use "$stock_results/`database'"
+	keep if year==`year'
+	keep if mode=="`mode'"
 	keep hs10 year mode sitc2 sitc2_3d iso_o lprix_yearly_hat_allFE 
 	order sitc2 year iso_o mode
-	keep if year==`year'
 	rename hs10 hs
 	merge 1:m hs year mode iso_o using "$dir_data/base_hs10_`year'"
 	rename prix_fob_wgt prix_fob_non_instru
@@ -415,6 +431,8 @@ if "`database'"=="FS_predictions_both_yearly_prod10_sect3" {
 
 if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
 	use "$stock_results/`database'"
+	keep if year==`year'
+	keep if mode=="`mode'"
 	drop sitc2_3d
 	merge 1:1 sitc2 year iso_o mode using "$dir_data/hummels_tra"
 	rename prix_fob prix_fob_non_instru
@@ -423,22 +441,40 @@ if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
 }
 
 
+if "`database'"=="hummels_tra_qy1_qy" | "`database'"=="hummels_tra_qy1_wgt" {
+	use "$dir_data/hummels_tra"
+	keep if year==`year'
+	bys sitc2 iso_o year : drop if _N==2
+	keep if mode=="`mode'"
+	generate sector = substr(sitc,1,`preci')
+	
+	**on utilise con_val parce que Hummels ne donne pas gen_val
+	keep if con_val==`mode'_val
+	keep if con_cha==`mode'_cha
+	keep if con_qy1 !=. & con_qy1 !=0
+	keep if con_val !=. & con_val !=0
+	keep if con_cha !=. & con_cha !=0
+	capture assert if con_cif==con_val+con_cha
+	if "`database'"=="hummels_tra_qy1_qy" {
+		replace prix_caf   = (con_val+con_cha)/con_qy1
+		replace prix_fob   = con_val/con_qy1
+		replace prix_trsp  = con_cha/con_val  			/* (pcif - pfas) / pfas */
+		replace prix_trsp2 = (con_val+con_cha)/con_val	/* pcif / pfas */		
+	}
+}
+
+
 
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
 *************************
 
-keep if year==`year'
-keep if mode=="`mode'"
+
 
 
 label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
-if "`database'"=="hummels_tra" {
-	generate sector = substr(sitc,1,`preci')
-	rename `mode'_val val 
-}
 
 if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS10" {
 	generate sector = substr(hs,1,`preci')
