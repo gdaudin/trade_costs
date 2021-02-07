@@ -94,7 +94,7 @@ end
 
 *Pour quand on a les quantités
 local mode ves air
-forvalues y = 1974/2019 {
+foreach y of numlist 1974/2019 {
 	foreach m in `mode' {	
 	EstimTC `y' `m' 5 3 hummels_tra_qy1_qy
 	EstimTC `y' `m' 5 3 hummels_tra_qy1_wgt
