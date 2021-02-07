@@ -72,12 +72,12 @@ capture log close
 	
 * sauver le log file chez Guillaume
 if "`c(username)'" =="guillaumedaudin" {
-	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level'_`product'_`level_sector'_`bdd'", replace
+	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
 }
 	
 * sauver le log file chez Lise
 if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C"{
-	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level'_`product'_`level_sector'_`bdd'", replace
+	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
 }
 	
 prep_reg `bdd' `year' `level_product' `level_sector' `mode'
