@@ -64,21 +64,25 @@ do "$dir_pgms/Estim_value_TC.do"
 *******************************************************
 
 
-global modelist  air ves
+global modelist /* air */ ves
 *local year 1974 
 
 
 foreach mode in $modelist {
 
 	*foreach  year of numlist  1998 1999 2003(1)2019 {
-	foreach  year of numlist  1977(3)2017 {
+	*foreach  year of numlist  1977(3)2017 {
+	
+	foreach  year of numlist  1975(3)1999 {
+	
+	** 27-01-2021, Lise : comparer 2002 air avec old_hummels_tra pour vérifier que c'est ok
 	
 		*** SOUMISSION: hummels_tra.dta
 		
 		capture log close
 		log using hummels_3digits_complet_`year'_`mode', replace
 		
-		prep_reg FS_predictions_both_yearly_prod5_sect3 `year'`y' 5 3 `mode'
+		prep_reg FS_predictions_both_yearly_prod5_sect3 `year' 5 3 `mode'
 		
 		*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 		*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
