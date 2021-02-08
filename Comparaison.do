@@ -339,16 +339,17 @@ if "`method2'"=="baseline10" {
 }
 
 if "`method2'"=="IV_referee1_yearly_5_3" {
-	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
+	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
 	generate beta_method2 = -(terme_A/(terme_I+terme_A-1))
 	capture drop group_sect
-	rename `mode'_val val 
+	*rename `mode'_val val 
 	capture rename product sector
 }
 	
 	
 
 egen cover_`method2'=total(val)
+
 
 
 egen group_sect=group(sector)
@@ -392,8 +393,6 @@ gen methode2 = "`method2'"
 
 merge 1:1 year mode using "$dir_comparaison/stats_comp_`method1'_`method2'.dta"
 drop _merge
-
-
 save "$dir_comparaison/stats_comp_`method1'_`method2'.dta", replace
 
 end
@@ -442,16 +441,18 @@ replace type = substr(type, 24,.) if strmatch(type,"`method1'*")!=0
 reshape wide beta_,i(year mode type) j(method) string
 
 
-graph twoway (connected beta_`method1' year) (connected beta_`method2' year), by(mode type)
-
-
-graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.png", replace
 
 
 graph twoway (scatter beta_`method2' beta_`method1') (lfit beta_`method2' beta_`method1'), ///
 			 ytitle("`method1'") xtitle("`method2'") by(mode type)
 			 
 graph export "$dir_comparaison/scatter_comparaison_by_type_`method1'_`method2'.png", replace
+
+graph twoway (line beta_`method1' year) (line beta_`method2' year), by(mode type)
+
+
+graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.png", replace
+
 
 end
 
@@ -481,7 +482,7 @@ global method2 IV_referee1_yearly_5_3
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 *foreach year of num 2005/2013 {
-foreach year of num 2003/2019 {
+foreach year of num 1975/2019 {
 *foreach year of num 2011/2015 {
 	foreach mode in air ves {
 	*if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
