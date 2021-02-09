@@ -462,6 +462,10 @@ if "`database'"=="hummels_tra_qy1_qy" | "`database'"=="hummels_tra_qy1_wgt" {
 		replace prix_trsp2 = (con_val+con_cha)/con_val	/* pcif / pfas */
 		rename con_val val
 	}
+	if "`database'"=="hummels_tra_qy1_wgt" {
+		rename `mode'_val val
+	}
+	
 }
 
 
