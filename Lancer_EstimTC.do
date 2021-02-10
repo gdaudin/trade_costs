@@ -59,8 +59,8 @@ if "`c(hostname)'" =="hericourt" {
 
 set more off
 
-
-do D:\Hericourt\trade_costs\pgms\Estim_value_TC.do
+do "$dir_pgms/Estim_value_TC.do"
+*do D:\Hericourt\trade_costs\pgms\Estim_value_TC.do
 
 
 
