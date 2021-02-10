@@ -24,6 +24,8 @@ if "`c(hostname)'" =="LAB0271A" {
 	global dir "\\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Lise\trade_costs"
 	global dir_pgms "\\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Git\trade_costs"
 	
+	
+	
 	global dir_log "C:\Users\lpatureau\Dropbox\trade_cost\Log divers"
 }
 
@@ -43,13 +45,22 @@ if "`c(hostname)'" =="MSOP112C" {
 	
 }
 
+if "`c(hostname)'" =="hericourt" {
+  
+	global dir D:\Hericourt\trade_costs
+	global dir_data D:\Hericourt\trade_costs\data
+	global dir_pgms D:\Hericourt\trade_costs\pgms
+
+	
+}
+
 *******************************************************
 
 
 set more off
 
 
-do "$dir_pgms/Estim_value_TC.do"
+do D:\Hericourt\trade_costs\pgms\Estim_value_TC.do
 
 
 
@@ -80,6 +91,11 @@ if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C"{
 	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
 }
 	
+	* sauver le log file chez Jerome
+if "`c(hostname)'" =="hericourt" {
+	log using "D:\Hericourt\trade_costs\Logs divers\log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
+}
+	
 prep_reg `bdd' `year' `level_product' `level_sector' `mode'
 	
 	
@@ -93,13 +109,17 @@ end
 
 
 *Pour quand on a les quantités
-local mode ves air
-foreach y of numlist 1974/2019 {
+local mode air
+*foreach  year of numlist  1976(3)2019
+
+foreach y of numlist 2014(-1) 1974 {
 	foreach m in `mode' {	
 	EstimTC `y' `m' 5 3 hummels_tra_qy1_wgt
 	EstimTC `y' `m' 5 3 hummels_tra_qy1_qy
 	}
 }
+
+
 
 
 
