@@ -243,20 +243,20 @@ From Equation (\ref{eq:tt1}), it is straightforward that $\beta$ is equal to the
 \frac{\partial TC}{\partial \widetilde{p}} \frac{\widetilde{p}}{TC} = - \beta \label{eq:alternative}
 \end{equation}
 
-From Equation (\ref{eq:tt1}), we can identify a first polar case $\beta=0$. Shipping charges are proportional to the fas price, such that $p=\widetilde{p}(1+X)$: Only ad-valorem costs apply. At the other extreme, the case $\beta=1$ corresponds to shipping costs being independent of the unit price, with the cif price the sum of the unit price and the shipping cost: Transport costs are fully additive.
-This suggests that, the closer $\beta$ to 1, the more prevalent additive costs in total transport costs. One can analytically show that $\beta$ is indeed equal to the share of additive costs in total transport costs. 
+From Equation (\ref{eq:tt1}), we can identify a first polar case where $\beta=0$. Shipping charges are proportional to the fas price, such that $p=\widetilde{p}(1+X)$: Only ad-valorem costs apply. At the other extreme, the case $\beta=1$ corresponds to shipping costs being independent of the unit price, with the cif price the sum of the unit price and the shipping cost: Transport costs are fully additive.
+This suggests that, the closer $\beta$ to 1, the more prevalent additive costs in total transport costs. One can analytically show that $\beta$ is indeed equal to the share of additive costs in total transport costs.
 
 To do so, start from the link between the link between cif, fas prices and transport costs by explicitly decomposing between the ad-valorem and the additive costs as:
 
 \begin{eqnarray}
-&& p = \tau \widetilde{p}+ t \label{eq:tt0} \\
+&& p = (1+\tau) \widetilde{p}+ t \label{eq:tt0} \\
 \Leftrightarrow && p = (1+\tau) \widetilde{p}+ \widetilde{t}\widetilde{p}  \label{eq:base}
 \end{eqnarray}
 
-\noindent with $\tau \geq 1$ the ad-valorem cost ($\tau =1$ meaning no ad-valorem cost) and $t>0 $ the additive shipping charge per kg transported (Equation (\ref{eq:tt0})). Notice that we can rewrite the additive cost as a function of the cost per USD shipped $\widetilde{t} \equiv \frac{t}{\widetilde{p}}$, as in Equation \ref{eq:base}. Starting from Equation (\ref{eq:base}), the elasticity of transport costs to the unit price $\widetilde{p}$ can be shown to be equal to:\footnote{See Appendix XXX for a formal demonstration.}
+\noindent with $\tau \geq 0$ the ad-valorem cost and $t>0 $ the additive shipping charge per kg transported (Equation (\ref{eq:tt0})). Notice that we can rewrite the additive cost as a function of the cost per USD shipped $\widetilde{t} \equiv \frac{t}{\widetilde{p}}$, as in Equation \ref{eq:base}. Starting from Equation (\ref{eq:base}), the elasticity of transport costs to the unit price $\widetilde{p}$ can be shown to be equal to:\footnote{See Appendix XXX for a formal demonstration.}
 \begin{eqnarray}
-\frac{\partial TC}{\partial \widetilde{p}} \frac{\tilde{p}}{TC}&=& \frac{-\frac{t}{\tilde{p}}}{\tau - 1  +\frac{t}{\tilde{p}}} \\
-&=& \frac{-t}{\tau -1+\widetilde{t}} \label{eq:tt2}
+\frac{\partial TC}{\partial \widetilde{p}} \frac{\tilde{p}}{TC}&=& \frac{-\frac{t}{\tilde{p}}}{\tau   +\frac{t}{\tilde{p}}} \notag \\
+&=& \frac{-t}{\tau +\widetilde{t}} \label{eq:tt2}
 \end{eqnarray}
 
 Comparing Equations (\ref{eq:tt1}) and (\ref{eq:tt2}), it is straightforward that the unit price-elasticity of transport costs (in relative terms) is also equal to the share of additive costs in total transport costs.
@@ -265,50 +265,46 @@ While many in the related literature provide an indirect measure of additive cos
 
 
 
-\paragraph{Obtaining the estimated equation} Let us denote $i$ the origin country, and $k$ the product (at the 5-digit level in our benchmark estimate), for each flow that is year- and transport-mode specific. For sake of reading convenience though, we skip the year and transport-mode dimensions in the notations. Transforming the above equation (\ref{eq:base}) as the percentage change in prices induced by transportation (and get rid of the kg unit), we get the following baseline specification underlying our estimation:
+\paragraph{Obtaining the estimated equation} Let us denote $i$ the origin country, and $k$ the product (at the 5-digit level in our benchmark estimate), for each year-mode specific flow. For sake of reading convenience, we skip the year and transport-mode dimensions in the notations. Transforming the above equation (\ref{eq:base}) as the percentage change in prices induced by transportation (and get rid of the kg unit), we get the following baseline specification underlying our estimation:
 
 \begin{equation}
-\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} -1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
+\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
 \end{equation}
 
 We follow \cite{Irrazabal_2015} by considering that \textit{i)} both ad-valorem and additive costs are separable between the origin country ($i$) and the product ($k$) dimensions, and \textit{ii)} this separability is in a multiplicative way for the former and an additive way for the latter.
-In other words, $\tau_{ik}$ and $t_{ik}$ from Equation (\ref{eq:base_estimee}) are written as:\footnote{Notice that, given the magnitude or order of transport costs, assuming an additive or a multiplicative form for country/product fixed effects does not make a substantial difference since, for small values (as we generally obtain), we have $\tau_i\times \tau_k -1 \simeq (\tau_i -1)+ (\tau_k-1)$ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.
+In other words, $\tau_{ik}$ and $t_{ik}$ from Equation (\ref{eq:base_estimee}) are written as:\footnote{Notice that, given the magnitude or order of transport costs, assuming an additive or a multiplicative form for country/product fixed effects does not make a substantial difference since, for small values (as we generally obtain), we have $\tau_i+ \tau_k \simeq (1+\tau_i)\times(1+\tau_k) -1$ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.
 We also provide a robustness analysis to the separability assumption. Given the much higher number of fixed effects to estimate, we run this robustness check on a sub-sample of goods/origin countries. See Section \ref{sec:robustness} for a detailed presentation of this robustness check.}
 
 \begin{eqnarray}
-\tau_{ik} &=&  \tau_{i} \tau_{k} \label{eq:ad-valorem}\\
+1+\tau_{ik} &=& (1+ \tau_{i})(1+ \tau_{k}) \label{eq:ad-valorem}\\
 t_{ik} &=& t_{i} + t_{k} \label{eq:add}
 \end{eqnarray}
 
 \noindent As a result, our underlying structural equation is specified as:
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\tau_{i}\tau_{k} -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ik}} \label{eq:theory_equation}
+\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =(1+\tau_{i})(1+\tau_{k}) -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ik}} \label{eq:theory_equation}
 \end{equation*}
 
-The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by construction, the cif price $p$ cannot be lower than the fas price ($p_{ik}>\widetilde{p}_{ik}$).
-Taking into account this constraint in the estimate implies that the error term should be always positive.
+The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by construction, the import price $p$ cannot be lower than the export price ($p_{ik}\geq\widetilde{p}_{ik}$). Taking into account this constraint in the estimate implies that the error term should be always positive.
 We ensure that this constraint is fulfilled by specifying the error term as follows:
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i}\tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})
+\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left((1+\tau_{i})(1+\tau_{k}) -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})
 \end{equation*}
 \noindent where $\epsilon_{ik}$ follows a normal law centered on 0.
 Considered in logs, the above equation becomes:
 
 \begin{equation}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i}\tau_{k}+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:equation0}
+\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left((1+\tau_{i})(1+\tau_{k})+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:equation0}
 \end{equation}
 
-Equation (\ref{eq:equation0}) is non-linear. It cannot be estimated using standard linear estimators.
-All estimates are thus performed using non-linear least squares.\footnote{The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations.
-The intuitive criterion for convergence is that the sum of squares of residuals does not increase from one iteration to the next.
+Since Equation (\ref{eq:equation0}) is non-linear, it cannot be estimated using standard linear estimators. All estimates are thus performed using non-linear least squares.\footnote{The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares of residuals does not increase from one iteration to the next.
 See \cite{Woolridge-Book-2001} for more details.} Yet, the use of a non-linear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time.
-Confronted with this trade-off, we estimate international transport costs at the 3-digit level as our benchmark classification, even though data series are available at a more disaggregated product level ($k=5$ in our benchmark estimates). This amounts to making the additional assumption, that all 5-digit products $k$ in a 3-digit sector $s$ share the
-same structure of costs.\footnote{One way to gauge the relevance of this assumption is to provide a decomposition variance exercise on the observed cif-fas price.
+Confronted with this trade-off, we estimate international transport costs at the 3-digit level as our benchmark classification, even though data series are available at a more disaggregated product level ($k=5$ in our benchmark estimates). This amounts to making the additional assumption, that all 5-digit products $k$ in a 3-digit sector $s$ share the same structure of costs.\footnote{One way to gauge the relevance of this assumption is to provide a decomposition variance exercise on the observed cif-fas price.
 As reported in Appendix \ref{app:decomp_variance}, the share of the observed variance that is accounted for by the between-sectors ($s$) variance is roughly similar to the between-product ($k$) variance.}$^{,}$\footnote{One may object that we could preserve the estimation at the 5-digit level by running an OLS estimation on the equation taken in level, i.e.
 on the basis of Equation (\ref{eq:base_estimee}), specifying the error term additively.
-This would not solve the problem, however, for three main complementary reasons.
+This would not solve the problem though, for three main complementary reasons.
 First, at the 5-digit level the number of fixed effects to include in the estimation would be more than 430,000 (with 216 countries and 2,029 products), making the estimation computationally extremely burdensome, even in OLS.
 Imposing Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}) to reduce the number of fixed effects would drive us back to the non-linearity issue for fixed effects.
 Second, making the error term (specified as following a normal law centered on 0) enter Equation (\ref{eq:base_estimee}) additively implies negative values for some of the estimated residuals $\widehat{\epsilon}_{ik}$, which is inconsistent with the constraint that $\frac{p_{ik}}{\widetilde{p}_{ik}}>1$.
@@ -316,7 +312,7 @@ Third, estimating the equation in level does not eliminate the fact that it is n
 
 This drives us to estimate a modified version of Equation (\ref{eq:equation0}), specified as:
 \begin{equation}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i} \tau_{s(k)}+\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:model_IetA}
+\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left((1+\tau_{i})(1+ \tau_{s(k)})-1+\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}} \right) + \epsilon_{ik} \label{eq:model_IetA}
 \end{equation}
 where $\tau_{i}$, $\tau_{s(k)}$, $t_{i}$ and $t_{s(k)}$ are the parameters to be estimated, i.e., fixed effects specific to each origin country $i$ and sector $s$ (at the 3-digit classification level), and $\epsilon_{ik}$ the residual centered on 0.\footnote{Note that, strictly speaking, the exact equation that we estimate is the following:
 $$\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\sum_i \alpha_i^\tau \mathbbm{1}_i \times \sum_{s(k)}\alpha_{s(k)}^\tau \mathbbm{1}_{s(k)}+ \frac{\sum_i\alpha_i^t\mathbbm{1}_i + \sum_{s(k)}\alpha^t_{s(k)}\mathbbm{1}_{s(k)}}{\widetilde{p}_{ik}}-1\right)+\epsilon_{ik} $$
