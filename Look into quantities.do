@@ -64,7 +64,17 @@ replace htsnumber=subinstr(htsnumber,`"."',"",.)
 
 rename unitofquantity unit_qy1
 
-generate hs6=substr(htsnumber,0,6)
+rename htsnumber hs
 
-merge m:1 hs6 using "$dir_data/hs2002_sitc2.dta"  
+merge 1:m hs using "$dir_data/base_hs10_2019.dta"  
+tabulate unit_qy1, sort
+
+collapse (sum) con_val, by (unit_qy1)
+egen total = total(con_val)
+gen perc = con_val/total
+format perc %9.2f
+br
+
+******Tout cela montre que les mesures en kilogrammes sont minoritaires (1/4-1/3)
+ 
 
