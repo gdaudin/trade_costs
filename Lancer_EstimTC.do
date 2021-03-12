@@ -107,8 +107,8 @@ log close
 
 end
 
-
-*Pour quand on a les quantités
+/*
+*Pour quand on a les quantités Hummels
 local mode air
 *foreach  year of numlist  1976(3)2019
 
@@ -118,7 +118,18 @@ foreach y of numlist 2014(-1) 1974 {
 	EstimTC `y' `m' 5 3 hummels_tra_qy1_qy
 	}
 }
+*/
 
+*Pour quand on a les quantités HS10
+local mode air
+*foreach  year of numlist  1976(3)2019
+
+foreach y of numlist 2019 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 5 3 hs10_qy1_wgt
+	EstimTC `y' `m' 5 3 hs10_qy1_qy
+	}
+}
 
 
 
