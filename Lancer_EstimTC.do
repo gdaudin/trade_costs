@@ -121,10 +121,10 @@ foreach y of numlist 2014(-1) 1974 {
 */
 
 *Pour quand on a les quantités HS10
-local mode air
+local mode air ves
 *foreach  year of numlist  1976(3)2019
 
-foreach y of numlist 2019 {
+foreach y of numlist 2017(-1)2002 {
 	foreach m in `mode' {	
 	EstimTC `y' `m' 5 3 hs10_qy1_wgt
 	EstimTC `y' `m' 5 3 hs10_qy1_qy
