@@ -508,71 +508,6 @@ On the contrary, they represent a sizable and structural dimension of internatio
 If the share of additive costs in total costs roughly amounts to 48\% (42\%) in vessel (air) transport on average, one can further notice that it varies substantially over time, from a minimum of 30\% to a maximum of 60\% depending on the year considered.
 In the next section, we further investigate the importance of the (varying pattern of) additive costs, as regards the determinants of transport costs time trends.
 
-\paragraph{Endogeneity concerns} One may be concerned that the specification of Equations (\ref{eq:model_IetA}) or (\ref{eq:model_nlI}) might be subject to an endogeneity bias, as the price set by the exporter may vary depending on the transport cost burden. Studies on the pricing-to-market behavior of firms (see \citealp{Krugman-87}) show that we cannot exclude that the export price set by the firm ($\widetilde{p}_{ik}$) is partly endogenous to the size of transport costs (for instance, the exporting firm absorbing (part of) the transport costs by reducing the fas price).
-Besides, related concerns may arise from productivity-sorting model in \cite{melitz} or the quality-sorting model in \cite{baldwin_harrigan}: more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair. In addition, there is also the possibility that bigger firms might impact transport costs, due to their ability of bargaining discounts for larger shipped volumes.
-
-It is true we are not interested in causal inference, since our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components. However, the latter can be biased by the aforementioned endogeneity issues since they imply that $\frac{1}{\widetilde{p}_{ik}}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. This may ultimately harm the estimation of $\widehat{t}/\widetilde{p}$ and consequently, $\widehat{\tau}$.
-
-Therefore, we propose to compare our main estimates with those stemming from a two-stage least-squares procedure. Put differently, we will replace in the right-hand side of Equation (\ref{eq:model_IetA}) $\widetilde{p}$ by predicted values stemming from the following equation:
-
-\begin{equation}
-\ln\left(\widetilde{p}_{ik}\right)= \beta IV_{ik} +\lambda_{is(k)}+ \mu_{ik} \label{eq:first_stage}
-\end{equation}
-
-\noindent where $\lambda_{is(k)}$ represents country-3-digit sector fixed effects, and $IV_{ik} $ the instrumental variable used to purge $\widetilde{p}_{ik}$ from endogeneity issues. Following common practice in the literature, we will use as instrument 5-digit product-specific tariff rates, or alternatively, a combination between the latter and lagged fas prices (XXX TO BE DONE XXX). Consistently with our overall estimation strategy, Equation (\ref{eq:first_stage}) is estimated on a yearly basis.
-
-Tables \ref{tab: FS_air} and \ref{tab: FS_ves} report summary results of these first stage regressions:
-
-
-\begin{table}[htbp]\centering
-\caption{Summary Results for First-Stage Regressions - Air\label{tab: FS_air}}
-\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
-\textbf{variable } & \textbf{mean} & \textbf{p25} & \textbf{p50} & \textbf{p75} & \textbf{sd} & \textbf{min} & \textbf{max} \\
-\hline
-   $\beta_{IV}$ &    -0.0858 &    -0.1247 &    -0.0944 &    -0.0362 &     0.0469 &    -0.1741 &    -0.0128 \\
-        $sd_{\beta}$  &     0.0184 &     0.0139 &     0.0197 &     0.0237 &     0.0082 &     0.0048 &     0.0331 \\
-  Student t  &    -5.2255 &    -6.5428 &    -5.2703 &    -3.7943 &     2.4782 &   -11.4557 &    -0.4184 \\
-    F stat  &    33.2938 &    14.4215 &    27.7801 &    42.8707 &    28.1280 &     0.1751 &   131.2323 \\
-  adj $R^2$  &     0.4845 &     0.4712 &     0.4768 &     0.4934 &     0.0227 &     0.4452 &     0.5472 \\
-  $R^2$ within &     0.0025 &     0.0015 &     0.0023 &     0.0036 &     0.0016 &     0.0000 &     0.0064 \\
-\hline
-\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} }}
-\end{tabular}
-\end{table}
-
-
-\begin{table}[htbp]\centering
-\caption{Summary Results for First-Stage Regressions -Ves\label{tab: FS_ves} }
-\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
-\textbf{variable } & \textbf{      mean} & \textbf{       p25} & \textbf{ p50} & \textbf{p75} & \textbf{sd} & \textbf{       min} & \textbf{       max} \\
-\hline
-   $\beta_{IV}$ &     0.0584 &     0.0180 &     0.0733 &     0.0846 &     0.0349 &    -0.0010 &     0.1147 \\
-       $sd_{\beta}$  &     0.0124 &     0.0108 &     0.0138 &     0.0155 &     0.0047 &     0.0041 &     0.0195 \\
-  Student t  &     4.5161 &     3.3592 &     4.8718 &     5.5721 &     1.9626 &    -0.0781 &     8.9563 \\
-    F stat  &    24.1509 &    11.4029 &    23.7486 &    31.0489 &    17.2397 &     0.0061 &    80.2158 \\
-  adj $R^2$ &     0.5856 &     0.5767 &     0.5878 &     0.5960 &     0.0172 &     0.5364 &     0.6323 \\
-  $R^2$ within &     0.0020 &     0.0006 &     0.0021 &     0.0032 &     0.0015 &     0.0000 &     0.0062 \\
-\hline
-\multicolumn{8}{l}{\footnotesize{\emph{Source:} }}
-\end{tabular}
-\end{table}
-
-Both Tables suggest that custom duties are a very good predictor of fas prices $\widetilde{p}_{ik}$, with strong significance. The F-statistic for significance of the instrument in the first-stage is on average well above 10, the ``rule-of-thumb'' threshold value recommended by \cite{staiger_stock} as a test for weak instrumentation.
-
-XXX on peut aussi ajouter des graphs des beta estimés ici, peut-être éventuellement avec les IC XXX
-
-XXX Reste ici l'épineux problème de la différence de signe entre les deux modes de transport; avant de creuser, voir si on ne résoudrait pas le problème avec l'IV combinant duties et lagged prices XXX
-
-Provided that the instrument used in Equation \ref{eq:first_stage} displays the right statistical properties, we can confidently re-inject the predictions it produces for $\widetilde{p}_{ik}$ on the right-hand side of Equation (\ref{eq:model_IetA}\footnote{Note that, since the predictions are expressed in logarithms, they are transformed through the exponential function before their implementation in Equation (\ref{eq:model_IetA}.} to produce a 2SLS-type of estimation. Results are displayed below, as well as a measure of the gap with our main estimates.
-
-XXX We expect the gap to be very small XXX
-
-
-%However, we consider as a reasonable assumption that the exporting firm cannot influence the international transport cost sector, that would imply a causal effect of the firm's prices on the transport costs value, except in the choice between air and vessel transport (that is beyond our scope of analysis).
-%Otherwise stated, conditional to an export price and a transport mode, the gap between the export price declared to the custom data and the import price recorded by the US administration is beyond the firm's control.
-%In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
-
-
 
 
 \section{Transport costs time trends: the role of the additive component}\label{sec:results_trends}
@@ -967,6 +902,28 @@ This suggests that the weighting scheme is not innocuous in the time trend decom
 However, Figure \ref{fig:compeffects_robustness} also shows that the composition effects have contributed to strengthen the decrease in the ``ceteris paribus'' transport costs in air transport (in Figure \ref{fig:compeffects_robustness}, panel (a), overall transport costs have decreased more than the fitted component), in accordance with the conclusions drawn from Figure \ref{fig:totalTC_compeffects_excl}, rather than partly offsetting this decline, as argued by \cite{hummels2007}.
 This confirms that it is the functional form and precisely the modeling of the additive component, rather than the weighting scheme, that is key in understanding the underlying determinants of the overall transport costs time trends, as pointed out in Section \ref{sec:results_trends}.
 
+\subsection{Endogeneity concerns} One may be concerned that the specification of Equations (\ref{eq:model_IetA}) or (\ref{eq:model_nlI}) might be subject to an endogeneity bias, as the price set by the exporter may vary depending on the transport cost burden. Studies on the pricing-to-market behavior of firms (see \citealp{Krugman-87}) show that we cannot exclude that the export price set by the firm ($\widetilde{p}_{ik}$) is partly endogenous to the size of transport costs (for instance, the exporting firm absorbing (part of) the transport costs by reducing the fas price).
+Besides, related concerns may arise from productivity-sorting model in \cite{melitz} or the quality-sorting model in \cite{baldwin_harrigan}: more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair. In addition, there is also the possibility that bigger firms might impact transport costs, due to their ability of bargaining discounts for larger shipped volumes.
+
+It is true we are not interested in causal inference, since our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components. However, the latter can be biased by the aforementioned endogeneity issues since they imply that $\frac{1}{\widetilde{p}_{ik}}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. This may ultimately harm the estimation of $\widehat{t}/\widetilde{p}$ and consequently, $\widehat{\tau}$.
+
+Therefore, we propose to compare our main estimates with those stemming from a two-stage least-squares procedure. Put differently, we replace in the right-hand side of Equation (\ref{eq:model_IetA}) $\widetilde{p}$ by predicted values stemming from a first-stage equation regressing $\widetilde{p}$  on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. Section \ref{app:first_stage_IV} in Appendix \ref{app:more_results} provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. In particular, it shows that our main Instrumental Variable displays the right statistical properties, ant that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation (\ref{eq:model_IetA}\footnote{Note that, since the predictions are expressed in logarithms, they are transformed through the exponential function before their implementation in Equation (\ref{eq:model_IetA}.} to produce a 2SLS-type of estimation. Figure \ref{fig:comp_IV_SITC5} below reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns. 
+
+\begin{figure}[htbp]
+\caption{Transport cost time trends: robustness to the weighting scheme}
+\label{fig:comp_IV_SITC5}
+\begin{center}
+\includegraphics[height=8cm]
+{comp_IV_SITC5.pdf}
+\end{center}
+\end{figure}
+
+%However, we consider as a reasonable assumption that the exporting firm cannot influence the international transport cost sector, that would imply a causal effect of the firm's prices on the transport costs value, except in the choice between air and vessel transport (that is beyond our scope of analysis).
+%Otherwise stated, conditional to an export price and a transport mode, the gap between the export price declared to the custom data and the import price recorded by the US administration is beyond the firm's control.
+%In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
+
+
+
 
 
 \section{Conclusion \label{sec:conclu}}
@@ -1272,6 +1229,148 @@ This holds throughout the period and for both transport modes.
 This suggests that what primarily matters in international transport costs is mostly attributable to the product \textit{per se}, rather than to the country where it comes from.
 %JH: un peu too much, non ? "By extension, one can expect a limited role of distance and other country-related variables as determinants of transport costs."
 
+\subsection{IV estimates: First stage \label{app:first_stage_IV}}
+
+We report here the first-stage procedure and estimates underlying the IV estimates reported in section \ref{sec:results_decomposition}. We start by detailing the theoretical intuitions behind the first-stage equation. Afterwards, we report the estimates based on 5-digit-product-level data, before moving to the more disaggregate HS10 level for sensitivity checks.
+
+\paragraph{First-stage equation.}
+
+Our main instrumental variable for the fas price $\widetilde{p}_{ikt}$ is the share of tariff duties over the total value imported, at the product line. Tariffs may be considered as a (reasonably) exogenous source of variation for fas prices, i.e., uncorrelated with transport costs changes and mostly independent from firm- or sector-level dynamics. In this respect, considering the predicted part of the fas price related to tariff duties is likely to solve potential endogeneity biases. In other words, tariff shocks should eliminate from the fas price any endogenous component that might me related to transport costs.
+
+Denoting as usual $i$ the origin country, $k$ the product at the 5 digit level, we assume that the fas price $\widetilde{p}_{ik}$ decomposes in two components, say $\bar{p}_{ik}$ the ``firm-specific'' price (related to its cost and pricing strategy) and $\tau^d_{ik}$ the tax duty (out of the firm's hands) according to :
+
+\begin{equation}
+\widetilde{p}_{ikt} = (1+\tau^d_{is(k)t})^\alpha \left(\bar{p}_{ikt}\right)^\beta \label{eq:link_fas_duty}
+\end{equation}
+
+\noindent with $s(k)$ the 3-digit classification as a function of the 5-digit product classification.
+
+We first-differentiate this equation (between $t$ and $t-1$), with $\Delta $ the difference operator ($\Delta\widetilde{p}_{ikt} = \widetilde{p}_{ikt} - \widetilde{p}_{ikt-1}$ and so on):
+\begin{eqnarray*}
+&&\Delta \widetilde{p}_{ikt} = \beta \bar{p}_{ikt-1}^{\beta-1}(1+\tau^d_{is(k)t-1})\Delta \bar{p}_{ikt} + \alpha \bar{p}^\beta_{ikt-1} (1+\tau^d_{ikt-1})^{\alpha-1}\Delta \tau^d_{is(k)t}  \\
+\Leftrightarrow &&\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}} = \beta \frac{\Delta \bar{p}_{ikt}}{\widetilde{p}_{ikt-1}} \frac{(1+\tau^d_{is(k)t-1})^\alpha \bar{p}_{ikt-1}^\beta}{\bar{p}^\beta_{ikt-1}(1+\tau^d_{is(k)t-1})^\alpha} +\alpha \frac{\Delta \tau^d_{is(k)t-1}}{1+\tau_{is(k)t-1}^d}\frac{(1+\tau^d_{is(k)t-1})^\alpha \bar{p}_{ikt-1}^\beta}{\bar{p}^\beta_{ikt-1}(1+\tau^d_{is(k)t-1})^\alpha} \end{eqnarray*}
+
+leading to:
+\begin{equation}
+\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}} =  \beta \frac{\Delta \bar{p}_{ikt}}{\bar{p}_{ikt-1}} +\alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{ikt-1}^d} \label{eq:firststage_Deltalog}
+\end{equation}
+
+Equation (\ref{eq:firststage_Deltalog}) brings a first-stage regression model as follows:
+
+$$\frac{\Delta \widetilde{p}_{ikt}}{\widetilde{p}_{ikt-1}} = \alpha \frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} + \gamma_{i} +\gamma_{k}+\epsilon_{ik}$$
+
+Or equivalently, taking logs:
+$$\Delta \log \widetilde{p}_{ikt}= \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\gamma_{k}+\epsilon_{ikt}$$
+
+
+\noindent with the LHS being the growth rate of the fas price (between $t$ and $t-1$). $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ is the change in the considered tariff rate, the second and third terms are fixed effects designed to capture changes in the ``firm-specific price'' $\bar{p}_{ik}$, $\epsilon_{ikt}$ being the residual. Note that, consistently with the second stage, the first stage will be estimated on a year-by-year basis, and will incorporate 3-digit-sector fixed effects. This implies to consider the following functional form of the first-stage equation:
+
+\begin{equation}
+\Delta \log \widetilde{p}_{ikt} = \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\gamma_{s}+\epsilon_{ikt} \label{eq:firststage_Deltalog}
+\end{equation}
+
+or equivalently:
+
+\begin{equation}
+\log \widetilde{p}_{ikt} = \log \widetilde{p}_{ikt-1} + \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\gamma_{s}+\epsilon_{ikt} \label{eq:firststage_Deltalog_bis}
+\end{equation}
+
+Finally, we allow for more flexibility in the empirical set-up, by allowing a variable degree of persistence in the fas price, i.e. by relieving the constraint of a unit parameter on $\log \widetilde{p}_{ikt-1}$:
+
+
+\begin{equation}
+\log \widetilde{p}_{ikt} = \beta\log \widetilde{p}_{ikt-1} + \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\lambda_{s(k)}+\epsilon_{ikt} \label{eq:firststage_final}
+\end{equation}
+
+Note that in such a formulation, $\log \widetilde{p}_{ikt-1}$ appears as a second excluded instrument for $\log \widetilde{p}_{ikt}$. The $\alpha$ parameter should fall between $-1$ and $0$, and has a direct theoretical interpretation in terms of ``pricing-to-market'' behavior of firms. $\alpha = 0$ corresponds to the case where the considered sector is made of firms not adjusting their fas price to the change in tariff, that would cancel out the influence of the tariff change on the price paid by the US consumers; this rather corresponds to small firms which do not have enough market power to manipulate their prices following changes in international competition. $\alpha = -1$ is the other polar case: the sector here displays full pricing-to-market, because it involves large firms fully compensating the tariff change through their margin (see \citealp{Berman_Martin_Mayer_2012}).
+In-between, $\alpha$ $\in$ $]-1,0[$ corresponds to some variable degree of``pricing-to-market'' in the sector, characterized by firms offsetting partly the impact of the tariff change on the fas price by adjusting the producer price in the opposite direction of the tariff change.
+
+As already mentioned, consistently with the cross-section analysis adopted by now, the first-stage equation is estimated on a yearly basis, and implements 3-digit sector fixed effects ($\lambda_{is(k)}$ ). We then replace the observed series of fas prices in the right-hand side of Equation (\ref{eq:model_IetA}) by the predicted fas prices produced by Equation (\ref{eq:firststage_final}). We now report results based on our main database at the SITC 5-digit level, before replicating the exercise on HS10 digit level, consistently with one major robustness implemented in the paper.
+
+\paragraph{First-stage estimates based on SITC5 data.}
+
+Here we run Equation (\ref{eq:firststage_final}) on our standard dataset, based on SITC-5 data. Consistently, we will use as instrument 5-digit product-specific tariff rates, as well as the one-year-lagged fas price. Table \ref{tab: FS_sitc5} reports summary results of these first stage regressions, while Figure \ref{fig: FS_IV_SITC5} displays year estimates of $\beta$ and $\alpha$ parameters, together with 5\% confidence bands:
+
+
+\begin{table}[htbp]\centering
+\caption{Summary Results for First-Stage Regressions\label{tab: FS_sitc5}}
+\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+\textbf{variable } & \textbf{Mean} & \textbf{1\textsuperscript{st} Quart.} & \textbf{Median} & \textbf{3\textsuperscript{rd} Quart.} & \textbf{ S.D.} & \textbf{Min} & \textbf{Max} \\
+\hline
+ $\log \widetilde{p}_{ikt-1}$ ($\widehat{\beta}$)&     0.7484 &     0.7400 &     0.7551 &     0.7663 &     0.0248 &     0.6616 &     0.7788 \\
+ % sd_lag~b  &     0.0051 &     0.0040 &     0.0045 &     0.0065 &     0.0015 &     0.0037 &     0.0093 \\
+Student t$_{\widehat{\beta}}$  &   157.07 &   113.24 &   168.82 &   191.15 &    41.23 &    82.88 &   208.23 \\
+$\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)  &    -0.6324 &    -0.8858 &    -0.6079 &    -0.3639 &     0.3962 &    -1.8353 &     0.0534 \\
+ %sd_tar~f  &     0.2216 &     0.2149 &     0.2363 &     0.2599 &     0.0681 &     0.0031 &     0.3399 \\
+ Student t$_{\widehat{\alpha}}$  &    -2.8178 &    -3.7575 &    -2.5741 &    -1.8099 &     1.6808 &    -7.3086 &     0.2280 \\
+ %F_stat  &   1.32e+04 &  6436.5362 &   1.43e+04 &   1.83e+04 &  6174.8488 &  3452.2548 &   2.17e+04 \\
+  F-statistic $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$  &    10.7023 &     3.2757 &     6.6260 &    14.1188 &    11.4529 &     0.0008 &    53.4159 \\
+  %adj_r_~e  &     0.7843 &     0.7809 &     0.7858 &     0.7899 &     0.0105 &     0.7438 &     0.8075 \\
+%  $R^2$ within&     0.5610 &     0.5424 &     0.5738 &     0.5846 &     0.0339 &     0.4373 &     0.5972 \\
+\hline
+%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} C:\Users\coadministrateur\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1_yearly/FS_parameters_both_yearly_prod5_sect3.dta}}
+\end{tabular}
+\end{table}
+
+
+
+
+\begin{figure}[htbp]
+\caption{Yearly estimates of $\alpha$ and $\beta$ - SITC5}\label{fig: FS_IV_SITC5}
+\begin{center}
+\begin{tabular}{cc}
+%{\small (a) $\beta$} & {\small (b) $\alpha$}\\
+\includegraphics[width=3.2in, height=3.2in,keepaspectratio]{beta_lag_SITC5.pdf}
+& \includegraphics[width=3.2in,height=3.2in,keepaspectratio]{alpha_tariff_SITC5.pdf} \\
+\end{tabular}
+\end{center}
+\end{figure}
+
+%Staiger and Stock (1997) formalized the definition of “weak instruments” and most researchers seem to have concluded (incorrectly) from that work (orhearsay) that if the F-statistic on the excluded instruments in the first stage is greater than 10, one need worry no further about weak instruments.
+
+%\newpage
+
+Table \ref{tab: FS_sitc5} suggests that custom duties variations are a satisfactory predictor of fas prices $\widetilde{p}_{ik}$, with strong significance. The F-statistic on the excluded instrument ($\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)) is on average above 10, the ``rule-of-thumb'' threshold value recommended by \cite{staiger_stock} as a test for weak instrumentation. In addition, Figure \ref{fig: FS_IV_SITC5} shows that most values of the $\alpha$ parameter stand between 0 and -1, as expected, except in 3 or 4 occasions, corresponding to abrupt fluctuations in oil prices. This is typically the case in 1975, with $\alpha$=-1.83. All in all, these estimates make us confident in the validity of our instrumentation strategy.
+
+
+
+\paragraph{First-stage estimates based on HS10 data.}
+
+Here we replicate our first-stage estimations using HS10 data, available between 2002 and 2019. In addition to one-year-lagged fas price, we use this time HS10-digit product-specific tariff duties. Table \ref{tab: FS_HS10} reports summary results of these first-stage regressions, while Figure \ref{fig: FS_IV_HS10} presents yearly estimates of $\beta$ and $\alpha$ parameters, together with 5\% confidence bands:
+
+
+\begin{table}[htbp]\centering
+\caption{Summary Results for First-Stage Regressions\label{tab: FS_HS10}}
+\begin{tabular} {@{} l r r r r r r r @{}} \\ \hline
+\textbf{variable } & \textbf{Mean} & \textbf{1\textsuperscript{st} Quart.} & \textbf{Median} & \textbf{3\textsuperscript{rd} Quart.} & \textbf{ S.D.} & \textbf{Min} & \textbf{Max} \\
+\hline
+$\log \widetilde{p}_{ikt-1}$ ($\widehat{\beta}$) &     0.7496 &     0.7453 &     0.7504 &     0.7539 &     0.0055 &     0.7385 &     0.7578 \\
+ % sd_lag~t  &     0.0020 &     0.0020 &     0.0020 &     0.0021 &     0.0001 &     0.0019 &     0.0021 \\
+Student t$_{\widehat{\beta}}$  &   369.81 &   361.19 &   366.34 &   376.77 &    12.91 &   352.61 &   395.33 \\
+$\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)  &    -0.3612 &    -0.5636 &    -0.4175 &    -0.1918 &     0.3393 &    -0.9258 &     0.3448 \\
+%  sd_tar~f  &     0.1511 &     0.1451 &     0.1618 &     0.1702 &     0.0325 &     0.0728 &     0.2011 \\
+ Student t$_{\widehat{\alpha}}$   &    -2.2505 &    -3.3518 &    -2.5489 &    -1.3144 &     2.7027 &    -7.9494 &     4.7359 \\
+  %  F_stat  &   6.85e+04 &   6.52e+04 &   6.71e+04 &   7.10e+04 &  4854.7592 &   6.22e+04 &   7.83e+04 \\
+ F-statistic $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ &    11.9399 &     1.7974 &     9.0342 &    14.8620 &    15.1916 &     0.8415 &    63.1932 \\
+%  adj_r_~e  &     0.7697 &     0.7660 &     0.7691 &     0.7725 &     0.0068 &     0.7550 &     0.7826 \\
+%  r_squa~n  &     0.5617 &     0.5591 &     0.5624 &     0.5661 &     0.0057 &     0.5505 &     0.5693 \\
+\hline
+%\multicolumn{8}{@{}l}{\footnotesize{\emph{Source:} C:\Users\coadministrateur\Dropbox\Papier_Lise_Guillaume\private\revision_JOEG\IV_rev/results/IV_referee1_yearly/FS_parameters_both_yearly_prod5_sect3.dta}}
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+\caption{Yearly estimates of $\alpha$ and $\beta$ - HS10}\label{fig: FS_IV_HS10}
+\begin{center}
+\begin{tabular}{cc}
+%{\small (a) $\beta$} & {\small (b) $\alpha$}\\
+\includegraphics[width=3.2in, height=3.2in,keepaspectratio]{beta_lag_HS10.pdf}
+& \includegraphics[width=3.2in,height=3.2in,keepaspectratio]{alpha_tariff_HS10.pdf} \\
+\end{tabular}
+\end{center}
+\end{figure}
+
+Results are qualitatively very similar to those reported on the longer-time-span, more-aggregated-SITC5 dataset previously reported. The F-statistic on the excluded instrument ($\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)) is on average close to 12, slightly higher than in our benchmark. As previously, Figure \ref{fig: FS_IV_HS10} shows that most values of the $\alpha$ parameter stand between 0 and -1, as expected, except in a few years which seem again to coincide with significant fluctuations in oil prices - e.g. Interestingly, the value of the $\alpha$ parameter is on average -0.36, lower than in our benchmark on SITC5 data. At this highly disaggregated level, pricing-to-market behavior seems less strong, indicating that the average firm is smaller than its average SITC5 counterpart. Interestingly, this average value is almost identical to the one found by \citet{Fontagne_Martin_Orefice2018} on French HS6 data between 1995 and 2010 (see the first-stage coefficients in their Table 6), or by \citet{Bussiere2013} on country-level data between 1980 and 2006. In any case, this strengthens our confidence in the validity of our estimation strategy. 
 
 \clearpage
 \setcounter{table}{0}
