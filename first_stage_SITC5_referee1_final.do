@@ -93,7 +93,7 @@ egen sector_5d=group(sitc2_5d)
 
 egen cntry=group(iso_o)
 
-*egen cntry_sect3d=group(iso_o sitc2_3d)
+egen cntry_sect3d=group(iso_o sitc2_3d)
 
 
 egen panel=group(iso_o mode sitc2)
@@ -154,6 +154,12 @@ capture drop FEd
 **********************************************************
 **********First stage regressions: ESTIMATES**************
 **********************************************************
+/*qui statsby "reghdfe ldgf lpop iroise switch_all lnb_partis unemp_rate alignement_catd*  catd* alignement incumbent, a(codgeo dep_y) vce(robust)" _b _se e(N), clear
+
+keep b_alignement_catd* se_alignement_catd*
+*/
+
+
 
 forvalues x=1975(1)2019{
 	use "$dir/hummels_FS_SITC5.dta", clear
@@ -166,9 +172,11 @@ svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
+replace varianceds_tariff_lise=abs(varianceds_tariff_lise)
 gen sd_tariff = sqrt(varianceds_tariff_lise)
 gen sd_lag_prix_fob =  sqrt(variancellprix_fob)
 drop *cons 
+replace sd_tariff = sd_tariff[_n+1] if sd_tariff~=.
 
 mat r_square= e(r2)
 svmat double r_square, names(matcol)
@@ -248,13 +256,28 @@ tabstat beta_lag_price sd_lag_prix_fob t_student_lag_pfob beta_Fds_tariff_lise s
 ****a few useful descriptive statistics in LaTex Tables AFTER 2001 (to ease comparisons with current HS10 data)*****
 latabstat beta_lag_price sd_lag_prix_fob t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within if year>2001, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
+****Graphs with IC****
+
+g beta_price_min = beta_lag_price-1.65*sd_lag_prix_fob
+g beta_price_max = beta_lag_price+1.65*sd_lag_prix_fob
+
+g beta_tariff_min = beta_Fds_tariff_lise-1.65*sd_tariff
+g beta_tariff_max = beta_Fds_tariff_lise+1.65*sd_tariff
 
 
-scatter beta_lag_price year
-graph save graph_lag_yearly_both, replace
 
-scatter beta_Fds_tariff_lise year
-graph save graph_tariff_yearly_both, replace
+global bandwidth = 0.66
+twoway rarea beta_price_min beta_price_max year, bsty(ci) sort ///
+|| scatter beta_lag_price year, xlab(1975(4)2019) scheme(s1mono) c(l) xtitle("Year") ytitle("{&beta}") legend(off) msymbol(i) title("Distribution of {&beta} parameter on lagged fas price across years", pos(11) ring(0) size(medium))   ///
+|| line beta_lag_price year
+graph export "$dir/results/IV_referee1_yearly/beta_lag_SITC5.pdf", as(pdf) replace
+
+
+global bandwidth = 0.66
+twoway rarea beta_tariff_min beta_tariff_max year, bsty(ci) sort ///
+|| scatter beta_Fds_tariff_lise year, xlab(1975(4)2019) scheme(s1mono) c(l) xtitle("Year") ytitle("{&alpha}") legend(off) msymbol(i) title("Distribution of {&alpha} parameter on tariffs across years", pos(11) ring(0) size(medium))   ///
+|| line beta_Fds_tariff_lise year
+graph export "$dir/results/IV_referee1_yearly/alpha_tariff_SITC5.pdf", as(pdf) replace
 
 
 
@@ -285,7 +308,7 @@ forvalues x=1975(1)2019{
 	
 reghdfe lprix_fob llprix_fob ds_tariff_lise, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
-predict lprix_yearly_hat_allFE,xbd 
+predict lprix_yearly_air_hat_allFE,xbd 
 	drop FEc FEs
 	
 save "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", replace
@@ -322,8 +345,8 @@ forvalues x=1975(1)2019 {
 }
 
 
-count if lprix_yearly_hat_allFE==.
-drop if lprix_yearly_hat_allFE==.
+count if lprix_yearly_air_hat_allFE==.
+drop if lprix_yearly_air_hat_allFE==.
 
 save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly_prod5_sect3.dta", replace
 

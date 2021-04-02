@@ -244,9 +244,11 @@ svmat double beta, names(matcol)
 mat variance=e(V)
 
 svmat double variance, names(matcol)
+replace varianceds_tariff_lise=abs(varianceds_tariff_lise)
 gen sd_tariff = sqrt(varianceds_tariff_lise)
 gen sd_lag_prix_fob_wgt =  sqrt(variancellprix_fob_wgt)
 drop *cons 
+replace sd_tariff = sd_tariff[_n+1] if sd_tariff~=.
 
 mat r_square= e(r2)
 svmat double r_square, names(matcol)
@@ -316,13 +318,30 @@ tabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_li
 ****a few useful descriptive statistics in LaTex Tables*****
 latabstat beta_lag_price sd_lag_prix_fob_wgt t_student_lag_pfob beta_Fds_tariff_lise sd_tariff t_student_tariff F_stat F_stat_tariff adj_r_square r_square_within, s(mean p25 med p75 sd min max) columns(statistics) format(%9.4fc)
 
+****Graphs with IC****
+
+g beta_price_min = beta_lag_price-1.65*sd_lag_prix_fob
+g beta_price_max = beta_lag_price+1.65*sd_lag_prix_fob
+
+g beta_tariff_min = beta_Fds_tariff_lise-1.65*sd_tariff
+g beta_tariff_max = beta_Fds_tariff_lise+1.65*sd_tariff
 
 
-scatter beta_lag_price year
-graph save graph_lag_yearly_both, replace
 
-scatter beta_Fds_tariff_lise year
-graph save graph_tariff_yearly_both, replace
+global bandwidth = 0.66
+twoway rarea beta_price_min beta_price_max year, bsty(ci) sort ///
+|| scatter beta_lag_price year, xlab(2003(2)2019) scheme(s1mono) c(l) xtitle("Year") ytitle("{&beta}") legend(off) msymbol(i) title("Distribution of {&beta} parameter on lagged fas price across years", pos(11) ring(0) size(medium))   ///
+|| line beta_lag_price year
+graph export "$dir/results/IV_referee1_yearly/beta_lag_HS10.pdf", as(pdf) replace
+
+
+global bandwidth = 0.66
+twoway rarea beta_tariff_min beta_tariff_max year, bsty(ci) sort ///
+|| scatter beta_Fds_tariff_lise year, xlab(2003(2)2019) scheme(s1mono) c(l) xtitle("Year") ytitle("{&alpha}") legend(off) msymbol(i) title("Distribution of {&alpha} parameter on tariffs across years", pos(11) ring(0) size(medium))   ///
+|| line beta_Fds_tariff_lise year
+graph export "$dir/results/IV_referee1_yearly/alpha_tariff_HS10.pdf", as(pdf) replace
+
+
 
 
 
@@ -355,7 +374,7 @@ forvalues x=2003(1)2019{
 	
 reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
-predict lprix_yearly_hat_allFE,xbd 
+predict lprix_yearly_air_hat_allFE,xbd 
 	drop FEc FEs
 	
 save "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", replace
@@ -392,9 +411,9 @@ forvalues x=2003(1)2019 {
 }
 
 
-count if lprix_yearly_hat_allFE==.
+count if lprix_yearly_air_hat_allFE==.
   *719,543, 26% of the sample 2006-2013
-drop if lprix_yearly_hat_allFE==.
+drop if lprix_yearly_air_hat_allFE==.
 
 
 save "$dir/results/IV_referee1_yearly/FS_predictions_both_yearly_prod10_sect3.dta", replace

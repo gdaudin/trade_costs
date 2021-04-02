@@ -358,6 +358,17 @@ if "`database'"=="hummels_tra_qy1_wgt" {
 	global stock_results $dir/results/qy1_wgt
 }
 
+
+if "`database'"=="hs10_qy1_qy" {
+	global stock_results $dir/results/hs10_qy1_qy
+}
+
+
+if "`database'"=="hs10_qy1_wgt" {
+	global stock_results $dir/results/hs10_qy1_wgt
+}
+
+
 ****************Préparation de la base blouk
 
 
@@ -386,9 +397,9 @@ if "`database'"=="hummels_tra" {
 
 
 if "`database'"=="base_hs10_newyears"  {
+	use "$dir_data/base_hs10_`year'", clear
 	keep if year==`year'
 	keep if mode=="`mode'"
-	use "$dir_data/base_hs10_`year'", clear
 }
 
 
@@ -441,6 +452,32 @@ if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
 }
 
 
+if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
+	use "$dir_data/base_hs10_`year'", clear
+	
+	collapse (sum) val qy1 cha wgt, by(hs iso_o dist_entry dist_unlad rate_prov mode sitc)
+	bysort hs iso_o dist_entry dist_unlad rate_prov mode: drop if _N!=1
+	**Remarque : la régression est à faire en 5/3
+	
+	keep if mode=="`mode'"
+	collapse (sum) val qy1 cha wgt, by(sitc iso_o mode)
+	generate sector = substr(sitc2,1,`preci')
+	
+	generate prix_trsp  = cha/val  			/* (pcif - pfas) / pfas */
+	generate prix_trsp2 = (val+cha)/val	/* pcif / pfas */
+	
+	if "`database'"=="hs10_qy1_qy" {
+		generate prix_caf   = (val+cha)/qy1
+		generate prix_fob   = val/qy1
+	}
+	if "`database'"=="hs10_qy1_wgt" {
+		generate prix_caf   = (val+cha)/wgt
+		generate prix_fob   = val/wgt
+	}
+	
+}
+
+
 if "`database'"=="hummels_tra_qy1_qy" | "`database'"=="hummels_tra_qy1_wgt" {
 	use "$dir_data/hummels_tra"
 	keep if year==`year'
@@ -470,6 +507,7 @@ if "`database'"=="hummels_tra_qy1_qy" | "`database'"=="hummels_tra_qy1_wgt" {
 
 
 
+
 ***Pour restreindre
 *keep if substr(sitc2,1,1)=="0"
 *************************
@@ -477,7 +515,7 @@ if "`database'"=="hummels_tra_qy1_qy" | "`database'"=="hummels_tra_qy1_wgt" {
 
 
 
-label variable iso_d "pays importateur"
+capture label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
 
@@ -531,6 +569,7 @@ if  "`database'"=="FS_predictions_both_yearly_prod5_sect3" {
 *****************************************************************************
 * On enlève en bas et en haut 
 *****************************************************************************
+
 
 
 
@@ -911,7 +950,8 @@ timer on 3
 
 capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
-	
+
+				
 local result_reg = _rc
 if `result_reg' ==0 {
 	display "La Regression a tourné"
