@@ -521,9 +521,9 @@ global method2 hs10_qy1_qy
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 *foreach year of num 2005/2013 {
-foreach year of num 2018/2019 {
+foreach year of num 1998 1999 2002/2019 {
 *foreach year of num 2011/2015 {
-	foreach mode in /*air*/ ves {
+	foreach mode in air ves {
 	*if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
 		if "$method1"=="qy1_wgt" {
 			if (`year' != 1987 | "`mode'"=="air") & (`year' != 2002 | "`mode'"=="air") & (`year' != 2012 | "`mode'"=="ves") & (`year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
