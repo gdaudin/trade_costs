@@ -161,6 +161,7 @@ program nlcouts_IetA
 *out v9	replace terme_A=(terme_A-1)/`prix_fob'
 
 	replace terme_A=terme_A/`prix_fob'
+	
 
 * v10 on modifie la forme fonctionnelle
 * de cette façon les erreurs sont bien centrées sur 0
@@ -455,6 +456,7 @@ if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
 if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 	use "$dir_data/base_hs10_`year'", clear
 	
+	drop if qy1==0
 	collapse (sum) val qy1 cha wgt, by(hs iso_o dist_entry dist_unlad rate_prov mode sitc)
 	bysort hs iso_o dist_entry dist_unlad rate_prov mode: drop if _N!=1
 	**Remarque : la régression est à faire en 5/3
@@ -474,8 +476,11 @@ if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 		generate prix_caf   = (val+cha)/wgt
 		generate prix_fob   = val/wgt
 	}
+	codebook prix_fob
 	
 }
+
+
 
 
 if "`database'"=="hummels_tra_qy1_qy" | "`database'"=="hummels_tra_qy1_wgt" {
@@ -612,27 +617,27 @@ local nbr_sect_expost=r(max)
 display "Nombre de secteurs ex post: `nbr_sect_expost'" 
 drop group_sect
 
-
 *** Tester le pgm
 /*
 * Pour faire un plus petit sample
 local limite 80
 
 * On enlève les pays les plus petits (<=80% des flux, par mode considéré)
-bys iso_o: egen total_iso_o = total(`mode'_val)
+bys iso_o: egen total_iso_o = total(val)
 egen seuil_pays = pctile(total_iso_o),p(`limite')
 
 drop if total_iso_o <= seuil_pays
 
 
-* On enlève les roduits les plus petits (<=80% des flux, par mode considéré)
-bys product: egen total_product = total(`mode'_val)
-egen seuil_product = pctile(total_product),p(`limite')
+* On enlève les secteurs les plus petits (<=80% des flux, par mode considéré)
+bys sector: egen total_sector = total(val)
+egen seuil_sector = pctile(total_sector),p(`limite')
 
-drop if total_product <= seuil_product
+drop if total_sector <= seuil_sector
+*/
 
 *** reprendre ici
-*/
+
 
 
 timer clear
@@ -947,6 +952,8 @@ timer on 3
 *nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
 
+sum ln_ratio_minus1
+sum prix_fob
 
 capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
