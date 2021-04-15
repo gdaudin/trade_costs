@@ -618,7 +618,7 @@ display "Nombre de secteurs ex post: `nbr_sect_expost'"
 drop group_sect
 
 *** Tester le pgm
-if "${test}!"="" {
+if "${test}"!="" {
 	* Pour faire un plus petit sample
 	local limite 80
 	
