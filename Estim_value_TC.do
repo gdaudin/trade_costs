@@ -618,24 +618,24 @@ display "Nombre de secteurs ex post: `nbr_sect_expost'"
 drop group_sect
 
 *** Tester le pgm
-/*
-* Pour faire un plus petit sample
-local limite 80
+if "${test}!"="" {
+	* Pour faire un plus petit sample
+	local limite 80
+	
+	* On enlève les pays les plus petits (<=80% des flux, par mode considéré)
+	bys iso_o: egen total_iso_o = total(val)
+	egen seuil_pays = pctile(total_iso_o),p(`limite')
+	
+	drop if total_iso_o <= seuil_pays
+	
+	
+	* On enlève les secteurs les plus petits (<=80% des flux, par mode considéré)
+	bys sector: egen total_sector = total(val)
+	egen seuil_sector = pctile(total_sector),p(`limite')
+	
+	drop if total_sector <= seuil_sector
 
-* On enlève les pays les plus petits (<=80% des flux, par mode considéré)
-bys iso_o: egen total_iso_o = total(val)
-egen seuil_pays = pctile(total_iso_o),p(`limite')
-
-drop if total_iso_o <= seuil_pays
-
-
-* On enlève les secteurs les plus petits (<=80% des flux, par mode considéré)
-bys sector: egen total_sector = total(val)
-egen seuil_sector = pctile(total_sector),p(`limite')
-
-drop if total_sector <= seuil_sector
-*/
-
+}
 *** reprendre ici
 
 
@@ -958,6 +958,7 @@ sum prix_fob
 capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
 
+blif
 				
 local result_reg = _rc
 if `result_reg' ==0 {
@@ -1083,7 +1084,7 @@ if `result_reg' !=0 { {
 }
 
 
-save "$stock_results/results_estimTC_`year'_prod`class'_sect`preci'_`mode'", replace
+save "$stock_results/${test}results_estimTC_`year'_prod`class'_sect`preci'_`mode'", replace
 
 
 

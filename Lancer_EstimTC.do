@@ -17,7 +17,7 @@
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
 	global dir_pgms "~/Répertoires GIT/trade_costs_git"
-	global dir_log "~/Documents/Recherche/2013 -- Trade Costs -- local/Log divers"
+	global dir_log "$dir/Logs divers"
 }
 
 ** Fixe Lise bureau, en local sur MyWork
@@ -42,7 +42,7 @@ if "`c(hostname)'" =="MSOP112C" {
   
 	* En local sur le disque dur
 	global dir_pgms C:\Users\Ipatureau\Documents\trade_costs
-	global dir_log "C:\Users\lpatureau\Dropbox\trade_cost\Log divers"
+	global dir_log "C:\Users\lpatureau\Dropbox\trade_cost\Logs divers"
 	
 }
 
@@ -83,8 +83,13 @@ args year mode level_product level_sector bdd
 
 capture log close
 	
+****Sit test
+global test test1
+******
 
-log using "$dirlog/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
+
+
+log using "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl", replace
 	
 prep_reg `bdd' `year' `level_product' `level_sector' `mode'
 	
@@ -92,10 +97,10 @@ prep_reg `bdd' `year' `level_product' `level_sector' `mode'
 	* 2013 air ne converge pas 
 
 log close
-translate "$dirlog/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl" /*
-		*/"$dirlog/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.pdf"
+translate "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl" /*
+		*/"$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.pdf"
 
-
+erase "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl"
 
 end
 
