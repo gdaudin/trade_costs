@@ -82,9 +82,11 @@ program EstimTC
 args year mode level_product level_sector bdd
 
 capture log close
-	
+
+
+global test
 ****Sit test
-global test test1
+*global test test2
 ******
 
 
