@@ -958,7 +958,7 @@ sum prix_fob
 capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
 
-blif
+
 				
 local result_reg = _rc
 if `result_reg' ==0 {
