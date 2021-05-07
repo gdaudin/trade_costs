@@ -955,6 +955,9 @@ timer on 3
 sum ln_ratio_minus1
 sum prix_fob
 
+ summarize ln_ratio_minus1 prix_fob, det
+ blif
+
 capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
 
