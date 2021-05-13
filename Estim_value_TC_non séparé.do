@@ -33,6 +33,7 @@
 if "`c(username)'" =="guillaumedaudin" {
 	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
 	global dir_data ~/Documents/Recherche/2013 -- Trade Costs -- local/data
+	global dir_log "$dir/Logs divers"
 }
 
 ** Fixe Lise bureau
@@ -204,6 +205,7 @@ program prep_reg
 * On ajoute le choix de la base de données
 args database year class preci mode 
 
+
 **On va changer en prep_reg hummels_tra 2006 5 3 air ou prep_reg base_hs10_newyears 2005 10 3 air 
 
 **"class" donne la précision des produits. "preci" donne la précision des secteurs
@@ -247,6 +249,7 @@ if "`database'"=="hs10_qy1_qy" {
 
 if "`database'"=="hs10_qy1_wgt" {
 	global stock_results $dir/results/hs10_qy1_wgt
+}
 
 ****************Préparation de la base blouk
 
@@ -521,7 +524,7 @@ if "${test}"!="" {
 
 timer clear
 
-
+/*
 *Pour nombre de sector
 quietly egen group_sect=group(sector)
 su group_sect, meanonly	
@@ -536,8 +539,9 @@ local nbr_iso_o=r(max)
 *Donne le nbr d'iso_o
 quietly levelsof iso_o, local(liste_iso_o) clean
 quietly tabulate iso_o, gen(iso_o_)
+*/
 
-
+generate sect_pays = sector+"_"+iso_o
 *Pour nombre de sect_pays
 quietly egen group_sect_pays=group(sect_pays)
 su group_sect_pays, meanonly	
@@ -548,46 +552,41 @@ quietly tabulate sect_pays, gen(sect_pays_)
 
 
 
-foreach i in sect_pays	{
-	local liste_variables_`i' 
-	forvalue j =  1/`nbr_`i'' {
-		if  1==1 {
-			local liste_variables_`i'  `liste_variables_`i'' `i'_`j'
-		}
-	}
+local liste_variables_sect_pays 
+forvalue j =  1/`nbr_sect_pays' {
+	local liste_variables_sect_pays  `liste_variables_sect_pays' sect_pays_`j'
+}
 
 
 ***************************************
 
-		local liste_parametres_`i'_A
-		forvalue j =  1/`nbr_`i'' {
-			if  1==1 {			
-				local liste_parametres_`i'_A  `liste_parametres_`i'_A' lnfeA_`i'_`j'
-			}
-		}
+local liste_parametres_sect_pays_A
+forvalue j =  1/`nbr_sect_pays' {		
+	local liste_parametres_sect_pays_A  `liste_parametres_sect_pays_A' lnfeA_sect_pays_`j'
+}
 
 
-		local liste_parametres_`i'_I
-		forvalue j =  1/`nbr_`i'' {
-			if    1==1 {			
-				local liste_parametres_`i'_I  `liste_parametres_`i'_I' lnfem1I_`i'_`j'
-			}
-		}
+
+local liste_parametres_sect_pays_I
+forvalue j =  1/`nbr_sect_pays' {		
+	local liste_parametres_sect_pays_I  `liste_parametres_sect_pays_I' lnfem1I_sect_pays_`j'
+}
+
 
 **************************************
 
 	
 	foreach g in A I {
-		local initial_`i'_`g'
-		forvalue j =  1/`nbr_`i'' {
+		local initial_sect_pays_`g'
+		forvalue j =  1/`nbr_sect_pays' {
 			if  1==1 {
 				if "`g'" =="A" {
-*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1 
-					local initial_`i'_`g'  `initial_`i'_`g'' lnfeA_`i'_`j' -3
+*out v9			local initial_sect_pays_`g'  `initial_sect_pays_`g'' fe`g'_sect_pays_`j' 1 
+					local initial_sect_pays_`g'  `initial_sect_pays_`g'' lnfeA_sect_pays_`j' -3
 				}
 				if "`g'" =="I" {
-*out v9			local initial_`i'_`g'  `initial_`i'_`g'' fe`g'_`i'_`j' 1
-					local initial_`i'_`g'  `initial_`i'_`g'' lnfem1I_`i'_`j' -3
+*out v9			local initial_sect_pays_`g'  `initial_sect_pays_`g'' fe`g'_sect_pays_`j' 1
+					local initial_sect_pays_`g'  `initial_sect_pays_`g'' lnfem1I_sect_pays_`j' -3
 ****ln(0.05) = -3
 				}
 			}
@@ -595,7 +594,6 @@ foreach i in sect_pays	{
 	}
 
 
-}
 
 * v10, on estime le log du ratio ob -1
 gen ln_ratio_minus1 = ln(prix_trsp2 -1)
@@ -619,108 +617,132 @@ timer on 3
 
 * attention on durçit la règle pour 1987, vess
 
+sum ln_ratio_minus1
+sum prix_fob
+
+summarize ln_ratio_minus1 prix_fob, det
+
+
 
 display "nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')"
 
 *nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
-nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(600) parameters(`liste_parametres' ) initial (`initial')
+capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
 
-capture	generate rc=_rc
-*capture	predict predict
-capture	predict blink_nl
-
-gen predict_nl = exp(blink_nl)+1 
-*capture	generate predict=exp(lpredict)	
-capture	generate converge=e(converge)
-*capture generate R2 = e(r2)
-capture generate t = terme_A*prix_fob
-
-** Mesurer le fit du modèle
-** (1) Coefficient R2
-*capture correlate lnprix_obs lnpredit_nl
-capture correlate ln_ratio_minus1 blink_nl
-capture generate Rp2_nl = r(rho)^2
-
-noisily capture  order iso_o iso_d sector sect_pays prix_fob prix_trsp2 converge predict lpredict terme* t /* e_t_rho* predict_calcul couts FE* 	*/
-
-capture	matrix X= e(b)
-capture matrix ET=e(V)
-local nbr_var = e(k)/2
-
-generate nbr_obs=e(N)
-bysort sector : generate nbr_obs_sect=_N
-bysort iso_o : generate nbr_obs_iso=_N
-generate  coef_iso_A =.
-generate  coef_iso_I =.
-generate  coef_sect_A =.
-generate  coef_sect_I =.
-generate  ecart_type_iso_A=.
-generate  ecart_type_iso_I=.
-generate  ecart_type_sect_A=.
-generate  ecart_type_sect_I=.
-
-
-** Mesurer le fit du modèle (cont')
-gen aic_nl= .
-gen logL_nl = .
-
-estat ic
-capture matrix Z= r(S)
-
-* (2) AIC 
-replace aic_nl = Z[1,5]
-
-* (3) log-likelihood
-replace logL_nl = Z[1,3]
-
-
-display "`liste_variables'"
-local n 1
-local m = `nbr_var'+1
-foreach i in `liste_variables' {
-	if strmatch("`i'","*sect_pays*")==1 {
-		quietly replace coef_sect_A =exp(X[1,`n']) if `i'==1
-		quietly replace coef_sect_I =exp(X[1,`m'])+1 if `i'==1
-		quietly replace ecart_type_sect_A =ET[`n',`n']^0.5 if `i'==1
-		quietly replace ecart_type_sect_I =ET[`m',`m']^0.5 if `i'==1
+local result_reg = _rc
+if `result_reg' ==0 {
+	display "La Regression a tourné"
+	*capture	predict predict
+	capture	predict blink_nl
+	
+	gen predict_nl = exp(blink_nl)+1 
+	*capture	generate predict=exp(lpredict)	
+	capture	generate converge=e(converge)
+	*capture generate R2 = e(r2)
+	capture generate t = terme_A*prix_fob
+	
+	** Mesurer le fit du modèle
+	** (1) Coefficient R2
+	*capture correlate lnprix_obs lnpredit_nl
+	capture correlate ln_ratio_minus1 blink_nl
+	capture generate Rp2_nl = r(rho)^2
+	
+	noisily capture  order iso_o iso_d sector sect_pays prix_fob prix_trsp2 converge predict lpredict terme* t /* e_t_rho* predict_calcul couts FE* 	*/
+	
+	capture	matrix X= e(b)
+	capture matrix ET=e(V)
+	local nbr_var = e(k)/2
+	
+	generate nbr_obs=e(N)
+	bysort sector : generate nbr_obs_sect=_N
+	bysort iso_o : generate nbr_obs_iso=_N
+	generate  coef_iso_sect_A =.
+	generate  coef_iso_sect_I =.
+	generate  ecart_type_iso_sect_A=.
+	generate  ecart_type_iso_sect_I=.
+	
+	
+	** Mesurer le fit du modèle (cont')
+	gen aic_nl= .
+	gen logL_nl = .
+	
+	estat ic
+	capture matrix Z= r(S)
+	
+	* (2) AIC 
+	replace aic_nl = Z[1,5]
+	
+	* (3) log-likelihood
+	replace logL_nl = Z[1,3]
+	
+	
+	display "`liste_variables'"
+	local n 1
+	local m = `nbr_var'+1
+	foreach i in `liste_variables' {
+		if strmatch("`i'","*sect_pays*")==1 {
+			quietly replace coef_iso_sect_A =exp(X[1,`n']) if `i'==1
+			quietly replace coef_iso_sect_I =exp(X[1,`m'])+1 if `i'==1
+			quietly replace ecart_type_iso_sect_A =ET[`n',`n']^0.5 if `i'==1
+			quietly replace ecart_type_iso_sect_I =ET[`m',`m']^0.5 if `i'==1
+		}
+		
+		local n = `n'+1
+		local m = `m'+1
 	}
 	
-	local n = `n'+1
-	local m = `m'+1
+	sum terme_A  [fweight=val], det
+	generate terme_A_mp = r(mean)
+	generate terme_A_med = r(p50)
+	generate terme_A_et = r(sd)
+	gen terme_A_min = r(min)
+	gen terme_A_max = r(max)
+	
+	sum terme_I  [fweight=val], det 	
+	generate terme_I_mp = r(mean)
+	generate terme_I_med = r(p50)
+	generate terme_I_et=r(sd)
+	gen terme_I_min = r(min)
+	gen terme_I_max = r(max)
+	
+	duplicates report
+	
+	
+	timer off 2
+	timer list 2
+	
+	capture drop Duree_estimation_secondes
+	generate Duree_estimation_secondes = r(t2)
+	capture generate machine =  "`c(hostname)'__`c(username)'"
+	
+	
+	*/
+	
+	timer clear
+	
+	global liste_parametres `liste_parametres'
+	
+	global liste_parametres_sect_pays_A 	`liste_parametres_sect_pays_A' 
+	global liste_parametres_sect_pays_I 	`liste_parametres_sect_pay_I' 
+	global liste_sect_pays `liste_sect_pays'
+	
+	
+	drop sect_pays*
+
 }
 
-sum terme_A  [fweight=`mode'_val], det
-generate terme_A_mp = r(mean)
-generate terme_A_med = r(p50)
-generate terme_A_et = r(sd)
-gen terme_A_min = r(min)
-gen terme_A_max = r(max)
-
-sum terme_I  [fweight=`mode'_val], det 	
-generate terme_I_mp = r(mean)
-generate terme_I_med = r(p50)
-generate terme_I_et=r(sd)
-gen terme_I_min = r(min)
-gen terme_I_max = r(max)
-
-duplicates report
+if `result_reg' !=0 {
+		generate rc=`result_reg' 
+		keep if _n==1
+		keep sector year mode rc terme_A terme_I val
+		replace terme_A=.
+		replace terme_I=.
+		replace val=.
+}
 
 
-timer off 2
-timer list 2
-
-capture drop Duree_estimation_secondes
-generate Duree_estimation_secondes = r(t2)
-capture generate machine =  "`c(hostname)'__`c(username)'"
-
-
-*/
-
-timer clear
-
-
-save "$dir/results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
+save "$dir/results/${test}results_estimTC_non_séparé_`year'_`class'_`preci'_`mode'", replace
 
 
 
@@ -741,29 +763,34 @@ end
 
 
 set more off
-local mode ves air
-*local year 1974 
+local mode_list ves air
+global test test
 
-foreach x in `mode' {
-
-*foreach z in `year' {
-
-forvalues z = 2006(1)2006 {
-**2006 ne semble pas converger. Pourtant on a bien les résultats ?
+foreach mode in `mode_list' {
 
 
-capture log close
-log using hummels_3digits_complet_non_séparé_`z'_`x', replace
+	
+	forvalues year = 2006(1)2006 {
+		
+		foreach base in hs10_qy1_qy hs10_qy1_wgt {
+		
+			capture log close
+			log using "$dir_log/${test}log_prep_reg_non_séparé_`year'_5_3_`mode'_`base'.smcl", replace
+		
+	
+		
+			prep_reg `base' `year' 5 3 `mode'
+			
+			log close
+		
+			translate "$dir_log/${test}log_prep_reg_non_séparé_`year'_5_3_`mode'_`base'.smcl" /*
+			*/"$dir_log/${test}log_prep_reg_non_séparé_`year'_5_3_`mode'_`base'.pdf", replace
 
-prep_reg `z' sitc2ns 3 `x'
+			erase "$dir_log/${test}log_prep_reg_non_séparé_`year'_5_3_`mode'_`base'.smcl"
 
-
-*erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
-*erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
-
-log close
-
-}
+		}
+	
+	}
 }
 
 
