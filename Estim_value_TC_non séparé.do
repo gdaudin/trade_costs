@@ -89,6 +89,44 @@ set maxvar 32767
 
 ****** timer clear ********
 
+****************Calcul pour trouver les pays qui font 80% du commerce********
+
+capture program drop a_garder
+program a_garder
+args mode year
+
+
+
+use "$dir/data/hummels_tra.dta", clear
+
+keep if year==`year' & mode=="`mode'"
+gen tot_val = `mode'_val
+collapse (sum) tot_val, by(iso_o)
+gsort - tot_val
+egen val_tous_pays=total(tot_val)
+gen share = tot_val/val_tous_pays
+gen share_cum = sum(share)
+drop if share_cum >= 0.8
+levelsof iso_o, local(pays_a_garder) clean
+global pays_a_garder "`pays_a_garder'"
+
+*************Idem pour les produits
+use "$dir/data/hummels_tra.dta", clear
+
+keep if year==`year' & mode=="`mode'"
+gen tot_val = `mode'_val
+gen sitc2_3 = substr(sitc2,1,3)
+collapse (sum) tot_val, by(sitc2_3)
+gsort - tot_val
+egen val_tous_sitc=total(tot_val)
+gen share = tot_val/val_tous_sitc
+gen share_cum = sum(share)
+drop if share_cum >= 0.8
+levelsof sitc2_3, local(secteur_a_garder) clean
+global secteur_a_garder "`secteur_a_garder'"
+
+end
+
 
 
 
@@ -210,7 +248,8 @@ args database year class preci mode
 
 **"class" donne la précision des produits. "preci" donne la précision des secteurs
 
-
+a_garder `mode' `year'
+**Détermine les secteurs / pays que l’on va garder
 
 ** Définir macro pour lieu de stockage des résultats selon base utilisée
 
@@ -449,7 +488,7 @@ if  "`database'"=="FS_predictions_both_yearly_prod5_sect3" {
 *****************************************************************************
 
 
-
+/*
 
 display "Nombre avant bas et haut " _N
 
@@ -492,6 +531,15 @@ display "Nombre de secteurs ex post: `nbr_sect_expost'"
 drop group_sect
 */
 
+
+
+macro dir
+
+keep if strpos("$pays_a_garder",iso_o)!=0
+keep if strpos("$secteur_a_garder",sector)!=0
+
+
+
 *** Tester le pgm
 if "${test}"!="" {
 	* Pour faire un plus petit sample
@@ -511,9 +559,8 @@ if "${test}"!="" {
 	drop if total_sector <= seuil_sector
 
 }
+
 *** reprendre ici
-
-
 
 
 
@@ -742,7 +789,7 @@ if `result_reg' !=0 {
 }
 
 
-save "$dir/results/${test}results_estimTC_non_séparé_`year'_`class'_`preci'_`mode'", replace
+save "$dir/results/${test}results_estimTC_non_séparé_`year'_`class'_`preci'_`mode'_`database'", replace
 
 
 
@@ -764,13 +811,16 @@ end
 
 set more off
 local mode_list ves air
-global test test
+*global test test
+global test
 
-foreach mode in `mode_list' {
+
 
 
 	
-	forvalues year = 2006(1)2006 {
+foreach year of numlist 1997(1)1999 2002(1)2019 {
+		
+	foreach mode in `mode_list' {
 		
 		foreach base in hs10_qy1_qy hs10_qy1_wgt {
 		
