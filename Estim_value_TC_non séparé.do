@@ -816,7 +816,7 @@ global test
 
 
 
-
+***Pour tester qy1 / wgt
 	
 foreach year of numlist 1997(1)1999 2002(1)2019 {
 		
@@ -843,6 +843,33 @@ foreach year of numlist 1997(1)1999 2002(1)2019 {
 	}
 }
 
+/*
+***Robustesse de base
+	
+local base hummels_tra
+foreach year of numlist 1973(1)2019 {
+		
+	foreach mode in `mode_list' {
+		
+		
+			capture log close
+			log using "$dir_log/${test}log_prep_reg_non_séparé_`year'_5_3_`mode'_`base'.smcl", replace
+		
+	
+		
+			prep_reg `base' `year' 5 3 `mode'
+			
+			log close
+		
+			translate "$dir_log/${test}log_prep_reg_non_séparé_`year'_5_3_`mode'_`base'.smcl" /*
+			*/"$dir_log/${test}log_prep_reg_non_séparé_`year'_5_3_`mode'_`base'.pdf", replace
+
+			erase "$dir_log/${test}log_prep_reg_non_séparé_`year'_5_3_`mode'_`base'.smcl"
+
+	
+	}
+}
+*/
 
 
 
