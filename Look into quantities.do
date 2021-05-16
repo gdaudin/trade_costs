@@ -45,28 +45,112 @@ if "`c(hostname)'" =="LAB0271A" {
 	global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
 }
 
-import delimited "$dir_external_data/Quantity/hts_2021_preliminary_revision_2_csv.csv", bindquote(strict) varnames(1) encoding(UTF-8)
 
-keep htsnumber unitofquantity
-drop if unitofquantity==""
+program import_hs_qy1
+args year
 
-replace unitofquantity=subinstr(unitofquantity,"[","",.)
-replace unitofquantity=subinstr(unitofquantity,"]","",.)
-replace unitofquantity=subinstr(unitofquantity,`"""',"",.)
-replace unitofquantity=subinstr(unitofquantity,`"."',"",.) 
-generate unit_qy2=""
-replace unit_qy2=substr(unitofquantity,strpos(unitofquantity,`","')+1,.) if strpos(unitofquantity,`","')!=0
 
-replace unitofquantity=substr(unitofquantity,1,strpos(unitofquantity,`","')-1) if strpos(unitofquantity,`","')!=0
+if `year'==2018 | `year'==2019 {
+	import delimited "$dir_external_data/Quantity/hts_`year'_basic_csv.csv", ///
+		bindquote(strict) varnames(1) encoding(UTF-8)
+} 
 
+if `year'==2017 {
+	import delimited "$dir_external_data/Quantity/hts_`year'_preliminary_csv.csv", ///
+		bindquote(strict) varnames(1) encoding(UTF-8)
+} 
+
+if `year'==2016 {
+	import delimited "$dir_external_data/Quantity/hts_`year'_basic_delimited.csv", ///
+		bindquote(strict) varnames(1) encoding(UTF-8)
+} 
+
+if `year'==2015 {
+	import delimited "$dir_external_data/Quantity/`year'_htsa_basic_delimited_0.txt", ///
+		parselocale(fr_FR) stringcols(2 4) bindquote(nobind) clear encoding(UTF-8)
+}
+
+if `year'==2014 {
+	import delimited "$dir_external_data/Quantity/`year'_hts_delimited_0.txt", ///
+		parselocale(fr_FR) stringcols(2 4) bindquote(nobind) clear encoding(UTF-8)
+}  
+
+tab unitofquantity
+
+if `year'>=2016 {
+
+	keep htsnumber unitofquantity
+	drop if unitofquantity==""
+	
+	replace unitofquantity=subinstr(unitofquantity,"[","",.)
+	replace unitofquantity=subinstr(unitofquantity,"]","",.)
+	replace unitofquantity=subinstr(unitofquantity,`"""',"",.)
+	replace unitofquantity=subinstr(unitofquantity,`"."',"",.) 
+	
+	generate unit_qy2=substr(unitofquantity,strpos(unitofquantity,`","')+1,.) if strpos(unitofquantity,`","')!=0
+	
+	replace unitofquantity=substr(unitofquantity,1,strpos(unitofquantity,`","')-1) if strpos(unitofquantity,`","')!=0
+	
+	
+	
+}
+
+
+if `year'<=2015 {
+	generate htsnumber = htsno+statsuffix
+	
+	generate unit_qy2=substr(unitofquantity,strpos(unitofquantity,`" "')+1,.) if strpos(unitofquantity,`" "')!=0
+	
+	replace unitofquantity=substr(unitofquantity,1,strpos(unitofquantity,`" "')-1) if strpos(unitofquantity,`" "')!=0
+	
+	
+	
+}
+
+if `year'==2015 drop if v3=="text"
 
 replace htsnumber=subinstr(htsnumber,`"."',"",.) 
 
 rename unitofquantity unit_qy1
+replace unit_qy1=trim(unit_qy1)
 
 rename htsnumber hs
+ 
+compress hs
 
-merge 1:m hs using "$dir_data/base_hs10_2019.dta"  
+ 
+
+keep if strlen(hs)==10
+duplicates tag hs, generate(flag)
+*br if flag==1 
+
+keep hs unit_qy1
+bys hs unit_qy1: drop if _n==2
+
+duplicates tag unit_qy1 hs , generate(flag)
+assert flag==0
+drop flag
+replace unit_qy1="kg" if unit_qy1=="kg." | unit_qy1=="Kg"
+replace unit_qy1="doz." if unit_qy1=="doz" | unit_qy1=="Doz" | unit_qy1=="Doz."
+replace unit_qy1="X" if unit_qy1=="X." | unit_qy1=="Doz" | unit_qy1=="Doz."
+replace unit_qy1="No." if unit_qy1=="No" | unit_qy1=="No.."
+
+
+save "$dir_data/Quantity/hs_qy1_`year'.dta", replace
+
+end
+
+****----------------
+
+import_hs_qy1 2014
+
+
+blif
+
+
+
+use "$dir_data/hs_qy1.dta", clear
+merge 1:m hs using "$dir_data/base_hs10_1997.dta"  
 tabulate unit_qy1, sort
 
 collapse (sum) con_val, by (unit_qy1)

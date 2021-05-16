@@ -59,6 +59,11 @@ if "`c(hostname)'" =="MSOP112C" {
 cd "$dir"
 
 
+****************Pour avoir la liste des unités
+import delimited "$dir/external_data/Quantity/HS2002_SITC2 - augmented.txt", encoding(UTF-8) stringcols(1 2) clear
+rename hs2002 hs2002_6d
+blif
+save "$dir/data/HS2002_SITC2 - augmented.dta", replace
 
 
 ***************** Avril 2015 ***********************************************************
@@ -93,14 +98,14 @@ set maxvar 32767
 
 capture program drop a_garder
 program a_garder
-args mode year
+args mode year base
 
 
-
-use "$dir/data/hummels_tra.dta", clear
+if "`base'"=="hs10_qy1_qy" | "`base'"=="hs10_qy1_wgt" use "$dir/data/base_hs10_`year'.dta", clear
+else use "$dir/data/hummels_tra.dta", clear
 
 keep if year==`year' & mode=="`mode'"
-gen tot_val = `mode'_val
+gen tot_val = val
 collapse (sum) tot_val, by(iso_o)
 gsort - tot_val
 egen val_tous_pays=total(tot_val)
@@ -111,19 +116,30 @@ levelsof iso_o, local(pays_a_garder) clean
 global pays_a_garder "`pays_a_garder'"
 
 *************Idem pour les produits
-use "$dir/data/hummels_tra.dta", clear
+if "`base'"=="hs10_qy1_qy" | "base'"=="hs10_qy1_wgt" use "$dir/data/base_hs10_`year'.dta", clear
+else use "$dir/data/hummels_tra.dta", clear
+
+gen hs2002_6d=substr(hs,1,6)
+
+
+merge m:1 hs2002_6d using "$dir/data/HS2002_SITC2 - augmented.dta", keep(3)
+
+blif
+
 
 keep if year==`year' & mode=="`mode'"
-gen tot_val = `mode'_val
+gen tot_val = val
 gen sitc2_3 = substr(sitc2,1,3)
-collapse (sum) tot_val, by(sitc2_3)
+gen sector_x_unit = sitc2_3 + unit1
+collapse (sum) tot_val, by(sector_x_unit)
 gsort - tot_val
 egen val_tous_sitc=total(tot_val)
 gen share = tot_val/val_tous_sitc
 gen share_cum = sum(share)
 drop if share_cum >= 0.8
-levelsof sitc2_3, local(secteur_a_garder) clean
-global secteur_a_garder "`secteur_a_garder'"
+levelsof sector_x_unit, local(secteur_x_unit_a_garder) clean
+global secteur_x_unit_a_garder "`secteur_x_unit_a_garder'"
+
 
 end
 
@@ -248,7 +264,7 @@ args database year class preci mode
 
 **"class" donne la précision des produits. "preci" donne la précision des secteurs
 
-a_garder `mode' `year'
+a_garder `mode' `year' `database' 
 **Détermine les secteurs / pays que l’on va garder
 
 ** Définir macro pour lieu de stockage des résultats selon base utilisée
