@@ -109,7 +109,7 @@ levelsof iso_o, local(pays_a_garder) clean
 global pays_a_garder "`pays_a_garder'"
 
 *************Idem pour les secteurs
-if "`base'"=="hs10_qy1_qy" | "base'"=="hs10_qy1_wgt" {
+if "`base'"=="hs10_qy1_qy" | "`base'"=="hs10_qy1_wgt" {
 	use "$dir/data/base_hs10_`year'.dta", clear
 
 	drop if sitc==""
@@ -134,7 +134,7 @@ if "`base'"=="hs10_qy1_qy" | "base'"=="hs10_qy1_wgt" {
 
 }
 
-if "`base'"!="hs10_qy1_qy" & "base'"!="hs10_qy1_wgt" {
+if "`base'"!="hs10_qy1_qy" & "`base'"!="hs10_qy1_wgt" {
 	
 	use "$dir/data/hummels_tra.dta", clear
 	keep if year==`year' & mode=="`mode'"
