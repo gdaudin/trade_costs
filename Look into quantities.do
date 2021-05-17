@@ -52,17 +52,17 @@ args year
 
 if `year'==2018 | `year'==2019 {
 	import delimited "$dir_external_data/Quantity/hts_`year'_basic_csv.csv", ///
-		bindquote(strict) varnames(1) encoding(UTF-8)
+		bindquote(strict) varnames(1) encoding(UTF-8) clear
 } 
 
 if `year'==2017 {
 	import delimited "$dir_external_data/Quantity/hts_`year'_preliminary_csv.csv", ///
-		bindquote(strict) varnames(1) encoding(UTF-8)
+		bindquote(strict) varnames(1) encoding(UTF-8) clear
 } 
 
 if `year'==2016 {
 	import delimited "$dir_external_data/Quantity/hts_`year'_basic_delimited.csv", ///
-		bindquote(strict) varnames(1) encoding(UTF-8)
+		bindquote(strict) varnames(1) encoding(UTF-8) clear
 } 
 
 if `year'==2015 {
@@ -75,7 +75,31 @@ if `year'==2014 {
 		parselocale(fr_FR) stringcols(2 4) bindquote(nobind) clear encoding(UTF-8)
 }  
 
-tab unitofquantity
+if `year'<=2013 {
+	import delimited "$dir_external_data/Quantity/`year'_hts_delimited.txt", ///
+		parselocale(fr_FR) stringcols(2 4) bindquote(nobind) clear encoding(UTF-8)
+}  
+
+if `year'==2011 | `year'==2010 {
+	rename v1 htsno
+	rename v2 statsuffix
+	rename v6 unitofquantity
+	drop if unitofquantity==""
+}
+
+
+if `year'==2009 {
+	rename v1 htsno
+	rename v2 statsuffix
+	rename v4 unitofquantity
+	drop if unitofquantity==""
+	replace unitofquantity="doz. kg" if unitofquantity=="doz.kg"
+	replace unitofquantity="m2 kg" if unitofquantity=="m2kg"
+	replace unitofquantity="No. kg" if unitofquantity=="No.kg"
+	replace unitofquantity="doz.pr. kg" if unitofquantity=="doz.pr.kg"
+}
+
+tab unitofquantity, sort
 
 if `year'>=2016 {
 
@@ -90,9 +114,7 @@ if `year'>=2016 {
 	generate unit_qy2=substr(unitofquantity,strpos(unitofquantity,`","')+1,.) if strpos(unitofquantity,`","')!=0
 	
 	replace unitofquantity=substr(unitofquantity,1,strpos(unitofquantity,`","')-1) if strpos(unitofquantity,`","')!=0
-	
-	
-	
+		
 }
 
 
@@ -102,9 +124,7 @@ if `year'<=2015 {
 	generate unit_qy2=substr(unitofquantity,strpos(unitofquantity,`" "')+1,.) if strpos(unitofquantity,`" "')!=0
 	
 	replace unitofquantity=substr(unitofquantity,1,strpos(unitofquantity,`" "')-1) if strpos(unitofquantity,`" "')!=0
-	
-	
-	
+		
 }
 
 if `year'==2015 drop if v3=="text"
@@ -125,7 +145,7 @@ duplicates tag hs, generate(flag)
 *br if flag==1 
 
 keep hs unit_qy1
-bys hs unit_qy1: drop if _n==2
+bys hs unit_qy1: drop if _n>=2
 
 duplicates tag unit_qy1 hs , generate(flag)
 assert flag==0
@@ -134,7 +154,14 @@ replace unit_qy1="kg" if unit_qy1=="kg." | unit_qy1=="Kg"
 replace unit_qy1="doz." if unit_qy1=="doz" | unit_qy1=="Doz" | unit_qy1=="Doz."
 replace unit_qy1="X" if unit_qy1=="X." | unit_qy1=="Doz" | unit_qy1=="Doz."
 replace unit_qy1="No." if unit_qy1=="No" | unit_qy1=="No.."
-
+replace unit_qy1="m3" if unit_qy1=="M3" | unit_qy1=="m3." | unit_qy1=="m³"
+replace unit_qy1="doz.pr." if unit_qy1=="doz.pr"
+replace unit_qy1="pcs" if unit_qy1=="pcs."
+replace unit_qy1="thousands" if unit_qy1=="thousand" | unit_qy1=="Thousand"
+replace unit_qy1="gross" if unit_qy1=="Gross"
+replace unit_qy1="X" if unit_qy1=="x"
+replace unit_qy1="prs." if unit_qy1=="prs"
+replace unit_qy1="m2" if unit_qy1=="m²"
 
 save "$dir_data/Quantity/hs_qy1_`year'.dta", replace
 
@@ -142,7 +169,13 @@ end
 
 ****----------------
 
-import_hs_qy1 2014
+*import_hs_qy1 2009
+*blif
+
+
+foreach year of numlist 2009(1)2019 {
+	import_hs_qy1 `year'
+}
 
 
 blif
