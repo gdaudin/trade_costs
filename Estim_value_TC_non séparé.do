@@ -59,13 +59,6 @@ if "`c(hostname)'" =="MSOP112C" {
 cd "$dir"
 
 
-****************Pour avoir la liste des unités
-import delimited "$dir/external_data/Quantity/HS2002_SITC2 - augmented.txt", encoding(UTF-8) stringcols(1 2) clear
-rename hs2002 hs2002_6d
-blif
-save "$dir/data/HS2002_SITC2 - augmented.dta", replace
-
-
 ***************** Avril 2015 ***********************************************************
 *** v10 : On impose les contraintes termeA>=0 et termeI<=1 (v9)
 *** Et on réfléchit "bien" sur le terme d'erreur, pour avoir une erreur centrée réduite
@@ -115,30 +108,50 @@ drop if share_cum >= 0.8
 levelsof iso_o, local(pays_a_garder) clean
 global pays_a_garder "`pays_a_garder'"
 
-*************Idem pour les produits
-if "`base'"=="hs10_qy1_qy" | "base'"=="hs10_qy1_wgt" use "$dir/data/base_hs10_`year'.dta", clear
-else use "$dir/data/hummels_tra.dta", clear
+*************Idem pour les secteurs
+if "`base'"=="hs10_qy1_qy" | "base'"=="hs10_qy1_wgt" {
+	use "$dir/data/base_hs10_`year'.dta", clear
 
-gen hs2002_6d=substr(hs,1,6)
+	drop if sitc==""
+	gen hs2002_6d=substr(hs,1,6)
+	merge m:1 hs using "$dir/data/Quantity/hs_qy1_`year'.dta", keep(3)
+	drop _merge
+	drop if unit_qy1=="X"
+	*Rq : il y a toujours des cas de non-merge pour des raisons bizarres...
+	
+	keep if year==`year' & mode=="`mode'"
+	gen tot_val = val
+	gen sitc2_3 = substr(sitc2,1,3)
+	gen sector_x_unit = sitc2_3 + unit_qy1
+	collapse (sum) tot_val, by(sector_x_unit)
+	gsort - tot_val
+	egen val_tous_sitc=total(tot_val)
+	gen share = tot_val/val_tous_sitc
+	gen share_cum = sum(share)
+	drop if share_cum >= 0.8
+	levelsof sector_x_unit, local(secteur_x_unit_a_garder) clean
+	global secteur_x_unit_a_garder "`secteur_x_unit_a_garder'"
 
+}
 
-merge m:1 hs2002_6d using "$dir/data/HS2002_SITC2 - augmented.dta", keep(3)
+if "`base'"!="hs10_qy1_qy" & "base'"!="hs10_qy1_wgt" {
+	
+	use "$dir/data/hummels_tra.dta", clear
+	keep if year==`year' & mode=="`mode'"
+	gen tot_val = val
+	gen sector = substr(sitc2,1,3)
+	
+	collapse (sum) tot_val, by(sector)
+	gsort - tot_val
+	egen val_tous_sitc=total(tot_val)
+	gen share = tot_val/val_tous_sitc
+	gen share_cum = sum(share)
+	drop if share_cum >= 0.8
+	levelsof sector, local(secteur_a_garder) clean
+	global secteur_a_garder "`secteur_x_unit_a_garder'"
 
-blif
+}
 
-
-keep if year==`year' & mode=="`mode'"
-gen tot_val = val
-gen sitc2_3 = substr(sitc2,1,3)
-gen sector_x_unit = sitc2_3 + unit1
-collapse (sum) tot_val, by(sector_x_unit)
-gsort - tot_val
-egen val_tous_sitc=total(tot_val)
-gen share = tot_val/val_tous_sitc
-gen share_cum = sum(share)
-drop if share_cum >= 0.8
-levelsof sector_x_unit, local(secteur_x_unit_a_garder) clean
-global secteur_x_unit_a_garder "`secteur_x_unit_a_garder'"
 
 
 end
@@ -391,13 +404,18 @@ if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
 if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 	use "$dir_data/base_hs10_`year'", clear
 	
+	merge m:1 hs using "$dir/data/Quantity/hs_qy1_`year'.dta", keep(3)
+	drop _merge
+	drop if unit_qy1=="X"
+	
+	
 	drop if qy1==0
-	collapse (sum) val qy1 cha wgt, by(hs iso_o dist_entry dist_unlad rate_prov mode sitc)
-	bysort hs iso_o dist_entry dist_unlad rate_prov mode: drop if _N!=1
+	collapse (sum) val qy1 cha wgt, by(hs iso_o dist_entry dist_unlad rate_prov mode sitc unit_qy1)
+	bysort hs iso_o dist_entry dist_unlad rate_prov mode unit_qy1: drop if _N!=1
 	**Remarque : la régression est à faire en 5/3
 	
 	keep if mode=="`mode'"
-	collapse (sum) val qy1 cha wgt, by(sitc iso_o mode)
+	collapse (sum) val qy1 cha wgt, by(sitc iso_o mode unit_qy1)
 	generate sector = substr(sitc2,1,`preci')
 	
 	generate prix_trsp  = cha/val  			/* (pcif - pfas) / pfas */
@@ -552,8 +570,11 @@ drop group_sect
 macro dir
 
 keep if strpos("$pays_a_garder",iso_o)!=0
-keep if strpos("$secteur_a_garder",sector)!=0
-
+if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
+	gen sector_x_unit = sector + unit_qy1
+	keep if strpos("$secteur_x_unit_a_garder",sector_x_unit)!=0
+}
+else keep if strpos(strpos("$secteur_a_garder",sector)!=0)
 
 
 *** Tester le pgm
@@ -605,6 +626,7 @@ quietly tabulate iso_o, gen(iso_o_)
 */
 
 generate sect_pays = sector+"_"+iso_o
+if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt"  replace sect_pays=sector_x_unit+"_"+iso_o
 *Pour nombre de sect_pays
 quietly egen group_sect_pays=group(sect_pays)
 su group_sect_pays, meanonly	
@@ -828,13 +850,13 @@ end
 set more off
 local mode_list ves air
 *global test test
-global test
+global test test
 
 
 
 ***Pour tester qy1 / wgt
 	
-foreach year of numlist 1997(1)1999 2002(1)2019 {
+foreach year of numlist 2009(1)2019 {
 		
 	foreach mode in `mode_list' {
 		
