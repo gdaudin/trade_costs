@@ -394,8 +394,6 @@ label var Nb_iso "Nb of origin countries in `method2'"
 
 generate beta_`method2'=-(terme_A/(terme_I+terme_A-1))
 
-blif
-
 gen Nb_`method2'=_N
 summarize beta_`method2', det
 generate beta_`method2'_mean = r(mean)
@@ -522,7 +520,7 @@ global method2 hs10_qy1_qy
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 *foreach year of num 2005/2013 {
-foreach year of num 2004 {
+foreach year of num 2009/2011 {
 *foreach year of num 2011/2015 {
 	foreach mode in air ves {
 	*if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2

@@ -850,13 +850,13 @@ end
 set more off
 local mode_list ves air
 *global test test
-global test test
+global test
 
 
 
 ***Pour tester qy1 / wgt
 	
-foreach year of numlist 2009(1)2019 {
+foreach year of numlist 2012(1)2019 {
 		
 	foreach mode in `mode_list' {
 		

@@ -144,6 +144,8 @@ keep if strlen(hs)==10
 duplicates tag hs, generate(flag)
 *br if flag==1 
 
+drop if unit_qy1==""
+
 keep hs unit_qy1
 bys hs unit_qy1: drop if _n>=2
 
@@ -163,6 +165,7 @@ replace unit_qy1="X" if unit_qy1=="x"
 replace unit_qy1="prs." if unit_qy1=="prs"
 replace unit_qy1="m2" if unit_qy1=="m²"
 
+
 save "$dir_data/Quantity/hs_qy1_`year'.dta", replace
 
 end
@@ -174,6 +177,7 @@ end
 
 
 foreach year of numlist 2009(1)2019 {
+*foreach year of numlist 2012 {
 	import_hs_qy1 `year'
 }
 
