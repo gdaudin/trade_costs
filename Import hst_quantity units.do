@@ -165,6 +165,13 @@ replace unit_qy1="X" if unit_qy1=="x"
 replace unit_qy1="prs." if unit_qy1=="prs"
 replace unit_qy1="m2" if unit_qy1=="m²"
 
+drop if real(hs)==.
+
+duplicates tag hs , generate(flag)
+assert flag==0
+drop flag
+
+
 
 save "$dir_data/Quantity/hs_qy1_`year'.dta", replace
 
