@@ -14,16 +14,18 @@
 \BOOKMARK [1][-]{section.4}{Robustness analysis }{}% 14
 \BOOKMARK [2][-]{subsection.4.1}{Robustness to the separability assumption}{section.4}% 15
 \BOOKMARK [2][-]{subsection.4.2}{Robustness to the weighting scheme }{section.4}% 16
-\BOOKMARK [1][-]{section.5}{Conclusion }{}% 17
-\BOOKMARK [1][-]{appendix.A}{Data Appendix }{}% 18
-\BOOKMARK [1][-]{appendix.B}{Estimation at the 3-digit classification level }{}% 19
-\BOOKMARK [2][-]{subsection.B.1}{Transport costs estimates: More detailed results}{appendix.B}% 20
-\BOOKMARK [2][-]{subsection.B.2}{Assessing the importance of additive transport costs }{appendix.B}% 21
-\BOOKMARK [2][-]{subsection.B.3}{Variance decomposition exercise }{appendix.B}% 22
-\BOOKMARK [1][-]{appendix.C}{Estimation at the 4-digit level }{}% 23
-\BOOKMARK [2][-]{subsection.C.1}{Transport cost estimates}{appendix.C}% 24
-\BOOKMARK [2][-]{subsection.C.2}{Goodness-of-fit tests at the 4-digit level}{appendix.C}% 25
-\BOOKMARK [1][-]{appendix.D}{Eliminating the composition effects: more details }{}% 26
-\BOOKMARK [2][-]{subsection.D.1}{More on our methodology}{appendix.D}% 27
-\BOOKMARK [3][-]{subsubsection.D.1.1}{Additive and ad-valorem transport costs: excluding the composition effects}{subsection.D.1}% 28
-\BOOKMARK [2][-]{subsection.D.2}{Comparing with hummels2007 }{appendix.D}% 29
+\BOOKMARK [2][-]{subsection.4.3}{Endogeneity concerns}{section.4}% 17
+\BOOKMARK [1][-]{section.5}{Conclusion }{}% 18
+\BOOKMARK [1][-]{appendix.A}{Data Appendix }{}% 19
+\BOOKMARK [1][-]{appendix.B}{Estimation at the 3-digit classification level }{}% 20
+\BOOKMARK [2][-]{subsection.B.1}{Transport costs estimates: More detailed results}{appendix.B}% 21
+\BOOKMARK [2][-]{subsection.B.2}{Assessing the importance of additive transport costs }{appendix.B}% 22
+\BOOKMARK [2][-]{subsection.B.3}{Variance decomposition exercise }{appendix.B}% 23
+\BOOKMARK [2][-]{subsection.B.4}{IV estimates: First stage }{appendix.B}% 24
+\BOOKMARK [1][-]{appendix.C}{Estimation at the 4-digit level }{}% 25
+\BOOKMARK [2][-]{subsection.C.1}{Transport cost estimates}{appendix.C}% 26
+\BOOKMARK [2][-]{subsection.C.2}{Goodness-of-fit tests at the 4-digit level}{appendix.C}% 27
+\BOOKMARK [1][-]{appendix.D}{Eliminating the composition effects: more details }{}% 28
+\BOOKMARK [2][-]{subsection.D.1}{More on our methodology}{appendix.D}% 29
+\BOOKMARK [3][-]{subsubsection.D.1.1}{Additive and ad-valorem transport costs: excluding the composition effects}{subsection.D.1}% 30
+\BOOKMARK [2][-]{subsection.D.2}{Comparing with hummels2007 }{appendix.D}% 31
