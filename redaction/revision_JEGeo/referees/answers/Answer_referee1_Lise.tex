@@ -329,7 +329,7 @@ Figure \ref{fig:accuracy_beta} In most cases, the log of the ratio is negative, 
 \end{itemize}
 \end{itemize}
 
-All these elements drive us to maintain our original estimation as benchmark method in the revised version, and we deeply hope to convince you of the relevance of this choice. However, we also want to keep track of this alternative method as further robustness check. Fr this purpose, we have amended the online Appendix with a section devoted to the referee's method.
+All these elements drive us to maintain our original estimation as benchmark method in the revised version, and we deeply hope to convince you of the relevance of this choice. However, we also want to keep track of this alternative method as further robustness check. Fr this purpose, we have amended the online Appendix with a section devoted to the referee's method.\textbf{ XXX CHECK THIS SECTION EXISTS IN THE ONLINE APPENDIX XXX}
 
 \textbf{stop here}
 
@@ -346,20 +346,24 @@ the bias has nothing to with the casual versus accounting interpretation of
 the estimates. Accordingly, the one-line justification the authors provide
 to not address the endogeneity problem is far from convincing.}
 
+Indeed, this is a very important point. The referee states that, based on theoretical insights by Melitz (\emph{Econometrica}, 2003) or Baldwin and Harrigan (\emph{American Economic Review}, 2011), $1/\widetilde{p}_{ik}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. In other words, more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair.
 
-We followed the referee's advice by providing some IV-estimates of the fas price to provide a clean assessment of the size of the potential bias in our original methodology. The IV-strategy is implemented in two steps.
+We obviously do not question this conceptual issue. However, it is worth noting that a good deal of the bias (actually, the part relating to the quality effect) is going to appear identically in the CIF (p) and the FAS ($\widetilde{p}_{ik}$) prices. Consequently, since our dependent variable is based on a ratio between the former and the latter, the (reverse causality) bias cancels out. That said, remains the possibility that bigger firms may impact transport costs, due to their ability of bargaining discounts for larger shipped volumes.
 
-\begin{itemize}
-\item First-stage equation: We regress the fas price $\widetilde{p}_{ik}$ with $k$ = 5-digit product classification and $i$ the origin country, on tax duty and lagged fas price according to Equation (XXX). As made clear in the appendix of the revised version (\textbf{Section XXX - take elements of topo-first-stage there}), we run the regression in log level on a yearly basis and by transport mode, consistently with our second-stage empirical strategy.
+Following the referee's advice, we decided therefore to provide a full set of IV estimates to provide a clean assessment of the size of the potential bias. Section 4.3 in the revised version of the paper provides an overview of the results, while section B.4 in Appendix B provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. We follow earlier literature (see e.g. Caliendo and Parro, 2015, or Lashkaripour, 2017) by implementing a first-stage equation regressing $\widetilde{p}$ on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. First-stage estimates reported in section B.4 show that our main instrumental variable displays the right statistical properties, and that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation 10 to produce a 2SLS-type of estimation. Figure 9 in the revised version of the paper reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns.
 
-\item The second-stage: Explain the difficulty since fas prices are on both sides of the equation; non-trivial way to do it. We have decided to not instrument the fas price that intervenes on the LHS. Develop.
+Not this check is performed both on our main dataset (SITC 5 digit), and also at the HS 10 level, to handle simultaneously the referee's concern about aggregation issues. In the latter case, second-stage estimates are not reported for the sake of space, but do not change anything to previous conclusion - they are very, very similar to their non-IV, least squares counterparts.
+%We followed the referee's advice by providing some IV-estimates of the fas price to provide a clean assessment of the size of the potential bias in our original methodology. The IV-strategy is implemented in two steps.
+
+%\begin{itemize}
+%\item First-stage equation: We regress the fas price $\widetilde{p}_{ik}$ with $k$ = 5-digit product classification and $i$ the origin country, on tax duty and lagged fas price according to Equation (XXX). As made clear in the appendix of the revised version (\textbf{Section XXX - take elements of topo-first-stage there}), we run the regression in log level on a yearly basis and by transport mode, consistently with our second-stage empirical strategy.
+
+%\item The second-stage: Explain the difficulty since fas prices are on both sides of the equation; non-trivial way to do it. We have decided to not instrument the fas price that intervenes on the LHS. Develop.
 
 
 
+%\end{itemize}
 
-\end{itemize}
-
-The results are ... DEVELOP.
 
 \subsubsection{The aggregation problem}
 
