@@ -339,13 +339,13 @@ Figure \ref{fig:accuracy_beta} In most cases, the log of the ratio is negative, 
 \end{itemize}
 \end{itemize}
 
-All these elements drive us to maintain our original estimation as benchmark method in the revised version, and we deeply hope to convince you of the relevance of this choice. However, we also want to keep track of this alternative method as further robustness check. Fr this purpose, we have amended the online Appendix with a section devoted to the referee's method.\textbf{ XXX CHECK THIS SECTION EXISTS IN THE ONLINE APPENDIX XXX}
+All these elements drive us to maintain our original estimation as benchmark method in the revised version, and we deeply hope to convince you of the relevance of this choice. However, we also want to keep track of this alternative method as further robustness check. Fr this purpose, we have amended the online Appendix with a section devoted to the referee's method.\textbf{ XXX TO BE DONE XXX CHECK THIS SECTION EXISTS IN THE ONLINE APPENDIX XXX}
 
 %\textbf{stop here}
 
 
 
-\subsubsection{Concers about endogeneity}
+\subsubsection{Concerns about endogeneity}
 
 \textit{\textbf{The endogeneity problem}: quoting Footnote 14 of the paper, the authors
 are estimating ti and ts(k) as coefficients on the industry or country
@@ -376,11 +376,9 @@ would become computationally expensive without it. But this reasoning
 brings us back to my original point that the authors can use the Hummel's
 Methodology to circumvent the computational burden.}
 
+It is true that the original annual Census data reports trade at the origin country-HS 10 product-district level of aggregation. Our initial choice of retaining $s=3$ at the sectoral level, $k=5$ at the product level was driven by the use of Hummel's dataset available over 1974-2004 with $k=5$ the finest degree of aggregation. We yet agree with the referee that jumping from $k=10$ to $k=5$ digits at the product level is detrimental to our ability to exploit useful variation in the data. In line with the referee's comment, we now run the estimation by considering $k$ at the HS10 classification level, not 5. After checking with the US Bureau of Census, data is only available since 1989, now available to 2019. We have hence asked for all available data at the time of revision (1989-2009), and we now present the results considering $s=3$ and $k=10$. This however deprives us from being able to exploit the period 1974-1988 at the aggregation level. \textbf{Que faire pour la periode 1974-1989 XXX TO BE DISCUSSED XXX}. Furthermore, the computational burden mentioned by the referee is not attributable to the product classification level $k=5$ or 10) but rather to the degree of sectoral classification ($s=3$ or 4) as it conditions the number of fixed effects. This explains why we consider the $s=4$ digit- sectoral classification level only for some years. We thank the referee for pointing this ambiguity in our paper, which drove us to rewrite the associated paragraph in the revised version of the paper \textbf{see XXXX TO BE DONE ??? XXX}
 
-
-It is true that the original annual Census data reports trade at the origin country-HS 10 product-district level of aggregation. Our initial choice of retaining $s=3$ at the sectoral level, $k=5$ at the product level was driven by the use of Hummel's dataset available over 1974-2004 with $k=5$ the finest degree of aggregation. We yet agree with the referee that jumping from $k=10$ to $k=5$ digits at the product level is detrimental to our ability to exploit useful variation in the data. In line with the referee's comment, we now run the estimation by considering $k$ at the HS10 classification level, not 5. After checking with the US Bureau of Census, data is only available since 1989, now available to 2019. We have hence asked for all available data at the time of revision (1989-2009), and we now present the results considering $s=3$ and $k=10$. This however deprives us from being able to exploit the period 1974-1988 at the aggregation level. \textbf{Que faire pour la periode 1974-1989}. Furthermore, the computational burden mentioned by the referee is not attributable to the product classification level $k=5$ or 10) but rather to the degree of sectoral classification ($s=3$ or 4) as it conditions the number of fixed effects. This explains why we consider the $s=4$ digit- sectoral classification level only for some years. We thank the referee for pointing this ambiguity in our paper, which drove us to rewrite the associated paragraph in the revised version of the paper \textbf{see XXXX}
-
-% XXX JH: UNLESS I AM MISTAKING, THE SHOPPING LIST BELOW HAS BEEN IMPLEMENTED 
+% XXX JH: UNLESS I AM MISTAKING, THE SHOPPING LIST BELOW HAS BEEN IMPLEMENTED XXX TO BE CONFIRMED
 %\subsubsection{To sum up: What remains to be done}
 
 %\begin{enumerate}
@@ -483,6 +481,7 @@ What to do with this? When composition effects do matter (ocean freight), do the
 
 \appendix
 
+% XXX JH: What do we do with the section below? 
 
 \section{Clarifying some technical points \label{app:technical_points}}
 
@@ -581,6 +580,9 @@ Two points can be made. First, we can check that if $\widehat{\beta}_{is(k)}=0$,
 
 
 
+\end{document} 
+
+
 \section{More details on the instrumentation strategy}
 
 \subsection{Specification of the first stage equation}
@@ -657,7 +659,3 @@ Consistently with the cross-section analysis adopted by now, the first-stage equ
 &&\log \widetilde{p}_{ikt}^{IV} = \widehat{\alpha}\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} + \widehat{\beta}\log\widetilde{p}_{ikt-1} \\
 \rightarrow &&\widetilde{p}_{ikt}^{IV}  = \exp^{\log \widetilde{p}_{ikt}^{IV}}
 \end{eqnarray*}
-
-
-
-\end{document} 
