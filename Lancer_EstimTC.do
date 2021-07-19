@@ -206,7 +206,7 @@ foreach m in `mode' {
 
 ****Pour baseline nlI
 local mode air ves 
-foreach  y of numlist 1974/2019 {
+foreach  y of numlist 2019/1974 {
 	foreach m in `mode' {	
 	EstimTC `y' `m' 5 3 hummels_tra nlA
 	}
