@@ -266,15 +266,47 @@ foreach mode in air ves {
 		save $dir_temp/data_${method}_`mode'.dta, replace
 	}
 	label var year "year ($method, `mode')"
-	label var prix_trsp "(caf-fob)/fob"
-	table (var) (year) [aweight=val], statistic(count prix_trsp) /*
+	label var prix_trsp "Observed transport costs"
+	table (var) (year) [aweight=val], /*
 	*/ statistic(mean prix_trsp) statistic(median prix_trsp) /*	
 	*/ statistic(mean terme_I) statistic(median terme_I) /*
 	*/ statistic(mean terme_A)   statistic(median terme_A) /*
 	*/ statistic(mean beta) statistic(median beta) /*
-	*/ command(r(r) levelsof iso_o) /*
 	*/ nformat(%4.3f) nototals /*
-	*/ name(model_nlAetI_`mode') replace
+	*/ name(bloum) replace
+	
+
+	
+	table (var) (year), /*
+	*/ statistic(count prix_trsp) /*
+	*/ command(r(r): tabulate iso_o) /*
+	*/name(blif) replace
+	
+	collect label values statcmd 1 "N", modify
+	collect style header statcmd, level(hide)
+	collect style header var, level(hide)
+	collect label levels result r "Number of partners", modify
+	
+	collect preview
+	
+	
+	
+	
+	table () (year), /*
+	*/ command(r(r): tabulate sector) /*
+	*/name(blouf) replace
+	
+	collect style header statcmd, level(hide)
+	collect style header var, level(hide)
+	collect label levels result r "Number of sectors", modify
+	
+	collect preview
+	
+	collect combine TableA1_`mode' = blif blouf bloum, replace
+	
+	collect preview
+	
+	
 }
 
 
