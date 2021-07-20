@@ -266,8 +266,15 @@ foreach mode in air ves {
 		save $dir_temp/data_${method}_`mode'.dta, replace
 	}
 	label var year "year ($method, `mode')"
-	table (var) (year) [aweight=val], statistic(mean beta) statistic(median beta) statistic(mean terme_I) /*
-	*/ statistic(median terme_I) statistic(mean terme_A)   statistic(median terme_A) nformat(%4.3f) nototals
+	label var prix_trsp "(caf-fob)/fob"
+	table (var) (year) [aweight=val], statistic(count prix_trsp) /*
+	*/ statistic(mean prix_trsp) statistic(median prix_trsp) /*	
+	*/ statistic(mean terme_I) statistic(median terme_I) /*
+	*/ statistic(mean terme_A)   statistic(median terme_A) /*
+	*/ statistic(mean beta) statistic(median beta) /*
+	*/ command(r(r) levelsof iso_o) /*
+	*/ nformat(%4.3f) nototals /*
+	*/ name(model_nlAetI_`mode') replace
 }
 
 
