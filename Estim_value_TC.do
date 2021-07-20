@@ -758,7 +758,7 @@ if "`model'"=="nlI" {
 
 timer on 1
 
-nl couts_iceberg @  prix_fob `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres_iceberg' ) initial (`initial_iceberg')
+nl couts_iceberg @  ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres_iceberg' ) initial (`initial_iceberg')
 
 
 capture	generate rc_nlI=_rc
@@ -786,7 +786,7 @@ capture matrix ET=e(V)
 local nbr_var_nlI = e(k)/2
 
 generate nbr_obs_nlI=e(N)
-bysort product : generate nbr_obs_prod_nlI=_N
+bysort sector : generate nbr_obs_prod_nlI=_N
 bysort iso_o : generate nbr_obs_iso_nlI=_N
 generate  coef_iso_nlI =.
 generate  coef_prod_nlI =.
@@ -951,7 +951,7 @@ save "$stock_results/${test}results_estimTC_`model'_`year'_prod`class'_sect`prec
 ******** ESTIMATION AVEC COUTS ADDITIF ET ICEBERG
 * ------------------------------------------------
 
-if "`model'"=="nlAetI" {
+if "`model'"=="nlAetI" | "`model'"==""{
 
 timer on 3
 
