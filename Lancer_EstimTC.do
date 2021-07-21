@@ -54,6 +54,17 @@ if "`c(hostname)'" =="hericourt" {
 	
 }
 
+/* Nouveau fixe Bureau Lise: Tout en local sur MyWork. Pour la base et les résultats, dossier Lise ; pgms dans le dossier Git (de MyWork) */
+if "`c(hostname)'" =="LAB0661F" {
+	
+	global dir "//storage2016.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_costs"
+	global dir_data "$dir/data"
+	global dir_pgms "//storage2016.windows.dauphine.fr/home/l/lpatureau/My_Work/Git/trade_costs"
+	global dir_log "$dir/Log_divers"
+	
+}
+
+
 *******************************************************
 
 
@@ -87,8 +98,8 @@ if "`c(username)'" =="guillaumedaudin" {
 }
 	
 * sauver le log file chez Lise
-if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C"{
-	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
+if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C" | "`c(hostname)'" =="LAB0661F" {
+	log using "$dir_log/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
 }
 	
 	* sauver le log file chez Jerome
@@ -124,6 +135,7 @@ foreach y of numlist 2014(-1) 1974 {
 local mode air ves
 *foreach  year of numlist  1976(3)2019
 
+/*
 foreach y of numlist 2017(-1)2002 {
 	foreach m in `mode' {	
 	EstimTC `y' `m' 5 3 hs10_qy1_wgt
@@ -131,7 +143,7 @@ foreach y of numlist 2017(-1)2002 {
 	}
 }
 
-
+*/
 
 
 ***Pour IV 5/3
@@ -143,16 +155,17 @@ foreach  y of numlist 2012 {
 
 }
 */
-/*
+
 ***Pour IV 10/3
-local mode ves 
-foreach  y of numlist 2012 {
+local mode air ves 
+*foreach  y of numlist 2003(1)2019 {
+foreach  y of numlist 2016(1)2019 {
 	foreach m in `mode' {	
-	EstimTC `y' `m' 5 3 FS_predictions_both_yearly_prod10_sect3
+	EstimTC `y' `m' 10 3 FS_predictions_both_yearly_prod10_sect3
 	}
 
 }
-*/
+
 /*
 ****Pour baseline
 local mode ves 

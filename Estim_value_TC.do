@@ -1,4 +1,5 @@
-*************************************************
+
+§/;,!:41*************************************************
 * Programme : Estimer les additive & iceberg trade costs
 * Using Hummels trade data
 *
@@ -50,6 +51,16 @@ if "`c(hostname)'" =="MSOP112C" {
 	global dir_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
 	
 }
+
+/* Nouveau fixe Bureau Lise: Tout en local sur MyWork. Pour la base et les résultats, dossier Lise ; pgms dans le dossier Git (de MyWork) */
+if "`c(hostname)'" =="LAB0661F" {
+	
+	global dir "//storage2016.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_costs"
+	global dir_data "$dir/data"
+	
+}
+
+
 cd "$dir"
 
 
