@@ -172,6 +172,7 @@ program nlcouts_IetA
 *out v9	replace terme_A=(terme_A-1)/`prix_fob'
 
 	replace terme_A=terme_A/`prix_fob'
+	
 
 * v10 on modifie la forme fonctionnelle
 * de cette façon les erreurs sont bien centrées sur 0
@@ -332,9 +333,11 @@ program prep_reg
 
 * Révision JEGeo
 * On ajoute le choix de la base de données
-args database year class preci mode 
+args database year class preci mode model
 
 **On va changer en prep_reg hummels_tra 2006 5 3 air ou prep_reg base_hs10_newyears 2005 10 3 air 
+
+**model : nlI / nlA / nlAetI
 
 **"class" donne la précision des produits. "preci" donne la précision des secteurs
 
@@ -404,6 +407,7 @@ if "`database'"=="hummels_tra" {
 	keep if year==`year'
 	keep if mode=="`mode'"
 	generate sector = substr(sitc,1,`preci')
+	rename `mode'_val val 
 }
 
 
@@ -466,6 +470,7 @@ if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
 if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 	use "$dir_data/base_hs10_`year'", clear
 	
+	drop if qy1==0
 	collapse (sum) val qy1 cha wgt, by(hs iso_o dist_entry dist_unlad rate_prov mode sitc)
 	bysort hs iso_o dist_entry dist_unlad rate_prov mode: drop if _N!=1
 	**Remarque : la régression est à faire en 5/3
@@ -485,8 +490,11 @@ if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 		generate prix_caf   = (val+cha)/wgt
 		generate prix_fob   = val/wgt
 	}
+	codebook prix_fob
 	
 }
+
+
 
 
 if "`database'"=="hummels_tra_qy1_qy" | "`database'"=="hummels_tra_qy1_wgt" {
@@ -623,27 +631,27 @@ local nbr_sect_expost=r(max)
 display "Nombre de secteurs ex post: `nbr_sect_expost'" 
 drop group_sect
 
-
 *** Tester le pgm
-/*
-* Pour faire un plus petit sample
-local limite 80
+if "${test}"!="" {
+	* Pour faire un plus petit sample
+	local limite 80
+	
+	* On enlève les pays les plus petits (<=80% des flux, par mode considéré)
+	bys iso_o: egen total_iso_o = total(val)
+	egen seuil_pays = pctile(total_iso_o),p(`limite')
+	
+	drop if total_iso_o <= seuil_pays
+	
+	
+	* On enlève les secteurs les plus petits (<=80% des flux, par mode considéré)
+	bys sector: egen total_sector = total(val)
+	egen seuil_sector = pctile(total_sector),p(`limite')
+	
+	drop if total_sector <= seuil_sector
 
-* On enlève les pays les plus petits (<=80% des flux, par mode considéré)
-bys iso_o: egen total_iso_o = total(`mode'_val)
-egen seuil_pays = pctile(total_iso_o),p(`limite')
-
-drop if total_iso_o <= seuil_pays
-
-
-* On enlève les roduits les plus petits (<=80% des flux, par mode considéré)
-bys product: egen total_product = total(`mode'_val)
-egen seuil_product = pctile(total_product),p(`limite')
-
-drop if total_product <= seuil_product
-
+}
 *** reprendre ici
-*/
+
 
 
 timer clear
@@ -750,7 +758,10 @@ local initial_additif `initial_sect_A' `initial_iso_o_A'
 *local initial_additif `initial_additif_sect_A' `initial_additif_iso_d_A'
 
 
-/*
+
+display "`model'"
+
+if "`model'"=="nlI" {
 **********************************************************************
 ************** PROGRAMME ESTIMATION NL SUR ICEBERG SEULEMENT
 **********************************************************************	
@@ -758,7 +769,7 @@ local initial_additif `initial_sect_A' `initial_iso_o_A'
 
 timer on 1
 
-nl couts_iceberg @  prix_fob `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres_iceberg' ) initial (`initial_iceberg')
+nl couts_iceberg @  ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(100) parameters(`liste_parametres_iceberg' ) initial (`initial_iceberg')
 
 
 capture	generate rc_nlI=_rc
@@ -779,14 +790,14 @@ capture correlate ln_ratio_minus1 blink_nlI
 capture generate Rp2_nlI = r(rho)^2
 
 
-noisily capture  order iso_o iso_d product prix_fob prix_trsp2 converge_nlI predict_nlI terme* /*predict_nlI */
+order iso_o sector prix_fob prix_trsp2 converge /*predict lpredict*/ predict_nl terme* /* e_t_rho* predict_calcul couts FE* 	*/
 
 capture	matrix X= e(b)
 capture matrix ET=e(V)
 local nbr_var_nlI = e(k)/2
 
 generate nbr_obs_nlI=e(N)
-bysort product : generate nbr_obs_prod_nlI=_N
+bysort sector : generate nbr_obs_prod_nlI=_N
 bysort iso_o : generate nbr_obs_iso_nlI=_N
 generate  coef_iso_nlI =.
 generate  coef_prod_nlI =.
@@ -828,7 +839,7 @@ foreach i in `liste_variables' {
 }
 
 
-sum terme_nlI  [fweight=`mode'_val], det
+sum terme_nlI  [fweight=val], det
 generate terme_nlI_mp = r(mean)
 generate terme_nlI_med = r(p50)
 generate terme_nlI_et=r(sd)	
@@ -848,15 +859,16 @@ generate Duree_estimation_secondes = r(t1)
 generate machine =  "`c(hostname)'__`c(username)'"
 
 
-save "$stock_results/blouk_nlI_`year'_`class'_`preci'_`mode'", replace
+save "$stock_results/${test}results_estimTC_`model'_`year'_prod`class'_sect`preci'_`mode'", replace
 
-*/
+}
 
 * ------------------------------------------------
 ******** ESTIMATION AVEC COUTS ADDITIF ONLY
 * ------------------------------------------------
 
-/*
+if "`model'"=="nlA" {
+	
 timer on 2
 
 nl couts_additif @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) parameters(`liste_parametres_additif' ) initial (`initial_additif')
@@ -870,7 +882,7 @@ gen predict_nlA = exp(blink_nlA)+1
 *capture	generate predict=exp(lpredict)	
 capture	generate converge_nlA=e(converge)
 *capture generate R2 = e(r2)
-capture generate t_nlA = terme_A*prix_fob
+capture generate t_nlA = terme_nlA*prix_fob
 
 ** Mesurer le fit du modèle
 ** (1) Coefficient R2
@@ -878,14 +890,14 @@ capture generate t_nlA = terme_A*prix_fob
 capture correlate ln_ratio_minus1 blink_nlA
 capture generate Rp2_nlA = r(rho)^2
 
-noisily capture  order iso_o iso_d product prix_fob prix_trsp2 converge_nlA predict_nlA terme* t_nlA /* e_t_rho* predict_calcul couts FE* 	*/
+order iso_o sector prix_fob prix_trsp2 converge /*predict lpredict*/ predict_nl terme* t_nlA /* e_t_rho* predict_calcul couts FE* 	*/
 
 capture	matrix X= e(b)
 capture matrix ET=e(V)
 local nbr_var = e(k)/2
 
 generate nbr_obs_nlA=e(N)
-bysort product : generate nbr_obs_nlA_prod=_N
+bysort sector : generate nbr_obs_nlA_prod=_N
 bysort iso_o : generate nbr_obs_nlA_iso=_N
 generate  coef_iso_nlA =.
 generate  coef_prod_nlA =.
@@ -924,7 +936,7 @@ foreach i in `liste_variables' {
 	local m = `m'+1
 }
 
-sum terme_nlA  [fweight=`mode'_val], det
+sum terme_nlA  [fweight=val], det
 generate terme_nlA_mp = r(mean)
 generate terme_nlA_med = r(p50)
 generate terme_nlA_et = r(sd)
@@ -942,14 +954,15 @@ generate Duree_estimation_secondes = r(t2)
 capture generate machine =  "`c(hostname)'__`c(username)'"
 
 
-save "$stock_results/blouk_nlA_`year'_`class'_`preci'_`mode'", replace
+save "$stock_results/${test}results_estimTC_`model'_`year'_prod`class'_sect`preci'_`mode'", replace
 
-*/
+}
 
 * ------------------------------------------------
 ******** ESTIMATION AVEC COUTS ADDITIF ET ICEBERG
 * ------------------------------------------------
 
+if "`model'"=="nlAetI" | "`model'"==""{
 
 timer on 3
 
@@ -958,9 +971,15 @@ timer on 3
 *nl couts_trsp @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-2) iterate(200) parameters(`liste_parametres' ) initial (`initial')
 
 
+sum ln_ratio_minus1
+sum prix_fob
+
+summarize ln_ratio_minus1 prix_fob, det
+
 
 capture noisily nl couts_IetA @ ln_ratio_minus1 prix_fob `liste_variables' , eps(1e-3) iterate(200) ///
 				parameters(`liste_parametres' ) initial (`initial')
+
 
 				
 local result_reg = _rc
@@ -1087,9 +1106,9 @@ if `result_reg' !=0 { {
 }
 
 
-save "$stock_results/results_estimTC_`year'_prod`class'_sect`preci'_`mode'", replace
+save "$stock_results/${test}results_estimTC_`year'_prod`class'_sect`preci'_`mode'", replace
 
-
+}
 
 end
 
