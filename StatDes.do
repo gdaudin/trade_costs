@@ -7,6 +7,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
 	global dir_temp ~/Downloads/temp_stata
 	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
+	global dir_git "~/Répertoires Git/trade_costs_git"
 	
 	
 }
@@ -267,6 +268,52 @@ foreach mode in air ves {
 	}
 	label var year "year ($method, `mode')"
 	label var prix_trsp "Observed transport costs"
+	
+	
+	
+	table (var) (year), /*
+	*/ statistic(count prix_trsp) /*
+	*/ command(r(r): tabulate iso_o) /*
+	*/ name(blif) replace nototals
+	
+	collect label values statcmd 1 "N", modify
+	collect style header statcmd, level(hide)
+	collect style header var, level(hide)
+	collect label levels result r "Number of partners", modify
+	collect preview
+	
+	collect export $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/filk.tex, tableonly replace
+	blif
+	
+	
+	
+	
+	table () (year), /*
+	*/ command(r(r): tabulate sector) /*
+	*/ name(blouf) replace nototals
+	
+	collect style header statcmd, level(hide)
+	collect style header var, level(hide)
+	collect label levels result r "Number of sectors", modify
+	
+	collect preview
+	
+	
+		table (var) (year) (statcmd) [aweight=val], /*
+	*/ statistic(mean prix_trsp) statistic(median prix_trsp) /*	
+	*/ statistic(mean terme_I) statistic(median terme_I) /*
+	*/ statistic(mean terme_A)   statistic(median terme_A) /*
+	*/ statistic(mean beta) statistic(median beta) /*
+	*/ command(r(r): tabulate iso_o) /*
+	*/ nformat(%4.3f) nototals /*
+	*/ name(bloum) replace
+	
+	
+	
+	
+	
+	
+	
 	table (var) (year) [aweight=val], /*
 	*/ statistic(mean prix_trsp) statistic(median prix_trsp) /*	
 	*/ statistic(mean terme_I) statistic(median terme_I) /*
@@ -277,30 +324,7 @@ foreach mode in air ves {
 	
 
 	
-	table (var) (year), /*
-	*/ statistic(count prix_trsp) /*
-	*/ command(r(r): tabulate iso_o) /*
-	*/name(blif) replace
-	
-	collect label values statcmd 1 "N", modify
-	collect style header statcmd, level(hide)
-	collect style header var, level(hide)
-	collect label levels result r "Number of partners", modify
-	
-	collect preview
-	
-	
-	
-	
-	table () (year), /*
-	*/ command(r(r): tabulate sector) /*
-	*/name(blouf) replace
-	
-	collect style header statcmd, level(hide)
-	collect style header var, level(hide)
-	collect label levels result r "Number of sectors", modify
-	
-	collect preview
+
 	
 	collect combine TableA1_`mode' = blif blouf bloum, replace
 	
