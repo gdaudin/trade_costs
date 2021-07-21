@@ -104,7 +104,7 @@ global test
 
 log using "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl", replace
 	
-<<<<<<< HEAD
+
 * sauver le log file chez Guillaume
 if "`c(username)'" =="guillaumedaudin" {
 	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
@@ -120,10 +120,9 @@ if "`c(hostname)'" =="hericourt" {
 	log using "D:\Hericourt\trade_costs\Logs divers\log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
 }
 	
-prep_reg `bdd' `year' `level_product' `level_sector' `mode'
-=======
+
 prep_reg `bdd' `year' `level_product' `level_sector' `mode' `model'
->>>>>>> 7febe325f69cc89648d14011f5dbe1e7fd2bd623
+
 	
 	
 	* 2013 air ne converge pas 
@@ -153,12 +152,11 @@ foreach y of numlist 2014(-1) 1974 {
 local mode air /*ves*/
 *foreach  year of numlist  1976(3)2019
 
-<<<<<<< HEAD
+
 /*
 foreach y of numlist 2017(-1)2002 {
-=======
-foreach y of numlist 2004 /*2017(-1)2002*/ {
->>>>>>> 7febe325f69cc89648d14011f5dbe1e7fd2bd623
+
+
 	foreach m in `mode' {	
 	EstimTC `y' `m' 5 3 hs10_qy1_qy
 	EstimTC `y' `m' 5 3 hs10_qy1_wgt
