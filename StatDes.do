@@ -288,7 +288,7 @@ foreach mode in air ves {
 	replace terme_A=terme_A *100
 	replace terme_I=(terme_I-1) *100
 	
-	
+/*
 	table (var) (year) [aweight=val], /*
 	*/ statistic(max N) /*
 	*/ statistic(max Nb_sectors) /*
@@ -299,21 +299,43 @@ foreach mode in air ves {
 	*/ statistic(mean beta) statistic(median beta) statistic(sd beta) /*
 	*/ nformat(%3.1f) nototals /*
 	*/ name(bloum) replace
-	
-	
-	
-	collect layout (result[max]#var var[prix_trsp terme_I terme_A beta]#result)  (year)
+*/
+
+
+	collect clear
+
+	sort year
+	quietly {
+		by year: collect r(max), tags(model[data] var[N]): 	sum N
+		by year: collect get r(max), tags(model[data] var[Nb_sectors]): 	sum Nb_sectors
+		by year: collect get r(max), tags(model[data] var[Nb_partners]): 	sum Nb_partners 
+
+		by year: collect get, tags(model[data] var[prix_trsp]) : sum prix_trsp [aweight=val], det
+		by year: collect get, tags(model[nlAetI] var[terme_I]) : sum terme_I [aweight=val], det
+		by year: collect get, tags(model[nlAetI] var[terme_A]) : sum terme_A [aweight=val], det
+		by year: collect get, tags(model[nlAetI] var[beta]) : sum beta [aweight=val], det
+	}
+	collect style cell, warn nformat (%3.1f)
+	collect style header result[max], level(hide)
+		
+		
+	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
+		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
+		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd])  (year)
+
 	
 	collect label levels var N "{$#$ obs.}"
 	collect label levels var Nb_sectors "{$#$ sectors}"
 	collect label levels var Nb_partners "{$#$ origin countries}"
 	collect label levels result max "\textbf{Data}", modify
 	collect label levels result mean "Mean (in $%$)", modify
-	collect label levels result median "Median (in $%$)", modify
+	collect label levels result p50 "Median (in $%$)", modify
 	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
 	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
-	collect label levels var beta "{$\widehat{\beta}$}", modify
+	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
+	collect label levels model data "\textbf{Data}"
+	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
 	collect style cell var[beta], warn nformat(%3.2f)
 	
@@ -326,9 +348,6 @@ foreach mode in air ves {
 	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA1_`mode'.tex,tableonly replace
 	
 	
-	
-	
-	blif
 	
 ********Essai avec tables concaténées après ; ne marche pas.
 
