@@ -269,19 +269,47 @@ foreach mode in air ves {
 	label var year "year ($method, `mode')"
 	label var prix_trsp "Observed transport costs"
 	
+	generate N = 0
+	generate Nb_sectors = 0
+	generate Nb_partners = 0
+	
+	foreach year of num 1974 1980 1990 2000 2010 2019 {
+		capture tabulate iso_o if year==`year'
+		replace Nb_partners=r(r) if year==`year'
+		capture tabulate sector if year==`year'
+		replace Nb_sectors=r(r) if year==`year'
+		egen N_`year'=count(prix_trsp), by(year)
+		replace N=N_`year' if year==`year'
+		drop N_`year'
+	}
+	
 	
 	table (var) (year) [aweight=val], /*
-	*/ statistic(count prix_trsp) /*
-	*/ command(r(r) levelsof iso_o) /*
-	*/ command(r(r) levelsof sectors) /*
-	*/ statistic(mean prix_trsp) statistic(median prix_trsp) /*	
-	*/ statistic(mean terme_I) statistic(median terme_I) /*
-	*/ statistic(mean terme_A)   statistic(median terme_A) /*
-	*/ statistic(mean beta) statistic(median beta) /*
+	*/ statistic(max N) /*
+	*/ statistic(max Nb_sectors) /*
+	*/ statistic(max Nb_partners) /*
+	*/ statistic(mean prix_trsp) statistic(median prix_trsp) statistic(sd prix_trsp) /*	
+	*/ statistic(mean terme_I) statistic(median terme_I) statistic(sd terme_I) /*
+	*/ statistic(mean terme_A)   statistic(median terme_A) statistic(sd terme_A) /*
+	*/ statistic(mean beta) statistic(median beta) statistic(sd beta) /*
 	*/ nformat(%4.3f) nototals /*
 	*/ name(bloum) replace
 	
+	collect label levels result max "Data dimensions", modify
+	collect label levels var terme_I "Multiplicative term", modify
+	collect label levels var terme_A "Additive term", modify
+	collect layout (result[max]#var var[prix_trsp terme_I terme_A beta]#result)  (year)
+	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
 	
+	collect preview
+	
+	collect export /* 		 
+	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA1_`mode'.tex,tableonly replace
+	
+	
+	
+	
+	blif
 	
 ********Essai avec tables concaténées après ; ne marche pas.
 
