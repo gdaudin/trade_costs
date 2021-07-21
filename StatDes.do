@@ -270,7 +270,22 @@ foreach mode in air ves {
 	label var prix_trsp "Observed transport costs"
 	
 	
+	table (var) (year) [aweight=val], /*
+	*/ statistic(count prix_trsp) /*
+	*/ command(r(r) levelsof iso_o) /*
+	*/ command(r(r) levelsof sectors) /*
+	*/ statistic(mean prix_trsp) statistic(median prix_trsp) /*	
+	*/ statistic(mean terme_I) statistic(median terme_I) /*
+	*/ statistic(mean terme_A)   statistic(median terme_A) /*
+	*/ statistic(mean beta) statistic(median beta) /*
+	*/ nformat(%4.3f) nototals /*
+	*/ name(bloum) replace
 	
+	
+	
+********Essai avec tables concaténées après ; ne marche pas.
+
+/*	
 	table (var) (year), /*
 	*/ statistic(count prix_trsp) /*
 	*/ command(r(r): tabulate iso_o) /*
@@ -282,8 +297,7 @@ foreach mode in air ves {
 	collect label levels result r "Number of partners", modify
 	collect preview
 	
-	collect export $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/filk.tex, tableonly replace
-	blif
+	
 	
 	
 	
@@ -297,6 +311,13 @@ foreach mode in air ves {
 	collect label levels result r "Number of sectors", modify
 	
 	collect preview
+	
+	collect combine blink = blif blouf, replace
+	
+	collect preview
+	
+	collect export $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/filk.tex, tableonly replace
+	blif
 	
 	
 		table (var) (year) (statcmd) [aweight=val], /*
@@ -323,14 +344,11 @@ foreach mode in air ves {
 	*/ name(bloum) replace
 	
 
-	
-
-	
 	collect combine TableA1_`mode' = blif blouf bloum, replace
 	
 	collect preview
 	
-	
+*/	
 }
 
 
