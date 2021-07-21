@@ -79,21 +79,21 @@ do "$dir_pgms/Estim_value_TC.do"
 
 capture program drop EstimTC
 program EstimTC
-args year mode level_product level_sector bdd
+args year mode level_product level_sector bdd model
 
 capture log close
 
 
 global test
 ****Si test
-global test test2
+*global test test2
 ******
 
 
 
 log using "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl", replace
 	
-prep_reg `bdd' `year' `level_product' `level_sector' `mode'
+prep_reg `bdd' `year' `level_product' `level_sector' `mode' `model'
 	
 	
 	* 2013 air ne converge pas 
@@ -118,7 +118,7 @@ foreach y of numlist 2014(-1) 1974 {
 	}
 }
 */
-
+/*
 *Pour quand on a les quantités HS10
 local mode air /*ves*/
 *foreach  year of numlist  1976(3)2019
@@ -130,7 +130,7 @@ foreach y of numlist 2004 /*2017(-1)2002*/ {
 	}
 }
 
-
+*/
 
 
 ***Pour IV 5/3
@@ -157,7 +157,7 @@ foreach  y of numlist 2012 {
 local mode ves 
 foreach  y of numlist 1974/2019 {
 	foreach m in `mode' {	
-	EstimTC `y' `m' 5 3 hummels_tra
+	EstimTC `y' `m' 5 3 hummels_tra nlAetI
 	}
 }
 */
@@ -201,5 +201,28 @@ foreach m in `mode' {
 	
 	}
 }
+
+*/
+/*
+****Pour baseline nlA
+local mode air ves 
+foreach  y of numlist 2019/1974 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 5 3 hummels_tra nlA
+	}
+}
+
+*/
+****Pour baseline nlI
+local mode air ves 
+foreach  y of numlist 2019/1974 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 5 3 hummels_tra nlI
+	}
+}
+
+
+
+
 
 
