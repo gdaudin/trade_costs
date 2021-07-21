@@ -36,15 +36,30 @@ if "`c(username)'" =="guillaumedaudin" {
 	set maxvar 120000
 }
 
+
+/* Nouveau fixe Lise */
+if "`c(hostname)'" =="LAB0661F" {
+    
+	
+	*global dir_pgms "\\storage2016.windows.dauphine.fr\home\l\lpatureau\My_Work\Git\trade_costs"
+	global dir "//storage2016.windows.dauphine.fr/home/l/lpatureau/My_Work/Lise/trade_costs"
+	
+	
+	set maxvar 120000
+}
 clear
+
+
 
 set more off
 
-/******************************************
+******************************************
 *****construction nouvelle base HS10******
 ******************************************
 
 use "$dir/data/base_hs10_2002.dta", replace
+
+
 save "$dir/data/base_hs10_newyears.dta", replace
 
 forvalues x=2003(1)2019{
@@ -55,14 +70,16 @@ forvalues x=2003(1)2019{
 
 }
 
+/*
 forvalues x=2002(1)2019 {
 
 	erase "$dir/data/base_hs10_`x'.dta"
 }
-
+*/
 
 set more off 
-*/
+
+
 
 ******************************************
 *******program first stage****************
@@ -374,7 +391,7 @@ forvalues x=2003(1)2019{
 	
 reghdfe lprix_fob_wgt llprix_fob_wgt ds_tariff_lise, a(FEc= cntry FEs= sector_3d)  vce (ro) resid
 
-predict lprix_yearly_air_hat_allFE,xbd 
+predict lprix_yearly_hat_allFE,xbd 
 	drop FEc FEs
 	
 save "$dir/results/IV_referee1_yearly/FS_predictions_`x'_both.dta", replace
