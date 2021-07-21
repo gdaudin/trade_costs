@@ -295,11 +295,22 @@ foreach mode in air ves {
 	*/ nformat(%4.3f) nototals /*
 	*/ name(bloum) replace
 	
-	collect label levels result max "Data dimensions", modify
-	collect label levels var terme_I "Multiplicative term", modify
-	collect label levels var terme_A "Additive term", modify
+	
+	
 	collect layout (result[max]#var var[prix_trsp terme_I terme_A beta]#result)  (year)
+	
+	collect label levels var N "{$#$ obs.}"
+	collect label levels var Nb_sectors "{$#$ sectors}"
+	collect label levels var Nb_partners "{$#$ origin countries}"
+	collect label levels result max "\textbf{Data}", modify
+	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
+	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
+	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
+	collect label levels var beta "{$\widehat{\beta}$}", modify
 	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	
+	
+	
 	
 	collect preview
 	
