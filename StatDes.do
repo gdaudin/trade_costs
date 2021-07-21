@@ -284,6 +284,11 @@ foreach mode in air ves {
 	}
 	
 	
+	replace prix_trsp=prix_trsp *100
+	replace terme_A=terme_A *100
+	replace terme_I=(terme_I-1) *100
+	
+	
 	table (var) (year) [aweight=val], /*
 	*/ statistic(max N) /*
 	*/ statistic(max Nb_sectors) /*
@@ -292,7 +297,7 @@ foreach mode in air ves {
 	*/ statistic(mean terme_I) statistic(median terme_I) statistic(sd terme_I) /*
 	*/ statistic(mean terme_A)   statistic(median terme_A) statistic(sd terme_A) /*
 	*/ statistic(mean beta) statistic(median beta) statistic(sd beta) /*
-	*/ nformat(%4.3f) nototals /*
+	*/ nformat(%3.1f) nototals /*
 	*/ name(bloum) replace
 	
 	
@@ -303,11 +308,14 @@ foreach mode in air ves {
 	collect label levels var Nb_sectors "{$#$ sectors}"
 	collect label levels var Nb_partners "{$#$ origin countries}"
 	collect label levels result max "\textbf{Data}", modify
+	collect label levels result mean "Mean (in $%$)", modify
+	collect label levels result median "Median (in $%$)", modify
 	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
 	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
 	collect label levels var beta "{$\widehat{\beta}$}", modify
 	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	collect style cell var[beta], warn nformat(%3.2f)
 	
 	
 	
