@@ -102,22 +102,19 @@ global test
 
 
 
-log using "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl", replace
-	
-
 * sauver le log file chez Guillaume
 if "`c(username)'" =="guillaumedaudin" {
-	log using "Logs divers/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
+	log using "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl", replace
 }
 	
 * sauver le log file chez Lise
 if "`c(hostname)'" =="LAB0271A" | "`c(hostname)'" =="MSOP112C" | "`c(hostname)'" =="LAB0661F" {
-	log using "$dir_log/log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
+	log using "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl", replace
 }
 	
 	* sauver le log file chez Jerome
 if "`c(hostname)'" =="hericourt" {
-	log using "D:\Hericourt\trade_costs\Logs divers\log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'", replace
+	log using "$dir_log/${test}log_prep_reg_base_`year'_`mode'_`level_product'_`level_sector'_`bdd'.smcl", replace
 }
 	
 

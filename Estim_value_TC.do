@@ -1,5 +1,4 @@
 
-§/;,!:41*************************************************
 * Programme : Estimer les additive & iceberg trade costs
 * Using Hummels trade data
 *
