@@ -154,11 +154,19 @@ erase temp_hummels_tra.dta
 	
 capture program drop open_year_mode
 program open_year_mode
-args year mode method
+args year mode method model
 
 
-if "`method'"=="baseline" {
+if "`method'"=="baseline" & ("`model'"=="" | "`model'"=="nlAetI") {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
+	generate beta=-(terme_A/(terme_I+terme_A-1))
+}	
+
+if "`method'"=="baseline" & ("`model'"=="nlA" | "`model'"=="nlI") {
+	use "$dir_baseline_results/results_estimTC_`model'_`year'_prod5_sect3_`mode'.dta", clear
 	capture rename `mode'_val val 
 	capture drop *_val
 	capture rename product sector
@@ -225,7 +233,6 @@ if "`method'"=="IV_referee1_yearly_5_3" {
 }	
 
 
-generate beta=-(terme_A/(terme_I+terme_A-1))
 egen cover_`method'=total(val)
 
 capture drop year
@@ -259,55 +266,81 @@ global method baseline
 *global method hs10_qy1_qy
 
 ***Pour les tables A
+
+
 foreach mode in air ves {
-	capture erase $dir_temp/data_${method}_`mode'.dta
-	foreach year of num 1974 1980 1990 2000 2010 2019 {
-		open_year_mode `year' `mode' $method
-		capture append using $dir_temp/data_${method}_`mode'.dta
-		save $dir_temp/data_${method}_`mode'.dta, replace
-	}
-	label var year "year ($method, `mode')"
-	label var prix_trsp "Observed transport costs"
-	
-	generate N = 0
-	generate Nb_sectors = 0
-	generate Nb_partners = 0
-	
-	foreach year of num 1974 1980 1990 2000 2010 2019 {
-		capture tabulate iso_o if year==`year'
-		replace Nb_partners=r(r) if year==`year'
-		capture tabulate sector if year==`year'
-		replace Nb_sectors=r(r) if year==`year'
-		egen N_`year'=count(prix_trsp), by(year)
-		replace N=N_`year' if year==`year'
-		drop N_`year'
-	}
-	
-	
-	replace prix_trsp=prix_trsp *100
-	replace terme_A=terme_A *100
-	replace terme_I=(terme_I-1) *100
-
 	collect clear
+	foreach model in nlAetI nlI {
+		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+		foreach year of num 1974 1980 1990 2000 2010 2019 {
+			open_year_mode `year' `mode' $method `model'
+			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
+			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
+		}
+		label var year "year ($method, `mode')"
+		
+		
+		if "`model'"=="nlAetI" {
+			generate N = 0
+			generate Nb_sectors = 0
+			generate Nb_partners = 0
+			label var prix_trsp "Observed transport costs"
+			
+			foreach year of num 1974 1980 1990 2000 2010 2019 {
+				capture tabulate iso_o if year==`year'
+				replace Nb_partners=r(r) if year==`year'
+				capture tabulate sector if year==`year'
+				replace Nb_sectors=r(r) if year==`year'
+				egen N_`year'=count(prix_trsp), by(year)
+				replace N=N_`year' if year==`year'
+				drop N_`year'
+			}
+		}
+		
 
-	sort year
-	quietly {
-		by year: collect r(max), tags(model[data] var[N]): 	sum N
-		by year: collect get r(max), tags(model[data] var[Nb_sectors]): 	sum Nb_sectors
-		by year: collect get r(max), tags(model[data] var[Nb_partners]): 	sum Nb_partners 
 
-		by year: collect get, tags(model[data] var[prix_trsp]) : sum prix_trsp [aweight=val], det
-		by year: collect get, tags(model[nlAetI] var[terme_I]) : sum terme_I [aweight=val], det
-		by year: collect get, tags(model[nlAetI] var[terme_A]) : sum terme_A [aweight=val], det
-		by year: collect get, tags(model[nlAetI] var[beta]) : sum beta [aweight=val], det
+		
+
+		sort year
+	*	macro list
+		quietly if "`model'"=="nlAetI" {
+			
+			replace prix_trsp=prix_trsp *100
+			replace terme_A=terme_A *100
+			replace terme_I=(terme_I-1) *100
+			
+			by year: collect r(max), tags(model[data] var[N]): 	sum N
+			by year: collect get r(max), tags(model[data] var[Nb_sectors]): 	sum Nb_sectors
+			by year: collect get r(max), tags(model[data] var[Nb_partners]): 	sum Nb_partners 
+
+			by year: collect get, tags(model[data] var[prix_trsp]) : sum prix_trsp [aweight=val], det
+			by year: collect get, tags(model[nlAetI] var[terme_I]) : sum terme_I [aweight=val], det
+			by year: collect get, tags(model[nlAetI] var[terme_A]) : sum terme_A [aweight=val], det
+			by year: collect get, tags(model[nlAetI] var[beta]) : sum beta [aweight=val], det
+		}
+		
+		quietly if "`model'"=="nlI" {
+			replace terme_nlI=(terme_nlI-1) *100
+			by year: collect get, tags(model[`model'] var[terme_nlI]) : sum terme_nlI [aweight=val], det
+		}
+		
+		quietly if "`model'"=="nlA" {
+			replace terme_A=terme_A *100
+			by year: collect get, tags(model[`model'] var[terme_A]) : sum terme_nlA [aweight=val], det
+		}
+		
+			
 	}
-	collect style cell, warn nformat (%3.1f)
-	collect style header result[max], level(hide)
-		
-		
+	
+	
+	
+	
+	
 	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
 		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
-		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd])  (year)
+		*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
+		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd]) /* 
+		*/ (year)
 
 	
 	collect label levels var N "{$#$ obs.}"
@@ -318,12 +351,17 @@ foreach mode in air ves {
 	collect label levels result p50 "Median (in $%$)", modify
 	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
 	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
+	collect label levels var terme_nlI "{\textit{Multiplicative term} ($\widehat{\tau}^{ice}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
+	collect label levels var terme_nlA "{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$)}", modify
 	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
-	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	collect label levels model nlI "{\textbf{Model (A)}}"
+	collect style cell, warn nformat (%3.1f)
 	collect style cell var[beta], warn nformat(%3.2f)
+	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	collect style header result[max], level(hide)
 	
 	collect style save myappendixAB, replace
 	
@@ -333,57 +371,59 @@ foreach mode in air ves {
 	collect export /* 		 
 	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA1_`mode'.tex, /*
 	*/ tableonly replace
+
 	
 	
 }
 
-foreach mode in air ves {
-	capture erase $dir_temp/data_${method}_`mode'.dta
-	foreach year of num 1974 1980 1990 2000 2010 2019 {
-		open_year_mode `year' `mode' $method
-		capture append using $dir_temp/data_${method}_`mode'.dta
-		save $dir_temp/data_${method}_`mode'.dta, replace
+/*
+******Pour les tables B appendix
+
+capture program drop tablesB
+program tablesB
+args start end mode method
+
+collect clear
+
+foreach model in nlAetI nlI {
+	capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+	foreach year of num `start'/`end'  {
+		open_year_mode `year' `mode' $method `model'
+		capture append using $dir_temp/data_`model'_${method}_`mode'.dta
+		save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 	}
 	label var year "year ($method, `mode')"
-	label var prix_trsp "Observed transport costs"
 	
-	generate N = 0
-	generate Nb_sectors = 0
-	generate Nb_partners = 0
 	
-	foreach year of num 1974 1980 1990 2000 2010 2019 {
-		capture tabulate iso_o if year==`year'
-		replace Nb_partners=r(r) if year==`year'
-		capture tabulate sector if year==`year'
-		replace Nb_sectors=r(r) if year==`year'
-		egen N_`year'=count(prix_trsp), by(year)
-		replace N=N_`year' if year==`year'
-		drop N_`year'
+	if "`model'"=="nlAetI" {
+		generate N = 0
+		generate Nb_sectors = 0
+		generate Nb_partners = 0
+		label var prix_trsp "Observed transport costs"
+		
+		foreach year of num `start'/`end'  {
+			capture tabulate iso_o if year==`year'
+			replace Nb_partners=r(r) if year==`year'
+			capture tabulate sector if year==`year'
+			replace Nb_sectors=r(r) if year==`year'
+			egen N_`year'=count(prix_trsp), by(year)
+			replace N=N_`year' if year==`year'
+			drop N_`year'
+		}
 	}
 	
-	
-	replace prix_trsp=prix_trsp *100
-	replace terme_A=terme_A *100
-	replace terme_I=(terme_I-1) *100
-	
-/*
-	table (var) (year) [aweight=val], /*
-	*/ statistic(max N) /*
-	*/ statistic(max Nb_sectors) /*
-	*/ statistic(max Nb_partners) /*
-	*/ statistic(mean prix_trsp) statistic(median prix_trsp) statistic(sd prix_trsp) /*	
-	*/ statistic(mean terme_I) statistic(median terme_I) statistic(sd terme_I) /*
-	*/ statistic(mean terme_A)   statistic(median terme_A) statistic(sd terme_A) /*
-	*/ statistic(mean beta) statistic(median beta) statistic(sd beta) /*
-	*/ nformat(%3.1f) nototals /*
-	*/ name(bloum) replace
-*/
 
 
-	collect clear
+	
 
 	sort year
-	quietly {
+*	macro list
+	quietly if "`model'"=="nlAetI" {
+		
+		replace prix_trsp=prix_trsp *100
+		replace terme_A=terme_A *100
+		replace terme_I=(terme_I-1) *100
+		
 		by year: collect r(max), tags(model[data] var[N]): 	sum N
 		by year: collect get r(max), tags(model[data] var[Nb_sectors]): 	sum Nb_sectors
 		by year: collect get r(max), tags(model[data] var[Nb_partners]): 	sum Nb_partners 
@@ -394,118 +434,53 @@ foreach mode in air ves {
 		by year: collect get, tags(model[nlAetI] var[beta]) : sum beta [aweight=val], det
 	}
 	
+	quietly if "`model'"=="nlI" {
+		replace terme_nlI=(terme_nlI-1) *100
+		by year: collect get, tags(model[`model'] var[terme_nlI]) : sum terme_nlI [aweight=val], det
+	}
+	
+	quietly if "`model'"=="nlA" {
+		replace terme_A=terme_A *100
+		by year: collect get, tags(model[`model'] var[terme_A]) : sum terme_nlA [aweight=val], det
+	}
+	
 		
-		
-	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
-		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
-		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd])  (year)
-
-	
-	collect label levels var N "{$#$ obs.}"
-	collect label levels var Nb_sectors "{$#$ sectors}"
-	collect label levels var Nb_partners "{$#$ origin countries}"
-	collect label levels result max "\textbf{Data}", modify
-	collect label levels result mean "Mean (in $%$)", modify
-	collect label levels result p50 "Median (in $%$)", modify
-	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
-	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
-	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
-	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
-	collect label levels model data "\textbf{Data}"
-	collect label levels model nlAetI "{\textbf{Model (B)}}"
-	
-	collect style cell, warn nformat (%3.1f)
-	collect style header result[max], level(hide)
-	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
-	collect style cell var[beta], warn nformat(%3.2f)
-	
-	
-	
-	
-	collect preview
-	
-	collect export /* 		 
-	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA1_`mode'.tex, /*
-	*/ tableonly replace
-	
-	
-}
-collect style save myappendixAB, replace
-collect label save myappendixAB, replace
-******Pour les tables B
-
-capture program drop tablesB
-program tablesB
-args start end mode method
-
-
-capture erase $dir_temp/data_${method}_`mode'.dta
-foreach year of num `start'/`end' {
-	open_year_mode `year' `mode' $method
-	capture append using $dir_temp/data_${method}_`mode'.dta
-	save $dir_temp/data_${method}_`mode'.dta, replace
-}
-label var year "year ($method, `mode')"
-label var prix_trsp "Observed transport costs"
-
-generate N = 0
-generate Nb_sectors = 0
-generate Nb_partners = 0
-
-foreach year of num `start'/`end'  {
-	capture tabulate iso_o if year==`year'
-	replace Nb_partners=r(r) if year==`year'
-	capture tabulate sector if year==`year'
-	replace Nb_sectors=r(r) if year==`year'
-	egen N_`year'=count(prix_trsp), by(year)
-	replace N=N_`year' if year==`year'
-	drop N_`year'
-}
-
-
-replace prix_trsp=prix_trsp *100
-replace terme_A=terme_A *100
-replace terme_I=(terme_I-1) *100
-
-collect clear
-
-sort year
-quietly {
-	by year: collect r(max), tags(model[data] var[N]): 	sum N
-	by year: collect get r(max), tags(model[data] var[Nb_sectors]): 	sum Nb_sectors
-	by year: collect get r(max), tags(model[data] var[Nb_partners]): 	sum Nb_partners 
-
-	by year: collect get, tags(model[data] var[prix_trsp]) : sum prix_trsp [aweight=val], det
-	by year: collect get, tags(model[nlAetI] var[terme_I]) : sum terme_I [aweight=val], det
-	by year: collect get, tags(model[nlAetI] var[terme_A]) : sum terme_A [aweight=val], det
-	by year: collect get, tags(model[nlAetI] var[beta]) : sum beta [aweight=val], det
 }
 
 
 
-	
-	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
-		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
-		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd])  (year)
 
-	
-	collect label levels var N "{$#$ obs.}"
-	collect label levels var Nb_sectors "{$#$ sectors}"
-	collect label levels var Nb_partners "{$#$ origin countries}"
-	collect label levels result max "\textbf{Data}", modify
-	collect label levels result mean "Mean (in $%$)", modify
-	collect label levels result p50 "Median (in $%$)", modify
-	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
-	collect label levels var terme_I "{\textit{Mult. term} ($\widehat{\tau}^{adv}$)}", modify
-	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
-	collect label levels var beta "{\textit{Elasticity} ($\widehat{\beta}$)}", modify
-	collect label levels model data "\textbf{Data}"
-	collect label levels model nlAetI "{\textbf{Model (B)}}"
-	
-	collect style cell, warn nformat (%3.1f)
-	collect style header result[max], level(hide)
-	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
-	collect style cell var[beta], warn nformat(%3.2f)
+
+collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
+	*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
+	*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
+	*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd]) /* 
+	*/ (year)
+
+
+collect label levels var N "{$#$ obs.}"
+collect label levels var Nb_sectors "{$#$ sectors}"
+collect label levels var Nb_partners "{$#$ origin countries}"
+collect label levels result max "\textbf{Data}", modify
+collect label levels result mean "Mean (in $%$)", modify
+collect label levels result p50 "Median (in $%$)", modify
+collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
+collect label levels var terme_I "{\textit{Mult. term} ($\widehat{\tau}^{adv}$)}", modify
+collect label levels var terme_nlI "{\textit{Mult. term} ($\widehat{\tau}^{ice}$)}", modify
+collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
+collect label levels var terme_nlA "{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$)}", modify
+collect label levels var beta "{\textit{Elasticity} ($\widehat{\beta}$)}", modify
+collect label levels model data "\textbf{Data}"
+collect label levels model nlAetI "{\textbf{Model (B)}}"
+collect label levels model nlI "{\textbf{Model (A)}}"
+collect style cell, warn nformat (%3.1f)
+collect style cell var[beta], warn nformat(%3.2f)
+collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+collect style header result[max], level(hide)
+
+
+
+
 
 collect preview
 
