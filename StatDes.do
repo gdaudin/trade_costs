@@ -304,7 +304,10 @@ foreach mode in air ves {
 	collect style cell, warn nformat (%3.1f)
 	collect style header result[max], level(hide)
 		
-
+		
+	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
+		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
+		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd])  (year)
 
 	
 	collect label levels var N "{$#$ obs.}"
@@ -316,7 +319,7 @@ foreach mode in air ves {
 	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
 	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
-	collect label levels var beta "{\textit{Elasticity} ($\widehat{\beta}$)}", modify
+	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
@@ -325,30 +328,12 @@ foreach mode in air ves {
 	collect style save myappendixAB, replace
 	
 	
-			
-	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
-		*/ model[data]#var[prix_trsp]#result[mean p50 sd]) (year) 
-	
 	collect preview
 	
-	
-	
-	
 	collect export /* 		 
-	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA1a_`mode'.tex, /*
+	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA1_`mode'.tex, /*
 	*/ tableonly replace
 	
-	collect layout (var[terme_I terme_A beta]#result[mean p50 sd])  (model[nlAetI]#year)
-	
-	collect style column, nodelimiter dups(center) position(top) width(asis)
-	collect style header year, level(hide)
-	
-	collect export /* 		 
-	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA1b_`mode'.tex, /*
-	*/ tableonly replace
-
-	
-	blif
 	
 }
 
