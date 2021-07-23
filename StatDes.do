@@ -265,7 +265,141 @@ global method baseline
 *global method qy1_qy
 *global method hs10_qy1_qy
 
-***Pour les tables A
+
+******************Pour la table 1
+collect clear
+global method baseline
+foreach mode in air ves {
+
+	foreach model in nlAetI nlI {
+		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+		foreach year of num 1974/2019  {
+			open_year_mode `year' `mode' $method `model'
+			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
+			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
+		}
+		
+		
+		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
+		egen value_year=total(val), by(year)
+		generate weight = value/value_year
+		
+		
+		
+		if "`model'"=="nlAetI" {
+			generate N = 0
+			generate Nb_sectors = 0
+			generate Nb_partners = 0
+			label var prix_trsp "Observed transport costs"
+			
+			foreach year of num 1974/2019 {
+				capture tabulate iso_o if year==`year'
+				replace Nb_partners=r(r) if year==`year'
+				capture tabulate sector if year==`year'
+				replace Nb_sectors=r(r) if year==`year'
+				egen N_`year'=count(prix_trsp), by(year)
+				replace N=N_`year' if year==`year'
+				drop N_`year'
+				}	
+			collect, tags(model[data] var[N] mode[`mode'] digit[${method}]): /*
+				*/ sum N [aweight=weight]
+			collect, tags(model[data] var[Nb_sectors] mode[`mode'] digit[${method}]): /*
+				*/ sum Nb_sectors [aweight=weight]
+			collect, tags(model[data] var[Nb_partners] mode[`mode'] digit[${method}]): /*
+			    */ sum Nb_partners[aweight=weight] 		
+
+			replace prix_trsp=prix_trsp *100
+			replace terme_A=terme_A *100
+			replace terme_I=(terme_I-1) *100
+			
+
+
+			collect, tags(model[data] var[prix_trsp] mode[`mode'] digit[${method}]) /*
+				*/ : sum prix_trsp [aweight=weight], det
+			collect, tags(model[nlAetI] var[terme_I] mode[`mode'] digit[${method}]) /*
+			    */ : sum terme_I [aweight=weight], det
+			collect, tags(model[nlAetI] var[terme_A] mode[`mode'] digit[${method}]) /*
+				*/ : sum terme_A [aweight=weight], det
+			collect, tags(model[nlAetI] var[beta] 	 mode[`mode'] digit[${method}]) /*
+			    */ : sum beta [aweight=weight], det
+		}
+		
+		quietly if "`model'"=="nlI" {
+			replace terme_nlI=(terme_nlI-1) *100
+			collect, tags(model[`model'] var[terme_nlI] mode[`mode'] digit[${method}]) :/*
+			*/ sum terme_nlI [aweight=val], det
+		}
+			
+	}
+	
+	
+}
+	
+	
+	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
+		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
+		*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
+		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd]) /* 
+		*/ (digit#mode)
+
+	 
+	
+	
+	collect label levels digit baseline "3-digit"
+	collect label levels var N "{$#$ obs.}"
+	collect label levels var Nb_sectors "{$#$ sectors}"
+	collect label levels var Nb_partners "{$#$ origin countries}"
+	collect label levels result max "\textbf{Data}", modify
+	collect label levels result mean "Mean (in $%$)", modify
+	collect label levels result p50 "Median (in $%$)", modify
+	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
+	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
+	collect label levels var terme_nlI "{\textit{Multiplicative term} ($\widehat{\tau}^{ice}$)}", modify
+	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
+	collect label levels var terme_nlA "{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$)}", modify
+	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
+	collect label levels model data "\textbf{Data}"
+	collect label levels model nlAetI "{\textbf{Model (B)}}"
+	collect label levels model nlI "{\textbf{Model (A)}}"
+	collect style cell, warn nformat (%3.1f)
+	collect style cell var[beta], warn nformat(%3.2f)
+	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	collect style header result[max], level(hide)
+	collect style column, nodelimiter dups(center) position(top) width(asis)
+	
+	collect style save myappendixAB, replace
+	
+	
+	collect preview
+	
+	collect export /* 		 
+	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Table1.tex, /*
+	*/ tableonly replace
+	
+	
+
+
+
+
+
+
+
+
+blif
+
+
+
+
+
+
+
+
+
+
+
+
+
+***Pour les tables A de l’appendix
 
 
 foreach mode in air ves {
@@ -376,7 +510,7 @@ foreach mode in air ves {
 	
 }
 
-/*
+
 ******Pour les tables B appendix
 
 capture program drop tablesB
