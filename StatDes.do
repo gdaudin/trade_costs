@@ -165,6 +165,14 @@ if "`method'"=="baseline" & ("`model'"=="" | "`model'"=="nlAetI") {
 	generate beta=-(terme_A/(terme_I+terme_A-1))
 }	
 
+if "`method'"=="baseline5_4" & ("`model'"=="" | "`model'"=="nlAetI") {
+	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect4_`mode'.dta", clear
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
+	generate beta=-(terme_A/(terme_I+terme_A-1))
+}	
+
 if "`method'"=="baseline" & ("`model'"=="nlA" | "`model'"=="nlI") {
 	use "$dir_baseline_results/results_estimTC_`model'_`year'_prod5_sect3_`mode'.dta", clear
 	capture rename `mode'_val val 
@@ -334,6 +342,81 @@ foreach mode in air ves {
 	
 	
 }
+
+
+
+global method baseline5_4
+
+foreach mode in air ves {
+
+	foreach model in nlAetI /*nlI*/ {
+		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+		foreach year of num 1974 1977(4)2013  {
+			open_year_mode `year' `mode' $method `model'
+			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
+			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
+		}
+		
+		
+		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
+		egen value_year=total(val), by(year)
+		generate weight = value/value_year
+		
+		
+		
+		if "`model'"=="nlAetI" {
+			generate N = 0
+			generate Nb_sectors = 0
+			generate Nb_partners = 0
+			label var prix_trsp "Observed transport costs"
+			
+			foreach year of num 1974 1977(4)2013  {
+				capture tabulate iso_o if year==`year'
+				replace Nb_partners=r(r) if year==`year'
+				capture tabulate sector if year==`year'
+				replace Nb_sectors=r(r) if year==`year'
+				egen N_`year'=count(prix_trsp), by(year)
+				replace N=N_`year' if year==`year'
+				drop N_`year'
+				}	
+			collect, tags(model[data] var[N] mode[`mode'] digit[${method}]): /*
+				*/ sum N [aweight=weight]
+			collect, tags(model[data] var[Nb_sectors] mode[`mode'] digit[${method}]): /*
+				*/ sum Nb_sectors [aweight=weight]
+			collect, tags(model[data] var[Nb_partners] mode[`mode'] digit[${method}]): /*
+			    */ sum Nb_partners[aweight=weight] 		
+
+			replace prix_trsp=prix_trsp *100
+			replace terme_A=terme_A *100
+			replace terme_I=(terme_I-1) *100
+			
+
+
+			collect, tags(model[data] var[prix_trsp] mode[`mode'] digit[${method}]) /*
+				*/ : sum prix_trsp [aweight=weight], det
+			collect, tags(model[nlAetI] var[terme_I] mode[`mode'] digit[${method}]) /*
+			    */ : sum terme_I [aweight=weight], det
+			collect, tags(model[nlAetI] var[terme_A] mode[`mode'] digit[${method}]) /*
+				*/ : sum terme_A [aweight=weight], det
+			collect, tags(model[nlAetI] var[beta] 	 mode[`mode'] digit[${method}]) /*
+			    */ : sum beta [aweight=weight], det
+		}
+		
+		quietly if "`model'"=="nlI" {
+			replace terme_nlI=(terme_nlI-1) *100
+			collect, tags(model[`model'] var[terme_nlI] mode[`mode'] digit[${method}]) :/*
+			*/ sum terme_nlI [aweight=val], det
+		}
+			
+	}
+	
+	
+}
+
+
+
+	
+
 	
 	
 	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
@@ -346,6 +429,7 @@ foreach mode in air ves {
 	
 	
 	collect label levels digit baseline "3-digit"
+	collect label levels digit baseline5_4 "4-digit"
 	collect label levels var N "{$#$ obs.}"
 	collect label levels var Nb_sectors "{$#$ sectors}"
 	collect label levels var Nb_partners "{$#$ origin countries}"
