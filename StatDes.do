@@ -273,7 +273,7 @@ global method baseline
 *global method qy1_qy
 *global method hs10_qy1_qy
 
-
+/*
 ******************Pour la table 1
 collect clear
 global method baseline
@@ -415,7 +415,7 @@ foreach mode in air ves {
 
 
 
-	
+
 
 	
 	
@@ -465,22 +465,7 @@ foreach mode in air ves {
 
 
 
-
-
-
-
-blif
-
-
-
-
-
-
-
-
-
-
-
+*/
 
 
 ***Pour les tables A de l’appendix
@@ -488,7 +473,7 @@ blif
 
 foreach mode in air ves {
 	collect clear
-	foreach model in nlAetI nlI {
+	foreach model in nlAetI nlI nlA {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num 1974 1980 1990 2000 2010 2019 {
 			open_year_mode `year' `mode' $method `model'
@@ -543,8 +528,8 @@ foreach mode in air ves {
 		}
 		
 		quietly if "`model'"=="nlA" {
-			replace terme_A=terme_A *100
-			by year: collect get, tags(model[`model'] var[terme_A]) : sum terme_nlA [aweight=val], det
+			replace terme_nlA=terme_nlA *100
+			by year: collect get, tags(model[`model'] var[terme_nlA]) : sum terme_nlA [aweight=val], det
 		}
 		
 			
@@ -557,7 +542,8 @@ foreach mode in air ves {
 	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
 		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
 		*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
-		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd]) /* 
+		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd] /* 
+		*/ model[nlA]#var[terme_nlA]#result[mean p50 sd]) /* 
 		*/ (year)
 
 	
@@ -576,6 +562,7 @@ foreach mode in air ves {
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect label levels model nlI "{\textbf{Model (A)}}"
+	collect label levels model nlA "{\textbf{Model (C)}}"
 	collect style cell, warn nformat (%3.1f)
 	collect style cell var[beta], warn nformat(%3.2f)
 	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
@@ -603,7 +590,7 @@ args start end mode method
 
 collect clear
 
-foreach model in nlAetI nlI {
+foreach model in nlAetI nlI nlA {
 	capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 	foreach year of num `start'/`end'  {
 		open_year_mode `year' `mode' $method `model'
@@ -658,8 +645,8 @@ foreach model in nlAetI nlI {
 	}
 	
 	quietly if "`model'"=="nlA" {
-		replace terme_A=terme_A *100
-		by year: collect get, tags(model[`model'] var[terme_A]) : sum terme_nlA [aweight=val], det
+		replace terme_nlA=terme_nlA *100
+		by year: collect get, tags(model[`model'] var[terme_nlA]) : sum terme_nlA [aweight=val], det
 	}
 	
 		
@@ -672,7 +659,8 @@ foreach model in nlAetI nlI {
 collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
 	*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
 	*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
-	*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd]) /* 
+	*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd] /* 
+	*/ model[nlA]#var[terme_nlA]#result[mean p50 sd])/*
 	*/ (year)
 
 
@@ -691,6 +679,7 @@ collect label levels var beta "{\textit{Elasticity} ($\widehat{\beta}$)}", modif
 collect label levels model data "\textbf{Data}"
 collect label levels model nlAetI "{\textbf{Model (B)}}"
 collect label levels model nlI "{\textbf{Model (A)}}"
+collect label levels model nlA "{\textbf{Model (C)}}"
 collect style cell, warn nformat (%3.1f)
 collect style cell var[beta], warn nformat(%3.2f)
 collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
