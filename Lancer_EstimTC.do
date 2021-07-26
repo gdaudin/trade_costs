@@ -186,15 +186,15 @@ foreach  y of numlist 2016(1)2019 {
 }
 */
 
-/*
+
 ****Pour baseline
-local mode ves 
-foreach  y of numlist 1974/2019 {
+local mode /*ves*/ air 
+foreach  y of numlist 2017 2019 {
 	foreach m in `mode' {	
-	EstimTC `y' `m' 5 3 hummels_tra nlAetI
+	EstimTC `y' `m' 5 4 hummels_tra nlAetI
 	}
 }
-*/
+
 /*
 *****Pour HS10
 local mode ves 
@@ -246,7 +246,11 @@ foreach  y of numlist 1974/2019 {
 	}
 }
 */
+<<<<<<< HEAD
 
+=======
+/*
+>>>>>>> develop
 ****Pour baseline nlI
 local mode air ves 
 foreach  y of numlist 1974 1977(4)2017 2019 {
