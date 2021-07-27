@@ -924,6 +924,173 @@ Therefore, we propose to compare our main estimates with those stemming from a t
 %In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
 
 
+\section{The role of additive cost: Theoretical insights}
+
+Our estimation results drive two main conclusions: First, additive costs constitute a significant part of international transports costs, in both maritime and air transport. Second, the size of international transport costs has decreased since the mid-1970s, in particular in air transport. While the share of additive costs is relatively stable in maritime transport, it has substantially decreased in air transport. \textbf{METTRE DES CHIFFRES}.
+
+The question we want to explore is about the implications of such results on theoretical grounds. While the whole bulk of the trade literature investigates the role of trade costs modelled as ad-valorem costs (e.g., iceberg trade costs), not much is said about the role of the additive components. One potential explanation is the lack of empirical estimates about the size of additive costs. Our results may thus usefully palliate this limitation. Specifically, we can make use of our empirical results to answer two questions: First, what does it change to introduce additive costs along with standard iceberg trade costs, in particular regarding the pattern of trade flows? Second, what are the welfare consequences of a reduction in international transport costs, when such a reduction also occurs through a reduction in the additive component? These two key questions (the pattern of trade and the welfare gains of trade liberalization) are overwhelmingly addressed considering ad-valorem trade costs only. Given our empirical results pointing out the importance of additive costs, we explore how additive costs modify the picture. \textbf{A MIEUX DIRE}.
+
+
+\subsection{The model}
+
+
+Two papers have explored the role of additive costs on theoretical grounds: \cite{Irrazabal_2015} and \cite{sorensen2014}. As in \cite{sorensen2014}, we investigate the role of additive costs in the trade model of \cite{melitz}, considered in its canonical symmetric two-country version. \textbf{discuter de pourquoi on ne retient pas Chaney}. \textbf{Faut-il citer Lashkaripour ici aussi?} This allows to highlight the specificities induced by additive versus the standard iceberg (ad-valoram) costs. In contrast to \cite{sorensen2014}, we make use of our empirical results to quantify the effects of a reduction in international transports costs on both positive and normative dimensions. In accordance with the literature, we focus on steady-state analysis. Since our focus in on the role of additive versus ad-valorem transport costs, we directly present the two-country version of the model, with the two countries (Home and Foreign) being perfectly symmetric.
+
+\subsubsection{Households}
+
+In each country, the representative household exogenously supplies $L$ units of labour and maximizes utility $\mathcal{U} = \left[ \int_{\omega \in \Omega}c(\omega)^{\frac{\sigma-1}{\sigma}} d\omega \right]^{\frac{\sigma}{\sigma-1}}$, with $\sigma>1$ the elasticity of substitution between varieties. She chooses her consumption $c(\omega)$  of each variety $\omega$ within the set $\Omega$ of available varieties (made of both domestic and foreign varieties, endogenously defined), subject to her budget constraint: $\int_{\omega \in \Omega} p(\omega) c(\omega) dw \leq E$, with $p(\omega)$ the consumer price of variety $\omega$ and $E$ nominal expenditures. As standard, the optimal demand function for variety $\omega$ is:
+\begin{eqnarray*}
+c(\omega) &=& \left(\frac{p(\omega)}{P}  \right)^{-\sigma} \frac{E}{P}\\
+\end{eqnarray*}
+\noindent with the associated optimal price index $P$ equal to:
+\begin{equation}
+P = \left[ \int_{\omega \in \Omega}p(\omega)^{1-\sigma}d\omega\right]^{\frac{1}{1-\sigma}} \label{eq:CPI}
+\end{equation}
+
+\subsubsection{Firms behavior}
+
+As in \cite{melitz}, firms are in monopolistic competition, each producing a differentiated variety using labor as sole production factor. Both countries being perfectly symmetric, the labor market equilibrium imposes the same wage in both countries, thus considered as the num\'{e}raire. Prices and costs are hence expressed in terms of labor. At entry, each firm pays a sunk entry cost $f_e$ and subsequently draws its productivity level $\varphi$ from a known distribution $G(\varphi)$. Production of $q$ units, a firm should employ $l(q|\varphi) = f+\frac{q}{\varphi}$ units of labor, with $f$ the fixed cost of production. Exporting is subject to an extra fixed cost $f_x$ and variable exporting costs of two types: an ad-valorem cost that depend on the value traded $\tau\geq 1$ and an additive cost depending on the quantity (weight) transported, $t\qeg 0$. \textbf{Mettre une footnote, unit vs weight}. At each point in time, a firm can be hit by a death shock at the exogenous probability $\delta>0$. Following \cite{melitz}, we solve the problem backwards. First, we solve for the maximizing profit behavior once entered. Second, we determine the entry conditions on the various markets.\medskip
+
+\paragraph{Profit-maximizing behaviors} Once entered, a firm adopts a pricing-to-market behavior (conditional on exporting) by setting a specific price on each destination market.
+
+On the domestic market, the objective is to maximize profit $\pi_d(\omega)$, taken into account the consumer demand function\footnote{In a monopolistic set-up, each firm (of productivity $\varphi$) is the sole producer of variety $\omega$, implying a one-to-one link between $\omega$ and $\varphi$, such that we could write $\omega(\varphi)$. For sake of notational simplicity, we omit this link and simply write the consumer demand function as a function of $\varphi$ directly.}:
+\begin{eqnarray*}
+\max_{p(\varphi)} \pi_d(\varphi) &=& \left(p^d(\varphi) -\frac{1}{\varphi}  \right)c(\varphi) \\
+\text{s.t. }&&c(\varphi) = \left(\frac{p(\varphi)}{P}  \right)^{-\sigma} \frac{E}{P}
+\end{eqnarray*}
+The optimal pricing behavior yields:
+$$p^d(\varphi) = \frac{\sigma}{\sigma-1}\frac{1}{\varphi}$$
+With a CES specification on household's preferences, the firm sets its price as a constant mark-up on marginal cost, which is inversely related to its productivity as for the domestic market. \medskip
+
+Conditional on exporting abroad, the profit-maximizing program on the foreign market requires the inclusion of variable international trade costs according to:
+\begin{eqnarray*}
+\max_{p^x(\varphi)} \pi_x(\varphi) &=& \left(p^x(\varphi) -\frac{\tau}{\varphi}  \right)c^x(\varphi) - tc^x(\varphi) \\
+\text{s.t. }&&c^x(\varphi) = \left(\frac{p^x(\varphi)}{P^\ast}  \right)^{-\sigma} \frac{E^\ast}{P^\ast}
+\end{eqnarray*}
+
+\noindent where $E^\ast$ and $P^\ast$ refer to nominal expenditures and the price index in the foreign country, $c^x(\omega)$ to the demand for variety $\omega$ from the Foreign household and $p^x(\omega)$ to the price set by the firm producing the variety $\omega$ on the export market. Solving for this yields:
+$$p^x(\varphi) = \frac{\sigma}{\sigma-1}\left[\frac{\tau}{\varphi} +t \right]$$
+
+Similarly as for the Home market, the firm sets a constant markup on its marginal cost, which is still a decreasing function of the firm's productivity $\varphi$, but also takes into account both components of trade costs.
+
+Under the assumption of symmetric countries (i.e, implying $E=E^\ast$ and $P=P^\ast$), one can deduce the profits on the domestic and export markets ($\pi_d(\varphi)$ and $\pi_x(\varphi)$) respectively as:
+\begin{eqnarray}
+\pi_d(\varphi)  &=& \frac{r_d(\varphi)}{\sigma} - f = B \varphi^{\sigma-1} - f \label{eq:pid_rd}\\
+\pi_x(\varphi) &=& \frac{r_x(\varphi)}{\sigma} - f_x = B \left[ \frac{\tau}{\varphi} + t\right]^{-(\sigma-1)} - f_x \label{eq:pix_rx}\\
+\text{with}&& B \equiv \frac{1}{\sigma-1}\left(\frac{\sigma}{\sigma-1}\right)^{-\sigma}P^{\sigma-1}E \notag
+\end{eqnarray}
+\noindent where $r_d(\varphi)$ and $r_x(\varphi)$ denote the sales revenues on each market. Profits increase with productivity $\varphi$, and only sufficiently productive firms are able to cover the fixed costs of operating in a given market. Further, in presence of trade costs, a given firm of productivity $\varphi$ makes a lower export profit than on its domestic market, conditional on being productive enough to export. This drives us to determine the productivity threshold associated to the entry conditions.
+
+Making use of the firm's first-order pricing conditions, revenues on each local and export market respectively read as:
+\begin{eqnarray}
+% \nonumber % Remove numbering (before each equation)
+  r_d(\varphi) &=& \left[\frac{1}{\rho } \frac{1}{\varphi}  \right]^{1-\sigma} P^{\sigma-1} E \label{eq:rd}\\
+  r_x(\varphi) &=& \left[\frac{1}{\rho}\left(\frac{\tau}{\varphi} +t\right)  \right]^{1-\sigma} P^{\sigma-1} E \label{eq:rx}
+\end{eqnarray}
+\noindent with $\rho =  \frac{\sigma-1}{\sigma}$ inversely related to the markup.
+\paragraph{Zero-cutoff profit conditions} Given the fixed costs on both the domestic and the export markets, only firms with a productivity above $\varphi^\ast$ will serve the domestic market, and those with $\varphi>\varphi_x^\ast$ will export abroad. The zero cut-off (ZCP) productivity level for successful entry on the domestic and export markets should verify:
+\begin{eqnarray*}
+\frac{\pi_d(\varphi^\ast)}{\delta} = 0 &\Leftrightarrow & \frac{r_d(\varphi^\ast)}{\sigma} - f =0\\
+\frac{\pi_x(\varphi_x^\ast)}{\delta} = 0 &\Leftrightarrow & \frac{r_x(\varphi_x^\ast)}{\sigma} - f_x = 0
+\end{eqnarray*}
+\noindent with $\frac{\pi_d(\varphi^\ast)}{\delta}$ the expected profit on each market. Manipulating equations, we get:
+\begin{eqnarray*}
+% \nonumber % Remove numbering (before each equation)
+  \varphi_x^\ast &=& \frac{\tau}{f_x^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}} -t} \\
+  \varphi^\ast &=& \frac{1}{f_^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}}}
+\end{eqnarray*}
+
+The two productivity thresholds are accordingly linked according to:
+\begin{equation}
+\frac{\varphi_x^\ast}{\tau+t\varphi_x^\ast} = \varphi^\ast \left( \frac{f}{f_x} \right)^{\frac{1}{1-\sigma}} \label{eq:link_thresholds}
+\end{equation}
+
+Following \cite{melitz} and the subsequent literature, we ensure selection on the export market, i.e. such that $\varphi_x^\ast > \varphi^\ast$. Making use of Equation (\ref{eq:link_thresholds}), this condition writes down as:
+$$\tau+ t\phi^\ast_x  \left( \frac{f}{f_x} \right)^{\frac{1}{1-\sigma}} >1$$
+
+Notice that, due to additive costs ($t>0$), this condition depends on the general equilibrium of the model (through $\phi^\ast_x $) and cannot be imposed ex-ante by an appropriate restriction on the space parameter. We check this condition holds numerically in solving the model.\textbf{A FAIRE ??? JE CROYAIS LE FAIRE MAIS JE NE LE FAIS QUE DANS LE CAS SANS ADDITIFS.}
+
+
+\subsubsection{Aggregation, firm entry and exit}
+
+\paragraph{Aggregation} The general equilibrium is characterized by a mass $M$ of producing firms in each country associated with a distribution $\mu(\varphi)$ of productivity levels of a subset of $\left(0,\infty\right)$. Given the productivity threshold $\phi^\ast$, $\mu(\varphi)$ is equal to the conditional distribution of $g(\varphi)$ on the subset $\left[\phi^\ast, \infty\right)$:
+\begin{eqnarray}
+\mu(\varphi) &=& \left\{
+\begin{array}{ll}
+\frac{g(\varphi)}{1-G(\varphi^\ast)}, & \text{if } \varphi\geq \varphi^\ast  \\
+0 & \text{otherwise}
+\end{array}
+\right.  \label{eq:muofphi}
+\end{eqnarray}
+\noindent with $1-G(\varphi^\ast)$ the probability of successful entry on the domestic market. Conditional on being active on the domestic market, a subset mass $M_x$ of firms export abroad. $\mu_x(\varphi)$ can be similarly defined as the conditional distribution of productivity on the export market, e.g. on the support $\left[ \varphi^\ast_x,\infty\right)$.
+
+Following \cite{melitz}, and with $\Omega_d$, $\Omega_x$ the set of varieties respectively produced at Home and imported, one can then rewrite the price index (\ref{eq:CPI}) as:
+\begin{eqnarray*}
+P &=& \left[\int_{\omega \in \Omega_d} p_d^{1-\sigma}(\omega)d\omega + \int_{\omega \in \Omega_x} p_x^{1-\sigma}(\omega)d\omega  \right]^{\frac{1}{1-\sigma}} \\
+&=& \left[\int_{0}^\infty p_d^{1-\sigma}(\varphi)M\mu(\varphi)d\varphi + \int_{0}^\infty p_x^{1-\sigma}(\varphi)M_x \mu_x(\varphi)d\varphi  \right]^{\frac{1}{1-\sigma}}
+\end{eqnarray*}
+Making use of Equation (\ref{eq:muofphi}), the price index reads as:
+\begin{eqnarray*}
+P &=& \left[\frac{M}{1-G(\varphi^\ast)}\int_{\phi^\ast}^\infty p_d^{1-\sigma}(\varphi)g(\varphi)d\varphi + \frac{M_x}{1-G(\varphi_x^\ast)}\int_{\varphi^\ast_x}^\infty p_x^{1-\sigma}(\varphi)g(\varphi)d\varphi  \right]^{\frac{1}{1-\sigma}} \\
+\text{with}&& \left\{
+\begin{array}{lll}
+p_d(\varphi)&=& \frac{\sigma}{\sigma-1} \frac{1}{\varphi}\\
+p_x(\varphi)&=& \frac{\sigma}{\sigma-1} \left[\frac{\tau}{\varphi} +t\right]
+\end{array}
+\right.
+\end{eqnarray*}
+Accordingly, the price index can be rewritten as:
+$$P = \left(\frac{\sigma}{\sigma-1}\right)\left[\frac{M}{1-G(\varphi^\ast)}\int_{\phi^\ast}^\infty \phi^{\sigma-1}g(\varphi)d\varphi + \frac{M_x}{1-G(\varphi_x^\ast)}\int_{\varphi^\ast_x}^\infty \left[\varphi \left(\frac{\tau}{\tau+t \varphi}  \right)  \right]^{\sigma-1}g(\varphi)d\varphi  \right]^{\frac{1}{1-\sigma}}$$
+
+Similarly as in the closed-economy case (\cite{melitz}), let us define $\widetilde{\varphi}(\varphi^\ast)$ and $\widetilde{\varphi}_x(\varphi_x^\ast)$ as the weighted average of productivities of the domestic firms, on the domestic market and the export market respectively:\footnote{In the symmetric two-country model, $\widetilde{\varphi}_x(\varphi_x^\ast)$ can also be defined as the weighted average of productivities of foreign exporters at Home, e.g. associated with the imported varieties.}
+
+\begin{eqnarray}
+\widetilde{\varphi} &=& \left[\frac{1}{1-G(\varphi^\ast)}\int_{\varphi^\ast}^\infty \phi^{\sigma-1}g(\varphi)d\varphi   \right]^{\frac{1}{\sigma-1}} \label{eq:def_phitilde}\\
+\widetilde{\varphi}_x &=& \left[\frac{1}{1-G(\varphi_x^\ast)}\int_{\varphi^\ast}^\infty \left[\varphi\left(\frac{\tau}{\tau+t \varphi}  \right) \right]^{\sigma-1}g(\varphi)d\varphi   \right]^{\frac{1}{\sigma-1}} \label{eq:def_phitildex}
+\end{eqnarray}
+
+Further defining $M_T = M+M_x$ as the total number of varieties accessible to the consumers, it comes that:
+$$P = \frac{\sigma}{\sigma-1}M_T^{\frac{1}{1-\sigma}}\left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$$
+
+With $\widetilde{\varphi}_T \equiv \left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$ the weighted average of firm productivities on the domestic market (including both local producers and foreign producers exporting at Home), the price index can be expressed as:
+\begin{equation}
+P = M_T^{\frac{1}{1-\sigma}}\frac{1}{\rho \widetilde{\varphi}_T } \label{eq:CPI_vf}
+\end{equation}
+
+
+\paragraph{Free-entry condition} There is free-entry in the monopolistic industry, imposing that the expected net present value of entry is driven to 0. In the open-economy setting, this condition is given by:
+\begin{equation*}
+  \sum_{t=0}^{\infty}(1-\delta)^t \left(\int_{\varphi^\ast}^{\infty} \pi_d(\varphi )dG(\varphi) + \int_{\varphi_x^\ast}^{\infty} \pi_x(\varphi )dG(\varphi)  \right) = f_e
+\end{equation*}
+
+Defining $\bar{\pi}$ as the average profit conditional to entry, this free-entry condition rewrites as:
+\begin{equation}
+\left(1-G(\varphi^\ast)\right)\frac{\bar{\pi}}{\delta} = f_e \label{eq:FEC}
+\end{equation}
+\noindent with $\left(1-G(\varphi^\ast)$ the probability of successful entry. In the open-economy setting, $\bar{\pi}$ can be expressed as:
+$$\bar{pi} =\pi_d(\widetilde{\varphi}(\varphi^\ast)) + \rho_x \pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))$$
+\noindent with $\pi_d(\widetilde{\varphi}(\varphi^\ast)) \equiv \bar{pi}_d$ the average expected profit on the domestic market, $\pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))\equiv \bar{pi^}_x$ the average expected export profit and $\rho_x$ the probability of exporting (conditional on entry on the domestic market), equal to:
+$$\rho_x = \frac{1-G(\varphi_x^\ast)}{1-G(\varphi^\ast)}$$
+
+Noticing that, from Equation (\ref{eq:rd}), $\frac{r_d(\varphi)}{r_d(\varphi^\ast)} = \left( \frac{\varphi}{\varphi^\ast} \right)^{\sigma-1}$ and similarly on the export market, Equations (\ref{eq:pid_rd}) and (\ref{eq:pix_rx}) can be rewritten as:
+\begin{eqnarray*}
+\bar{\pi}_d &=& \left\{\left(\frac{\widetilde{\varphi}^\ast}{\varphi^\ast}\right)^{\sigma-1}-1 \right\}f \\
+\bar{\pi}_x &=& \left\{\left[\left(\frac{\widetilde{\varphi}_x^\ast}{\varphi_x^\ast}\right)\left(\frac{\tau+ t \varphi^\ast_x}{\tau+ t \widetilde{\varphi}^\ast_x}\right)\right]^{\sigma-1}-1 \right\}f_x
+\end{eqnarray*}
+
+Making use of the above elements, we finally get the zero-cut off profit condition in the open economy with additive costs as:
+\begin{equation}
+\bar{\pi} = \left\{\left(\frac{\widetilde{\varphi}^\ast}{\varphi^\ast}\right)^{\sigma-1}-1 \right\}f +  \frac{1-G(\varphi_x^\ast)}{1-G(\varphi^\ast)}\left\{\left[\left(\frac{\widetilde{\varphi}_x^\ast}{\varphi_x^\ast}\right)\left(\frac{\tau+ t \varphi^\ast_x}{\tau+ t \widetilde{\varphi}^\ast_x}\right)\right]^{\sigma-1}-1 \right\}f_x \label{eq:ZCP}
+\end{equation}
+\noindent with $\widetilde{\varphi}^\ast$ and $\widetilde{\varphi}_x^\ast$ given by Equations (\ref{eq:def_phitilde}) and (\ref{eq:def_phitildex}). 
+
+\paragraph{Summary} Equations (\ref{eq:def_phitilde}), (\ref{eq:def_phitildex}), (\ref{eq:ZCP}), (\ref{eq:link_thresholds}) and (\ref{eq:FEC}) determine a system of interdependent equations in five endogenous variables $\left\{\bar{\pi}, \widetilde{\varphi}, widetilde{\varphi}_x, \varphi^\ast, \varphi^\ast_x \right\}$, from which we can deduce the equilibrium values of the remaining set of variables (as detailed in Appendix \ref{app:theoretical_model}). Specifically, we will study the consequences of additive costs in terms of welfare, which can be shown to be the inverse of the price level as standard in this literature (the price level $P$ being given by Equation (\ref{eq:CPI_vf})).
+
+
+
+
+
+
 
 
 
@@ -1694,6 +1861,7 @@ In the second polar case with $\beta = 0$, Equation (\ref{eq:Hummels1}) becomes:
 $$p_{ikt} = \tau_{ikt} \widetilde{p}_{ikt}$$
 
 \noindent with $\tau_{ikt}$ appropriately defined.
+
 This exactly corresponds to the case of ad-valorem transport costs only.
 
 
@@ -1702,6 +1870,41 @@ By estimating Equation (\ref{eq:Hummels1}) with a constant $\beta$, \cite{hummel
 This is an important difference with our method, as we measure transport costs by explicitly allowing for an additive component that varies in the three dimensions (i.e. allowing for a varying $\beta$ across time, country partner and product).
 To establish this point clearly, we replicate the method adopted by \cite{hummels2007}, outlined above, on our database (which is the same as his until 2004).
 The results are reported in Figure \ref{fig:comp_effects_as_in_Hummels}.
+
+\section{More on the model \label{app:theoretical_model}}
+
+\subsection{General equilibrium}
+
+Following \cite{melitz} and the subsequent literature, denoting $M_e$ the mass of prospective entrants and $\rho_e$ the probability of successful entry (equal to $1-G(\varphi^\ast)$, considering only steady-state equilibrium needs to verify the entry-exit flow equilibrium condition:
+$$rho_e M_e = \delta M$$.
+
+Given the wage normalization, total revenue in each country should be such that: $E = L_p+\Pi$, with $L_p$ the number of workers of the productive sector and $\Pi$ total profits. Labor market equilibrium further requires: $L = L_p+ L_e$ with $L_e = f_eM_e$ as sunk entry costs are paid in terms of labor. Combining this with the free-entry condition (\ref{eq:FEC}), we obtain that $\Pi = L_e$: Total profits in the productive sector are used to pay the entry sunk costs. Making use of this, we obtain that aggregate income in each country is equal to its labor endowment: $E =L$. 
+
+Further, total revenue can de expressed as the product of the average sales and the mass of active producers, according to: $E = M\bar{r}$, with $\bar{r}$ average sales. Similarly as for profits, it can be expressed as the sum of average sales on each local and foreign market:
+$$\bar{r} = r_d(\widetilde{\varphi}(\varphi^\ast))+ \rho_x r_d(\widetilde{\varphi}_x(\varphi_x^\ast))$$
+\noindent with the (conditional) probability of export $\rho_x = \frac{1-G(\varphi^\ast_x)}{1-G(\varphi^\ast)}$ and average sales on each market which can be shown to be:
+\begin{eqnarray*}
+\bar{r}_d &=& \left(\frac{\widetilde{\varphi}^\ast}{\varphi^\ast}\right)^{\sigma-1} \sigma f \\
+\bar{r}_x &=& \left(\frac{\widetilde{\varphi}_x^\ast}{\varphi_x^\ast}\right)^{\sigma-1}\left(\frac{\tau+ t \varphi^\ast_x}{\tau+ t \widetilde{\varphi}^\ast_x}\right)^{\sigma-1} \sigma f_x
+\end{eqnarray*}
+
+Given selection on the export market, the mass of domestic exporters depends on that of domestic active firms according to: $M_x = \rho_x M$. In the symmetric equilibrium, the total mass of available varieties is then: $M_T= M+M_x = (1+\rho_x)M$. 
+
+\subsection{Summary}
+
+\subsubsection{General form}
+Equations (\ref{eq:def_phitilde}), (\ref{eq:def_phitildex}), (\ref{eq:ZCP}), (\ref{eq:link_thresholds}) and (\ref{eq:FEC}) determine a system of interdependent equations in five endogenous variables $\left\{\bar{\pi}, \widetilde{\varphi}, \widetilde{\varphi}_x, \varphi^\ast, \varphi^\ast_x \right\}$. We can deduce the equilibrium values of the remaining set of variables $\left\{P, M_T, M, M_x, \widetilde{\varphi}_T, \bar{r} \right\}$ by recursively solving the following set of equations:
+
+\begin{eqnarray*}
+% \nonumber % Remove numbering (before each equation)
+ \bar{r}&=& \left(\frac{\widetilde{\varphi}^\ast}{\varphi^\ast}\right)^{\sigma-1} \sigma f + \frac{1-G(\varphi^\ast_x)}{1-G(\varphi^\ast)}\left(\frac{\widetilde{\varphi}_x^\ast}{\varphi_x^\ast}\right)^{\sigma-1}\left(\frac{\tau+ t \varphi^\ast_x}{\tau+ t \widetilde{\varphi}^\ast_x}\right)^{\sigma-1} \sigma f_x \\
+ M &=& \frac{L}{\bar{r}} \\
+M_x &=& \frac{1-G(\varphi^\ast_x)}{1-G(\varphi^\ast)} M \\
+M_T &=& \left(1+ \frac{1-G(\varphi^\ast_x)}{1-G(\varphi^\ast)} \right)M \\
+\widetilde{\varphi}_T &=& \widetilde{\varphi}_T \equiv \left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}} \\
+P &=& M_T^{\frac{1}{1-\sigma}} \frac{\rho}{\widetilde{\varphi}_T}
+\end{eqnarray*}
+
 
 
 
