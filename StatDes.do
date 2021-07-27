@@ -157,7 +157,7 @@ program open_year_mode
 args year mode method model
 
 
-if "`method'"=="baseline" & ("`model'"=="" | "`model'"=="nlAetI") {
+if "`method'"=="baseline" & ("`model'"=="" | "`model'"=="nlAetI" | "`model'"=="nl") {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
 	capture rename `mode'_val val 
 	capture drop *_val
@@ -241,7 +241,7 @@ if "`method'"=="IV_referee1_yearly_5_3" {
 }	
 
 
-egen cover_`method'=total(val)
+capture egen cover_`method'=total(val)
 
 capture drop year
 gen year=`year'
@@ -274,7 +274,7 @@ global method baseline
 *global method hs10_qy1_qy
 
 /*
-******************Pour la table 1
+******************Pour la table 1 du texte
 collect clear
 global method baseline
 foreach mode in air ves {
@@ -468,8 +468,8 @@ foreach mode in air ves {
 */
 
 
-***Pour les tables A de l’appendix
-
+***Pour les tables A1 et A2 de l’appendix
+/*
 
 foreach mode in air ves {
 	collect clear
@@ -580,6 +580,93 @@ foreach mode in air ves {
 	
 	
 }
+
+*/
+
+******Pour les tables A3 et A4 de l’appendix (quality of fit)
+
+
+foreach mode in air ves {
+	collect clear
+	foreach model in nl nlI nlA {
+		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+		foreach year of num 1974 1980 1990 2000 2010 2019 {
+			open_year_mode `year' `mode' $method `model'
+			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
+			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
+		}
+		
+		sort year
+		
+	
+	
+			
+			
+		by year: collect r(mean), tags(model[`model'] var[R2]): 	sum Rp2_`model'
+		by year: collect r(mean), tags(model[`model'] var[aic]): 	sum aic_`model'
+		by year: collect r(mean), tags(model[`model'] var[LL]): 	sum logL_`model'
+		gen error =abs(prix_trsp2 - predict_`model')*100
+	*	gen error =abs(ln(prix_trsp2) - ln(predict_`model'))
+		by year: collect r(mean), tags(model[`model'] var[SER]): 	sum error [aweight=val]
+			
+			
+	}
+	
+	
+	
+	
+	
+	collect layout (var[R2 SER aic LL]#model[nlI nl nlA]#result[mean])/* 
+		*/ (year)
+
+	
+	collect label levels model nl "{Model (B)}"
+	collect label levels model nlI "{Model (A)}"
+	collect label levels model nlA "{Model (C)}"
+	collect label levels var R2 "\textbf{\textit{R}$^2$}"
+	collect label levels var SER "\textbf{SER (in $%$)}"
+	collect label levels var aic "\textbf{AIC criteria}"
+	collect label levels var LL "\textbf{Log-likelihood}"
+	
+	collect style cell, warn nformat (%3.1f)
+	collect style cell var[R2], warn nformat(%3.2f)
+	collect style cell var[SER], warn nformat(%2.1f)
+	collect style cell var[LL aic], warn nformat(%9.0fc)
+	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	collect style header result[mean], level(hide)
+	
+
+	collect preview
+	
+	collect export /* 		 
+	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA3_`mode'.tex, /*
+	*/ tableonly replace
+
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+blif
+
+
 
 
 ******Pour les tables B appendix
