@@ -1099,7 +1099,7 @@ Making use of the above elements, we finally get the zero-cut off profit conditi
 
 \subsection{Calibration}
 
-As standard in this literature (\cite{Irrazabal_2015}, Melitz fial proofs), the heterogenity in firm productivity is assumed to be given by a Pareto distribution. In contrast to the standard case with only ad-valorem costs, the model can no longer be solved analytically due to the presence of additive costs (see Appendix \ref{app:theoretical_model}). In this case, we rely on the model's simulations to determine the steady state. This drives us to calibrate the structural parameters of the model. To do so, we rely on values commonly retained in the literature except for the two additive and ad-valorem transport costs, as reported in Table .
+As standard in this literature (\cite{Irrazabal_2015}, Melitz fial proofs), the heterogenity in firm productivity is assumed to be given by a Pareto distribution. In contrast to the standard case with only ad-valorem costs, the model can no longer be solved analytically due to the presence of additive costs (see Appendix \ref{app:theoretical_model}). In this case, we rely on the model's simulations to determine the steady state. This drives us to calibrate the structural parameters of the model. To do so, we rely on values commonly retained in the literature except for the two additive and ad-valorem transport costs, as reported in Table \ref{tab:calib_horsTC}.
 \begin{table}[htbp]
   \centering
   \caption{Calibration (1)} \label{tab:calib_horsTC}
@@ -1107,6 +1107,9 @@ As standard in this literature (\cite{Irrazabal_2015}, Melitz fial proofs), the 
 	\input{donnees_calibration.tex}
 \end{center}
 \end{table}
+
+$f$ such that all firms produce in autarky (i.e., such that $\varphi^{\ast,a} = \varphi_{\text{min}}$. $f_x$ endogenously revealed such that the initial steady state (with 1974 values of transport costs) implies a share of exporting firms equal to 21\%, based on \textbf{???}, following so the calibration method of \cite{ghironi} or \cite{Irrazabal_2015}.
+
 The calibration of transport costs parameters relies on our empirical estimates. We notably illustrate the consequences of trade liberalization by comparing the equilibrium based on the 1974 values of transport costs (at the beginning of our sample), versus those of 2019 (at the very end of our estimation period), in both cases on only ad-valorem transport costs and in the presence of both additive and ad-valorem costs. Calibration of transport costs is displayed in Table \ref{tab:calib_TC}.
 
 \begin{table}[htbp]
@@ -1115,14 +1118,41 @@ The calibration of transport costs parameters relies on our empirical estimates.
 \begin{center}
 	\input{table_calibTC_combined.tex}
 \end{center}
-{\parbox[l]{12cm}{ \vspace{7pt}\footnotesize{Notes: TC = Transport Costs. In columns (1), (3), (5) and (7) only ad-valorem costs are considered. In Columns (2), (4), (6) and (8), we model both ad-valorem and additive costs. $t$ is calibrated so that the ratio $t/\widetilde{p}_x$ from the model matches its empirical target, with $widetilde{p}^{\text{fas}}_x$ the average fas price set in place by those domestic firms that export. We theoretically define the export fas price through: $p_x = \tau p^{\text{fas}} +t$}}}
+{\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs. In columns (1), (3), (5) and (7) only ad-valorem costs are considered. In Columns (2), (4), (6) and (8), we model both ad-valorem and additive costs. $t$ is calibrated so that the ratio $t/\widetilde{p}_x$ from the model matches its empirical target, with $widetilde{p}^{\text{fas}}_x$ the average fas price set in place by those domestic firms that export. We theoretically define the export fas price through: $p_x = \tau p^{\text{fas}} +t$}}}
 \end{table}
 
 
+\textbf{A DEVELOPPER}
 
+\subsection{Trade liberalization: The importance of additive costs}
 
+Our empirical results point to two important conclusions: First, additive costs represent a non-negligible part of overall international transport costs. Second, total transport costs are strongly reduced over 1974-2019, and the decrease is particularly marked in the additive component in air transport. We exploit the theoretical implications of these empirical findings in two different ways. 
 
+First, we run a comparative statics analysis following a reduction in transport costs based on our estimates in 1974 and 2019, by transport mode. Specifically, we contrast two cases: In the first scenario, the reduction in total transport costs is solely attributable to the ad-valorem component (e.g., contrasting Table \ref{tab:calib_TC}, Column (3) to (1) for air transport, and Column (7) to (5) for maritime transport); in the second scenario, we rely of the true estimates of transport costs, with the reduction of total transport costs coming from both additive and ad-valorem components. In this scenario, we contrast Table \ref{tab:calib_TC}, Column (4) to (2) (Air) and Column (8) to (6) (Vessel). Importantly, we run this comparative statics analysis \textit{ceteris paribus}, notably with the same value of the export fixed cost $f_x$ as in the initial equilibrium (see Table \ref{tab:calib_horsTC}.
 
+Second, we take into account the fact that the share of exporting firms has substantially increased since the 21\% value estimated by \textbf{???} in \textbf{YEAR YYY}. According to \textbf{???}, this share roughly amounts to 35\% in \textbf{???}. This can be matched in the model by resetting the (lower) value of the export fixed cost $f_x$ accordingly. In the second exercise, we thus run a comparative statics analysis where we contrast the 2014 steady states (e.g., with the 2019 transport costs values) with the two dimensions of trade liberalization: the reduction of transport costs (as in the first exercise) and the reduction of the export fixed cost, consistent with the increase in the share of exporters from 21\% to 35\%.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Trade liberalization: The role of additive costs} \label{tab:resultats_modele}
+\begin{center}
+\begin{tabular}{l|c|c|c|c||c|c|c|c}
+\hline
+Mode & \multicolumn{4}{|c||}{Air} & \multicolumn{4}{c}{Vessel} \\ \hline
+Exercise &  \multicolumn{2}{|c|}{Constant $f_x$} &  \multicolumn{2}{|c||}{Lower $f_x$} & \multicolumn{2}{|c|}{Constant $f_x$} &  \multicolumn{2}{|c}{Lower $f_x$} \\ \hline
+Reduction in & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$ & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$\\ \hline
+$TC_{1974}$ & 0.062 & 0.062 & 0.062 & 0.062 & 0.105 & 0.105 & 0.105 & 0.105\\
+$TC_{2019}$ &  0.028 & 0.028 & 0.028 & 0.028&  0.041 & 0.041 & 0.041 & 0.041\\
+$\Delta TC$ (in pp) &  -0.034 & -0.034 & -0.034 & -0.034 & -0.064 & -0.064 & -0.064 & -0.064\\
+$\Delta \tau$ (in pp) & -0.0340	&-0.0140&	-0.0340&	-0.0140	&-0.064&	-0.031&	-0.064&	-0.031  \\
+$\Delta t/\widetilde{p}_x^{\text{fas}}$ (in pp) & 0&	-0.02&	0&	-0.02&	0&	-0.033&	0&	-0.033  \\ \hline
+$\Delta \mathcal{U}$ & 0.0202&	0.0295	&0.0362&	0.0527	&0.035&	0.052	&0.047&	0.064 \\
+$\Delta \mathcal{U}/\mathcal{U}$ (in \%) & 1.2319&	1.8187&	2.2073	&3.2477	&2.179	&3.295&	2.872&	4.052   \\
+\hline
+\end{tabular} 
+\end{center}
+{\parbox[l]{15cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs, expressed in percentage of the average export fas price.}}}
+\end{table}
 
 
 
