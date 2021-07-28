@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840) (preloaded format=pdflatex 2018.10.11)  28 JUL 2021 12:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6840) (preloaded format=pdflatex 2018.10.11)  28 JUL 2021 17:00
 entering extended mode
 **./DHP_JoEG_rev1.tex
 (DHP_JoEG_rev1.tex
@@ -981,7 +981,7 @@ tting properties and the explanatory
 
 pdfTeX warning: pdflatex.exe (file ./Figure1_share_of_additive_in_totalTC.pdf):
  PDF inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<Figure1_share_of_additive_in_totalTC.pdf, id=524, 788.25197pt x 483.42021pt>
+<Figure1_share_of_additive_in_totalTC.pdf, id=528, 788.25197pt x 483.42021pt>
 File: Figure1_share_of_additive_in_totalTC.pdf Graphic file (type pdf)
 <use Figure1_share_of_additive_in_totalTC.pdf>
 Package pdftex.def Info: Figure1_share_of_additive_in_totalTC.pdf  used on inpu
@@ -1003,7 +1003,7 @@ onent
 
 pdfTeX warning: pdflatex.exe (file ./Figure2_Trend_of_totalTC_bymode.pdf): PDF 
 inclusion: found PDF version <1.7>, but at most version <1.5> allowed
-<Figure2_Trend_of_totalTC_bymode.pdf, id=545, 426.51472pt x 304.55515pt>
+<Figure2_Trend_of_totalTC_bymode.pdf, id=549, 426.51472pt x 304.55515pt>
 File: Figure2_Trend_of_totalTC_bymode.pdf Graphic file (type pdf)
 <use Figure2_Trend_of_totalTC_bymode.pdf>
 Package pdftex.def Info: Figure2_Trend_of_totalTC_bymode.pdf  used on input lin
@@ -1027,7 +1027,7 @@ e and the ad-valorem components
 
 pdfTeX warning: pdflatex.exe (file ./Etude_beta_pondere_air.pdf): PDF inclusion
 : found PDF version <1.7>, but at most version <1.5> allowed
-<Etude_beta_pondere_air.pdf, id=594, 397.485pt x 289.08pt>
+<Etude_beta_pondere_air.pdf, id=598, 397.485pt x 289.08pt>
 File: Etude_beta_pondere_air.pdf Graphic file (type pdf)
 <use Etude_beta_pondere_air.pdf>
 Package pdftex.def Info: Etude_beta_pondere_air.pdf  used on input line 592.
@@ -1036,7 +1036,7 @@ Package pdftex.def Info: Etude_beta_pondere_air.pdf  used on input line 592.
 
 pdfTeX warning: pdflatex.exe (file ./Etude_beta_pondere_ves.pdf): PDF inclusion
 : found PDF version <1.7>, but at most version <1.5> allowed
-<Etude_beta_pondere_ves.pdf, id=595, 397.485pt x 289.08pt>
+<Etude_beta_pondere_ves.pdf, id=599, 397.485pt x 289.08pt>
 File: Etude_beta_pondere_ves.pdf Graphic file (type pdf)
 <use Etude_beta_pondere_ves.pdf>
 Package pdftex.def Info: Etude_beta_pondere_ves.pdf  used on input line 593.
@@ -1048,29 +1048,29 @@ Overfull \hbox (30.2006pt too wide) in paragraph at lines 590--596
 
 [17] [18 <./Etude_beta_pondere_air.pdf> <./Etude_beta_pondere_ves.pdf>]
 [19] [20] [21]
-<graph_composition_all.pdf, id=693, 397.485pt x 289.08pt>
+<graph_composition_all.pdf, id=697, 397.485pt x 289.08pt>
 File: graph_composition_all.pdf Graphic file (type pdf)
 <use graph_composition_all.pdf>
 Package pdftex.def Info: graph_composition_all.pdf  used on input line 716.
 (pdftex.def)             Requested size: 397.50221pt x 289.07999pt.
  [22 <./graph_composition_all.pdf>] [23]
-<figure5_comme_hummels.pdf, id=737, 397.485pt x 289.08pt>
+<figure5_comme_hummels.pdf, id=741, 397.485pt x 289.08pt>
 File: figure5_comme_hummels.pdf Graphic file (type pdf)
 <use figure5_comme_hummels.pdf>
 Package pdftex.def Info: figure5_comme_hummels.pdf  used on input line 761.
 (pdftex.def)             Requested size: 180.68007pt x 130.0848pt.
-<figure6_comme_hummels.pdf, id=738, 397.485pt x 289.08pt>
+<figure6_comme_hummels.pdf, id=742, 397.485pt x 289.08pt>
 File: figure6_comme_hummels.pdf Graphic file (type pdf)
 <use figure6_comme_hummels.pdf>
 Package pdftex.def Info: figure6_comme_hummels.pdf  used on input line 762.
 (pdftex.def)             Requested size: 180.68007pt x 130.0848pt.
-<figure5_comme_hummels_base100.pdf, id=739, 397.485pt x 289.08pt>
+<figure5_comme_hummels_base100.pdf, id=743, 397.485pt x 289.08pt>
 File: figure5_comme_hummels_base100.pdf Graphic file (type pdf)
 <use figure5_comme_hummels_base100.pdf>
 Package pdftex.def Info: figure5_comme_hummels_base100.pdf  used on input line 
 765.
 (pdftex.def)             Requested size: 180.68007pt x 144.53964pt.
-<figure6_comme_hummels_base100.pdf, id=740, 397.485pt x 289.08pt>
+<figure6_comme_hummels_base100.pdf, id=744, 397.485pt x 289.08pt>
 File: figure6_comme_hummels_base100.pdf Graphic file (type pdf)
 <use figure6_comme_hummels_base100.pdf>
 Package pdftex.def Info: figure6_comme_hummels_base100.pdf  used on input line 
@@ -1089,25 +1089,25 @@ Overfull \hbox (15.25032pt too wide) in paragraph at lines 831--832
 st to the separability assumption,
  []
 
-<graph_robustesse_ns_mp_terme_A_air.pdf, id=806, 397.485pt x 289.08pt>
+<graph_robustesse_ns_mp_terme_A_air.pdf, id=810, 397.485pt x 289.08pt>
 File: graph_robustesse_ns_mp_terme_A_air.pdf Graphic file (type pdf)
 <use graph_robustesse_ns_mp_terme_A_air.pdf>
 Package pdftex.def Info: graph_robustesse_ns_mp_terme_A_air.pdf  used on input 
 line 840.
 (pdftex.def)             Requested size: 216.81607pt x 144.53964pt.
-<graph_robustesse_ns_mp_terme_A_ves.pdf, id=807, 397.485pt x 289.08pt>
+<graph_robustesse_ns_mp_terme_A_ves.pdf, id=811, 397.485pt x 289.08pt>
 File: graph_robustesse_ns_mp_terme_A_ves.pdf Graphic file (type pdf)
 <use graph_robustesse_ns_mp_terme_A_ves.pdf>
 Package pdftex.def Info: graph_robustesse_ns_mp_terme_A_ves.pdf  used on input 
 line 841.
 (pdftex.def)             Requested size: 216.81607pt x 144.53964pt.
-<graph_robustesse_ns_mp_terme_I_air.pdf, id=808, 397.485pt x 289.08pt>
+<graph_robustesse_ns_mp_terme_I_air.pdf, id=812, 397.485pt x 289.08pt>
 File: graph_robustesse_ns_mp_terme_I_air.pdf Graphic file (type pdf)
 <use graph_robustesse_ns_mp_terme_I_air.pdf>
 Package pdftex.def Info: graph_robustesse_ns_mp_terme_I_air.pdf  used on input 
 line 842.
 (pdftex.def)             Requested size: 216.81607pt x 144.53964pt.
-<graph_robustesse_ns_mp_terme_I_ves.pdf, id=809, 397.485pt x 289.08pt>
+<graph_robustesse_ns_mp_terme_I_ves.pdf, id=813, 397.485pt x 289.08pt>
 File: graph_robustesse_ns_mp_terme_I_ves.pdf Graphic file (type pdf)
 <use graph_robustesse_ns_mp_terme_I_ves.pdf>
 Package pdftex.def Info: graph_robustesse_ns_mp_terme_I_ves.pdf  used on input 
@@ -1124,7 +1124,7 @@ _terme_I_ves.pdf>]
 
 pdfTeX warning: pdflatex.exe (file ./Etude_beta_pond_sitc2separe_air.pdf): PDF 
 inclusion: found PDF version <1.6>, but at most version <1.5> allowed
-<Etude_beta_pond_sitc2separe_air.pdf, id=860, 397.485pt x 289.08pt>
+<Etude_beta_pond_sitc2separe_air.pdf, id=864, 397.485pt x 289.08pt>
 File: Etude_beta_pond_sitc2separe_air.pdf Graphic file (type pdf)
 <use Etude_beta_pond_sitc2separe_air.pdf>
 Package pdftex.def Info: Etude_beta_pond_sitc2separe_air.pdf  used on input lin
@@ -1134,7 +1134,7 @@ e 866.
 
 pdfTeX warning: pdflatex.exe (file ./Etude_beta_pond_sitc2ns_air.pdf): PDF incl
 usion: found PDF version <1.6>, but at most version <1.5> allowed
-<Etude_beta_pond_sitc2ns_air.pdf, id=861, 397.485pt x 289.08pt>
+<Etude_beta_pond_sitc2ns_air.pdf, id=865, 397.485pt x 289.08pt>
 File: Etude_beta_pond_sitc2ns_air.pdf Graphic file (type pdf)
 <use Etude_beta_pond_sitc2ns_air.pdf>
 Package pdftex.def Info: Etude_beta_pond_sitc2ns_air.pdf  used on input line 86
@@ -1144,7 +1144,7 @@ Package pdftex.def Info: Etude_beta_pond_sitc2ns_air.pdf  used on input line 86
 
 pdfTeX warning: pdflatex.exe (file ./Etude_beta_pond_sitc2separe_ves.pdf): PDF 
 inclusion: found PDF version <1.6>, but at most version <1.5> allowed
-<Etude_beta_pond_sitc2separe_ves.pdf, id=862, 397.485pt x 289.08pt>
+<Etude_beta_pond_sitc2separe_ves.pdf, id=866, 397.485pt x 289.08pt>
 File: Etude_beta_pond_sitc2separe_ves.pdf Graphic file (type pdf)
 <use Etude_beta_pond_sitc2separe_ves.pdf>
 Package pdftex.def Info: Etude_beta_pond_sitc2separe_ves.pdf  used on input lin
@@ -1154,7 +1154,7 @@ e 870.
 
 pdfTeX warning: pdflatex.exe (file ./Etude_beta_pond_sitc2ns_ves.pdf): PDF incl
 usion: found PDF version <1.6>, but at most version <1.5> allowed
-<Etude_beta_pond_sitc2ns_ves.pdf, id=863, 397.485pt x 289.08pt>
+<Etude_beta_pond_sitc2ns_ves.pdf, id=867, 397.485pt x 289.08pt>
 File: Etude_beta_pond_sitc2ns_ves.pdf Graphic file (type pdf)
 <use Etude_beta_pond_sitc2ns_ves.pdf>
 Package pdftex.def Info: Etude_beta_pond_sitc2ns_ves.pdf  used on input line 87
@@ -1173,7 +1173,7 @@ er the $\OML/cmm/m/it/10.95 i; k$ \OT1/cmr/m/n/10.95 dimension, which implicitl
 y
  []
 
-<graph_composition_all_np.pdf, id=920, 397.485pt x 289.08pt>
+<graph_composition_all_np.pdf, id=924, 397.485pt x 289.08pt>
 File: graph_composition_all_np.pdf Graphic file (type pdf)
 <use graph_composition_all_np.pdf>
 Package pdftex.def Info: graph_composition_all_np.pdf  used on input line 899.
@@ -1182,7 +1182,7 @@ Package pdftex.def Info: graph_composition_all_np.pdf  used on input line 899.
 
 pdfTeX warning: pdflatex.exe (file ./comp_IV_SITC5.pdf): PDF inclusion: found P
 DF version <1.6>, but at most version <1.5> allowed
-<comp_IV_SITC5.pdf, id=965, 845.1575pt x 597.45204pt>
+<comp_IV_SITC5.pdf, id=969, 845.1575pt x 597.45204pt>
 File: comp_IV_SITC5.pdf Graphic file (type pdf)
 <use comp_IV_SITC5.pdf>
 Package pdftex.def Info: comp_IV_SITC5.pdf  used on input line 921.
@@ -1211,17 +1211,17 @@ Overfull \hbox (1.96835pt too wide) in paragraph at lines 1097--1098
  []
 
 (donnees_calibration.tex)
-Overfull \hbox (45.32797pt too wide) in paragraph at lines 1--1108
+Overfull \hbox (30.72794pt too wide) in paragraph at lines 1--1108
  [] 
  []
 
 [36] (table_calibTC_combined.tex) [37]
-Overfull \hbox (22.3736pt too wide) in paragraph at lines 1139--1153
+Overfull \hbox (30.4368pt too wide) in paragraph at lines 1142--1156
  [] 
  []
 
 [38] [39] (DHP_JoEG_rev1.bbl [40]) [41]
-Overfull \hbox (6.00356pt too wide) in paragraph at lines 1217--1220
+Overfull \hbox (6.00356pt too wide) in paragraph at lines 1224--1227
 []\OT1/cmr/m/n/10.95 The cif (cost, insurance, and freight) value represents th
 e landed value of the merchandise
  []
@@ -1229,17 +1229,17 @@ e landed value of the merchandise
 [42
 
 ]
-Overfull \hbox (11.35982pt too wide) in paragraph at lines 1240--1269
+Overfull \hbox (11.35982pt too wide) in paragraph at lines 1247--1276
  [] 
  []
 
 
-Overfull \hbox (11.35982pt too wide) in paragraph at lines 1277--1307
+Overfull \hbox (11.35982pt too wide) in paragraph at lines 1284--1314
  [] 
  []
 
 
-Overfull \hbox (0.77486pt too wide) in paragraph at lines 1313--1332
+Overfull \hbox (0.77486pt too wide) in paragraph at lines 1320--1339
 \OT1/cmr/m/n/10.95 additive costs) in fitting the observed cif-fas prices gap, 
 in order to deliver a more systematic
  []
@@ -1247,7 +1247,7 @@ in order to deliver a more systematic
 [43
 
 ]
-Overfull \hbox (3.93823pt too wide) in paragraph at lines 1416--1422
+Overfull \hbox (3.93823pt too wide) in paragraph at lines 1423--1429
 \OT1/cmr/m/n/10.95 This is especially true for the model restricting transport 
 cost to their ad-valorem dimension,
  []
@@ -1256,19 +1256,19 @@ cost to their ad-valorem dimension,
 
 pdfTeX warning: pdflatex.exe (file ./variance_decomposition.pdf): PDF inclusion
 : found PDF version <1.7>, but at most version <1.5> allowed
-<variance_decomposition.pdf, id=1202, 845.1575pt x 597.23125pt>
+<variance_decomposition.pdf, id=1209, 845.1575pt x 597.23125pt>
 File: variance_decomposition.pdf Graphic file (type pdf)
 <use variance_decomposition.pdf>
-Package pdftex.def Info: variance_decomposition.pdf  used on input line 1449.
+Package pdftex.def Info: variance_decomposition.pdf  used on input line 1456.
 (pdftex.def)             Requested size: 284.52551pt x 199.16467pt.
 [46]
-Overfull \hbox (1.47322pt too wide) in paragraph at lines 1467--1468
+Overfull \hbox (1.47322pt too wide) in paragraph at lines 1474--1475
 \OT1/cmr/m/n/10.95 We report here the first-stage procedure and estimates under
 lying the IV estimates reported
  []
 
 [47 <./variance_decomposition.pdf, page is rotated 90 degrees>] [48]
-Overfull \hbox (49.29393pt too wide) in paragraph at lines 1530--1546
+Overfull \hbox (49.29393pt too wide) in paragraph at lines 1537--1553
  [][] 
  []
 
@@ -1276,39 +1276,39 @@ Overfull \hbox (49.29393pt too wide) in paragraph at lines 1530--1546
 
 pdfTeX warning: pdflatex.exe (file ./beta_lag_SITC5.pdf): PDF inclusion: found 
 PDF version <1.6>, but at most version <1.5> allowed
-<beta_lag_SITC5.pdf, id=1243, 397.485pt x 289.08pt>
+<beta_lag_SITC5.pdf, id=1250, 397.485pt x 289.08pt>
 File: beta_lag_SITC5.pdf Graphic file (type pdf)
 <use beta_lag_SITC5.pdf>
-Package pdftex.def Info: beta_lag_SITC5.pdf  used on input line 1556.
+Package pdftex.def Info: beta_lag_SITC5.pdf  used on input line 1563.
 (pdftex.def)             Requested size: 231.26927pt x 168.19583pt.
 
 
 pdfTeX warning: pdflatex.exe (file ./alpha_tariff_SITC5.pdf): PDF inclusion: fo
 und PDF version <1.6>, but at most version <1.5> allowed
-<alpha_tariff_SITC5.pdf, id=1244, 397.485pt x 289.08pt>
+<alpha_tariff_SITC5.pdf, id=1251, 397.485pt x 289.08pt>
 File: alpha_tariff_SITC5.pdf Graphic file (type pdf)
 <use alpha_tariff_SITC5.pdf>
-Package pdftex.def Info: alpha_tariff_SITC5.pdf  used on input line 1557.
+Package pdftex.def Info: alpha_tariff_SITC5.pdf  used on input line 1564.
 (pdftex.def)             Requested size: 231.26927pt x 168.19583pt.
 
-Overfull \hbox (59.10701pt too wide) in paragraph at lines 1554--1559
+Overfull \hbox (59.10701pt too wide) in paragraph at lines 1561--1566
  [] 
  []
 
 
-Overfull \hbox (9.40303pt too wide) in paragraph at lines 1566--1567
+Overfull \hbox (9.40303pt too wide) in paragraph at lines 1573--1574
 \OT1/cmr/m/n/10.95 average, fas prices exhibit substantial persistence. The F-s
 tatistic on the excluded instrument
  []
 
 [49 <./beta_lag_SITC5.pdf> <./alpha_tariff_SITC5.pdf>]
-Overfull \hbox (13.60127pt too wide) in paragraph at lines 1572--1573
+Overfull \hbox (13.60127pt too wide) in paragraph at lines 1579--1580
  []\OT1/cmr/bx/n/10.95 First-stage estimates based on HS10 data.[] \OT1/cmr/m/n
 /10.95 Here we replicate our first-stage estimations
  []
 
 
-Overfull \hbox (49.29393pt too wide) in paragraph at lines 1577--1593
+Overfull \hbox (49.29393pt too wide) in paragraph at lines 1584--1600
  [][] 
  []
 
@@ -1316,22 +1316,22 @@ Overfull \hbox (49.29393pt too wide) in paragraph at lines 1577--1593
 
 pdfTeX warning: pdflatex.exe (file ./beta_lag_HS10.pdf): PDF inclusion: found P
 DF version <1.6>, but at most version <1.5> allowed
-<beta_lag_HS10.pdf, id=1281, 397.485pt x 289.08pt>
+<beta_lag_HS10.pdf, id=1288, 397.485pt x 289.08pt>
 File: beta_lag_HS10.pdf Graphic file (type pdf)
 <use beta_lag_HS10.pdf>
-Package pdftex.def Info: beta_lag_HS10.pdf  used on input line 1600.
+Package pdftex.def Info: beta_lag_HS10.pdf  used on input line 1607.
 (pdftex.def)             Requested size: 231.26927pt x 168.19583pt.
 
 
 pdfTeX warning: pdflatex.exe (file ./alpha_tariff_HS10.pdf): PDF inclusion: fou
 nd PDF version <1.6>, but at most version <1.5> allowed
-<alpha_tariff_HS10.pdf, id=1282, 397.485pt x 289.08pt>
+<alpha_tariff_HS10.pdf, id=1289, 397.485pt x 289.08pt>
 File: alpha_tariff_HS10.pdf Graphic file (type pdf)
 <use alpha_tariff_HS10.pdf>
-Package pdftex.def Info: alpha_tariff_HS10.pdf  used on input line 1601.
+Package pdftex.def Info: alpha_tariff_HS10.pdf  used on input line 1608.
 (pdftex.def)             Requested size: 231.26927pt x 168.19583pt.
 
-Overfull \hbox (59.10701pt too wide) in paragraph at lines 1598--1603
+Overfull \hbox (59.10701pt too wide) in paragraph at lines 1605--1610
  [] 
  []
 
@@ -1342,58 +1342,58 @@ Overfull \hbox (59.10701pt too wide) in paragraph at lines 1598--1603
 ]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\begingroup' on input line 1852.
+(hyperref)                removing `\begingroup' on input line 1859.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\<let>-command' on input line 1852.
+(hyperref)                removing `\<let>-command' on input line 1859.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\NAT@ctype' on input line 1852.
+(hyperref)                removing `\NAT@ctype' on input line 1859.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\z@' on input line 1852.
+(hyperref)                removing `\z@' on input line 1859.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 1852.
+(hyperref)                removing `\let' on input line 1859.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\let' on input line 1852.
+(hyperref)                removing `\let' on input line 1859.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\new@ifnextchar' on input line 1852.
+(hyperref)                removing `\new@ifnextchar' on input line 1859.
 
 
-Overfull \hbox (13.24278pt too wide) in paragraph at lines 1875--1876
+Overfull \hbox (13.24278pt too wide) in paragraph at lines 1882--1883
 []\OT1/cmr/m/n/10.95 After estimating Equation ([]37[]), []Hummels[] ([]2007[])
  uses the predicted value of the regression,
  []
 
 [55]
-Overfull \hbox (8.88602pt too wide) in paragraph at lines 1877--1883
+Overfull \hbox (8.88602pt too wide) in paragraph at lines 1884--1890
 \OT1/cmr/m/n/10.95 underlined. First, []Hummels[] ([]2007[]) obtains the fitted
  ad-valorem rate in one step (considering
  []
 
 
-Overfull \hbox (7.34189pt too wide) in paragraph at lines 1896--1899
+Overfull \hbox (7.34189pt too wide) in paragraph at lines 1903--1906
 []\OT1/cmr/m/n/10.95 One last difference remains to be commented, concerning th
 e way the additive component
  []
 
 [56] [57] [58]
-Overfull \hbox (12.6047pt too wide) in paragraph at lines 1982--1983
+Overfull \hbox (12.6047pt too wide) in paragraph at lines 1989--1990
 \OT1/cmr/m/n/10.95 can be rewritten as a system of four equations in four endog
 enous variables: $[]$
  []
 
 
-Overfull \hbox (19.95328pt too wide) in alignment at lines 1984--1989
+Overfull \hbox (19.95328pt too wide) in alignment at lines 1991--1996
  [][][] []
  []
 
@@ -1402,25 +1402,25 @@ Overfull \hbox (19.95328pt too wide) in alignment at lines 1984--1989
 Package natbib Warning: There were undefined citations.
 
 [60]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1996.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1996.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2003.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2003.
  (DHP_JoEG_rev1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1996.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1996.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2003.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2003.
 
 Package rerunfilecheck Info: File `DHP_JoEG_rev1.out' has not changed.
-(rerunfilecheck)             Checksum: 21B2D960505A3FFC9BC783D7639142DA;3481.
+(rerunfilecheck)             Checksum: 0343E4207F6DF0A895A0B6964F690664;3580.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1996.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2003.
  ) 
 Here is how much of TeX's memory you used:
- 19577 strings out of 492970
- 372735 string characters out of 3124817
+ 19579 strings out of 492970
+ 372775 string characters out of 3124817
  458902 words of memory out of 3000000
- 22746 multiletter control sequences out of 15000+200000
+ 22747 multiletter control sequences out of 15000+200000
  20674 words of font info for 81 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  62i,17n,81p,2681b,515s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1461,9 +1461,9 @@ Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti9.pfb><C:/Users/Ipaturea
 u/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><
 C:/Users/Ipatureau/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfont
 s/cm/cmtt9.pfb>
-Output written on DHP_JoEG_rev1.pdf (61 pages, 2412872 bytes).
+Output written on DHP_JoEG_rev1.pdf (61 pages, 2415239 bytes).
 PDF statistics:
- 1592 PDF objects out of 1728 (max. 8388607)
- 254 named destinations out of 1000 (max. 500000)
- 565 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1599 PDF objects out of 1728 (max. 8388607)
+ 255 named destinations out of 1000 (max. 500000)
+ 573 words of extra memory for PDF output out of 10000 (max. 10000000)
 
