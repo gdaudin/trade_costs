@@ -588,6 +588,7 @@ foreach mode in air ves {
 
 foreach mode in air ves {
 	collect clear
+	capture erase $dir_temp/forLLratio_${method}_`mode'.dta, replace
 	foreach model in nl nlI nlA {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num 1974 1980 1990 2000 2010 2019 {
@@ -618,6 +619,7 @@ foreach mode in air ves {
 			replace Nb_sectors=r(r) if year==`year'
 		}
 		
+		sort year
 		gen error =prix_trsp2 - predict_`model'
 		egen blouf = total(error^2*weightN), by(year)
 		
@@ -632,17 +634,40 @@ foreach mode in air ves {
 		by year: collect r(mean), tags(model[`model'] var[aic]): 	sum aic_`model'
 		by year: collect r(mean), tags(model[`model'] var[LL]): 	sum logL_`model'
 		
-			
-			
+		bys year : keep if _n==1
+		keep year Nb_partners Nb_sectors logL_`model' mode
+		rename Nb_partners Nb_partners_`model'
+		rename Nb_sectors Nb_sectors_`model'
+		capture drop _merge
+		capture noisily merge 1:1 year mode using $dir_temp/forLLratio_${method}_`mode'.dta
+		capture drop _merge
+		save $dir_temp/forLLratio_${method}_`mode'.dta, replace
 	}
+
+	sort year
+	gen statLLratioB_A = 2*abs(logL_nlI-logL_nl)
+	gen restLLratioB_A = Nb_sectors_nl*2+Nb_partners_nl*2-Nb_sectors_nlI-Nb_partners_nlI
+	
+	gen statLLratioB_C = 2*abs(logL_nlA-logL_nl)
+	gen restLLratioB_C = Nb_sectors_nl*2+Nb_partners_nl*2-Nb_sectors_nlA-Nb_partners_nlA
+	
+	gen p_value_B_A=chi2den(restLLratioB_A,statLLratioB_A)
+	gen p_value_B_C=chi2den(restLLratioB_C,statLLratioB_C)
+	
+	by year: collect r(mean), tags(var[TestLL] varb[statLLratioB_A]): sum statLLratioB_A
+	by year: collect r(mean), tags(var[TestLL] varb[restLLratioB_A]): sum restLLratioB_A
+	by year: collect r(mean), tags(var[TestLL] varb[p_value_B_A]): sum p_value_B_A
+	
+	by year: collect r(mean), tags(var[TestLL] varb[statLLratioB_C]): sum statLLratioB_C
+	by year: collect r(mean), tags(var[TestLL] varb[restLLratioB_C]): sum restLLratioB_C
+	by year: collect r(mean), tags(var[TestLL] varb[p_value_B_C]): sum p_value_B_C
 	
 	
-	
-	
-	
-	collect layout (var[R2 SER aic LL]#model[nlI nl nlA]#result[mean])/* 
+	collect layout (var[R2 SER aic LL]#model[nlI nl nlA]#result[mean] /*
+		*/ var[TestLL]#varb#result[mean])/* 
 		*/ (year)
 
+	
 	
 	collect label levels model nl "{Model (B)}"
 	collect label levels model nlI "{Model (A)}"
@@ -651,20 +676,33 @@ foreach mode in air ves {
 	collect label levels var SER "\textbf{SER (in $%$)}"
 	collect label levels var aic "\textbf{AIC criteria}"
 	collect label levels var LL "\textbf{Log-likelihood}"
+	collect label levels var TestLL "\textbf{Test LL}"
+	collect label levels varb statLLratioB_A "Stat LL ratio (B vs A)"
+	collect label levels varb statLLratioB_C "Stat LL ratio (B vs C)"
+	collect label levels varb restLLratioB_A "$#$ of restrictions (B vs A)"
+	collect label levels varb restLLratioB_C "$#$ of restrictions (B vs C)"
+	collect label levels varb p_value_B_A "p-value (B vs A)"
+	collect label levels varb p_value_B_C "p-value (B vs C)"
+	
+	
 	
 	collect style cell, warn nformat (%3.1f)
 	collect style cell var[R2], warn nformat(%3.2f)
+	collect style cell varb[p_value_B_C], warn nformat(%3.2f)
+	collect style cell varb[p_value_B_A], warn nformat(%3.2f)
 	collect style cell var[SER], warn nformat(%2.1f)
 	collect style cell var[LL aic], warn nformat(%9.0fc)
-	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	collect style cell varb[restLLratioB_C restLLratioB_A], warn nformat(%4.0fc)
+	collect style cell varb[statLLratioB_C statLLratioB_A], warn nformat(%9.0fc)
 	collect style header result[mean], level(hide)
 	
 
 	collect preview
-	
 	collect export /* 		 
 	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA3_`mode'.tex, /*
 	*/ tableonly replace
+	
+	
 
 	
 }
@@ -672,7 +710,7 @@ foreach mode in air ves {
 
 
 
-
+blif
 
 
 

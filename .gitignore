@@ -12,3 +12,5 @@
 *.snm
 *.toc
 *.mp
+*.synctex
+*.lot
