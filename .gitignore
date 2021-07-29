@@ -1,0 +1,14 @@
+/redaction/.DS_Store
+.DS_Store
+*.bbl
+*.blg
+*.tdo
+*.top
+*.tui
+*.aux
+*.out
+*.log
+*.nav
+*.snm
+*.toc
+*.mp
