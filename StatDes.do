@@ -360,7 +360,7 @@ foreach mode in air ves {
 		
 		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		egen value_year=total(val), by(year)
-		generate weight = value/value_year
+		generate weight = val/value_year
 		
 		
 		
@@ -602,12 +602,36 @@ foreach mode in air ves {
 	
 			
 			
+
+		****Pour la standard error of regression (https://en.wikipedia.org/wiki/Reduced_chi-squared_statistic)
+		egen value_year=total(val), by(year)
+		by year: generate weightN = val/value_year*_N
+		
+		gen Nb_partners=.
+		gen Nb_sectors=.
+		
+		foreach year of num 1974 1980 1990 2000 2010 2019 {
+			capture tabulate iso_o if year==`year'
+			replace Nb_partners=r(r) if year==`year'
+			
+			capture tabulate sector if year==`year'
+			replace Nb_sectors=r(r) if year==`year'
+		}
+		
+		gen error =prix_trsp2 - predict_`model'
+		egen blouf = total(error^2*weightN), by(year)
+		
+		by year : gen SER = (blouf/(_N-Nb_sectors-Nb_partners))^0.5*100
+		
+		
+		drop blouf
+	*	gen error =abs(ln(prix_trsp2) - ln(predict_`model'))
+		by year: collect r(mean), tags(model[`model'] var[SER]): 	sum SER
+		
 		by year: collect r(mean), tags(model[`model'] var[R2]): 	sum Rp2_`model'
 		by year: collect r(mean), tags(model[`model'] var[aic]): 	sum aic_`model'
 		by year: collect r(mean), tags(model[`model'] var[LL]): 	sum logL_`model'
-		gen error =abs(prix_trsp2 - predict_`model')*100
-	*	gen error =abs(ln(prix_trsp2) - ln(predict_`model'))
-		by year: collect r(mean), tags(model[`model'] var[SER]): 	sum error [aweight=val]
+		
 			
 			
 	}
