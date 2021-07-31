@@ -1,3 +1,6 @@
+
+ssc inst _gwtmean
+
 *Programme fait à partir de "Comparaison.do
 
 if "`c(username)'" =="guillaumedaudin" {
@@ -267,7 +270,7 @@ end
 *****************************************************************************************
 
 
-global method baseline
+*global method baseline
 *global method baseline10
 *baseline pour baseline 5/3
 *global method IV_referee1_yearly_5_3
@@ -282,7 +285,7 @@ global method baseline
 *global method qy1_qy
 *global method hs10_qy1_qy
 
-
+/*
 ******************Pour la table 1 du texte
 collect clear
 
@@ -452,7 +455,7 @@ foreach mode in air ves {
 	collect label levels var terme_nlI "{\textit{Multiplicative term} ($\widehat{\tau}^{ice}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
 	collect label levels var terme_nlA "{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$)}", modify
-	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
+	collect label levels var beta "$\widehat{\beta}$:  \textit{Share of additive costs}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect label levels model nlI "{\textbf{Model (A)}}"
@@ -478,9 +481,9 @@ foreach mode in air ves {
 
 */
 
-
+/*
 ***Pour les tables A1 et A2 de l’appendix
-
+collect clear
 global method baseline
 foreach mode in air ves {
 	collect clear
@@ -592,8 +595,8 @@ foreach mode in air ves {
 	
 }
 
-
-
+*/
+/*
 ******Pour les tables A3 et A4 de l’appendix (quality of fit)
 global method baseline
 
@@ -719,8 +722,8 @@ foreach mode in air ves {
 }
 
 
-
-
+*/
+/*
 ******Pour les tables B appendix
 
 capture program drop tablesB
@@ -845,15 +848,33 @@ foreach mode in air ves {
 	tablesB 2016 2019 `mode' $method
 }
 
-
+*/
 ******************************Pour la figure 1 du texte
 global method baseline
 
 local model nlAetI
-capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+
+capture erase $dir_temp/data_`model'_${method}.dta
+foreach mode in air ves {
 	foreach year of num 1974/2019  {
 		open_year_mode `year' `mode' $method `model'
-		capture append using $dir_temp/data_`model'_${method}_`mode'.dta
-		save $dir_temp/data_`model'_${method}_`mode'.dta, replace
-	}
+		gen share_A = -beta
+		egen mean_share_A = wtmean(share_A), weight(val) by(year)
+		bys year :keep if _n==1
+		keep year mode mean_share_A
+		capture append using $dir_temp/data_`model'_${method}.dta
+		save $dir_temp/data_`model'_${method}.dta, replace
+	}	
+}
+
+reshape wide mean_share_A, i(year) j(mode) string
+label var mean_share_Aair "Air"
+label var mean_share_Aves "Vessel"
+twoway (line  mean_share_Aves year, lcolor(black)) (line   mean_share_Aair year, lpattern(dash) lcolor(black)) ,scheme(s1mono)
+graph export /*
+*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure1_share_of_additive_in_totalTC.jpg", replace
+
+
+
+
 	
