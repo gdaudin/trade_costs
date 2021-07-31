@@ -179,6 +179,15 @@ if "`method'"=="baseline" & ("`model'"=="nlA" | "`model'"=="nlI") {
 	capture drop *_val
 	capture rename product sector
 }	
+
+if "`method'"=="baseline5_4" & "`model'"=="nlI"  {
+	use "$dir_baseline_results/results_estimTC_`model'_`year'_prod5_sect4_`mode'.dta", clear
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
+}	
+
+
 	
 if "`method'"=="baselinesamplereferee1" {
 	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
@@ -273,9 +282,11 @@ global method baseline
 *global method qy1_qy
 *global method hs10_qy1_qy
 
-/*
+
 ******************Pour la table 1 du texte
 collect clear
+
+
 global method baseline
 foreach mode in air ves {
 
@@ -349,15 +360,15 @@ global method baseline5_4
 
 foreach mode in air ves {
 
-	foreach model in nlAetI /*nlI*/ {
+	foreach model in nlAetI nlI {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
-		foreach year of num 1974 1977(4)2013  {
+		foreach year of num 1974 1977(4)2017 2019  {
 			open_year_mode `year' `mode' $method `model'
 			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
 			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		}
 		
-		
+
 		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		egen value_year=total(val), by(year)
 		generate weight = val/value_year
@@ -370,7 +381,7 @@ foreach mode in air ves {
 			generate Nb_partners = 0
 			label var prix_trsp "Observed transport costs"
 			
-			foreach year of num 1974 1977(4)2013  {
+			foreach year of num 1974 1977(4)2017 2019 {
 				capture tabulate iso_o if year==`year'
 				replace Nb_partners=r(r) if year==`year'
 				capture tabulate sector if year==`year'
@@ -469,8 +480,8 @@ foreach mode in air ves {
 
 
 ***Pour les tables A1 et A2 de l’appendix
-/*
 
+global method baseline
 foreach mode in air ves {
 	collect clear
 	foreach model in nlAetI nlI nlA {
@@ -581,10 +592,10 @@ foreach mode in air ves {
 	
 }
 
-*/
+
 
 ******Pour les tables A3 et A4 de l’appendix (quality of fit)
-
+global method baseline
 
 foreach mode in air ves {
 	collect clear
@@ -706,27 +717,6 @@ foreach mode in air ves {
 
 	
 }
-
-
-
-
-blif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-blif
 
 
 
@@ -854,3 +844,16 @@ foreach mode in air ves {
 	tablesB 2002 2015 `mode' $method
 	tablesB 2016 2019 `mode' $method
 }
+
+
+******************************Pour la figure 1 du texte
+global method baseline
+
+local model nlAetI
+capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+	foreach year of num 1974/2019  {
+		open_year_mode `year' `mode' $method `model'
+		capture append using $dir_temp/data_`model'_${method}_`mode'.dta
+		save $dir_temp/data_`model'_${method}_`mode'.dta, replace
+	}
+	
