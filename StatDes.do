@@ -1,3 +1,6 @@
+
+ssc inst _gwtmean
+
 *Programme fait à partir de "Comparaison.do
 
 if "`c(username)'" =="guillaumedaudin" {
@@ -179,6 +182,15 @@ if "`method'"=="baseline" & ("`model'"=="nlA" | "`model'"=="nlI") {
 	capture drop *_val
 	capture rename product sector
 }	
+
+if "`method'"=="baseline5_4" & "`model'"=="nlI"  {
+	use "$dir_baseline_results/results_estimTC_`model'_`year'_prod5_sect4_`mode'.dta", clear
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
+}	
+
+
 	
 if "`method'"=="baselinesamplereferee1" {
 	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
@@ -258,7 +270,7 @@ end
 *****************************************************************************************
 
 
-global method baseline
+*global method baseline
 *global method baseline10
 *baseline pour baseline 5/3
 *global method IV_referee1_yearly_5_3
@@ -276,6 +288,8 @@ global method baseline
 /*
 ******************Pour la table 1 du texte
 collect clear
+
+
 global method baseline
 foreach mode in air ves {
 
@@ -349,18 +363,18 @@ global method baseline5_4
 
 foreach mode in air ves {
 
-	foreach model in nlAetI /*nlI*/ {
+	foreach model in nlAetI nlI {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
-		foreach year of num 1974 1977(4)2013  {
+		foreach year of num 1974 1977(4)2017 2019  {
 			open_year_mode `year' `mode' $method `model'
 			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
 			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		}
 		
-		
+
 		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		egen value_year=total(val), by(year)
-		generate weight = value/value_year
+		generate weight = val/value_year
 		
 		
 		
@@ -370,7 +384,7 @@ foreach mode in air ves {
 			generate Nb_partners = 0
 			label var prix_trsp "Observed transport costs"
 			
-			foreach year of num 1974 1977(4)2013  {
+			foreach year of num 1974 1977(4)2017 2019 {
 				capture tabulate iso_o if year==`year'
 				replace Nb_partners=r(r) if year==`year'
 				capture tabulate sector if year==`year'
@@ -441,7 +455,7 @@ foreach mode in air ves {
 	collect label levels var terme_nlI "{\textit{Multiplicative term} ($\widehat{\tau}^{ice}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
 	collect label levels var terme_nlA "{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$)}", modify
-	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
+	collect label levels var beta "$\widehat{\beta}$:  \textit{Share of additive costs}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect label levels model nlI "{\textbf{Model (A)}}"
@@ -467,10 +481,10 @@ foreach mode in air ves {
 
 */
 
-
-***Pour les tables A1 et A2 de l’appendix
 /*
-
+***Pour les tables A1 et A2 de l’appendix
+collect clear
+global method baseline
 foreach mode in air ves {
 	collect clear
 	foreach model in nlAetI nlI nlA {
@@ -582,12 +596,13 @@ foreach mode in air ves {
 }
 
 */
-
+/*
 ******Pour les tables A3 et A4 de l’appendix (quality of fit)
-
+global method baseline
 
 foreach mode in air ves {
 	collect clear
+	capture erase $dir_temp/forLLratio_${method}_`mode'.dta, replace
 	foreach model in nl nlI nlA {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num 1974 1980 1990 2000 2010 2019 {
@@ -602,23 +617,71 @@ foreach mode in air ves {
 	
 			
 			
+
+		****Pour la standard error of regression (https://en.wikipedia.org/wiki/Reduced_chi-squared_statistic)
+		egen value_year=total(val), by(year)
+		by year: generate weightN = val/value_year*_N
+		
+		gen Nb_partners=.
+		gen Nb_sectors=.
+		
+		foreach year of num 1974 1980 1990 2000 2010 2019 {
+			capture tabulate iso_o if year==`year'
+			replace Nb_partners=r(r) if year==`year'
+			
+			capture tabulate sector if year==`year'
+			replace Nb_sectors=r(r) if year==`year'
+		}
+		
+		sort year
+		gen error =prix_trsp2 - predict_`model'
+		egen blouf = total(error^2*weightN), by(year)
+		
+		by year : gen SER = (blouf/(_N-Nb_sectors-Nb_partners))^0.5*100
+		
+		
+		drop blouf
+	*	gen error =abs(ln(prix_trsp2) - ln(predict_`model'))
+		by year: collect r(mean), tags(model[`model'] var[SER]): 	sum SER
+		
 		by year: collect r(mean), tags(model[`model'] var[R2]): 	sum Rp2_`model'
 		by year: collect r(mean), tags(model[`model'] var[aic]): 	sum aic_`model'
 		by year: collect r(mean), tags(model[`model'] var[LL]): 	sum logL_`model'
-		gen error =abs(prix_trsp2 - predict_`model')*100
-	*	gen error =abs(ln(prix_trsp2) - ln(predict_`model'))
-		by year: collect r(mean), tags(model[`model'] var[SER]): 	sum error [aweight=val]
-			
-			
+		
+		bys year : keep if _n==1
+		keep year Nb_partners Nb_sectors logL_`model' mode
+		rename Nb_partners Nb_partners_`model'
+		rename Nb_sectors Nb_sectors_`model'
+		capture drop _merge
+		capture noisily merge 1:1 year mode using $dir_temp/forLLratio_${method}_`mode'.dta
+		capture drop _merge
+		save $dir_temp/forLLratio_${method}_`mode'.dta, replace
 	}
+
+	sort year
+	gen statLLratioB_A = 2*abs(logL_nlI-logL_nl)
+	gen restLLratioB_A = Nb_sectors_nl*2+Nb_partners_nl*2-Nb_sectors_nlI-Nb_partners_nlI
+	
+	gen statLLratioB_C = 2*abs(logL_nlA-logL_nl)
+	gen restLLratioB_C = Nb_sectors_nl*2+Nb_partners_nl*2-Nb_sectors_nlA-Nb_partners_nlA
+	
+	gen p_value_B_A=chi2den(restLLratioB_A,statLLratioB_A)
+	gen p_value_B_C=chi2den(restLLratioB_C,statLLratioB_C)
+	
+	by year: collect r(mean), tags(var[TestLL] varb[statLLratioB_A]): sum statLLratioB_A
+	by year: collect r(mean), tags(var[TestLL] varb[restLLratioB_A]): sum restLLratioB_A
+	by year: collect r(mean), tags(var[TestLL] varb[p_value_B_A]): sum p_value_B_A
+	
+	by year: collect r(mean), tags(var[TestLL] varb[statLLratioB_C]): sum statLLratioB_C
+	by year: collect r(mean), tags(var[TestLL] varb[restLLratioB_C]): sum restLLratioB_C
+	by year: collect r(mean), tags(var[TestLL] varb[p_value_B_C]): sum p_value_B_C
 	
 	
-	
-	
-	
-	collect layout (var[R2 SER aic LL]#model[nlI nl nlA]#result[mean])/* 
+	collect layout (var[R2 SER aic LL]#model[nlI nl nlA]#result[mean] /*
+		*/ var[TestLL]#varb#result[mean])/* 
 		*/ (year)
 
+	
 	
 	collect label levels model nl "{Model (B)}"
 	collect label levels model nlI "{Model (A)}"
@@ -627,48 +690,40 @@ foreach mode in air ves {
 	collect label levels var SER "\textbf{SER (in $%$)}"
 	collect label levels var aic "\textbf{AIC criteria}"
 	collect label levels var LL "\textbf{Log-likelihood}"
+	collect label levels var TestLL "\textbf{Test LL}"
+	collect label levels varb statLLratioB_A "Stat LL ratio (B vs A)"
+	collect label levels varb statLLratioB_C "Stat LL ratio (B vs C)"
+	collect label levels varb restLLratioB_A "$#$ of restrictions (B vs A)"
+	collect label levels varb restLLratioB_C "$#$ of restrictions (B vs C)"
+	collect label levels varb p_value_B_A "p-value (B vs A)"
+	collect label levels varb p_value_B_C "p-value (B vs C)"
+	
+	
 	
 	collect style cell, warn nformat (%3.1f)
 	collect style cell var[R2], warn nformat(%3.2f)
+	collect style cell varb[p_value_B_C], warn nformat(%3.2f)
+	collect style cell varb[p_value_B_A], warn nformat(%3.2f)
 	collect style cell var[SER], warn nformat(%2.1f)
 	collect style cell var[LL aic], warn nformat(%9.0fc)
-	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	collect style cell varb[restLLratioB_C restLLratioB_A], warn nformat(%4.0fc)
+	collect style cell varb[statLLratioB_C statLLratioB_A], warn nformat(%9.0fc)
 	collect style header result[mean], level(hide)
 	
 
 	collect preview
-	
 	collect export /* 		 
 	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableA3_`mode'.tex, /*
 	*/ tableonly replace
+	
+	
 
 	
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-blif
-
-
-
-
+*/
+/*
 ******Pour les tables B appendix
 
 capture program drop tablesB
@@ -792,3 +847,34 @@ foreach mode in air ves {
 	tablesB 2002 2015 `mode' $method
 	tablesB 2016 2019 `mode' $method
 }
+
+*/
+******************************Pour la figure 1 du texte
+global method baseline
+
+local model nlAetI
+
+capture erase $dir_temp/data_`model'_${method}.dta
+foreach mode in air ves {
+	foreach year of num 1974/2019  {
+		open_year_mode `year' `mode' $method `model'
+		gen share_A = -beta
+		egen mean_share_A = wtmean(share_A), weight(val) by(year)
+		bys year :keep if _n==1
+		keep year mode mean_share_A
+		capture append using $dir_temp/data_`model'_${method}.dta
+		save $dir_temp/data_`model'_${method}.dta, replace
+	}	
+}
+
+reshape wide mean_share_A, i(year) j(mode) string
+label var mean_share_Aair "Air"
+label var mean_share_Aves "Vessel"
+twoway (line  mean_share_Aves year, lcolor(black)) (line   mean_share_Aair year, lpattern(dash) lcolor(black)) ,scheme(s1mono)
+graph export /*
+*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure1_share_of_additive_in_totalTC.jpg", replace
+
+
+
+
+	
