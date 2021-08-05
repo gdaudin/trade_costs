@@ -1129,7 +1129,7 @@ The calibration of transport costs parameters relies on our empirical estimates.
 \begin{center}
 	\input{table_calibTC_combined.tex}
 \end{center}
-{\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs. In columns (1), (3), (5) and (7) only ad-valorem costs are considered. In Columns (2), (4), (6) and (8), we model both ad-valorem and additive costs. $t$ is calibrated so that the ratio $t/\widetilde{p}_x$ from the model matches its empirical target, with $widetilde{p}^{\text{fas}}_x$ the average fas price set in place by those domestic firms that export. We theoretically define the export fas price through: $p_x = \tau p^{\text{fas}} +t$}}}
+{\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: In Columns (1), (3), (5) and (7), we model oad-valorem costs only. In Columns (2), (4), (6) and (8), we model both ad-valorem and additive costs. $t$ is calibrated so that the ratio $t/\widetilde{p}_x$ from the model matches its empirical target, with $widetilde{p}^{\text{fas}}_x$ the average fas price set in place by those domestic firms that export. We theoretically define the export fas price through: $p_x = \tau p^{\text{fas}} +t$. TC = Transport Costs, expressed in percentage of the average fas export price.}}}
 \end{table}
 
 
@@ -1150,13 +1150,14 @@ The results are reported in Table \ref{tab:resultats_modele}, for Air (Columns (
   \centering
   \caption{Trade liberalization: The role of additive costs} \label{tab:resultats_modele}
 \begin{center}
-\begin{tabular}{l|c|c|c|c||c|c|c|c}
+\begin{tabular}{l||c|c|c|c||c|c|c|c}
 \hline
-Mode & \multicolumn{4}{|c||}{Air} & \multicolumn{4}{c}{Vessel} \\ \hline
-Fixed export cost: &  \multicolumn{2}{|c|}{Constant $f_x$} &  \multicolumn{2}{|c||}{Lower $f_x$} & \multicolumn{2}{|c|}{Constant $f_x$} & \multicolumn{2}{|c}{Lower $f_x$} \\ \hline
-Reduction in: & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$ & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$\\ \hline
-%$TC_{1974}$ & 0.062 & 0.062 & 0.062 & 0.062 & 0.105 & 0.105 & 0.105 & 0.105\\
-%$TC_{2019}$ &  0.028 & 0.028 & 0.028 & 0.028&  0.041 & 0.041 & 0.041 & 0.041\\
+Mode & \multicolumn{4}{|c||}{Air} & \multicolumn{4}{c}{Vessel} \\ \hline  
+$f_x$ final value &  \multicolumn{2}{|c|}{As in 1974} &  \multicolumn{2}{|c||}{Lower} & \multicolumn{2}{|c|}{As in 1974} & \multicolumn{2}{|c}{Lower } \\ \hline
+& (A) & (B) & (C) & (D) & (E) & (F) &(G) & (H) \\ 
+Reduction in: & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$ & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$\\  \hline  
+$TC_{1974}$ & 0.062 & 0.062 & 0.062 & 0.062 & 0.105 & 0.105 & 0.105 & 0.105\\
+$TC_{2019}$ &  0.028 & 0.028 & 0.028 & 0.028&  0.041 & 0.041 & 0.041 & 0.041\\
 $\Delta TC$ (in pp) &-3.4 &-3.4 &-3.4 &-3.4 &-6.4 &-6.4 &-6.4 &-6.4  \\
 $\Delta \tau$ (in pp) & -3.4	&-1.4&	-3.40&	-1.40	&-6.4&	-3.1&	-6.4&	-3.1  \\
 $\Delta t/\widetilde{p}_x^{\text{fas}}$ (in pp) & 0&	-2.0&	0&	-2.0&	0&	-3.3&	0&	-3.3  \\ \hline
@@ -1165,12 +1166,12 @@ $\Delta \mathcal{W}/\mathcal{W}$ (in \%) & 1.232&	1.819&	2.207	&3.248	&2.179	&3.
 \hline
 \end{tabular}
 \end{center}
-{\parbox[l]{15cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs. The reduction in transport costs is expressed in percentage points. }}}
+{\parbox[l]{15cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs, expressed in percentage of the average export fas price. The reduction in transport costs is expressed in percentage points. }}}
 \end{table}
 
 \subsubsection{Reducing international transport costs}
 
-In this first exercise, we contrast the effects of a reduction of international transport costs depending on whether this occurs through a reduction in ad-valorem costs only, or a combined reduction in both the additive and the multiplicative components. In Table \ref{tab:resultats_modele}, this relies on the results reported in Column (1) versus (2) for Air, Column (5) versus (6) for Vessel.\medskip
+In this first exercise, we contrast the effects of a reduction of international transport costs depending on whether this occurs through a reduction in ad-valorem costs only, or a combined reduction in both the additive and the multiplicative components. In Table \ref{tab:resultats_modele}, this relies on the results reported in Column (A) versus (B) for Air, Column (E) versus (F) for Vessel.\medskip
 
 Whatever the transport mode (and the associated magnitude of the transport costs decrease), welfare gains are higher when this reduction is partly achieved through a reduction of additive costs. The effect is substantial: The reduction of 3.4 percentage points of Air transport costs generates a welfare gain higher by 0.58 percentage point when such a reduction occurs through the additive component (accounting for almost 60\% of the total cost decrease), rather than when it realizes through a decrease in iceberg costs only. In maritime transport, where the decrease in total transport costs is larger (-6.4 percentage points), the extra welfare gain amounts to 1.12 percentage points when the transport cost reduction occurs through the additive component (by 50\%) rather than through the iceberg component only.\smallskip
 
@@ -1215,9 +1216,46 @@ To understand the changes induced by the additive costs, consider first the benc
 
 What does it change when the reduction in international transport costs also occurs through a reduction in its additive component? As reported in Figure \ref{fig:welfare_decomp} (right grey bars), trade liberalisation still induces welfare gains, and even larger than in the pure ad-valorem case. This is consistent with the analytical results of \cite{sorensen2014}, in a different exercise of trade liberalization though. \footnote{\cite{sorensen2014} compares the welfare effect of a trade costs reduction depending whether it is exclusively ad-valorem or exclusively additive, the comparison between both trade cost decreases being a criterion of equal impact on trade openness. Our quantitative model offers a more general and flexible set-up, as we can virtually consider all cases of trade liberalization. Based on our empirical estimates, we compare the effects of the same decrease in overall transport costs depending on 1) whether additive costs are present or not, and 2) when they are present, assuming that the trade cost decrease is achieved by a reduction of both additive and ad-valorem components.} Quantitatively, the effects are sizeable.
 
-Through which mechanism does it occur? As underlined by \cite{sorensen2014}, a reduction in the additive cost reduces the export-market price of the high-productivity exporters relative to the low-productive ones (this can be shown from Equation (\ref{eq:px})). Within the exporters category, this favors the more productive firms, whose market share, e.g. revenues increases relatively more, as can be shown from Equation (\ref{eq:rx}). Everything else equal, this pushes the average productivity on the export market upwards. In contrast to ad-valorem costs, the reduction in additive costs induces a \textit{within-exporters selection effect}, in favor of the more productive firms. At the general equilibrium, this within-exporters selection effect also affects the \textit{classic} selection effect at the extensive margin, at the heart of the \cite{melitz} model: As the expected export profit increases, it is necessary to be more productive to satisfy the free-entry condition: Everything else equal, 
+Through which mechanism does it occur? As underlined by \cite{sorensen2014}, a reduction in the additive cost reduces the export-market price of the high-productivity exporters relative to the low-productive ones (this can be shown from Equation (\ref{eq:px})). Within the exporters category, this favors the more productive firms, whose market share, e.g. revenues increases relatively more, as can be shown from Equation (\ref{eq:rx}). Everything else equal, this pushes the average productivity on the export market upwards.\footnote{This mechanism indirectly appears Figure \ref{fig:competitivity_air_decomp}, panel. Given our exercise that assumes a combined decrease in both the additive and the ad-valorem costs, at the general equilibrium, the threshold productivity on the export market $\widetilde{\varphi}^\ast_x$ still decreases, but to a lesser extent when the trade liberalization partly occurs through a reduction in additive costs. } In contrast to ad-valorem costs, the reduction in additive costs induces a \textit{within-exporters selection effect}, in favor of the more productive firms. At the general equilibrium, this within-exporters selection effect also affects the \textit{classic} selection effect at the extensive margin at the heart of the \cite{melitz} model: As the expected export profit increases, it is necessary to be more productive to satisfy the free-entry condition. Everything else equal, the threshold productivity on the domestic market increases, as well as the average productivity. Accordingly, the competitiveness effect increases by more when the trade liberalization involves a reduction in the additive component. 
+
+The more negative variety effect (Figure \ref{fig:welfare_decomp}) can be understood as a consequence of the above mechanism. Since the reduction in additive costs favors the more productive firms in terms of market share, entry on the export market is tougher leading to a lower mass of exporters (Figure \ref{fig:variety_air_decomp}). As the selection on the domestic market is also strengthened when trade liberalization involves a reduction in additive costs, the mass of active domestic firms reduces by a larger amount. From the consumer side, this induces a more negative variety effect that is welfare-detrimental everything else equal. As for the pure-iceberg case though, the strength of the competitiveness effect still dominates, inducing positive welfare gains, and even larger when the trade liberalization involves a reduction in additive costs. 
 
 
+
+\textbf{Faire l'exercice partant d'un monde avec les deux ad-valorem + iceberg, regarder ce qui se passe quand la baisse des coouts totaux est soit soit uniquement iceberg, soit uniquement ad-valorem? Plus proche de l'exercice de Sorensen. Plus clair sur les effets? }
+
+
+\subsubsection{Reducing fixed export costs}
+
+The above results underline the importance of the additive component of international trade costs. Trade liberalization still has positive welfare effects, and even larger when it relies on a reduction in additive costs. One might question the robustness of this last result to the type of trade liberalization considered. Indeed, the reduction in the fixed export costs seems empirically relevant to account for the larger share of exporting firms nowadays relative to the 1970s (Based on XXX, from 19\% in XXX to around 35\% in XXX). As underlined by \cite{melitz} \textbf{l'a-t-il MONTRE VRAIMENT ANALYTIQUEMENT? A VERIFIER}, the reduction of the fixed export cost is also welfare-enhancing, in presence of yet only ad-valorem variable trade costs. A natural question then emerges: To what extent is this result modified in presence of additive costs? Specifically, are the welfare gains of a fixed export costs decrease larger in presence of additive costs?
+
+The answer can be found in Table \ref{tab:resultats_modele}, by comparing Columns (B) to (D) for Air, (F) to (H) for Vessel, the difference between these two columns (for each transport mode) being the lower value of the fixed export cost. Here again, the welfare gains of trade liberalization (under the form of a lower fixed export cost) are larger when variable trade costs involve a part of additive costs: If the effect are quantitatively modest in maritime transport (by 0.75 percentage points, from 3.3\% to 4.05\%), the decrease in the fixed export cost is more sizeable when variable costs are lower, as in air transport where the welfare gains almost double (from 1.82\% to 3.25\%).
+
+
+\begin{table}[htbp]
+  \centering
+  \caption{Trade liberalization: The role of additive costs} \label{tab:resultats_modele_decompwelfare}
+\begin{center}
+\begin{tabular}{l||c|c|c|c||c|c|c|c}
+\hline
+Mode & \multicolumn{4}{|c||}{Air} & \multicolumn{4}{c}{Vessel} \\ \hline
+$f_x$ final value &  \multicolumn{2}{|c|}{As in 1974} &  \multicolumn{2}{|c||}{Lower} & \multicolumn{2}{|c|}{As in 1974} & \multicolumn{2}{|c}{Lower } \\ \hline
+& (A) & (B) & (C) & (D) & (E) & (F) &(G) & (H) \\
+Reduction in: & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$ & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$\\  \hline
+%$TC_{1974}$ & 0.062 & 0.062 & 0.062 & 0.062 & 0.105 & 0.105 & 0.105 & 0.105\\
+%$TC_{2019}$ &  0.028 & 0.028 & 0.028 & 0.028&  0.041 & 0.041 & 0.041 & 0.041\\
+%$\Delta TC$ (in pp) &-3.4 &-3.4 &-3.4 &-3.4 &-6.4 &-6.4 &-6.4 &-6.4  \\
+%$\Delta \tau$ (in pp) & -3.4	&-1.4&	-3.40&	-1.40	&-6.4&	-3.1&	-6.4&	-3.1  \\
+%$\Delta t/\widetilde{p}_x^{\text{fas}}$ (in pp) & 0&	-2.0&	0&	-2.0&	0&	-3.3&	0&	-3.3  \\ \hline
+%$\Delta \mathcal{W}$ & 0.0202&	0.0295	&0.036&	0.053	&0.035&	0.052	&0.047&	0.064 \\
+$\Delta \mathcal{W}/\mathcal{W}$ (in \%) & 1.232&	1.819&	2.207	&3.248	&2.179	&3.295&	2.872&	4.052   \\ \hline
+Variety effect (\%)&	-0.827	&0.747	&-2.670&	-1.132	&-1.323	&-0.126&	-3.061	& -1.857 \\
+Price effect (\%)&	2.084&	1.455	&5.202&	4.444&	3.568	&3.001&	6.829&	6.059 \\ 
+\hline
+\end{tabular}
+\end{center}
+%{\parbox[l]{15cm}{ \vspace{4pt}\footnotesize{Notes: The reduction in transport costs is expressed in percentage points. }}}
+\end{table}
 
 
 \section{Conclusion \label{sec:conclu}}
