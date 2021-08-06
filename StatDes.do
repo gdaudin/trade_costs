@@ -285,7 +285,6 @@ end
 *global method qy1_qy
 *global method hs10_qy1_qy
 
-/*
 ******************Pour la table 1 du texte
 collect clear
 
@@ -295,7 +294,7 @@ foreach mode in air ves {
 
 	foreach model in nlAetI nlI {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
-		foreach year of num 1974/2019  {
+		foreach year of num 1974/1980 /*2019*/  {
 			open_year_mode `year' `mode' $method `model'
 			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
 			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
@@ -314,7 +313,7 @@ foreach mode in air ves {
 			generate Nb_partners = 0
 			label var prix_trsp "Observed transport costs"
 			
-			foreach year of num 1974/2019 {
+			foreach year of num 1974/1980/*2019*/ {
 				capture tabulate iso_o if year==`year'
 				replace Nb_partners=r(r) if year==`year'
 				capture tabulate sector if year==`year'
@@ -334,6 +333,13 @@ foreach mode in air ves {
 			replace terme_A=terme_A *100
 			replace terme_I=(terme_I-1) *100
 			
+			gen p_trsp_dollar = prix_caf-prix_fob
+			collect, tags(model[data] var[p_trsp_dollar] mode[`mode'] digit[${method}]) /*
+				*/ : sum p_trsp_dollar [aweight=weight], det
+				
+			gen p_add_dollar = terme_A*prix_fob
+			collect, tags(model[data] var[p_add_dollar] mode[`mode'] digit[${method}]) /*
+				*/ : sum  p_add_dollar [aweight=weight], det
 
 
 			collect, tags(model[data] var[prix_trsp] mode[`mode'] digit[${method}]) /*
@@ -342,6 +348,8 @@ foreach mode in air ves {
 			    */ : sum terme_I [aweight=weight], det
 			collect, tags(model[nlAetI] var[terme_A] mode[`mode'] digit[${method}]) /*
 				*/ : sum terme_A [aweight=weight], det
+			collect, tags(model[nlAetI] var[terme_A] mode[`mode'] digit[${method}]) /*
+				*/ : sum p_add_dollar [aweight=weight], det
 			collect, tags(model[nlAetI] var[beta] 	 mode[`mode'] digit[${method}]) /*
 			    */ : sum beta [aweight=weight], det
 		}
@@ -357,7 +365,7 @@ foreach mode in air ves {
 	
 }
 
-
+/*
 
 global method baseline5_4
 
@@ -398,13 +406,21 @@ foreach mode in air ves {
 			collect, tags(model[data] var[Nb_sectors] mode[`mode'] digit[${method}]): /*
 				*/ sum Nb_sectors [aweight=weight]
 			collect, tags(model[data] var[Nb_partners] mode[`mode'] digit[${method}]): /*
-			    */ sum Nb_partners[aweight=weight] 		
+			    */ sum Nb_partners[aweight=weight]
+				
 
 			replace prix_trsp=prix_trsp *100
 			replace terme_A=terme_A *100
 			replace terme_I=(terme_I-1) *100
 			
-
+			gen p_trsp_dollar = prix_caf-prix_fob
+			collect, tags(model[data] var[p_trsp_dollar] mode[`mode'] digit[${method}]) /*
+				*/ : sum  p_trsp_dollar [aweight=weight], det
+			
+			gen p_add_dollar = terme_A*prix_fob
+			collect, tags(model[data] var[p_add_dollar] mode[`mode'] digit[${method}]) /*
+				*/ : sum  p_add_dollar [aweight=weight], det
+			
 
 			collect, tags(model[data] var[prix_trsp] mode[`mode'] digit[${method}]) /*
 				*/ : sum prix_trsp [aweight=weight], det
@@ -412,6 +428,8 @@ foreach mode in air ves {
 			    */ : sum terme_I [aweight=weight], det
 			collect, tags(model[nlAetI] var[terme_A] mode[`mode'] digit[${method}]) /*
 				*/ : sum terme_A [aweight=weight], det
+			collect, tags(model[nlAetI] var[terme_A] mode[`mode'] digit[${method}]) /*
+				*/ : sum p_add_dollar [aweight=weight], det
 			collect, tags(model[nlAetI] var[beta] 	 mode[`mode'] digit[${method}]) /*
 			    */ : sum beta [aweight=weight], det
 		}
@@ -429,18 +447,18 @@ foreach mode in air ves {
 
 
 
-
+*/
 
 	
 	
 	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
-		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
+		*/ model[data]#var[prix_trsp p_trsp_dollar]#result[mean p50 sd] /*
 		*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
-		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd]) /* 
+		*/ model[nlAetI]#var[terme_I terme_A p_add_dollar beta]#result[mean p50 sd]) /* 
 		*/ (digit#mode)
 
 	 
-	
+blif
 	
 	collect label levels digit baseline "3-digit"
 	collect label levels digit baseline5_4 "4-digit"
@@ -448,13 +466,14 @@ foreach mode in air ves {
 	collect label levels var Nb_sectors "{$#$ sectors}"
 	collect label levels var Nb_partners "{$#$ origin countries}"
 	collect label levels result max "\textbf{Data}", modify
-	collect label levels result mean "Mean (in $%$)", modify
-	collect label levels result p50 "Median (in $%$)", modify
-	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
-	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
-	collect label levels var terme_nlI "{\textit{Multiplicative term} ($\widehat{\tau}^{ice}$)}", modify
-	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
-	collect label levels var terme_nlA "{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$)}", modify
+	collect label levels result mean "Mean", modify
+	collect label levels result p50 "Median", modify
+	collect label levels var prix_trsp "{\textit{Obs. transport costs $(p/\widehat{p}-1)$ (in $%$)}}", modify
+	collect label levels var p_trsp_dollar "{\textit{Obs. transport costs (USD per kg)}}", modify
+	collect label levels var terme_I "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{adv}$)}", modify
+	collect label levels var terme_nlI "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{ice}$)}", modify
+	collect label levels var terme_A "{\textit{Additive term (in $%$)} ($\widehat{t}/\widetilde{p}$)}", modify
+	collect label levels var p_add_dollar "{\textit{Additive term in USD}}", modify
 	collect label levels var beta "$\widehat{\beta}$:  \textit{Share of additive costs}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
@@ -849,6 +868,8 @@ foreach mode in air ves {
 }
 
 */
+
+/*
 ******************************Pour la figure 1 du texte
 global method baseline
 
@@ -873,7 +894,7 @@ label var mean_share_Aves "Vessel"
 twoway (line  mean_share_Aves year, lcolor(black)) (line   mean_share_Aair year, lpattern(dash) lcolor(black)) ,scheme(s1mono)
 graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure1_share_of_additive_in_totalTC.jpg", replace
-
+*/
 
 
 
