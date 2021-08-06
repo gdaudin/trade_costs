@@ -1017,20 +1017,20 @@ Making use of the firm's first-order pricing conditions, revenues on each local 
   \varphi^\ast &=& \frac{1}{f^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}}}
 \end{eqnarray*}
 
-The two productivity thresholds are accordingly linked according to:
+The two productivity thresholds are linked according to:
 \begin{equation}
 \frac{\varphi_x^\ast}{\tau+t\varphi_x^\ast} = \varphi^\ast \left( \frac{f}{f_x} \right)^{\frac{1}{1-\sigma}} \label{eq:link_thresholds}
 \end{equation}
 
 Following \cite{melitz} and the subsequent literature, we ensure selection on the export market, i.e. such that $\varphi_x^\ast > \varphi^\ast$. Making use of Equation (\ref{eq:link_thresholds}), this condition writes down as:
-$$\tau+ t\phi^\ast_x  \left( \frac{f}{f_x} \right)^{\frac{1}{1-\sigma}} >1$$
+$$\tau+ t\varphi^\ast_x  \left( \frac{f}{f_x} \right)^{\frac{1}{1-\sigma}} >1$$
 
-Notice that, due to additive costs ($t>0$), this condition depends on the general equilibrium of the model (through $\phi^\ast_x $) and cannot be imposed ex-ante by an appropriate restriction on the space parameter. We check this condition holds numerically in solving the model.\textbf{A FAIRE ??? JE CROYAIS LE FAIRE MAIS JE NE LE FAIS QUE DANS LE CAS SANS ADDITIFS.}
+Notice that, due to additive costs ($t>0$), this condition depends on the general equilibrium of the model (through $\varphi^\ast_x $) and cannot be imposed ex-ante by an appropriate restriction on the space parameter. We check this condition holds numerically in solving the model.\textbf{A FAIRE ??? JE CROYAIS LE FAIRE MAIS JE NE LE FAIS QUE DANS LE CAS SANS ADDITIFS.}
 
 
 \subsubsection{Aggregation, firm entry and exit}
 
-\paragraph{Aggregation} The general equilibrium is characterized by a mass $M$ of producing firms in each country associated with a distribution $\mu(\varphi)$ of productivity levels of a subset of $\left(0,\infty\right)$. Given the productivity threshold $\phi^\ast$, $\mu(\varphi)$ is equal to the conditional distribution of $g(\varphi)$ on the subset $\left[\phi^\ast, \infty\right)$:
+\paragraph{Aggregation} The general equilibrium is characterized by a mass $M$ of producing firms in each country associated with a distribution $\mu(\varphi)$ of productivity levels of a subset of $\left(0,\infty\right)$. Given the productivity threshold $\varphi^\ast$, $\mu(\varphi)$ is equal to the conditional distribution of $g(\varphi)$ on the subset $\left[\varphi^\ast, \infty\right)$:
 \begin{eqnarray}
 \mu(\varphi) &=& \left\{
 \begin{array}{ll}
@@ -1088,7 +1088,7 @@ Defining $\bar{\pi}$ as the average profit conditional to entry, this free-entry
 
 
 \noindent with $\left(1-G(\varphi^\ast)\right)$ the probability of successful entry. In the open-economy setting, $\bar{\pi}$ can be expressed as:
-$$\bar{pi} =\pi_d(\widetilde{\varphi}(\varphi^\ast)) + \rho_x \pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))$$
+$$\bar{\pi} =\pi_d(\widetilde{\varphi}(\varphi^\ast)) + \rho_x \pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))$$
 \noindent with $\pi_d(\widetilde{\varphi}(\varphi^\ast)) \equiv \bar{pi}_d$ the average expected profit on the domestic market, $\pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))\equiv \bar{pi}_x$ the average expected export profit and $\rho_x$ the probability of exporting (conditional on entry on the domestic market), equal to:
 $$\rho_x = \frac{1-G(\varphi_x^\ast)}{1-G(\varphi^\ast)}$$
 
@@ -1104,7 +1104,7 @@ Making use of the above elements, we finally get the zero-cut off profit conditi
 \end{equation}
 \noindent with $\widetilde{\varphi}^\ast$ and $\widetilde{\varphi}_x^\ast$ given by Equations (\ref{eq:def_phitilde}) and (\ref{eq:def_phitildex}).
 
-\paragraph{Summary} Equations (\ref{eq:def_phitilde}), (\ref{eq:def_phitildex}), (\ref{eq:ZCP}), (\ref{eq:link_thresholds}) and (\ref{eq:FEC}) determine a system of interdependent equations in five endogenous variables $\left\{\bar{\pi}, \widetilde{\varphi}, widetilde{\varphi}_x, \varphi^\ast, \varphi^\ast_x \right\}$. From this, we can deduce the equilibrium values of the remaining set of variables (as detailed in Appendix \ref{app:theoretical_model}). Specifically, we will study the consequences of additive costs in terms of welfare, which can be shown to be the inverse of the price level as standard in this literature (the price level $P$ being given by Equation (\ref{eq:CPI_vf})).
+\paragraph{Summary} Equations (\ref{eq:def_phitilde}), (\ref{eq:def_phitildex}), (\ref{eq:ZCP}), (\ref{eq:link_thresholds}) and (\ref{eq:FEC}) determine a system of interdependent equations in five endogenous variables $\left\{\bar{\pi}, \widetilde{\varphi}, widetilde{\varphi}_x, \varphi^\ast, \varphi^\ast_x \right\}$. From this, we can deduce the equilibrium values of the remaining set of variables (as detailed in Appendix \ref{app:theoretical_model}). Specifically, we will study the consequences of additive costs in terms of welfare. As in \cite{melitz}, given our assumptions of wage normalization and a one-sector economy, welfare per worker is simply equal the inverse of the price level: $\mathcal{W} = \frac{w}{P}= P^{-1}$, the price level $P$ being given by Equation (\ref{eq:CPI_vf}).
 
 
 \subsection{Calibration}
@@ -1156,24 +1156,63 @@ Fixed export cost: &  \multicolumn{2}{|c|}{Constant $f_x$} &  \multicolumn{2}{|c
 Reduction in: & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$ & $\tau$ only & $\tau$ and $t$ &$\tau$ only & $\tau$ and $t$\\ \hline
 %$TC_{1974}$ & 0.062 & 0.062 & 0.062 & 0.062 & 0.105 & 0.105 & 0.105 & 0.105\\
 %$TC_{2019}$ &  0.028 & 0.028 & 0.028 & 0.028&  0.041 & 0.041 & 0.041 & 0.041\\
-$\Delta TC$ (in pp) &-3.4 &-3.4 &-3.4 &-3.4 &-6.4 &-6.4 &-6.4 &-6.4  \\ 
-$\Delta \tau$ (in pp) & -3.4	&-1.4&	-3.40&	-1.40	&-6.4&	-3.1&	-6.4&	-3.1  \\ 
+$\Delta TC$ (in pp) &-3.4 &-3.4 &-3.4 &-3.4 &-6.4 &-6.4 &-6.4 &-6.4  \\
+$\Delta \tau$ (in pp) & -3.4	&-1.4&	-3.40&	-1.40	&-6.4&	-3.1&	-6.4&	-3.1  \\
 $\Delta t/\widetilde{p}_x^{\text{fas}}$ (in pp) & 0&	-2.0&	0&	-2.0&	0&	-3.3&	0&	-3.3  \\ \hline
-$\Delta \mathcal{U}$ & 0.0202&	0.0295	&0.0362&	0.0527	&0.035&	0.052	&0.047&	0.064 \\
-$\Delta \mathcal{U}/\mathcal{U}$ (in \%) & 1.2319&	1.8187&	2.2073	&3.2477	&2.179	&3.295&	2.872&	4.052   \\
+$\Delta \mathcal{W}$ & 0.0202&	0.0295	&0.036&	0.053	&0.035&	0.052	&0.047&	0.064 \\
+$\Delta \mathcal{W}/\mathcal{W}$ (in \%) & 1.232&	1.819&	2.207	&3.248	&2.179	&3.295&	2.872&	4.052   \\
 \hline
 \end{tabular}
 \end{center}
 {\parbox[l]{15cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs. The reduction in transport costs is expressed in percentage points. }}}
 \end{table}
 
-\subsubsection{Reducing international transport costs} 
+\subsubsection{Reducing international transport costs}
 
-In this first exercise, we contrast the effects of a reduction of international transport costs depending on whether this occurs through a reduction in ad-valorem costs only, or a combined reduction in both the additive and the multiplicative components. Accordingly, we focus on the results reported in Table \ref{tab:resultats_modele}, Column (1) versus (2) for Air, Column (5) versus (6) for Vessel. 
+In this first exercise, we contrast the effects of a reduction of international transport costs depending on whether this occurs through a reduction in ad-valorem costs only, or a combined reduction in both the additive and the multiplicative components. In Table \ref{tab:resultats_modele}, this relies on the results reported in Column (1) versus (2) for Air, Column (5) versus (6) for Vessel.\medskip
 
-A first conclusion emerges: Whatever the transport mode (and the magnitude of the transport costs decrease accordingly), welfare gains are higher when this reduction is made (partly) through a reduction of additive costs. The effect is substantial: In Air transport, the reduction of 3.4 percentage points of transport costs generates a welfare gain higher by 0.58 percentage point when almost 60\% of such a reduction occurs through the additive component, rather than when it realizes through a decrease of iceberg costs only. In maritime transport, where the decrease in total transport costs is larger (by 6.4 percentage points), the extra welfare gain amounts to 1.12 percentage points when 50\% of the transport cost reduction occurs through the additive component.
+Whatever the transport mode (and the associated magnitude of the transport costs decrease), welfare gains are higher when this reduction is partly achieved through a reduction of additive costs. The effect is substantial: The reduction of 3.4 percentage points of Air transport costs generates a welfare gain higher by 0.58 percentage point when such a reduction occurs through the additive component (accounting for almost 60\% of the total cost decrease), rather than when it realizes through a decrease in iceberg costs only. In maritime transport, where the decrease in total transport costs is larger (-6.4 percentage points), the extra welfare gain amounts to 1.12 percentage points when the transport cost reduction occurs through the additive component (by 50\%) rather than through the iceberg component only.\smallskip
+
+Recalling that welfare is the inverse of the price index, the explanation can be understood decomposing the welfare change in its two components, the variety effect and the price competitiveness effect. Considering the inverse of Equation (\ref{eq:CPI_vf}), it is straightforward to get the welfare change as:
+\begin{equation}
+\frac{d\mathcal{W}}{\mathcal{W}_0} = \underbrace{\frac{1}{\sigma-1} \frac{d M_T}{M_{T0}}}_{\text{Variety effect}} +  \underbrace{\frac{d\widetilde{\varphi}_T}{\widetilde{\varphi}_{T0}}}_{\text{Price effect}} \label{eq:decompWelfare}
+\end{equation}
+
+Figure \ref{fig:welfare_decomp} displays the welfare change and its decomposition between its two components following the reduction in international transport costs, for the decrease estimated in air transport (left column, Panels (1), (1-a) and (1-b)) and in maritime transport (right column, Panels (2), (2-a) and (2-b)). All are expressed in percentage change from the initial steady-state value. In each panel, the blue left bar displays the case where the trade liberalization occurs through a reduction in ad-valorem costs; the grey right bar reporting the case where the (same) reduction in international transport costs occurs through a combined reduction in both the ad-valorem and the additive components, based on our estimated results in 1974 and 2019 (for each transport mode), as in Table \ref{tab:calib_TC}). 
+
+\begin{figure}[htbp]
+\caption{Welfare decomposition}
+\label{fig:welfare_decomp}
+\includegraphics[width=15cm, height=12cm]{Welfare_change_bothmodes.pdf}
+\begin{minipage} [t]  {7in} \footnotesize%
+Notes: All bars are expressed in percentage change from the initial steady-state value.
+\end{minipage}
+\end{figure}
+
+To go deeper into the analysis, we further decompose each variety and competitiveness effects in its various dimensions, as reported in Figures \ref{fig:variety_air_decomp} (Variety effect) and \ref{fig:competitivity_air_decomp} (Competitiveness effect) for air transport. Figures \textbf{XXX} in \textbf{Appendix} report similar results for maritime transport.
+
+\begin{figure}[htbp]
+\caption{Variety effect (Air transport)}
+\label{fig:variety_air_decomp}
+\includegraphics[width=12cm, height=10cm]{VarietyEffect_air.pdf}
+%\begin{minipage} [t]  {7in} \footnotesize%
+%Notes: All bars are expressed in percentage change from the initial steady-state value.
+%\end{minipage}
+\end{figure}
 
 
+\begin{figure}[htbp]
+\caption{Competitiveness effect (Air transport)}
+\label{fig:competitivity_air_decomp}
+\includegraphics[width=12cm, height=10cm]{CompetEffect_air.pdf}
+%\begin{minipage} [t]  {7in} \footnotesize%
+%Notes: All bars are expressed in percentage change from the initial steady-state value.
+%\end{minipage}
+\end{figure}
+
+To understand the changes induced by the additive costs, let us start from reasoning in the benchmark model with only ad-valorem costs of \cite{melitz}. In this case, the reduction in transport costs induces an increase in selection on the domestic market ($\phi^\ast$ increases, Figure \textbf{XXXX STOP HERE }), but more domestic firms can now export ($\phi_x^\ast$ decreases). Accordingly, the number of domestic active firms reduces, even if a larger number of them is able to export ($M$ decreases but $M_x$ increases). As a whole, the total number of varieties accessible to the consumer reduces ($M_T$ decreases slightly). Everything else equal, this reduces welfare. This is counteracted by a price competitiveness effect. Due to the tougher selection on the domestic market, the less productive firms no longer enter. As a result, the average productivity on the domestic market increases ($\widetilde{\varphi}^\ast$ increases), which pushes the average productivity upwards ($\widetilde{\varphi}^\ast$ and $\widetilde{\varphi}_T$ increase). This price competitiveness effect pushes welfare upwards;
+
+Reduction in additive costs: More negative variety effect
 
 
 \section{Conclusion \label{sec:conclu}}
