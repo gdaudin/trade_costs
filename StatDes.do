@@ -463,17 +463,18 @@ foreach mode in air ves {
 	collect label levels result mean "Mean", modify
 	collect label levels result p50 "Median", modify
 	collect label levels var prix_trsp "{\textit{Obs. transport costs $(p/\widehat{p}-1)$ (in $%$)}}", modify
-	collect label levels var prix_fob "Export price (\textit{$\widehat{p}}) in USPD", modify
+	collect label levels var prix_fob "{\textit{Export price (\textit{$\widehat{p}$}) in USD}}", modify
 	collect label levels var terme_I "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{adv}$)}", modify
 	collect label levels var terme_nlI "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{ice}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term (in $%$)} ($\widehat{t}/\widetilde{p}$)}", modify
-	collect label levels var p_add_dollar "{\textit{Additive term in USD ($\widehat{t})}}", modify
+	collect label levels var p_add_dollar "{\textit{Additive term in USD ($\widehat{t}$)}}", modify
 	collect label levels var beta "$\widehat{\beta}$:  \textit{-Share of additive costs}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect label levels model nlI "{\textbf{Model (A)}}"
 	collect style cell, warn nformat (%3.1f)
 	collect style cell var[beta], warn nformat(%3.2f)
+	collect style cell var[prix_fob], warn nformat(%9.0fc)
 	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
 	collect style header result[max], level(hide)
 	collect style column, nodelimiter dups(center) position(top) width(asis)
