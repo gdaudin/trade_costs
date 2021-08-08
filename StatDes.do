@@ -883,12 +883,12 @@ egen val_tot_year=total(val), by(year mode)
 gen share_y_val = round((val/val_tot_year)*100000)
 
 replace mode = "(a) Air transport" if mode=="air"
-replace mode = "(b) Vesser transport" if mode=="ves"
+replace mode = "(b) Vessel transport" if mode=="ves"
 
 * Lise, pb avec le double if et saving - stata version?
 * On enleve la boucle sur ponderation
 
-foreach mode in ves air {
+foreach mode in "(a) Air transport" "(b) Vessel transport" {
 	
 	histogram beta if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) xtitle("Share of additive costs") ytitle("Density") title("`mode' (no ponderation)") scheme(s1mono)
 	graph export /*
