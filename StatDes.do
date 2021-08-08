@@ -285,6 +285,7 @@ end
 *global method qy1_qy
 *global method hs10_qy1_qy
 
+/*
 ******************Pour la table 1 du texte
 collect clear
 
@@ -828,6 +829,96 @@ graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure1_share_of_additive_in_totalTC.jpg", replace
 */
 
+/*
+******************************Pour la figure 2 du texte
+global method baseline
+
+local model nlAetI
+
+capture erase $dir_temp/data_`model'_${method}.dta
+foreach mode in air ves {
+	foreach year of num 1974/2019  {
+		open_year_mode `year' `mode' $method `model'
+		gen est_trsp_cost = (terme_A+terme_I-1)*100
+		egen mean_est_trsp_cost = wtmean(est_trsp_cost), weight(val) by(year)
+		bys year :keep if _n==1
+		keep year mode mean_est_trsp_cost
+		capture append using $dir_temp/data_`model'_${method}.dta
+		save $dir_temp/data_`model'_${method}.dta, replace
+	}	
+}
+
+replace mode = "(a) Air" if mode=="air"
+replace mode = "(b) Vessel" if mode=="ves"
+
+twoway (line mean_est_trsp_cost year) (lfit mean_est_trsp_cost year), ///
+			ytitle("In % of FAS price") yscale(range(0 12)) ylabel(0 (3) 12) xtitle(Year) ///
+			xscale(range(1973 2019)) xlabel(1974 1980 (10) 2000 2019) by(mode, legend(off))  scheme(s1mono)
+
+graph export /*
+*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure2_Trend_of_totalTC_bymode.jpg", replace
+*/
+
+
+************Pour la figure 3 du texte
+global method baseline
+
+local model nlAetI
+
+capture erase $dir_temp/data_`model'_${method}.dta
+foreach mode in air ves {
+	foreach year of num 1974/2019  {
+		open_year_mode `year' `mode' $method `model'
+		capture append using $dir_temp/data_`model'_${method}.dta
+		save $dir_temp/data_`model'_${method}.dta, replace
+	}	
+}
+
+replace beta = -beta
+label var beta "Share of additive costs"
+
+
+
+egen val_tot_year=total(val), by(year mode)
+gen share_y_val = round((val/val_tot_year)*100000)
+
+replace mode = "(a) Air transport" if mode=="air"
+replace mode = "(b) Vesser transport" if mode=="ves"
+
+* Lise, pb avec le double if et saving - stata version?
+* On enleve la boucle sur ponderation
+
+foreach mode in ves air {
+	
+	histogram beta if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) xtitle("Share of additive costs") ytitle("Density") title("`mode' (no ponderation)") scheme(s1mono)
+	graph export /*
+	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Etude_beta_nopond_`mode'.jpg", /* */    replace
+
+	histogram beta [fweight=share_y_val] if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) xtitle("Share of additive costs") ytitle("Density") title("`mode'") scheme(s1mono)
+	graph export /*
+	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Etude_beta_pondere_`mode'.jpg", replace
+
+}
+
+/*
+foreach pond in yes no {
+	
+	foreach mode in ves air {
+
+		if "`pond'"=="no" histogram beta if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
+		title ("`mode'")
+		saving ("$dir/results/Etude_beta_pond_`pond'_TOT_`mode'.pdf", replace)
+		
+		
+		if "`pond'"=="yes" histogram beta [fweight=share_y_val] if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
+		title ("`mode'") ///
+		saving ("$dir/results/Etude_beta_pond_`pond'_TOT_`mode'.pdf", replace) 
+		note("Ponderation by share of yearly value of flow : `pond'")
+		graph export $dir/results/Etude_beta_pond_`pond'_TOT_`mode'.pdf, replace
+	}	
+}
+
+*/
 
 
 	
