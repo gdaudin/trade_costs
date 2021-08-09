@@ -1,5 +1,5 @@
 
-ssc inst _gwtmean
+*ssc inst _gwtmean
 
 *Programme fait à partir de "Comparaison.do
 
@@ -285,16 +285,23 @@ end
 *global method qy1_qy
 *global method hs10_qy1_qy
 
+/*
 ******************Pour la table 1 du texte
 collect clear
 
+capture program drop table1_part
+program table1_part
+args method
 
-global method baseline
+global method `method'
+if "$method"=="baseline" local time_span 1974 (1) 2019
+if "$method"=="baseline5_4" local time_span 1974 1977 (4)2017 2019
+
 foreach mode in air ves {
 
 	foreach model in nlAetI nlI {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
-		foreach year of num 1974/2019  {
+		foreach year of num `time_span'  {
 			open_year_mode `year' `mode' $method `model'
 			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
 			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
@@ -303,7 +310,8 @@ foreach mode in air ves {
 		
 		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		egen value_year=total(val), by(year)
-		generate weight = value/value_year
+		generate weight = val/value_year
+		
 		
 		
 		
@@ -313,7 +321,7 @@ foreach mode in air ves {
 			generate Nb_partners = 0
 			label var prix_trsp "Observed transport costs"
 			
-			foreach year of num 1974/2019 {
+			foreach year of num `time_span' {
 				capture tabulate iso_o if year==`year'
 				replace Nb_partners=r(r) if year==`year'
 				capture tabulate sector if year==`year'
@@ -321,7 +329,9 @@ foreach mode in air ves {
 				egen N_`year'=count(prix_trsp), by(year)
 				replace N=N_`year' if year==`year'
 				drop N_`year'
-				}	
+				}
+				
+			
 			collect, tags(model[data] var[N] mode[`mode'] digit[${method}]): /*
 				*/ sum N [aweight=weight]
 			collect, tags(model[data] var[Nb_sectors] mode[`mode'] digit[${method}]): /*
@@ -356,96 +366,24 @@ foreach mode in air ves {
 			collect, tags(model[`model'] var[terme_nlI] mode[`mode'] digit[${method}]) :/*
 			*/ sum terme_nlI [aweight=val], det
 		}
-			
+		save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 	}
 	
 	
 }
 
 
-
-global method baseline5_4
-
-foreach mode in air ves {
-
-	foreach model in nlAetI nlI {
-		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
-		foreach year of num 1974 1977(4)2017 2019  {
-			open_year_mode `year' `mode' $method `model'
-			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
-			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
-		}
-		
-
-		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
-		egen value_year=total(val), by(year)
-		generate weight = val/value_year
-		
-		
-		
-		if "`model'"=="nlAetI" {
-			generate N = 0
-			generate Nb_sectors = 0
-			generate Nb_partners = 0
-			label var prix_trsp "Observed transport costs"
-			
-			foreach year of num 1974 1977(4)2017 2019 {
-				capture tabulate iso_o if year==`year'
-				replace Nb_partners=r(r) if year==`year'
-				capture tabulate sector if year==`year'
-				replace Nb_sectors=r(r) if year==`year'
-				egen N_`year'=count(prix_trsp), by(year)
-				replace N=N_`year' if year==`year'
-				drop N_`year'
-				}	
-			collect, tags(model[data] var[N] mode[`mode'] digit[${method}]): /*
-				*/ sum N [aweight=weight]
-			collect, tags(model[data] var[Nb_sectors] mode[`mode'] digit[${method}]): /*
-				*/ sum Nb_sectors [aweight=weight]
-			collect, tags(model[data] var[Nb_partners] mode[`mode'] digit[${method}]): /*
-			    */ sum Nb_partners[aweight=weight]
-				
-
-			replace prix_trsp=prix_trsp *100
-			replace terme_A=terme_A *100
-			replace terme_I=(terme_I-1) *100
-			
-			collect, tags(model[data] var[prix_fob] mode[`mode'] digit[${method}]) /*
-				*/ : sum  prix_fob [aweight=weight], det
-			
-			gen p_add_dollar = terme_A*prix_fob
-			collect, tags(model[nlAetI] var[p_add_dollar] mode[`mode'] digit[${method}]) /*
-				*/ : sum  p_add_dollar [aweight=weight], det
-			
-
-			collect, tags(model[data] var[prix_trsp] mode[`mode'] digit[${method}]) /*
-				*/ : sum prix_trsp [aweight=weight], det
-			collect, tags(model[nlAetI] var[terme_I] mode[`mode'] digit[${method}]) /*
-			    */ : sum terme_I [aweight=weight], det
-			collect, tags(model[nlAetI] var[terme_A] mode[`mode'] digit[${method}]) /*
-				*/ : sum terme_A [aweight=weight], det
-			collect, tags(model[nlAetI] var[beta] 	 mode[`mode'] digit[${method}]) /*
-			    */ : sum beta [aweight=weight], det
-		}
-		
-		quietly if "`model'"=="nlI" {
-			replace terme_nlI=(terme_nlI-1) *100
-			collect, tags(model[`model'] var[terme_nlI] mode[`mode'] digit[${method}]) :/*
-			*/ sum terme_nlI [aweight=val], det
-		}
-			
-	}
-	
-	
-}
+end
 
 
+table1_part baseline
+table1_part baseline5_4
 
 
 
 	
 	
-	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
+	collect layout (model[data]#result[mean]#var[N Nb_sectors Nb_partners] /*
 		*/ model[data]#var[prix_trsp prix_fob]#result[mean p50 sd] /*
 		*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
 		*/ model[nlAetI]#var[terme_I terme_A p_add_dollar beta]#result[mean p50 sd]) /* 
@@ -463,19 +401,20 @@ foreach mode in air ves {
 	collect label levels result mean "Mean", modify
 	collect label levels result p50 "Median", modify
 	collect label levels var prix_trsp "{\textit{Obs. transport costs $(p/\widehat{p}-1)$ (in $%$)}}", modify
-	collect label levels var prix_fob "Export price (\textit{$\widehat{p}}) in USPD", modify
+	collect label levels var prix_fob "{\textit{Export price in USD per kg (\textit{$\widehat{p}$})}}", modify
 	collect label levels var terme_I "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{adv}$)}", modify
 	collect label levels var terme_nlI "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{ice}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term (in $%$)} ($\widehat{t}/\widetilde{p}$)}", modify
-	collect label levels var p_add_dollar "{\textit{Additive term in USD ($\widehat{t})}}", modify
+	collect label levels var p_add_dollar "{\textit{Additive term in USD per kg ($\widehat{t}$)}}", modify
 	collect label levels var beta "$\widehat{\beta}$:  \textit{-Share of additive costs}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect label levels model nlI "{\textbf{Model (A)}}"
+	
 	collect style cell, warn nformat (%3.1f)
 	collect style cell var[beta], warn nformat(%3.2f)
-	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
-	collect style header result[max], level(hide)
+	collect style cell var[prix_fob], warn nformat(%9.0fc)
+	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0fc)
 	collect style column, nodelimiter dups(center) position(top) width(asis)
 	
 	collect style save myappendixAB, replace
@@ -890,6 +829,96 @@ graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure1_share_of_additive_in_totalTC.jpg", replace
 */
 
+/*
+******************************Pour la figure 2 du texte
+global method baseline
+
+local model nlAetI
+
+capture erase $dir_temp/data_`model'_${method}.dta
+foreach mode in air ves {
+	foreach year of num 1974/2019  {
+		open_year_mode `year' `mode' $method `model'
+		gen est_trsp_cost = (terme_A+terme_I-1)*100
+		egen mean_est_trsp_cost = wtmean(est_trsp_cost), weight(val) by(year)
+		bys year :keep if _n==1
+		keep year mode mean_est_trsp_cost
+		capture append using $dir_temp/data_`model'_${method}.dta
+		save $dir_temp/data_`model'_${method}.dta, replace
+	}	
+}
+
+replace mode = "(a) Air" if mode=="air"
+replace mode = "(b) Vessel" if mode=="ves"
+
+twoway (line mean_est_trsp_cost year) (lfit mean_est_trsp_cost year), ///
+			ytitle("In % of FAS price") yscale(range(0 12)) ylabel(0 (3) 12) xtitle(Year) ///
+			xscale(range(1973 2019)) xlabel(1974 1980 (10) 2000 2019) by(mode, legend(off))  scheme(s1mono)
+
+graph export /*
+*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure2_Trend_of_totalTC_bymode.jpg", replace
+*/
+
+
+************Pour la figure 3 du texte
+global method baseline
+
+local model nlAetI
+
+capture erase $dir_temp/data_`model'_${method}.dta
+foreach mode in air ves {
+	foreach year of num 1974/2019  {
+		open_year_mode `year' `mode' $method `model'
+		capture append using $dir_temp/data_`model'_${method}.dta
+		save $dir_temp/data_`model'_${method}.dta, replace
+	}	
+}
+
+replace beta = -beta
+label var beta "Share of additive costs"
+
+
+
+egen val_tot_year=total(val), by(year mode)
+gen share_y_val = round((val/val_tot_year)*100000)
+
+replace mode = "(a) Air transport" if mode=="air"
+replace mode = "(b) Vessel transport" if mode=="ves"
+
+* Lise, pb avec le double if et saving - stata version?
+* On enleve la boucle sur ponderation
+
+foreach mode in "(a) Air transport" "(b) Vessel transport" {
+	
+	histogram beta if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) xtitle("Share of additive costs") ytitle("Density") title("`mode' (no ponderation)") scheme(s1mono)
+	graph export /*
+	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Etude_beta_nopond_`mode'.jpg", /* */    replace
+
+	histogram beta [fweight=share_y_val] if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) xtitle("Share of additive costs") ytitle("Density") title("`mode'") scheme(s1mono)
+	graph export /*
+	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Etude_beta_pondere_`mode'.jpg", replace
+
+}
+
+/*
+foreach pond in yes no {
+	
+	foreach mode in ves air {
+
+		if "`pond'"=="no" histogram beta if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
+		title ("`mode'")
+		saving ("$dir/results/Etude_beta_pond_`pond'_TOT_`mode'.pdf", replace)
+		
+		
+		if "`pond'"=="yes" histogram beta [fweight=share_y_val] if mode=="`mode'" , width(0.025) kdensity kdenopts(bwidth(0.05)) ///
+		title ("`mode'") ///
+		saving ("$dir/results/Etude_beta_pond_`pond'_TOT_`mode'.pdf", replace) 
+		note("Ponderation by share of yearly value of flow : `pond'")
+		graph export $dir/results/Etude_beta_pond_`pond'_TOT_`mode'.pdf, replace
+	}	
+}
+
+*/
 
 
 	
