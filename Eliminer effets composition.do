@@ -14,27 +14,82 @@ set maxvar 32767
 
 
 
+*Programme fait à partir de "Comparaison.do
+
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/2013 -- trade_cost -- dropbox
+	global dir_baseline_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/baseline"
+	global dir_referee1 "~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1"
+	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
+	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
+	global dir_temp ~/Downloads/temp_stata
+	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
+	global dir_git "~/Répertoires Git/trade_costs_git"
+	
+	
 }
 
 
+*** Juillet 2020: Lise, tout sur mon OneDrive
+
+
+/* Fixe Lise P112*/
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost
-}
+	 
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+	
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	 
+	 
+	 
+	}
+
+/* Nouveau portable Lise */
+if "`c(hostname)'" =="MSOP112C" {
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	}
 
 
-if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost
-}
 
-if "`c(hostname)'" =="LABP112" {
-    global dir C:\Users\lpatureau\Dropbox\trade_cost
-}
-
-cd $dir
+set more off
 
 capture log using "`c(current_time)' `c(current_date)'"
+
+do "$dirgit/Open_year_mode_method_model.do"
 
 * En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
 
@@ -101,7 +156,7 @@ local type_TCm `type_TC'
 if "`type_TC'"=="obs_Hummels" local type_TCm obs
 assert "`sitc'"=="manuf" | "`sitc'"=="primary" | "`sitc'"=="all"
 
-*Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all A
+*Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all A (faux !)
 
 
 
@@ -111,7 +166,10 @@ assert "`sitc'"=="manuf" | "`sitc'"=="primary" | "`sitc'"=="all"
 
 ***************CRÉATION DE LA BASE POUR STOCKER LES DONNÉES AVEC LE COÛT EN 1974
 
-use "$dir/results/estimTC.dta", clear
+*use "$dir/results/estimTC.dta", clear
+*keep if year == 1974
+
+open_year_mode 1974 `mode' baseline nlAetI
 
 
 
@@ -153,7 +211,7 @@ gen terme_obs = prix_caf/prix_fob
 *drop val
 
 *replace terme_A = terme_A
-keep if year == 1974
+
 
 
 
@@ -168,24 +226,45 @@ generat ecart_type_`type_TCm'_`mode'_mp=.
 keep year terme_`type_TCm'_`mode'_mp
 keep if _n==1
 
-save start_year_`mode'_`sitc'_`type_TC', replace
+save "dir_temp/start_year_`mode'_`sitc'_`type_TC'", replace
 
 * La base pour stocker les résultats des estimations
 * On enlève 1974, c'est l'année de référence, les EF sont estimés par rapport à cette année là
 
 **************************DÉBUT DE L'ANALYSE PROPREMENT DITE
 
-use "$dir/results/estimTC.dta", clear
+*use "$dir/results/estimTC.dta", clear
 
-drop if year == 1974
-keep year
-bys year: keep if _n ==1
-save database_pureTC_`mode'_`sitc'_`type_TC', replace
+local time_span 1975 (1) 2019
 
 
+foreach year of num `time_span'  {
+	open_year_mode `year' `mode' baseline nlAetI
+	keep if _n ==1
+	
+	capture append save "$dir_temp/database_pureTC_`mode'_`sitc'_`type_TC'.dta"
+	save "$dir_temp/database_pureTC_`mode'_`sitc'_`type_TC'.dta", replace
+}
 
 
-use "$dir/results/estimTC.dta", clear
+*drop if year == 1974
+*keep year
+*keep if mode=="`mode'"
+*bys year: keep if _n ==1
+
+
+
+
+
+*use "$dir/results/estimTC.dta", clear
+
+local time_span 1974 (1) 2019
+
+foreach year of num `time_span'  {
+	open_year_mode `year' `mode' baseline nlAetI
+	capture append save "$dir_temp/temp.dta"
+	save "$dir_temp/temp.dta", replace
+}
 
 foreach secteur of num 0(1)9 {
 	if "`sitc'"=="`secteur'" keep if substr(sector,1,1)=="`sitc'"
@@ -213,13 +292,15 @@ if "`sitc'"=="manuf" drop if substr(sector,1,1)=="0" | substr(sector,1,1)=="1" /
 
 gen terme_obs = prix_caf/prix_fob
 
-keep if mode=="`mode'"
 
 
 
 
-*keep if year < 1977
-*keep if iso_o=="FRA" | iso_o=="DEU" | iso_o=="GBR" | iso_o=="FIN" 
+***Pour test
+keep if year < 1977
+keep if iso_o=="FRA" | iso_o=="DEU" | iso_o=="GBR" | iso_o=="FIN" 
+*****
+
 *local limit 1
 local limit 15
 bys iso_o : drop if _N<=`limit'
