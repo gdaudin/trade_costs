@@ -89,7 +89,7 @@ set more off
 
 capture log using "`c(current_time)' `c(current_date)'"
 
-do "$dirgit/Open_year_mode_method_model.do"
+do "$dir_git/Open_year_mode_method_model.do"
 
 * En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
 
@@ -169,7 +169,7 @@ assert "`sitc'"=="manuf" | "`sitc'"=="primary" | "`sitc'"=="all"
 *use "$dir/results/estimTC.dta", clear
 *keep if year == 1974
 
-open_year_mode 1974 `mode' baseline nlAetI
+open_year_mode_method_model 1974 `mode' baseline nlAetI
 
 
 
@@ -226,7 +226,7 @@ generat ecart_type_`type_TCm'_`mode'_mp=.
 keep year terme_`type_TCm'_`mode'_mp
 keep if _n==1
 
-save "dir_temp/start_year_`mode'_`sitc'_`type_TC'", replace
+save "$dir_temp/start_year_`mode'_`sitc'_`type_TC'", replace
 
 * La base pour stocker les résultats des estimations
 * On enlève 1974, c'est l'année de référence, les EF sont estimés par rapport à cette année là
@@ -239,11 +239,11 @@ local time_span 1975 (1) 2019
 
 
 foreach year of num `time_span'  {
-	open_year_mode `year' `mode' baseline nlAetI
+	open_year_mode_method_model `year' `mode' baseline nlAetI
 	keep if _n ==1
 	
-	capture append save "$dir_temp/database_pureTC_`mode'_`sitc'_`type_TC'.dta"
-	save "$dir_temp/database_pureTC_`mode'_`sitc'_`type_TC'.dta", replace
+	capture append save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta"
+	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta", replace
 }
 
 
@@ -258,13 +258,21 @@ foreach year of num `time_span'  {
 
 *use "$dir/results/estimTC.dta", clear
 
-local time_span 1974 (1) 2019
 
-foreach year of num `time_span'  {
-	open_year_mode `year' `mode' baseline nlAetI
-	capture append save "$dir_temp/temp.dta"
+/*À garder au début !
+local start 1974
+local end 2019
+
+erase "$dir_temp/temp.dta"
+foreach year of num `start' (1) `end'  {
+	open_year_mode_method_model `year' `mode' baseline nlAetI
+	if `year' !=`start' append using "$dir_temp/temp.dta"
 	save "$dir_temp/temp.dta", replace
 }
+
+*/
+
+use "$dir_temp/temp.dta", clear
 
 foreach secteur of num 0(1)9 {
 	if "`sitc'"=="`secteur'" keep if substr(sector,1,1)=="`sitc'"
@@ -295,14 +303,16 @@ gen terme_obs = prix_caf/prix_fob
 
 
 
+local limit 15
 
 ***Pour test
 keep if year < 1977
 keep if iso_o=="FRA" | iso_o=="DEU" | iso_o=="GBR" | iso_o=="FIN" 
+local limit 1
 *****
 
-*local limit 1
-local limit 15
+
+
 bys iso_o : drop if _N<=`limit'
 bys sector : drop if _N<=`limit'
 bys iso_o : drop if _N<=`limit'
@@ -317,15 +327,16 @@ bys sector : drop if _N<=`limit'
 egen c_95_`type_TCm' = pctile(terme_`type_TCm'),p(95)
 egen c_05_`type_TCm' = pctile(terme_`type_TCm'),p(05)
 drop if terme_`type_TCm' < c_05_`type_TCm' | terme_`type_TCm' > c_95_`type_TCm'
+
 	
 *Création du poids pertinent
 *Qui est la part occupée chaque année par chaque secteur x pays
-bys year : egen annual_trade = total(val), 
+bys year : egen annual_trade = total(val)
 generate yearly_share=val/annual_trade
 label var yearly_share "part dans le commerce de cette année-là"
 
 
-save tmp_`mode'_`sitc'_`type_TC'.dta, replace
+save "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", replace
 
 
 
@@ -335,7 +346,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 
 	** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
 	** avec i : pays origine, k = sector, t = year
-	use tmp_`mode'_`sitc'_`type_TC'.dta, clear
+	use "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", clear
 	
 	gen ln_terme_`type_TC' = ln(terme_`type_TC')
 	
@@ -346,7 +357,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	
 	reg ln_terme_`type_TC' i.year i.sector_num i.iso_o_num [iweight=yearly_share], /*nocons*/ robust 
 	
-	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
+	estimates save "$dir_results/Effets de composition/estimate_deter_couts_add_`mode'_`type_TC'.ster", replace
 	
 	predict ln_terme_`type_TC'_predict
 	generate terme_`type_TC'_predict=exp(ln_terme_`type_TC'_predict)
@@ -406,11 +417,11 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	
 	sort year
 *	list
-	merge 1:1 year using database_pureTC_`mode'_`sitc'_`type_TC' 
+	merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta" 
 	keep if _merge==3
 	drop _merge
 	
-	save database_pureTC_`mode'_`sitc'_`type_TC', replace
+	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'", replace
 	
 
 }
@@ -431,7 +442,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 
 if "`type_TC'"== "A" {
 	
-	use tmp_`mode'_`sitc'_`type_TC'.dta, clear
+	use "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", clear
 	drop if terme_A==0 | terme_A==.
 	gen ln_terme_A = ln(terme_A)
 	
@@ -444,6 +455,7 @@ if "`type_TC'"== "A" {
 	**Sinon, j'ai un soucis avec les EF que j'enlève dans l'équation non-linéaire.
 	
 	*Pour nombre de sector
+	capture drop group_sect
 	quietly egen group_sect=group(sector)
 	quietly summarize group_sect
 	local nbr_sect=r(max)
@@ -451,6 +463,7 @@ if "`type_TC'"== "A" {
 	quietly tabulate sector, gen (sect_)
 		
 	*Pour nombre d'iso_o
+	capture drop group_iso_o
 	quietly egen group_iso_o=group(iso_o)
 	quietly summarize group_iso_o	
 	local nbr_iso_o=r(max)
@@ -458,6 +471,7 @@ if "`type_TC'"== "A" {
 	quietly tabulate iso_o, gen(iso_o_)
 	
 	*Pour nombre d'années
+	capture drop group_yearquietly
 	quietly egen group_year=group(year)
 	quietly summarize group_year	
 	local nbr_year=r(max)-r(min)+1
@@ -533,11 +547,11 @@ if "`type_TC'"== "A" {
 	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 
 	
-	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
+	estimates save "$dir_results/Effets de composition/estimate_deter_couts_add_`mode'_`type_TC'.ster", replace
 	
 	
 
-	estimates use estimate_deter_couts_add_`mode'_`type_TC'.ster
+	estimates use "$dir_results/Effets de composition/estimate_deter_couts_add_`mode'_`type_TC'.ster"
 
 	
 *******
@@ -545,7 +559,7 @@ if "`type_TC'"== "A" {
 	generate terme_A_predict=exp(ln_terme_A_predict)
 	twoway (scatter ln_terme_A_predict ln_terme_A)
 	
-	save blouk.dta, replace
+	save "$dir_temp/blouk.dta", replace
 	collapse (mean) terme_A_predict, by(year)
 	rename terme_A_predict terme_`type_TC'_`mode'_np
 	label var terme_`type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
@@ -603,7 +617,7 @@ if "`type_TC'"== "A" {
 			terme_A_`mode'_np terme_A_`mode'_74_np
 
 	sort year
-	save database_pureTC_`mode'_`sitc'_`type_TC'.dta, replace
+	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta", replace
 	
 	
 	list
@@ -620,7 +634,7 @@ if "`type_TC'"== "obs_Hummels"  {
 
 	** log (tau ikt) = log (tauik) + beta. lag (weight/value) + log (taut) + residu
 	** avec i : pays origine, k = sector, t = year
-	use tmp_`mode'_`sitc'_`type_TC'.dta, clear
+	use "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", clear
 	
 	gen ln_terme_`type_TCm' = ln(terme_`type_TCm')
 	
@@ -643,7 +657,7 @@ if "`type_TC'"== "obs_Hummels"  {
 	reghdfe ln_terme_`type_TCm'  i.year /*ln_inv_unit_price*/ /*[aweight=yearly_share]*/, /*nocons robust*/ absorb(ii)
 	
 	
-	estimates save estimate_deter_couts_add_`mode'_`type_TC'.ster, replace
+	estimates save "$dir_results/Effets de composition/estimate_deter_couts_add_`mode'_`type_TC'.ster", replace
 	
 	* Enregistrer les effets fixes temps
 	
@@ -695,13 +709,13 @@ if "`type_TC'"== "obs_Hummels"  {
 	
 	sort year
 	list
-	merge 1:1 year using database_pureTC_`mode'_`sitc'_`type_TC' 
+	merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta" 
 	keep if _merge==3
 	drop _merge
 	
-	save database_pureTC_`mode'_`sitc'_`type_TC', replace
+	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'", replace
 	
-	append using start_year_`mode'_`sitc'_`type_TC'
+	append using "$dir_temp/start_year_`mode'_`sitc'_`type_TC'"
 	sort year
 
 	
@@ -716,8 +730,8 @@ if "`type_TC'"== "obs_Hummels"  {
 ****************Fin des estimations
 ****************Début des contrefactuels
 
-use database_pureTC_`mode'_`sitc'_`type_TC'.dta, clear
-append using start_year_`mode'_`sitc'_`type_TC'
+use "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta", clear
+append using "$dir_temp/start_year_`mode'_`sitc'_`type_TC'.dta"
 sort year
 
 if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
@@ -775,10 +789,10 @@ if "`type_TC'"== "A" {
 
 
 
-save database_pureTC_`mode'_`sitc'_`type_TC', replace
+save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'", replace
 
-erase start_year_`mode'_`sitc'_`type_TC'.dta
-erase tmp_`mode'_`sitc'_`type_TC'.dta
+erase "$dir_temp/start_year_`mode'_`sitc'_`type_TC'.dta"
+erase "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta"
 
 end
 
@@ -793,7 +807,7 @@ end
 
 
 
-capture program erase aggreg
+capture program drop aggreg
 program aggreg
 args secteur
 
@@ -802,21 +816,21 @@ args secteur
 * Ajouter 1974 et partir d'une valeur 100 en 1974
 *Puis construire le fichier de résultat
 
-use database_pureTC_air_`secteur'_I, clear
-merge 1:1 year using database_pureTC_air_`secteur'_obs
+use "$dir_results/Effets de composition/database_pureTC_air_`secteur'_I", clear
+merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_air_`secteur'_obs"
 drop _merge
-merge 1:1 year using database_pureTC_air_`secteur'_A
+merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_air_`secteur'_A"
 drop _merge
-merge 1:1 year using database_pureTC_ves_`secteur'_I
+merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_ves_`secteur'_I"
 drop _merge
-merge 1:1 year using database_pureTC_ves_`secteur'_obs
+merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_ves_`secteur'_obs"
 drop 	_merge
-merge 1:1 year using database_pureTC_ves_`secteur'_A
+merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_ves_`secteur'_A"
 drop _merge
 
 
-export excel using table_extract_effetscomposition_`secteur', replace firstrow(varlabels)
-save resultats_finaux/database_pureTC_`secteur', replace
+export excel using "$dir_results/Effets de composition/table_extract_effetscomposition_`secteur'", replace firstrow(varlabels)
+save "$dir_results/Effets de composition/database_pureTC_`secteur'", replace
 
 end
 
