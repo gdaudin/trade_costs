@@ -259,7 +259,7 @@ foreach year of num `time_span'  {
 *use "$dir/results/estimTC.dta", clear
 
 
-/*À garder au début !
+*Pour faire la bdd : on peut commenter pour les tests 
 local start 1974
 local end 2019
 
@@ -270,7 +270,7 @@ foreach year of num `start' (1) `end'  {
 	save "$dir_temp/temp.dta", replace
 }
 
-*/
+
 
 use "$dir_temp/temp.dta", clear
 
@@ -304,13 +304,13 @@ gen terme_obs = prix_caf/prix_fob
 
 
 local limit 15
-
+/*
 ***Pour test
 keep if year < 1977
 keep if iso_o=="FRA" | iso_o=="DEU" | iso_o=="GBR" | iso_o=="FIN" 
 local limit 1
 *****
-
+*/
 
 
 bys iso_o : drop if _N<=`limit'
@@ -861,7 +861,7 @@ aggreg all
 
 
 *local liste_secteurs all
-local liste_secteurs primary manuf
+local liste_secteurs all primary manuf
 
 foreach secteur of local  liste_secteurs {
 	eliminer_effets_composition air `secteur'  A
