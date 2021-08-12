@@ -4,7 +4,7 @@
 *** des coûts de transport estimés
 *** de manière à récupérer l'évolution "pure" des coûts de transport, via les effets fixes pays
 
-version 14.1
+version 16.0
 
 clear all
 *set mem 800m
@@ -12,7 +12,7 @@ set matsize 8000
 set more off
 set maxvar 32767
 
-
+**Il faut créer un dossier results/Effets de composition
 
 *Programme fait à partir de "Comparaison.do
 
@@ -304,13 +304,13 @@ gen terme_obs = prix_caf/prix_fob
 
 
 local limit 15
-
+/*
 ***Pour test
 keep if year < 1977
 keep if iso_o=="FRA" | iso_o=="DEU" | iso_o=="GBR" | iso_o=="FIN" 
 local limit 1
 *****
-
+*/
 
 
 bys iso_o : drop if _N<=`limit'
@@ -875,12 +875,12 @@ aggreg all
 local liste_secteurs all primary manuf
 
 foreach secteur of local  liste_secteurs {
-	eliminer_effets_composition air `secteur'  A
 	eliminer_effets_composition air `secteur'  I
 	eliminer_effets_composition air `secteur'  obs
-	eliminer_effets_composition ves `secteur'  A
 	eliminer_effets_composition ves `secteur'  I
 	eliminer_effets_composition ves `secteur'  obs
+	eliminer_effets_composition air `secteur'  A
+	eliminer_effets_composition ves `secteur'  A
 }
 
 foreach secteur of local  liste_secteurs  {
