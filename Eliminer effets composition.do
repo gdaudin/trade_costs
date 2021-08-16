@@ -4,7 +4,7 @@
 *** des coûts de transport estimés
 *** de manière à récupérer l'évolution "pure" des coûts de transport, via les effets fixes pays
 
-version 14.1
+version 16.0
 
 clear all
 *set mem 800m
@@ -12,7 +12,7 @@ set matsize 8000
 set more off
 set maxvar 32767
 
-
+**Il faut créer un dossier results/Effets de composition
 
 *Programme fait à partir de "Comparaison.do
 
@@ -116,12 +116,12 @@ program nldeter_couts_add
 	syntax varlist (min=`nbr_var' max=`nbr_var') if [iw/], at(name)
 
 	
-	tempvar terme_A_dsbcle
-	generate double `terme_A_dsbcle'=0
-	local ln_terme_A : word 1 of `varlist'
+	tempvar terme_Adoll_dsbcle
+	generate double `terme_Adoll_dsbcle'=0
+	local ln_terme_Adoll : word 1 of `varlist'
 		
 
-**Ici, on fait les effets fixes (à la fois dans le terme additif et le terme multiplicatif)
+**Ici, on fait les effets fixes (dans le terme additif)
 	
 	local n 1
 	foreach type_FE in iso_o sect year {
@@ -132,15 +132,15 @@ program nldeter_couts_add
 
 				scalar `feA_`type_FE'_`num_FE'' =`at'[1,`n']
 
-				if ("`type_FE'"!="year") replace `terme_A_dsbcle' = `terme_A_dsbcle' + (exp(`feA_`type_FE'_`num_FE'') * `type_FE'_`num_FE')
-				if ("`type_FE'"=="year") replace `terme_A_dsbcle' = `terme_A_dsbcle' * (exp(`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE'))
+				if ("`type_FE'"!="year") replace `terme_Adoll_dsbcle' = `terme_Adoll_dsbcle' + (exp(`feA_`type_FE'_`num_FE'') * `type_FE'_`num_FE')
+				if ("`type_FE'"=="year") replace `terme_Adoll_dsbcle' = `terme_Adoll_dsbcle' * (exp(`feA_`type_FE'_`num_FE'' * `type_FE'_`num_FE'))
 				local n = `n'+1
 			}
 		}
 	}
 
 	
-	replace `ln_terme_A' = ln(`terme_A_dsbcle') `if'
+	replace `ln_terme_Adoll' = ln(`terme_Adoll_dsbcle') `if'
 
 	end
 **********************************************************************
@@ -259,18 +259,18 @@ foreach year of num `time_span'  {
 *use "$dir/results/estimTC.dta", clear
 
 
-/*À garder au début !
+*Pour faire la bdd : on peut commenter pour les tests 
 local start 1974
 local end 2019
 
-erase "$dir_temp/temp.dta"
+capture erase "$dir_temp/temp.dta"
 foreach year of num `start' (1) `end'  {
 	open_year_mode_method_model `year' `mode' baseline nlAetI
 	if `year' !=`start' append using "$dir_temp/temp.dta"
 	save "$dir_temp/temp.dta", replace
 }
 
-*/
+
 
 use "$dir_temp/temp.dta", clear
 
@@ -304,13 +304,13 @@ gen terme_obs = prix_caf/prix_fob
 
 
 local limit 15
-
+/*
 ***Pour test
 keep if year < 1977
 keep if iso_o=="FRA" | iso_o=="DEU" | iso_o=="GBR" | iso_o=="FIN" 
 local limit 1
 *****
-
+*/
 
 
 bys iso_o : drop if _N<=`limit'
@@ -347,6 +347,8 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
 	** avec i : pays origine, k = sector, t = year
 	use "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", clear
+	
+	if "`type_TC'"== "I" collapse (sum) yearly_share (mean) terme_I, by(iso_o year sector mode)
 	
 	gen ln_terme_`type_TC' = ln(terme_`type_TC')
 	
@@ -444,7 +446,10 @@ if "`type_TC'"== "A" {
 	
 	use "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", clear
 	drop if terme_A==0 | terme_A==.
-	gen ln_terme_A = ln(terme_A)
+	gen terme_Adoll = terme_A*prix_fob
+	collapse (sum) yearly_share (mean) terme_Adoll, by(iso_o year sector mode)
+	gen ln_terme_Adoll = ln(terme_Adoll)
+	
 	
 	************************ Importé de Estim_value_TC
 		******************************************Régression
@@ -540,11 +545,11 @@ if "`type_TC'"== "A" {
 	display "Regression terme_A `mode'"
 	
 	
-	display "nl deter_couts_add @ ln_terme_A `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')"
+	display "nl deter_couts_add @ ln_terme_Adoll `liste_variables' , iterate(100) parameters(`liste_parametres' ) initial(`initial')"
 	
 	replace yearly_share = yearly_share*100000
 ******	Ce bout là soit fait l'estimation, soit la récupère si elle a déjà été faite.
-	nl deter_couts_add @ ln_terme_A `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
+	nl deter_couts_add @ ln_terme_Adoll `liste_variables' [iweight=yearly_share], iterate(100) parameters(`liste_parametres' ) initial(`initial')
 
 	
 	estimates save "$dir_results/Effets de composition/estimate_deter_couts_add_`mode'_`type_TC'.ster", replace
@@ -555,13 +560,13 @@ if "`type_TC'"== "A" {
 
 	
 *******
-	predict ln_terme_A_predict
-	generate terme_A_predict=exp(ln_terme_A_predict)
-	twoway (scatter ln_terme_A_predict ln_terme_A)
+	predict ln_terme_Adoll_predict
+	generate terme_Adoll_predict=exp(ln_terme_Adoll_predict)
+	twoway (scatter ln_terme_Adoll_predict ln_terme_Adoll)
 	
 	save "$dir_temp/blouk.dta", replace
-	collapse (mean) terme_A_predict, by(year)
-	rename terme_A_predict terme_`type_TC'_`mode'_np
+	collapse (mean) terme_Adoll_predict, by(year)
+	rename terme_Adoll_predict terme_`type_TC'_`mode'_np
 	label var terme_`type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
 	
 	
@@ -842,11 +847,17 @@ end
 
 
 ***********LANCER LES PROGRAMMES********************
+
 /*
+eliminer_effets_composition ves all A
+
 
 eliminer_effets_composition ves all obs
 eliminer_effets_composition ves all I
-eliminer_effets_composition ves all A
+
+
+
+
 eliminer_effets_composition air all obs
 eliminer_effets_composition air all I
 eliminer_effets_composition air all A
@@ -861,18 +872,18 @@ aggreg all
 
 
 *local liste_secteurs all
-local liste_secteurs primary manuf
+local liste_secteurs all primary manuf
 
 foreach secteur of local  liste_secteurs {
-	eliminer_effets_composition air `secteur'  A
 	eliminer_effets_composition air `secteur'  I
 	eliminer_effets_composition air `secteur'  obs
-	eliminer_effets_composition ves `secteur'  A
 	eliminer_effets_composition ves `secteur'  I
 	eliminer_effets_composition ves `secteur'  obs
+	eliminer_effets_composition air `secteur'  A
+	eliminer_effets_composition ves `secteur'  A
 }
 
-foreach secteur in /*all*/ primary manuf  {
+foreach secteur of local  liste_secteurs  {
 	aggreg `secteur'
 }
 
