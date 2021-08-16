@@ -33,18 +33,22 @@ if "`c(username)'" =="guillaumedaudin" {
 
 
 /* Fixe Lise P112*/
-if "`c(hostname)'" =="LAB0271A" {
+
+/* Nouveau fixe Bureau Lise: Tout en local sur MyWork. Pour la base et les résultats, dossier Lise ; pgms dans le dossier Git (de MyWork) */
+if "`c(hostname)'" =="LAB0661F" {
+	
+	global dir_git "//storage2016.windows.dauphine.fr/home/l/lpatureau/My_Work/Git/trade_costs"
 	 
 
 	* baseline results sur hummels_tra dans son intégralité
-    global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+    global dir_baseline_results "C:\Users\lpatureau.WINDOWS\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
 	
 		
 	* résultats selon méthode référé 1
-	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	global dir_referee1 "C:\Users\lpatureau.WINDOWS\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
 	
 	* stocker la comparaison des résultats
-	global dir_comparaison "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	global dir_comparaison "C:\Users\lpatureau.WINDOWS\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1/comparaison_baseline_referee1"
 	
 	/* Il me manque pour faire méthode 2 en IV 
 	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
@@ -52,10 +56,11 @@ if "`c(hostname)'" =="LAB0271A" {
 	
 	*/
 	
-	global dir_temp "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
-	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
-	global dir_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
-	 
+	global dir_temp "C:\Users\lpatureau.WINDOWS\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\lpatureau.WINDOWS\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\lpatureau.WINDOWS\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	
+
 	 
 	 
 	}
@@ -89,7 +94,10 @@ set more off
 
 capture log using "`c(current_time)' `c(current_date)'"
 
+*cd $dir_git
+
 do "$dir_git/Open_year_mode_method_model.do"
+
 
 * En cohérence avec l'estimation via nl, qui minimise la variance de l'erreur additive
 
@@ -872,7 +880,9 @@ aggreg all
 
 
 *local liste_secteurs all
-local liste_secteurs all primary manuf
+*local liste_secteurs all primary manuf
+
+local liste_secteurs manuf
 
 foreach secteur of local  liste_secteurs {
 	eliminer_effets_composition air `secteur'  I
