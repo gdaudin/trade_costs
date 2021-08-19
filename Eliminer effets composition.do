@@ -263,7 +263,7 @@ foreach year of num `time_span'  {
 local start 1974
 local end 2019
 
-erase "$dir_temp/temp.dta"
+capture erase "$dir_temp/temp.dta"
 foreach year of num `start' (1) `end'  {
 	open_year_mode_method_model `year' `mode' baseline nlAetI
 	if `year' !=`start' append using "$dir_temp/temp.dta"
