@@ -640,6 +640,7 @@ if "`type_TC'"== "obs_Hummels"  {
 	** log (tau ikt) = log (tauik) + beta. lag (weight/value) + log (taut) + residu
 	** avec i : pays origine, k = sector, t = year
 	use "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", clear
+	rename `mode'_wgt wgt
 	
 	gen ln_terme_`type_TCm' = ln(terme_`type_TCm')
 	
@@ -649,6 +650,7 @@ if "`type_TC'"== "obs_Hummels"  {
 	encode iso_o, gen(iso_o_num)
 	
 	egen ii = group(sector iso_o)
+	
 	
 	*gen val_caf = prix_caf*wgt
 	*rename val val_fob
@@ -688,7 +690,8 @@ if "`type_TC'"== "obs_Hummels"  {
 	
 	drop if year==1974
 	
-	foreach i of num 1(1)39 {
+	
+	foreach i of num 1(1)45 {
 			*replace SITCRev2_3d_num= word("`liste_sitc'",`i') in `n'
 			replace effet_fixe= X[1,`i'] in `i'
 			replace ecart_type=V[`i',`i'] in `i'	
@@ -714,9 +717,7 @@ if "`type_TC'"== "obs_Hummels"  {
 	
 	sort year
 	list
-	merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta" 
-	keep if _merge==3
-	drop _merge
+	append using "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta" 
 	
 	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'", replace
 	
@@ -866,11 +867,12 @@ aggreg all
 
 
 */
+/*En fait, aller voir "Calcul de l’effet de composition comme chez Hummels.do"
+eliminer_effets_composition air all obs_Hummels
+eliminer_effets_composition ves all obs_Hummels
+*/
 
-
-
-
-
+/*
 *local liste_secteurs all
 local liste_secteurs all primary manuf
 
