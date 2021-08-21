@@ -418,12 +418,18 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 			terme_`type_TC'_`mode'_np terme_`type_TC'_`mode'_74_np
 	
 	sort year
-*	list
-	merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta" 
-	keep if _merge==3
-	drop _merge
+	list
+	
+	
 	
 	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'", replace
+	
+	append using "$dir_temp/start_year_`mode'_`sitc'_`type_TC'"
+	
+	sort year
+	
+	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'", replace
+	
 	
 
 }
@@ -631,7 +637,7 @@ if "`type_TC'"== "A" {
 
 
 
-
+/*
 
 if "`type_TC'"== "obs_Hummels"  {
 	
@@ -732,13 +738,11 @@ if "`type_TC'"== "obs_Hummels"  {
 	
 
 }
-
+*/
 ****************Fin des estimations
 ****************Début des contrefactuels
 
 use "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta", clear
-append using "$dir_temp/start_year_`mode'_`sitc'_`type_TC'.dta"
-sort year
 
 if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
@@ -823,6 +827,7 @@ args secteur
 *Puis construire le fichier de résultat
 
 use "$dir_results/Effets de composition/database_pureTC_air_`secteur'_I", clear
+
 merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_air_`secteur'_obs"
 drop _merge
 merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_air_`secteur'_A"
@@ -872,19 +877,23 @@ eliminer_effets_composition air all obs_Hummels
 eliminer_effets_composition ves all obs_Hummels
 */
 
-/*
+
 *local liste_secteurs all
 local liste_secteurs all primary manuf
+
+
 
 foreach secteur of local  liste_secteurs {
 	eliminer_effets_composition air `secteur'  I
 	eliminer_effets_composition air `secteur'  obs
 	eliminer_effets_composition ves `secteur'  I
 	eliminer_effets_composition ves `secteur'  obs
-	eliminer_effets_composition air `secteur'  A
-	eliminer_effets_composition ves `secteur'  A
+*	eliminer_effets_composition air `secteur'  A
+*	eliminer_effets_composition ves `secteur'  A
 }
 
+
+*/
 foreach secteur of local  liste_secteurs  {
 	aggreg `secteur'
 }
