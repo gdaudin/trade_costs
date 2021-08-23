@@ -4,6 +4,9 @@
 *** des coûts de transport estimés
 *** de manière à récupérer l'évolution "pure" des coûts de transport, via les effets fixes pays
 
+*****Août 2021 : je fais le calcul sur terme_Adoll et non pas sur terme_A (comme dans l’équation, quoi...
+*******je fais la même chose pour prix_fob, de manière à pouvoir le comparer à terme_Adoll
+
 version 16.0
 
 clear all
@@ -152,8 +155,17 @@ program nldeter_couts_add
 capture drop program eliminer_effets_composition
 program eliminer_effets_composition
 args mode sitc type_TC
-local type_TCm `type_TC'
+
 if "`type_TC'"=="obs_Hummels" local type_TCm obs
+
+local type_TCm `type_TC'
+
+local terme_type_TC terme_`type_TC'
+local terme_type_TCm terme_`type_TCm'
+
+if "`type_TC'"=="prix_fob" local terme_type_TC prix_fob
+if "`type_TC'"=="prix_fob" local terme_type_TCm prix_fob
+
 assert "`sitc'"=="manuf" | "`sitc'"=="primary" | "`sitc'"=="all"
 
 *Exemple : eliminer_effets_composition 6 ou eliminer_effets_composition all A (faux !)
@@ -216,14 +228,14 @@ gen terme_obs = prix_caf/prix_fob
 
 
 
-sum terme_`type_TCm' [fweight= val] if mode=="`mode'" 
-generate terme_`type_TCm'_`mode'_mp = r(mean)
-label var terme_`type_TCm'_`mode'_mp "Weighted mean value of estimated TC of type `type_TC', 1974, mode `mode'"
+sum `terme_type_TCm' [fweight= val] if mode=="`mode'" 
+generate `terme_type_TCm'_`mode'_mp = r(mean)
+label var `terme_type_TCm'_`mode'_mp "Weighted mean value of estimated TC of type `type_TC', 1974, mode `mode'"
 generat ecart_type_`type_TCm'_`mode'_mp=.
 
 
 
-keep year terme_`type_TCm'_`mode'_mp
+keep year `terme_type_TCm'_`mode'_mp
 keep if _n==1
 
 save "$dir_temp/start_year_`mode'_`sitc'_`type_TC'", replace
@@ -324,9 +336,9 @@ bys sector : drop if _N<=`limit'
 bys iso_o : drop if _N<=`limit'
 bys sector : drop if _N<=`limit'
 	
-egen c_95_`type_TCm' = pctile(terme_`type_TCm'),p(95)
-egen c_05_`type_TCm' = pctile(terme_`type_TCm'),p(05)
-drop if terme_`type_TCm' < c_05_`type_TCm' | terme_`type_TCm' > c_95_`type_TCm'
+egen c_95_`type_TCm' = pctile(`terme_type_TCm'),p(95)
+egen c_05_`type_TCm' = pctile(`terme_type_TCm'),p(05)
+drop if `terme_type_TCm' < c_05_`type_TCm' | `terme_type_TCm' > c_95_`type_TCm'
 
 	
 *Création du poids pertinent
@@ -340,7 +352,7 @@ save "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", replace
 
 
 
-if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
+if "`type_TC'"== "obs" |  "`type_TC'"== "I" |  "`type_TC'"== "prix_fob" {
 	*** Step 1 et 2 - Estimation sur couts de transport estimés en obs/terme_I seulement
 	*** On précise l'équation en log
 
@@ -350,24 +362,24 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	
 	if "`type_TC'"== "I" collapse (sum) yearly_share (mean) terme_I, by(iso_o year sector mode)
 	
-	gen ln_terme_`type_TC' = ln(terme_`type_TC')
+	gen ln_`terme_type_TC' = ln(`terme_type_TC')
 	
 	display "Regression `type_TC' `mode'"
 	
 	encode sector, gen(sector_num)
 	encode iso_o, gen(iso_o_num)
 	
-	reg ln_terme_`type_TC' i.year i.sector_num i.iso_o_num [iweight=yearly_share], /*nocons*/ robust 
+	reg ln_`terme_type_TC' i.year i.sector_num i.iso_o_num [iweight=yearly_share], /*nocons*/ robust 
 	
 	estimates save "$dir_results/Effets de composition/estimate_deter_couts_add_`mode'_`type_TC'.ster", replace
 	
-	predict ln_terme_`type_TC'_predict
-	generate terme_`type_TC'_predict=exp(ln_terme_`type_TC'_predict)
+	predict ln_`terme_type_TC'_predict
+	generate `terme_type_TC'_predict=exp(ln_`terme_type_TC'_predict)
 	
 	
-	collapse (mean) terme_`type_TC'_predict, by(year)
-	rename terme_`type_TC'_predict terme_`type_TC'_`mode'_np
-	label var terme_`type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
+	collapse (mean) `terme_type_TC'_predict, by(year)
+	rename `terme_type_TC'_predict `terme_type_TC'_`mode'_np
+	label var `terme_type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
 	
 	
 	
@@ -385,7 +397,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	generate effet_fixe=.
 	generate ecart_type=.
 	 
-	keep year effet_fixe ecart_type  terme_`type_TC'_`mode'_np
+	keep year effet_fixe ecart_type  `terme_type_TC'_`mode'_np
 	bys year : keep if _n==1
 	
 	
@@ -400,7 +412,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 			local n=`n'+1
 	}
 	
-	gen terme_`type_TC'_`mode'_74_np=terme_`type_TC'_`mode'_np[1]
+	gen `terme_type_TC'_`mode'_74_np=`terme_type_TC'_`mode'_np[1]
 	drop if year==1974
 
 *	list
@@ -415,7 +427,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
 	label var ecart_type_`type_TC'_`mode' "ecart_type_`type_TC'_`mode'"
 	
 	keep year effetfixe_`type_TC'_`mode' ecart_type_`type_TC'_`mode' ///
-			terme_`type_TC'_`mode'_np terme_`type_TC'_`mode'_74_np
+			`terme_type_TC'_`mode'_np `terme_type_TC'_`mode'_74_np
 	
 	sort year
 	list
@@ -572,8 +584,8 @@ if "`type_TC'"== "A" {
 	
 	save "$dir_temp/blouk.dta", replace
 	collapse (mean) terme_Adoll_predict, by(year)
-	rename terme_Adoll_predict terme_`type_TC'_`mode'_np
-	label var terme_`type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
+	rename terme_Adoll_predict `terme_type_TC'_`mode'_np
+	label var `terme_type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
 	
 	
 	
@@ -591,10 +603,10 @@ if "`type_TC'"== "A" {
 	generate effet_fixe=.
 	generate ecart_type=.
 	 
-	keep year effet_fixe ecart_type terme_`type_TC'_`mode'_np
+	keep year effet_fixe ecart_type `terme_type_TC'_`mode'_np
 	bys year : keep if _n==1
 	sort year
-	gen terme_`type_TC'_`mode'_74_np=terme_`type_TC'_`mode'_np[1]
+	gen `terme_type_TC'_`mode'_74_np=`terme_type_TC'_`mode'_np[1]
 	drop if year==1974
 	quietly levelsof year, local (liste_year) clean
 	
@@ -648,7 +660,7 @@ if "`type_TC'"== "obs_Hummels"  {
 	use "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", clear
 	rename `mode'_wgt wgt
 	
-	gen ln_terme_`type_TCm' = ln(terme_`type_TCm')
+	gen ln_`terme_type_TCm' = ln(`terme_type_TCm')
 	
 	display "Regression `type_TC' `mode'"
 	
@@ -661,13 +673,13 @@ if "`type_TC'"== "obs_Hummels"  {
 	*gen val_caf = prix_caf*wgt
 	*rename val val_fob
 	*collapse (sum) val_caf val_fob yearly_share wgt, by(ii year)
-	*gen ln_terme_`type_TCm'=ln(val_caf/val_fob) 
+	*gen ln_`terme_type_TCm'=ln(val_caf/val_fob) 
 	*gen ln_inv_unit_price=ln(wgt/val_fob)
 	*xtset ii year
 	*replace wgt = wgt/2.2  if year <=1988 (Hummels le fait. Mais pourquoi diable ???
 	gen ln_inv_unit_price=ln(wgt/val)
 	
-	reghdfe ln_terme_`type_TCm'  i.year /*ln_inv_unit_price*/ /*[aweight=yearly_share]*/, /*nocons robust*/ absorb(ii)
+	reghdfe ln_`terme_type_TCm'  i.year /*ln_inv_unit_price*/ /*[aweight=yearly_share]*/, /*nocons robust*/ absorb(ii)
 	
 	
 	estimates save "$dir_results/Effets de composition/estimate_deter_couts_add_`mode'_`type_TC'.ster", replace
@@ -744,56 +756,56 @@ if "`type_TC'"== "obs_Hummels"  {
 
 use "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta", clear
 
-if "`type_TC'"== "obs" |  "`type_TC'"== "I" {
-	generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
+if "`type_TC'"== "obs" |  "`type_TC'"== "I" |  "`type_TC'"== "prix_fob" {
+	generate `terme_type_TC'_`mode'_74  = `terme_type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
-	replace terme_`type_TC'_`mode'_mp = 100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
+	replace `terme_type_TC'_`mode'_mp = 100*(`terme_type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)	
 
 	
 	
-	*replace ecart_type_`type_TC'_`mode' = 100*(terme_`type_TC'_`mode'_74*exp(ecart_type_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)	
+	*replace ecart_type_`type_TC'_`mode' = 100*(`terme_type_TC'_`mode'_74*exp(ecart_type_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)	
 	
-	gen terme_95_`type_TC'_`mode'_mp=100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'+1.96*ecart_type_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)
-	gen terme_05_`type_TC'_`mode'_mp=100*(terme_`type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'-1.96*ecart_type_`type_TC'_`mode')-1)/(terme_`type_TC'_`mode'_74-1)
-	
-	
+	gen terme_95_`type_TC'_`mode'_mp=100*(`terme_type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'+1.96*ecart_type_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)
+	gen terme_05_`type_TC'_`mode'_mp=100*(`terme_type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'-1.96*ecart_type_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)
 	
 	
-	label var terme_`type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
+	
+	
+	label var `terme_type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
 	label var ecart_type_`type_TC'_`mode' "ecart_type_TC_`type_TC'_`mode'"
 	
-	egen blink = mean(terme_`type_TC'_`mode'_74_np)
-	replace terme_`type_TC'_`mode'_74_np=blink
+	egen blink = mean(`terme_type_TC'_`mode'_74_np)
+	replace `terme_type_TC'_`mode'_74_np=blink
 	drop blink
 	
-	replace terme_`type_TC'_`mode'_np=terme_`type_TC'_`mode'_74_np if year==1974
-	replace terme_`type_TC'_`mode'_np=100*(terme_`type_TC'_`mode'_np-1)/(terme_`type_TC'_`mode'_74_np-1)
-	label var terme_`type_TC'_`mode'_np "pure_TC_`type_TC'_`mode'_np"
+	replace `terme_type_TC'_`mode'_np=`terme_type_TC'_`mode'_74_np if year==1974
+	replace `terme_type_TC'_`mode'_np=100*(`terme_type_TC'_`mode'_np-1)/(`terme_type_TC'_`mode'_74_np-1)
+	label var `terme_type_TC'_`mode'_np "pure_TC_`type_TC'_`mode'_np"
 }
 
 
 
 
 if "`type_TC'"== "A" {
-	generate terme_`type_TC'_`mode'_74  = terme_`type_TC'_`mode'_mp[1]
+	generate `terme_type_TC'_`mode'_74  = `terme_type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
-	replace terme_`type_TC'_`mode'_mp = 100*exp(effetfixe_`type_TC'_`mode')
+	replace `terme_type_TC'_`mode'_mp = 100*exp(effetfixe_`type_TC'_`mode')
 *		replace ecart_type_`type_TC'_`mode' = 100*exp(ecart_type_`type_TC'_`mode')
 	
 	gen terme_95_`type_TC'_`mode'_mp=100*exp(effetfixe_`type_TC'_`mode'+1.96*ecart_type_`type_TC'_`mode')
 	gen terme_05_`type_TC'_`mode'_mp=100*exp(effetfixe_`type_TC'_`mode'-1.96*ecart_type_`type_TC'_`mode')
 	
-	label var terme_`type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
+	label var `terme_type_TC'_`mode'_mp "pure_TC_`type_TC'_`mode'"
 	label var ecart_type_`type_TC'_`mode' "ecart_type_TC_`type_TC'_`mode'"
 	
-	egen blink = mean(terme_`type_TC'_`mode'_74_np)
-	replace terme_`type_TC'_`mode'_74_np=blink
+	egen blink = mean(`terme_type_TC'_`mode'_74_np)
+	replace `terme_type_TC'_`mode'_74_np=blink
 	drop blink
 	
-	replace terme_`type_TC'_`mode'_np=terme_`type_TC'_`mode'_74_np if year==1974
-	replace terme_`type_TC'_`mode'_np=100*terme_`type_TC'_`mode'_np/terme_`type_TC'_`mode'_74_np
+	replace `terme_type_TC'_`mode'_np=`terme_type_TC'_`mode'_74_np if year==1974
+	replace `terme_type_TC'_`mode'_np=100*`terme_type_TC'_`mode'_np/`terme_type_TC'_`mode'_74_np
 	
-	label var terme_`type_TC'_`mode'_np "pure_TC_`type_TC'_`mode'_np"
+	label var `terme_type_TC'_`mode'_np "pure_TC_`type_TC'_`mode'_np"
 	
 }
 
@@ -832,12 +844,24 @@ merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_air_`se
 drop _merge
 merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_air_`secteur'_A"
 drop _merge
+merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_air_`secteur'_prix_fob"
+drop _merge
 merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_ves_`secteur'_I"
 drop _merge
 merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_ves_`secteur'_obs"
 drop 	_merge
 merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_ves_`secteur'_A"
 drop _merge
+merge 1:1 year using "$dir_results/Effets de composition/database_pureTC_ves_`secteur'_prix_fob"
+drop _merge
+
+rename *A* *Adoll*
+
+generate terme_A_air_np = terme_Adoll_air_np /(prix_fob_air_np)*100
+generate terme_A_air_mp = terme_Adoll_air_mp /(prix_fob_air_mp)*100
+generate terme_A_ves_np = terme_Adoll_ves_np /(prix_fob_ves_np)*100
+generate terme_A_ves_mp = terme_Adoll_ves_mp /(prix_fob_ves_mp)*100
+
 
 
 export excel using "$dir_results/Effets de composition/table_extract_effetscomposition_`secteur'", replace firstrow(varlabels)
@@ -882,7 +906,17 @@ eliminer_effets_composition ves all obs_Hummels
 local liste_secteurs all primary manuf
 
 
+foreach secteur of local  liste_secteurs {
+	eliminer_effets_composition air `secteur'  prix_fob
+	eliminer_effets_composition ves `secteur'  prix_fob
+}
 
+
+
+
+
+
+/*
 foreach secteur of local  liste_secteurs {
 	eliminer_effets_composition air `secteur'  I
 	eliminer_effets_composition air `secteur'  obs
