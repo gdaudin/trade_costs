@@ -174,7 +174,7 @@ replace `var' = ln(`var')
 tab year, gen(y)
 global ct 1
 
-while $ct <=40 {
+while $ct <=46 {
 global nct = $ct + 1973
 ren y$ct  y$nct
 
@@ -200,13 +200,13 @@ tis year
 
 
 /* generate output for main figure */
-xtreg afv awv y1975-y2013, fe
+xtreg afv awv y1975-y2019, fe
 
 
 predict afvhat
 
 
-xtreg vfv vwv y1975-y2013, fe
+xtreg vfv vwv y1975-y2019, fe
 predict vfvhat
 
 /*
@@ -276,14 +276,18 @@ label var vfvhat  "Fitted ad-valorem rate"
 label var afv_wgt "Expenditure/import value"
 label var vfv_wgt "Expenditure/import value"
 
-tsline afvhat afv_wgt  , ytitle("% of value shipped") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014")
-quietly capture graph save resultats_finaux/figure5_comme_hummels.gph, replace
-quietly capture graph export resultats_finaux/figure5_comme_hummels.pdf, replace
+tsline afvhat afv_wgt, ///
+	ytitle("% of value shipped") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
+quietly capture graph save "$dir_results/Effets de composition/figure5_comme_hummels.gph", replace
+quietly capture graph export "$dir_results/Effets de composition/figure5_comme_hummels.jpg", replace
+quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure5_comme_hummels.jpg", replace
 
-tsline vfvhat vfv_wgt   , ytitle("% of value shipped") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014")
+tsline vfvhat vfv_wgt, ///
+	ytitle("% of value shipped") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
 
-quietly capture graph save resultats_finaux/figure6_comme_hummels.gph, replace
-quietly capture graph export resultats_finaux/figure6_comme_hummels.pdf, replace
+quietly capture graph save "$dir_results/Effets de composition/figure6_comme_hummels.gph", replace
+quietly capture graph export "$dir_results/Effets de composition/figure6_comme_hummels.jpg", replace
+quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure6_comme_hummels.jpg", replace
 
 
 ********En base 100 en 1974
@@ -307,21 +311,26 @@ twoway (line  afvhat_index year,  clpattern(solid) color(navy)) ///
 	   (line  afv_wgt_index year, clpattern( longdash) color(sienna)  ) ///
 	   (lfit  afvhat_index year, clpattern(solid) color(navy) ) ///
 	   (lfit  afv_wgt_index year, clpattern( longdash) color(sienna)) ///
-	   , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order (1 2))
-quietly capture graph save resultats_finaux/figure5_comme_hummels_base100.gph, replace
-quietly capture graph export resultats_finaux/figure5_comme_hummels_base100.pdf, replace
+	   , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order (1 2)) ///
+	   scheme(s1mono)
+	   
+quietly capture graph save "$dir_results/Effets de composition/figure5_comme_hummels_base100.gph", replace
+quietly capture graph export "$dir_results/Effets de composition/figure5_comme_hummels_base100.jpg", replace
+quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure5_comme_hummels_base100.jpg", replace
 
 twoway (line  vfvhat_index year,  clpattern(solid) color(navy)) ///
 	   (line  vfv_wgt_index year, clpattern( longdash) color(sienna) ) ///
 	   (lfit  vfvhat_index year, clpattern(solid) color(navy) ) ///
 	   (lfit  vfv_wgt_index year, clpattern( longdash) color(sienna)  ) ///  
-	   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order(1 2))
+	   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order(1 2)) ///
+	   scheme(s1mono)
 
 	   
 	   
 	   
 quietly capture graph save "$dir_results/Effets de composition/figure6_comme_hummels_base100.gph", replace
 quietly capture graph export "$dir_results/Effets de composition/figure6_comme_hummels_base100.jpg", replace
+quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure6_comme_hummels_base100.jpg", replace
 
 
 save "$dir_results/Effets de composition/effet_composition_hummels.dta", replace
