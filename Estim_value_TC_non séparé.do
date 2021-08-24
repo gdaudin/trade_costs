@@ -345,6 +345,7 @@ if "`database'"=="hummels_tra" {
 	keep if year==`year'
 	keep if mode=="`mode'"
 	generate sector = substr(sitc,1,`preci')
+	rename `mode'_val val
 }
 
 
@@ -891,7 +892,7 @@ foreach year of numlist 2012(1)2019 {
 local base hummels_tra
 foreach year of numlist 2014(1)2019 {
 		
-	foreach mode in `mode_list' {
+	foreach mode in air /*`mode_list'*/ {
 		
 		
 			capture log close
