@@ -93,11 +93,13 @@ capture program drop a_garder
 program a_garder
 args mode year base
 
-
 if "`base'"=="hs10_qy1_qy" | "`base'"=="hs10_qy1_wgt" use "$dir/data/base_hs10_`year'.dta", clear
 else use "$dir/data/hummels_tra.dta", clear
 
+if "`c(filename)'"=="$dir/data/hummels_tra.dta" rename `mode'_val val
+
 keep if year==`year' & mode=="`mode'"
+
 gen tot_val = val
 collapse (sum) tot_val, by(iso_o)
 gsort - tot_val
@@ -137,6 +139,7 @@ if "`base'"=="hs10_qy1_qy" | "`base'"=="hs10_qy1_wgt" {
 if "`base'"!="hs10_qy1_qy" & "`base'"!="hs10_qy1_wgt" {
 	
 	use "$dir/data/hummels_tra.dta", clear
+	if "`c(filename)'"=="$dir/data/hummels_tra.dta" rename `mode'_val val
 	keep if year==`year' & mode=="`mode'"
 	gen tot_val = val
 	gen sector = substr(sitc2,1,3)
@@ -148,7 +151,7 @@ if "`base'"!="hs10_qy1_qy" & "`base'"!="hs10_qy1_wgt" {
 	gen share_cum = sum(share)
 	drop if share_cum >= 0.8
 	levelsof sector, local(secteur_a_garder) clean
-	global secteur_a_garder "`secteur_x_unit_a_garder'"
+	global secteur_a_garder "`secteur_a_garder'"
 
 }
 
@@ -574,7 +577,7 @@ if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 	gen sector_x_unit = sector + unit_qy1
 	keep if strpos("$secteur_x_unit_a_garder",sector_x_unit)!=0
 }
-else keep if strpos(strpos("$secteur_a_garder",sector)!=0)
+else keep if strpos("$secteur_a_garder",sector)!=0
 
 
 *** Tester le pgm
@@ -827,7 +830,7 @@ if `result_reg' !=0 {
 }
 
 
-save "$dir/results/${test}results_estimTC_non_séparé_`year'_`class'_`preci'_`mode'_`database'", replace
+save "$dir/results/robustesse_non_separe/${test}results_estimTC_non_séparé_`year'_`class'_`preci'_`mode'_`database'", replace
 
 
 
@@ -853,7 +856,7 @@ local mode_list ves air
 global test
 
 
-
+/*
 ***Pour tester qy1 / wgt
 	
 foreach year of numlist 2012(1)2019 {
@@ -880,12 +883,13 @@ foreach year of numlist 2012(1)2019 {
 	
 	}
 }
+*/
 
-/*
+
 ***Robustesse de base
 	
 local base hummels_tra
-foreach year of numlist 1973(1)2019 {
+foreach year of numlist 2014(1)2019 {
 		
 	foreach mode in `mode_list' {
 		
