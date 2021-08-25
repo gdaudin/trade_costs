@@ -254,7 +254,7 @@ foreach year of num `time_span'  {
 	open_year_mode_method_model `year' `mode' baseline nlAetI
 	keep if _n ==1
 	
-	capture append save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta"
+	capture append "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta"
 	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta", replace
 }
 
@@ -441,7 +441,6 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" |  "`type_TC'"== "prix_fob" {
 	sort year
 	
 	save "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'", replace
-	
 	
 
 }
@@ -756,7 +755,7 @@ if "`type_TC'"== "obs_Hummels"  {
 
 use "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.dta", clear
 
-if "`type_TC'"== "obs" |  "`type_TC'"== "I" |  "`type_TC'"== "prix_fob" {
+if "`type_TC'"== "obs" |  "`type_TC'"== "I"  {
 	generate `terme_type_TC'_`mode'_74  = `terme_type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 	replace `terme_type_TC'_`mode'_mp = 100*(`terme_type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)	
@@ -785,8 +784,7 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" |  "`type_TC'"== "prix_fob" {
 
 
 
-
-if "`type_TC'"== "A" {
+if "`type_TC'"== "A" | "`type_TC'"== "prix_fob" {
 	generate `terme_type_TC'_`mode'_74  = `terme_type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
 	replace `terme_type_TC'_`mode'_mp = 100*exp(effetfixe_`type_TC'_`mode')
@@ -916,7 +914,7 @@ foreach secteur of local  liste_secteurs {
 
 
 
-/*
+
 foreach secteur of local  liste_secteurs {
 	eliminer_effets_composition air `secteur'  I
 	eliminer_effets_composition air `secteur'  obs
