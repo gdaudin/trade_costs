@@ -158,6 +158,8 @@ do "$dir_git/Open_year_mode_method_model.do"
 
 
 
+
+
 *****************************************************************************************
 ***on lance les programmes
 *****************************************************************************************
@@ -178,7 +180,7 @@ do "$dir_git/Open_year_mode_method_model.do"
 *global method qy1_qy
 *global method hs10_qy1_qy
 
-/*
+
 ******************Pour la table 1 du texte
 collect clear
 
@@ -188,6 +190,7 @@ args method
 
 global method `method'
 if "$method"=="baseline" local time_span 1974 (1) 2019
+*if "$method"=="baseline" local time_span 1974 (1) 1978
 if "$method"=="baseline5_4" local time_span 1974 1977 (4)2017 2019
 
 foreach mode in air ves {
@@ -195,7 +198,7 @@ foreach mode in air ves {
 	foreach model in nlAetI nlI {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num `time_span'  {
-			open_year_mode `year' `mode' $method `model'
+			open_year_mode_method_model `year' `mode' $method `model'
 			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
 			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		}
@@ -239,7 +242,8 @@ foreach mode in air ves {
 			collect, tags(model[data] var[prix_fob] mode[`mode'] digit[${method}]) /*
 				*/ : sum prix_fob [aweight=weight], det
 				
-			gen p_add_dollar = terme_A*prix_fob
+				
+			gen p_add_dollar = terme_A*prix_fob/100
 			collect, tags(model[nlAetI] var[p_add_dollar] mode[`mode'] digit[${method}]) /*
 				*/ : sum  p_add_dollar [aweight=weight], det
 
@@ -305,7 +309,7 @@ table1_part baseline5_4
 	collect label levels model nlI "{\textbf{Model (A)}}"
 	
 	collect style cell, warn nformat (%3.1f)
-	collect style cell var[beta], warn nformat(%3.2f)
+	collect style cell var[beta p_add_dollar], warn nformat(%3.2f)
 	collect style cell var[prix_fob], warn nformat(%9.0fc)
 	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0fc)
 	collect style column, nodelimiter dups(center) position(top) width(asis)
@@ -316,7 +320,7 @@ table1_part baseline5_4
 	collect preview
 	
 	collect export /* 		 
-	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Table1.tex, /*
+	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Table1.tex", /*
 	*/ tableonly replace
 	
 	
@@ -335,7 +339,7 @@ foreach mode in air ves {
 	foreach model in nlAetI nlI nlA {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num 1974 1980 1990 2000 2010 2019 {
-			open_year_mode `year' `mode' $method `model'
+			open_year_mode_method_model `year' `mode' $method `model'
 			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
 			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		}
@@ -451,7 +455,7 @@ foreach mode in air ves {
 	foreach model in nl nlI nlA {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num 1974 1980 1990 2000 2010 2019 {
-			open_year_mode `year' `mode' $method `model'
+			open_year_mode_method_model `year' `mode' $method `model'
 			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
 			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		}
@@ -580,7 +584,7 @@ collect clear
 foreach model in nlAetI nlI nlA {
 	capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 	foreach year of num `start'/`end'  {
-		open_year_mode `year' `mode' $method `model'
+		open_year_mode_method_model `year' `mode' $method `model'
 		capture append using $dir_temp/data_`model'_${method}_`mode'.dta
 		save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 	}
@@ -694,8 +698,8 @@ foreach mode in air ves {
 }
 
 */
-
 /*
+
 ******************************Pour la figure 1 du texte
 global method baseline
 
@@ -704,7 +708,7 @@ local model nlAetI
 capture erase $dir_temp/data_`model'_${method}.dta
 foreach mode in air ves {
 	foreach year of num 1974/2019  {
-		open_year_mode `year' `mode' $method `model'
+		open_year_mode_method_model `year' `mode' $method `model'
 		gen share_A = -beta
 		egen mean_share_A = wtmean(share_A), weight(val) by(year)
 		bys year :keep if _n==1
@@ -720,9 +724,9 @@ label var mean_share_Aves "Vessel"
 twoway (line  mean_share_Aves year, lcolor(black)) (line   mean_share_Aair year, lpattern(dash) lcolor(black)) ,scheme(s1mono)
 graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure1_share_of_additive_in_totalTC.jpg", replace
-*/
 
-/*
+
+
 ******************************Pour la figure 2 du texte
 global method baseline
 
@@ -731,7 +735,7 @@ local model nlAetI
 capture erase $dir_temp/data_`model'_${method}.dta
 foreach mode in air ves {
 	foreach year of num 1974/2019  {
-		open_year_mode `year' `mode' $method `model'
+		open_year_mode_method_model `year' `mode' $method `model'
 		gen est_trsp_cost = (terme_A+terme_I-1)*100
 		egen mean_est_trsp_cost = wtmean(est_trsp_cost), weight(val) by(year)
 		bys year :keep if _n==1
@@ -750,7 +754,7 @@ twoway (line mean_est_trsp_cost year) (lfit mean_est_trsp_cost year), ///
 
 graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure2_Trend_of_totalTC_bymode.jpg", replace
-*/
+
 
 
 ************Pour la figure 3 du texte
@@ -761,7 +765,7 @@ local model nlAetI
 capture erase $dir_temp/data_`model'_${method}.dta
 foreach mode in air ves {
 	foreach year of num 1974/2019  {
-		open_year_mode `year' `mode' $method `model'
+		open_year_mode_method_model `year' `mode' $method `model'
 		capture append using $dir_temp/data_`model'_${method}.dta
 		save $dir_temp/data_`model'_${method}.dta, replace
 	}	
