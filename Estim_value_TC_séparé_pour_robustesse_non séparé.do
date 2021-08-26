@@ -32,26 +32,33 @@
 */
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/2013 -- trade_cost -- dropbox
+	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
+	global dir_data ~/Documents/Recherche/2013 -- Trade Costs -- local/data
+	global dir_log "$dir/Logs divers"
+	global dir_temp ~/Downloads/temp_stata
 }
 
-
+** Fixe Lise bureau
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost
+	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_data "$dir/data"
 }
 
-
+/* Vieux portable Lise
 if "`c(hostname)'" =="lise-HP" {
 	global dir C:\Users\lise\Dropbox\trade_cost
 }
+*/
 
-if "`c(hostname)'" =="LABP112" {
-    global dir C:\Users\lpatureau\Dropbox\trade_cost
+/* Nouveau portable Lise */
+
+if "`c(hostname)'" =="MSOP112C" {
+  
+	global dir C:\Lise\trade_costs
+	global dir_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
+	
 }
-
-cd $dir
-
-
+cd "$dir"
 ***************** Avril 2015 ***********************************************************
 *** v10 : On impose les contraintes termeA>=0 et termeI<=1 (v9)
 *** Et on réfléchit "bien" sur le terme d'erreur, pour avoir une erreur centrée réduite
@@ -300,7 +307,6 @@ drop group_prod
 local nbr_prod_exante=r(max)
 display "Nombre de produits : `nbr_prod_exante'" 
 
-bysort product: drop if _N<=5
 
 egen group_prod=group(product)
 su group_prod, meanonly	
@@ -530,7 +536,7 @@ capture generate machine =  "`c(hostname)'__`c(username)'"
 timer clear
 
 
-save "$dir/results/results_estimTC_`year'_`class'_`preci'_`mode'", replace
+save "$dir/results/robustesse_non_separe/results_estimTC_séparé_pour_robustesse_ns_`year'_`class'_`preci'_`mode'_hummels_tra", replace
 
 
 
@@ -558,13 +564,13 @@ foreach x in `mode' {
 
 *foreach z in `year' {
 
-forvalues z = 1974(1)2013 {
+forvalues z = 2014(1)2019 {
 
 
 capture log close
-log using hummels_3d_séparé_pour_robustesse_`z'_`x', replace
+log using "$dir_temp/hummels_3d_séparé_pour_robustesse_`z'_`x'", replace
 
-prep_reg `z' sitc2separe 3 `x'
+prep_reg `z' 5 3 `x'
 
 
 *erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
