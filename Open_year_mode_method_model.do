@@ -98,7 +98,7 @@ if "`method'"=="IV_referee1_yearly_5_3" {
 
 
 
-if "`method'"=="non_separé" {
+if "`method'"=="non_séparé" {
 	use "$dir_results/robustesse_non_separe/results_estimTC_non_séparé_`year'_5_3_`mode'_hummels_tra.dta", clear
 	generate beta_method = -(terme_A/(terme_I+terme_A-1))
 	capture rename `mode'_val val 
