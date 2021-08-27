@@ -10,13 +10,86 @@ set more off
 capture log close
 *set mem 2000m
 
+
+
+
+if "`c(username)'" =="guillaumedaudin" {
+	global dir_baseline_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/baseline"
+	global dir_referee1 "~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1"
+	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
+	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
+	global dir_temp ~/Downloads/temp_stata
+	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
+	global dir_git "~/Répertoires Git/trade_costs_git"
+	
+	
+}
+
+
+*** Juillet 2020: Lise, tout sur mon OneDrive
+
+
+/* Fixe Lise P112*/
+if "`c(hostname)'" =="LAB0271A" {
+	 
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+	
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	 
+	 
+	 
+	}
+
+/* Nouveau portable Lise */
+if "`c(hostname)'" =="MSOP112C" {
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_referee1_yearly/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	}
+
+
+
+
 *global DIR c:\david\decline\finaldata\regs/
-cd "~/dropbox/2013 -- trade_cost -- dropbox"
+*cd "~/dropbox/2013 -- trade_cost -- dropbox"
 
 
 *use ${DIR}sitcreallysmall_allyears
 
-use   "~/dropbox/2013 -- trade_cost -- dropbox/data/hummels_tra.dta"
+use   "$dir/data/hummels_tra.dta"
 rename iso2 ctry
 
 drop if substr(sitc2,1,1)=="9"
@@ -101,7 +174,7 @@ replace `var' = ln(`var')
 tab year, gen(y)
 global ct 1
 
-while $ct <=40 {
+while $ct <=46 {
 global nct = $ct + 1973
 ren y$ct  y$nct
 
@@ -110,12 +183,12 @@ global ct = $ct + 1
 
 gen trend = year - 1973
 gen dt = dist * trend
-save temp, replace
+save "$dir_temp/temp.dta", replace
 
 egen ii = group(sitc2 ctry)
 destring(sitc2), gen(s2)
 
-save temp1, replace
+save "$dir_temp/temp1.dta", replace
 
 /*  first simple regressions */
 
@@ -127,13 +200,13 @@ tis year
 
 
 /* generate output for main figure */
-xtreg afv awv y1975-y2013, fe
+xtreg afv awv y1975-y2019, fe
 
 
 predict afvhat
 
 
-xtreg vfv vwv y1975-y2013, fe
+xtreg vfv vwv y1975-y2019, fe
 predict vfvhat
 
 /*
@@ -186,7 +259,7 @@ afvhat_wgt... are value weighted averages of the estimates
 
 */
 
-save predictedrates, replace
+save "$dir_temp/predictedrates.dta", replace
 
 *log close
 
@@ -195,7 +268,7 @@ save predictedrates, replace
 
 
 clear
-use predictedrates
+use "$dir_temp/predictedrates.dta"
 tsset year, yearly 
 
 label var afvhat  "Fitted ad-valorem rate"
@@ -203,14 +276,18 @@ label var vfvhat  "Fitted ad-valorem rate"
 label var afv_wgt "Expenditure/import value"
 label var vfv_wgt "Expenditure/import value"
 
-tsline afvhat afv_wgt  , ytitle("% of value shipped") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014")
-quietly capture graph save resultats_finaux/figure5_comme_hummels.gph, replace
-quietly capture graph export resultats_finaux/figure5_comme_hummels.pdf, replace
+tsline afvhat afv_wgt, ///
+	ytitle("% of value shipped") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
+quietly capture graph save "$dir_results/Effets de composition/figure5_comme_hummels.gph", replace
+quietly capture graph export "$dir_results/Effets de composition/figure5_comme_hummels.jpg", replace
+quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure5_comme_hummels.jpg", replace
 
-tsline vfvhat vfv_wgt   , ytitle("% of value shipped") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014")
+tsline vfvhat vfv_wgt, ///
+	ytitle("% of value shipped") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
 
-quietly capture graph save resultats_finaux/figure6_comme_hummels.gph, replace
-quietly capture graph export resultats_finaux/figure6_comme_hummels.pdf, replace
+quietly capture graph save "$dir_results/Effets de composition/figure6_comme_hummels.gph", replace
+quietly capture graph export "$dir_results/Effets de composition/figure6_comme_hummels.jpg", replace
+quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure6_comme_hummels.jpg", replace
 
 
 ********En base 100 en 1974
@@ -234,53 +311,34 @@ twoway (line  afvhat_index year,  clpattern(solid) color(navy)) ///
 	   (line  afv_wgt_index year, clpattern( longdash) color(sienna)  ) ///
 	   (lfit  afvhat_index year, clpattern(solid) color(navy) ) ///
 	   (lfit  afv_wgt_index year, clpattern( longdash) color(sienna)) ///
-	   , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014") legend(stack order (1 2))
-quietly capture graph save resultats_finaux/figure5_comme_hummels_base100.gph, replace
-quietly capture graph export resultats_finaux/figure5_comme_hummels_base100.pdf, replace
+	   , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order (1 2)) ///
+	   scheme(s1mono)
+	   
+quietly capture graph save "$dir_results/Effets de composition/figure5_comme_hummels_base100.gph", replace
+quietly capture graph export "$dir_results/Effets de composition/figure5_comme_hummels_base100.jpg", replace
+quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure5_comme_hummels_base100.jpg", replace
 
 twoway (line  vfvhat_index year,  clpattern(solid) color(navy)) ///
 	   (line  vfv_wgt_index year, clpattern( longdash) color(sienna) ) ///
 	   (lfit  vfvhat_index year, clpattern(solid) color(navy) ) ///
 	   (lfit  vfv_wgt_index year, clpattern( longdash) color(sienna)  ) ///  
-	   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014") legend(stack order(1 2))
+	   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order(1 2)) ///
+	   scheme(s1mono)
 
 	   
 	   
 	   
-quietly capture graph save resultats_finaux/figure6_comme_hummels_base100.gph, replace
-quietly capture graph export resultats_finaux/figure6_comme_hummels_base100.pdf, replace
+quietly capture graph save "$dir_results/Effets de composition/figure6_comme_hummels_base100.gph", replace
+quietly capture graph export "$dir_results/Effets de composition/figure6_comme_hummels_base100.jpg", replace
+quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure6_comme_hummels_base100.jpg", replace
 
 
- save "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/results/effet_composition_hummels.dta", replace
-
-
-if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/trade_cost
-}
-
-
-if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost
-}
-
-
-if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost
-}
-
-if "`c(hostname)'" =="LABP112" {
-    global dir C:\Users\lpatureau\Dropbox\trade_cost
-}
+save "$dir_results/Effets de composition/effet_composition_hummels.dta", replace
 
 
 
-save "$dir/results/effet_composition_hummels.dta", replace
-
-
-
-
-erase temp.dta
-erase temp1.dta
-erase predictedrates.dta
+erase "$dir_temp/temp.dta"
+erase "$dir_temp/temp1.dta"
+erase "$dir_temp/predictedrates.dta"
 
 

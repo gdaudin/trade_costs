@@ -97,6 +97,28 @@ if "`method'"=="IV_referee1_yearly_5_3" {
 }	
 
 
+
+if "`method'"=="non_séparé" {
+	use "$dir_results/robustesse_non_separe/results_estimTC_non_séparé_`year'_5_3_`mode'_hummels_tra.dta", clear
+	generate beta_method = -(terme_A/(terme_I+terme_A-1))
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
+}	
+
+if "`method'"=="séparé_pour_robustesse_ns" {
+	use "$dir_results/robustesse_non_separe/results_estimTC_séparé_pour_robustesse_ns_`year'_5_3_`mode'_hummels_tra.dta", clear
+	generate beta_method = -(terme_A/(terme_I+terme_A-1))
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
+}	
+
+
 capture egen cover_`method'=total(val)
 
 capture drop year
