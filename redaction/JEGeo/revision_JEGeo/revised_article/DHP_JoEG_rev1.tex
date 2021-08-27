@@ -898,6 +898,9 @@ In this section, we provide a robustness test to this difference of treatment.\s
 
 When aggregating the trade cost measure over the product/country ($i,k$) dimension, \cite{hummels2007} takes the unweighted average value over the $i,k$ dimension, which implicitly attributes a weight equal to 1 to each flow.
 Our benchmark specification  (at the root of Figure \ref{fig:totalTC_compeffects_excl}) proceeds differently, as each flow is weighted by its relative value in total trade flows observed in 1974.
+
+----Pas sûr. Je crois que c’est weighted by value/value total for the year -- 
+
 In this section, we check whether this difference of treatment is responsible or not for the difference in results relative to the role of the trade composition effects, which we rather attribute to the modeling of the additive component.
 
 To this aim, we rebuild the fitted values for each of our transport cost measures (ad-valorem, additive and overall) applying the \cite{hummels2007} weighting scheme (i.e. taking the unweighed average value over the $i,k$ dimension), which we then express as indices, with the reference value 100 in 1974.
@@ -908,7 +911,7 @@ The results are reported in Figure \ref{fig:compeffects_robustness}.
 \label{fig:compeffects_robustness}
 \begin{center}
 \includegraphics[height=8cm]
-{graph_composition_all_np.pdf}
+{graph_composition_all_np.jpg}
 \end{center}
 \end{figure}
 
@@ -926,11 +929,11 @@ It is true we are not interested in causal inference, since our aim is to provid
 Therefore, we propose to compare our main estimates with those stemming from a two-stage least-squares procedure. Put differently, we follow earlier literature (see e.g. \citealp{Caliendo_Parro_2015} or \citealp{Lashkaripour-2017}) by replacing in the right-hand side of Equation (\ref{eq:model_IetA}) $\widetilde{p}$ by predicted values stemming from a first-stage equation regressing $\widetilde{p}$ on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. Section \ref{app:first_stage_IV} in Appendix \ref{app:more_results} provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. In particular, it shows that our main instrumental variable displays the right statistical properties, and that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation (\ref{eq:model_IetA}\footnote{Note that, since the predictions are expressed in logarithms, they are transformed through the exponential function before their implementation in Equation (\ref{eq:model_IetA}.} to produce a 2SLS-type of estimation. Figure \ref{fig:comp_IV_SITC5} below reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns.
 
 \begin{figure}[htbp]
-\caption{Transport cost time trends: robustness to the weighting scheme}
+\caption{Transport cost time trends: robustness to IV procedure}
 \label{fig:comp_IV_SITC5}
 \begin{center}
 \includegraphics[height=8cm]
-{comp_IV_SITC5.pdf}
+{scatter_chronology_baseline_IV_ref1_y_5_3.png}
 \end{center}
 \end{figure}
 

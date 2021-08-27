@@ -890,9 +890,9 @@ foreach year of numlist 2012(1)2019 {
 ***Robustesse de base
 	
 local base hummels_tra
-foreach year of numlist 2014(1)2019 {
+foreach year of numlist 2014(1)2018 {
 		
-	foreach mode in air /*`mode_list'*/ {
+	foreach mode in ves /*`mode_list'*/ {
 		
 		
 			capture log close
