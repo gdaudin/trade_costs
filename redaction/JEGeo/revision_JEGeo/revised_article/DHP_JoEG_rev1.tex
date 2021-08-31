@@ -218,7 +218,7 @@ In light of this, the estimated values that we obtain can be viewed as the lower
 
 As detailed below, the use of a non-linear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. This drives us to estimate international transport costs at the 3-digit classification level, exploiting heterogeneity between products at the SITC-5 classification level. Depending on the year, this leaves us with around 200 3-digit sectors, from around 200 countries of origin. We ensure the robustness of these results by conducting two types of alternative estimates: \textit{i,} within each 3-digit sector, exploiting heterogeneity between HS-10 products. Notice that this can be done from 1989 onwards for which HS-10 data are available; \textit{ii,} running the estimation at the 4-digit sector level (still with 5-digit products) for some selected years. The selected years for the 4-digit level estimations are: 1974, 1977, 1981, 1985, 1989, 1993, 1997, 2001, 2005, 2009, 2019. Comparing different levels of aggregation is useful to check differences and the presence of biases precisely due to aggregation. However, we obtain no substantial difference between the results obtained for the benchmark 3-5 sector-product classification levels and those considering either the 3-10 and 4-5 ones (See Appendix \ref{app:4digit}. \textbf{JH: WHERE ARE THE 3-10/4-5 ESTIMATES? NOT IN ANY APPENDICES.}
 
-% JH : reprendre XXX ICI
+
 
 \subsection{Estimating transport costs: empirical specification}
 
@@ -248,7 +248,7 @@ To do so, start from the link between the link between cif, fas prices and trans
 \Leftrightarrow && p = (1+\tau) \widetilde{p}+ \widetilde{t}\widetilde{p}  \label{eq:base}
 \end{eqnarray}
 
-\noindent with $\tau \geq 0$ the ad-valorem cost and $t>0 $ the additive shipping charge per kg transported (Equation (\ref{eq:tt0})). Notice that we can rewrite the additive cost as a function of the cost per USD shipped $\widetilde{t} \equiv \frac{t}{\widetilde{p}}$, as in Equation \ref{eq:base}. Starting from Equation (\ref{eq:base}), the elasticity of transport costs to the unit price $\widetilde{p}$ can be shown to be equal to:\footnote{See Appendix XXX for a formal demonstration.}
+\noindent with $\tau \geq 0$ the ad-valorem cost and $t>0 $ the additive shipping charge per kg transported (Equation (\ref{eq:tt0})). Notice that we can rewrite the additive cost as a function of the cost per USD shipped $\widetilde{t} \equiv \frac{t}{\widetilde{p}}$, as in Equation \ref{eq:base}. Starting from Equation (\ref{eq:base}), the elasticity of transport costs to the unit price $\widetilde{p}$ can be shown to be equal to:\footnote{See Appendix XXX for a formal demonstration. XXXJH: WHERE ??? XXX}
 \begin{eqnarray}
 \frac{\partial TC}{\partial \widetilde{p}} \frac{\tilde{p}}{TC}&=& \frac{-\frac{t}{\tilde{p}}}{\tau   +\frac{t}{\tilde{p}}} \notag \\
 &=& \frac{-t}{\tau +\widetilde{t}} \label{eq:tt2}
@@ -256,7 +256,7 @@ To do so, start from the link between the link between cif, fas prices and trans
 
 Comparing Equations (\ref{eq:tt1}) and (\ref{eq:tt2}), it is straightforward that the unit price-elasticity of transport costs (in relative terms) is also equal to the share of additive costs in total transport costs.
 
-While many in the related literature provide an indirect measure of additive costs by estimating the elasticity of freight charges to the unit price (\citealp{hummels_skiba}, \citealp{Lashkaripour-2018}), thereby relying on Equation (\ref{eq:alternative}), we propose an alternative route. Based on Equation (\ref{eq:base}), we exploit our dataset to obtain explicit measures of both transport costs components $\tau$ and $t$ (or $\widetilde{t}$). From this, we can deduce the price-elasticity of transport costs as the share of additive costs in total transport costs through Equation (\ref{eq:tt2}).
+While many in the related literature provide an indirect measure of additive costs by estimating the elasticity of freight charges to the unit price (\citealp{hummels_skiba}, \citealp{Lashkaripour-2017}), thereby relying on Equation (\ref{eq:alternative}), we propose an alternative route. Based on Equation (\ref{eq:base}), we exploit our dataset to obtain explicit measures of both transport costs components $\tau$ and $t$ (or $\widetilde{t}$). From this, we can deduce the price-elasticity of transport costs as the share of additive costs in total transport costs through Equation (\ref{eq:tt2}).
 
 
 
@@ -315,11 +315,11 @@ After proceeding to the estimation, we uncover the estimated values of the trans
 For reading convenience, we adopt a lighter expression of this equation by resorting to the notations of $\tau_i,\tau_{s(k)}$ and $t_i$, $t_{s(k)}$ as a short-cut.}  To eliminate the potential influence of outliers, we exclude 5\% of the upper and lower tails of the distribution in the regression variables.
 %JH: TO KEEP IN MIND: one day, we could be asked to winsorize tails, instead of cutting them...
 These cut-offs are aimed at eliminating reporting or coding errors.
-We estimate Equation (\ref{eq:model_IetA}) for each year over the period 1974-2013, for each of the transportation modes reported (air or vessel), on a sectoral-origin country basis ($i,s$).
+We estimate Equation (\ref{eq:model_IetA}) for each year over the period 1974-2019, for each of the transportation modes reported (air or vessel), on a sectoral-origin country basis ($i,s$).
 Depending on the year considered, this leaves us with around 800 fixed effects to estimate by transport mode at the 3-digit level.
   \medskip
 
-\textbf{stop here}
+\textbf{stop here XXX JH: WHY? WHAT DO YOU MEAN?}
 
 
 As mentioned in the Introduction, one contribution of the paper is to provide a careful estimation of international transport costs, which decomposes into both an additive and an ad-valorem component.
@@ -385,12 +385,12 @@ We also provide diagnostic tests about the goodness-of-fit measures, which confi
 \end{table}
 
 Table \ref{tab:summary_results} reports a summary of our results.
-It displays the mean and median values of each type of transport costs (either ad-valorem estimated alone or estimated along with additive costs), as well as the associated standard deviation, averaged over the period 1974-2013, for estimation driven both at the 3- and 4-digit sectorial level for different specifications and data.
+It displays the mean and median values of each type of transport costs (either ad-valorem estimated alone or estimated along with additive costs), as well as the associated standard deviation, averaged over the period 1974-2019, for estimation driven both at the 3- and 4-digit sectorial level for different specifications and data.
 The top panel reports the results for a specification based on ad-valorem costs estimated alone (Model (a), based on Equation (\ref{eq:model_nlI})), while the intermediate panel presents estimates for a specification involving both ad-valorem and multiplicative components (Model (b), based on Equation (\ref{eq:model_IetA})).
 Finally, the bottom panel reports the same set of descriptive statistics, but for the actual cif/fas ratio in our data.\footnote{In Appendix \ref{app:more_results}, we report similar results for a sample of years, for both transport modes, at the 3- and 4-digit classification level.
 Results for all years (available at the 3-digit level) are reported in the Online Appendix, available on the authors' webpages.}$^{,}$\footnote{We present the estimation results for air transport at the 3-digit level, removing the year 1989, as the results reveal the presence of strong outliers that bias the estimates of transport costs upwards this particular year.
 Overall results (over the whole period) are not substantially affected if this year is included.
-This can be seen in the results detailed year by year in the Online Appendix, available on the authors' webpages.}
+This can be seen in the results detailed year by year in section B of the Online Appendix, available on the authors' webpages.}
 
 %\begin{table}[htbp]
  % \centering
@@ -459,7 +459,7 @@ Table \ref{tab:summary_results} calls for two types of comments.
 The first type is of statistical order.
 As displayed in Table \ref{tab:summary_results}, estimated mean values are systematically higher than medians, by around one percentage point.
 This result is not surprising, given that our key variable is by nature bounded to 0; therefore, outliers can only be positive, pushing the mean upward compared to the median.
-One can also note that estimated total costs are systematically higher than observed costs, by 0.5 to 1 percentage point.
+One can also note that estimated total costs are most of the time higher than observed costs by 0.5 to 1 percentage point.
 This is first due to the fact that observed data are \textit{de facto} trade-weighted (i.e. by the weight of each good in total trade) while our estimates are based on simple arithmetic means within sector and country.
 Furthermore, Table \ref{tab:summary_results} reports values expressed in percentages (for the observed values, $\frac{p_{ik}}{\widetilde{p}_{ik}} -1$, in \%), whereas all our estimates are based on log-linearization.
 Therefore, what matters on the statistical ground is that the mean of our predicted values (based on logarithms) must be equal to the mean of the log-linearized data ($\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)$), which does not necessarily imply equality between values.
@@ -467,23 +467,23 @@ Descriptive statistics showing that both observed and predicted values do match 
 
 \paragraph{Interpretation} Coming now to interpretation, two main results emerge from Table \ref{tab:summary_results}.
 First, it provides estimation results about the size of the overall transport costs.
-Table \ref{tab:summary_results} shows that transport costs amount to around a 6\% markup in ocean shipping, and 5\% markup in air shipping on average over 1974-2013.\footnote{Expressed as a markup over production costs, transport costs are equal to $\frac{p-\widetilde{p}}{\widetilde{p}}$.
-Under Model (a) (ad-valorem costs only), making use of the figures reported in Table \ref{tab:summary_results} gives a markup of 5.8\% in vessel, and 5.1\% in air shipping (considering the mean value over the period).
+Table \ref{tab:summary_results} shows that transport costs amount to around a 6\% markup in ocean shipping, and 4\% markup in air shipping on average over 1974-2019.\footnote{Expressed as a markup over production costs, transport costs are equal to $\frac{p-\widetilde{p}}{\widetilde{p}}$.
+Under Model (a) (ad-valorem costs only), making use of the figures reported in Table \ref{tab:summary_results} gives a markup of 4.6\% in vessel, and 3.9\% in air shipping (considering the mean value over the period).
 Under Model (b), total transport costs are equal to $\frac{p-\widetilde{p}}{\widetilde{p}} = (\tau-1) + \frac{t}{\widetilde{p}}$.
-With $\tau-1= 0.032$ and $\frac{t}{\widetilde{p}}= 0.029$ in vessel (as reported in Table \ref{tab:summary_results}), we get a value equal to 6.1\% in vessel.
-A similar calculus gives 4.3\% in air transport.} If this seems modest in comparison with the 11\% of markup obtained by \cite{anderson_wincoop_jel} over a set of industrialized countries, it stands in line with the results obtained by \cite{hummels2007} for the US economy.\footnote{Beyond country coverage and time period, another plausible explanation for the difference with \cite{anderson_wincoop_jel}, lays in the difference of empirical methodology.
+With $\tau-1= 0.030$ and $\frac{t}{\widetilde{p}}= 0.028$ in vessel (as reported in Table \ref{tab:summary_results}), we get a value equal to 5.8\% in vessel.
+A similar calculus gives 4.1\% in air transport.} If this seems modest in comparison with the 11\% of markup obtained by \cite{anderson_wincoop_jel} over a set of industrialized countries, it stands in line with the results obtained by \cite{hummels2007} for the US economy.\footnote{Beyond country coverage and time period, another plausible explanation for the difference with \cite{anderson_wincoop_jel}, lays in the difference of empirical methodology.
 \cite{anderson_wincoop_jel}'s estimates are based on standard gravity equations, while ours come from a non-linear estimation of a ``structural'' decomposition of the difference between export and import prices.}
 
 Second, and most importantly, Table \ref{tab:summary_results} provides new quantitative evidence about the size of the additive component of transportation costs.
-On average over the whole period, for sectors defined at the 3-digit level, additive costs amount to 10 cents (0.1 USD) per kilogram exported in maritime transport, and 1.12 USD per kilogram exported in air transport, indicating that freight rates are much higher in the latter case.
-Expressed in terms of the export price, the additive costs amount to 2.9\% and 1.8\% for ocean shipping and air transport respectively.
-This is slightly lower than the estimates for the ad-valorem component, which is estimated at 3.2\% and 2.5\% for vessel and air shipping respectively (on average over the period).
-Put differently, the additive component amounts to 48\% of total transport costs in vessel, and 42\% in Air.
+On average over the whole period, for sectors defined at the 3-digit level, additive costs amount to 10 cents (0.1 USD) per kilogram exported in maritime transport, and 1.1 USD per kilogram exported in air transport, indicating that freight rates are much higher in the latter case.
+Expressed in terms of the export price, the additive costs amount to 2.8\% and 1.7\% for ocean shipping and air transport respectively.
+This is slightly lower than the estimates for the ad-valorem component, which is estimated at 3\% and 2.4\% for vessel and air shipping respectively (on average over the period).
+Put differently, the additive component amounts to 44\% of total transport costs in vessel, and 30\% in Air, as highlighted by the row $\widehat{\beta}$:  \textit{-Share of additive costs}
 This shows that the per-kg cost dimension is quantitatively sizable.
-For both transport modes, the omission of the additive term seriously biases the ad-valorem term upward, by roughly 2.
+For both transport modes, the omission of the additive term seriously biases the ad-valorem term upward, by roughly 1.5/1.7.
 Additionally, Appendix \ref{app:diagnostic_test} reports quality-of-fit diagnostic tests that confirm the importance of the additive cost component.
 The goodness of fit is systematically better when the additive component is included in the regression, even when taking into account the removed degree of freedom.
-An important aspect of these results is also to provide quantitative estimates for the values of both additive and ad-valorem transport costs, which can be very useful for more theoretical approaches needing calibration.%\smallskip
+An important aspect of these results is also to provide quantitative estimates for the values of both additive and ad-valorem transport costs, which can be very useful for more theoretical approaches needing calibration (see the exercise performed in section \ref{sec:theory}).%\smallskip
 
 Our estimation results on the size of additive transport costs can be compared to \cite{Irrazabal_2015}, the most recent evidence on this question.
 Based on Norwegian trade data for 2004, \cite{Irrazabal_2015} estimate that additive costs (in Norwegian crowns) amount to 6\% of export price multiplied by the ad-valorem cost (expressed in Norwegian crowns), i.e.
@@ -495,11 +495,12 @@ This may seem surprisingly low, in contrast to the 6\% obtained by \cite{Irrazab
 This can be accounted for by recalling the difference in the type of dataset - hence, of costs, embraced in each case.
 While the database of \cite{Irrazabal_2015} allows studying trade costs in general, our database covers a subset made of the monetary international transport costs, as we start from the gap between the import and the export prices (on top of differences due to the country coverage of the two databases).
 In this respect, our two papers can be used in a complementary fashion to infer the proportion of additive trade costs that are due to international shipment.
-\cite{Irrazabal_2015}'s results imply that, for an export price multiplied by the ad-valorem cost of 100 USD, 6 USD are paid in additive trade costs.
-For the same export price multiplied by the ad-valorem cost of 100 USD, our results yield the value of 2.8 (1.5) USD paid in additive transport costs for maritime (air) transport.\footnote{Also notice that, in both papers, starting from the estimated value of the ratio $\frac{t}{\tau \widetilde{p}}= x$, we can rebuild the proportion of additive costs in terms of the import price $\frac{t}{\tau \widetilde{p} + t} = \frac{x}{1+x}$.
+\cite{Irrazabal_2015}'s results on the year 2004 imply that, for an export price multiplied by the ad-valorem cost of 100 USD, 6 USD are paid in additive trade costs.
+For the same export price multiplied by the ad-valorem cost of 100 USD, our results for 2004 yield the value of 2.8 (1.5) USD paid in additive transport costs for maritime (air) transport.\footnote{Also notice that, in both papers, starting from the estimated value of the ratio $\frac{t}{\tau \widetilde{p}}= x$, we can rebuild the proportion of additive costs in terms of the import price $\frac{t}{\tau \widetilde{p} + t} = \frac{x}{1+x}$.
 Given our estimates for 2004 ($x = 0.028$ and $0.015$ in vessel and air transport respectively), we get a ratio $\frac{t}{\tau \widetilde{p} + t}$ equal to 2.7\% and 1.4\% in each transport mode respectively.} This comparison of results suggests that between 25\% (air) and 47\% (vessel) of additive trade costs are attributable to international transport.
 On top of our results summarized in Table \ref{tab:summary_results}, this points to evidence that the additive component represents a quantitative sizable dimension of international transport costs.\smallskip
 
+% JH : reprendre XXX ICI
 
 \paragraph{Time dynamics} Given the time coverage of our database, one may then wonder whether this important part of additive costs we put forward, is a long-lasting, i.e. a structural phenomenon.
 We investigate this point by reporting the share of additive costs in total transport costs on a yearly basis, in both air and vessel transport, based on the weighted-mean values $\widehat{t}/\widetilde{p}$ and $\widehat{\tau}$ (in similar terms as those reported in Tables \ref{tab:result_air_3d_detail} and \ref{tab:result_ves_3d_detail}.
@@ -535,7 +536,7 @@ Specifically, in the same spirit as \cite{hummels2007} we investigate the underl
 \subsection{A first look at the trend patterns}
 
 As a first step, Figure \ref{fig:Trends_in_TC} displays the evolution of total transport costs over the period, summing the additive and the ad-valorem estimated costs, expressed in percentage of the fas price,\footnote{Specifically, we use the yearly values of the estimated transport cost components averaged over the country/product dimensions (at the 3-digit level), corresponding to the numbers reported for each year in detail in the Online Appendix.
-Each yearly value is obtained as: $\widehat{\tau}-1+\frac{\widehat{t}}{\widetilde{p}}$.} by transport mode for each year between 1974 and 2013.
+Each yearly value is obtained as: $\widehat{\tau}-1+\frac{\widehat{t}}{\widetilde{p}}$.} by transport mode for each year between 1974 and 2019.
 
 \begin{figure}[htbp]
 \caption{Trend in estimated transport costs (yearly mean value)}
@@ -671,7 +672,7 @@ As for the additive cost defined in $[0;+\infty]$, we build the variable $\Gamma
 \noindent As a result, the two series $\Gamma^{adv}_t$ and $\Gamma^{add}_t$ have a straightforward interpretation in percentage changes from the initial value of 100 for $t=1974$.
 
 
-\paragraph{Obtaining the unfitted measures} - The objective is to find the unfitted transport cost component (additive and multiplicative) built as an index with reference value 100 in 1974, starting from the estimated values previously obtained ($\widehat{\tau}_t$, $\widehat{t}_t$, for each year $t$ from 1974 to 2013).
+\paragraph{Obtaining the unfitted measures} - The objective is to find the unfitted transport cost component (additive and multiplicative) built as an index with reference value 100 in 1974, starting from the estimated values previously obtained ($\widehat{\tau}_t$, $\widehat{t}_t$, for each year $t$ from 1974 to 2019).
 To do so, we apply the simple formula to get the following indices, for the ad-valorem and the additive cost components respectively:
 
 -------IL FAUT INTRODUIRE LES PRIX FOB. Sinon, les coûts additifs ne sont pas modifiés de l’inflation -----
@@ -732,14 +733,14 @@ In each panel, we report the evolution of transport costs for both the unfitted 
 
 Three main results emerge from Figure \ref{fig:totalTC_compeffects_excl}.
 First, in accordance with Figure \ref{fig:Trends_in_TC}, we find that international transport costs have substantially decreased over the period, for both transport modes (Panels (c) and (f)).
-International transport costs were reduced by 50\% between 1974 and 2013 in air shipping, and by 60\% in maritime shipping.
+International transport costs were reduced by 50\% between 1974 and 2019 in air shipping, and by 60\% in maritime shipping.
 This stands in line with the related literature (see \citealp{Hummels_1999}; \citealp{Lafourcade_Thisse}).
 Second, the magnitude of the decrease is roughly of the same order for both for the ad-valorem and the additive components (Panels (a), (b), (d) and (e)).
 Further, the transport cost reduction is much smoother in maritime transport, while air transport shows more volatility in the trend pattern, in particular in the 1980s and the 2000s.
 Third, and most importantly, we find that composition effects do not play a major role in accounting for the time trend of overall transport costs.
 Inspecting the panels of Figure \ref{fig:totalTC_compeffects_excl} for air transport (panels (a) to (c)), we do not find much evidence of a substantial trend difference between the unfitted transport costs measure and the pure transport costs.
 For all three series (additive, ad-valorem and overall transport costs), the dotted and the plain line follow closely, almost every year throughout the period.
-Air transport costs were reduced by 50\% between 1974 and 2013, which is mainly attributable to a reduction in the transport costs ``per se''.
+Air transport costs were reduced by 50\% between 1974 and 2019, which is mainly attributable to a reduction in the transport costs ``per se''.
 Composition effects are stronger in vessel transport, for all three series (Figure \ref{fig:totalTC_compeffects_excl}, panels (d) to (f)): they amplify the reduction in ``pure'' transport costs at the beginning of the period, in the 1970s (the dotted line is below the plain line, and the gap is increasing). Afterwards, the dotted line remains below the plain line, but the gap between the two remains roughly constant across years, indicating that the amplification effect does not strengthen anymore: the two trends are similar.
 Considering the raw series (plain line), maritime transport costs have decreased by 60\% over the period, which can be decomposed into a 50\% decrease in transport costs ``per se'' (dotted line), and a 10\% reduction that comes from composition effects (the difference of the two).
 This is particularly the case for the multiplicative component (panel (d)).\smallskip
@@ -805,7 +806,7 @@ For each year and transport mode, we select the countries ($i$) and the products
 \begin{center}
     \begin{tabular}{lcc|cc}
     \hline \hline
-    \multicolumn{5}{c}{Mean value over 1974-2013} \\
+    \multicolumn{5}{c}{Mean value over 1974-2019} \\
  \multicolumn{5}{c}{3 digits} \\    \hline \hline
    Mode  & \multicolumn{2}{c|}{Air} & \multicolumn{2}{c}{Vessel} \\ \hline
    Separability & No  & Yes (baseline) & No & Yes (baseline)\\ \hline
@@ -899,7 +900,7 @@ In this section, we provide a robustness test to this difference of treatment.\s
 When aggregating the trade cost measure over the product/country ($i,k$) dimension, \cite{hummels2007} takes the unweighted average value over the $i,k$ dimension, which implicitly attributes a weight equal to 1 to each flow.
 Our benchmark specification  (at the root of Figure \ref{fig:totalTC_compeffects_excl}) proceeds differently, as each flow is weighted by its relative value in total trade flows observed in 1974.
 
-----Pas sûr. Je crois que c’est weighted by value/value total for the year -- 
+----Pas sûr. Je crois que c’est weighted by value/value total for the year --
 
 In this section, we check whether this difference of treatment is responsible or not for the difference in results relative to the role of the trade composition effects, which we rather attribute to the modeling of the additive component.
 
@@ -1244,11 +1245,11 @@ In line with \cite{sorensen2014} and \cite{Irrazabal_2015}, our overall theoreti
 \section{Conclusion \label{sec:conclu}}
 
 This paper empirically studies the magnitude of additive costs in international transport costs, by exploiting the differences between the import and the export prices.
-Using SITC 3 and 4- digit cif-fas unit values taken from the US import database over 1974-2013, we estimate the two components (additive and ad-valorem) of transport costs, by transport mode (air or ocean).
+Using SITC 3 and 4- digit cif-fas unit values taken from the US import database over 1974-2019, we estimate the two components (additive and ad-valorem) of transport costs, by transport mode (air or ocean).
 Two main findings emerge from our results.
 First, we provide a quantitative measure of both the additive and the ad-valorem transport costs.
 We find that additive costs are quantitatively sizable: They amount to 2.8\% of the export price unit values for ocean shipping, and 1.8\% for air transport.
-This is slightly lower that the estimated values for the ad-valorem costs, around  2.5\% (vessel) and 3.2\% (air) as mean values over 1974-2013.
+This is slightly lower that the estimated values for the ad-valorem costs, around  2.5\% (vessel) and 3.2\% (air) as mean values over 1974-2019.
 Further, modeling the additive component significantly improves the quality of fit of the regression.
 Second, we show the importance of integrating the additive component in accounting for the time trend of international transport costs.
 Allowing for a varying share of additive costs in the product/country/time dimension, we find that the decrease of international transport costs observed in the data is mostly attributable to a reduction in the \textit{pure} transport costs, with trade pattern composition effects playing a small role.
@@ -1311,7 +1312,7 @@ import duties.
 \subsection{Transport costs estimates: More detailed results}
 
 In this section, we report more detailed results for the estimates for international transport costs, by transport mode on a yearly basis, when either additive costs are included in the estimation (Equation (\ref{eq:model_IetA})) or not (Equation (\ref{eq:model_nlI})), under our benchmark sectoral classification level (3 digit).
-Specifically, we complement the results displayed in Table \ref{tab:summary_results} by reporting the estimates of international transport costs for a sample of years over 1974-2013, when the degree of classification retained ($s$) is at the 3-digit classification level.
+Specifically, we complement the results displayed in Table \ref{tab:summary_results} by reporting the estimates of international transport costs for a sample of years over 1974-2019, when the degree of classification retained ($s$) is at the 3-digit classification level.
 Table \ref{tab:result_air_3d_detail} reports the results for air transport.
 The results for vessel transport are displayed in Table \ref{tab:result_ves_3d_detail}.
 
