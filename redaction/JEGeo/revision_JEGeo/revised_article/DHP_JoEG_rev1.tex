@@ -319,8 +319,6 @@ We estimate Equation (\ref{eq:model_IetA}) for each year over the period 1974-20
 Depending on the year considered, this leaves us with around 800 fixed effects to estimate by transport mode at the 3-digit level.
   \medskip
 
-\textbf{stop here XXX JH: WHY? WHAT DO YOU MEAN?}
-
 
 As mentioned in the Introduction, one contribution of the paper is to provide a careful estimation of international transport costs, which decomposes into both an additive and an ad-valorem component.
 In this respect, our paper relates to the recent literature about the importance of additive costs in accounting for international trade costs (\citealp{Irrazabal_2015}, among others).
@@ -500,7 +498,7 @@ For the same export price multiplied by the ad-valorem cost of 100 USD, our resu
 Given our estimates for 2004 ($x = 0.028$ and $0.015$ in vessel and air transport respectively), we get a ratio $\frac{t}{\tau \widetilde{p} + t}$ equal to 2.7\% and 1.4\% in each transport mode respectively.} This comparison of results suggests that between 25\% (air) and 47\% (vessel) of additive trade costs are attributable to international transport.
 On top of our results summarized in Table \ref{tab:summary_results}, this points to evidence that the additive component represents a quantitative sizable dimension of international transport costs.\smallskip
 
-% JH : reprendre XXX ICI
+% XXX JH : reprendre XXX ICI
 
 \paragraph{Time dynamics} Given the time coverage of our database, one may then wonder whether this important part of additive costs we put forward, is a long-lasting, i.e. a structural phenomenon.
 We investigate this point by reporting the share of additive costs in total transport costs on a yearly basis, in both air and vessel transport, based on the weighted-mean values $\widehat{t}/\widetilde{p}$ and $\widehat{\tau}$ (in similar terms as those reported in Tables \ref{tab:result_air_3d_detail} and \ref{tab:result_ves_3d_detail}.
@@ -926,6 +924,8 @@ This confirms that it is the functional form and precisely the modeling of the a
 Besides, related concerns may arise from productivity-sorting model in \cite{melitz} or the quality-sorting model in \cite{baldwin_harrigan}: more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair. In addition, there is also the possibility that bigger firms might impact transport costs, due to their ability of bargaining discounts for larger shipped volumes.
 
 It is true we are not interested in causal inference, since our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components. However, the latter can be biased by the aforementioned endogeneity issues since they imply that $\frac{1}{\widetilde{p}_{ik}}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. This may ultimately harm the estimation of $\widehat{t}/\widetilde{p}$ and consequently, $\widehat{\tau}$.
+
+% XXX JH LP: Peut-être faire moins amende honorable, expliquer mieux pourquoi notre benchmark reste sans IV (préserver notre période d'estimation...)
 
 Therefore, we propose to compare our main estimates with those stemming from a two-stage least-squares procedure. Put differently, we follow earlier literature (see e.g. \citealp{Caliendo_Parro_2015} or \citealp{Lashkaripour-2017}) by replacing in the right-hand side of Equation (\ref{eq:model_IetA}) $\widetilde{p}$ by predicted values stemming from a first-stage equation regressing $\widetilde{p}$ on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. Section \ref{app:first_stage_IV} in Appendix \ref{app:more_results} provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. In particular, it shows that our main instrumental variable displays the right statistical properties, and that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation (\ref{eq:model_IetA}\footnote{Note that, since the predictions are expressed in logarithms, they are transformed through the exponential function before their implementation in Equation (\ref{eq:model_IetA}.} to produce a 2SLS-type of estimation. Figure \ref{fig:comp_IV_SITC5} below reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns.
 
