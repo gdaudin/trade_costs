@@ -317,10 +317,7 @@ We estimate Equation (\ref{eq:model_IetA}) for each year over the period 1974-20
 Depending on the year considered, this leaves us with around 800 fixed effects to estimate by transport mode at the 3-digit level.
   \medskip
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 4b61a81cecff54d6db55f94b8457ebd4ee0470e7
 
 As mentioned in the Introduction, one contribution of the paper is to provide a careful estimation of international transport costs, which decomposes into both an additive and an ad-valorem component.
 In this respect, our paper relates to the recent literature about the importance of additive costs in accounting for international trade costs (\citealp{Irrazabal_2015}, among others).
@@ -487,10 +484,6 @@ For the same export price multiplied by the ad-valorem cost of 100 USD, our resu
 Given our estimates for 2004 ($x = 0.028$ and $0.015$ in vessel and air transport respectively), we get a ratio $\frac{t}{\tau \widetilde{p} + t}$ equal to 2.7\% and 1.4\% in each transport mode respectively.} This comparison of results suggests that between 25\% (air) and 47\% (vessel) of additive trade costs are attributable to international transport.
 On top of our results summarized in Table \ref{tab:summary_results}, this points to evidence that the additive component represents a quantitative sizable dimension of international transport costs.\smallskip
 
-<<<<<<< HEAD
-% XXX JH : reprendre XXX ICI
-=======
->>>>>>> 4b61a81cecff54d6db55f94b8457ebd4ee0470e7
 
 \subsection{A first look at the time dynamics of transport costs}
 
@@ -820,164 +813,6 @@ Assuming a varying share of the additive component over time, product and countr
 In both air and vessel transports, we thus find that this last dimension is the main driver of the reduction in international transport costs observed over time, in particular in air transport.
 Complementing the findings of Section \ref{sec:results_decomposition}, these results highlight the importance of integrating the additive dimension of international transport costs, with the aim here of characterizing their time trends.
 
-<<<<<<< HEAD
-\section{Robustness analysis \label{sec:robustness}}
-
-\subsection{Robustness to the separability assumption}
-In this section, we provide a robustness analysis to the separability assumption of country-good fixed effects, which considers (following \citealp{Irrazabal_2015}) that both the ad-valorem and the additive costs are separable between the origin country ($i$) and the product ($s(k)$) dimensions.
-That is, we relax Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}) to model $t_{is(k)}$ and $t_{is(k)}$ (on a yearly/transport mode basis).
-Yet, this comes at the cost of having to estimate a much larger number of fixed effects (for approx. 200 countries of origin and 200 sectors at the 3-digit level, this means estimating 40,000 versus 400 fixed effects, per year and per transport mode), making the estimation (all the more given our non-linear setting) intractable in practice.
-This drives us to conduct the analysis on a sub-sample of trade flows, upon which two estimations are conducted (for every year and each transport mode): with the separability assumption (Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}) hold, our baseline case) and without.
-For each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows. Table \ref{tab:robustness_separability} shows a summary of the results, considering the average estimated values over the period (by transport mode).
-
-\begin{table}[htbp]
-  \centering
-  \caption{Robustness to the separability assumption (average over the period) - restricted sample}
-\begin{center}
-    \begin{tabular}{lcc|cc}
-    \hline \hline
-    \multicolumn{5}{c}{Mean value over 1974-2019} \\
- \multicolumn{5}{c}{3 digits} \\    \hline \hline
-   Mode  & \multicolumn{2}{c|}{Air} & \multicolumn{2}{c}{Vessel} \\ \hline
-   Separability & No  & Yes (baseline) & No & Yes (baseline)\\ \hline
-    \multicolumn{5}{l}{\textit{Additive term} ($\widehat{t}/\widetilde{p}$.
-in \%)}  \\
-    Mean  & 1.76 & 1.96 & 2.61 & 2.99 \\
-    Median &0.65 & 0.84 &1.83 & 2.23 \\ \hline
-    \multicolumn{5}{l}{\textit{Ad-valorem term} ($\widehat{\tau}$, in \%)}\\
-    Mean  & 1.04 & 0.94 & 2.43 & 2.40 \\
-    Median & 0.56 & 0.83 & 2.06 & 2.04 \\ \hline
-\multicolumn{5}{l}{\textit{Share of additive costs in total costs (in \%)}} \\
-    Mean  & 62.8  & 67.5  & 51.8  & 55.4 \\
-    Median & 54.1  & 50.5  & 47.0  & 52.2 \\  \hline
- \textit{Diagnostic test} & & &  &  \\
-    %$R^2$    & \multicolumn{1}{c}{0.80} & \multicolumn{1}{c}{0.68} & \multicolumn{1}{c}{0.67} & \multicolumn{1}{c}{0.45} \\
-    %SER   & \multicolumn{1}{c}{0.57} & \multicolumn{1}{c}{0.72} & \multicolumn{1}{c}{0.53} & \multicolumn{1}{c}{0.69} \\
-    AIC criteria & 4657.60 & 4654.23 & 10744.83 & 10690.80 \\ \hline
-    %Log-likelihood & \multicolumn{1}{c}{-1757.75} & \multicolumn{1}{c}{-2258.24} & \multicolumn{1}{c}{-4018.51} & \multicolumn{1}{c}{-5220.00} \\ \hline
-\# observations & 2381 & 2381 & 2798 & 2798 \\
-\# origin country & 13.4 & 13.4 & 19.8 & 19.8 \\
-\# products & 25.5 & 25.5 & 53 & 53 \\ \hline \hline
-    \end{tabular}%
-\end{center}
-\parbox[l]{12cm}{\footnotesize{Notes: Estimations are performed on a restricted sample, based on the following rule: for each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows.
-The additive term is expressed in fraction of fas price. 1989 omitted in 3-digit estimation for air.}}
-\label{tab:robustness_separability}
-\end{table}
-
-\begin{table}[htbp]
-	\centering
-	\caption{Robustness to the separability assumption (average over the period) - restricted sample}
-	\begin{center}
-			\input{table4.tex}
-	\end{center}
-	\parbox[l]{12cm}{\footnotesize{Notes: Estimations are performed on a restricted sample, based on the following rule: for each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows.
-			The additive term is expressed in fraction of fas price.}}
-	\label{tab:robustness_separability}
-\end{table}
-
-Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but 80\% of the total value of aggregated trade) involve a higher share of additive costs: between 52\% and 67\% of total costs on average, versus 40\% to 50\% on the whole sample.
-%JH: la phrase suivante est en contradiction avec celle qui suit encore juste après: "Second, assuming that country/product fixed effects are separable in these two dimensions tends to overestimate the value and the share of the additive costs."
-Second, both models provide a similar quality of fit of the regression (once we take into account the number of right-hand-side variables) as the AIC criteria display very close values in both models (conditional on transport mode).
-Third, the estimated values remain of similar magnitude under both separability and non-separability assumptions, even if one can note that under the separability assumption, the share of additive costs seems slightly biased upward, at least for averages over the period. The picture is reversed for medians.
-
-
-Before jumping to the conclusion that our results are robust to the separability assumption, however we investigate this comparison deeper on a year-to-year basis, as shown in Figure \ref{fig:robustesse_non_separe}. Specifically, Figure \ref{fig:robustesse_non_separe} displays the results for air transport in panel (a) and for maritime transport in panel (b). In each case, the estimated values (as well as the fitted regression line) under both separability (baseline) and non-separability are reported, for the additive term (upper panel) and the ad-valorem term (lower panel).
-
-
-\begin{figure}[htbp]
-\caption{Robustness to the separability assumption (year-to-year basis)}
-\label{fig:robustesse_non_separe}
-\begin{center}
-\begin{tabular}{cc}
-\includegraphics[width=6in, height=4in]{graph_robustesse_ns.jpg}
-
-\end{tabular}
-\end{center}
-\begin{minipage} [c]  {5in} \scriptsize%
-Notes: FE for (country, sector) fixed effects.
-\end{minipage}
-\end{figure}
-
-In line with Table \ref{tab:robustness_separability}, the results shown in Figure \ref{fig:robustesse_non_separe} confirm that the separability assumption (retained in our baseline estimation) tends to overestimate the value of the additive cost component (and underestimate the value of the ad-valorem cost).
-However, they also show that the difference is quantitatively small. Further, and most importantly, whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs, whether estimated under the separability assumption or not, are very similar. Along with the quality-of-fit diagnosis, this confirms the robustness of our estimation results to this assumption.
-
-As an ultimate check, we investigate whether the varying pattern over time/country of origin/product pointed out in Section \ref{sec:results_decomposition} is also robust to the separability assumption. With this aim, we replicate Figure \ref{fig:histogram_beta} on the reduced sample for both specifications of separable (baseline) and non-separable fixed costs.
-Figure \ref{fig:histogram_beta_robustness} shows the histogram of the distribution of the elasticity of transport costs to the export price ($\beta_{ikt}$, for air transport (top panel) and for maritime transport (bottom panel) under the baseline specification (Panels (a), (c))) and the non-separability scenario (Panels (b), (c)).
-
-
-\begin{figure}[htbp]
-\caption{Histogram of the share of additive costs in total costs (restricted sample)}
-\label{fig:histogram_beta_robustness}
-\begin{center}
-\begin{tabular}{cc}
-\includegraphics[width=14cm, height=10cm]{Etude_beta_pond.jpg}\\
-\multicolumn{2}{l}{{\footnotesize Notes: Distribution of $\beta_{ikt}$ over the triplet (year-product-country), weighted by share of yearly value of flow.}}\\
-\end{tabular}
-\end{center}
-\end{figure}
-
-Similarly, as for the whole sample (Figure \ref{fig:histogram_beta}), for both transport modes the distribution of $\beta_{ikt}$ over the triplet (year, country of origin, product) appears smoothly distributed over the interval $[0,1]$, whatever the assumption regarding the specification of fixed effects.
-Relaxing the assumption that fixed effects are separable between the two country and product dimensions does not alter qualitatively our conclusion, that the elasticity of transport costs to the export price (or the share of additive costs in total transport costs), is strongly varying over time, countries of origin and products.
-As a consequence, this also provides an indirect robustness check to the results regarding the trend decomposition provided in Section \ref{sec:results_trends}, which establish that the decline of ``pure'' transport costs is a main reason for the decrease of overall transport costs observed over time.
-
-
-\subsection{Robustness to the weighting scheme }
-
-As discussed in Appendix \ref{app:comp-effects}, one source of difference between our methodology and that of \cite{hummels2007} concerns the weighting scheme used to obtain the evolution of the pure transport costs over time.
-In this section, we provide a robustness test to this difference of treatment.\smallskip
-
-When aggregating the trade cost measure over the product/country ($i,k$) dimension, \cite{hummels2007} takes the unweighted average value over the $i,k$ dimension, which implicitly attributes a weight equal to 1 to each flow.
-Our benchmark specification  (at the root of Figure \ref{fig:totalTC_compeffects_excl}) proceeds differently, as each flow is weighted by its relative value in total trade flows observed in 1974.
-
-----Pas sûr. Je crois que c’est weighted by value/value total for the year --
-
-In this section, we check whether this difference of treatment is responsible or not for the difference in results relative to the role of the trade composition effects, which we rather attribute to the modeling of the additive component.
-
-To this aim, we rebuild the fitted values for each of our transport cost measures (ad-valorem, additive and overall) applying the \cite{hummels2007} weighting scheme (i.e. taking the unweighed average value over the $i,k$ dimension), which we then express as indices, with the reference value 100 in 1974.
-The results are reported in Figure \ref{fig:compeffects_robustness}.
-
-\begin{figure}[htbp]
-\caption{Transport cost time trends: robustness to the weighting scheme}
-\label{fig:compeffects_robustness}
-\begin{center}
-\includegraphics[height=8cm]
-{graph_composition_all_np.jpg}
-\end{center}
-\end{figure}
-
-The comparison of Figure \ref{fig:compeffects_robustness} (applying \citealp{hummels2007}'s weighting scheme) and Figure \ref{fig:totalTC_compeffects_excl} (applying our weighting scheme) prompts two comments.
-First, differences do show up, in particular for the multiplicative component of air transport.
-This suggests that the weighting scheme is not innocuous in the time trend decomposition exercise.
-However, Figure \ref{fig:compeffects_robustness} also shows that the composition effects have contributed to strengthen the decrease in the ``ceteris paribus'' transport costs in air transport (in Figure \ref{fig:compeffects_robustness}, panel (a), overall transport costs have decreased more than the fitted component), in accordance with the conclusions drawn from Figure \ref{fig:totalTC_compeffects_excl}, rather than partly offsetting this decline, as argued by \cite{hummels2007}.
-This confirms that it is the functional form and precisely the modeling of the additive component, rather than the weighting scheme, that is key in understanding the underlying determinants of the overall transport costs time trends, as pointed out in Section \ref{sec:results_trends}.
-
-\subsection{Endogeneity concerns} One may be concerned that the specification of Equations (\ref{eq:model_IetA}) or (\ref{eq:model_nlI}) might be subject to an endogeneity bias, as the price set by the exporter may vary depending on the transport cost burden. Studies on the pricing-to-market behavior of firms (see \citealp{Krugman-87}) show that we cannot exclude that the export price set by the firm ($\widetilde{p}_{ik}$) is partly endogenous to the size of transport costs (for instance, the exporting firm absorbing (part of) the transport costs by reducing the fas price).
-Besides, related concerns may arise from productivity-sorting model in \cite{melitz} or the quality-sorting model in \cite{baldwin_harrigan}: more productive firms and/or firms selling high-quality products will charge higher prices, all other things equal – in our case, for a given country-product pair. In addition, there is also the possibility that bigger firms might impact transport costs, due to their ability of bargaining discounts for larger shipped volumes.
-
-It is true we are not interested in causal inference, since our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components. However, the latter can be biased by the aforementioned endogeneity issues since they imply that $\frac{1}{\widetilde{p}_{ik}}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. This may ultimately harm the estimation of $\widehat{t}/\widetilde{p}$ and consequently, $\widehat{\tau}$.
-
-% XXX JH LP: Peut-être faire moins amende honorable, expliquer mieux pourquoi notre benchmark reste sans IV (préserver notre période d'estimation...)
-
-Therefore, we propose to compare our main estimates with those stemming from a two-stage least-squares procedure. Put differently, we follow earlier literature (see e.g. \citealp{Caliendo_Parro_2015} or \citealp{Lashkaripour-2017}) by replacing in the right-hand side of Equation (\ref{eq:model_IetA}) $\widetilde{p}$ by predicted values stemming from a first-stage equation regressing $\widetilde{p}$ on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. Section \ref{app:first_stage_IV} in Appendix \ref{app:more_results} provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. In particular, it shows that our main instrumental variable displays the right statistical properties, and that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation (\ref{eq:model_IetA}\footnote{Note that, since the predictions are expressed in logarithms, they are transformed through the exponential function before their implementation in Equation (\ref{eq:model_IetA}.} to produce a 2SLS-type of estimation. Figure \ref{fig:comp_IV_SITC5} below reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns.
-
-\begin{figure}[htbp]
-\caption{Transport cost time trends: robustness to IV procedure}
-\label{fig:comp_IV_SITC5}
-\begin{center}
-\includegraphics[height=8cm]
-{scatter_chronology_baseline_IV_ref1_y_5_3.png}
-\end{center}
-\end{figure}
-
-%However, we consider as a reasonable assumption that the exporting firm cannot influence the international transport cost sector, that would imply a causal effect of the firm's prices on the transport costs value, except in the choice between air and vessel transport (that is beyond our scope of analysis).
-%Otherwise stated, conditional to an export price and a transport mode, the gap between the export price declared to the custom data and the import price recorded by the US administration is beyond the firm's control.
-%In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
-
-
-
-=======
->>>>>>> 4b61a81cecff54d6db55f94b8457ebd4ee0470e7
 
 \section{The role of additive cost: Theoretical insights}\label{sec:theory}
 
