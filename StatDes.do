@@ -207,7 +207,7 @@ foreach mode in air ves {
 		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		egen value_year=total(val), by(year)
 		generate weight = val/value_year
-		
+		drop if year==1989 & mode=="air"  
 		
 		
 		
@@ -231,7 +231,7 @@ foreach mode in air ves {
 			collect, tags(model[data] var[N] mode[`mode'] digit[${method}]): /*
 				*/ sum N [aweight=weight]
 			collect, tags(model[data] var[Nb_sectors] mode[`mode'] digit[${method}]): /*
-				*/ sum Nb_sectors [aweight=weight]
+				*/ sum Nb_sectors [aweight=weight] 
 			collect, tags(model[data] var[Nb_partners] mode[`mode'] digit[${method}]): /*
 			    */ sum Nb_partners[aweight=weight] 		
 
