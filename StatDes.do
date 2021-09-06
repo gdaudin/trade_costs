@@ -190,8 +190,11 @@ args method
 
 global method `method'
 if "$method"=="baseline" local time_span 1974 (1) 2019
-*if "$method"=="baseline" local time_span 1974 (1) 1978
 if "$method"=="baseline5_4" local time_span 1974 1977 (4)2017 2019
+if "$method"=="baseline10" | "$method"=="baseline_rob_10" local time_span 1997 1998 1999 2002(1) 2019
+
+if "$method"=="baseline_rob_10" global method baseline /*En effet, tout ce qui change c’est la période*/
+
 
 foreach mode in air ves {
 
@@ -272,7 +275,9 @@ foreach mode in air ves {
 
 end
 
+/*
 
+*************Pour tableau 1 : baseline + baseline 5_4
 table1_part baseline
 table1_part baseline5_4
 
@@ -322,13 +327,69 @@ table1_part baseline5_4
 	collect export /* 		 
 	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Table1.tex", /*
 	*/ tableonly replace
-	
-	
-
-
 
 
 */
+
+
+
+*************Pour tableau 1 : baseline10 + baseline sur période réduite
+table1_part baseline10
+table1_part baseline_rob_10
+
+
+*************Pour tableau 1 : baseline + baseline 5_4
+table1_part baseline
+table1_part baseline5_4
+
+
+
+	
+	
+	collect layout (model[data]#result[mean]#var[N Nb_sectors Nb_partners] /*
+		*/ model[data]#var[prix_trsp prix_fob]#result[mean p50 sd] /*
+		*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
+		*/ model[nlAetI]#var[terme_I terme_A p_add_dollar beta]#result[mean p50 sd]) /* 
+		*/ (digit#mode)
+
+	 
+
+	
+	collect label levels digit baseline "5/3-digit"
+	collect label levels digit baseline10 "10/3-digit"
+	collect label levels var N "{$#$ obs.}"
+	collect label levels var Nb_sectors "{$#$ sectors}"
+	collect label levels var Nb_partners "{$#$ origin countries}"
+	collect label levels result max "\textbf{Data}", modify
+	collect label levels result mean "Mean", modify
+	collect label levels result p50 "Median", modify
+	collect label levels var prix_trsp "{\textit{Obs. transport costs $(p/\widehat{p}-1)$ (in $%$)}}", modify
+	collect label levels var prix_fob "{\textit{Export price in USD per kg (\textit{$\widehat{p}$})}}", modify
+	collect label levels var terme_I "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{adv}$)}", modify
+	collect label levels var terme_nlI "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{ice}$)}", modify
+	collect label levels var terme_A "{\textit{Additive term (in $%$)} ($\widehat{t}/\widetilde{p}$)}", modify
+	collect label levels var p_add_dollar "{\textit{Additive term in USD per kg ($\widehat{t}$)}}", modify
+	collect label levels var beta "$\widehat{\beta}$:  \textit{-Share of additive costs}", modify
+	collect label levels model data "\textbf{Data}"
+	collect label levels model nlAetI "{\textbf{Model (B)}}"
+	collect label levels model nlI "{\textbf{Model (A)}}"
+	
+	collect style cell, warn nformat (%3.1f)
+	collect style cell var[beta p_add_dollar], warn nformat(%3.2f)
+	collect style cell var[prix_fob], warn nformat(%9.0fc)
+	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0fc)
+	collect style column, nodelimiter dups(center) position(top) width(asis)
+	
+
+	collect preview
+	
+	collect export /* 		 
+	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Table_baseline10.tex", /*
+	*/ tableonly replace
+
+
+
+
 
 /*
 ***Pour les tables A1 et A2 de l’appendix
