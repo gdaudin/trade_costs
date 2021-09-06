@@ -261,7 +261,7 @@ foreach mode in air ves {
 		quietly if "`model'"=="nlI" {
 			replace terme_nlI=(terme_nlI-1) *100
 			collect, tags(model[`model'] var[terme_nlI] mode[`mode'] digit[${method}]) :/*
-			*/ sum terme_nlI [aweight=val], det
+			*/ sum terme_nlI [aweight=weight], det
 		}
 		save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 	}
