@@ -192,13 +192,16 @@ global method `method'
 if "$method"=="baseline" local time_span 1974 (1) 2019
 if "$method"=="baseline5_4" local time_span 1974 1977 (4)2017 2019
 if "$method"=="baseline10" | "$method"=="baseline_rob_10" local time_span 1997 1998 1999 2002(1) 2019
+if "$method"=="baseline10" | "$method"=="baseline_rob_10" local model_list nlAetI
+if "$method"=="baseline" | "$method"=="baseline5_4" local model_list nlAetI nlI
 
 if "$method"=="baseline_rob_10" global method baseline /*En effet, tout ce qui change c’est la période*/
 
 
 foreach mode in air ves {
+	
 
-	foreach model in nlAetI nlI {
+	foreach model in `model_list' {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num `time_span'  {
 			open_year_mode_method_model `year' `mode' $method `model'
@@ -333,14 +336,9 @@ table1_part baseline5_4
 
 
 
-*************Pour tableau 1 : baseline10 + baseline sur période réduite
+*************Pour tableau 1 baseline10 + baseline sur période réduite
 table1_part baseline10
 table1_part baseline_rob_10
-
-
-*************Pour tableau 1 : baseline + baseline 5_4
-table1_part baseline
-table1_part baseline5_4
 
 
 
@@ -348,7 +346,6 @@ table1_part baseline5_4
 	
 	collect layout (model[data]#result[mean]#var[N Nb_sectors Nb_partners] /*
 		*/ model[data]#var[prix_trsp prix_fob]#result[mean p50 sd] /*
-		*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
 		*/ model[nlAetI]#var[terme_I terme_A p_add_dollar beta]#result[mean p50 sd]) /* 
 		*/ (digit#mode)
 
@@ -366,7 +363,6 @@ table1_part baseline5_4
 	collect label levels var prix_trsp "{\textit{Obs. transport costs $(p/\widehat{p}-1)$ (in $%$)}}", modify
 	collect label levels var prix_fob "{\textit{Export price in USD per kg (\textit{$\widehat{p}$})}}", modify
 	collect label levels var terme_I "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{adv}$)}", modify
-	collect label levels var terme_nlI "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{ice}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term (in $%$)} ($\widehat{t}/\widetilde{p}$)}", modify
 	collect label levels var p_add_dollar "{\textit{Additive term in USD per kg ($\widehat{t}$)}}", modify
 	collect label levels var beta "$\widehat{\beta}$:  \textit{-Share of additive costs}", modify
