@@ -445,7 +445,6 @@ graph twoway (scatter beta_`method2'_mean beta_`method1'_mean) (lfit beta_`metho
 			 ytitle("`method1'") xtitle("`method2'") scheme(s1mono)
 			 
 graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.png", replace
-graph export "$dir_redaction/scatter_comparaison_`method1'_`method2'.png", replace
 
 
 keep year mode beta* 
