@@ -243,14 +243,14 @@ From Equation (\ref{eq:tt1}), it is straightforward that $\beta$ is equal to the
 From Equation (\ref{eq:tt1}), we can identify a first polar case where $\beta=0$. Shipping charges are proportional to the fas price, such that $p=\widetilde{p}(1+X)$: Only ad-valorem costs apply. At the other extreme, the case $\beta=1$ corresponds to shipping costs being independent of the unit price, with the cif price the sum of the unit price and the shipping cost: Transport costs are fully additive.
 This suggests that, the closer $\beta$ to 1, the more prevalent additive costs in total transport costs. One can analytically show that $\beta$ is indeed equal to the share of additive costs in total transport costs.
 
-To do so, start from the link between the link between cif, fas prices and transport costs by explicitly decomposing between the ad-valorem and the additive costs as $p = (1+\tau) \widetilde{p}+ t$, with $\tau \geq 0$ the ad-valorem cost and $t>0 $ the additive shipping charge per kg transported. We can rewrite the additive cost as a function of the cost per USD shipped $\widetilde{t} \equiv \frac{t}{\widetilde{p}}$, leading to:
+To do so, start from the link between the link between cif, fas prices and transport costs by explicitly decomposing between the ad-valorem and the additive costs as $p = \tau \widetilde{p}+ t$, with $\tau \geq 1$ the ad-valorem cost and $t>0 $ the additive shipping charge per kg transported. We can rewrite the additive cost as a function of the cost per USD shipped $\widetilde{t} \equiv \frac{t}{\widetilde{p}}$, leading to:
 \begin{equation}
-p = (1+\tau) \widetilde{p}+ \widetilde{t}\widetilde{p}  \label{eq:base}
+p = \tau \widetilde{p}+ \widetilde{t}\widetilde{p}  \label{eq:base}
 \end{equation}
-Starting from Equation (\ref{eq:base}), the elasticity of transport costs to the unit price $\widetilde{p}$ can be shown to be equal to:\footnote{See Appendix XXX for a formal demonstration. XXXJH: WHERE ??? XXX}
+Starting from Equation (\ref{eq:base}), the elasticity of transport costs to the unit price $\widetilde{p}$ can be shown to be equal to:\footnote{See \textbf{Appendix XXX for a formal demonstration. XXXJH: WHERE ??? XXX A FIARE?}}
 \begin{eqnarray}
-\frac{\partial TC}{\partial \widetilde{p}} \frac{\tilde{p}}{TC}&=& \frac{-\frac{t}{\tilde{p}}}{\tau   +\frac{t}{\tilde{p}}} \notag \\
-&=& \frac{-t}{\tau +\widetilde{t}} \label{eq:tt2}
+\frac{\partial TC}{\partial \widetilde{p}} \frac{\tilde{p}}{TC}&=& \frac{-\frac{t}{\tilde{p}}}{\tau -1  +\frac{t}{\tilde{p}}} \notag \\
+&=& -\frac{\widetilde{t}}{\tau-1 +\widetilde{t}} \label{eq:tt2}
 \end{eqnarray}
 
 Comparing Equations (\ref{eq:tt1}) and (\ref{eq:tt2}), it is straightforward that the unit price-elasticity of transport costs (in relative terms) is also equal to the share of additive costs in total transport costs.
@@ -262,35 +262,35 @@ While many in the related literature provide an indirect measure of additive cos
 \paragraph{Obtaining the estimated equation} Let us denote $i$ the origin country, and $k$ the product (at the 5-digit level in our benchmark estimate), for each year-mode specific flow. For sake of reading convenience, we skip the year and transport-mode dimensions in the notations. Transforming the above equation (\ref{eq:base}) as the percentage change in prices induced by transportation, we get the following baseline specification underlying our estimation:
 
 \begin{equation}
-\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik} +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
+\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik}-1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
 \end{equation}
 
 We follow \cite{Irrazabal_2015} by considering that \textit{i)} both ad-valorem and additive costs are separable between the origin country ($i$) and the product ($k$) dimensions, and \textit{ii)} this separability is in a multiplicative way for the former and an additive way for the latter.
-In other words, $\tau_{ik}$ and $t_{ik}$ are written as:\footnote{Notice that, given the magnitude or order of transport costs, assuming an additive or a multiplicative form for country/product fixed effects does not make a substantial difference since, for small values (as we generally obtain), we have $\tau_i+ \tau_k \simeq (1+\tau_i)\times(1+\tau_k) -1$ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.
+In other words, $\tau_{ik}$ and $t_{ik}$ are written as:\footnote{Notice that, given the magnitude or order of transport costs, assuming an additive or a multiplicative form for country/product fixed effects does not make a substantial difference since, for small values (as we generally obtain), we have $\tau_i\times \tau_k -1\simeq (\tau_i-1) + (\tau_k -1) $ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.
 We also provide a robustness analysis to the separability assumption. Given the much higher number of fixed effects to estimate, we run this robustness check on a sub-sample of goods/origin countries. See Section \ref{sec:robustness} for a detailed presentation of this robustness check.}
 
 \begin{eqnarray}
-1+\tau_{ik} &=& (1+ \tau_{i})(1+ \tau_{k}) \label{eq:ad-valorem}\\
+\tau_{ik} &=& \tau_{i} \times\tau_{k} \label{eq:ad-valorem}\\
 t_{ik} &=& t_{i} + t_{k} \label{eq:add}
 \end{eqnarray}
 
 \noindent As a result, our underlying structural equation is specified as:
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =(1+\tau_{i})(1+\tau_{k}) -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ik}} \label{eq:theory_equation}
+\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\tau_{i}\times\tau_{k} -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ik}} \label{eq:theory_equation}
 \end{equation*}
 
 The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by construction, the import price $p$ cannot be lower than the export price ($p_{ik}\geq\widetilde{p}_{ik}$). Taking into account this constraint in the estimate implies that the error term should be always positive.
 We ensure that this constraint is fulfilled by specifying the error term as follows:
 
 \begin{equation*}
-\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left((1+\tau_{i})(1+\tau_{k}) -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})
+\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i}\times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})
 \end{equation*}
 \noindent where $\epsilon_{ik}$ follows a normal law centered on 0.
 Considered in logs, the above equation becomes:
 
 \begin{equation}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left((1+\tau_{i})(1+\tau_{k})+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:equation0}
+\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i}\times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:equation0}
 \end{equation}
 
 Since Equation (\ref{eq:equation0}) is non-linear, it cannot be estimated using standard linear estimators. All estimates are thus performed using non-linear least squares.\footnote{The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares of residuals does not increase from one iteration to the next.
@@ -306,10 +306,10 @@ Third, estimating the equation in level does not eliminate the fact that it is n
 
 This drives us to estimate a modified version of Equation (\ref{eq:equation0}), specified as:
 \begin{equation}
-\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left((1+\tau_{i})(1+ \tau_{s(k)})-1+\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}} \right) + \epsilon_{ik} \label{eq:model_IetA}
+\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i}\times \tau_{s(k)} -1+\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}} \right) + \epsilon_{ik} \label{eq:model_IetA}
 \end{equation}
 where $\tau_{i}$, $\tau_{s(k)}$, $t_{i}$ and $t_{s(k)}$ are the parameters to be estimated, i.e., fixed effects specific to each origin country $i$ and sector $s$ (at the 3-digit classification level), and $\epsilon_{ik}$ the residual centered on 0.\footnote{Note that, strictly speaking, the exact equation that we estimate is the following:
-$$\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\sum_i \alpha_i^\tau \mathbbm{1}_i \times \sum_{s(k)}\alpha_{s(k)}^\tau \mathbbm{1}_{s(k)}+ \frac{\sum_i\alpha_i^t\mathbbm{1}_i + \sum_{s(k)}\alpha^t_{s(k)}\mathbbm{1}_{s(k)}}{\widetilde{p}_{ik}}-1\right)+\epsilon_{ik} $$
+$$\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\sum_i \alpha_i^\tau \mathbbm{1}_i \times \sum_{s(k)}\alpha_{s(k)}^\tau \mathbbm{1}_{s(k)}-1 + \frac{\sum_i\alpha_i^t\mathbbm{1}_i + \sum_{s(k)}\alpha^t_{s(k)}\mathbbm{1}_{s(k)}}{\widetilde{p}_{ik}}\right)+\epsilon_{ik} $$
 After proceeding to the estimation, we uncover the estimated values of the transport costs components $\tau_{i}$, $\tau_{s(k)}$, $t_{i}$, $t_{s(k)}$ from the obtained coefficients $\alpha^{x}_{z}$ for $x=\tau,t$ and $z=i,s(k)$ (by year and transport mode).
 For reading convenience, we adopt a lighter expression of this equation by resorting to the notations of $\tau_i,\tau_{s(k)}$ and $t_i$, $t_{s(k)}$ as a short-cut.}  To eliminate the potential influence of outliers, we exclude 5\% of the upper and lower tails of the distribution in the regression variables.
 %JH: TO KEEP IN MIND: one day, we could be asked to winsorize tails, instead of cutting them...
@@ -356,7 +356,10 @@ We thus recover a ``synthetic estimate'' of each type of transport cost: $\wideh
 These results are reported in Section \ref{sec:results_decomposition}.
 
 
-\section{Overview of transport costs between 1974 and 2019}\label{sec:basic_results}
+\section{Transport costs: Quantifying their size and structure}\label{sec:basic_results}
+
+\textbf{In this section, we... INTRODUIRE CE QU'ON FAIT}
+
 \subsection{The importance of the additive component \label{sec:results_decomposition}}
 
 %Our ambition to re-assess the underlying sources of the trend patterns of international transport costs requires a careful modeling of both the additive and the multiplicative components.
@@ -454,8 +457,8 @@ Descriptive statistics showing that both observed and predicted values do match 
 First, it provides estimation results about the size of the overall transport costs.
 Table \ref{tab:summary_results} shows that transport costs amount to around a 5.5-6\% markup in ocean shipping, and 4\% markup in air shipping on average over 1974-2019.\footnote{Expressed as a markup over production costs, transport costs are equal to $\frac{p-\widetilde{p}}{\widetilde{p}}$.
 Under Model (a) (ad-valorem costs only), this gives a markup of 5.5\% in vessel, and 4.8\% in air shipping (considering the mean value over the period).
-Under Model (b), total transport costs are equal to $\frac{p-\widetilde{p}}{\widetilde{p}} = (\tau) + \frac{t}{\widetilde{p}}$.
-With $\tau= 0.030$ and $\frac{t}{\widetilde{p}}= 0.028$ in vessel (as reported in Table \ref{tab:summary_results}), we get a value equal to 5.8\%.
+Under Model (b), total transport costs are equal to $\frac{p-\widetilde{p}}{\widetilde{p}} = (\tau-1) + \frac{t}{\widetilde{p}}$.
+With $\tau= 1.030$ and $\frac{t}{\widetilde{p}}= 0.028$ in vessel (as reported in Table \ref{tab:summary_results}), we get a value equal to 5.8\%.
 A similar calculus gives 4.1\% in air transport.} If this seems modest in comparison with the 11\% of markup obtained by \cite{anderson_wincoop_jel} over a set of industrialized countries, it stands in line with the results obtained by \cite{hummels2007} for the US economy.\footnote{Beyond country coverage and time period, another plausible explanation for the difference with \cite{anderson_wincoop_jel}, lays in the difference of empirical methodology.
 \cite{anderson_wincoop_jel}'s estimates are based on standard gravity equations, while ours come from a non-linear estimation of a ``structural'' decomposition of the difference between export and import prices.}
 
@@ -463,8 +466,7 @@ Second, and most importantly, Table \ref{tab:summary_results} provides new quant
 On average over the whole period, for sectors defined at the 3-digit level, additive costs amount to around 10 cents (0.1 USD) per kilogram exported in maritime transport, and 1.13 USD per kilogram exported in air transport, indicating that freight rates are much higher in the latter case.
 Expressed in terms of the export price, the additive costs amount to 2.8\% and 1.7\% for ocean shipping and air transport respectively.
 This is slightly lower than the estimates for the ad-valorem component, which is estimated at 3\% and 2.4\% for vessel and air shipping respectively (on average over the period).
-Put differently, the additive component amounts to 44\% of total transport costs in vessel, and 30\% in Air, as highlighted by the row $\widehat{\beta}$:  \textit{-Share of additive costs}
-This shows that the per-kg cost dimension is quantitatively sizable.
+Put differently, the additive component amounts to 44\% of total transport costs in vessel, and 30\% in Air, as displayed in the last rows of Table \ref{tab:summary_results}: The per-kg cost dimension is quantitatively sizable.
 \medskip
 
 We also provide diagnostic tests about the goodness-of-fit measures, which confirm the empirical relevance of adding the additive component in the estimation. Appendix \ref{app:diagnostic_test} reports quality-of-fit diagnostic tests that confirm the importance of the additive cost component.
@@ -493,7 +495,7 @@ In this section, we investigate the trend patterns of international transport co
 This focus is shared with some of the international trade literature, such as \cite{Lafourcade_Thisse}, \cite{hummels2007} and \cite{Behar_Venables}. Along with the pattern of total transport costs over time, our empirical set-up also allows us to investigate whether additive costs we put forward so far looking at the average, is a long-lasting, i.e. a structural phenomenon.
 
 \paragraph{Total transport costs: A first look at the trend patterns} Figure \ref{fig:Trends_in_TC} displays the evolution of total transport costs over the period, summing the additive and the ad-valorem estimated costs expressed in percentage of the fas price,\footnote{Specifically, we use the yearly values of the estimated transport cost components averaged over the country/product dimensions (at the 3-digit level), corresponding to the numbers reported for each year in detail in the Online Appendix.
-Each yearly value is obtained as: $\widehat{\tau}+\frac{\widehat{t}}{\widetilde{p}}$.} by transport mode for each year between 1974 and 2019.
+Each yearly value is obtained as: $\widehat{\tau}-1+\frac{\widehat{t}}{\widetilde{p}}$.} by transport mode for each year between 1974 and 2019.
 
 \begin{figure}[htbp]
 \caption{Trend in estimated transport costs (yearly mean value)}
@@ -533,58 +535,58 @@ If the share of additive costs in total costs roughly amounts to 44\% (30\%) in 
 
 \paragraph{Wrap-up} Our results so far show that total transport costs have strongly reduced between 1974 and 2019, especially in ocean transport. Further, if additive costs represent a substantial share of total transport costs considered on average over the period for both transport modes, a yearly-based inspection reveals marked fluctuations in the share of additive costs in total costs over time. In air transport specifically, the share of additive costs has been declining over time since the beginning of the 1990s. This suggests that the transport costs decrease is more than proportionally due to additive costs in air transport, but more equally shared between ad-valorem and additive costs in ocean transport.
 
-In the following sections, we check the robustness of these results to important checks regarding the separability assumption of country-good fixed effects and potential endogeneity biases.
+In the following section, we check the robustness of these results regarding two important issues, the separability assumption of country-good fixed effects and potential endogeneity biases.
 
 \subsection{Robustness analysis \label{sec:robustness}}
 
 
 \subsubsection{Robustness to the separability assumption}
 In this section, we provide a robustness analysis to the separability assumption of country-good fixed effects, which considers (following \citealp{Irrazabal_2015}) that both the ad-valorem and the additive costs are separable between the origin country ($i$) and the product ($s(k)$) dimensions.
-That is, we relax Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}) to model $t_{is(k)}$ and $t_{is(k)}$ (on a yearly/transport mode basis).
+That is, we relax Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}) to model $\tau_{is(k)}$ and $t_{is(k)}$ (on a yearly/transport mode basis).
 Yet, this comes at the cost of having to estimate a much larger number of fixed effects (for approx. 200 countries of origin and 200 sectors at the 3-digit level, this means estimating 40,000 versus 400 fixed effects, per year and per transport mode), making the estimation (all the more given our non-linear setting) intractable in practice.
 This drives us to conduct the analysis on a sub-sample of trade flows, upon which two estimations are conducted (for every year and each transport mode): with the separability assumption (Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}) hold, our baseline case) and without.
 For each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows. Table \ref{tab:robustness_separability} shows a summary of the results, considering the average estimated values over the period (by transport mode).
-
-\begin{table}[htbp]
-  \centering
-  \caption{Robustness to the separability assumption (average over the period) - restricted sample}
-\begin{center}
-    \begin{tabular}{lcc|cc}
-    \hline \hline
-    \multicolumn{5}{c}{Mean value over 1974-2019} \\
- \multicolumn{5}{c}{3 digits} \\    \hline \hline
-   Mode  & \multicolumn{2}{c|}{Air} & \multicolumn{2}{c}{Vessel} \\ \hline
-   Separability & No  & Yes (baseline) & No & Yes (baseline)\\ \hline
-    \multicolumn{5}{l}{\textit{Additive term} ($\widehat{t}/\widetilde{p}$.
-in \%)}  \\
-    Mean  & 1.76 & 1.96 & 2.61 & 2.99 \\
-    Median &0.65 & 0.84 &1.83 & 2.23 \\ \hline
-    \multicolumn{5}{l}{\textit{Ad-valorem term} ($\widehat{\tau}$, in \%)}\\
-    Mean  & 1.04 & 0.94 & 2.43 & 2.40 \\
-    Median & 0.56 & 0.83 & 2.06 & 2.04 \\ \hline
-\multicolumn{5}{l}{\textit{Share of additive costs in total costs (in \%)}} \\
-    Mean  & 62.8  & 67.5  & 51.8  & 55.4 \\
-    Median & 54.1  & 50.5  & 47.0  & 52.2 \\  \hline
- \textit{Diagnostic test} & & &  &  \\
-    %$R^2$    & \multicolumn{1}{c}{0.80} & \multicolumn{1}{c}{0.68} & \multicolumn{1}{c}{0.67} & \multicolumn{1}{c}{0.45} \\
-    %SER   & \multicolumn{1}{c}{0.57} & \multicolumn{1}{c}{0.72} & \multicolumn{1}{c}{0.53} & \multicolumn{1}{c}{0.69} \\
-    AIC criteria & 4657.60 & 4654.23 & 10744.83 & 10690.80 \\ \hline
-    %Log-likelihood & \multicolumn{1}{c}{-1757.75} & \multicolumn{1}{c}{-2258.24} & \multicolumn{1}{c}{-4018.51} & \multicolumn{1}{c}{-5220.00} \\ \hline
-\# observations & 2381 & 2381 & 2798 & 2798 \\
-\# origin country & 13.4 & 13.4 & 19.8 & 19.8 \\
-\# products & 25.5 & 25.5 & 53 & 53 \\ \hline \hline
-    \end{tabular}%
-\end{center}
-\parbox[l]{12cm}{\footnotesize{Notes: Estimations are performed on a restricted sample, based on the following rule: for each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows.
-The additive term is expressed in fraction of fas price. 1989 omitted in 3-digit estimation for air.}}
-\label{tab:robustness_separability}
-\end{table}
+%
+%\begin{table}[htbp]
+%  \centering
+%  \caption{Robustness to the separability assumption (average over the period) - restricted sample}
+%\begin{center}
+%    \begin{tabular}{lcc|cc}
+%    \hline \hline
+%    \multicolumn{5}{c}{Mean value over 1974-2019} \\
+% \multicolumn{5}{c}{3 digits} \\    \hline \hline
+%   Mode  & \multicolumn{2}{c|}{Air} & \multicolumn{2}{c}{Vessel} \\ \hline
+%   Separability & No  & Yes (baseline) & No & Yes (baseline)\\ \hline
+%    \multicolumn{5}{l}{\textit{Additive term} ($\widehat{t}/\widetilde{p}$.
+%in \%)}  \\
+%    Mean  & 1.76 & 1.96 & 2.61 & 2.99 \\
+%    Median &0.65 & 0.84 &1.83 & 2.23 \\ \hline
+%    \multicolumn{5}{l}{\textit{Ad-valorem term} ($\widehat{\tau}$, in \%)}\\
+%    Mean  & 1.04 & 0.94 & 2.43 & 2.40 \\
+%    Median & 0.56 & 0.83 & 2.06 & 2.04 \\ \hline
+%\multicolumn{5}{l}{\textit{Share of additive costs in total costs (in \%)}} \\
+%    Mean  & 62.8  & 67.5  & 51.8  & 55.4 \\
+%    Median & 54.1  & 50.5  & 47.0  & 52.2 \\  \hline
+% \textit{Diagnostic test} & & &  &  \\
+%    %$R^2$    & \multicolumn{1}{c}{0.80} & \multicolumn{1}{c}{0.68} & \multicolumn{1}{c}{0.67} & \multicolumn{1}{c}{0.45} \\
+%    %SER   & \multicolumn{1}{c}{0.57} & \multicolumn{1}{c}{0.72} & \multicolumn{1}{c}{0.53} & \multicolumn{1}{c}{0.69} \\
+%    AIC criteria & 4657.60 & 4654.23 & 10744.83 & 10690.80 \\ \hline
+%    %Log-likelihood & \multicolumn{1}{c}{-1757.75} & \multicolumn{1}{c}{-2258.24} & \multicolumn{1}{c}{-4018.51} & \multicolumn{1}{c}{-5220.00} \\ \hline
+%\# observations & 2381 & 2381 & 2798 & 2798 \\
+%\# origin country & 13.4 & 13.4 & 19.8 & 19.8 \\
+%\# products & 25.5 & 25.5 & 53 & 53 \\ \hline \hline
+%    \end{tabular}%
+%\end{center}
+%\parbox[l]{12cm}{\footnotesize{Notes: Estimations are performed on a restricted sample, based on the following rule: for each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows.
+%The additive term is expressed in fraction of fas price. 1989 omitted in 3-digit estimation for air.}}
+%\label{tab:robustness_separability}
+%\end{table}
 
 \begin{table}[htbp]
 	\centering
-	\caption{Robustness to the separability assumption (average over the period) - restricted sample}
+	\caption{Robustness to the separability assumption - restricted sample}
 	\begin{center}
-			\input{table4.tex}
+			\input{Table4_reshaped.tex}
 	\end{center}
 	\parbox[l]{12cm}{\footnotesize{Notes: Estimations are performed on a restricted sample, based on the following rule: for each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows.
 			The additive term is expressed in fraction of fas price.}}
@@ -657,7 +659,9 @@ Therefore, we propose to compare our main estimates with those stemming from a t
 %In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
 
 
+\subsubsection{XXX}
 
+\textbf{Il me semble qu'on avait dit qu'on mettait une 3e robustesse. Non? Faire une transition pour la suite.}
 
 
 
@@ -677,10 +681,7 @@ Further, and as in \cite{hummels_skiba}, \cite{hummels2007} writes the per kg sh
 TC_{ikt}\equiv \frac{p_{ikt}-\widetilde{p}_{ikt}}{\widetilde{p}_{ikt}} = \widetilde{p}_{ikt}^{-\beta}X_{ikt} \label{eq:Hummel_benchmarkeq}
 \end{equation}
 
-Notice that $\beta$ can be interpreted as the elasticity of transport costs to the export price (in absolute value).
-As such, a value of $\beta = 0$ corresponds to the standard case of ``iceberg'' costs, in which transport costs are purely ad valorem.
-At the other extreme, $\beta = 1$ means that all transport costs are additive.
-Accordingly, the estimated value of $\beta$ can be interpreted as the share of additive costs in total transport costs.
+As already noticed, $\beta$ can be interpreted as the elasticity of transport costs to the export price (in absolute value), also equal to the share of additive costs in total transport costs.
 Equation (\ref{eq:Hummel_benchmarkeq}) is the baseline specification from which \cite{hummels2007} decomposes the changes in transport costs over time between trade composition effects and changes in ``pure'' transport costs, as described in more detail in Appendix \ref{app:compare_Hummels}.
 In doing so, \cite{hummels2007} implicitly assumes $\beta$ constant across the triplet origin country origin/product/year.
 Put differently, this means that the share of additive costs in total costs does not vary across these dimensions.
@@ -688,16 +689,16 @@ Put differently, this means that the share of additive costs in total costs does
 \paragraph{Challenging the $\beta$'s constancy assumption} As Figure \ref{fig:part_cout_additif} (based on the yearly estimates of transport costs averaged over the country/sector dimension) suggests, the share of additive costs is rather varying over time, in both transport modes.
 %In light of this, one may wonder about the constancy of the share of additive costs along the pair product/origin country hypothesized by \cite{hummels2007}.
 We investigate this point deeper by reporting the histogram of the distribution of the share of additive costs in total costs.
-To do so, we start from Equation (\ref{eq:base_estimee}) with the trade costs measure on the left-hand side, from which we deduce the formulae to get the elasticity of transport costs to the export price, i.e.
+To do so, we start from Equation (\ref{eq:base_estimee}) with the trade costs measure on the left-hand side, from which we deduce the formulae to get the elasticity of transport costs to the export price on a per product-year-country basis, i.e.
 $\beta$, according to:
 \begin{eqnarray*}
-\beta_{ikt} &\equiv& \frac{\partial TC_{ikt}}{\partial \widetilde{p}_{ikt}}\frac{\widetilde{p}_{ikt}}{TC_{ikt}} \\
-&=& \frac{\widehat{t}_{ikt}/\widetilde{p}_{ikt}}{\widehat{t}_{ikt}/\widetilde{p}_{ikt}+\widehat{\tau}_{ikt}},
+\beta_{ikt} &\equiv& -\frac{\partial TC_{ikt}}{\partial \widetilde{p}_{ikt}}\frac{\widetilde{p}_{ikt}}{TC_{ikt}} \\
+&=& \frac{\widehat{t}_{is(k)t}/\widetilde{p}_{ikt}}{\widehat{t}_{is(k)t}/\widetilde{p}_{ikt}+\widehat{\tau}_{is(k)t}-1},
 \end{eqnarray*}
 
-\noindent making use of our first-stage estimates for both the additive and the ad-valorem components ($\widehat{t}_{ikt}$ and $\widehat{\tau}_{ikt}$).
-We can then rebuild the value of the elasticity on a per product-year-country basis.
-The histogram of the distribution of the estimated $\beta_{ikt}$ is reported in Figure \ref{fig:histogram_beta}, in panels (a) and (b) for air and maritime transport respectively.
+\textbf{ajoute un s(k) sur nos valeurs estimees}
+
+\noindent making use of our first-stage estimates for both the additive and the ad-valorem components ($\widehat{t}_{is(k)t}$ and $\widehat{\tau}_{is(k)t}$). The histogram of the distribution of the estimated $\beta_{ikt}$ is reported in Figure \ref{fig:histogram_beta}, in panels (a) and (b) for air and maritime transport respectively.
 
 
 \begin{figure}[htbp]
@@ -815,6 +816,7 @@ Complementing the findings of Section \ref{sec:results_decomposition}, these res
 
 \section{The role of additive cost: Theoretical insights}\label{sec:theory}
 
+\textbf{ATTENTION AJUSTER LES FIGURES ET CHIFFRES A NOUVELLE CALIBRATION}
 
 In this section, we explore the implications of our empirical results on theoretical grounds. While the whole bulk of the trade literature investigates the role of trade costs modelled as ad-valorem costs (e.g., iceberg trade costs), not much is said about the role of the additive component. One potential explanation is the lack of empirical estimates about the size of additive costs. Our results may thus usefully palliate this limitation. Specifically, we make use of our empirical results to investigate the welfare consequences of a reduction in international transport costs, when such a reduction also occurs through a reduction in the additive component. \cite{Irrazabal_2015}, \cite{sorensen2014} and \cite{Lashkaripour_JIE2020} have preceded us on this issue. We differentiate from them in the following way. \cite{sorensen2014} explores the welfare effects of a trade costs reduction depending on whether they are either fully ad-valorem or fully additive. In contrast, we provide a quantification of such welfare gains, as in \cite{Irrazabal_2015} or \cite{Lashkaripour_JIE2020}. To do so, we rely on our empirical estimates of the transport costs values, that induce a combined decrease in both the ad-valorem and the additive components over the last decades. In a partial-equilibrium model with perfect competition, \cite{Lashkaripour_JIE2020} obtains that welfare gains are not substantially different whether the transport cost decrease implies an additive component or not. This stands in contrast with the conclusion reached by \cite{sorensen2014} (analytically) and \cite{Irrazabal_2015} (quantitatively) in M\'{e}litz' type models. Anticipating on our results, we also share the result, that the transport cost reduction implies substantially larger welfare gains when they are achieved through a reduction in the additive component. As first explanation, it should be noted that, in \cite{Lashkaripour_JIE2020}'s paper, the case with additive costs relies on a share of additive costs that remains negligible. In this context, one might expect that whether additive costs are present or not makes little difference. As underlined by \cite{Lashkaripour_JIE2020}, a second explanation may rely on the modeling framework. While \cite{Lashkaripour_JIE2020} models a perfectly competitive multi-sector model, we as in \cite{sorensen2014} and \cite{Irrazabal_2015} adopt a model with monopolistic competition and firm selection \`{a} la \cite{melitz} or \cite{chaney2008}. In this setting, we indeed show that additive costs do modify the selection of firm on both the domestic and the export markets, e.g the extensive margin of trade, whose role in the welfare gains of trade liberalization lies at the heart of the New Trade models  \`{a} la \cite{melitz}. Put differently, leaving aside the selection issue leads to underestimate the welfare gains that can be achieved by a reduction in the additive component of transport costs.
 
@@ -1589,8 +1591,6 @@ In this section, we explain in more detail the method employed to eliminate the 
 
 \subsection{More on our methodology}
 
-\textbf{JE REPORTE ICI LA VERSION DANS LE MAIN TEXT DE LA VERSION SOUMISE. IL FAUT RESUMER.}
-
 
 \subsubsection{Estimation method for each additive and multiplicative component}
 
@@ -1598,13 +1598,47 @@ We begin by describing the estimation method to extract the fitted and unfitted 
 \smallskip
 
 \paragraph{Obtaining the ``pure'' transport costs component series} - The empirical strategy to find the fitted transport cost measure (i.e. extracting from trade composition effect) can be described as a two-stage process.
-First, we decompose the estimated measure in the three product/country/time dimensions, using fixed effects.
+First, we decompose the estimated measure in the three product/country/time dimensions, using fixed effects. In plain words, we measure how these costs have changed over time by blocking the composition of trade flows by product and country partners to the one observed in 1974 (the beginning of our sample).\smallskip
+
 For the estimated ad-valorem component, we estimate the following equation:
 \begin{eqnarray}
-\ln(\widehat{\tau}_{ikt})&=&\delta +\underbrace{\sum_{i \neq \text{ARG}}\alpha_i.\mathbbm{1}_i}_{(a)} + \underbrace{\sum_{s(k)\neq \text{011}}\beta_{s(k)}.\mathbbm{1}_{s(k)}}_{(b)} + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t}_{(c)}+\epsilon_{ikt} \label{eq:compeffects_mult}
+\ln(\widehat{\tau}_{ikt}-1)&=&\delta +\underbrace{\sum_{i \neq \text{ARG}}\alpha_i.\mathbbm{1}_i}_{(a)} + \underbrace{\sum_{s(k)\neq \text{011}}\beta_{s(k)}.\mathbbm{1}_{s(k)}}_{(b)} + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t}_{(c)}+\epsilon_{ikt} \label{eq:compeffects_mult}
 \end{eqnarray}
 
 \noindent where $\mathbbm{1}_i$ and $\mathbbm{1}_{s(k)}$ represent country and sector fixed effects.\footnote{Throughout the exercise, we consider Argentina, the sector 011 and the first year of our dataset 1974, as references for the country, product and year dummies.}  Equation (\ref{eq:compeffects_mult}) is estimated using OLS, with a weighting scheme based on the value of each flow in the total value of flows for the relevant year.
+
+In this exercise, we are interested in isolating the change in the time dimension of each transport cost component. This constitutes the second stage of our procedure. Based on Equation (\ref{eq:compeffects_mult}), we deduce after estimation that:
+
+\[\left\{
+  \begin{array}{lcl}
+  \text{For the year 1974:} &&  \widehat{\tau}_{is74} -1 = \exp(\delta +\alpha_i+\beta_s), \\
+  \text{For any year }t> 1974:&& \widehat{\tau}_{ist} -1 = \exp(\delta +\alpha_i+\beta_s)\times \exp(\gamma_t) \\
+  \end{array}
+\right.\]
+
+From this, we obtain the following recursive link: $\widehat{\tau}_{ist} -1 = (\widehat{\tau}_{is74}-1)\exp(\gamma_t)$. Given the constraint $\tau>1$, we rewrite to get the percentage change between year 1974 and any year $t>1974$:
+\begin{equation*}
+\Gamma_{ist} = 100.\frac{\widehat{\tau}_{ist}-1}{\widehat{\tau}_{is74}-1} = 100.\frac{(\widehat{\tau}_{is74}-1)\exp(\gamma_t)}{\widehat{\tau}_{is74}} = 100\exp(\gamma_t)
+\end{equation*}
+
+As such, the index of transport costs in year $t$ (relative to the reference year 1974) $\Gamma_{ist} $  only depends on the cost observed in 1974 and the time trend. Note that it is independent of the product-origin country pair, such that we can rewrite:
+\begin{equation}
+ \Gamma^{adv}_t= 100\exp(\gamma^{adv}_t)  \label{eq:tcadv_compoeffect}
+\end{equation}
+
+\noindent where the subscript $^{adv}$ clarifies that this time fixed effect is specific to the ad-valorem component. \medskip
+
+\textbf{REPRENDRE AVEC GUILLAUME. }
+
+%At this stage though, it remains specific to a product-origin country pair.
+%Next step is to build the index $\Gamma^{adv}_t$ such that:
+%\begin{equation}
+% \Gamma^{adv}_t= 100\frac {\bar{\tau}_{1974}.\exp(\gamma_t)} {\bar{\tau}_{19741}  \label{eq:tcadv_compoeffect}
+%\end{equation}
+%\noindent that is, Equation (\ref{eq:comp_effects_adv}) with $\bar{\tau}_{1974} = \exp(\delta + \sum_i \alpha_i + \sum_k \beta_k$) the mean (ad-valorem) transport cost in 1974.
+
+\textbf{STOP HERE}
+
 As for the additive component, given that the sector fixed effect and the country fixed effect are additive rather than multiplicative by construction, we estimate the following equation using non-linear least squares:\footnote{For sake of notational simplicity, we do not distinguish the coefficients associated with the fixed effects between Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}), even if they are specific to the type of transport costs considered (e.g. the series of $\gamma_t$ differs from one estimation to the other).
 Note that we apply the same weighting scheme as for the OLS regression (based on the relative value of the flow).}
 
@@ -1612,32 +1646,34 @@ Note that we apply the same weighting scheme as for the OLS regression (based on
 \begin{eqnarray}
 \ln(\widehat{t}_{ikt})&=&\ln\left( \delta + \underbrace{\sum_{i \neq \text{ARG}}  \alpha_i.\mathbbm{1}_i}_{(a)}+\underbrace{\sum_{s(k)}\beta_{s(k)}.\mathbbm{1}_{s(k)}}_{(b)}\right) + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t}_{(c)}+\epsilon_{ikt} \label{eq:compeffects_add}
 \end{eqnarray}
+
+
 As displayed in Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}), we decompose the estimated transport cost component in three elements: the country dimension (Term (a)), the product dimension (Term (b)) and the pure transport costs time trend (Term (c)).
 Note that Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}) preserve our specification of the ad-valorem and additive costs of Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}), as we consider that the iceberg cost is the product of the country of origin and the goods dimension, while the additive cost is the sum of the two dimensions.
 Both equations are estimated by transport mode.\smallskip
 
-In this exercise, we are interested in isolating the change in the time dimension of each transport cost component.
-This constitutes the second stage of our procedure.
-As for the ad-valorem component defined in $[1;+\infty]$, from the estimation of Equation (\ref{eq:compeffects_mult}), we build the variable $\Gamma^{adv}_t$, for each year $t\geq 1974$, according to:
+After estimating Equation (\ref{eq:compeffects_add}), we can rebuild the additive component according to:
+\[\left\{
+  \begin{array}{lcl}
+\text{For the year 1974:}&&\widehat{t}_{is74}=  \delta + \alpha_i+ \beta_s, \\
+\text{For any year}~t> 1974:&&\widehat{t}_{ist}=\left(\delta + \alpha_i+ \beta_s\right).\exp(\gamma_t)
+\end{array}
+\right.\]
+
+From this, we deduce the recursive link: $\widehat{t}_{ist} = \widehat{t}_{is74} \times \exp(\gamma_t)$.
+Given the constraint $t>0$, we then obtain the percentage change from 1974 from $\Gamma^{add}_{ist} = 100\frac{\widehat{t}_{ist}}{\widehat{t}_{ik74}} = 100\exp(\gamma_t)$. Again, it is independent of the product-origin country pair. We can thus rewrite the time-trend series for the additive transport cost component as:
 \begin{equation}
-\Gamma^{adv}_t = 100.\frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1} \label{eq:comp_effects_adv}
+\Gamma^{add}_t  = 100\exp(\gamma^{add}_t) \label{eq:tcadd_compoeffect}
 \end{equation}
 
-\noindent with $\bar{\tau}_{1974} = \exp(\delta +\sum_i \alpha_i +\sum_s \beta_s)$ the mean ad-valorem transport cost in 1974 (see details in Appendix \ref{app:comp-effects}).
-In plain words, we measure how these costs have changed over time by blocking the composition of trade flows by product and country partners to the one observed in 1974 (the beginning of our sample).
 
-As for the additive cost defined in $[0;+\infty]$, we build the variable $\Gamma^{add}_t$, the reference year being 1974 (ie, with $\gamma_{1974}=0$) according to:
-\begin{equation}
-\Gamma^{add}_t = 100.\exp(\gamma_t) \label{eq:comp_effects_add}
-\end{equation}
-
-\noindent As a result, the two series $\Gamma^{adv}_t$ and $\Gamma^{add}_t$ have a straightforward interpretation in percentage changes from the initial value of 100 for $t=1974$.
+\noindent where the subscript $^{add}$ clarifies that this time fixed effect is specific to the additive component. As a result, the two series $\Gamma^{adv}_t$ and $\Gamma^{add}_t$ have a straightforward interpretation in percentage changes from the initial value of 100 for $t=1974$.
 
 
-\paragraph{Obtaining the unfitted measures} - The objective is to find the unfitted transport cost component (additive and multiplicative) built as an index with reference value 100 in 1974, starting from the estimated values previously obtained ($\widehat{\tau}_t$, $\widehat{t}_t$, for each year $t$ from 1974 to 2019).
+\paragraph{Obtaining the unfitted measures} - The objective here is to express the unfitted transport cost component (additive and multiplicative) built as an index with reference value 100 in 1974, starting from the estimated values previously obtained ($\widehat{\tau}_t$, $\widehat{t}_t$, for each year $t$ from 1974 to 2019).
 To do so, we apply the simple formula to get the following indices, for the ad-valorem and the additive cost components respectively:
 
--------IL FAUT INTRODUIRE LES PRIX FOB. Sinon, les coûts additifs ne sont pas modifiés de l’inflation -----
+\textbf{ENLEVER LE TREND LIE A L'INFLATION. POURQUOI SEULEMENT ICI, ET PAS DANS LE FITTED? that exprime en USD aussi. REPRENDRE AVEC GUILLAUME}
 
 $$\Gamma^{adv, raw}_t = 100\times\frac{\widehat{\tau}_t}{\widehat{\tau}_{1974}},\qquad \Gamma^{add, raw}_t = 100\times\frac{\widehat{t}_t}{\widehat{t}_{1974}}$$
 
@@ -1645,34 +1681,36 @@ $$\Gamma^{adv, raw}_t = 100\times\frac{\widehat{\tau}_t}{\widehat{\tau}_{1974}},
 
 \subsubsection{Estimation method for the total transport cost measures}
 
-We also build two measures of the ``total'' transport costs, combining our estimates of the two additive and ad-valorem components, for both the unfitted series and the pure transport cost series (i.e. composition effects excluded).
-As for each additive and ad-valorem component, the objective is to get a measure of total transport cost changes built as an index starting from the value 100 in 1974.
-Even if obeying the same logic, we proceed slightly differently for the unfitted and the fitted measures, as we now explain.
+We also build two measures of the ``total'' transport costs, combining our estimates of the two additive and ad-valorem components, for both the unfitted series and the pure transport cost series (i.e. composition effects excluded). Specifically, the objective is to get a measure of total transport cost changes built as an index starting from the value 100 in 1974. Even if obeying the same logic, we proceed slightly differently for the unfitted and the fitted measures, as we now explain.
 \smallskip
 
 \paragraph{Obtaining the unfitted total transport cost index} - For each transport mode, we build the total transport cost series based on Equation (\ref{eq:base_estimee}) according to:
-$$\widehat{tc}^{raw}_t= \widehat{\tau}^{adv}_t -1 + \frac{\widehat{t}_t}{\widetilde{p}_t}$$
-\noindent where $\widehat{\tau}^{adv}_t$ and $\widehat{t}_t$ are the average values over the country/sector dimension estimated (conditional on a year and a transport mode), as explained in Section \ref{sec:data_method}.
-Recall that $\widehat{\tau}^{adv}_t-1$ measures the ad-valorem transport cost component and $\frac{\widehat{t}_t}{\widetilde{p}_t}$ the additive component, both expressed as percentage of the fas price.
+$$\widehat{tc}^{raw}_t= \widehat{\tau}^{adv}_t + \frac{\widehat{t}_t}{\widetilde{p}_t}$$
+\noindent where $\widehat{\tau}^{adv}_t$ and $\widehat{t}_t$ are the average values over the country/sector dimension estimated (conditional on a year and a transport mode), as explained in Section \ref{sec:data_method}, \textbf{and $\widetilde{p}_t$ the corresponding average observed fas price}.
+Recall that $\widehat{\tau}^{adv}_t$ measures the ad-valorem transport cost component and $\frac{\widehat{t}_t}{\widetilde{p}_t}$ the additive component, both expressed as percentage of the fas price.
 We then transform this value in an index with base year 1974, applying a similar formula as above (by transport mode):
-$$\Gamma^{tc, raw}_t = 100\frac{\widehat{tc}^{raw}_t -1 }{\widehat{tc}^{raw}_{1974}-1}$$
+%$$\Gamma^{tc, raw}_t = 100\frac{\widehat{tc}^{raw}_t -1 }{\widehat{tc}^{raw}_{1974}-1}$$
+
+$$\Gamma^{tc, raw}_t = 100\frac{\widehat{tc}^{raw}_t  }{\widehat{tc}^{raw}_{1974}}$$
+
+\textbf{POURQUOI UN (-1) AVANT?}
 
 \paragraph{Obtaining the fitted total transport cost index} - The same logic as above applies to constructing the fitted measure of total transport cost (i.e. composition effect excluded), with one notable exception: Fitted ad-valorem and additive components have not been estimated in value, but extracted and built as indices.
 In a first step then, we rebuild the fitted measures of each transport cost component in value starting from these indices.
 For the ad-valorem component, this can be obtained by rewriting Equation (\ref{eq:tcadv_compoeffect}):
 
-$$\widehat{\tau}^{pure, adv}_t = \frac{\Gamma^{adv}_t \left(\bar{\tau}_{1974}-1\right)}{100} +1$$
+$$\widehat{\tau}^{pure, adv}_t = \bar{\tau}_{1974}\frac{\Gamma^{adv}_t }{100} $$
 
 with $\widehat{\tau}^{pure, adv}_t \equiv \bar{\tau}_{1974}.\exp(\gamma_t)$ the yearly value of the pure (fitted) ad-valorem cost.
 A similar reasoning starting from Equation (\ref{eq:tcadd_compoeffect}) gives the fitted value for the additive cost component as:
 
 $$\widehat{t}^{pure}_t = \frac{\Gamma^{add}_t}{100}$$
 
-with $\widehat{t}^{pure}_t \equiv \exp(\gamma_t)$ the yearly value of the pure (fitted) additive cost.
+with $\widehat{t}^{pure}_t \equiv \exp(\gamma_t)$ the yearly value of the pure (fitted) additive cost. \textbf{POURQUOI PAS tbar 1974? On reconstruit la mesure en USD? PAS CLAIR}
 
 
-We then deduce the fitted value of the overall cost according to:
-$$\widehat{tc}^{pure}_t= \widehat{\tau}^{pure, adv}_t  + \widehat{t}^{pure}_t$$
+We then deduce the fitted value of the overall cost according to: \textbf{il manque le fas price, je l'ajoute pour la composante additive}
+$$\widehat{tc}^{pure}_t= \widehat{\tau}^{pure, adv}_t  + \frac{\widehat{t}^{pure}_t}{\widetilde{p}^{fas}_t}$$
 
 Last, we transform this (fitted) measure of total transport cost in an index with base year 1974, applying a similar formula as above (by transport mode):
 $$\Gamma^{tc}_t = 100\frac{\widehat{tc}^{pure}_t -1 }{\widehat{tc}^{pure}_{1974}-1}$$
@@ -1684,55 +1722,7 @@ $$\Gamma^{tc}_t = 100\frac{\widehat{tc}^{pure}_t -1 }{\widehat{tc}^{pure}_{1974}
 
 In this section, we detail our methodology to extract the time trend in the pure (or fitted) transport cost component, for both the ad-valorem and the additive component.
 
-\paragraph{For the ad-valorem component} - Consider first the multiplicative transport cost component.
-Rewriting Equation (\ref{eq:compeffects_mult}) by taking the exponential, we get:
-
-\begin{equation*}
-\widehat{\tau}_{ikt}=\exp\left(\delta + \sum_{i \neq \text{AFG}}\alpha_i.\mathbbm{1}_i+\sum_{k\neq \text{011}}\beta_k.\mathbbm{1}_k\right).\exp\left(\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t\right) .\exp\left(\epsilon_{ikt}\right)
-\end{equation*}
-
-Based on this equation, we deduce after estimation that:
-
-\[\left\{
-  \begin{array}{lcl}
-  \text{For the year 1974:} &&  \widehat{\tau}_{is74} = \exp(\delta +\alpha_i+\beta_s), \\
-  \text{For any year }t> 1974:&& \widehat{\tau}_{ist} = \exp(\delta +\alpha_i+\beta_s)\times \exp(\gamma_t) \\
-  \end{array}
-\right.\]
-
-From this, we obtain the following recursive link: $\widehat{\tau}_{ist} = \widehat{\tau}_{is74}\exp(\gamma_t)$.
-Given that $\tau >1$, we can rewrite to get the percentage change between year 1974 and any year $t>1974$:
-\begin{equation*}
-\Gamma_{ist} = 100.\frac{\widehat{\tau}_{ist}-1}{\widehat{\tau}_{is74}-1} = 100.\frac{\widehat{\tau}_{is74}\exp(\gamma_t)-1}{\widehat{\tau}_{is74}-1}
-\end{equation*}
-
-As such, the index of transport costs in year $t$ (relative to the reference year 1974) $\Gamma_{ist} $  only depends on the cost observed in 1974 and the time trend.
-At this stage though, it remains specific to a product-origin country pair.
-Next step is to build the index $\Gamma^{adv}_t$ such that:
-\begin{equation}
- \Gamma^{adv}_t= 100\frac {\bar{\tau}_{1974}.\exp(\gamma_t)-1} {\bar{\tau}_{1974}-1}  \label{eq:tcadv_compoeffect}
-\end{equation}
-\noindent that is, Equation (\ref{eq:comp_effects_adv}) with $\bar{\tau}_{1974} = \exp(\delta + \sum_i \alpha_i + \sum_k \beta_k$) the mean (ad-valorem) transport cost in 1974.
-
-\paragraph{For the additive component} - After estimating Equation (\ref{eq:compeffects_add}), we can rebuild the additive component according to:
-\[\left\{
-  \begin{array}{lcl}
-\text{For the year 1974:}&&\widehat{t}_{is74}=  \delta + \alpha_i+ \beta_s, \\
-\text{For any year}~t> 1974:&&\widehat{t}_{ist}=\left(\delta + \alpha_i+ \beta_s\right).\exp(\gamma_t)
-\end{array}
-\right.\]
-
-From this, we deduce the recursive link: $\widehat{t}_{ist} = \widehat{t}_{is74} \times \exp(\gamma_t)$.
-Given the constraint $t>0$, we then obtain the percentage change from 1974 from:
-
-\begin{equation}
-\Gamma^{add}_{ist} = 100\frac{\widehat{t}_{ist}}{\widehat{t}_{ik74}} = 100\exp(\gamma_t) \label{eq:indice_add}
-\end{equation}
-
-\noindent Note that it is independent of the product-origin country pair. We can thus rewrite the time-trend series for the additive transport cost component as:
-\begin{equation}
-\Gamma^{add}_t  = 100\exp(\gamma_t) \label{eq:tcadd_compoeffect}
-\end{equation}
+\paragraph{For the additive component} -
 
 
 \subsection{Comparing with \cite{hummels2007} \label{app:compare_Hummels}}
