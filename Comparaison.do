@@ -11,6 +11,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
 	global dir_temp ~/Downloads/temp_stata
 	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
+	global dir_redaction  "~/Répertoires Git/trade_costs_git/redaction/JEGeo/revision_JEGeo/revised_article"
 	
 	
 }
@@ -444,14 +445,18 @@ graph twoway (scatter beta_`method2'_mean beta_`method1'_mean) (lfit beta_`metho
 			 ytitle("`method1'") xtitle("`method2'") scheme(s1mono)
 			 
 graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.png", replace
+graph export "$dir_redaction/scatter_comparaison_`method1'_`method2'.png", replace
 
 
 keep year mode beta* 
 
 
+
 reshape long beta_, i(year mode) j(type) string
 gen method="`method2'"
-replace method="`method1'" if strmatch(type,"`method1'*")!=0
+tab type
+replace method="`method1'" if strmatch(type,"`method1'_*")!=0
+
 
 * faire les différents cas possibles**Mais je ne crois plus que ce soit utile ? GD 2 mars 2021
 /*
@@ -470,6 +475,7 @@ replace type = substr(type, 24,.) if strmatch(type,"`method1'*")!=0
 
 replace type = subinstr(type,"${method1}_","",.)
 replace type = subinstr(type,"${method2}_","",.)
+
 reshape wide beta_,i(year mode type) j(method) string
 
 
@@ -495,6 +501,7 @@ graph twoway (line beta_`method1' year) (line beta_`method2' year), by(mode type
 
 
 graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.png", replace
+graph export "$dir_redaction/scatter_chronology_`method1'_`method2'.png", replace
 
 
 end
@@ -515,8 +522,8 @@ global method1 baseline
 
 
 *global method2 IV_referee1_panel
-global method2 IV_ref1_y_5_3
-*global method2 baseline10
+*global method2 IV_ref1_y_5_3
+global method2 baseline10
 *global method2 qy1_qy
 *global method2 hs10_qy1_qy
 
@@ -524,7 +531,7 @@ global method2 IV_ref1_y_5_3
 
 **Où "baseline 10" c’est celle avec les produits à 10 digits.
 
-
+/*
 
 *capture erase "$dir_comparaison/stats_comp_baseline_referee1.dta"
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
@@ -558,7 +565,7 @@ use stats_comp_${method1}_$method2.dta
 export excel using stats_comp_${method1}_$method2.xls, firstrow(varl) replace
 
 * Pb sur les graphiques sur baseline10 as methode1
-
+*/
 comparaison_graph $method1 $method2
 
 

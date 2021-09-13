@@ -371,7 +371,7 @@ These results constitute our first original contribution to the literature.
 \begin{table}[htbp]
  \centering
 \caption{Transport costs estimates: summary} \vspace{5mm} \label{tab:summary_results}
-	\input{Table1_reshaped.tex}
+	\input{Table1.tex}
 		\begin{tablenotes}
 		\tiny
 		\item Statistics are obtained weighting each observation by its value relative to total trade flows.
@@ -659,10 +659,34 @@ Therefore, we propose to compare our main estimates with those stemming from a t
 %In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
 
 
-\subsubsection{XXX}
+\subsubsection{Robustness to aggregation}
 
-\textbf{Il me semble qu'on avait dit qu'on mettait une 3e robustesse. Non? Faire une transition pour la suite.}
+Current data are available at the 10-digit level for products (HS10).
+Theoretically, they should be available from 1989. 
+But because of the COVID situation, it was only possible to get 1997-1999 and 2001-2019.
+Yet, as \ref{tab: baseline10} shows, the results are similar when using 10-digit product and 5-digit products. 
 
+\begin{table}[htbp]
+	\centering
+	\caption{Transport costs estimates: robustess to agregation} \vspace{5mm} \label{tab:baseline10}
+	\input{Table_baseline10.tex}
+	\begin{tablenotes}
+		\tiny
+		\item Statistics for 1997-1999 and 2002-2019
+		\item Statistics are obtained weighting each observation by its value relative to total trade flows.
+		\item \textbf{Model (a): With ad-valorem transport costs only}
+		\item \textbf{Model (b): With additive and ad-valorem transport costs}
+	\end{tablenotes}
+\end{table}
+   
+
+\begin{figure}[htbp]
+	\caption{Transport cost time trends: robustness to agregation}
+	\label{fig:comp_IV_SITC5}
+	\begin{center}
+		\includegraphics[height=8cm]{scatter_chronology_baseline_baseline10.png}
+	\end{center}
+\end{figure}
 
 
 \section{Additive costs and transport costs time trends}\label{sec:results_trends}
