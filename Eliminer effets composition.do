@@ -860,6 +860,11 @@ generate terme_A_air_mp = terme_Adoll_air_mp /(prix_fob_air_mp)*100
 generate terme_A_ves_np = terme_Adoll_ves_np /(prix_fob_ves_np)*100
 generate terme_A_ves_mp = terme_Adoll_ves_mp /(prix_fob_ves_mp)*100
 
+generate terme_A_air_74=terme_Adoll_air_74/prix_fob_air_74
+generate terme_A_ves_74=terme_Adoll_ves_74/prix_fob_ves_74
+generate terme_A_ves_74_np=terme_Adoll_ves_74_np/prix_fob_ves_74_np
+generate terme_A_air_74_np=terme_Adoll_air_74_np/prix_fob_air_74_np
+
 
 
 export excel using "$dir_results/Effets de composition/table_extract_effetscomposition_`secteur'", replace firstrow(varlabels)
@@ -916,6 +921,7 @@ foreach secteur of local  liste_secteurs {
 
 
 local liste_secteurs all primary manuf
+
 foreach secteur of local  liste_secteurs {
 	eliminer_effets_composition air `secteur'  I
 	eliminer_effets_composition air `secteur'  obs
