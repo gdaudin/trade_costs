@@ -759,11 +759,12 @@ use "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.
 if "`type_TC'"== "obs" |  "`type_TC'"== "I"  {
 	generate `terme_type_TC'_`mode'_74  = `terme_type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
-	replace `terme_type_TC'_`mode'_mp = 100*(`terme_type_TC'_`mode'_74-1)*exp(effetfixe_`type_TC'_`mode')/(`terme_type_TC'_`mode'_74-1)	
+	replace `terme_type_TC'_`mode'_mp = 100*exp(effetfixe_`type_TC'_`mode')	
 
 	
 	*replace ecart_type_`type_TC'_`mode' = 100*(`terme_type_TC'_`mode'_74*exp(ecart_type_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)	
 	
+	* ATTENTION VERIFIER A CORRIGER 
 	gen terme_95_`type_TC'_`mode'_mp=100*(`terme_type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'+1.96*ecart_type_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)
 	gen terme_05_`type_TC'_`mode'_mp=100*(`terme_type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode'-1.96*ecart_type_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)
 	
