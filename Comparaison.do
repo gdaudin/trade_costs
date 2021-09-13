@@ -511,7 +511,7 @@ end
 *****************************************************************************************
 
 
-global method1 baseline
+*global method1 baseline
 *global method1 baseline10
 *baseline pour baseline 5/3
 *global method2 IV_ref1_y_5_3
@@ -522,9 +522,10 @@ global method1 baseline
 
 *global method2 IV_referee1_panel
 *global method2 IV_ref1_y_5_3
-global method2 baseline10
+*global method2 baseline10
 *global method2 qy1_qy
 *global method2 hs10_qy1_qy
+global method2  dbsamesample10_5_3
 
 
 
