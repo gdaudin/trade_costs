@@ -1497,7 +1497,11 @@ After estimating Equation (\ref{eq:compeffects_add}), we can rebuild the additiv
 
 
 
+<<<<<<< HEAD
 From this, we deduce the recursive link: $\widehat{t}_{ist} = \widehat{t}_{is74} \times \exp(\gamma_t)$.
+=======
+From this, we deduce the recursive link: $\widehat{t}_{ist} = \widehat{t}_{is74} \times \exp(\gamma_t)$. 
+>>>>>>> 5197719ff76e13ae8c9c2fb8570c9268dcc357b8
 Given the constraint $t>0$, we then obtain the percentage change from 1974 from $\Gamma^{add}_{ist} = 100\frac{\widehat{t}_{ist}}{\widehat{t}_{ik74}} = 100\exp(\gamma_t)$. Again, it is independent of the product-origin country pair. We can thus rewrite the time-trend series for the additive transport cost component as:
 \begin{equation}
 \Gamma^{add}_t  = 100\exp(\gamma^{add}_t) \label{eq:tcadd_compoeffect}
@@ -1540,6 +1544,7 @@ We then transform this value in an index with base year 1974, applying a similar
 %$$\Gamma^{tc, raw}_t = 100\frac{\widehat{tc}^{raw}_t -1 }{\widehat{tc}^{raw}_{1974}-1}$$
 
 $$\Gamma^{tc, raw}_t = 100\frac{\widehat{TC}^{raw}_t  }{\widehat{TC}^{raw}_{1974}}$$
+<<<<<<< HEAD
 
 
 
@@ -1548,6 +1553,16 @@ $$\Gamma^{tc, raw}_t = 100\frac{\widehat{TC}^{raw}_t  }{\widehat{TC}^{raw}_{1974
 \begin{eqnarray*}
 \widehat{\tau}^{pure, adv}_t -1 &=&\Gamma^{adv}_t \frac{\bar{\tau}_{1974} }{100} \\
 \widehat{t}^{pure}_t &=& \Gamma^{add}_t\frac{\bar{t}_{1974}}{100}
+=======
+
+
+
+\paragraph{Obtaining the fitted total transport cost index} - The same logic as above applies to constructing the fitted measure of total transport cost (i.e. composition effect excluded), with one notable exception: Fitted ad-valorem and additive components have not been estimated in value, but extracted and built as indices. In a first step then, starting from these indices, we rebuild the fitted measures of each transport cost component in value (expressed in percentage of the fas price in both cases):
+
+\begin{eqnarray*}
+\widehat{\tau}^{pure, adv}_t -1 &=&\Gamma^{adv}_t \frac{\bar{\tau}_{1974} }{100} \\
+\widehat{t}^{pure}_t &=& \Gamma^{add}_t\frac{\bar{t}_{1974}}{100} 
+>>>>>>> 5197719ff76e13ae8c9c2fb8570c9268dcc357b8
 \end{eqnarray*}
 
 
