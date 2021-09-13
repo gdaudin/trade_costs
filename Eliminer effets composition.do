@@ -359,11 +359,13 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" |  "`type_TC'"== "prix_fob" {
 	** log (tau ikt) = log (taui) + log (tauk) + log (taut) + residu
 	** avec i : pays origine, k = sector, t = year
 	use "$dir_temp/tmp_`mode'_`sitc'_`type_TC'.dta", clear
+	if ("`type_TC'"== "obs" |  "`type_TC'"== "I")  replace `terme_type_TC' = `terme_type_TC'-1
 	
 	if "`type_TC'"== "I" collapse (sum) yearly_share (mean) terme_I, by(iso_o year sector mode)
 	
 	gen ln_`terme_type_TC' = ln(`terme_type_TC')
 	
+
 	display "Regression `type_TC' `mode'"
 	
 	encode sector, gen(sector_num)
@@ -374,9 +376,8 @@ if "`type_TC'"== "obs" |  "`type_TC'"== "I" |  "`type_TC'"== "prix_fob" {
 	estimates save "$dir_results/Effets de composition/estimate_deter_couts_add_`mode'_`type_TC'.ster", replace
 	
 	predict ln_`terme_type_TC'_predict
-	generate `terme_type_TC'_predict=exp(ln_`terme_type_TC'_predict)
-	
-	
+	if "`type_TC'"== "obs" |  "`type_TC'"== "I"  generate `terme_type_TC'_predict=exp(ln_`terme_type_TC'_predict)+1
+	if "`type_TC'"== "prix_fob" `terme_type_TC'_predict=exp(ln_`terme_type_TC'_predict)
 	collapse (mean) `terme_type_TC'_predict, by(year)
 	rename `terme_type_TC'_predict `terme_type_TC'_`mode'_np
 	label var `terme_type_TC'_`mode'_np "Moyenne non-pondérée des predicts du 2e stage"
@@ -758,9 +759,8 @@ use "$dir_results/Effets de composition/database_pureTC_`mode'_`sitc'_`type_TC'.
 if "`type_TC'"== "obs" |  "`type_TC'"== "I"  {
 	generate `terme_type_TC'_`mode'_74  = `terme_type_TC'_`mode'_mp[1]
 	replace effetfixe_`type_TC'_`mode' = 0 if effetfixe_`type_TC'_`mode' == .
-	replace `terme_type_TC'_`mode'_mp = 100*(`terme_type_TC'_`mode'_74*exp(effetfixe_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)	
+	replace `terme_type_TC'_`mode'_mp = 100*(`terme_type_TC'_`mode'_74-1)*exp(effetfixe_`type_TC'_`mode')/(`terme_type_TC'_`mode'_74-1)	
 
-	
 	
 	*replace ecart_type_`type_TC'_`mode' = 100*(`terme_type_TC'_`mode'_74*exp(ecart_type_`type_TC'_`mode')-1)/(`terme_type_TC'_`mode'_74-1)	
 	
@@ -901,6 +901,7 @@ eliminer_effets_composition ves all obs_Hummels
 
 
 *local liste_secteurs all
+/*
 local liste_secteurs all primary manuf
 
 
@@ -909,12 +910,12 @@ foreach secteur of local  liste_secteurs {
 	eliminer_effets_composition ves `secteur'  prix_fob
 }
 
+*/
 
 
 
 
-
-
+local liste_secteurs all primary manuf
 foreach secteur of local  liste_secteurs {
 	eliminer_effets_composition air `secteur'  I
 	eliminer_effets_composition air `secteur'  obs
