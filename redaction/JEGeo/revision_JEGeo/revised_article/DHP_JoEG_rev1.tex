@@ -369,7 +369,7 @@ These results constitute our first original contribution to the literature.
 \begin{table}[htbp]
  \centering
 \caption{Transport costs estimates: summary} \vspace{5mm} \label{tab:summary_results}
-	\input{Table1_reshaped.tex}
+	\input{Table1.tex}
 		\begin{tablenotes}
 		\tiny
 		\item Statistics are obtained weighting each observation by its value relative to total trade flows.
@@ -591,13 +591,13 @@ For each year and transport mode, we select the countries ($i$) and the products
 	\label{tab:robustness_separability}
 \end{table}
 
-Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but 80\% of the total value of aggregated trade) involve a higher share of additive costs: between 52\% and 67\% of total costs on average, versus 40\% to 50\% on the whole sample.
+Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but 80\% of the total value of aggregated trade) involve a higher share of additive costs: between 48\% and 55\% of total costs on average, versus 300\% to 44\% on the whole sample.
 %JH: la phrase suivante est en contradiction avec celle qui suit encore juste après: "Second, assuming that country/product fixed effects are separable in these two dimensions tends to overestimate the value and the share of the additive costs."
 Second, both models provide a similar quality of fit of the regression (once we take into account the number of right-hand-side variables) as the AIC criteria display very close values in both models (conditional on transport mode).
-Third, the estimated values remain of similar magnitude under both separability and non-separability assumptions, even if one can note that under the separability assumption, the share of additive costs seems slightly biased upward, at least for averages over the period. The picture is reversed for medians.
+Third, the estimated values remain of similar magnitude under both separability and non-separability assumptions%, even if one can note that under the separability assumption, the share of additive costs seems slightly biased upward, at least for averages over the period. The picture is reversed for medians
+.
 
-
-Before jumping to the conclusion that our results are robust to the separability assumption, however we investigate this comparison deeper on a year-to-year basis, as shown in Figure \ref{fig:robustesse_non_separe}. Specifically, Figure \ref{fig:robustesse_non_separe} displays the results for air transport in panel (a) and for maritime transport in panel (b). In each case, the estimated values (as well as the fitted regression line) under both separability (baseline) and non-separability are reported, for the additive term (upper panel) and the ad-valorem term (lower panel).
+As a further check, we investigate this comparison deeper on a year-to-year basis, as shown in Figure \ref{fig:robustesse_non_separe}. Specifically, Figure \ref{fig:robustesse_non_separe} displays the results for air transport in panel (a) and for maritime transport in panel (b). In each case, the estimated values (as well as the fitted regression line) under both separability (baseline) and non-separability are reported, for the additive term (upper panel) and the ad-valorem term (lower panel).
 
 
 \begin{figure}[htbp]
@@ -615,9 +615,10 @@ Notes: FE for (country, sector) fixed effects.
 \end{figure}
 
 In line with Table \ref{tab:robustness_separability}, the results shown in Figure \ref{fig:robustesse_non_separe} confirm that the separability assumption (retained in our baseline estimation) tends to overestimate the value of the additive cost component (and underestimate the value of the ad-valorem cost).
-However, they also show that the difference is quantitatively small. Further, and most importantly, whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs, whether estimated under the separability assumption or not, are very similar. Along with the quality-of-fit diagnosis, this confirms the robustness of our estimation results to this assumption.
+However, they also show that the difference is quantitatively small in most cases. Further, and most importantly, whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs, whether estimated under the separability assumption or not, are very similar. Along with the quality-of-fit diagnosis, this confirms the robustness of our estimation results to this assumption.
 
-As an ultimate check, we investigate whether the varying pattern over time/country of origin/product pointed out in Section \ref{sec:results_decomposition} is also robust to the separability assumption. With this aim, Figure \ref{fig:histogram_beta_robustness} shows the histogram of the distribution of the elasticity of transport costs to the export price ($\beta_{ikt}$, for air transport (top panel) and for maritime transport (bottom panel) under the baseline specification (Panels (a), (c))) and the non-separability scenario (Panels (b), (c)).
+As an ultimate check, we investigate whether the varying pattern over time/country of origin/product pointed out in Section \ref{sec:results_decomposition} is also robust to the separability assumption. With this aim, we report in Figure \ref{fig:histogram_beta_robustness}
+the histogram of the distribution of the elasticity of transport costs to the export price ($\beta_{ikt}$, for air transport (top panel) and for maritime transport (bottom panel) under the baseline specification (Panels (a), (c))) and the non-separability scenario (Panels (b), (c)).
 
 
 \begin{figure}[htbp]
@@ -641,7 +642,8 @@ Besides, related concerns may arise from productivity-sorting model in \cite{mel
 
 It is true we are not interested in causal inference, since our aim is to provide an accounting breakdown of transport costs between the additive and the multiplicative components. However, the latter can be biased by the aforementioned endogeneity issues since they imply that $\frac{1}{\widetilde{p}_{ik}}$ is correlated in one direction on another with residuals $\epsilon_{ik}$. This may ultimately harm the estimation of $\widehat{t}/\widetilde{p}$ and consequently, $\widehat{\tau}$.
 
-Therefore, we propose to compare our main estimates with those stemming from a two-stage least-squares procedure. Put differently, we follow earlier literature (see e.g. \citealp{Caliendo_Parro_2015} or \citealp{Lashkaripour-2017}) by replacing in the right-hand side of Equation (\ref{eq:model_IetA}) $\widetilde{p}$ by predicted values stemming from a first-stage equation regressing $\widetilde{p}$ on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. Section \ref{app:first_stage_IV} in Appendix \ref{app:more_results} provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. In particular, it shows that our main instrumental variable displays the right statistical properties, and that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation (\ref{eq:model_IetA}\footnote{Note that, since the predictions are expressed in logarithms, they are transformed through the exponential function before their implementation in Equation (\ref{eq:model_IetA}.} to produce a 2SLS-type of estimation. Figure \ref{fig:comp_IV_SITC5} below reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns.
+Therefore, we propose to compare our main estimates with those stemming from a two-stage least-squares procedure. Put differently, we follow earlier literature (see e.g. \citealp{Caliendo_Parro_2015} or \citealp{Lashkaripour-2017}) by replacing in the right-hand side of Equation (\ref{eq:model_IetA}) $\widetilde{p}$ by predicted values stemming from a first-stage equation regressing $\widetilde{p}$ on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. Section \ref{app:first_stage_IV} in Appendix \ref{app:more_results} provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. In particular, it shows that our main instrumental variable displays the right statistical properties, and that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation (\ref{eq:model_IetA}%\footnote{Note that, since the predictions are expressed in logarithms, they are transformed through the exponential function before their implementation in Equation (\ref{eq:model_IetA}.} 
+ to produce a 2SLS-type of estimation. Figure \ref{fig:comp_IV_SITC5} below reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns.
 
 \begin{figure}[htbp]
 \caption{Transport cost time trends: robustness to IV procedure}
@@ -657,17 +659,44 @@ Therefore, we propose to compare our main estimates with those stemming from a t
 %In this respect, we are confident that our estimation strategy is immune from endogeneity problems.
 
 
-\subsubsection{XXX}
+\subsubsection{Robustness to aggregation}
 
-\textbf{Il me semble qu'on avait dit qu'on mettait une 3e robustesse. Non? Faire une transition pour la suite.}
+Current data are available at the 10-digit level for products (HS10).
+Theoretically, they should be available from 1989. 
+But because of the COVID situation, it was only possible to get 1997-1999 and 2001-2019.
+Yet, as Table \ref{tab:baseline10} and 	Figure \ref{fig:robustness_to_agregation} show, the results are similar when using 10-digit product and 5-digit products. 
 
+<<<<<<< HEAD
+Two main insights emerge up to now. First, total transport costs have strongly reduced between 1974 and 2019. Second, additive costs represent an important share of those declining transport costs, between 30 and 45\%. In the two following sections, we take stock of those results to draw implications for two important debates in economic analysis. In the next section, we shed light on the origins of the decrease of transport costs over time, by providing a decomposition of the transport costs trend patterns, between what arises from changes in the trade composition (by product and/or partner country), and what is attributable to changes in transport costs \emph{per se}. Section \ref{sec:theory} implements several theory-based calibration exercises to investigate the different welfare consequences of alterations over time to multiplicative and additive costs.
+=======
+\begin{table}[htbp]
+	\centering
+	\caption{Transport costs estimates: robustess to agregation} \vspace{5mm} \label{tab:baseline10}
+	\input{Table_baseline10.tex}
+	\begin{tablenotes}
+		\tiny
+		\item Statistics for 1997-1999 and 2002-2019
+		\item Statistics are obtained weighting each observation by its value relative to total trade flows.
+		\item \textbf{Model (a): With ad-valorem transport costs only}
+		\item \textbf{Model (b): With additive and ad-valorem transport costs}
+	\end{tablenotes}
+\end{table}
+   
 
+\begin{figure}[htbp]
+	\caption{Transport cost time trends: robustness to agregation}
+	\label{fig:robustness_to_agregation}
+	\begin{center}
+		\includegraphics[height=8cm]{scatter_chronology_baseline_baseline10.png}
+	\end{center}
+\end{figure}
+>>>>>>> 4ed7c9e1935274f0ba373e5233dd41b32e2d980d
 
-\section{Additive costs and transport costs time trends}\label{sec:results_trends}
+\section{Transport costs time trends: the key part of additive costs}\label{sec:results_trends}
 
 In this section, we investigate the underlying sources behind the downward trend of international transport costs, by identifying the respective roles of the reduction in ``pure'' transport costs and changes in trade composition effects. As underlined by \cite{hummels2007}, the time trend of international transport costs depends on both the evolution of per product and per partner (``pure'') transport costs and the evolution of the composition of trade.
 Total transport costs may thus have decreased over time because the share of neighboring countries in total US trade or the share of goods cheaper to transport has increased, independently of any change in transport costs \textit{per se}.
-As emphasized by \cite{Hummels_1999} and \cite{hummels2007}, it is hence necessary to eliminate the composition effects of trade flows to isolate the evolution of pure international transport costs.
+As emphasized by \cite{Hummels_1999, hummels2007}, it is hence necessary to eliminate the composition effects of trade flows to isolate the evolution of pure international transport costs.
 Specifically, Hummels's (2007) results\nocite{hummels2007} underlie the view that trade composition effects partially compensate the reduction in pure transport costs, thereby attenuating the downward trend in overall (observed) transport costs since 1974.
 Our own results tend to challenge this view, as we further show.
 
@@ -722,7 +751,7 @@ We start with the presentation of our estimation strategy before turning to the 
 
 \subsubsection{Estimation strategy}
 
-The estimation carried out in Section \ref{sec:results_decomposition} provides us with the additive and ad-valorem measures of international transport costs (Equation (\ref{eq:model_IetA})), which vary over time, product and origin country (i.e., $\widehat{t}_{ikt}$ and $\widehat{\tau}_{ikt}$).
+The estimation carried out in section \ref{sec:results_decomposition} provides us with the additive and ad-valorem measures of international transport costs (Equation (\ref{eq:model_IetA})), which vary over time, product and origin country (i.e., $\widehat{t}_{ikt}$ and $\widehat{\tau}_{ikt}$).
 Starting from these values, for each additive and multiplicative cost component (by transport mode) we extract the pure transport cost measure by the mean of a time fixed effect.
 Precisely, we extract the changes over time in the pure transport cost dimension by assuming a composition of trade flows by country partner and product that is constant throughout the period, and equal to the one observed in 1974.
 We conduct the same analysis on an overall transport costs measure, built by combining the two estimated components (additive and iceberg) in a unified measure of transport costs.\footnote{Note that the unfitted total transport costs are virtually the same as those reported in Figure \ref{fig:Trends_in_TC}, but reported from another perspective (basis 100 in year 1974).} The objective is to obtain six time series, all built as indices with the reference value 100 in 1974: three time series for the unfitted transport costs measures $\{\Gamma^{t/\widetilde{p}, raw}_t, \Gamma^{adv, raw}_t, \Gamma^{tc, raw}_t \}$  (additive, ad-valorem and total cost respectively), and three series for the fitted values $\{\Gamma^{t/\widetilde{p}}_t, \Gamma^{adv}_t, \Gamma^{tc}_t \}$ (additive, ad-valorem and total cost respectively).
@@ -1202,15 +1231,11 @@ On average over the whole period, the $R^{2}$ doubles when per-kg costs are incl
 Similar qualitative conclusions arise from the comparisons of the standard errors of the regression (SER).
 Regarding the other criteria, improvements allowed by the inclusion of the additive term are roughly of the same extent across transport modes.
 Both AIC and log-likelihood statistics decrease with the inclusion of the additive term, and the log-likelihood test unambiguously rejects the null of statistical equivalence of the two models.
-These results holds whatever the considered year.\smallskip
-
-
-For comparison purposes, we provide a similar goodness-of-fit exercise at the 4-digit product level (4-digits), reported in Appendix \ref{app:4digit}, Tables \ref{tab:good_fit_air_rob} and \ref{tab:good_fit_ves_rob}.
-If anything, the quality of fit appears slightly higher when estimations are based on the 4-digit classification.
-This is especially true for the model restricting transport cost to their ad-valorem dimension, whatever the transport mode considered.
-When the additive part is taken into account however, the difference in goodness of fit between the 3- and the 4-digit classification level becomes very small, whatever the considered criterion.
-In other words, if using a more disaggregated classification unsurprisingly adds some statistical precision, this is not to an extent that would disqualify the use of slightly more aggregated data.
-Further, the same conclusion established at the 3-digit level regarding the significant role of the additive component in fitting international transport costs emerges at the 4-digit level.
+These results holds whatever the considered year. \footnote{For comparison purposes, we provide a similar goodness-of-fit exercise at the 4-digit product level (4-digits), reported in Online Appendix A.3XXX. If anything, the quality of fit appears slightly higher when estimations are based on the 4-digit classification.}
+%This is especially true for the model restricting transport cost to their ad-valorem dimension, whatever the transport mode considered.
+%When the additive part is taken into account however, the difference in goodness of fit between the 3- and the 4-digit classification level becomes very small, whatever the considered criterion.
+%In other words, if using a more disaggregated classification unsurprisingly adds some statistical precision, this is not to an extent that would disqualify the use of slightly more aggregated data.
+%Further, the same conclusion established at the 3-digit level regarding the significant role of the additive component in fitting international transport costs emerges at the 4-digit level.
 
 
 
@@ -1405,181 +1430,8 @@ Results are qualitatively very similar to those reported on the longer-time-span
 \renewcommand{\thefigure}{C.\arabic{figure}}
 \renewcommand{\thetable}{C.\arabic{table}}
 
-\section{Estimation at the 4-digit level \label{app:4digit}}
-
-In this section, we report the estimation results when we retain the 4-digit classification level ($s$=4-digit).
-
-\subsection{Transport cost estimates}
 
 
-Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} report the estimates of both models (with and without additive costs) in air and ocean transport respectively.
-
-\begin{table}[htbp]
-  \centering
-  \caption{Air: Transport costs estimates, selected years, 4-digit level}
-\begin{center}
-  \footnotesize{
-    \begin{tabular}{l|cccccc}
-   \hline\hline
-Year & 1974  & 1981  & 1989  & 2001  & 2009  & 2013 \\ \hline
-\multicolumn{7}{l}{\textbf{Model (a) - With only Ad-Valorem TC} ($\widehat{\tau}^{ice}-1$, in \%) }  \\
-\hline
-Mean  & 6.6 & 5.8 & 5.2 & 3.3 & 3.7 & 3.2 \\
-Median & 5.2 & 4.4 & 4.1 & 2.1 & 2.7 & 2.6 \\
-%Standard Error & 0.056 & 0.054 & 0.046 & \multicolumn{1}{c}{0.040} & \multicolumn{1}{c}{0.036} & \multicolumn{1}{c}{0.025}  \\
-\hline
-\multicolumn{7}{l}{\textbf{Model (b) - With Additive \& Ad-Valorem TC}}  \\ \hline
-\multicolumn{7}{l}{\textit{Ad-valorem term }($\widehat{\tau}^{adv}-1$, in \%) }   \\ \hline
-Mean  & 3.5 & 2.6 & 3.1 & 1.5 & 2.1 & 1.6  \\
-Median & 2.5 & 1.7 & 1.9 & 1.0 & 1.7 & 1.4  \\
-%Standard Error & 0.036 & 0.028 & 0.030 & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{0.015}  \\
-\hline
-\multicolumn{7}{l}{\textit{Additive term} ($\widehat{t}/\widetilde{p}$), in \%}    \\ \hline
-Mean  & 2.6 & 2.1 & 1.7 & 1.2 &1.2 & 1.0 \\
-Median & 1.2 & 0.6 & 0.6 & 0.5 & 0.4 & 0.4  \\
-%Standard Error & 0.039 & 0.042 & 0.033 & \multicolumn{1}{c}{0.027} & \multicolumn{1}{c}{0.029} & \multicolumn{1}{c}{0.019} \\
-\hline
-\# observations & 14944 & 16844 & 25307 & \multicolumn{1}{c}{35005} & \multicolumn{1}{c}{38475} & \multicolumn{1}{c}{39460}  \\
-\hline\hline
-\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs.
-Statistics are obtained weighting each observation by its share in trade (mode-dependent).
-Additive term expressed in fraction of fas price.}}}
-\end{tabular}%
-}
-\end{center}
-  \label{tab:result_air_rob}
-\end{table}%
-
-
-\begin{table}[htbp]
-  \centering
-\caption{Vessel: Transport costs estimates, selected years, 4-digit level}
-\begin{center}
-  \footnotesize{
-    \begin{tabular}{l|cccccc}
-   \hline\hline
-Year & 1974  & 1981  & 1989  & 2001  & 2009  & 2013 \\
-\hline
-\multicolumn{7}{l}{\textbf{Model (a) - With only Ad-Valorem TC} ($\widehat{\tau}^{ice}-1$, in \%)} \\
-\hline
-Mean  & 9.8 & 6.1 & 5.8 & 5.1 & 4.2 & 3.6  \\
-Median & 9.4 & 5.1 & 4.8 & 4.5 & 3.8 & 3.1 \\
-%Standard Error & 0.060 & 0.038 & \multicolumn{1}{c}{0.036} & \multicolumn{1}{c}{0.030} & \multicolumn{1}{c}{0.023} & \multicolumn{1}{c}{0.020} \\
-\hline
-\multicolumn{7}{l}{\textbf{Model (b) - With Additive \& Ad-Valorem TC} }\\ \hline
-\multicolumn{7}{l}{\textit{Ad-valorem term} ($\widehat{\tau}^{adv}-1$, in \%) }   \\ \hline
-Mean  & 5.4 & 3.4 & 2.8 & 2.8 & 2.4 & 2.1  \\
-Median & 4.9 & 3.0 & 2.4 & 2.5 & 2.6 & 1.8 \\
-%Standard Error & 0.043 & 0.026 & \multicolumn{1}{c}{0.025} & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.016} & \multicolumn{1}{c}{0.013}  \\
-\hline
-\multicolumn{7}{l}{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$, in \%) }   \\ \hline
-Mean  & 4.6 & 2.6 & 3.1 & 2.4 & 2.1 & 1.5  \\
-Median & 2.9 & 1.3 & 1.9 & 1.5 & 1.3 & 0.8 \\
-%Standard Error & 0.068 & 0.044 & \multicolumn{1}{c}{0.037} & \multicolumn{1}{c}{0.035} & \multicolumn{1}{c}{0.031} & \multicolumn{1}{c}{0.023} \\
-\hline
-\# observations & 19196 & 17916 & \multicolumn{1}{c}{29387} & \multicolumn{1}{c}{36677} & \multicolumn{1}{c}{37643} & \multicolumn{1}{c}{38820} \\
-\hline\hline
-\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs.
-Statistics are obtained weighting each observation by its share in trade (mode-dependent).
-Additive term expressed in fraction of fas price.}}}
-\end{tabular}%
-}
-\end{center}
-\label{tab:result_ves_rob}%
-\end{table}%
-
-\subsection{Goodness-of-fit tests at the 4-digit level}
-
-We now report the goodness-of-fit exercise (conducted by transport mode) at the 4-digit product classification level (for the selected years).
-The results are reported in Tables \ref{tab:good_fit_air_rob} (for air) and \ref{tab:good_fit_ves_rob} (for vessel).
-\begin{table}[htbp]
-  \centering
-  \caption{Air: Measures of goodness of fit, 4-digit level}
-\begin{center}
-\label{tab:good_fit_air_rob}%
-%\vspace{0.5cm}
-%\scalebox{0.97}{
-  \footnotesize{
-\begin{tabular}{l|cccccc}
-\hline
-\hline
-      & \multicolumn{6}{c}{Year}              \\
-      & \multicolumn{1}{c}{1974} & \multicolumn{1}{c}{1981} & \multicolumn{1}{c}{1989} & \multicolumn{1}{c}{2001} & \multicolumn{1}{c}{2009} & \multicolumn{1}{c}{2013}  \\
-\hline
-\multicolumn{7}{l}{\textbf{R$^2$}}      \\ \hline
-Model (a)& \multicolumn{1}{c}{0.48} & \multicolumn{1}{c}{0.49} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.45} & \multicolumn{1}{c}{0.35} \\
-Model (b) & \multicolumn{1}{c}{0.63} & \multicolumn{1}{c}{0.66} & \multicolumn{1}{c}{0.65} & \multicolumn{1}{c}{0.66} & \multicolumn{1}{c}{0.54} & \multicolumn{1}{c}{0.45} \\ \hline
-\multicolumn{7}{l}{\textbf{SER} }  \\ \hline
-Model (a)& \multicolumn{1}{c}{0.8} & \multicolumn{1}{c}{0.9} & \multicolumn{1}{c}{0.83} &   0.87    & \multicolumn{1}{c}{0.88} & \multicolumn{1}{c}{0.93}  \\
-Model (b) & \multicolumn{1}{c}{0.67} & \multicolumn{1}{c}{0.74} & \multicolumn{1}{c}{0.69} &  0.80     & \multicolumn{1}{c}{0.80} & \multicolumn{1}{c}{0.86}  \\
-\multicolumn{7}{l}{\textbf{Log-likelihood} } \\ \hline
-Model (a) & \multicolumn{1}{c}{-17505.6} & \multicolumn{1}{c}{-21813.5} & \multicolumn{1}{c}{-30960.6} & \multicolumn{1}{c}{-44067.6} & \multicolumn{1}{c}{-49375.6} & \multicolumn{1}{c}{-53197.9}  \\
-Model (b) & \multicolumn{1}{c}{-14895.8} & \multicolumn{1}{c}{-18589.9} & \multicolumn{1}{c}{-26553.5} & \multicolumn{1}{c}{-37297.9} & \multicolumn{1}{c}{-45747.6} & \multicolumn{1}{c}{-49899.1}  \\ \hline
-\multicolumn{7}{l}{\textbf{AIC criteria} }  \\ \hline
-Model (a)& \multicolumn{1}{c}{36243.1} & \multicolumn{1}{c}{44966.9} & \multicolumn{1}{c}{63417.1} & \multicolumn{1}{c}{89747.2} & \multicolumn{1}{c}{100317.13} & \multicolumn{1}{c}{107963.7} \\
-Model (b) & \multicolumn{1}{c}{31873.6} & \multicolumn{1}{c}{39495.8} & \multicolumn{1}{c}{55777.1} & \multicolumn{1}{c}{77439.9} & \multicolumn{1}{c}{94059.1} & \multicolumn{1}{c}{102224.3}  \\ \hline
-\multicolumn{7}{l}{\textbf{Test LL} }    \\ \hline
-2$\times$(ll(UR) -ll(R)) & \multicolumn{1}{c}{5219.5} & \multicolumn{1}{c}{6447.1} & \multicolumn{1}{c}{8814.1} & \multicolumn{1}{c}{13539.4} & \multicolumn{1}{c}{7256.0} & \multicolumn{1}{c}{6597.5}  \\
-\# restrictions  & \multicolumn{1}{c}{640} & \multicolumn{1}{c}{698} & \multicolumn{1}{c}{778} & \multicolumn{1}{c}{833} & \multicolumn{1}{c}{824} & \multicolumn{1}{c}{818}  \\
-p-value & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.000} \\
-\hline\hline
-\multicolumn{7}{l}{\parbox[l]{13cm}{ \vspace{7pt}\scriptsize{Notes: Model (a) = with only ad-valorem transport costs.
-Model (b) = with additive \& ad-valorem
-transport costs.
-$R^{2}$ between the log of predicted ratio and the log of the observed ratio.
-The number \# of restrictions is equal to the number of parameters estimated, i.e. the number of partner countries plus the number of products.}}}
-\end{tabular}%
-}
-\end{center}
-\end{table}%
-
-
-\begin{table}[htbp]
-  \centering
-  \caption{Vessel: Measures of goodness of fit, 4-digit level}
-\begin{center}
-\label{tab:good_fit_ves_rob}%
-  \footnotesize{
-\begin{tabular}{l|cccccc}
-\hline
-\hline
-      & \multicolumn{6}{c}{Year}                   \\
-      & \multicolumn{1}{c}{1974} & \multicolumn{1}{c}{1981} & \multicolumn{1}{c}{1989} & \multicolumn{1}{c}{2001} & \multicolumn{1}{c}{2009} & \multicolumn{1}{c}{2013}  \\ \hline
-\multicolumn{7}{l}{\textbf{R$^{2}$}} \\ \hline
-Term I only & 0.50  & 0.45  & \multicolumn{1}{c}{0.47} & \multicolumn{1}{c}{0.41} & \multicolumn{1}{c}{0.37} & \multicolumn{1}{c}{0.35} \\
-Terms A \& I & 0.66  & 0.62  & \multicolumn{1}{c}{0.62} & \multicolumn{1}{c}{0.58} & \multicolumn{1}{c}{0.51} & \multicolumn{1}{c}{0.46} \\ \hline
-\multicolumn{7}{l}{\textbf{SER} }\\ \hline
-Model (a) &    0.58   &   0.64    & \multicolumn{1}{c}{0.61} & \multicolumn{1}{c}{0.0.72} & \multicolumn{1}{c}{0.79} & \multicolumn{1}{c}{0.82} \\
-Model (b) &   0.48    &    0.53   & \multicolumn{1}{c}{0.51} & \multicolumn{1}{c}{0.61} & \multicolumn{1}{c}{0.69} & \multicolumn{1}{c}{0.75} \\ \hline
-\multicolumn{7}{l}{\textbf{Log-likelihood} } \\ \hline
-Model (a)& -16460.1 & -16951.6 & \multicolumn{1}{c}{-26771.4} & \multicolumn{1}{c}{-39008.3} & \multicolumn{1}{c}{-43888.9} & \multicolumn{1}{c}{-47161.6} \\
-Model (b) & -12743.65 & -13546.9 & \multicolumn{1}{c}{-21752.8} & \multicolumn{1}{c}{-33281.0} & \multicolumn{1}{c}{-39078.9} & \multicolumn{1}{c}{-43399.2}  \\ \hline
-\multicolumn{7}{l}{\textbf{AIC criteria} } \\ \hline
-Model (a) & 34464.2 & 35491.2 & \multicolumn{1}{c}{55272.9} & \multicolumn{1}{c}{79800.7} & \multicolumn{1}{c}{89459.8} & \multicolumn{1}{c}{95987.2}\\
-Model (b) & 28271.3 & 29877.8 & \multicolumn{1}{c}{46595.6} & \multicolumn{1}{c}{69743.9} & \multicolumn{1}{c}{81155.7} & \multicolumn{1}{c}{89692.4} \\ \hline
-\multicolumn{7}{l}{\textbf{Test LL}} \\ \hline
-2$\times$(ll(UR) -ll(R)) & 12385.80 & 11226.8 & \multicolumn{1}{c}{17354.7} & \multicolumn{1}{c}{20113.5} & \multicolumn{1}{c}{16608.2} & \multicolumn{1}{c}{12589.6} \\
-\# restrictions  & 797   & 814   & \multicolumn{1}{c}{881} & \multicolumn{1}{c}{910} & \multicolumn{1}{c}{886} & \multicolumn{1}{c}{874} \\
-p-value & 0.000 & 0.000 & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} \\
-\hline\hline
-\multicolumn{7}{l}{\parbox[l]{13cm}{ \vspace{7pt}\scriptsize{Notes: Model (a) = with only ad-valorem transport costs.
-Model (b) = with additive \& ad-valorem
-transport costs.
-$R^{2}$ between the log of predicted ratio and the log of the observed ratio.
-The number \# of restrictions is equal to the number of parameters estimated, i.e. the number of partner countries plus the number of products.}}}
-\end{tabular}%
-}
-\end{center}
-\end{table}%
-
-\newpage
-
-
-\clearpage
-\setcounter{table}{0}
-\setcounter{figure}{0}
-\renewcommand{\thefigure}{D.\arabic{figure}}
-\renewcommand{\thetable}{D.\arabic{table}}
 
 \section{Eliminating the composition effects: more details \label{app:comp-effects}}
 
