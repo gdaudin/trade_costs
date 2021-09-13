@@ -46,6 +46,13 @@ if "`method'"=="baseline10" {
 	generate beta=(terme_A/(terme_I+terme_A-1))
 }	
 
+if "`method'"=="dbsamesample10_5_3" {
+	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	capture rename `mode'_val val 
+	capture drop *_val
+}
+
+
 
 if "`method'"=="IV_referee1_yearly_10_3" {
 	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear

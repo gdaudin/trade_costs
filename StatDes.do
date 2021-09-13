@@ -191,11 +191,10 @@ args method
 global method `method'
 if "$method"=="baseline" local time_span 1974 (1) 2019
 if "$method"=="baseline5_4" local time_span 1974 1977 (4)2017 2019
-if "$method"=="baseline10" | "$method"=="baseline_rob_10" local time_span 1997 1998 1999 2002(1) 2019
-if "$method"=="baseline10" | "$method"=="baseline_rob_10" local model_list nlAetI
+if "$method"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span /*1997 1998 1999 2002(1) 2019*/ 2005/2013
+if "$method"=="baseline10" | "$method"=="dbsamesample10_5_3" local model_list nlAetI
 if "$method"=="baseline" | "$method"=="baseline5_4" local model_list nlAetI nlI
 
-if "$method"=="baseline_rob_10" global method baseline /*En effet, tout ce qui change c’est la période*/
 
 
 foreach mode in air ves {
@@ -337,8 +336,9 @@ table1_part baseline5_4
 
 
 *************Pour tableau 1 baseline10 + baseline sur période réduite
+table1_part dbsamesample10_5_3
 table1_part baseline10
-table1_part baseline_rob_10
+
 
 
 
