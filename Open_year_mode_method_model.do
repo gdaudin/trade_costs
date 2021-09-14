@@ -9,7 +9,7 @@ if "`method'"=="baseline" & ("`model'"=="" | "`model'"=="nlAetI" | "`model'"=="n
 	capture rename `mode'_val val 
 	capture drop *_val
 	capture rename product sector
-	generate beta=-(terme_A/(terme_I+terme_A-1))
+	generate beta=(terme_A/(terme_I+terme_A-1))
 }	
 
 if "`method'"=="baseline5_4" & ("`model'"=="" | "`model'"=="nlAetI") {
@@ -17,7 +17,7 @@ if "`method'"=="baseline5_4" & ("`model'"=="" | "`model'"=="nlAetI") {
 	capture rename `mode'_val val 
 	capture drop *_val
 	capture rename product sector
-	generate beta=-(terme_A/(terme_I+terme_A-1))
+	generate beta=(terme_A/(terme_I+terme_A-1))
 }	
 
 if "`method'"=="baseline" & ("`model'"=="nlA" | "`model'"=="nlI") {
@@ -43,7 +43,15 @@ if "`method'"=="baselinesamplereferee1" {
 	
 if "`method'"=="baseline10" {
 	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
+	generate beta=(terme_A/(terme_I+terme_A-1))
 }	
+
+if "`method'"=="dbsamesample10_5_3" {
+	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	capture rename `mode'_val val 
+	capture drop *_val
+}
+
 
 
 if "`method'"=="IV_referee1_yearly_10_3" {

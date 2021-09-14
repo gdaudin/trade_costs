@@ -190,12 +190,17 @@ args method
 
 global method `method'
 if "$method"=="baseline" local time_span 1974 (1) 2019
-*if "$method"=="baseline" local time_span 1974 (1) 1978
 if "$method"=="baseline5_4" local time_span 1974 1977 (4)2017 2019
+if "$method"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span /*1997 1998 1999 2002(1) 2019*/ 2005/2013
+if "$method"=="baseline10" | "$method"=="dbsamesample10_5_3" local model_list nlAetI
+if "$method"=="baseline" | "$method"=="baseline5_4" local model_list nlAetI nlI
+
+
 
 foreach mode in air ves {
+	
 
-	foreach model in nlAetI nlI {
+	foreach model in `model_list' {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num `time_span'  {
 			open_year_mode_method_model `year' `mode' $method `model'
@@ -207,7 +212,7 @@ foreach mode in air ves {
 		use $dir_temp/data_`model'_${method}_`mode'.dta, replace
 		egen value_year=total(val), by(year)
 		generate weight = val/value_year
-		
+		drop if year==1989 & mode=="air"  
 		
 		
 		
@@ -231,7 +236,7 @@ foreach mode in air ves {
 			collect, tags(model[data] var[N] mode[`mode'] digit[${method}]): /*
 				*/ sum N [aweight=weight]
 			collect, tags(model[data] var[Nb_sectors] mode[`mode'] digit[${method}]): /*
-				*/ sum Nb_sectors [aweight=weight]
+				*/ sum Nb_sectors [aweight=weight] 
 			collect, tags(model[data] var[Nb_partners] mode[`mode'] digit[${method}]): /*
 			    */ sum Nb_partners[aweight=weight] 		
 
@@ -261,7 +266,7 @@ foreach mode in air ves {
 		quietly if "`model'"=="nlI" {
 			replace terme_nlI=(terme_nlI-1) *100
 			collect, tags(model[`model'] var[terme_nlI] mode[`mode'] digit[${method}]) :/*
-			*/ sum terme_nlI [aweight=val], det
+			*/ sum terme_nlI [aweight=weight], det
 		}
 		save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 	}
@@ -272,7 +277,9 @@ foreach mode in air ves {
 
 end
 
+/*
 
+*************Pour tableau 1 : baseline + baseline 5_4
 table1_part baseline
 table1_part baseline5_4
 
@@ -322,13 +329,63 @@ table1_part baseline5_4
 	collect export /* 		 
 	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Table1.tex", /*
 	*/ tableonly replace
-	
-	
-
-
 
 
 */
+
+
+
+*************Pour tableau 1 baseline10 + baseline sur période réduite
+table1_part dbsamesample10_5_3
+table1_part baseline10
+
+
+
+
+	
+	
+	collect layout (model[data]#result[mean]#var[N Nb_sectors Nb_partners] /*
+		*/ model[data]#var[prix_trsp prix_fob]#result[mean p50 sd] /*
+		*/ model[nlAetI]#var[terme_I terme_A p_add_dollar beta]#result[mean p50 sd]) /* 
+		*/ (digit#mode)
+
+	 
+
+	
+	collect label levels digit baseline "5/3-digit"
+	collect label levels digit baseline10 "10/3-digit"
+	collect label levels var N "{$#$ obs.}"
+	collect label levels var Nb_sectors "{$#$ sectors}"
+	collect label levels var Nb_partners "{$#$ origin countries}"
+	collect label levels result max "\textbf{Data}", modify
+	collect label levels result mean "Mean", modify
+	collect label levels result p50 "Median", modify
+	collect label levels var prix_trsp "{\textit{Obs. transport costs $(p/\widehat{p}-1)$ (in $%$)}}", modify
+	collect label levels var prix_fob "{\textit{Export price in USD per kg (\textit{$\widehat{p}$})}}", modify
+	collect label levels var terme_I "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{adv}$)}", modify
+	collect label levels var terme_A "{\textit{Additive term (in $%$)} ($\widehat{t}/\widetilde{p}$)}", modify
+	collect label levels var p_add_dollar "{\textit{Additive term in USD per kg ($\widehat{t}$)}}", modify
+	collect label levels var beta "$\widehat{\beta}$:  \textit{-Share of additive costs}", modify
+	collect label levels model data "\textbf{Data}"
+	collect label levels model nlAetI "{\textbf{Model (B)}}"
+	collect label levels model nlI "{\textbf{Model (A)}}"
+	
+	collect style cell, warn nformat (%3.1f)
+	collect style cell var[beta p_add_dollar], warn nformat(%3.2f)
+	collect style cell var[prix_fob], warn nformat(%9.0fc)
+	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0fc)
+	collect style column, nodelimiter dups(center) position(top) width(asis)
+	
+
+	collect preview
+	
+	collect export /* 		 
+	*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Table_baseline10.tex", /*
+	*/ tableonly replace
+
+
+
+
 
 /*
 ***Pour les tables A1 et A2 de l’appendix

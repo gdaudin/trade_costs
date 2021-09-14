@@ -148,7 +148,7 @@ In this section, we report the estimation results of the three models: Model (A)
    \begin{tablenotes}
 	\tiny
 	\item Statistics are weighted by value
-	\item \textbf{Model (A): Iceberg transpost costs only}
+	\item \textbf{Model (A): Iceberg transport costs only}
 	\item \textbf{Model (B): With additive and ad-valorem transport costs}
 				\item \textbf{Model (C): With additive transport costs only}
 \end{tablenotes}
@@ -166,7 +166,7 @@ In this section, we report the estimation results of the three models: Model (A)
 		\begin{tablenotes}
 			\tiny
 		\item Statistics are weighted by value
-		\item \textbf{Model (A): Iceberg transpost costs only}
+		\item \textbf{Model (A): Iceberg transport costs only}
 		\item \textbf{Model (B): With additive and ad-valorem transport costs}
 		\item \textbf{Model (C): With additive transport costs only}
 		\end{tablenotes}
@@ -181,7 +181,6 @@ Results for Models (A) and (B) are identical to those reported in the paper. Uns
 
 To go further into the comparison of the empirical relevance of our three empirical models (A), (B) and (C), we compare quality of fit diagnostic tests in this section. Table \ref{tab:3models_diagnosis_air} reports the results for air transport, and Table \ref{tab:3models_diagnosis_vessel} those for vessel transport. In both tables, we report the values of the $R^2$, the Standard Error of Regression (SER), the AIC criterion  and the log-likelihood (LL) value. We also report the value of the log-likelihood ratio that tests the quality of fit of the global model (Model (B)) compared to the other two models.
 
-
 \begin{table}[htbp]
 \centering
 \footnotesize{
@@ -191,7 +190,7 @@ To go further into the comparison of the empirical relevance of our three empiri
 \begin{tablenotes}
 	\tiny
 	\item SER are weighted by value
-	\item \textbf{Model (A): Iceberg transpost costs only}
+	\item \textbf{Model (A): Iceberg transport costs only}
 	\item \textbf{Model (B): With additive and ad-valorem transport costs}
 	\item \textbf{Model (C): With additive transport costs only}
 \end{tablenotes}
@@ -209,7 +208,7 @@ To go further into the comparison of the empirical relevance of our three empiri
 		\begin{tablenotes}
 			\tiny
 			\item SER are weighted by value
-			\item \textbf{Model (A): Iceberg transpost costs only}
+			\item \textbf{Model (A): Iceberg transport costs only}
 			\item \textbf{Model (B): With additive and ad-valorem transport costs}
 			\item \textbf{Model (C): With additive transport costs only}
 \end{tablenotes}
@@ -219,6 +218,182 @@ To go further into the comparison of the empirical relevance of our three empiri
 
 For all years and whatever the transport mode considered, the model with additive costs only (Model (C)) is consistently dominated (in terms of quality of fit properties) by the model with multiplicative costs only (Model (A)), which is itself consistently dominated by the complete model (Model (B)), whatever the type of diagnostic test considered. That justifies our choice to disregard Model (C) in the main text.
 
+
+\subsection{Estimation at the 4-digit level \label{app:4digit}}
+
+XXX UPDATE XXX In this section, we report the estimation results when we retain the 4-digit classification level ($s$=4-digit).
+
+\subsubsection{Transport cost estimates}
+
+
+Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} report the estimates of both models (with and without additive costs) in air and ocean transport respectively.
+
+\begin{table}[htbp]
+  \centering
+  \caption{Air: Transport costs estimates, selected years, 4-digit level}
+\begin{center}
+  \footnotesize{
+    \begin{tabular}{l|cccccc}
+   \hline\hline
+Year & 1974  & 1981  & 1989  & 2001  & 2009  & 2013 \\ \hline
+\multicolumn{7}{l}{\textbf{Model (a) - With only Ad-Valorem TC} ($\widehat{\tau}^{ice}-1$, in \%) }  \\
+\hline
+Mean  & 6.6 & 5.8 & 5.2 & 3.3 & 3.7 & 3.2 \\
+Median & 5.2 & 4.4 & 4.1 & 2.1 & 2.7 & 2.6 \\
+%Standard Error & 0.056 & 0.054 & 0.046 & \multicolumn{1}{c}{0.040} & \multicolumn{1}{c}{0.036} & \multicolumn{1}{c}{0.025}  \\
+\hline
+\multicolumn{7}{l}{\textbf{Model (b) - With Additive \& Ad-Valorem TC}}  \\ \hline
+\multicolumn{7}{l}{\textit{Ad-valorem term }($\widehat{\tau}^{adv}-1$, in \%) }   \\ \hline
+Mean  & 3.5 & 2.6 & 3.1 & 1.5 & 2.1 & 1.6  \\
+Median & 2.5 & 1.7 & 1.9 & 1.0 & 1.7 & 1.4  \\
+%Standard Error & 0.036 & 0.028 & 0.030 & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.024} & \multicolumn{1}{c}{0.015}  \\
+\hline
+\multicolumn{7}{l}{\textit{Additive term} ($\widehat{t}/\widetilde{p}$), in \%}    \\ \hline
+Mean  & 2.6 & 2.1 & 1.7 & 1.2 &1.2 & 1.0 \\
+Median & 1.2 & 0.6 & 0.6 & 0.5 & 0.4 & 0.4  \\
+%Standard Error & 0.039 & 0.042 & 0.033 & \multicolumn{1}{c}{0.027} & \multicolumn{1}{c}{0.029} & \multicolumn{1}{c}{0.019} \\
+\hline
+\# observations & 14944 & 16844 & 25307 & \multicolumn{1}{c}{35005} & \multicolumn{1}{c}{38475} & \multicolumn{1}{c}{39460}  \\
+\hline\hline
+\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs.
+Statistics are obtained weighting each observation by its share in trade (mode-dependent).
+Additive term expressed in fraction of fas price.}}}
+\end{tabular}%
+}
+\end{center}
+  \label{tab:result_air_rob}
+\end{table}%
+
+
+\begin{table}[htbp]
+  \centering
+\caption{Vessel: Transport costs estimates, selected years, 4-digit level}
+\begin{center}
+  \footnotesize{
+    \begin{tabular}{l|cccccc}
+   \hline\hline
+Year & 1974  & 1981  & 1989  & 2001  & 2009  & 2013 \\
+\hline
+\multicolumn{7}{l}{\textbf{Model (a) - With only Ad-Valorem TC} ($\widehat{\tau}^{ice}-1$, in \%)} \\
+\hline
+Mean  & 9.8 & 6.1 & 5.8 & 5.1 & 4.2 & 3.6  \\
+Median & 9.4 & 5.1 & 4.8 & 4.5 & 3.8 & 3.1 \\
+%Standard Error & 0.060 & 0.038 & \multicolumn{1}{c}{0.036} & \multicolumn{1}{c}{0.030} & \multicolumn{1}{c}{0.023} & \multicolumn{1}{c}{0.020} \\
+\hline
+\multicolumn{7}{l}{\textbf{Model (b) - With Additive \& Ad-Valorem TC} }\\ \hline
+\multicolumn{7}{l}{\textit{Ad-valorem term} ($\widehat{\tau}^{adv}-1$, in \%) }   \\ \hline
+Mean  & 5.4 & 3.4 & 2.8 & 2.8 & 2.4 & 2.1  \\
+Median & 4.9 & 3.0 & 2.4 & 2.5 & 2.6 & 1.8 \\
+%Standard Error & 0.043 & 0.026 & \multicolumn{1}{c}{0.025} & \multicolumn{1}{c}{0.021} & \multicolumn{1}{c}{0.016} & \multicolumn{1}{c}{0.013}  \\
+\hline
+\multicolumn{7}{l}{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$, in \%) }   \\ \hline
+Mean  & 4.6 & 2.6 & 3.1 & 2.4 & 2.1 & 1.5  \\
+Median & 2.9 & 1.3 & 1.9 & 1.5 & 1.3 & 0.8 \\
+%Standard Error & 0.068 & 0.044 & \multicolumn{1}{c}{0.037} & \multicolumn{1}{c}{0.035} & \multicolumn{1}{c}{0.031} & \multicolumn{1}{c}{0.023} \\
+\hline
+\# observations & 19196 & 17916 & \multicolumn{1}{c}{29387} & \multicolumn{1}{c}{36677} & \multicolumn{1}{c}{37643} & \multicolumn{1}{c}{38820} \\
+\hline\hline
+\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs.
+Statistics are obtained weighting each observation by its share in trade (mode-dependent).
+Additive term expressed in fraction of fas price.}}}
+\end{tabular}%
+}
+\end{center}
+\label{tab:result_ves_rob}%
+\end{table}%
+
+\subsubsection{Goodness-of-fit tests at the 4-digit level}
+
+We now report the goodness-of-fit exercise (conducted by transport mode) at the 4-digit product classification level (for the selected years).
+The results are reported in Tables \ref{tab:good_fit_air_rob} (for air) and \ref{tab:good_fit_ves_rob} (for vessel).
+\begin{table}[htbp]
+  \centering
+  \caption{Air: Measures of goodness of fit, 4-digit level}
+\begin{center}
+\label{tab:good_fit_air_rob}%
+%\vspace{0.5cm}
+%\scalebox{0.97}{
+  \footnotesize{
+\begin{tabular}{l|cccccc}
+\hline
+\hline
+      & \multicolumn{6}{c}{Year}              \\
+      & \multicolumn{1}{c}{1974} & \multicolumn{1}{c}{1981} & \multicolumn{1}{c}{1989} & \multicolumn{1}{c}{2001} & \multicolumn{1}{c}{2009} & \multicolumn{1}{c}{2013}  \\
+\hline
+\multicolumn{7}{l}{\textbf{R$^2$}}      \\ \hline
+Model (a)& \multicolumn{1}{c}{0.48} & \multicolumn{1}{c}{0.49} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.50} & \multicolumn{1}{c}{0.45} & \multicolumn{1}{c}{0.35} \\
+Model (b) & \multicolumn{1}{c}{0.63} & \multicolumn{1}{c}{0.66} & \multicolumn{1}{c}{0.65} & \multicolumn{1}{c}{0.66} & \multicolumn{1}{c}{0.54} & \multicolumn{1}{c}{0.45} \\ \hline
+\multicolumn{7}{l}{\textbf{SER} }  \\ \hline
+Model (a)& \multicolumn{1}{c}{0.8} & \multicolumn{1}{c}{0.9} & \multicolumn{1}{c}{0.83} &   0.87    & \multicolumn{1}{c}{0.88} & \multicolumn{1}{c}{0.93}  \\
+Model (b) & \multicolumn{1}{c}{0.67} & \multicolumn{1}{c}{0.74} & \multicolumn{1}{c}{0.69} &  0.80     & \multicolumn{1}{c}{0.80} & \multicolumn{1}{c}{0.86}  \\
+\multicolumn{7}{l}{\textbf{Log-likelihood} } \\ \hline
+Model (a) & \multicolumn{1}{c}{-17505.6} & \multicolumn{1}{c}{-21813.5} & \multicolumn{1}{c}{-30960.6} & \multicolumn{1}{c}{-44067.6} & \multicolumn{1}{c}{-49375.6} & \multicolumn{1}{c}{-53197.9}  \\
+Model (b) & \multicolumn{1}{c}{-14895.8} & \multicolumn{1}{c}{-18589.9} & \multicolumn{1}{c}{-26553.5} & \multicolumn{1}{c}{-37297.9} & \multicolumn{1}{c}{-45747.6} & \multicolumn{1}{c}{-49899.1}  \\ \hline
+\multicolumn{7}{l}{\textbf{AIC criteria} }  \\ \hline
+Model (a)& \multicolumn{1}{c}{36243.1} & \multicolumn{1}{c}{44966.9} & \multicolumn{1}{c}{63417.1} & \multicolumn{1}{c}{89747.2} & \multicolumn{1}{c}{100317.13} & \multicolumn{1}{c}{107963.7} \\
+Model (b) & \multicolumn{1}{c}{31873.6} & \multicolumn{1}{c}{39495.8} & \multicolumn{1}{c}{55777.1} & \multicolumn{1}{c}{77439.9} & \multicolumn{1}{c}{94059.1} & \multicolumn{1}{c}{102224.3}  \\ \hline
+\multicolumn{7}{l}{\textbf{Test LL} }    \\ \hline
+2$\times$(ll(UR) -ll(R)) & \multicolumn{1}{c}{5219.5} & \multicolumn{1}{c}{6447.1} & \multicolumn{1}{c}{8814.1} & \multicolumn{1}{c}{13539.4} & \multicolumn{1}{c}{7256.0} & \multicolumn{1}{c}{6597.5}  \\
+\# restrictions  & \multicolumn{1}{c}{640} & \multicolumn{1}{c}{698} & \multicolumn{1}{c}{778} & \multicolumn{1}{c}{833} & \multicolumn{1}{c}{824} & \multicolumn{1}{c}{818}  \\
+p-value & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.00} & \multicolumn{1}{c}{0.000} \\
+\hline\hline
+\multicolumn{7}{l}{\parbox[l]{13cm}{ \vspace{7pt}\scriptsize{Notes: Model (a) = with only ad-valorem transport costs.
+Model (b) = with additive \& ad-valorem
+transport costs.
+$R^{2}$ between the log of predicted ratio and the log of the observed ratio.
+The number \# of restrictions is equal to the number of parameters estimated, i.e. the number of partner countries plus the number of products.}}}
+\end{tabular}%
+}
+\end{center}
+\end{table}%
+
+
+\begin{table}[htbp]
+  \centering
+  \caption{Vessel: Measures of goodness of fit, 4-digit level}
+\begin{center}
+\label{tab:good_fit_ves_rob}%
+  \footnotesize{
+\begin{tabular}{l|cccccc}
+\hline
+\hline
+      & \multicolumn{6}{c}{Year}                   \\
+      & \multicolumn{1}{c}{1974} & \multicolumn{1}{c}{1981} & \multicolumn{1}{c}{1989} & \multicolumn{1}{c}{2001} & \multicolumn{1}{c}{2009} & \multicolumn{1}{c}{2013}  \\ \hline
+\multicolumn{7}{l}{\textbf{R$^{2}$}} \\ \hline
+Term I only & 0.50  & 0.45  & \multicolumn{1}{c}{0.47} & \multicolumn{1}{c}{0.41} & \multicolumn{1}{c}{0.37} & \multicolumn{1}{c}{0.35} \\
+Terms A \& I & 0.66  & 0.62  & \multicolumn{1}{c}{0.62} & \multicolumn{1}{c}{0.58} & \multicolumn{1}{c}{0.51} & \multicolumn{1}{c}{0.46} \\ \hline
+\multicolumn{7}{l}{\textbf{SER} }\\ \hline
+Model (a) &    0.58   &   0.64    & \multicolumn{1}{c}{0.61} & \multicolumn{1}{c}{0.0.72} & \multicolumn{1}{c}{0.79} & \multicolumn{1}{c}{0.82} \\
+Model (b) &   0.48    &    0.53   & \multicolumn{1}{c}{0.51} & \multicolumn{1}{c}{0.61} & \multicolumn{1}{c}{0.69} & \multicolumn{1}{c}{0.75} \\ \hline
+\multicolumn{7}{l}{\textbf{Log-likelihood} } \\ \hline
+Model (a)& -16460.1 & -16951.6 & \multicolumn{1}{c}{-26771.4} & \multicolumn{1}{c}{-39008.3} & \multicolumn{1}{c}{-43888.9} & \multicolumn{1}{c}{-47161.6} \\
+Model (b) & -12743.65 & -13546.9 & \multicolumn{1}{c}{-21752.8} & \multicolumn{1}{c}{-33281.0} & \multicolumn{1}{c}{-39078.9} & \multicolumn{1}{c}{-43399.2}  \\ \hline
+\multicolumn{7}{l}{\textbf{AIC criteria} } \\ \hline
+Model (a) & 34464.2 & 35491.2 & \multicolumn{1}{c}{55272.9} & \multicolumn{1}{c}{79800.7} & \multicolumn{1}{c}{89459.8} & \multicolumn{1}{c}{95987.2}\\
+Model (b) & 28271.3 & 29877.8 & \multicolumn{1}{c}{46595.6} & \multicolumn{1}{c}{69743.9} & \multicolumn{1}{c}{81155.7} & \multicolumn{1}{c}{89692.4} \\ \hline
+\multicolumn{7}{l}{\textbf{Test LL}} \\ \hline
+2$\times$(ll(UR) -ll(R)) & 12385.80 & 11226.8 & \multicolumn{1}{c}{17354.7} & \multicolumn{1}{c}{20113.5} & \multicolumn{1}{c}{16608.2} & \multicolumn{1}{c}{12589.6} \\
+\# restrictions  & 797   & 814   & \multicolumn{1}{c}{881} & \multicolumn{1}{c}{910} & \multicolumn{1}{c}{886} & \multicolumn{1}{c}{874} \\
+p-value & 0.000 & 0.000 & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} & \multicolumn{1}{c}{0.000} \\
+\hline\hline
+\multicolumn{7}{l}{\parbox[l]{13cm}{ \vspace{7pt}\scriptsize{Notes: Model (a) = with only ad-valorem transport costs.
+Model (b) = with additive \& ad-valorem
+transport costs.
+$R^{2}$ between the log of predicted ratio and the log of the observed ratio.
+The number \# of restrictions is equal to the number of parameters estimated, i.e. the number of partner countries plus the number of products.}}}
+\end{tabular}%
+}
+\end{center}
+\end{table}%
+
+
+If anything, the quality of fit appears slightly higher when estimations are based on the 4-digit classification. This is especially true for the model restricting transport cost to their ad-valorem dimension, whatever the transport mode considered.
+When the additive part is taken into account however, the difference in goodness of fit between the 3- and the 4-digit classification level becomes very small, whatever the considered criterion.
+In other words, if using a more disaggregated classification unsurprisingly adds some statistical precision, this is not to an extent that would disqualify the use of slightly more aggregated data.
+Further, the same conclusion established at the 3-digit level regarding the significant role of the additive component in fitting international transport costs emerges at the 4-digit level.
+
+\newpage
+
 %\subsection{Detailed Results \label{secoa:detailed}}
 \newpage
 \setcounter{table}{0}
@@ -226,9 +401,8 @@ For all years and whatever the transport mode considered, the model with additiv
 
 \subsection{Transport Cost Estimates: Yearly Detailed Results}
 
-In this section, we complement Table 1 of the main text by reporting the year-to-year results of the estimation driven at the 3-digit classification level. Table \ref{tab_oa:result_air_ally3} reports the results for each year over 1974-2013 for air transport; Table \ref{tab_oa:result_vessel_ally3} reports similar results for vessel. In both cases, we report the estimated values of the transport costs (weighted mean and median) when only ad-valorem costs are modeled (Model (A)) and when both additive and ad-valorem costs are modeled (Model (B)).
+In this section, we complement Table 1 of the main text by reporting the year-to-year results of the estimation driven at the 3-digit classification level. Table \ref{tab_oa:result_ves_ally3} reports the results for each year over 1974-2019 for vessel; Table \ref{tab_oa:result_air_ally3} reports similar results for air transport. In both cases, we report the estimated values of the transport costs (weighted mean and median) when only ad-valorem costs are modeled (Model (A)), when both additive and ad-valorem costs are modeled (Model (B)) and when only additive costs are modeled (Model (A)).
 
-%JH : reprendre XXX ICI
 \begin{landscape}
 
 \begin{table}[htbp]
@@ -240,7 +414,7 @@ In this section, we complement Table 1 of the main text by reporting the year-to
 				\begin{tablenotes}
 			\tiny
 			\item Statistics are weighted by value
-			\item \textbf{Model (A): With ad-valorem transpost costs only}
+			\item \textbf{Model (A): With ad-valorem transport costs only}
 			\item \textbf{Model (B): With additive and ad-valorem transport costs}
 			\item \textbf{Model (C): With additive transport costs only}
 		\end{tablenotes}
@@ -249,6 +423,7 @@ In this section, we complement Table 1 of the main text by reporting the year-to
 \label{tab_oa:result_ves_ally3}%
 \end{table}%
 
+\setcounter{table}{0}
 
 \begin{table}[htbp]
 	
@@ -259,7 +434,7 @@ In this section, we complement Table 1 of the main text by reporting the year-to
 				\begin{tablenotes}
 			\tiny
 			\item Statistics are weighted by value
-			\item \textbf{Model (A): With ad-valorem transpost costs only}
+			\item \textbf{Model (A): With ad-valorem transport costs only}
 			\item \textbf{Model (B): With additive and ad-valorem transport costs}
 			\item \textbf{Model (C): With additive transport costs only}
 		\end{tablenotes}
@@ -268,6 +443,7 @@ In this section, we complement Table 1 of the main text by reporting the year-to
 	\label{tab_oa:result_ves_ally3}%
 \end{table}%
 
+\setcounter{table}{0}
 
 \begin{table}[htbp]
 	
@@ -289,6 +465,7 @@ In this section, we complement Table 1 of the main text by reporting the year-to
 
 \end{landscape}
 
+\setcounter{table}{0}
 
 \begin{table}[htbp]
 	
@@ -333,6 +510,7 @@ Still, this does not make much difference. When 1989 is included, the weighed me
 	\label{tab_oa:result_air_ally3}%
 \end{table}%
 
+\setcounter{table}{1}
 
 \begin{table}[htbp]
 	
@@ -351,6 +529,8 @@ Still, this does not make much difference. When 1989 is included, the weighed me
 	\end{center}
 	\label{tab_oa:result_air_ally3}%
 \end{table}%
+
+\setcounter{table}{1}
 
 \begin{table}[htbp]
 
@@ -372,6 +552,8 @@ Still, this does not make much difference. When 1989 is included, the weighed me
 
 \end{landscape}
 
+
+\setcounter{table}{1}
 
 \begin{table}[htbp]
 
@@ -395,6 +577,7 @@ Still, this does not make much difference. When 1989 is included, the weighed me
 
 
 
+%JH : reprendre XXX ICI
 
 \setcounter{table}{0}
 \renewcommand{\thetable}{C.\arabic{table}}

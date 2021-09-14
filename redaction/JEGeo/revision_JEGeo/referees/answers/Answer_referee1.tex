@@ -108,7 +108,7 @@ University Paris-Dauphine \& PSL University, LEDa, 75016 Paris, France;  email: 
  \maketitle
 \bigskip
 
-We would like to thank you for your various insightful comments. They led us to introduce some
+We would like to thank you for your insightful comments. They led us to introduce some
 significant changes to the paper that we hope address your concerns. We first give you an overview
 of the revision (Section\ref{sec:main_changes}) before answering in detail each of your comments (Section\ref{sec:detailed_answers}). Number of sections, pages and equations mentioned in the text refer to the revised version.
 
@@ -116,12 +116,22 @@ of the revision (Section\ref{sec:main_changes}) before answering in detail each 
 
 
 \begin{itemize}
-\item Based on your comment 1.2 (\textit{The aggregation problem}), the benchmark set-up now retains $s=3$ and $k=10$ for the industry/product aggregation levels respectively. It is true that the original annual Census data reports trade at the origin country-HS 10 product-district level of aggregation. Our initial choice of retaining $s=3$ at the sectoral level, $k=5$ at the product level was driven by the use of Hummel's dataset available over 1974-2004 with $k=5$ the finest degree of aggregation. We yet agree with the referee that jumping from $k=10$ to $k=5$ digits at the product level is detrimental to our ability to exploit useful variation in the data. In line with the referee's comment, we now run the estimation by considering $k$ at the HS10 classification level, not 5. \textbf{We come back to this point in Section XXX of the letter.}
+\item Based on your comment 1.2 (\textit{The aggregation problem}), the benchmark set-up now retains $s=3$ and $k=10$ for the industry/product aggregation levels respectively. It is true that the original annual Census data reports trade at the origin country-HS 10 product-district level of aggregation.
+\textbf{XXXXX-GD- Bah c’est pas le benchmark, si ?}
+Our initial choice of retaining $s=3$ at the sectoral level, $k=5$ at the product level was driven by the use of Hummel's dataset available over 1974-2004 with $k=5$ the finest degree of aggregation. We yet agree with the referee that jumping from $k=10$ to $k=5$ digits at the product level is detrimental to our ability to exploit useful variation in the data. In line with the referee's comment, we now run the estimation by considering $k$ at the HS10 classification level, not 5. \textbf{We come back to this point in Section XXX of the letter.}
 
     This has important consequences in terms of database. In the submitted version, we used the original Hummel's database (available on his webpage from 1974 to 2003, which we completed by the US Bureau of census import database over the period 2005-2013. In Hummels' (2007) database, which we use until 2004, the finest degree of classification is at the 5-degree level until 2004. For comparability reasons over time, we have adopted the same degree of classification $k=5$ for the following years (based on the original Census dataset). As a result, in the submitted version, transport costs are estimated at the 3-digit sector level as benchmark estimate, exploiting product heterogeneity at the 5-digit level (for a given origin country, and conditional on year and transport mode).
 
-    Switching to $k=10$ as benchmark disaggregation level for the product dimension requires to resort on US Census dataset only. As first step, we have re-run the estimation over the years for which we already had the data (2005-2013). In parallel, we have bought older years from the Census bureau, as well as the more recent years 2014-2019. However, the Census bureau can provide data disaggregated at the $k=10$ product level only starting in 1989. This deprives us from the very first years 1974-1988. For this period, we can only resort on Hummel's dataset, with $k=5$ the finest product level category. This notably induces us to maintain $s=3$ as the benchmark disaggregation level for the sectoral dimension for the whole period. This allows us to preserve (as far as possible) the largest time coverage - even though switching from $s=3, k=5$ (1974-1988) to $s=3, k=10$) (1989-2019) undoubtedly constitutes a significant break. \textbf{What do we do with that?}
-
+    Switching to $k=10$ as benchmark disaggregation level for the product dimension would require resorting on US Census dataset only.
+    %As first step, we have re-run the estimation over the years for which we already had the data (2005-2013). In parallel, we have bought older years from the Census bureau, as well as the more recent years 2014-2019.
+    However, the Census bureau can provide data disaggregated at the $k=10$ product level only starting in 1989. Some of these data are in physical storage and were not accessible because of the Covid-19 pandemic (1989-1996, but also 2000 and 2001). In september 2021, they are still not accessible. Waiting for them contributed to making this revision quite late. This deprives us from the very first years 1974-1996 and 2000-2001. For this period, we can only resort on Hummel's dataset, with $k=5$ the finest product level category.
+    %This notably induces us to maintain $k=5$ as the benchmark disaggregation level for the sectoral dimension for the whole period.
+    This is a non-negligible cost as we are interested in the long-term evolution of trade costs.
+    
+    Comparing the 10/3 ad 5/3 results This allows us to preserve (as far as possible) the largest time coverage.
+    
+     % even though switching from $s=3, k=5$ (1974-1988) to $s=3, k=10$) (1989-2019) undoubtedly constitutes a significant break. \textbf{What do we do with that?}
+	\textbf{XXXXXGD - Je crois que c’est caduc puisque nous avons décidé que le benchmark état 5/3. Je ne sais pas qui a écrit "What can we do with that..."}
 
 
 \item Based on your comment 1.1 (\textit{The endogeneity problem}), the benchmark regression (non-linear least squares) is now completed by a two-stage procedure, where the fas price is instrumented by tax duties and its own lag - see section 4.3 and appendix B.4 in the paper, and section 2.1.2 of this letter.
