@@ -348,6 +348,10 @@ if "`database'"=="hummels_tra" | "`database'"=="base_hs10_newyears" {
 	global stock_results $dir/results/baseline
 }
 
+if "`database'"=="base_hs10_newyears" {
+	global stock_results $dir/results/10_3
+}
+
 if "`database'"=="db_samesample_`class'_`preci'_HS10" {
 	global stock_results $dir/results/referee1/baselinesamplereferee1
 }
@@ -414,6 +418,7 @@ if "`database'"=="base_hs10_newyears"  {
 	use "$dir_data/base_hs10_`year'", clear
 	keep if year==`year'
 	keep if mode=="`mode'"
+	global restreindre non
 }
 
 
@@ -589,47 +594,6 @@ if  "`database'"=="FS_predictions_both_yearly_prod5_sect3" {
 *****************************************************************************
 
 
-
-
-display "Nombre avant bas et haut " _N
-
-bys sector: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
-bys sector: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
-drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
-
-
-display "Nombre après bas et haut " _N
-
-egen prix_min = min(prix_trsp2), by(sector)
-egen prix_max = max(prix_trsp2), by(sector)
-
-g lprix_trsp2 = ln(prix_trsp2)
-label variable lprix_trsp2 "log(prix_caf/prix_fob)"
-*g lprix_trsp2 = ln(prix_trsp2)
-
-/*
-g ldist = ln(dist)
-label variable ldist "log(distance)"
-*/
-**********Sur les secteurs
-
-codebook sector
-
-
-egen group_sect=group(sector)
-su group_sect, meanonly	
-local nbr_sect_exante=r(max)
-display "Nombre de secteurs ex ante: `nbr_sect_exante'" 
-drop group_sect
-
-bysort sector: drop if _N<=5
-
-egen group_sect=group(sector)
-su group_sect, meanonly	
-local nbr_sect_expost=r(max)
-display "Nombre de secteurs ex post: `nbr_sect_expost'" 
-drop group_sect
-
 *** Tester le pgm
 if "${test}"!="" {
 	* Pour faire un plus petit sample
@@ -653,23 +617,79 @@ if "${test}"!="" {
 
 
 
-timer clear
 
 
-*Pour nombre de secteurs
-quietly egen group_sect=group(sector)
-su group_sect, meanonly	
-local nbr_sect=r(max)
-quietly levelsof sector, local (liste_sect) clean
-quietly tabulate sector, gen (sect_)
+
+if "$restreindre" !="non" {
+
+	display "Nombre avant bas et haut " _N
+
+	bys sector: egen c_95_prix_trsp2 = pctile(prix_trsp2),p(95)
+	bys sector: egen c_05_prix_trsp2 = pctile(prix_trsp2),p(05)
+	drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2 
+
+
+	display "Nombre après bas et haut " _N
+
+	egen prix_min = min(prix_trsp2), by(sector)
+	egen prix_max = max(prix_trsp2), by(sector)
+
+	g lprix_trsp2 = ln(prix_trsp2)
+	label variable lprix_trsp2 "log(prix_caf/prix_fob)"
+	*g lprix_trsp2 = ln(prix_trsp2)
+
+	/*
+	g ldist = ln(dist)
+	label variable ldist "log(distance)"
+	*/
+	**********Sur les secteurs
+
+	codebook sector
+
+
+	egen group_sect=group(sector)
+	su group_sect, meanonly	
+	local nbr_sect_exante=r(max)
+	display "Nombre de secteurs ex ante: `nbr_sect_exante'" 
+	drop group_sect
+
+	bysort sector: drop if _N<=5
+
+	egen group_sect=group(sector)
+	su group_sect, meanonly	
+	local nbr_sect_expost=r(max)
+	display "Nombre de secteurs ex post: `nbr_sect_expost'" 
+	drop group_sect
+
+
+	timer clear
+
+
+	*Pour nombre de secteurs
+	quietly egen group_sect=group(sector)
+	su group_sect, meanonly	
+	local nbr_sect=r(max)
+	quietly levelsof sector, local (liste_sect) clean
+	quietly tabulate sector, gen (sect_)
+		
+	*Pour nombre d'iso_o
+	quietly egen group_iso_o=group(iso_o)
+	su group_iso_o, meanonly	
+	local nbr_iso_o=r(max)
+	*Donne le nbr d'iso_o
+	quietly levelsof iso_o, local(liste_iso_o) clean
+	quietly tabulate iso_o, gen(iso_o_)
+}
+
+
+
+
+if "$restreindre" !="non" & "`database'"=="base_hs10_newyears" {
+	merge m:1 sector iso_o using  "$dir/results/baseline/results_estimTC_`year'_prod`class'_sect`preci'_`mode'", keepusing() keep(3)
+	blif
+}
 	
-*Pour nombre d'iso_o
-quietly egen group_iso_o=group(iso_o)
-su group_iso_o, meanonly	
-local nbr_iso_o=r(max)
-*Donne le nbr d'iso_o
-quietly levelsof iso_o, local(liste_iso_o) clean
-quietly tabulate iso_o, gen(iso_o_)
+
 
 
 

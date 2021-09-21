@@ -15,7 +15,7 @@
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
+	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
 	global dir_pgms "~/Répertoires GIT/trade_costs_git"
 	global dir_log "$dir/Logs divers"
 }
@@ -97,7 +97,7 @@ capture log close
 
 global test
 ****Si test
-*global test test2
+global test test2
 ******
 
 
