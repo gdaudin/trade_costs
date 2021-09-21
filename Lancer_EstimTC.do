@@ -201,7 +201,7 @@ foreach  y of numlist 2017 2019 {
 *****Pour HS10 10/3
 local year 1997 1998 1999 2002(1) 2019
 local mode ves 
-foreach  y of numlist 1997/1997 {
+foreach  y of numlist 2019/2019 {
 	foreach m in `mode' {	
 	EstimTC `y' `m' 10 3 base_hs10_newyears
 	}
