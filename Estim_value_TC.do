@@ -664,6 +664,28 @@ if "$restreindre" !="non" {
 
 	timer clear
 
+}
+
+
+if "$restreindre" =="non" & "`database'"=="base_hs10_newyears" {
+	save "$dir_temp/blif.dta", replace
+	use  "$dir/results/baseline/results_estimTC_`year'_prod5_sect3_`mode'", clear
+	rename product sector
+	bys  sector iso_o: keep if _n==1
+	codebook sector
+	codebook iso_o
+	save "$dir_temp/for_merge.dta", replace
+	use "$dir_temp/blif.dta", clear
+	codebook sector
+	codebook iso_o
+	merge m:1 sector iso_o using  "$dir_temp/for_merge", keepusing() keep(3)
+	codebook sector
+	codebook iso_o
+	blif
+	erase  "$dir_temp/for_merge.dta"
+	erase "$dir_temp/blif.dta"
+}
+	
 
 	*Pour nombre de secteurs
 	quietly egen group_sect=group(sector)
@@ -679,16 +701,12 @@ if "$restreindre" !="non" {
 	*Donne le nbr d'iso_o
 	quietly levelsof iso_o, local(liste_iso_o) clean
 	quietly tabulate iso_o, gen(iso_o_)
-}
 
 
 
 
-if "$restreindre" !="non" & "`database'"=="base_hs10_newyears" {
-	merge m:1 sector iso_o using  "$dir/results/baseline/results_estimTC_`year'_prod`class'_sect`preci'_`mode'", keepusing() keep(3)
-	blif
-}
-	
+
+
 
 
 

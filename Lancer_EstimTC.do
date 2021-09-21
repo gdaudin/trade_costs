@@ -18,6 +18,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
 	global dir_pgms "~/Répertoires GIT/trade_costs_git"
 	global dir_log "$dir/Logs divers"
+	global dir_temp "~/Downloads/temp_stata"
 }
 
 ** Fixe Lise bureau, en local sur MyWork
@@ -97,7 +98,7 @@ capture log close
 
 global test
 ****Si test
-global test test2
+*global test test2
 ******
 
 
@@ -188,22 +189,24 @@ foreach  y of numlist 2016(1)2019 {
 
 
 ****Pour baseline
+/*
 local mode /*ves*/ air 
 foreach  y of numlist 2017 2019 {
 	foreach m in `mode' {	
-	EstimTC `y' `m' 5 4 hummels_tra nlAetI
-	}
-}
-
-/*
-*****Pour HS10
-local mode ves 
-foreach  y of numlist 1974/2019 {
-	foreach m in `mode' {	
-	EstimTC `y' `m' 5 3 base_hs10_newyears
+	EstimTC `y' `m' 5 3 hummels_tra nlAetI
 	}
 }
 */
+
+*****Pour HS10 10/3
+local year 1997 1998 1999 2002(1) 2019
+local mode ves 
+foreach  y of numlist 1997/1997 {
+	foreach m in `mode' {	
+	EstimTC `y' `m' 10 3 base_hs10_newyears
+	}
+}
+
 
 /*
 
@@ -246,16 +249,13 @@ foreach  y of numlist 1974/2019 {
 	}
 }
 */
-<<<<<<< HEAD
 
-=======
 /*
->>>>>>> develop
 ****Pour baseline nlI
 local mode air ves 
 foreach  y of numlist 1974 1977(4)2017 2019 {
 	foreach m in `mode' {	
-	EstimTC `y' `m' 5 4 hummels_tra nlI
+	EstimTC `y' `m' 5 3 hummels_tra nlI
 	}
 
 }
