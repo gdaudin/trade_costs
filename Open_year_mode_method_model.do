@@ -48,6 +48,7 @@ if "`method'"=="baseline10" {
 
 if "`method'"=="dbsamesample10_5_3" {
 	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
+	rename product sector
 	capture rename `mode'_val val 
 	capture drop *_val
 }

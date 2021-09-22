@@ -352,7 +352,7 @@ table1_part baseline10
 	 
 
 	
-	collect label levels digit baseline "5/3-digit"
+	collect label levels digit dbsamesample10_5_3 "5/3-digit"
 	collect label levels digit baseline10 "10/3-digit"
 	collect label levels var N "{$#$ obs.}"
 	collect label levels var Nb_sectors "{$#$ sectors}"
@@ -365,7 +365,7 @@ table1_part baseline10
 	collect label levels var terme_I "{\textit{Multiplicative term (in $%$)} ($\widehat{\tau}^{adv}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term (in $%$)} ($\widehat{t}/\widetilde{p}$)}", modify
 	collect label levels var p_add_dollar "{\textit{Additive term in USD per kg ($\widehat{t}$)}}", modify
-	collect label levels var beta "$\widehat{\beta}$:  \textit{-Share of additive costs}", modify
+	collect label levels var beta "$\widehat{\beta}$:  \textit{Share of additive costs}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect label levels model nlI "{\textbf{Model (A)}}"
