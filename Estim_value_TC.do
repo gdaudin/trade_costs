@@ -344,7 +344,7 @@ args database year class preci mode model
 
 ** Définir macro pour lieu de stockage des résultats selon base utilisée
 
-if "`database'"=="hummels_tra" | "`database'"=="base_hs10_newyears" {
+if "`database'"=="hummels_tra" {
 	global stock_results $dir/results/baseline
 }
 
@@ -670,6 +670,7 @@ if "$restreindre" !="non" {
 if "$restreindre" =="non" & "`database'"=="base_hs10_newyears" {
 	save "$dir_temp/blif.dta", replace
 	use  "$dir/results/baseline/results_estimTC_`year'_prod5_sect3_`mode'", clear
+	capture rename product sector
 	bys  sector iso_o: keep if _n==1
 	*codebook sector
 	*codebook iso_o
