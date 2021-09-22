@@ -344,7 +344,7 @@ args database year class preci mode model
 
 ** Définir macro pour lieu de stockage des résultats selon base utilisée
 
-if "`database'"=="hummels_tra" | "`database'"=="base_hs10_newyears" {
+if "`database'"=="hummels_tra" {
 	global stock_results $dir/results/baseline
 }
 
