@@ -36,15 +36,18 @@ if "`c(username)'" =="guillaumedaudin" {
 
 
 /* Fixe Lise P112*/
-if "`c(hostname)'" =="LAB0271A" {
+
+/* Nouveau fixe Bureau Lise: Tout en local sur MyWork. Pour la base et les résultats, dossier Lise ; pgms dans le dossier Git (de MyWork) */
+if "`c(hostname)'" =="LAB0661F" {
+	
+	 * baseline results sur hummels_tra dans son intégralité
+	 global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+
 	 
 
-	* baseline results sur hummels_tra dans son intégralité
-    global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
-	
-		
 	* résultats selon méthode référé 1
-	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+    global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
 	
 	* stocker la comparaison des résultats
 	global dir_comparaison "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
@@ -58,7 +61,6 @@ if "`c(hostname)'" =="LAB0271A" {
 	global dir_temp "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
 	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
 	global dir_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
-	 
 	 
 	 
 	}
