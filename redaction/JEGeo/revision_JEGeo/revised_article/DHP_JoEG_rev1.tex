@@ -154,15 +154,15 @@ This represents a valuable insight for calibrating related international trade o
 We also provide an empirical assessment of what standard international trade models lose by skipping additive transport costs.
 Quantitatively, the omission of the additive term leads to overestimate the ad-valorem component by a factor around 2. Further, the goodness of fit is systematically better when the additive component is included in the regression, even when taking into account the removed degree of freedom.\smallskip
 
-A natural question then emerges: To what extent should we care about additive costs? Our paper answers this question from two different sides. 
+A natural question then emerges: To what extent should we care about additive costs? Our paper answers this question from two different sides.
 
 On the empirical side first, we show the importance of incorporating additive costs in the understanding of the international transport costs decrease observed between 1974 and 2019. Allowing for time-varying per-unit costs, we find that the downward trend in international transport costs comes from the reduction in ``pure'' transport costs over time, by roughly \textbf{50\% in air shipping and 60\% in vessel shipping over 1974-2019}.\footnote{Throughout the paper, we refer to ``pure'' or ``\textit{per se}'' transport costs changes as the changes over time in the transport costs for a given product/country partner, ie excluding trade composition effects (i.e. changes over time in the baskets of imported goods and/or the origin countries).} Trade composition effects have only limited influence in accounting for the downward trend of international transport costs, and when they matter (in maritime transport), composition effects amplify the reduction of pure transport costs, in contrast with the conclusion obtained by \cite{hummels2007} yet also on US import flows.
-%\cite{hummels2007} finds that total transport costs have decreased in both air and maritime shipment, but less so than ``pure'' transport costs, because trade composition effects have partly offset the pure transport costs decrease, thereby attenuating the overall downward trend in transport costs. 
+%\cite{hummels2007} finds that total transport costs have decreased in both air and maritime shipment, but less so than ``pure'' transport costs, because trade composition effects have partly offset the pure transport costs decrease, thereby attenuating the overall downward trend in transport costs.
 Importantly, we show that the difference of results can be attributed to the new method of modeling the additive component that we offer. Allowing the share of additive costs to vary across time, products and country partners (rather than being constant as in \citealp{hummels2007}), turns out to be key in the decomposition of underlying sources of the decrease of overall transport costs observed over the period.\smallskip
 
 We also show the importance of embedding additive costs when assessing the effects of trade liberalization in normative terms. Specifically, we
 make use of our empirical results to investigate the welfare consequences of the reduction in international transport costs observed over 1974-2019, contrasting two cases: When this reduction solely occurs through a decrease in the ad-valorem cost, as standardly modelled in New Trade models, versus when it is achieved through a combined reduction in the ad-valorem and the additive components, as quantified by our empirical model. To this aim, we embed additive costs in the canonical \cite{melitz} model. Relying on our empirical estimates of transport costs
-over 1974-2019, our preferred scenario shows an extra welfare gain by around 1.2 percentage point when the transport cost decrease encompasses a reduction in its additive component (as we document empirically) relative to a pure ad-valorem reduction. Put differently, neglecting additive costs thus leads to a substantial underestimation of the welfare gains of trade liberalisation. 
+over 1974-2019, our preferred scenario shows an extra welfare gain by around 1.2 percentage point when the transport cost decrease encompasses a reduction in its additive component (as we document empirically) relative to a pure ad-valorem reduction. Put differently, neglecting additive costs thus leads to a substantial underestimation of the welfare gains of trade liberalisation.
 
 \smallskip
 In both aspects, our results point to the importance of the additive component in accounting for international transport costs.
@@ -849,71 +849,37 @@ components (as quantified by our empirical model) or solely through the ad-valor
 \subsection{The model}
 
 
-As in \cite{sorensen2014}, we adopt the two-country model of \cite{melitz} with monopolistic competition and endogenous firm entry.\footnote{\cite{Irrazabal_2015} adopt the multi-country model of \cite{chaney2008}, consistently with their database that documents the exports of Norwegian firms in various destination markets worldwide. We rather choose to retain the \cite{melitz} model, in its simplest form with one sector and two symmetric countries, picking up the average estimated values of transport costs based on our unique importer country, e.g. the US. Sticking to this canonical set-up allows us to illustrate the role of additive costs in a transparent and intuitive way.} As widely standard in the literature, we focus on steady-state analysis, running comparative statics analysis following a trade cost reduction. Since our focus in on the role of additive versus ad-valorem transport costs, we directly present the two-country version of the model, with the two countries (Home and Foreign) being perfectly symmetric.
+We rely on the model developed by \cite{sorensen2014}, which amends the two-country model of \cite{melitz} with monopolistic competition and endogenous firm entry to include additive costs.\footnote{\cite{Irrazabal_2015} adopt the multi-country model of \cite{chaney2008}, consistently with their database that documents the exports of Norwegian firms in various destination markets worldwide. We rather choose to retain the \cite{melitz} model, in its simplest form with one sector and two symmetric countries, picking up the average estimated values of transport costs based on our unique importer country, e.g. the US. Sticking to this canonical set-up allows us to illustrate the role of additive costs in a transparent and intuitive way.} Since our focus in on the role of additive versus ad-valorem transport costs, we directly present the two-country version of the model, with the two countries (Home and Foreign) being perfectly symmetric. For sake of space saving, we only present here the building blocks of the model. More details can be found in Appendix \ref{app:theoretical_model}.
 
 \subsubsection{Households}
 
-In each country, the representative household exogenously supplies $L$ units of labour and maximizes utility $\mathcal{U} = \left[ \int_{\omega \in \Omega}c(\omega)^{\frac{\sigma-1}{\sigma}} d\omega \right]^{\frac{\sigma}{\sigma-1}}$, with $\sigma>1$ the elasticity of substitution between varieties $\omega$. She chooses her consumption $c(\omega)$  within the set $\Omega$ of available varieties (made of both domestic and foreign varieties, endogenously defined), subject to her budget constraint: $\int_{\omega \in \Omega} p(\omega) c(\omega) dw \leq E$, with $p(\omega)$ the consumer price of variety $\omega$ and $E$ nominal expenditures. As standard, the optimal demand function for variety $\omega$ is:
-\begin{eqnarray*}
-c(\omega) &=& \left(\frac{p(\omega)}{P}  \right)^{-\sigma} \frac{E}{P}\\
-\end{eqnarray*}
-\noindent with the associated optimal price index $P$ equal to:
-\begin{equation}
-P = \left[ \int_{\omega \in \Omega}p(\omega)^{1-\sigma}d\omega\right]^{\frac{1}{1-\sigma}} \label{eq:CPI}
-\end{equation}
-
+In each country, the representative household exogenously supplies $L$ units of labour and maximizes utility $\mathcal{U} = \left[ \int_{\omega \in \Omega}c(\omega)^{\frac{\sigma-1}{\sigma}} d\omega \right]^{\frac{\sigma}{\sigma-1}}$, with $\sigma>1$ the elasticity of substitution between varieties $\omega$. She chooses her consumption $c(\omega)$  within the set $\Omega$ of available varieties (made of both domestic and foreign varieties, endogenously defined), subject to her budget constraint: $\int_{\omega \in \Omega} p(\omega) c(\omega) dw \leq E$, with $p(\omega)$ the consumer price of variety $\omega$ and $E$ nominal expenditures. As standard, the optimal demand function for variety $\omega$ is: $c(\omega) = \left(\frac{p(\omega)}{P}  \right)^{-\sigma} \frac{E}{P}$ with the associated optimal price index $P$ equal to $P = \left[ \int_{\omega \in \Omega}p(\omega)^{1-\sigma}d\omega\right]^{\frac{1}{1-\sigma}} $.
 
 
 \subsubsection{Firms behavior}
 
 As in \cite{melitz}, firms are in monopolistic competition, each producing a differentiated variety using labor as sole production factor. Both countries being perfectly symmetric, the labor market equilibrium imposes the same wage in both countries, thus considered as the num\'{e}raire. Prices and costs are hence expressed in terms of labor. At entry, each firm pays a sunk entry cost $f_e$ and subsequently draws its productivity level $\varphi$ from a known distribution $G(\varphi)$. The production of $q$ units requires employing $l(q|\varphi) = f+\frac{q}{\varphi}$ units of labor, with $f$ the fixed cost of production. Exporting is subject to an extra fixed cost $f_x$ and variable exporting costs of two types: an ad-valorem cost that depends on the value traded $\tau\geq 1$ and an additive cost depending on the quantity (weight) transported, $t\geq 0$. At each point in time, a firm can be hit by a death shock at the exogenous probability $\delta>0$. Following \cite{melitz}, we solve the problem backwards. First, we solve for the maximizing profit behavior once entered. Second, we determine the entry conditions on both the domestic and the export markets.\medskip
 
-\paragraph{Profit-maximizing behaviors} Once entered, and conditional on being able to export, a firm adopts a pricing-to-market behavior by setting a specific price on each destination market.
-
-On the domestic market, the objective is to maximize profit $\pi_d(\omega)= \left(p^d(\varphi) -\frac{1}{\varphi}  \right)c(\varphi)$, taken into account the consumer demand function $c(\varphi) = \left(\frac{p(\varphi)}{P}  \right)^{-\sigma} \frac{E}{P}$\footnote{In a monopolistic set-up, each firm (of productivity $\varphi$) is the sole producer of variety $\omega$, implying a one-to-one link between $\omega$ and $\varphi$, such that we could write $\omega(\varphi)$. For sake of notational simplicity, we omit this link and simply write the consumer demand function as a function of $\varphi$ directly.}
-The optimal pricing behavior yields:
-$$p^d(\varphi) = \frac{\sigma}{\sigma-1}\frac{1}{\varphi}$$
-With a CES specification on household's preferences, the firm sets its price as a constant mark-up on marginal cost, which is inversely related to its productivity as for the domestic market. \medskip
-
-Conditional on exporting abroad, the profit-maximizing program on the export market requires the inclusion of variable international trade costs. The optimizing program accordingly rewrites as:
-\begin{eqnarray*}
-\max_{p_x(\varphi)} \pi_x(\varphi) &=& \left(p_x(\varphi) -\frac{\tau}{\varphi}  \right)c_x(\varphi) - tc_x(\varphi) \\
-\text{s.t. }&&c_x(\varphi) = \left(\frac{p_x(\varphi)}{P^\ast}  \right)^{-\sigma} \frac{E^\ast}{P^\ast}
-\end{eqnarray*}
-
-\noindent where $E^\ast$ and $P^\ast$ refer to nominal expenditures and the price index in the foreign country, $c_x(\omega)$ to the demand for variety $\omega$ from the Foreign household and $p_x(\omega)$ to the price set by the firm producing the variety $\omega$ on the export market. Solving for this yields:
-\begin{equation}
-p_x(\varphi) = \frac{\sigma}{\sigma-1}\left[\frac{\tau}{\varphi} +t \right] \label{eq:px}
-\end{equation}
-
-Similarly as for the Home market, the firm sets a constant markup on its marginal cost, which is still a decreasing function of the firm's productivity $\varphi$, but also takes into account both components of trade costs.
+\paragraph{Profit-maximizing behaviors} Once entered, and conditional on being able to export, a firm adopts a pricing-to-market behavior by setting a specific price on each destination market. For each destination market, he firm sets a constant markup on its marginal cost, which is a decreasing function of the firm's productivity $\varphi$, but also takes into account both components of trade costs on the export market, according to:
+\begin{eqnarray}
+p_d(\varphi) &=& \frac{\sigma}{\sigma-1}\frac{1}{\varphi} \notag \\
+p_x(\varphi) &=& \frac{\sigma}{\sigma-1}\left[\frac{\tau}{\varphi} +t \right] \label{eq:px}
+\end{eqnarray}
 
 Under the assumption of symmetric countries (i.e, implying $E=E^\ast$ and $P=P^\ast$), one can deduce the profits on the domestic and export markets ($\pi_d(\varphi)$ and $\pi_x(\varphi)$) respectively as:
 \begin{eqnarray}
 \pi_d(\varphi)  &=& \frac{r_d(\varphi)}{\sigma} - f = B \varphi^{\sigma-1} - f \label{eq:pid_rd}\\
 \pi_x(\varphi) &=& \frac{r_x(\varphi)}{\sigma} - f_x = B \left[ \frac{\tau}{\varphi} + t\right]^{-(\sigma-1)} - f_x \label{eq:pix_rx}
 \end{eqnarray}
-\noindent with $B \equiv \frac{1}{\sigma-1}\left(\frac{\sigma}{\sigma-1}\right)^{-\sigma}P^{\sigma-1}E$ and where $r_d(\varphi)$ and $r_x(\varphi)$ denote the sales revenues on each market. Profits increase with productivity $\varphi$, and only sufficiently productive firms are able to cover the fixed costs of operating in a given market. Further, in presence of trade costs, a given firm of productivity $\varphi$ makes a lower export profit than on its domestic market, conditional on being productive enough to export. This drives us to determine the productivity threshold associated to the entry conditions.
+\noindent with $B \equiv \frac{1}{\sigma-1}\left(\frac{\sigma}{\sigma-1}\right)^{-\sigma}P^{\sigma-1}E$ and where $r_d(\varphi)$ and $r_x(\varphi)$ denote the sales revenues on each market (see Appendix \ref{app:theoretical_model} for a detailed expression). Profits increase with productivity $\varphi$, and only sufficiently productive firms are able to cover the fixed costs of operating in a given market. Further, in presence of trade costs, a given firm of productivity $\varphi$ makes a lower export profit than on its domestic market, conditional on being productive enough to export. This drives us to determine the productivity threshold associated to the entry conditions.
 
-Making use of the firm's first-order pricing conditions, revenues on each local and export market respectively read as:
-\begin{eqnarray}
-% \nonumber % Remove numbering (before each equation)
-  r_d(\varphi) &=& \left[\frac{1}{\rho \varphi}  \right]^{1-\sigma} P^{\sigma-1} E \label{eq:rd}\\
-  r_x(\varphi) &=& \left[\frac{1}{\rho}\left(\frac{\tau}{\varphi} +t\right)  \right]^{1-\sigma} P^{\sigma-1} E \label{eq:rx}
-\end{eqnarray}
-\noindent with $\rho =  \frac{\sigma-1}{\sigma}$ inversely related to the markup rate.
 
-\paragraph{Zero-cutoff profit conditions} Given the fixed costs on both the domestic and the export markets, only firms with a productivity above $\varphi^\ast$ will serve the domestic market, and those with $\varphi>\varphi_x^\ast$ will export abroad. With $\frac{\pi_d(\varphi^\ast)}{\delta}$ and  $\frac{\pi_x(\varphi_x^\ast)}{\delta}$ the expected profit on the domestic and export market respectively, the zero cut-off (ZCP) productivity levels for successful entry on each market should verify:
-\begin{eqnarray*}
-\frac{\pi_d(\varphi^\ast)}{\delta} = 0 &\Leftrightarrow & \varphi^\ast = \frac{1}{f^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}}}\\
-\frac{\pi_x(\varphi_x^\ast)}{\delta} = 0 &\Leftrightarrow & \varphi_x^\ast = \frac{\tau}{f_x^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}} -t}
-\end{eqnarray*}
-The two productivity thresholds can be linked according to:
+\paragraph{Zero-cutoff profit conditions} Given the fixed costs on both the domestic and the export markets, only firms with a productivity above $\varphi^\ast$ will serve the domestic market, and those with $\varphi>\varphi_x^\ast$ will export abroad.  The two productivity thresholds can be linked according to:
 \begin{equation}
 \frac{\varphi_x^\ast}{\tau+t\varphi_x^\ast} = \varphi^\ast \left( \frac{f}{f_x} \right)^{\frac{1}{1-\sigma}} \label{eq:link_thresholds}
 \end{equation}
 
-Following \cite{melitz} and the subsequent literature, we ensure selection on the export market, i.e. such that $\varphi_x^\ast > \varphi^\ast$. Making use of Equation (\ref{eq:link_thresholds}), this condition writes down as $\left[\tau+ t\varphi^\ast_x \right] \left( \frac{f}{f_x} \right)^{\frac{1}{1-\sigma}} >1$. Two comments can be made at this point. First, additive costs ($t>0$) make the selection condition more likely to happen everything else equal for any given values of ad-valorem and fixed costs. Put differently, additive costs somehow relax the constraint of the fixed cost of exporting. Second, due to additive costs ($t>0$), the export selection condition depends on the general equilibrium of the model (through $\varphi^\ast_x $) and cannot be imposed ex-ante by an appropriate restriction on the space parameter. We check this condition holds numerically in solving the model.\footnote{This is no longer the case under ad-valorem costs only. In this case, with $t=0$, we find the usual condition that $\varphi^\ast_x >\varphi^\ast$ iif $\tau^{\sigma-1}\frac{f_x}{f}>1$.}
+Following \cite{melitz} and the subsequent literature, we ensure selection on the export market, i.e. such that $\varphi_x^\ast > \varphi^\ast$. Making use of Equation (\ref{eq:link_thresholds}), this condition writes down as $\left[\tau+ t\varphi^\ast_x \right] \left( \frac{f}{f_x} \right)^{\frac{1}{1-\sigma}} >1$. Due to additive costs ($t>0$), the export selection condition depends on the general equilibrium of the model (through $\varphi^\ast_x $) and cannot be imposed ex-ante by an appropriate restriction on the space parameter. We check this condition holds numerically in solving the model.\footnote{This is no longer the case under ad-valorem costs only. In this case, with $t=0$, we find the usual condition that $\varphi^\ast_x >\varphi^\ast$ iif $\tau^{\sigma-1}\frac{f_x}{f}>1$.}
 
 
 
@@ -929,18 +895,10 @@ Following \cite{melitz} and the subsequent literature, we ensure selection on th
 \right.  \label{eq:muofphi}
 \end{eqnarray}
 \noindent with $1-G(\varphi^\ast)$ the probability of successful entry on the domestic market. Conditional on being active on the domestic market, a subset mass $M_x$ of firms export abroad. $\mu_x(\varphi)$ can be similarly defined as the conditional distribution of productivity on the export market, e.g. on the support $\left[ \varphi^\ast_x,\infty\right)$.
-
-
-Further defining $M_T = M+M_x$ as the total number of varieties accessible to the consumers, one can show that the consumer price index can be rewritten as: comes that:
-$$P = \frac{\sigma}{\sigma-1}M_T^{\frac{1}{1-\sigma}}\left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$$
-
-\noindent with $\widetilde{\varphi}(\varphi^\ast)$ and $\widetilde{\varphi}_x(\varphi_x^\ast)$ the weighted average of productivities of domestic and imported varieties respectively (defined in Appendix \ref{app:theoretical_model}). With $\widetilde{\varphi}_T \equiv \left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$ the weighted average of firm productivities on the domestic market (including both local producers and foreign producers exporting at Home), the price index can be expressed as $P = M_T^{\frac{1}{1-\sigma}}\frac{1}{\rho \widetilde{\varphi}_T }$. As in \cite{melitz}, given our assumptions of wage normalization and a one-sector economy, welfare per worker is simply equal the inverse of the price level: $\mathcal{W} = \frac{w}{P}= P^{-1}$, leading to:
-
+Further defining $M_T = M+M_x$ as the total number of varieties accessible to the consumers, $\widetilde{\varphi}_T$ the weighted average of firms productivities on the domestic market, one can show that the welfare per worker can be written as (see Appendix \ref{app:theoretical_model}): 
 \begin{equation}
-\mathcal{W} = \rho \widetilde{\varphi}_T M_T^{\frac{1}{\sigma-1}}\label{eq:Welfare}
+\mathcal{W} = \rho \widetilde{\varphi}_T M_T^{\frac{1}{\sigma-1}} \label{eq:Welfare}
 \end{equation}
-
-
 
 \paragraph{Free-entry condition} There is free-entry in the monopolistic industry, imposing that the expected net present value of entry is driven to zero. In the open-economy setting, this condition is given by:
 \begin{equation*}
@@ -951,29 +909,16 @@ Defining $\bar{\pi}$ as the average profit conditional to entry, this free-entry
 \begin{equation}
 \left(1-G(\varphi^\ast)\right)\frac{\bar{\pi}}{\delta} = f_e \label{eq:FEC}
 \end{equation}
-
-
-\noindent with $\left(1-G(\varphi^\ast)\right)$ the probability of successful entry. $\bar{\pi}$ can be expressed as $\bar{\pi} =\pi_d(\widetilde{\varphi}(\varphi^\ast)) + \rho_x \pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))$, with $\pi_d(\widetilde{\varphi}(\varphi^\ast)) \equiv \bar{\pi}_d$ the average expected profit on the domestic market, $\pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))\equiv \bar{pi}_x$ the average expected export profit and $\rho_x$ the probability of exporting (conditional on entry on the domestic market), equal to $\rho_x = \frac{1-G(\varphi_x^\ast)}{1-G(\varphi^\ast)}$.
-
-Noticing that, from Equation (\ref{eq:rd}), $\frac{r_d(\varphi)}{r_d(\varphi^\ast)} = \left( \frac{\varphi}{\varphi^\ast} \right)^{\sigma-1}$ and similarly on the export market, Equations (\ref{eq:pid_rd}) and (\ref{eq:pix_rx}) can be rewritten as:
-\begin{eqnarray*}
-\bar{\pi}_d &=& \left\{\left(\frac{\widetilde{\varphi}^\ast}{\varphi^\ast}\right)^{\sigma-1}-1 \right\}f \\
-\bar{\pi}_x &=& \left\{\left[\left(\frac{\widetilde{\varphi}_x^\ast}{\varphi_x^\ast}\right)\left(\frac{\tau+ t \varphi^\ast_x}{\tau+ t \widetilde{\varphi}^\ast_x}\right)\right]^{\sigma-1}-1 \right\}f_x
-\end{eqnarray*}
-
-Making use of the above elements, we finally get the zero-cut off profit condition in the open economy with additive costs as:
+As shown in Appendix \ref{app:theoretical_model}, it can be rewritten as:
 \begin{equation}
 \bar{\pi} = \left\{\left(\frac{\widetilde{\varphi}^\ast}{\varphi^\ast}\right)^{\sigma-1}-1 \right\}f +  \frac{1-G(\varphi_x^\ast)}{1-G(\varphi^\ast)}\left\{\left[\left(\frac{\widetilde{\varphi}_x^\ast}{\varphi_x^\ast}\right)\left(\frac{\tau+ t \varphi^\ast_x}{\tau+ t \widetilde{\varphi}^\ast_x}\right)\right]^{\sigma-1}-1 \right\}f_x \label{eq:ZCP}
 \end{equation}
-\noindent with $\widetilde{\varphi}^\ast$ and $\widetilde{\varphi}_x^\ast$ given by Equations (\ref{eq:def_phitilde}) and (\ref{eq:def_phitildex}).
-
-\paragraph{Summary} Equations (\ref{eq:def_phitilde}), (\ref{eq:def_phitildex}), (\ref{eq:ZCP}), (\ref{eq:link_thresholds}) and (\ref{eq:FEC}) determine a system of interdependent equations in five endogenous variables $\left\{\bar{\pi}, \widetilde{\varphi}, \widetilde{\varphi}_x, \varphi^\ast, \varphi^\ast_x \right\}$. From this, we can deduce the equilibrium values of the remaining set of variables (as detailed in Appendix \ref{app:theoretical_model}).
-
+\noindent with $\widetilde{\varphi}^\ast$ and $\widetilde{\varphi}_x^\ast$ the weighted average productivities of domestic and exporting firms respectively (see Equations (\ref{eq:def_phitilde}) and (\ref{eq:def_phitildex}) in Appendix \ref{app:theoretical_model}).
 
 
 \subsection{Calibration}
 
-As standard in this literature (\cite{Irrazabal_2015}, \cite{melitz-redding-Handbk-IT-2014}), the heterogenity in firm productivity is assumed to be given by a Pareto distribution. As shown in \cite{melitz-redding-Handbk-IT-2014}, the Pareto distribution indeed allows for a full analytical solving of the M\'{e}litz model. This is no longer the case in the presence of additive costs (see Appendix \ref{app:theoretical_model}). In this case, we need to rely on the model's simulations to determine the steady state. This drives us to calibrate the structural parameters of the model. To do so, we dwell on values commonly retained in the literature, as reported in Table \ref{tab:calib_horsTC}. The one exception is the value for the two additive and ad-valorem transport costs, for which we use our empirical estimates of Section \ref{sec:results_decomposition}.
+As standard in this literature (\cite{Irrazabal_2015}, \cite{melitz-redding-Handbk-IT-2014}), the heterogenity in firm productivity is assumed to be given by a Pareto distribution. As shown in \cite{melitz-redding-Handbk-IT-2014}, the Pareto distribution indeed allows for a full analytical solving of the M\'{e}litz model. This is no longer the case in the presence of additive costs (see Appendix \ref{app:theoretical_model}). In this case, we need to rely on the model's simulations to determine the steady state. This drives us to calibrate the structural parameters of the model. To do so, we dwell on values commonly retained in the literature, as reported in Table \ref{tab:calib_horsTC}. The one exception is the value for the two additive and ad-valorem transport costs, for which we use our empirical estimates of Section \ref{sec:results_decomposition} for the years 1974 and 2019, as reported in Table \ref{tab:calib_TC}.
 
 \begin{table}[htbp]
   \centering
@@ -981,14 +926,9 @@ As standard in this literature (\cite{Irrazabal_2015}, \cite{melitz-redding-Hand
 \begin{center}
 	\input{donnees_calibration.tex}
 \end{center}
-{\parbox[l]{13cm}{ \vspace{4pt}\footnotesize{Notes: $f_x$ can take two values, depending on the share of exporters considered that might differ between the initial steady state (21\%, based on early 1980s' value) and the final steady state (39\%, based on 2000's value.), according to the references provided above. BEJK (2003) refers to \cite{BEJK-AER-03}.}}}
+{\parbox[l]{13cm}{ \vspace{4pt}\footnotesize{Notes: $f$ endogenously revealed at the autarky case, such that all firms produce in autarky. $f_x$ can take two values, depending on the share of exporters considered that might differ between the initial steady state (21\%, based on early 1980s' value) and the final steady state (39\%, based on 2000's value.), according to the references provided above. BEJK (2003) refers to \cite{BEJK-AER-03}.}}}
 \end{table}
 
-
-
-Following \cite{ghironi}, $f$ such that all firms produce in autarky (i.e., such that $\varphi^{\ast,a} = \varphi_{\text{min}}$. The calibration of the fixed export cost obeys the following logic. As in \cite{ghironi}, $f_x$ is endogenously revealed to match a given share of exporting firms at the steady state. Further, \cite{Lincoln_McCallum2018} document the large increase in the number of exporting firms in the US between the mid 1980s et the mid 2000s, with a share of exporting firms raising by 52\% over this period. Accordingly, we will assess the effects of the trade liberalization assuming a joined reduction in both the variable transport costs ($\tau, t$, based on our empirical estimates) and the fixed export cost $f_x$. Specifically, we endogenously determine the initial value of $f_x$ such that the initial steady state (with 1974 values of transport costs) implies a share of exporting firms equal to 21\%, as in  \cite{ghironi} based on the value estimated by \cite{BEJK-AER-03} in the early 1990s. In the final steady state, $f_x$ will be revealed such that this share of exporting plants has increased by 85\% (i.e., from 21\% to 39\%), based on the evidence reported in \cite{Lincoln_McCallum2018}.\smallskip
-
-The calibration of transport costs parameters relies on our empirical estimates. We notably illustrate the consequences of trade liberalization by comparing the equilibrium based on the 1974 values of transport costs (at the beginning of our sample), versus those of 2019 (at the very end of our estimation period), in both cases on only ad-valorem transport costs and in the presence of both additive and ad-valorem costs. Calibration of transport costs is displayed in Table \ref{tab:calib_TC}.
 
 \begin{table}[htbp]
   \centering
@@ -998,6 +938,9 @@ The calibration of transport costs parameters relies on our empirical estimates.
 \end{center}
 {\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: In Columns (1), (3), (5) and (7), we model ad-valorem costs only. In Columns (2), (4), (6) and (8), we model both ad-valorem and additive costs. $t$ is calibrated so that the ratio $t/\widetilde{p}^{\text{fas}}_x$ from the model matches its empirical target, with $\widetilde{p}^{\text{fas}}_x$ the average fas price set in place by those domestic firms that export. We theoretically define the export fas price through: $p_x = \tau \widetilde{p}^{\text{fas}} +t$. TC = Transport Costs, expressed in percentage of the average fas export price.}}}
 \end{table}
+
+We notably illustrate the consequences of trade liberalization by comparing the equilibrium based on the 1974 values of transport costs (at the beginning of our sample), versus those of 2019 (at the very end of our estimation period), in both cases on only ad-valorem transport costs and in the presence of both additive and ad-valorem costs. Further, \cite{Lincoln_McCallum2018} document the large increase in the number of exporting firms in the US between the mid 1980s et the mid 2000s, with a share of exporting firms raising by 52\% over this period. This can be captured in the model through a reduction in the fixed export cost $f_x$. Accordingly, we will assess the effects of the trade liberalization assuming a joined reduction in both the variable transport costs ($\tau, t$, based on our empirical estimates) and the fixed export cost $f_x$.\footnote{We endogenously determine the initial value of $f_x$ such that the initial steady state (with 1974 values of transport costs) implies a share of exporting firms equal to 21\%, as in  \cite{ghironi} based on the value estimated by \cite{BEJK-AER-03} in the early 1990s. In the final steady state, $f_x$ will be revealed such that this share of exporting plants has increased by 85\% (i.e., from 21\% to 39\%), based on the evidence reported in \cite{Lincoln_McCallum2018}, along with the 2019 values of variable transport costs}
+
 
 
 \subsection{Trade liberalization: The importance of additive costs}
@@ -1703,10 +1646,44 @@ However, Figure \ref{fig:compeffects_robustness} also shows that the composition
 
 In this section, we provide more details on the model's solving in the general case, i.e. without specifying any functional form for the distribution of firm productivity.
 
+\subsubsection{Firms}
+
+\paragraph{Profit-maximizing behavior}
+
+On the domestic market, the objective is to maximize profit $\pi_d(\omega)= \left(p^d(\varphi) -\frac{1}{\varphi}  \right)c(\varphi)$, taking into account the consumer demand function $c(\varphi) = \left(\frac{p(\varphi)}{P}  \right)^{-\sigma} \frac{E}{P}$. In a monopolistic set-up, each firm (of productivity $\varphi$) is the sole producer of variety $\omega$, implying a one-to-one link between $\omega$ and $\varphi$, such that we could write $\omega(\varphi)$. For sake of notational simplicity, we omit this link and simply write the consumer demand function as a function of $\varphi$ directly. 
+The optimal pricing behavior yields:
+$$p^d(\varphi) = \frac{\sigma}{\sigma-1}\frac{1}{\varphi}$$
+With a CES specification on household's preferences, the firm sets its price as a constant mark-up on marginal cost, which is inversely related to its productivity as for the domestic market. \medskip
+
+Conditional on exporting abroad, the profit-maximizing program on the export market requires the inclusion of variable international trade costs. The optimizing program accordingly rewrites as:
+\begin{eqnarray*}
+\max_{p_x(\varphi)} \pi_x(\varphi) &=& \left(p_x(\varphi) -\frac{\tau}{\varphi}  \right)c_x(\varphi) - tc_x(\varphi) \\
+\text{s.t. }&&c_x(\varphi) = \left(\frac{p_x(\varphi)}{P^\ast}  \right)^{-\sigma} \frac{E^\ast}{P^\ast}
+\end{eqnarray*}
+
+\noindent where $E^\ast$ and $P^\ast$ refer to nominal expenditures and the price index in the foreign country, $c_x(\omega)$ to the demand for variety $\omega$ from the Foreign household and $p_x(\omega)$ to the price set by the firm producing the variety $\omega$ on the export market. Solving for this yields:
+\begin{equation}
+p_x(\varphi) = \frac{\sigma}{\sigma-1}\left[\frac{\tau}{\varphi} +t \right] \label{eq:px}
+\end{equation}
+
+Making use of the firm's first-order pricing conditions, revenues on each local and export market respectively read as:
+\begin{eqnarray}
+% \nonumber % Remove numbering (before each equation)
+  r_d(\varphi) &=& \left[\frac{1}{\rho \varphi}  \right]^{1-\sigma} P^{\sigma-1} E \label{eq:rd}\\
+  r_x(\varphi) &=& \left[\frac{1}{\rho}\left(\frac{\tau}{\varphi} +t\right)  \right]^{1-\sigma} P^{\sigma-1} E \label{eq:rx}
+\end{eqnarray}
+\noindent with $\rho =  \frac{\sigma-1}{\sigma}$ inversely related to the markup rate.
+
+\paragraph{Zero-cutoff profit conditions} With $\frac{\pi_d(\varphi^\ast)}{\delta}$ and  $\frac{\pi_x(\varphi_x^\ast)}{\delta}$ the expected profit on the domestic and export market respectively, the zero cut-off (ZCP) productivity levels for successful entry on each market should verify:
+\begin{eqnarray*}
+\frac{\pi_d(\varphi^\ast)}{\delta} = 0 &\Leftrightarrow & \varphi^\ast = \frac{1}{f^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}}}\\
+\frac{\pi_x(\varphi_x^\ast)}{\delta} = 0 &\Leftrightarrow & \varphi_x^\ast = \frac{\tau}{f_x^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}} -t}
+\end{eqnarray*}
+
 \subsubsection{Aggregation: Price indices}
 
 
-Following \cite{melitz}, and decomposing the set of available varieties into $\Omega_d$, $\Omega_x$ the set of varieties respectively produced at Home and imported, one can rewrite the price index (\ref{eq:CPI}) as:
+Following \cite{melitz}, and decomposing the set of available varieties into $\Omega_d$, $\Omega_x$ the set of varieties respectively produced at Home and imported, one can rewrite the price index as:
 \begin{eqnarray*}
 P &=& \left[\int_{\omega \in \Omega_d} p_d^{1-\sigma}(\omega)d\omega + \int_{\omega \in \Omega_x} p_x^{1-\sigma}(\omega)d\omega  \right]^{\frac{1}{1-\sigma}} \\
 &=& \left[\int_{0}^\infty p_d^{1-\sigma}(\varphi)M\mu(\varphi)d\varphi + \int_{0}^\infty p_x^{1-\sigma}(\varphi)M_x \mu_x(\varphi)d\varphi  \right]^{\frac{1}{1-\sigma}}
@@ -1731,6 +1708,29 @@ Similarly as in the closed-economy case (\cite{melitz}), let us define $\widetil
 \widetilde{\varphi} &=& \left[\frac{1}{1-G(\varphi^\ast)}\int_{\varphi^\ast}^\infty \phi^{\sigma-1}g(\varphi)d\varphi   \right]^{\frac{1}{\sigma-1}} \label{eq:def_phitilde}\\
 \widetilde{\varphi}_x &=& \left[\frac{1}{1-G(\varphi_x^\ast)}\int_{\varphi^\ast}^\infty \left[\varphi\left(\frac{\tau}{\tau+t \varphi}  \right) \right]^{\sigma-1}g(\varphi)d\varphi   \right]^{\frac{1}{\sigma-1}} \label{eq:def_phitildex}
 \end{eqnarray}
+
+
+
+Further defining $M_T = M+M_x$ as the total number of varieties accessible to the consumers, one can show that the consumer price index can be rewritten as: comes that:
+$$P = \frac{\sigma}{\sigma-1}M_T^{\frac{1}{1-\sigma}}\left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$$
+
+\noindent with $\widetilde{\varphi}(\varphi^\ast)$ and $\widetilde{\varphi}_x(\varphi_x^\ast)$ the weighted average of productivities of domestic and imported varieties respectively defined in Equations (\ref{eq:def_phitilde}) and (\ref{eq:def_phitildex}). With $\widetilde{\varphi}_T \equiv \left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$ the weighted average of firm productivities on the domestic market (including both local producers and foreign producers exporting at Home), the price index can be expressed as $P = M_T^{\frac{1}{1-\sigma}}\frac{1}{\rho \widetilde{\varphi}_T }$. As in \cite{melitz}, given our assumptions of wage normalization and a one-sector economy, welfare per worker is simply equal the inverse of the price level: $\mathcal{W} = \frac{w}{P}= P^{-1}$, leading to:
+
+\begin{equation*}
+\mathcal{W} = \rho \widetilde{\varphi}_T M_T^{\frac{1}{\sigma-1}} 
+\end{equation*}
+\noindent that is, Equation (\ref{eq:Welfare}).
+
+\paragraph{Free-entry condition} $\bar{\pi}$ can be expressed as $\bar{\pi} =\pi_d(\widetilde{\varphi}(\varphi^\ast)) + \rho_x \pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))$, with $\pi_d(\widetilde{\varphi}(\varphi^\ast)) \equiv \bar{\pi}_d$ the average expected profit on the domestic market, $\pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))\equiv \bar{\pi}_x$ the average expected export profit and $\rho_x$ the probability of exporting (conditional on entry on the domestic market), equal to $\rho_x = \frac{1-G(\varphi_x^\ast)}{1-G(\varphi^\ast)}$.
+
+Noticing that, from Equation (\ref{eq:rd}), $\frac{r_d(\varphi)}{r_d(\varphi^\ast)} = \left( \frac{\varphi}{\varphi^\ast} \right)^{\sigma-1}$ and similarly on the export market, Equations (\ref{eq:pid_rd}) and (\ref{eq:pix_rx}) can be rewritten as:
+\begin{eqnarray*}
+\bar{\pi}_d &=& \left\{\left(\frac{\widetilde{\varphi}^\ast}{\varphi^\ast}\right)^{\sigma-1}-1 \right\}f \\
+\bar{\pi}_x &=& \left\{\left[\left(\frac{\widetilde{\varphi}_x^\ast}{\varphi_x^\ast}\right)\left(\frac{\tau+ t \varphi^\ast_x}{\tau+ t \widetilde{\varphi}^\ast_x}\right)\right]^{\sigma-1}-1 \right\}f_x
+\end{eqnarray*}
+
+Making use of the above elements, we finally get the zero-cut off profit condition in the open economy with additive costs as:
+
 
 \subsubsection{Solving the general equilibrium}
 
