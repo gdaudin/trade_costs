@@ -155,12 +155,7 @@ We also provide an empirical assessment of what standard international trade mod
 Quantitatively, the omission of the additive term leads to overestimate the ad-valorem component by a factor around 2. Further, the goodness of fit is systematically better when the additive component is included in the regression, even when taking into account the removed degree of freedom.\smallskip
 
 A natural question then emerges: To what extent should we care about additive costs? Our paper answers this question from two different sides.
-
-<<<<<<< HEAD
 On the empirical side first, we show the importance of incorporating additive costs in the understanding of the international transport costs decrease observed between 1974 and 2019. Allowing for time-varying per-unit costs, we find that the downward trend in international transport costs comes from the reduction in ``pure'' transport costs (i.e., for a given product/country partner) over time, by roughly \textbf{50\% in air shipping and 60\% in vessel shipping over 1974-2019}. Trade composition effects (i.e., changes over time in the baskets of imported goods and/or the origin countries) have only limited influence in accounting for the downward trend of international transport costs, and when they matter (in maritime transport), composition effects amplify the reduction of pure transport costs, in contrast with the conclusion obtained by \cite{hummels2007} yet also on US import flows.
-=======
-On the empirical side first, we show the importance of incorporating additive costs in the understanding of the international transport costs decrease observed between 1974 and 2019. Allowing for time-varying per-unit costs, we find that the downward trend in international transport costs comes from the reduction in ``pure'' transport costs over time, by roughly \textbf{50\% in air shipping and 60\% in vessel shipping over 1974-2019}.\footnote{Throughout the paper, we refer to ``pure'' or ``\textit{per se}'' transport costs changes as the changes over time in the transport costs for a given product/country partner, ie excluding trade composition effects (i.e. changes over time in the baskets of imported goods and/or the origin countries).} Trade composition effects have only limited influence in accounting for the downward trend of international transport costs, and when they matter (in maritime transport), composition effects amplify the reduction of pure transport costs, in contrast with the conclusion obtained by \cite{hummels2007} yet also on US import flows.
->>>>>>> develop
 %\cite{hummels2007} finds that total transport costs have decreased in both air and maritime shipment, but less so than ``pure'' transport costs, because trade composition effects have partly offset the pure transport costs decrease, thereby attenuating the overall downward trend in transport costs.
 Importantly, we show that the difference of results can be attributed to the new method of modeling the additive component that we offer. Allowing the share of additive costs to vary across time, products and country partners (rather than being constant as in \citealp{hummels2007}), turns out to be key in the decomposition of underlying sources of the decrease of overall transport costs observed over the period.\smallskip
 
@@ -503,7 +498,7 @@ The yearly trend from 1980 is -2\% for mean air transport costs and -1.6\% for m
 We thus choose to exploit the whole time dimension of our database by taking 1974 as starting date of our time-trend analysis.} Using US data, \cite{Hummels_1999} found that overall transport cost declined from 6\% to 4\% of the import value between 1974 and 1996.
 For the same years, we obtain a total decrease from 5.3\% to 3\% in terms of the export price on average for air shipping, and from 8.9\% to 4.6\% for ocean shipping. Overall, our results display trends confirm and extend those reported by \cite{Hummels_1999} up to the very recent years.\smallskip
 
-\paragraph{The share of additive costs: Time dynamics} As next step, we investigate whether additive costs are a long-lasting, i.e. a structural phenomenon. Figure \ref{fig:part_cout_additif} reports the share of additive costs in total transport costs on a yearly basis, in both air and vessel transport, based on the weighted-mean values $\widehat{t}/\widetilde{p}$ and $\widehat{\tau}$. 
+\paragraph{The share of additive costs: Time dynamics} As next step, we investigate whether additive costs are a long-lasting, i.e. a structural phenomenon. Figure \ref{fig:part_cout_additif} reports the share of additive costs in total transport costs on a yearly basis, in both air and vessel transport, based on the weighted-mean values $\widehat{t}/\widetilde{p}$ and $\widehat{\tau}$.
 .
 
 \begin{figure}[htbp]
@@ -717,7 +712,7 @@ Based on the above results, we provide a decomposition of the transport costs tr
 
 \subsubsection{Estimation strategy}
 
-The estimation carried out in section \ref{sec:results_decomposition} provides us with the 
+The estimation carried out in section \ref{sec:results_decomposition} provides us with the
 Starting from the additive and ad-valorem measures of international transport costs which vary over time, product and origin country (i.e., $\widehat{t}_{ikt}$ and $\widehat{\tau}_{ikt}$), we extract the pure transport cost measure by the mean of a time fixed effect.
 Precisely, we extract the changes over time in the pure transport cost dimension by assuming a composition of trade flows by country partner and product that is constant throughout the period, and equal to the one observed in 1974. We conduct the same analysis on an overall transport costs measure, built by combining the two estimated components (additive and iceberg) in a unified measure of transport costs. The objective is to obtain six time series, all built as indices with the reference value 100 in 1974: three time series for the unfitted transport costs measures $\{\Gamma^{t/\widetilde{p}, raw}_t, \Gamma^{adv, raw}_t, \Gamma^{tc, raw}_t \}$, and three series for the fitted values $\{\Gamma^{t/\widetilde{p}}_t, \Gamma^{adv}_t, \Gamma^{tc}_t \}$ (additive, ad-valorem and total cost respectively).
 
@@ -795,9 +790,6 @@ Assuming a varying share of the additive component over time, product and countr
 In both air and vessel transports, we thus find that this last dimension is the main driver of the reduction in international transport costs observed over time, in particular in air transport.
 Complementing the findings of Section \ref{sec:results_decomposition}, these results highlight the importance of integrating the additive dimension of international transport costs, with the aim here of characterizing their time trends.
 
-
-\textbf{LP: stop here}
-
 \section{The role of additive cost: Theoretical insights}\label{sec:theory}
 
 
@@ -855,16 +847,12 @@ Following \cite{melitz} and the subsequent literature, we ensure selection on th
 \right.  \label{eq:muofphi}
 \end{eqnarray}
 \noindent with $1-G(\varphi^\ast)$ the probability of successful entry on the domestic market. Conditional on being active on the domestic market, a subset mass $M_x$ of firms export abroad. $\mu_x(\varphi)$ can be similarly defined as the conditional distribution of productivity on the export market, e.g. on the support $\left[ \varphi^\ast_x,\infty\right)$.
-Further defining $M_T = M+M_x$ as the total number of varieties accessible to the consumers, $\widetilde{\varphi}_T$ the weighted average of firms productivities on the domestic market, one can show that the welfare per worker can be written as (see Appendix \ref{app:theoretical_model}): 
+Further defining $M_T = M+M_x$ as the total number of varieties accessible to the consumers, $\widetilde{\varphi}_T$ the weighted average of firms productivities on the domestic market, one can show that the welfare per worker can be written as (see Appendix \ref{app:theoretical_model}):
 \begin{equation}
 \mathcal{W} = \rho \widetilde{\varphi}_T M_T^{\frac{1}{\sigma-1}} \label{eq:Welfare}
 \end{equation}
 
-\paragraph{Free-entry condition} There is free-entry in the monopolistic industry, imposing that the expected net present value of entry is driven to zero. In the open-economy setting, this condition is given by:
-\begin{equation*}
-  \sum_{t=0}^{\infty}(1-\delta)^t \left(\int_{\varphi^\ast}^{\infty} \pi_d(\varphi )dG(\varphi) + \int_{\varphi_x^\ast}^{\infty} \pi_x(\varphi )dG(\varphi)  \right) = f_e
-\end{equation*}
-
+\paragraph{Free-entry condition} There is free-entry in the monopolistic industry, imposing that the expected net present value of entry is driven to zero. 
 Defining $\bar{\pi}$ as the average profit conditional to entry, this free-entry condition rewrites as:
 \begin{equation}
 \left(1-G(\varphi^\ast)\right)\frac{\bar{\pi}}{\delta} = f_e \label{eq:FEC}
@@ -878,28 +866,29 @@ As shown in Appendix \ref{app:theoretical_model}, it can be rewritten as:
 
 \subsection{Calibration}
 
-As standard in this literature (\cite{Irrazabal_2015}, \cite{melitz-redding-Handbk-IT-2014}), the heterogenity in firm productivity is assumed to be given by a Pareto distribution. As shown in \cite{melitz-redding-Handbk-IT-2014}, the Pareto distribution indeed allows for a full analytical solving of the M\'{e}litz model. This is no longer the case in the presence of additive costs (see Appendix \ref{app:theoretical_model}). In this case, we need to rely on the model's simulations to determine the steady state. This drives us to calibrate the structural parameters of the model. To do so, we dwell on values commonly retained in the literature, as reported in Table \ref{tab:calib_horsTC}. The one exception is the value for the two additive and ad-valorem transport costs, for which we use our empirical estimates of Section \ref{sec:results_decomposition} for the years 1974 and 2019, as reported in Table \ref{tab:calib_TC}.
+As standard in this literature (\cite{Irrazabal_2015}, \cite{melitz-redding-Handbk-IT-2014}), the heterogenity in firm productivity is assumed to be given by a Pareto distribution. As shown in \cite{melitz-redding-Handbk-IT-2014}, the Pareto distribution indeed allows for a full analytical solving of the M\'{e}litz model. This is no longer the case in the presence of additive costs (see Appendix \ref{app:theoretical_model}). In this case, we need to rely on the model's simulations to determine the steady state. This drives us to calibrate the structural parameters of the model. To do so, we dwell on values commonly retained in the literature, as reported in Table \ref{tab:calib_horsTC}. 
 
-\begin{table}[htbp]
+\begin{table}[htb]
   \centering
   \caption{Calibration (1)} \label{tab:calib_horsTC}
 \begin{center}
 	\input{donnees_calibration.tex}
 \end{center}
-{\parbox[l]{13cm}{ \vspace{4pt}\footnotesize{Notes: $f$ endogenously revealed at the autarky case, such that all firms produce in autarky. $f_x$ can take two values, depending on the share of exporters considered that might differ between the initial steady state (21\%, based on early 1980s' value) and the final steady state (39\%, based on 2000's value.), according to the references provided above. BEJK (2003) refers to \cite{BEJK-AER-03}.}}}
+{\parbox[l]{13cm}{ \vspace{4pt}\footnotesize{Notes: $f$ endogenously revealed at the autarky case, such that all firms produce in autarky. $f_x$ can take two values, depending on the share of exporters considered that might differ between the initial steady state (21\%, based on early 1980s' value) and the final steady state (39\%, based on 2000's value.), according to the references provided above.}}}
 \end{table}
 
+The one exception is the value for the two additive and ad-valorem transport costs, for which we use our empirical estimates of Section \ref{sec:results_decomposition} for the years 1974 and 2019, as reported in Table \ref{tab:calib_TC}.
 
-\begin{table}[htbp]
+\begin{table}[htb]
   \centering
   \caption{Calibration (2)}\label{tab:calib_TC}
 \begin{center}
 	\input{table_calibTC_combined.tex}
 \end{center}
-{\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: In Columns (1), (3), (5) and (7), we model ad-valorem costs only. In Columns (2), (4), (6) and (8), we model both ad-valorem and additive costs. $t$ is calibrated so that the ratio $t/\widetilde{p}^{\text{fas}}_x$ from the model matches its empirical target, with $\widetilde{p}^{\text{fas}}_x$ the average fas price set in place by those domestic firms that export. We theoretically define the export fas price through: $p_x = \tau \widetilde{p}^{\text{fas}} +t$. TC = Transport Costs, expressed in percentage of the average fas export price.}}}
+{\parbox[l]{13cm}{ \vspace{4pt}\footnotesize{Notes: In Columns (1), (3), (5) and (7), we model ad-valorem costs only. In Columns (2), (4), (6) and (8), we model both ad-valorem and additive costs. $t$ is calibrated so that the ratio $t/\widetilde{p}^{\text{fas}}_x$ from the model matches its empirical target, with $\widetilde{p}^{\text{fas}}_x$ the average fas price set in place by those domestic firms that export. We theoretically define the export fas price through: $p_x = \tau \widetilde{p}^{\text{fas}} +t$. TC = Transport Costs, expressed in percentage of the average fas export price.}}}
 \end{table}
 
-We notably illustrate the consequences of trade liberalization by comparing the equilibrium based on the 1974 values of transport costs (at the beginning of our sample), versus those of 2019 (at the very end of our estimation period), in both cases on only ad-valorem transport costs and in the presence of both additive and ad-valorem costs. Further, \cite{Lincoln_McCallum2018} document the large increase in the number of exporting firms in the US between the mid 1980s et the mid 2000s, with a share of exporting firms raising by 52\% over this period. This can be captured in the model through a reduction in the fixed export cost $f_x$. Accordingly, we will assess the effects of the trade liberalization assuming a joined reduction in both the variable transport costs ($\tau, t$, based on our empirical estimates) and the fixed export cost $f_x$.\footnote{We endogenously determine the initial value of $f_x$ such that the initial steady state (with 1974 values of transport costs) implies a share of exporting firms equal to 21\%, as in  \cite{ghironi} based on the value estimated by \cite{BEJK-AER-03} in the early 1990s. In the final steady state, $f_x$ will be revealed such that this share of exporting plants has increased by 85\% (i.e., from 21\% to 39\%), based on the evidence reported in \cite{Lincoln_McCallum2018}, along with the 2019 values of variable transport costs}
+We are interested in studying the normative consequences of trade liberalization in presence or not of additive costs. To that aim, we will compare the equilibrium based on the 1974 values of transport costs (at the beginning of our sample), versus those of 2019 (at the very end of our estimation period), in both cases on only ad-valorem transport costs and in the presence of both additive and ad-valorem costs. Further, \cite{Lincoln_McCallum2018} document the large increase in the number of exporting firms in the US between the mid 1980s et the mid 2000s, with a share of exporting firms raising by 52\% over this period. This can be captured in the model through a reduction in the fixed export cost $f_x$. Accordingly, we will assess the effects of the trade liberalization assuming a joined reduction in both the variable transport costs ($\tau, t$, based on our empirical estimates) and the fixed export cost $f_x$.\footnote{We endogenously determine the initial value of $f_x$ such that the initial steady state (with 1974 values of transport costs) implies a share of exporting firms equal to 21\%, as in  \cite{ghironi} based on the value estimated by \cite{BEJK-AER-03} in the early 1990s. In the final steady state, $f_x$ will be revealed such that this share of exporting plants has increased by 85\% (i.e., from 21\% to 39\%), based on the evidence reported in \cite{Lincoln_McCallum2018}, along with the 2019 values of variable transport costs}
 
 
 
@@ -1635,7 +1624,7 @@ In this section, we provide more details on the model's solving in the general c
 
 \paragraph{Profit-maximizing behavior}
 
-On the domestic market, the objective is to maximize profit $\pi_d(\omega)= \left(p^d(\varphi) -\frac{1}{\varphi}  \right)c(\varphi)$, taking into account the consumer demand function $c(\varphi) = \left(\frac{p(\varphi)}{P}  \right)^{-\sigma} \frac{E}{P}$. In a monopolistic set-up, each firm (of productivity $\varphi$) is the sole producer of variety $\omega$, implying a one-to-one link between $\omega$ and $\varphi$, such that we could write $\omega(\varphi)$. For sake of notational simplicity, we omit this link and simply write the consumer demand function as a function of $\varphi$ directly. 
+On the domestic market, the objective is to maximize profit $\pi_d(\omega)= \left(p^d(\varphi) -\frac{1}{\varphi}  \right)c(\varphi)$, taking into account the consumer demand function $c(\varphi) = \left(\frac{p(\varphi)}{P}  \right)^{-\sigma} \frac{E}{P}$. In a monopolistic set-up, each firm (of productivity $\varphi$) is the sole producer of variety $\omega$, implying a one-to-one link between $\omega$ and $\varphi$, such that we could write $\omega(\varphi)$. For sake of notational simplicity, we omit this link and simply write the consumer demand function as a function of $\varphi$ directly.
 The optimal pricing behavior yields:
 $$p^d(\varphi) = \frac{\sigma}{\sigma-1}\frac{1}{\varphi}$$
 With a CES specification on household's preferences, the firm sets its price as a constant mark-up on marginal cost, which is inversely related to its productivity as for the domestic market. \medskip
@@ -1702,11 +1691,15 @@ $$P = \frac{\sigma}{\sigma-1}M_T^{\frac{1}{1-\sigma}}\left[\frac{1}{M_T}\left(M\
 \noindent with $\widetilde{\varphi}(\varphi^\ast)$ and $\widetilde{\varphi}_x(\varphi_x^\ast)$ the weighted average of productivities of domestic and imported varieties respectively defined in Equations (\ref{eq:def_phitilde}) and (\ref{eq:def_phitildex}). With $\widetilde{\varphi}_T \equiv \left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$ the weighted average of firm productivities on the domestic market (including both local producers and foreign producers exporting at Home), the price index can be expressed as $P = M_T^{\frac{1}{1-\sigma}}\frac{1}{\rho \widetilde{\varphi}_T }$. As in \cite{melitz}, given our assumptions of wage normalization and a one-sector economy, welfare per worker is simply equal the inverse of the price level: $\mathcal{W} = \frac{w}{P}= P^{-1}$, leading to:
 
 \begin{equation*}
-\mathcal{W} = \rho \widetilde{\varphi}_T M_T^{\frac{1}{\sigma-1}} 
+\mathcal{W} = \rho \widetilde{\varphi}_T M_T^{\frac{1}{\sigma-1}}
 \end{equation*}
 \noindent that is, Equation (\ref{eq:Welfare}).
 
-\paragraph{Free-entry condition} $\bar{\pi}$ can be expressed as $\bar{\pi} =\pi_d(\widetilde{\varphi}(\varphi^\ast)) + \rho_x \pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))$, with $\pi_d(\widetilde{\varphi}(\varphi^\ast)) \equiv \bar{\pi}_d$ the average expected profit on the domestic market, $\pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))\equiv \bar{\pi}_x$ the average expected export profit and $\rho_x$ the probability of exporting (conditional on entry on the domestic market), equal to $\rho_x = \frac{1-G(\varphi_x^\ast)}{1-G(\varphi^\ast)}$.
+\paragraph{Free-entry condition} In the open-economy setting, the free-entry condition is given by:
+\begin{equation*}
+  \sum_{t=0}^{\infty}(1-\delta)^t \left(\int_{\varphi^\ast}^{\infty} \pi_d(\varphi )dG(\varphi) + \int_{\varphi_x^\ast}^{\infty} \pi_x(\varphi )dG(\varphi)  \right) = f_e
+\end{equation*}
+$\bar{\pi}$ can be expressed as $\bar{\pi} =\pi_d(\widetilde{\varphi}(\varphi^\ast)) + \rho_x \pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))$, with $\pi_d(\widetilde{\varphi}(\varphi^\ast)) \equiv \bar{\pi}_d$ the average expected profit on the domestic market, $\pi_x(\widetilde{\varphi}_x(\varphi_x^\ast))\equiv \bar{\pi}_x$ the average expected export profit and $\rho_x$ the probability of exporting (conditional on entry on the domestic market), equal to $\rho_x = \frac{1-G(\varphi_x^\ast)}{1-G(\varphi^\ast)}$.
 
 Noticing that, from Equation (\ref{eq:rd}), $\frac{r_d(\varphi)}{r_d(\varphi^\ast)} = \left( \frac{\varphi}{\varphi^\ast} \right)^{\sigma-1}$ and similarly on the export market, Equations (\ref{eq:pid_rd}) and (\ref{eq:pix_rx}) can be rewritten as:
 \begin{eqnarray*}
