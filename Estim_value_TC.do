@@ -670,6 +670,7 @@ if "$restreindre" !="non" {
 if "$restreindre" =="non" & "`database'"=="base_hs10_newyears" {
 	save "$dir_temp/blif.dta", replace
 	use  "$dir/results/baseline/results_estimTC_`year'_prod5_sect3_`mode'", clear
+	capture rename product sector
 	bys  sector iso_o: keep if _n==1
 	*codebook sector
 	*codebook iso_o
