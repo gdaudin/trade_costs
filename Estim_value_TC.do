@@ -687,6 +687,7 @@ if "$restreindre" =="non" & "`database'"=="base_hs10_newyears" {
 	codebook iso_o
 	erase  "$dir_temp/for_merge.dta"
 	erase "$dir_temp/blif.dta"
+	
 }
 	
 
