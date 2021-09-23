@@ -221,7 +221,7 @@ For all years and whatever the transport mode considered, the model with additiv
 
 \subsection{Estimation at the 4-digit level \label{app:4digit}}
 
-\textbf{XXX UPDATE XXX : Est-ce fait?} 
+\textbf{XXX UPDATE XXX : Est-ce fait?}
 In this section, we report the estimation results when we retain the 4-digit classification level ($s$=4-digit).
 
 \subsubsection{Transport cost estimates}
@@ -402,7 +402,7 @@ Further, the same conclusion established at the 3-digit level regarding the sign
 
 \subsection{Transport Cost Estimates: Yearly Detailed Results}
 
-In this section, we complement Table 1 of the main text by reporting the year-to-year results of the estimation driven at the 3-digit classification level. Table \ref{tab_oa:result_ves_ally3} reports the results for each year over 1974-2019 for vessel; Table \ref{tab_oa:result_air_ally3} reports similar results for air transport. In both cases, we report the estimated values of the transport costs (weighted mean and median) when only ad-valorem costs are modeled (Model (A)), when both additive and ad-valorem costs are modeled (Model (B)) and when only additive costs are modeled (Model (A)). In all tables, statistics are weighted by value. 
+In this section, we complement Table 1 of the main text by reporting the year-to-year results of the estimation driven at the 3-digit classification level. Table \ref{tab_oa:result_ves_ally3} reports the results for each year over 1974-2019 for vessel; Table \ref{tab_oa:result_air_ally3} reports similar results for air transport. In both cases, we report the estimated values of the transport costs (weighted mean and median) when only ad-valorem costs are modeled (Model (A)), when both additive and ad-valorem costs are modeled (Model (B)) and when only additive costs are modeled (Model (A)). In all tables, statistics are weighted by value.
 
 \begin{landscape}
 
@@ -575,10 +575,47 @@ Still, this does not make much difference. When 1989 is included, the weighed me
 \end{table}%
 
 
+\subsection{Robustness checks}
 
 
+\subsubsection{Variance decomposition exercise \label{app:decomp_variance}}
 
-%JH : reprendre XXX ICI
+In this section, we provide a variance decomposition exercise on the observed cif-fas price gap.
+Specifically, we determine the share of the observed variance in the ratio $\ln(\frac{p_{ik}}{\widetilde{p}_{ik}}-1)$ that comes from \textit{i)} the between-product variance (at the 5-digit level, $k$) and \textit{ii)} the between-sector variance (at the 3-digit level, $s$).
+The variance decomposition expression at the product level $k$ (5-digit level) is obtained by applying the following formula (by year and transport mode):
+
+$$\sum_{k=1}^K \sum_{i=1}^I \left(x_{ik} - \bar{x}_g  \right)^2 = \underbrace{\sum_k \sum_i \left(x_{ik} - \bar{x}_k  \right)^2}_{(1)} + \underbrace{\sum_k \left(\bar{x}_{k} - \bar{x}_g  \right)^2}_{(2)}$$
+
+with $x$ the observed cif-fas price gap and $\bar{x}_g$, $\bar{x}_k$ average values defined as:
+
+\begin{eqnarray*}
+\bar{x}_g \equiv \frac{1}{n} \sum_{k=1}^K \sum_{i=1}^I x_{ik},&& \bar{x}_k \equiv \frac{1}{K}\sum_{k=1}^K x_{ik}
+\end{eqnarray*}
+
+\noindent with $n$ the total number of observations, $K$ the total number of products and $I$ the total number of country partners. In the above equation, the left-hand side gives the total variability, which decomposes into the within-product variability (Term (1)) and the between-product variability (Term (2)). 
+We apply the same variance decomposition exercise at the sector level, in which case the sector $s$ index (at the 3-digit level) replaces the $k$ index (at the 5-digit level).
+This gives us an alternative way to ensure the robustness of the estimation results to the degree of classification retained to estimate international transport costs.
+We also determine the share of the observed variance that can be attributed to the between-country variance, adapting the variance decomposition formula written above accordingly.
+Results are reported in Figure \ref{fig:decomp_variance}.
+
+\begin{figure}[htbp]
+\caption{Variance decomposition (observed cif-fas price gap)}
+\label{fig:decomp_variance}
+\begin{center}
+\includegraphics[width=10cm, height=7cm]{variance_decomposition.pdf}
+%{\footnotesize {OECD data} }
+\end{center}
+\end{figure}
+
+
+Two interesting results emerge from Figure \ref{fig:decomp_variance}.
+First, the share of the cif-fas price gap variance that comes from the variance between products (5-digit level) is of the same magnitude of order as the variance between sectors at the 3-digit level.
+Both account for between 30 and 40\% of the total variance in air transport, depending on the years considered.
+This is also the case for vessel transport, even if the difference between the between-product variance share and the between-sector share is more pronounced (30\% for the between-sector vs 40\% for the between-product variance at the beginning of the period).
+This provides an indirect robustness check to the degree of classification we have retained to estimate international transport costs.
+Second, the variance of the cif-fas price gap that can be attributed to the product (or sector) dimension is much larger than the between-country variance.
+This holds throughout the period and for both transport modes. By extension, one can expect a limited role of distance and other country-related variables as determinants of transport costs.
+
 
 \setcounter{table}{0}
 \renewcommand{\thetable}{C.\arabic{table}}
@@ -586,8 +623,77 @@ Still, this does not make much difference. When 1989 is included, the weighed me
 \setcounter{figure}{0}
 \renewcommand{\thefigure}{C.\arabic{figure}}
 
-\subsection{Eliminating the composition effects: Primary vs. Manufacturing sector} \label{sec_oa:comp-effects}
 
+
+\subsubsection{Separability Assumption}
+
+
+This section reports two supplementary checks concerning the separability assumption.
+
+\paragraph{Comparison on a yearly basis} We investigate this comparison deeper on a year-to-year basis, as shown in Figure \ref{fig:robustesse_non_separe}. Specifically, Figure \ref{fig:robustesse_non_separe} displays the results for air transport in panel (A) and for maritime transport in panel (B). In each case, the estimated values (as well as the fitted regression line) under both separability (baseline) and non-separability are reported, for the additive term (upper panel) and the ad-valorem term (lower panel).
+
+
+\begin{figure}[htbp]
+\caption{Robustness to the separability assumption (year-to-year basis)}
+\label{fig:robustesse_non_separe}
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[width=6in, height=4in]{graph_robustesse_ns.jpg}
+
+\end{tabular}
+\end{center}
+\begin{minipage} [c]  {5in} \scriptsize%
+Notes: FE for (country, sector) fixed effects.
+\end{minipage}
+\end{figure}
+
+In line with Table \ref{tab:robustness_separability}, the results shown in Figure \ref{fig:robustesse_non_separe} confirm that the separability assumption (retained in our baseline estimation) tends to overestimate the value of the additive cost component (and underestimate the value of the ad-valorem cost).
+However, they also show that the difference is quantitatively small in most cases. Further, and most importantly, whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs, whether estimated under the separability assumption or not, are very similar. Along with the quality-of-fit diagnosis, this confirms the robustness of our estimation results to this assumption.
+
+
+\paragraph{Distribution of the $\beta$} As final check, we also investigate whether the varying pattern over time/country of origin/product pointed out in Section \ref{sec:results_decomposition} is also robust to the separability assumption. With this aim, we report in Figure \ref{fig:histogram_beta_robustness}
+the histogram of the distribution of the elasticity of transport costs to the export price ($\beta_{ikt}$, for air transport (top panel) and for maritime transport (bottom panel) under the baseline specification (Panels (A), (c))) and the non-separability scenario (Panels (B), (c)).
+
+
+\begin{figure}[htbp]
+\caption{Histogram of the share of additive costs in total costs (restricted sample)}
+\label{fig:histogram_beta_robustness}
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[width=14cm, height=10cm]{Etude_beta_pond.jpg}\\
+\multicolumn{2}{l}{{\footnotesize Notes: Distribution of $\beta_{ikt}$ over the triplet (year-product-country), weighted by share of yearly value of flow.}}\\
+\end{tabular}
+\end{center}
+\end{figure}
+
+For both transport modes the distribution of $\beta_{ikt}$ over the triplet (year, country of origin, product) appears smoothly distributed over the interval $[0,1]$, whatever the assumption regarding the specification of fixed effects.
+Relaxing the assumption that fixed effects are separable between the two country and product dimensions does not alter qualitatively our conclusion, that the elasticity of transport costs to the export price (or the share of additive costs in total transport costs), is strongly varying over time, countries of origin and products.
+\footnote{As a consequence, this also provides an indirect robustness check to the results regarding the trend decomposition provided in Section \ref{sec:results_trends}, which establish that the decline of ``pure'' transport costs is a main reason for the decrease of overall transport costs observed over time.}
+
+
+
+\subsection{Eliminating the composition effects} \label{sec_oa:comp-effects}
+
+\subsubsection{More on the Hummel's methodology}
+
+This section complements Section \textbf{XXX} in the main paper, where we replicate the method adopted by \cite{hummels2007} on our database. Here, we report the unfitted measure of transport costs versus the ``pure'' transport costs series, i.e composition effects excluded
+in percentage of the export price, as in \cite{hummels2007}. We also adopt Himmel's (2007) terminology, contrasting the ``expenditure/importe value'' (i.e, the unfitted serie) and the ``fitted ad-valorem rate'' (i.e, corresponding to the ``pure'' transport costs series, composition effects excluded). Unsurprisingly, this accords with his Figure 5 (for Air) and 6 (Vessel) for the comme period (until 2014).
+
+\begin{figure}[htbp]
+\caption{Characterizing the time trends: applying Hummel's (2007) method }
+\label{fig:comp_effects_as_in_Hummels}
+\begin{center}
+\begin{tabular}{cc}
+{\small (A) Ad-valorem air freight} & {\small (B) Ad-valorem vessel freight}\\
+\multicolumn{2}{c}{{\small In percent of the export price}} \\
+\includegraphics[width=2.5in, height=1.8in]{figure5_comme_hummels.jpg}
+& \includegraphics[width=2.5in,height=1.8in]{figure6_comme_hummels.jpg} \\
+{\small (c) Ad-valorem air freight} & {\small (d) Ad-valorem vessel freight} \\
+\end{tabular}
+\end{center}
+\end{figure}
+
+\subsubsection{Composition effects: Primary vs. Manufacturing sector}
 In this section, we refine the characterization of the evolution of international transport costs by distinguishing primary goods trade flows and and manufactured goods trade flows. The evolution in transport costs over time, by transport mode (overall transport costs and composition effects excluded) are reported in Figure \ref{fig:totalTC_compeffects_excl_manuf} for the manufacturing sector, and in Figure \ref{fig:totalTC_compeffects_excl_primary} for the primary goods. For easing comparison, we also report the results obtained on the whole range of trade flows (i.e., Figure 2 of the paper), in Figure \ref{fig:totalTC_compeffects_excl}.
 
 
