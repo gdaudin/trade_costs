@@ -42,7 +42,7 @@ if "`method'"=="baselinesamplereferee1" {
 }	
 	
 if "`method'"=="baseline10" {
-	use "$dir_baseline_results/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
+	use "$dir_results/10_3/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta=(terme_A/(terme_I+terme_A-1))
 }	
 
