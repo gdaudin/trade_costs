@@ -7,6 +7,7 @@
 *************************************************
 
 *version 12
+*** blabla 
 
 /* Itération sur forme d'estimation 
 
