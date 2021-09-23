@@ -7,6 +7,7 @@
 *************************************************
 
 *version 12
+*** blabla 
 
 /* Itération sur forme d'estimation 
 
@@ -46,8 +47,10 @@ if "`c(hostname)'" =="lise-HP" {
 
 if "`c(hostname)'" =="MSOP112C" {
   
-	global dir C:\Lise\trade_costs
-	global dir_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
+	*global dir C:\Lise\trade_costs
+	*global dir_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
+	
+	* changer tout mettre en local
 	
 }
 
@@ -672,8 +675,8 @@ if "$restreindre" =="non" & "`database'"=="base_hs10_newyears" {
 	use  "$dir/results/baseline/results_estimTC_`year'_prod5_sect3_`mode'", clear
 	capture rename product sector
 	bys  sector iso_o: keep if _n==1
-	*codebook sector
-	*codebook iso_o
+	codebook sector
+	codebook iso_o
 	save "$dir_temp/for_merge.dta", replace
 	use "$dir_temp/blif.dta", clear
 	*codebook sector
@@ -681,10 +684,11 @@ if "$restreindre" =="non" & "`database'"=="base_hs10_newyears" {
 	describe
 	merge m:1 sector iso_o using  "$dir_temp/for_merge", keepusing(sector iso_o) keep(3)
 	describe
-	*codebook sector
-	*codebook iso_o
+	codebook sector
+	codebook iso_o
 	erase  "$dir_temp/for_merge.dta"
 	erase "$dir_temp/blif.dta"
+	
 }
 	
 
