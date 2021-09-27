@@ -110,27 +110,20 @@ University Paris-Dauphine \& PSL University, LEDa, 75016 Paris, France;  email: 
 
 We would like to thank you for your insightful comments. They led us to introduce some
 significant changes to the paper that we hope address your concerns. We first give you an overview
-of the revision (Section\ref{sec:main_changes}) before answering in detail each of your comments (Section\ref{sec:detailed_answers}). Number of sections, pages and equations mentioned in the text refer to the revised version.
+of the revision (Section\ref{sec:main_changes}) before answering in detail each of your comments (Section\ref{sec:detailed_answers}). Number of sections, pages and equations mentioned in the text refer to the revised version. When necessary, we refer to number of sections, pages and equations from the submitted version. In this case, they are written into brackets.
 
 \section{Main changes \label{sec:main_changes}}
 
-
+The structure of the paper has been modified after taking into account the referees' comments. 
 \begin{itemize}
-%\item Based on your comment 1.2 (\textit{The aggregation problem}), we have investigated the case with $s=3$ and $k=10$ for the industry/product aggregation levels respectively. Our initial choice of retaining $s=3$ at the sectoral level, $k=5$ at the product level was driven by the use of Hummel's dataset available over 1974-2004 with $k=5$ the finest degree of aggregation. In the submitted version, we used the original Hummel's database (available on his webpage from 1974 to 2003, which we completed by the US Bureau of census import database over the period 2005-2013. In Hummels' (2007) database, which we use until 2004, the finest degree of classification is at the 5-degree level until 2004. For comparability reasons over time, we have adopted the same degree of classification $k=5$ for the following years (based on the original Census dataset). As a result, in the submitted version, transport costs are estimated at the 3-digit sector level as benchmark estimate, exploiting product heterogeneity at the 5-digit level (for a given origin country, and conditional on year and transport mode).
-%
-%    Switching to $k=10$ as benchmark disaggregation level for the product dimension would require resorting on US Census dataset only. It is true that the original annual Census data reports trade at the origin country-HS 10 product-district level of aggregation. However, the Census bureau can provide data disaggregated at the $k=10$ product level only starting in 1989. Some of these data are in physical storage and were not accessible because of the Covid-19 pandemic (1989-1996, but also 2000 and 2001). In september 2021, they are still not accessible. Waiting for them contributed to making this revision quite late. This deprives us from the very first years 1974-1996 and 2000-2001. For this period, we can only resort on Hummel's dataset, with $k=5$ the finest product level category. This is a non-negligible cost as we are interested in the long-term evolution of trade costs.
-%
-%    As a result, we decided to adopt the following strategy in the revised version. As benchmark, we still consider the 5/3 product/sector classification (as in the submitted version), as this allows us to preserve (as far as possible) the largest time coverage. We check the robustness of our results to the 10/3 classification, for the available years. This is made in Section XXX.
-%
-%    \textbf{LP: Pas sure que ce point doive etre mis ici, pas main change du coup}
-    
-
-
-\item Based on your comment 1.1 (\textit{The endogeneity problem}), the benchmark regression (non-linear least squares) is now completed by a two-stage procedure, where the fas price is instrumented by tax duties and its own lag - see section 4.3 and appendix B.4 in the paper, and section 2.1.2 of this letter.
-
-\item Based on your main comment 1, the paper has been rewritten so as to be more in line with Hummel's (2004) methodology. Specifically, we now start from the elasticity of total transport costs to the unit price $\beta$, which we show also corresponds to the share of additive costs. From this, we can deduce the additive / ad-valorem components ($t,\tau$) rather than the other way round (as in the submitted version). We thank the referee for pointing this out, as this contributes to a more straightforward and intuitive understanding of our estimation method.
-
-\item What about the big picture?
+\item In the submitted version, [Section 2] was devoted to the estimation of international transport costs; specifically, their break-down in two components, additive and ad-valorem. In [Section 3], we investigated the role of additive costs in the decomposition of transport costs time trends, between structural changes and composition effects. [Section 4] was devoted to the robustness analysis relative to the results from both previous sections.
+\item In the revised version, we have strengthened the robustness checks regarding the estimation results of international transport costs (robustness to aggregation, robustness to IV estimates). Accordingly, the previously-called [Section 2] has been split in two Sections: Section 2, where we present the data and the estimation strategy; and the results, in Section 3, which now includes the robustness checks as final sub-section. For sake of space saving, the robustness analysis related to composition effects has been set to the Appendix (Section C.3).
+\item Both referees asked us to put light on the implications of additive costs (the ``Big Picture''). We agree that this was not enough emphasized in the submitted version, and we thank the referees for their suggestions on that issue. The revised version answers this concern in two points. 
+    \begin{enumerate}
+    \item We maintain the analysis of the transport costs time trends (previously [Section 3], now Section 4); but we made our best to make this section easier to read, leaving the technical aspects in the Appendix (Section C). As such, we hope that the main message of this Section is better catched.
+    \item Most importantly, we now emphasize the ``Big Picture'' implications of additive costs on theoretical grounds. Through the lens of the \cites{melitz} model amended to integrate additive costs, we analyze the welfare gains that derive from the reduction in international transport costs that we have estimated (in Section 3 of the revised version), to quantify the extra welfare gains attributable to the reduction of the additive component. This analysis is driven in a new Section, Section 5.
+        \end{enumerate}
+\item To keep the paper (both the main text and with appendix included) with a reasonable number of pages, yet to be fully transparent about our results, we have added numerous detailed tables in the Online Appendix, to which the reader can refer to.
 \end{itemize}
 
 We now answer in detail each of your comments given in italics.
