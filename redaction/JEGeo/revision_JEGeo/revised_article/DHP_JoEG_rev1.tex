@@ -871,7 +871,7 @@ Our empirical results point to two important conclusions: First, additive costs 
 In running this exercise, we also take into account the fact that the share of exporting firms has substantially increased since the 21\% value reported in \cite{BEJK-AER-03} (and consistent with the value estimated by \citet{Lincoln_McCallum2018} for 1987 on US data). According to \cite{Lincoln_McCallum2018}, this share roughly amounts to 39\% in the mid 2000's. This can be matched in the model by resetting the (lower) value of the export fixed cost $f_x$ accordingly. Our preferred scenario thus embeds the two dimensions of trade liberalization: the reduction of transport costs along with the reduction of the export fixed cost.
 
 The results are reported in Table \ref{tab:resultats_modele}, panel (1), by transport mode (for Air (Columns (A)-(B)) and Vessel (Columns (C)-(D) respectively.\footnote{For sake of space saving, we only report the welfare consequences of trade liberalization, depending on the structure of transport costs, even if we refer to the positive effects (in terms of number of firms, threshold and average productivities, etc.) to explain the underlying mechanisms. The whole set of results is available upon request to the authors.} Specifically, we report the change in total transport costs (expressed in percentage points, and based on the raw numbers reported in Table \ref{tab:calib_TC}), decomposed in its two dimensions (additive and ad-valorem); as well as the welfare change, both in absolute and in relative terms.
-We also simulate an alternative scenario where only the variable transport costs decrease, the fixed export cost being constant at its initial value. This has two purposes. It allows us to better highlight the specific mechanisms involved by (a reduction in) additive costs versus the standard iceberg costs. In a related manner, it delivers a relevant robustness check on the normative implications of additive costs. These results are reported in Table \ref{tab:resultats_modele}, panel (2).
+We also simulate an alternative scenario where only the variable transport costs decrease, the fixed export cost being constant at its initial value. This has two purposes. It allows us to better highlight the specific mechanisms involved by (a reduction in) additive costs versus the standard iceberg costs. In a related manner, it delivers a relevant robustness check on the normative implications of additive costs. These results are reported in Table \ref{tab:resultats_modele}, panel (2).\footnote{Under a constant fixed export cost, we also compare two alternative cases. Starting from the values observed in 1974, we simulate \textit{(i)} the observed reduction in the additive cost $t/\widetilde{p}^fas$, maintaining the ad-valorem component at its initial (1974) value, and  \textit{(ii)} the opposite case where $\tau$ takes its 2019 value with the same additive cost (in percentage of the fas price) as in 1974. The quantitative results strongly confirm the welfare-detrimental effects of additive costs, and the larger welfare gains when this specific component of international trade costs reduces. See \textbf{Appendix XXX, Table XXX for the results}.}
 
 
 \begin{table}[htbp]
@@ -904,7 +904,7 @@ Price effect (\%)&2.08 &3.56	&5.20	& 6.83  \\
 
 
 
-In line with the literature, we find that trade liberalization induces welfare gains whatever the transport mode (and the associated magnitude of the transport costs decrease). The originality of our results rather dwells on comparing the welfare gains depending on the type of cost reduction. On that side, the welfare gains are higher when the trade cost reduction occurs through a decrease in the additive component. This is consistent with the analytical results of \cite{sorensen2014}, in a different exercise of trade liberalization though. \footnote{\cite{sorensen2014} compares the welfare effect of a trade costs reduction depending whether it is exclusively ad-valorem or exclusively additive, the comparison between both trade cost decreases being a criterion of equal impact on trade openness. Our quantitative model offers a more general and flexible set-up, as we can virtually consider all cases of trade liberalization. Based on our empirical estimates, we compare the effects of the same decrease in overall transport costs depending on 1) whether additive costs are present or not, and 2) when they are present, assuming that the trade cost decrease is achieved by a reduction of both additive and ad-valorem components.} Quantitatively, the welfare gains are sizeable. In our preferred scenario, the reduction in variable transport costs generates a relative welfare gain higher by around 1.1 percentage point when such a reduction occurs through the additive component (which accounts for 50 to 60\% of the total cost decrease, depending on the transport mode), rather than when it realizes through a decrease in iceberg costs only (Table \ref{tab:resultats_modele}, panel (1), Column (B) vs (A) for Air, (D) vs (C) for Vessel). \cite{Irrazabal_2015} also quantify the welfare gains of a trade cost decrease in presence of additive costs. If we share a similar conclusion regarding the importance of additive costs, our empirical analysis allows us to simulate the effects of the reduction in transport costs actually observed in the data over the period 1974-2019, in all their dimensions (additive and ad-valorem). \smallskip
+In line with the literature, we find that trade liberalization induces welfare gains whatever the transport mode (and the associated magnitude of the transport costs decrease). The originality of our results rather dwells on comparing the welfare gains depending on the type of cost reduction. On that side, the welfare gains are higher when the trade cost reduction occurs through a decrease in the additive component. This is consistent with the analytical results of \cite{sorensen2014}, in a different exercise of trade liberalization though. \footnote{\cite{sorensen2014} compares the welfare effect of a trade costs reduction depending whether it is exclusively ad-valorem or exclusively additive, the comparison between both trade cost decreases being a criterion of equal impact on trade openness. Our quantitative model offers a more general and flexible set-up, as we can virtually consider all cases of trade liberalization. Based on our empirical estimates, we compare the effects of the same decrease in overall transport costs depending on 1) whether additive costs are present or not, and 2) when they are present, assuming that the trade cost decrease is achieved by a reduction of both additive and ad-valorem components.} Quantitatively, the welfare gains are sizeable. In our preferred scenario, the reduction in variable transport costs generates a relative welfare gain higher by around 1.1 percentage point when such a reduction occurs through the additive component (which accounts for 50 to 60\% of the total cost decrease, depending on the transport mode), rather than when it realizes through a decrease in iceberg costs only (Table \ref{tab:resultats_modele}, panel (1), Column (B) vs (A) for Air, (D) vs (C) for Vessel). Closely related to our work, \cite{Irrazabal_2015} also quantify the welfare losses of imposing trade taxes depending on whether they are additive or ad-valorem. If we share a similar conclusion regarding the importance of additive costs, our empirical analysis allows us to simulate the effects of the reduction in transport costs actually observed in the data over the period 1974-2019, in all their dimensions (additive and ad-valorem). \smallskip
 
 Through which mechanism does it occur? Recalling that welfare is the inverse of the price index, the explanation can be understood decomposing the welfare change in its two components, the variety effect and the price competitiveness effect. Considering Equation (\ref{eq:Welfare}), it is straightforward to get the welfare change as:
 \begin{equation}
@@ -1656,6 +1656,44 @@ g(\varphi_x^\ast)&=&\int_{\varphi_x^\ast}^\infty \varphi^{\sigma-1-(k+1)}(\tau +
 \noindent with $\kappa \equiv \frac{\sigma-1}{k-(\sigma-1)}$. Notice that, in the absence of additive costs ($t=0$), Equation (\ref{eq:systemPareto_2}) rewrites as:
 $$g(\varphi_x^\ast) = \tau^{1-\sigma}\left[ \frac{(\varphi_x^\ast)^{-(k-(\sigma-1))}}{k-(\sigma-1)}\right]$$
 The system of Equations (\ref{eq:systemPareto_1})-((\ref{eq:systemPareto_4}) thus simplifies to be solved recursively with a full analytical solution. This is no longer the case in the presence of additive costs, and we have to rely on the model's simulations to obtain the general equilibrium of the model for a given calibration of the deep parameters.
+
+
+\subsection{Some extra theoretical results}
+
+In this section, we run an additional exercise to confirm the importance of the additive dimension in the welfare-detrimental effects of trade costs. Under a constant fixed export costs, we simulate the model under two alternative cases. Starting from the values observed in 1974, we simulate \textit{(i)} the observed reduction in the additive cost $t/\widetilde{p}^fas$, maintaining the ad-valorem component at its initial (1974) value, and  \textit{(ii)} the opposite case where $\tau$ takes its 2019 value with the same additive cost (in percentage of the fas price) as in 1974. These two scenarii (as well as the initial one based on 1974 values) are reported in Table \ref{tab:calib_TC_appendix}.
+
+
+\begin{table}[htb]
+  \centering
+  \caption{Exploring alternative scenario: Calibration }\label{tab:calib_TC_appendix}
+\begin{center}
+	\input{table_calibTC_appendix.tex}
+\end{center}
+{\parbox[l]{13cm}{ \vspace{4pt}\footnotesize{Notes: $t$ is calibrated so that the ratio $t/\widetilde{p}^{\text{fas}}_x$ from the model matches its empirical target, with $\widetilde{p}^{\text{fas}}_x$ the average fas price set in place by those domestic firms that export. We theoretically define the export fas price through: $p_x = \tau \widetilde{p}^{\text{fas}} +t$. TC = Transport Costs, expressed in percentage of the average fas export price. $\beta$ is the share of additive in total transport costs}}}
+\end{table}
+
+
+The quantitative results strongly confirm the welfare-detrimental effects of additive costs, and the larger welfare gains when this specific component of international trade costs reduces.
+
+\begin{table}[htb]
+  \centering
+  \caption{Exploring alternative scenario: Results }\label{tab:calib_TC_appendix}
+\begin{center}
+\begin{tabular}{l|cc|cc}
+& \multicolumn{2}{|c|}{Air transport} & \multicolumn{2}{|c}{Maritime transport} \\ \hline
+$\Delta TC$ (pp)&	-0,02	&-0,014	&-0,033&	-0,031 \\
+$\Delta \tau$ (pp)&	0	&-0,014&	0&	-0,031 \\
+$\Delta t/pfas $(pp)&	-0,020	&0	&-0,033&	0 \\
+$\Delta \beta$ (in pp)	&-27,75&	12,14	&-23,53&	20,36 \\
+%Delta Welfare (abs)&	0,042&	0,007	&0,060&	0,011 \\
+Rel. Delta welf (in \%)&	2,589&	0,411	&3,801	&0,695 \\
+Variety effect (in \%)	&-2,487&	-0,213&	-2,879	&-0,171 \\
+Price effect (in \%)	&5,275	&0,625&	6,973	&0,867 \\
+\hline \hline
+\end{tabular}
+\end{center}
+{\parbox[l]{13cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs, expressed in percentage of the average fas export price. $\beta$ is the share of additive in total transport costs}}}
+\end{table}
 
 
 \end{document} 
