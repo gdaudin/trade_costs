@@ -281,7 +281,7 @@ collect style column, nodelimiter dups(center) position(top) width(asis)
 collect label levels colname year "Time trend", modify
 collect label levels result p50  "Median", modify
 collect label levels var value_tot  "Covered trade value", modify
-collect label levels digit referee1  "Estimating $\widehat{\beta_{i,s}$", modify
+collect label levels digit referee1  "Estimating $\beta_{i,s}$", modify
 
 collect preview
 
