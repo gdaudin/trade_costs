@@ -73,6 +73,8 @@ if "`method'"=="referee1" {
 	*use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS8_`mode'.dta", clear
 	*** Actualisé EN HS10
 	use "$dir_referee1/results_beta_contraint_`year'_sitc2_HS10_`mode'.dta", clear
+	capture rename `mode'_val val
+	replace beta =-beta
 }
 
 
