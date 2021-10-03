@@ -178,8 +178,8 @@ args method
 
 global method `method'
 
-local time_span 2005 (1) 2013
-local model nlAetI
+local time_span $time_span
+local model $model
 
 
 foreach mode in  air ves {
@@ -193,11 +193,10 @@ foreach mode in  air ves {
 	
 	
 	use $dir_temp/data_`model'_${method}_`mode'.dta, replace
+	drop if beta==.
 	egen value_year=total(val), by(year)
 	generate weight = val/value_year 
-	
-	
-	
+
 	
 
 	generate N = 0
@@ -245,35 +244,32 @@ foreach mode in  air ves {
 
 	save $dir_temp/data_`model'_${method}_`mode'.dta, replace
 	
-	collect, tags(var[beta_2005] 	 mode[`mode'] digit[${method}]) /*
-		*/ : sum beta[aweight=weight] if year==2005, det
+	
+	
+	collect, tags(var[beta_${debut}] 	 mode[`mode'] digit[${method}]) /*
+		*/ : sum beta[aweight=weight] if year==${debut}, det
 		
-	collect, tags(var[beta_2013] 	 mode[`mode'] digit[${method}]) /*
-		*/ : sum beta[aweight=weight] if year==2013, det
+		
+
+		
+	collect, tags(var[beta_${fin}] 	 mode[`mode'] digit[${method}]) /*
+		*/ : sum beta[aweight=weight] if year==${fin}, det
 
 	
 	
 	collect layout (result[mean]#var[Nb_sectors Nb_partners Nb_pairs value_tot] /*
-	*/ var[beta]#result[mean p50 sd] (colname[year]#result) (var[beta_2005 beta_2013]#result[mean])) /* 
+	*/ var[beta]#result[mean p50 sd] (colname[year]#result) (var[beta_$debut beta_${fin}]#result[mean])) /* 
 	*/ (mode#digit)
 	
 	
-
 
 	
 	
 }
 
 
-end
-
-
-
-table_comparaison_part referee1
-table_comparaison_part baseline
-
 collect style cell, warn nformat (%3.1f)
-collect style cell var[beta beta_debut beta_fin], warn nformat(%3.2f)
+collect style cell var[beta beta_$debut beta_$fin], warn nformat(%3.2f)
 collect style cell var[Nb_pairs]#var[value_tot]#var[Nb_sectors]#var[Nb_partners], warn 	nformat(%9.0fc)
 collect style cell colname[year], warn nformat(%4.3f)
 collect style column, nodelimiter dups(center) position(top) width(asis)
@@ -283,9 +279,47 @@ collect label levels result p50  "Median", modify
 collect label levels var value_tot  "Covered trade value", modify
 collect label levels digit referee1  "Estimating $\beta_{i,s}$", modify
 
+end
+
+**********Pour comparer baseline / beta referee1
+
+global time_span 2005 (1) 2013
+global debut 2005
+global fin 2013
+global model nlAetI
+global model nlAetI
+
+table_comparaison_part referee1
+table_comparaison_part baseline
+
 collect preview
 
 collect export /* 		 
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/Comp_baseline_referee1.tex", /*
 */ tableonly replace
+
+collect clear
+
+**********
+
+
+********************Pour comparer baseline / wgt / qy
+
+global time_span 2005 (1) 2019
+global debut 2005
+global fin 2019
+global model nlAetI
+
+table_comparaison_part hs10_qy1_qy
+table_comparaison_part hs10_qy1_wgt
+table_comparaison_part baseline
+
+collect preview
+
+collect export /* 		 
+*/ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/Comp_baseline_wgt_qy.tex", /*
+*/ tableonly replace
+
+
+collect clear
 

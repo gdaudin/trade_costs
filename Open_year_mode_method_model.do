@@ -66,6 +66,7 @@ if "`method'"=="qy1_wgt" | "`method'"=="hs10_qy1_wgt" |  {
 	use "$dir_results/`method'/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
 	*rename product sector /*Product is in fact 3 digits*/
 	*drop _merge
+	generate beta = (terme_A/(terme_I+terme_A-1))
 }	
 	
 
@@ -81,7 +82,7 @@ if "`method'"=="referee1" {
 
 if "`method'"=="qy1_qy" | "`method'"=="hs10_qy1_qy" {
 	use "$dir_results/`method'/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
-	generate beta_method = -(terme_A/(terme_I+terme_A-1))
+	generate beta_method = (terme_A/(terme_I+terme_A-1))
 }
 
 
