@@ -221,7 +221,6 @@ For all years and whatever the transport mode considered, the model with additiv
 
 \subsection{Estimation at the 4-digit level \label{app:4digit}}
 
-\textbf{XXX UPDATE XXX : Est-ce fait?}
 In this section, we report the estimation results when we retain the 4-digit classification level ($s$=4-digit).
 
 \subsubsection{Transport cost estimates}
@@ -670,30 +669,46 @@ For both transport modes the distribution of $\beta_{ikt}$ over the triplet (yea
 Relaxing the assumption that fixed effects are separable between the two country and product dimensions does not alter qualitatively our conclusion, that the elasticity of transport costs to the export price (or the share of additive costs in total transport costs), is strongly varying over time, countries of origin and products.
 \footnote{As a consequence, this also provides an indirect robustness check to the results regarding the trend decomposition provided in Section 4 of the paper, which establish that the decline of ``pure'' transport costs is a main reason for the decrease of overall transport costs observed over time.}
 
-\subsubsection{Estimating $\widehat{\beta_{i,s}}$ directly}
+
+
+\subsubsection{Estimating $\widehat{\beta}_{i,s}$ directly}
 	
 In this section, we explore an alternative estimation method, which proceeds as follows. $\beta$ can be separately estimated for each industry $s$-origin country $i$ using the following regression:
 
 \begin{equation}
-\ln TC_{ikd} = \beta_{is}\ln \tilde{p}_{ikd} + \text{Controls}_{ikd} +\epsilon_{ikd} \label{eq:estimation_ref1}
+\ln TC_{ikd} = \beta_{is}\ln \tilde{p}_{ikd} + Z_{ikd} +\epsilon_{ikd} \label{eq:estimation_ref1}
 \end{equation}
 
-where $d$ denotes the US district of entry and $k$ denotes an HS-10 product, $TC_{ikd}$ being the transport costs. The
-identification of $\beta_{is}$, in this case, would rely on exploiting the variability between sub-sectors at the 10-digit
-level ($k$) and between ports of entry in the US ($d$).
+where $d$ denotes the US district of entry and $k$ denotes an HS-10 product, $TC_{ikd}$ being the transport costs and $Z$ a set of controls variables. The identification of $\beta_{is}$, in this case, relies on exploiting the variability between sub-sectors at the 10-digit
+level ($k$) and between ports of entry in the US ($d$). From this, one can then recover the levels of additive and multiplicative transports costs. Denoting $\widehat{\beta}_{is(k)}$ the estimated $\beta$ for a given sector-country $i,s(k)$, one can indeed solve the following two-equation system:
 
-One advantage of this approach is that the above regression can be estimated separately for various country-industry pairs on a linear basis, without having to resort on the separability assumption. This does not solve the issue yet, for two main reasons. First, we would still be constrained to resort to non-linear estimators. This is due to the necessity of imposing an \textit{ex-ante} restriction on parameters, i.e. imposing $0 \leq  \beta \leq 1$. Should we relax this restriction, standard linear, least squares estimates often deliver negative, meaningless estimates. In this respect, implementing this does not suppress the requirement of resorting on non-linear estimates (and the computational, time-consuming burden it induces).
+\begin{eqnarray*}
+p_{ik} &=& \tau_{is(k)}\widetilde{p}_{ik} +t_{is(k)} \label{eq:system1}\\
+\frac{t_{is(k)}}{(\tau_{is(k)}-1)\widetilde{p}_{ik}+ t_{is(k)}} &=& \widehat{\beta}_{is(k)}  \label{eq:system2}
+\end{eqnarray*}
 
-Second, 
+
+\noindent with $p_{ik}$ and $\widetilde{p}_{ik}$ the cif and fas prices observed in our dataset (conditional on a given year-transport mode).
+
+One advantage of this approach is that the above regression can be estimated separately for various country-industry pairs on a linear basis, without having to resort on the separability assumption. This does not solve the issue yet, for two main reasons. First, it is still constrained to resort to non-linear estimators. This is due to the necessity of imposing an \textit{ex-ante} restriction on parameters, i.e. imposing $0 \leq  \beta \leq 1$. Should we relax this restriction, standard linear, least squares estimates often deliver negative, meaningless estimates. In this respect, implementing this does not suppress the requirement of resorting on non-linear estimates (and the computational, time-consuming burden it induces).
+
+It should also be noted that this estimation method implies a lower coverage, both in time and in the sectors/countries covered. Information about the port of entry are only available since 1989, which is already smaller than our full sample starting in 1974. On top of that, because of the Covid situation, the US Bureau of Census was only able to send them the CDs relative to the years 1997-1999 and 2001-2019. Implementing the referee's method would hence necessarily reduce the time coverage of our analysis by more than 20 years (skipping the 1974-1996 years in particular). In our view, the historical coverage is interesting per se, as it provides useful insights about how transport costs have evolved over time. 
+
+With respect to the trade flows coverage, the method is run country by country, and 3-digit sector by 3-digit sector, exploiting the variability within each country-3d sector across 10-d sub-sectors and ports of entry. Yet, it appears that for many couples (country, 3-digit sector), there is too few variability across sub-sectors or ports en entry given the number of fixed effects included in the regression, such that estimation can not be run. This can be seen comparing the number of observations by year/ transport mode between this alternative method and our baseline method reported in Table \ref{tab_comp_referee1_baseline}. Put it differently, this methodology discards countries which export a limited range of goods to the US and/or which arrive in the USA through the same ports of entry. In this respect, the induced selection bias reduces the general scope of the transport costs estimates.
+
+Notwithstanding these limitations, it remains interesting to run this alternative estimation method as robustness check. Table \ref{tab_comp_referee1_baseline} reports the estimation results, by transport mode, in the Column ``Alternative'', along with the results obtained with our baseline method over the same period 2005-2013. As noted above, the partners-sectors covered are lower. Regarding the share of additive costs $\beta$, the comparison between the two methods goes in opposite directions depending on the transport mode. While the estimated $\beta$ is lower for maritime transport with the alternative method (also displaying a larger decrease over the period), the opposite holds for Air transport. In any case yet, the share of additive costs remains substantial, around 40\% on average over the period, thereby confirming the main message of our paper shedding light on the importance of the additive component in international transport costs.
 
 
 \begin{table}[htbp]
 	\caption{Comparison 2005-2013}
 	\begin{center}		
 		\input{Comp_baseline_referee1_reshaped.tex}
-	\end{center}
+	
+{\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: Mean values reported for the 2005 and 2013 values reported for $\beta$. Time trend coefficient is the annual growth rate.}}}
+\end{center}
 	\label{tab_comp_referee1_baseline}%
 \end{table}%
+
 
 
 
@@ -714,7 +729,7 @@ Second,
 
 \subsubsection{More on the Hummel's methodology}
 
-This section complements Section \textbf{XXX} in the main paper, where we replicate the method adopted by \cite{hummels2007} on our database. Here, we report the unfitted measure of transport costs versus the ``pure'' transport costs series, i.e composition effects excluded
+This section complements Section 4 in the main paper, where we replicate the method adopted by \cite{hummels2007} on our database. Here, we report the unfitted measure of transport costs versus the ``pure'' transport costs series, i.e composition effects excluded
 in percentage of the export price, as in \cite{hummels2007}. We also adopt Himmel's (2007) terminology, contrasting the ``expenditure/importe value'' (i.e, the unfitted serie) and the ``fitted ad-valorem rate'' (i.e, corresponding to the ``pure'' transport costs series, composition effects excluded). Unsurprisingly, this accords with his Figure 5 (for Air) and 6 (Vessel) for the comme period (until 2014).
 
 \begin{figure}[htbp]

@@ -209,8 +209,7 @@ Third, this dataset is available over a long time span, which enables us to anal
 In light of this, the estimated values that we obtain can be viewed as the lower bounds of the ``potential'' transport costs.} \smallskip
 
 
-As detailed below, the use of a non-linear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. This drives us to estimate international transport costs at the 3-digit classification level, exploiting heterogeneity between products at the SITC-5 classification level. Depending on the year, this leaves us with around 200 3-digit sectors, from around 200 countries of origin. We ensure the robustness of these results by conducting two types of alternative estimates: \textit{i,} within each 3-digit sector, exploiting heterogeneity between HS-10 products. Notice that this can be done from 1989 onwards for which HS-10 data are available; \textit{ii,} running the estimation at the 4-digit sector level (still with 5-digit products) for some selected years. The selected years for the 4-digit level estimations are: 1974, 1977, 1981, 1985, 1989, 1993, 1997, 2001, 2005, 2009, 2019. Comparing different levels of aggregation is useful to check differences and the presence of biases precisely due to aggregation. However, we obtain no substantial difference between the results obtained for the benchmark 3-5 sector-product classification levels and those considering either the 3-10 and 4-5 ones (See Appendix \ref{app:4digit}). \textbf{JH: WHERE ARE THE 3-10/4-5 ESTIMATES? NOT IN ANY APPENDICES.}
- \textbf{XXXX-GD:4-5 ESTIMATES are in table 1. 3-10 I am not sure... On y fait allusion dans la procédure en IV, c’est sûr.}
+As detailed below, the use of a non-linear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time. This drives us to estimate international transport costs at the 3-digit classification level, exploiting heterogeneity between products at the SITC-5 classification level. Depending on the year, this leaves us with around 200 3-digit sectors, from around 200 countries of origin (hence, around 400 fixed effects). We ensure the robustness of these results by conducting two types of alternative estimates: \textit{i),} within each 3-digit sector, exploiting heterogeneity between HS-10 products. Notice that this can be done from 1989 onwards for which HS-10 data are available; \textit{ii),} running the estimation at the 4-digit sector level (still with 5-digit products) for some selected years. The selected years for the 4-digit level estimations are: 1974, 1977, 1981, 1985, 1989, 1993, 1997, 2001, 2005, 2009, 2019. Comparing different levels of aggregation is useful to check differences and the presence of biases precisely due to aggregation. However, we obtain no substantial difference between the results obtained for the benchmark 3-5 sector-product classification levels and those considering either the 3-10 and 4-5 ones (See Table \ref{tab:summary_results} and Appendix \ref{app:4digit} for the 4-5 results and Table \ref{tab:baseline10}, Section \ref{sec:robustness} for the 3-10 estimation results). \textbf{ADD 10-3 RESULTS TO BE DONE}
 
 
 
@@ -606,6 +605,8 @@ Therefore, we propose to compare our main estimates with those stemming from a t
 
 Current data are available at the 10-digit level for products (HS10) for some specific years. The results reported here rely on exploiting data over the years 1997-1999 and 2001-2019.\footnote{Theoretically, they should be available from 1989, which is already smaller than our full sample starting in 1974. Because of the COVID situation, it was only possible to get access to the years 1997-1999 and 2001-2019.} \textbf{REPRENDRE CES RESULTATS PB SUR VESSEL LP. }
 
+Notice that switching to a 3 (sector)-10(product) estimation method does not alter the number of fixed effects to estimate, as they are at the sector $s$ level (along with those at the origin country $i$ level). However, within each 3-digit sector category, the 3-10 estimation method has the advantage to exploit a larger source of heterogeneity by considering trade flows at the HS-10 product level. 
+
 Yet, as Table \ref{tab:baseline10} and 	Figure \ref{fig:robustness_to_agregation} show, the results are similar when using 10-digit product and 5-digit products.
 
 
@@ -871,7 +872,7 @@ Our empirical results point to two important conclusions: First, additive costs 
 In running this exercise, we also take into account the fact that the share of exporting firms has substantially increased since the 21\% value reported in \cite{BEJK-AER-03} (and consistent with the value estimated by \citet{Lincoln_McCallum2018} for 1987 on US data). According to \cite{Lincoln_McCallum2018}, this share roughly amounts to 39\% in the mid 2000's. This can be matched in the model by resetting the (lower) value of the export fixed cost $f_x$ accordingly. Our preferred scenario thus embeds the two dimensions of trade liberalization: the reduction of transport costs along with the reduction of the export fixed cost.
 
 The results are reported in Table \ref{tab:resultats_modele}, panel (1), by transport mode (for Air (Columns (A)-(B)) and Vessel (Columns (C)-(D) respectively.\footnote{For sake of space saving, we only report the welfare consequences of trade liberalization, depending on the structure of transport costs, even if we refer to the positive effects (in terms of number of firms, threshold and average productivities, etc.) to explain the underlying mechanisms. The whole set of results is available upon request to the authors.} Specifically, we report the change in total transport costs (expressed in percentage points, and based on the raw numbers reported in Table \ref{tab:calib_TC}), decomposed in its two dimensions (additive and ad-valorem); as well as the welfare change, both in absolute and in relative terms.
-We also simulate an alternative scenario where only the variable transport costs decrease, the fixed export cost being constant at its initial value. This has two purposes. It allows us to better highlight the specific mechanisms involved by (a reduction in) additive costs versus the standard iceberg costs. In a related manner, it delivers a relevant robustness check on the normative implications of additive costs. These results are reported in Table \ref{tab:resultats_modele}, panel (2).\footnote{Under a constant fixed export cost, we also compare two alternative cases. Starting from the values observed in 1974, we simulate \textit{(i)} the observed reduction in the additive cost $t/\widetilde{p}^fas$, maintaining the ad-valorem component at its initial (1974) value, and  \textit{(ii)} the opposite case where $\tau$ takes its 2019 value with the same additive cost (in percentage of the fas price) as in 1974. The quantitative results strongly confirm the welfare-detrimental effects of additive costs, and the larger welfare gains when this specific component of international trade costs reduces. See \textbf{Appendix XXX, Table XXX for the results}.}
+We also simulate an alternative scenario where only the variable transport costs decrease, the fixed export cost being constant at its initial value. This has two purposes. It allows us to better highlight the specific mechanisms involved by (a reduction in) additive costs versus the standard iceberg costs. In a related manner, it delivers a relevant robustness check on the normative implications of additive costs. These results are reported in Table \ref{tab:resultats_modele}, panel (2).\footnote{Under a constant fixed export cost, we also compare two alternative cases. Starting from the values observed in 1974, we simulate \textit{(i)} the observed reduction in the additive cost $t/\widetilde{p}^fas$, maintaining the ad-valorem component at its initial (1974) value, and  \textit{(ii)} the opposite case where $\tau$ takes its 2019 value with the same additive cost (in percentage of the fas price) as in 1974. The quantitative results strongly confirm the welfare-detrimental effects of additive costs, and the larger welfare gains when this specific component of international trade costs reduces. See Appendix \ref{app:theoretical_model}, Table \ref{tab:results_model_appendix} for the results}.
 
 
 \begin{table}[htbp]
@@ -1660,7 +1661,7 @@ The system of Equations (\ref{eq:systemPareto_1})-((\ref{eq:systemPareto_4}) thu
 
 \subsection{Some extra theoretical results}
 
-In this section, we run an additional exercise to confirm the importance of the additive dimension in the welfare-detrimental effects of trade costs. Under a constant fixed export costs, we simulate the model under two alternative cases. Starting from the values observed in 1974, we simulate \textit{(i)} the observed reduction in the additive cost $t/\widetilde{p}^fas$, maintaining the ad-valorem component at its initial (1974) value, and  \textit{(ii)} the opposite case where $\tau$ takes its 2019 value with the same additive cost (in percentage of the fas price) as in 1974. These two scenarii (as well as the initial one based on 1974 values) are reported in Table \ref{tab:calib_TC_appendix}.
+In this section, we run an additional exercise to confirm the importance of the additive dimension in the welfare-detrimental effects of trade costs. Under a constant fixed export costs, we simulate the model under two alternative cases. Starting from the values observed in 1974, we simulate \textit{(i)} the observed reduction in the additive cost $t/\widetilde{p}^fas$, maintaining the ad-valorem component at its initial (1974) value (Scenario (A)), and  \textit{(ii)} the opposite case where $\tau$ takes its 2019 value with the same additive cost (in percentage of the fas price) as in 1974 (Scenario (B)). These two scenarii (as well as the initial one based on 1974 values) are reported in Table \ref{tab:calib_TC_appendix}.
 
 
 \begin{table}[htb]
@@ -1673,26 +1674,28 @@ In this section, we run an additional exercise to confirm the importance of the 
 \end{table}
 
 
-The quantitative results strongly confirm the welfare-detrimental effects of additive costs, and the larger welfare gains when this specific component of international trade costs reduces.
+The quantitative results strongly confirm the welfare-detrimental effects of additive costs, and the larger welfare gains when this specific component of international trade costs reduces (Scenario (A)). In contrast, under Scenario (B), the reduction in total trade costs is still welfare-enhancing, but the magnitude of the welfare gains is much more modest, because of the larger distortion induced by additive costs - that now account for a larger share of total trade costs. 
 
 \begin{table}[htb]
   \centering
-  \caption{Exploring alternative scenario: Results }\label{tab:calib_TC_appendix}
+  \caption{Exploring alternative scenario: Results }\label{tab:results_model_appendix}
 \begin{center}
 \begin{tabular}{l|cc|cc}
+\hline \hline
 & \multicolumn{2}{|c|}{Air transport} & \multicolumn{2}{|c}{Maritime transport} \\ \hline
-$\Delta TC$ (pp)&	-0,02	&-0,014	&-0,033&	-0,031 \\
-$\Delta \tau$ (pp)&	0	&-0,014&	0&	-0,031 \\
-$\Delta t/pfas $(pp)&	-0,020	&0	&-0,033&	0 \\
-$\Delta \beta$ (in pp)	&-27,75&	12,14	&-23,53&	20,36 \\
-%Delta Welfare (abs)&	0,042&	0,007	&0,060&	0,011 \\
-Rel. Delta welf (in \%)&	2,589&	0,411	&3,801	&0,695 \\
-Variety effect (in \%)	&-2,487&	-0,213&	-2,879	&-0,171 \\
-Price effect (in \%)	&5,275	&0,625&	6,973	&0,867 \\
+Scenario & (A) & (B) & (A) & (B) \\ \hline
+$\Delta TC$ (pp)&	-0.02	&-0.014	&-0.033&	-0.031 \\
+$\Delta \tau$ (pp)&	0	&-0.014&	0&	-0.031 \\
+$\Delta t/\widetilde{p}^{fas} $(pp)&	-0.020	&0	&-0.033&	0 \\
+$\Delta \beta$ (in pp)	&-27.75&	12.14	&-23.53&	20.36 \\ \hline
+%Delta Welfare (abs)&	0.042&	0.007	&0.060&	0.011 \\
+Rel. Delta welf (in \%)&	2.589&	0.411	&3.801	&0.695 \\
+Variety effect (in \%)	&-2.487&	-0.213&	-2.879	&-0.171 \\
+Price effect (in \%)	&5.275	&0.625&	6.973	&0.867 \\
 \hline \hline
 \end{tabular}
 \end{center}
-{\parbox[l]{13cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs, expressed in percentage of the average fas export price. $\beta$ is the share of additive in total transport costs}}}
+{\parbox[l]{10cm}{ \vspace{4pt}\footnotesize{Notes: TC = Transport Costs, expressed in percentage of the average fas export price. $\beta$ is the share of additive in total transport costs.}}}
 \end{table}
 
 
