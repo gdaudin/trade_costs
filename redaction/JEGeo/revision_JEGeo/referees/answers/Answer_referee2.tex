@@ -1,0 +1,189 @@
+\documentclass[a4paper,11pt]{article}
+
+%\usepackage[pdftex]{graphicx}
+\usepackage{amsmath}
+%\usepackage[latin1]{inputenc}
+%\usepackage{hyperref}
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
+%%GD Quand je mets usepackage[utf8]{inputenc} je n'arrive plus à compiler la biblio
+%J'ai essayé de débuger : je n'y suis pas arrivé
+\usepackage{rotating}
+\usepackage{setspace}
+\usepackage{lscape}
+\usepackage[round]{natbib}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{vmargin}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{caption}
+\usepackage[tableposition=top]{caption}
+\usepackage{amsfonts}
+\usepackage{bbold}
+\usepackage{bbm}
+\usepackage[flushleft]{threeparttable}
+%\usepackage{bbold}
+%\usepackage[T1]{fontenc}
+% JH : impossible de compiler avec le package bbold, remplacé par amsfonts
+% LP : impossible de compiler avec le package bbold, remplacé par bbm
+\usepackage{upgreek}
+\usepackage{comment}
+\includecomment{commentGD}
+\usepackage[draft]{todonotes}
+%\usepackage[disable]{todonotes}
+%%GDPour cacher les notes, \usepackage[disable]{todonotes}
+
+\usepackage{setspace}
+
+%\usepackage[nolists, figuresfirst]{endfloat}
+%\usepackage{sidefloat}
+
+\setlength{\abovecaptionskip}{-8pt}
+
+%\usepackage[usenames]{color}
+%\definecolor{grey}{rgb}{0.35,0.35,0.35}
+%\definecolor{webdarkblue}{rgb}{0,0,0.4}
+%\definecolor{orange}{rgb}{0.7,0.2,0.05}
+
+
+%\usepackage[pdfcreator={PDFLaTeX}, pdfproducer={PDFLaTeX}, pdfstartview=FitH, pdfpagemode=UseOutlines, pagebackref=false, colorlinks={true},
+%citecolor={webdarkblue}, linkcolor={webdarkblue},
+%urlcolor={webdarkblue}]{hyperref}
+
+
+
+%\addtolength{\oddsidemargin}{-0.4in}
+%\addtolength{\evensidemargin}{-0.4in}
+%\addtolength{\textwidth}{0.8in} \addtolength{\topmargin}{-0.85in}
+%\addtolength{\textheight}{1.7in}
+\renewcommand{\baselinestretch}{1.2}
+
+\newcommand\cites[1]{\citeauthor{#1}'s\ (\citeyear{#1})}
+
+\newcommand\citeh[1]{\citeauthor{#1}'\ (\citeyear{#1})}
+
+\setmarginsrb{3cm}{2cm}{3cm}{2cm}{0,5cm}{0,5cm}{0,3cm}{0,5cm}
+
+
+
+% commands
+
+\newcommand{\bi}{\begin{itemize}}
+\newcommand{\ei}{\end{itemize}}
+\newcommand{\be}{\begin{enumerate}}
+\newcommand{\ee}{\end{enumerate}}
+\newcommand{\bd}{\begin{description}}
+\newcommand{\ed}{\end{description}}
+\newcommand{\beqa}{\begin{eqnarray}}
+\newcommand{\eeqa}{\end{eqnarray}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\bs}{\bigskip}
+\newcommand{\A}{$^a$}
+\newcommand{\B}{$^b$}
+\newcommand{\C}{$^c$}
+
+\renewcommand{\baselinestretch}{1.2}
+%\doublespacing
+
+%\linespread{1.6}
+
+%\newcommand{\note}[1]{\footnote{\begin{doublespace}#1\end{doublespace}}}
+
+
+\begin{document}
+
+
+\title{\textsc{International Transport costs:\\New Findings from modeling additive costs} \\
+Answer to Referee 2}
+
+\author{Guillaume \textsc{Daudin}\thanks{%
+Université Paris-Dauphine, PSL University, CNRS, 8007, IRD, 260, LEDa, DIAL, 75016, Paris, France ; email: \url{guillaume.daudin@dauphine.psl.eu}}  \qquad J\'{e}r\^{o}me \textsc{H\'{e}ricourt} \thanks{Universit\'{e} de Lille - LEM-CNRS UMR 9221, France \& CEPII, France; email: \url{jerome.hericourt@univ-lille.fr}}\qquad Lise \textsc{Patureau}\thanks{Corresponding author.
+University Paris-Dauphine \& PSL University, LEDa, 75016 Paris, France;  email: \url{lise.patureau@dauphine.psl.eu} } }
+
+
+\date{September 2021}
+ \maketitle
+\bigskip
+
+We would like to thank you for your insightful comments. They led us to introduce some
+significant changes to the paper that we hope address your concerns. We first give you an overview
+of the revision (Section\ref{sec:main_changes}) before answering in detail each of your comments (Section\ref{sec:detailed_answers}). Number of sections, pages and equations mentioned in the text refer to the revised version. When necessary, we refer to number of sections, pages and equations from the submitted version. In this case, they are written into brackets.
+
+\section{Main changes \label{sec:main_changes}}
+
+The structure of the paper has been modified after taking into account the referees' comments.
+\begin{itemize}
+\item In the submitted version, [Section 2] was devoted to the estimation of international transport costs; specifically, their break-down in two components, additive and ad-valorem. In [Section 3], we investigated the role of additive costs in the decomposition of transport costs time trends, between structural changes and composition effects. [Section 4] was devoted to the robustness analysis relative to the results from both previous sections.
+\item In the revised version, we have strengthened the robustness checks regarding the estimation results of international transport costs (robustness checks to aggregation and to IV estimates have been added). Accordingly, the previously-called [Section 2] has been split in two Sections: Section 2, where we present the data and the estimation strategy; and Section 3, which reports the results and now includes the robustness checks as final sub-section. For sake of space saving, the robustness analysis related to composition effects has been set to the Appendix (Section C.3).
+\item Both referees asked us to put light on the implications of additive costs (the ``Big Picture''). We agree that this was not enough emphasized in the submitted version, and we thank the referees for their suggestions on that issue. The revised version answers this concern in two points.
+    \begin{enumerate}
+    \item We maintain the analysis of the transport costs time trends (previously [Section 3], now Section 4); but we made our best to make this section easier to read, leaving the technical aspects in the Appendix (Section C). As such, we hope that the main message of this Section is better catched.
+    \item Most importantly, we now emphasize the ``Big Picture'' implications of additive costs on theoretical grounds. Through the lens of the \cites{melitz} model amended to integrate additive costs, we analyze the welfare gains that derive from the reduction in international transport costs that we have estimated (in Section 3 of the revised version), to quantify the extra welfare gains attributable to the reduction of the additive component. This analysis is driven in a new Section 5.
+        \end{enumerate}
+\item To keep the paper (both the main text and with appendix included) within a reasonable number of pages, yet to be fully transparent about our results, we have added numerous detailed tables in the Online Appendix, to which the reader can refer to.
+\end{itemize}
+
+We now answer in detail each of your comments given in italics.
+
+\section{Detailed answers \label{sec:detailed_answers}}
+
+\subsection{Implications/usefulness of the exercise}
+
+\paragraph{``Big Picture''} \textit{[...] The main contribution of this paper thus appears to be to unravel the temporal evolution / relative importance of the ad-valorem and specific transport cost component. However, besides showing this evolution, the paper is basically silent on the implication(s) of the patterns found. In the conclusion, the authors state that this is left for future research. This was quite disappointing, simply documenting the evolution of these two components leaves the reader (at least me) wondering why he/she should care about this. The authors should aim to be much more clear on what the trends in ad-valorem / specific transport costs mean/imply from the perspective of these recent theoretical contributions/insights.} \smallskip
+
+
+\textbf{Our answer:} We devoted a lot of thought to this point, which directly echoed a similar concern by the other referee. Taking stock of your suggestion, we decided to offer insights on the welfare implications of our results. In this regard, the new section 5 ``The role of additive cost: Theoretical insights'' is devoted to a theory-based analysis of the alterations to welfare gains involved by the relative variations of additive and multiplicative transport costs over our period of analysis. To do so, we start from the canonical \cites{melitz} model where we add additive trade costs. The inclusion of additive costs in a \citet{melitz} setting has already been performed in \citet{sorensen2014} and \citet{Irrazabal_2015}. However, \citet{sorensen2014} exclusively performs a theoretical analysis, without any quantitative exercise. In addition to a partial equilibrium extension of \citet{melitz}, \citet{Irrazabal_2015} do perform a quantitative simulation to assess the welfare variations induced by the presence of additive costs, but the latter is based on a calibration for transport costs restricted to 2004, based on the case of Nowrway. In contrast, our own exercise relies on a several decades time span for the US, allowing us to highlight the welfare alterations induced over time by the relative dynamics of additive and multiplicative costs, based on ``true'' values for the latter - remember that our methodology allows for the identification of both multiplicative and additive costs as a share of total costs, whereas additive costs in \citet{Irrazabal_2015} are expressed relatively to the (median) export price.
+
+More precisely, we use some of the estimates underlying results reported in Section 3 concerning multiplicative and additive costs, more precisely those for the years 1974 and 2019. Based on the latter, we implement several comparative statics exercises to investigate the different welfare consequences of alterations to multiplicative and additive costs. In addition, we also assess how the latter results are distorted by changes in sunk costs of exports, $f_{x}$. To that end, we adjust the share of exporting firms in the US: based on \citet{Lincoln_McCallum2018}, we set the latter to 35\% in 2019, versus 21\% in 1974. In our preferred exercise, we quantify the welfare gains that derive from the reduction in transport costs as documented in Section 3, relying on a combined reduction in each additive/iceberg component, with the reduction in the fixed export cost. We compare this with the case where the total transport costs reduction is solely attributed to a decrease in ad-valorem costs.
+
+Table 5 in Section 5 of the paper reports the results of these various comparative statics exercises for Air and Vessel transport modes. Specifically, we report the change in total transport costs decomposed in its two dimensions (additive and ad-valorem); as well as the welfare change, both in absolute and in relative terms. Qualitatively, the conclusions are identical for both transport modes, with two major insights. First, for a given decrease in total transport costs,  welfare gains are around 50\% higher when this reduction is partly achieved through a reduction in the additive costs. Second, the decrease in export sunk costs (i.e., increase in the share of exporting firms) proportionally amplifies the gains from decreasing variable costs, with again an additional premium coming from the decrease of additive costs.
+
+Overall, these results appear to add a substantial contribution to the paper : we are able to provide a quantitative assessment of the welfare gains induced by the decrease in both types (additive and multiplicative) of costs over a 45-year period, and to highlight the respective part of each component in the determination of these gains. Note also that not only the inclusion of additive costs in the underlying framework generates large welfare differences, but also that the latter are probably a lower bound of the welfare variations induced by changes in additive \emph{trade} costs, larger than the sole transport costs.
+
+\paragraph{Exploring the heterogeneity of our results} \textit{At the very least the authors could/should make use of the fact that the temporal patterns in specific / ad-valorem transport costs is likely to show substantial heterogeneity across goods as well as countries. Exploring this heterogeneity to a fuller extent could already hint at the main drivers (insurance costs / containerization / economies of scale) behind the observed patterns. This could be done by e.g. not only reporting the mean and median of the ad-valorem / specific transport cost components but exploring more fully the heterogeneity in these transport costs components across sectors/exporters. Also, it should be relatively straightforward to provide some analysis of the major correlates with the identified specific and ad-valorem costs (e.g. product value/weight ratio, distance to the exporter, etc.).}
+
+
+\textbf{WHAT DO WE DO ABOUT THAT? We provide an analysis by sector about the time trends. Do more than that: Regress the additive costs/ ad-valorem costs $t_{is}$, $\tau_{is}$ on distance from the US? correlation btw each component and the sector/country fixed effect ?}
+
+\subsection{Empirical strategy}
+
+\textit{The empirical strategy used to unravel the specific and ad-valorem component in international
+transport costs is quite elaborate. [...] To be more specific, why not simply estimate equation (1) while plugging
+in equation (3) and (4) for $\tau$ and $t$ respectively? Doing this yields the following estimation equation (\ref{eq:ref2_basis}) in
+levels (I have added a time subscript t as well as an additive error term $\epsilon$):}
+
+\begin{equation}
+p_{ikt}=\tau_{it}\widetilde{p}_{ikt}+ \tau_{kt}\widetilde{p}_{ikt} + t_{it} + t_{kt} + \epsilon_{ikt}   \label{eq:ref2_basis}
+\end{equation}
+
+\textit{I do not see why the authors need the complicated non-linear transformations to do what they aim
+for. Estimating Equation (\ref{eq:ref2}) should be relatively easy, for one it is linear, but it would also not require the
+inclusion of any country-sector fixed effects.}
+
+\begin{equation}
+p_{ikt}= \sum_i \sum_t \alpha_{it}^\tau \mathbbm{1}_{it}\widetilde{p}_{ikt} +  \sum_k \sum_t \alpha_{kt}^\tau \mathbbm{1}_{kt}\widetilde{p}_{ikt} + \sum_i \sum_t \alpha_{it}^t \mathbbm{1}_{it} + \sum_k \sum_t \alpha_{it}^t\mathbbm{1}_{kt} \label{eq:ref2}
+\end{equation}
+
+
+\textbf{Our answer:} As highlighted by the referee, our estimated equation imposes to use non-linear estimation methods, such as Non-Linear Least Squares. We agree that resorting on a linear form as the one suggested by the referee would substantially alleviate the computational burden. It does not seem to solve the issue yet.
+
+First, it can be noticed that the equation suggested by the referee does not stand in accordance with the assumption we borrow from \cite{Irrazabal_2015}, that ad-valorem costs is decomposed in its two country/sector dimensions multiplicatively (i.e. approximating $\tau_{is(k)}$ by the product $\tau_i\times \tau_{s(k)}$.
+
+However, even with another formulation, such as the equations (\ref{eq:ref2_basis}) and (\ref{eq:ref2}) suggested by the referee, we would still be constrained to resort to non-linear estimators. This is due to the restrictions imposed \textit{ex-ante} on parameters, i.e. $\tau \geq 1$ and $t\geq 0$, the latter meaning simply we constrain both types of trade costs to be non-negative, as by construction we cannot have $p_{ikt} < \widetilde{p}_{ikt}$. Without these restrictions, standard linear, least squares estimates deliver aberrant values with more than mild quality-of-fit. Taking into account this constraint implies that the error term should be always positive, which we ensure by specifying the error term such that:
+\begin{equation*}
+\frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i}\times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})
+\end{equation*}
+\noindent where $\epsilon_{ik}$ follows a normal law centered on 0.
+
+\newpage
+\bibliographystyle{apalike2}
+\bibliography{biblio}
+
+
+
+
+
+\end{document} 
