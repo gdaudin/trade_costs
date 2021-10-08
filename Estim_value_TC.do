@@ -479,7 +479,9 @@ if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 	
 	drop if qy1==0
 	collapse (sum) val qy1 cha wgt, by(hs iso_o dist_entry dist_unlad rate_prov mode sitc)
+	describe
 	bysort hs iso_o dist_entry dist_unlad rate_prov mode: drop if _N!=1
+	**Cette commande est faite pour enlever les flux multi-modes. Mais apparamment, il n’y en a pas ?
 	**Remarque : la régression est à faire en 5/3
 	
 	keep if mode=="`mode'"
