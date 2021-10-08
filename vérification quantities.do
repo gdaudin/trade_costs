@@ -29,7 +29,7 @@ cd "$dir"
 
 *****Ici, on vérifie la part des unimodaux dans hummels_tra (exemple 1998)
 use "$dir_data/hummels_tra", clear
-keep if year==1998
+*keep if year==1998
 replace air_val=0 if mode=="ves"
 replace ves_val=0 if mode=="air"
 
@@ -56,13 +56,15 @@ duplicates report hs iso_o dist_entry dist_unlad mode rate_prov /*je crois que c
 collapse (sum) val, by(hs iso_o dist_entry dist_unlad rate_prov mode)
 
 bysort hs iso_o dist_entry dist_unlad rate_prov mode: drop if _N!=1
-*Ce dernier test n’élimine rien
+*Ce dernier test n'élimine rien
 
 
 
 egen com_total= total(val)
 tab com_total
 bys hs iso_o dist_entry dist_unlad rate_prov : drop if _N==2
+*Cela élimine tous les duplicates
+
 
 egen com_total_reduit= total(val)
 tab com_total_reduit
@@ -79,6 +81,20 @@ drop _merge
 generate sector = substr(sitc2,1,3)
 bys sector unit_qy1 : keep if _n==1
 duplicates report sector
+tab unit_qy1, sort
+
+**Variante en convertissant les unités.
+merge m:1 unit_qy1 using "$dir/external_data/Quantity/Unit_conversion.dta"
+bys sector unit_qy1_new : keep if _n==1
+duplicates report sector
+tab unit_qy1_new, sort
+
+***En enlevant X
+drop if unit_qy1=="X"
+duplicates report sector
+
+
+
 
 *****Ici on examine le nombre d'unités dans un secteur hs 3d
 

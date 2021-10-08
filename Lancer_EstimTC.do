@@ -153,8 +153,8 @@ local mode air /*ves*/
 */
 
 
-/*
-foreach y of numlist 2017(-1)2002 {
+local mode air
+foreach y of numlist 2019 /*(-1)2002*/ {
 
 
 	foreach m in `mode' {	
@@ -199,6 +199,7 @@ foreach  y of numlist 2017 2019 {
 }
 */
 
+/*
 *****Pour HS10 10/3
 *local year 1997 1998 1999 2002(1) 2019
 local mode air
@@ -207,7 +208,7 @@ foreach  y of numlist 2019(-1)2005 {
 	EstimTC `y' `m' 10 3 base_hs10_newyears
 	}
 }
-
+*/
 
 /*
 
