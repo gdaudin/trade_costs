@@ -27,9 +27,9 @@ if "`c(hostname)'" =="MSOP112C" {
 }
 cd "$dir"
 
-
+*****Ici, on vérifie la part des unimodaux dans hummels_tra (exemple 1998)
 use "$dir_data/hummels_tra", clear
-keep if year==1998
+*keep if year==1998
 replace air_val=0 if mode=="ves"
 replace ves_val=0 if mode=="air"
 
@@ -47,7 +47,7 @@ tab com_total_reduit
 
 
 	
-******
+***********Ici, on vérifie la part des unimodaux dans les nouvelles données
 
 use "$dir_data/base_hs10_2019.dta" , clear
 
@@ -56,12 +56,52 @@ duplicates report hs iso_o dist_entry dist_unlad mode rate_prov /*je crois que c
 collapse (sum) val, by(hs iso_o dist_entry dist_unlad rate_prov mode)
 
 bysort hs iso_o dist_entry dist_unlad rate_prov mode: drop if _N!=1
+*Ce dernier test n'élimine rien
 
 
 
 egen com_total= total(val)
 tab com_total
 bys hs iso_o dist_entry dist_unlad rate_prov : drop if _N==2
+*Cela élimine tous les duplicates
+
 
 egen com_total_reduit= total(val)
 tab com_total_reduit
+
+
+
+*****Ici on examine le nombre d’unités dans un secteur sitc
+
+use "$dir_data/Quantity/hs_qy1_2019.dta", clear
+gen hs6= substr(hs,1,6)
+merge m:1 hs6 using "$dir_data/hs2002_sitc2.dta"
+keep if _merge==3
+drop _merge
+generate sector = substr(sitc2,1,3)
+bys sector unit_qy1 : keep if _n==1
+duplicates report sector
+tab unit_qy1, sort
+
+**Variante en convertissant les unités.
+merge m:1 unit_qy1 using "$dir/external_data/Quantity/Unit_conversion.dta"
+bys sector unit_qy1_new : keep if _n==1
+duplicates report sector
+tab unit_qy1_new, sort
+
+***En enlevant X
+drop if unit_qy1=="X"
+duplicates report sector
+
+
+
+
+*****Ici on examine le nombre d'unités dans un secteur hs 3d
+
+use "$dir_data/Quantity/hs_qy1_2019.dta", clear
+generate sector = substr(hs,1,3)
+bys sector unit_qy1 : keep if _n==1
+duplicates report sector
+
+
+

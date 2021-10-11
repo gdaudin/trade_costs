@@ -479,12 +479,48 @@ if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 	
 	drop if qy1==0
 	collapse (sum) val qy1 cha wgt, by(hs iso_o dist_entry dist_unlad rate_prov mode sitc)
+	describe
 	bysort hs iso_o dist_entry dist_unlad rate_prov mode: drop if _N!=1
+	**Cette commande ne fait rien tomber
+	
+	duplicates report  hs iso_o dist_entry dist_unlad rate_prov
+	bys hs iso_o dist_entry dist_unlad rate_prov : drop if _N==2
+	**Cela sert à éliminer les flux bi-modaux.
+	describe
+	
 	**Remarque : la régression est à faire en 5/3
 	
 	keep if mode=="`mode'"
-	collapse (sum) val qy1 cha wgt, by(sitc iso_o mode)
+	
+	****Maintenenant, on enlève les flux dons les secteurs ont plusieurs unités de mesure
+	
+	*Récupération des unités de mesure
+	merge m:1 hs using "$dir_data/Quantity/hs_qy1_`year'.dta" /*comme dans les sources*/
+	keep if _merge==3
+	drop _merge
+	merge m:1 unit_qy1 using "$dir/external_data/Quantity/Unit_conversion.dta" /*unifiées*/
+	keep if _merge==3
+	drop _merge
+	rename unit_qy1 unit_qy1_old
+	rename qy1 qy1_old
+	rename unit_qy1_new unit_qy1
+	generate qy1 = qy1_old*conversion_factor
+	
+	drop if unit_qy1=="X" /*Cela signifie qu’il n’est pas besoin d’entrer la quantitié*/
+	*Puis on exclu les secteurs avec plusieurs unités de mesure
 	generate sector = substr(sitc2,1,`preci')
+	
+	codebook sector
+	bys sector unit_qy1 : gen nbr_sectxunit = _N
+	bys sector  : gen nbr_sect = _N
+	drop if nbr_sect!= nbr_sectxunit /*si c’est égal, cela veut dire qu’il y a une seule unité*/
+	codebook sector
+	
+	***Passage en 5/3
+	gen prod = substr(hs,1,`class')
+	collapse (sum) val cha qy1 wgt, by(prod iso_o mode unit_qy1 sector)
+	
+	
 	
 	generate prix_trsp  = cha/val  			/* (pcif - pfas) / pfas */
 	generate prix_trsp2 = (val+cha)/val	/* pcif / pfas */
