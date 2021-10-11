@@ -172,13 +172,14 @@ p_{ikt}= \sum_i \sum_t \alpha_{it}^\tau \mathbbm{1}_{it}\widetilde{p}_{ikt} +  \
 
 First, it can be noticed that the equation suggested by the referee does not stand in accordance with the assumption we borrow from \cite{Irrazabal_2015}, that ad-valorem costs is decomposed in its two country/sector dimensions multiplicatively (i.e. approximating $\tau_{is(k)}$ by the product $\tau_i\times \tau_{s(k)}$.
 
-However, even with another formulation, such as the equations (\ref{eq:ref2_basis}) and (\ref{eq:ref2}) suggested by the referee, we would still be constrained to resort to non-linear estimators. This is due to the restrictions imposed \textit{ex-ante} on parameters, i.e. $\tau \geq 1$ and $t\geq 0$, the latter meaning simply we constrain both types of trade costs to be non-negative, as by construction we cannot have $p_{ikt} < \widetilde{p}_{ikt}$. Without these restrictions, standard linear, least squares estimates deliver aberrant values with more than mild quality-of-fit. Taking into account this constraint implies that the error term should be always positive, which we ensure by specifying the error term such that:
+However, even with another formulation, such as the equations (\ref{eq:ref2_basis}) and (\ref{eq:ref2}) suggested by the referee, we would still be constrained to resort to non-linear estimators. This is due to the restrictions imposed \textit{ex-ante} on parameters, i.e. $\tau \geq 1$ and $t\geq 0$, the latter meaning simply we constrain both types of transport costs to be non-negative, as by construction we cannot have $p_{ikt} < \widetilde{p}_{ikt}$. Without these restrictions, standard linear, least squares estimates deliver aberrant values with more than mild quality-of-fit. Taking into account this constraint implies that the error term should be always positive, which we ensure by specifying the error term such that:
+
 \begin{equation*}
 \frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i}\times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})
 \end{equation*}
-\noindent where $\epsilon_{ik}$ follows a normal law centered on 0.
+\noindent where $\epsilon_{ik}$ follows a normal law centered on 0. 
 
-We do acknowledge this is very important was not made clear enough in the initial version, and did our best to make the point clear in the revised version (see p.8). We also devote more time to the robustness of the empirical specification. On top of the robustness to the separability assumption (already in the submitted version), we also assess the robustness to the degree of aggregation and endogeneity (Section 3.4). We hope that this new version now convinces you that our estimation strategy is both relevant and robust.
+This specification obviously requires a non-linear estimation. We did our best to make the point clear in the revised version (see p.8). We also devote more time to the robustness of the empirical specification. On top of the robustness to the separability assumption (already in the submitted version), we also assess the robustness to the degree of aggregation and endogeneity (Section 3.4). We hope that this new version now convinces you that our estimation strategy is both relevant and robust.
 
 
 
