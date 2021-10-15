@@ -279,10 +279,13 @@ collect label levels result p50  "Median", modify
 collect label levels var value_tot  "Covered trade value", modify
 collect label levels digit referee1  "Estimating $\beta_{i,s}$", modify
 
+collect label levels digit  non_séparé_qy "Price per qy", modify
+collect label levels digit  non_séparé_wgt "Price per kg", modify
+
 end
 
 **********Pour comparer baseline / beta referee1
-
+/*
 global time_span 2005 (1) 2013
 global debut 2005
 global fin 2013
@@ -301,20 +304,29 @@ collect export /*
 collect clear
 
 **********
-
+*/
 
 ********************Pour comparer baseline / wgt / qy
-
-global time_span 2005 (1) 2019
-global debut 2005
+*
+global time_span 2009 (1) 2019
+global debut 2009
 global fin 2019
 global model nlAetI
 
+/**Mais en fait, ce ne sont pas les bonnes régressions, car non-séparées
 table_comparaison_part hs10_qy1_qy
 table_comparaison_part hs10_qy1_wgt
 table_comparaison_part baseline
 
 collect preview
+*/
+
+table_comparaison_part non_séparé_qy
+table_comparaison_part non_séparé_wgt
+table_comparaison_part baseline
+
+
+
 
 collect export /* 		 
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/Comp_baseline_wgt_qy.tex", /*

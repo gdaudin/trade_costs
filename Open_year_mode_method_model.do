@@ -79,13 +79,6 @@ if "`method'"=="referee1" {
 }
 
 
-
-if "`method'"=="qy1_qy" | "`method'"=="hs10_qy1_qy" {
-	use "$dir_results/`method'/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
-	generate beta_method = (terme_A/(terme_I+terme_A-1))
-}
-
-
 if "`method'"=="IV_referee1_panel" {
 	use "$dir_results/IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
 	generate beta_method = -(terme_A/(terme_I+terme_A-1))
@@ -112,13 +105,35 @@ if "`method'"=="IV_referee1_yearly_5_3" {
 
 if "`method'"=="non_séparé" {
 	use "$dir_results/robustesse_non_separe/results_estimTC_non_séparé_`year'_5_3_`mode'_hummels_tra.dta", clear
-	generate beta_method = -(terme_A/(terme_I+terme_A-1))
+	generate beta_method = (terme_A/(terme_I+terme_A-1))
 	capture rename `mode'_val val 
 	capture drop *_val
 	capture rename product sector
 	*rename product sector /*Product is in fact 3 digits*/
 	*drop _merge
 }	
+
+if "`method'"=="non_séparé_qy" {
+	use "$dir_results/hs10_qy1_qy/results_estimTC_non_séparé_`year'_5_3_`mode'_hs10_qy1_qy.dta", clear
+	generate beta_method = (terme_A/(terme_I+terme_A-1))
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
+}	
+
+if "`method'"=="non_séparé_wgt" {
+	use "$dir_results/hs10_qy1_wgt/results_estimTC_non_séparé_`year'_5_3_`mode'_hs10_qy1_wgt.dta", clear
+	generate beta_method = (terme_A/(terme_I+terme_A-1))
+	capture rename `mode'_val val 
+	capture drop *_val
+	capture rename product sector
+	*rename product sector /*Product is in fact 3 digits*/
+	*drop _merge
+}	
+
+
 
 if "`method'"=="séparé_pour_robustesse_ns" {
 	use "$dir_results/robustesse_non_separe/results_estimTC_séparé_pour_robustesse_ns_`year'_5_3_`mode'_hummels_tra.dta", clear
