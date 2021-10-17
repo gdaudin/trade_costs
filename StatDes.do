@@ -191,7 +191,7 @@ args method
 global method `method'
 if "$method"=="baseline" local time_span 1974 (1) 2019
 if "$method"=="baseline5_4" local time_span 1974 1977 (4)2017 2019
-if "$method"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span /*1997 1998 1999 2002(1) 2019*/ 2005/2013
+if "$method"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span /*1997 1998 1999 2002(1) 2019*/ 2005 (1) 2019
 if "$method"=="baseline10" | "$method"=="dbsamesample10_5_3" local model_list nlAetI
 if "$method"=="baseline" | "$method"=="baseline5_4" local model_list nlAetI nlI
 
@@ -336,8 +336,9 @@ table1_part baseline5_4
 
 
 *************Pour tableau 1 baseline10 + baseline sur période réduite
-table1_part dbsamesample10_5_3
 table1_part baseline10
+table1_part dbsamesample10_5_3
+
 
 
 
@@ -347,7 +348,7 @@ table1_part baseline10
 	collect layout (model[data]#result[mean]#var[N Nb_sectors Nb_partners] /*
 		*/ model[data]#var[prix_trsp prix_fob]#result[mean p50 sd] /*
 		*/ model[nlAetI]#var[terme_I terme_A p_add_dollar beta]#result[mean p50 sd]) /* 
-		*/ (digit#mode)
+		*/ (mode#digit)
 
 	 
 

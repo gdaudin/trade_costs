@@ -9,6 +9,7 @@ if "`method'"=="baseline" & ("`model'"=="" | "`model'"=="nlAetI" | "`model'"=="n
 	capture rename `mode'_val val 
 	capture drop *_val
 	capture rename product sector
+	capture rename stic2 product
 	generate beta=(terme_A/(terme_I+terme_A-1))
 }	
 
@@ -44,11 +45,15 @@ if "`method'"=="baselinesamplereferee1" {
 if "`method'"=="baseline10" {
 	use "$dir_results/10_3/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
 	generate beta=(terme_A/(terme_I+terme_A-1))
+	 capture rename product sector
+	capture rename stic2 product
 }	
 
 if "`method'"=="dbsamesample10_5_3" {
-	use "$dir_referee1/baselinesamplereferee1/results_estimTC_`year'_sitc2_3_`mode'.dta", clear
-	rename product sector
+	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
+	generate beta = (terme_A/(terme_I+terme_A-1))
+	capture rename product sector
+	capture rename sitc2 product
 	capture rename `mode'_val val 
 	capture drop *_val
 }
