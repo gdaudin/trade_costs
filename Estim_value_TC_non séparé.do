@@ -831,7 +831,7 @@ if `result_reg' !=0 {
 }
 
 
-save "$dir/results/robustesse_non_separe/${test}results_estimTC_non_séparé_`year'_`class'_`preci'_`mode'_`database'", replace
+save "$dir/results/robustesse_non_séparé/${test}results_estimTC_non_séparé_`year'_`class'_`preci'_`mode'_`database'", replace
 
 
 
