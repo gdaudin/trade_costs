@@ -1,12 +1,12 @@
-Position,What,Do file,Method,Database,Sample,When
-baseline/results_estimTC_year_prod5_sect3_mode,Baseline 5/3,Lancer_EstimTC.do,baseline,hummels_tra,Own,31/07/21
-baseline/results_estimTC_year_prod4_sect3_mode,Robustess 5/4,Lancer_EstimTC.do,baseline,hummels_tra,Own (1974-77-81-85...-2017-2019),31/07/21
-10_3/results_estimTC_year_prod10_sect3_mode,Robustesse en 10/3,Lancer_EstimTC.do,baseline,hummels_tra,From baseline 2005-2019,13/10/21
-hs10_qy1_wgt/results_estimTC_year_prod5_sect3_mode,Robustesse en 5/3 non-séparé d’une méthode fausse pour qy/wgt. Prix par wgt,Lancer_EstimTC.do,baseline,base_hs10_year,Sans les flux bimodaux-Sans les secteurs à plusieurs unités de mesure,11/10/21
-hs10_qy1_qy/results_estimTC_year_prod5_sect3_mode,Pour faire le pendant de robustesse en 5/3 non-séparé d’une méthode fausse pour qy/wgt. Prix par qy,Lancer_EstimTC.do,baseline,base_hs10_year,Sans les flux bimodaux-Sans les secteurs à plusieurs unités de mesure,11/10/21
-hs10_qy1_qyt/results_non_séparé_year_prod5_sect3_mode_hs10_qy1_qy,Robustesse en non-séparé pour qy. Effets fixes qy*pays*secteurs,Estim_value_TC_non séparé.do,nonséparé. Effets fixes qy*pays*secteurs. Prix par qy,base_hs10_year,Réduit pour 80 % du sample. Sans les flux bimodaux.,14/06/21
-hs10_qy1_wgt/results_non_séparé_year_prod5_sect3_mode_hs10_qy1_wgt,Robustesse en non-séparé pour wgt. Effets fixes qy*pays*secteurs,Estim_value_TC_non séparé.do,nonséparé. Effets fixes qy*pays*secteurs. Prix par kg,base_hs10_year,Réduit pour 80 % du sample. Sans les flux bimodaux.,14/06/21
-robustesse_non_séparé/results_estimTC_non_séparé_year_5_3_mode_hummels_tra,Robustesse en non-séparé,Estim_value_TC_non séparé.do,Nonséparé. Effets fixe pays*secteurs,hummels_tra,Réduit pour 80 % du sample,29/08/21
-robustesse_non_séparé/results_estimTC_séparé_pour_robustesse_ns_year_5_3_mode_hummels_tra,Pour compléter robustesse en non-séparé,Estim_value_TC_séparé_pour_robustesse_non séparé.do,Séparé. Effets fixes pays et secteurs,hummels_tra,Réduit pour 80 % du sample,26/08/21
-IV,,,,,,
-estimation des betas,,,,,,
+Position,handle for openning,What,Do file,Method,Database,Sample,When
+baseline/results_estimTC_year_prod5_sect3_mode,baseline ; baseline10,Baseline 5/3,Lancer_EstimTC.do,baseline,hummels_tra,Own,31/07/21
+baseline/results_estimTC_year_prod4_sect3_mode,,Robustess 5/4,Lancer_EstimTC.do,baseline,hummels_tra,Own (1974-77-81-85...-2017-2019),31/07/21
+10_3/results_estimTC_year_prod10_sect3_mode,,Robustesse en 10/3,Lancer_EstimTC.do,baseline,hummels_tra,From baseline 2005-2019,13/10/21
+hs10_qy1_wgt/results_estimTC_year_prod5_sect3_mode,,Robustesse en 5/3 non-séparé d’une méthode fausse pour qy/wgt. Prix par wgt,Lancer_EstimTC.do,baseline,base_hs10_year,Sans les flux bimodaux-Sans les secteurs à plusieurs unités de mesure,11/10/21
+hs10_qy1_qy/results_estimTC_year_prod5_sect3_mode,,Pour faire le pendant de robustesse en 5/3 non-séparé d’une méthode fausse pour qy/wgt. Prix par qy,Lancer_EstimTC.do,baseline,base_hs10_year,Sans les flux bimodaux-Sans les secteurs à plusieurs unités de mesure,11/10/21
+hs10_qy1_qyt/results_non_séparé_year_prod5_sect3_mode_hs10_qy1_qy,non_séparé_qy,Robustesse en non-séparé pour qy. Effets fixes qy*pays*secteurs,Estim_value_TC_non séparé.do,nonséparé. Effets fixes qy*pays*secteurs. Prix par qy,base_hs10_year,Réduit pour 80 % du sample. Sans les flux bimodaux.,14/06/21
+hs10_qy1_wgt/results_non_séparé_year_prod5_sect3_mode_hs10_qy1_wgt,non_séparé_wgt,Robustesse en non-séparé pour wgt. Effets fixes qy*pays*secteurs,Estim_value_TC_non séparé.do,nonséparé. Effets fixes qy*pays*secteurs. Prix par kg,base_hs10_year,Réduit pour 80 % du sample. Sans les flux bimodaux.,14/06/21
+robustesse_non_séparé/results_estimTC_non_séparé_year_5_3_mode_hummels_tra,,Robustesse en non-séparé,Estim_value_TC_non séparé.do,Nonséparé. Effets fixe pays*secteurs,hummels_tra,Réduit pour 80 % du sample,29/08/21
+robustesse_non_séparé/results_estimTC_séparé_pour_robustesse_ns_year_5_3_mode_hummels_tra,,Pour compléter robustesse en non-séparé,Estim_value_TC_séparé_pour_robustesse_non séparé.do,Séparé. Effets fixes pays et secteurs,hummels_tra,Réduit pour 80 % du sample,26/08/21
+IV,,,,,,,
+estimation des betas,,,,,,,
