@@ -372,13 +372,13 @@ end
 *****************************************************************************************
 
 
-*global method1 baseline
+global method1 baseline
 *global method1 baseline10
 *baseline pour baseline 5/3
 *global method2 IV_ref1_y_5_3
 *global method1 qy1_wgt
 *global method1 hs10_qy1_wgt
-global method1 non_séparé_wgt
+*global method1 non_séparé_wgt
 ******
 
 
@@ -388,11 +388,13 @@ global method1 non_séparé_wgt
 *global method2 qy1_qy
 *global method2 hs10_qy1_qy
 *global method2  dbsamesample10_5_3
-global method2 non_séparé_qy
+*global method2 non_séparé_qy
+global method2 referee1
 
 
 if "$method1"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span 2005/2019
 if "$method1"=="non_séparé_wgt" | "$method2"=="non_séparé_wgt" local time_span 2009/2019
+if "$method1"=="referee1" | "$method2"=="referee1" local time_span 2005/2013
 
 
 

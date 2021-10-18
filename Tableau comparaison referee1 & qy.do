@@ -290,9 +290,9 @@ end
 
 **********Pour comparer baseline / beta referee1
 
-global time_span 2005 (1) 2019
+global time_span 2005 (1) 2013
 global debut 2005
-global fin 2019
+global fin 2013
 global model nlAetI
 
 table_comparaison_part referee1
