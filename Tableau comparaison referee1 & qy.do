@@ -237,9 +237,6 @@ foreach mode in  air ves {
 		*/ sum value_tot[aweight=weight] 	
 	collect, tags(var[beta] 	 mode[`mode'] digit[${method}]) /*
 		*/ : sum beta[aweight=weight], det
-
-	quietly gen ln_beta=ln(beta)	
-	collect _r_b, tags(mode[`mode'] digit[${method}]): regress ln_beta year [aweight=weight]
 	
 
 	save $dir_temp/data_`model'_${method}_`mode'.dta, replace
@@ -255,11 +252,18 @@ foreach mode in  air ves {
 	collect, tags(var[beta_${fin}] 	 mode[`mode'] digit[${method}]) /*
 		*/ : sum beta[aweight=weight] if year==${fin}, det
 
-	
+	gen beta_pour_collapse = beta*weight
+	collapse (sum) beta_pour_collapse, by(year)
+	quietly gen ln_beta=ln(beta_pour_collapse)	
+	collect _r_b, tags(mode[`mode'] digit[${method}]): regress ln_beta year /*[aweight=weight]*/
+	*if "`mode'"=="air" & "${method}"=="non_séparé_wgt" blink
 	
 	collect layout (result[mean]#var[Nb_sectors Nb_partners Nb_pairs value_tot] /*
 	*/ var[beta]#result[mean p50 sd] (colname[year]#result) (var[beta_$debut beta_${fin}]#result[mean])) /* 
 	*/ (mode#digit)
+	
+	
+
 	
 	
 
@@ -285,11 +289,10 @@ collect label levels digit  non_séparé_wgt "Price per kg", modify
 end
 
 **********Pour comparer baseline / beta referee1
-/*
-global time_span 2005 (1) 2013
+
+global time_span 2005 (1) 2019
 global debut 2005
-global fin 2013
-global model nlAetI
+global fin 2019
 global model nlAetI
 
 table_comparaison_part referee1
@@ -304,7 +307,7 @@ collect export /*
 collect clear
 
 **********
-*/
+
 
 ********************Pour comparer baseline / wgt / qy
 *
@@ -317,8 +320,6 @@ global model nlAetI
 table_comparaison_part hs10_qy1_qy
 table_comparaison_part hs10_qy1_wgt
 table_comparaison_part baseline
-
-collect preview
 */
 
 table_comparaison_part non_séparé_qy
@@ -326,7 +327,7 @@ table_comparaison_part non_séparé_wgt
 table_comparaison_part baseline
 
 
-
+collect preview
 
 collect export /* 		 
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/Comp_baseline_wgt_qy.tex", /*
