@@ -12,6 +12,7 @@ if "`c(username)'" =="guillaumedaudin" {
 	global dir_temp ~/Downloads/temp_stata
 	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
 	global dir_redaction  "~/Répertoires Git/trade_costs_git/redaction/JEGeo/revision_JEGeo/revised_article"
+	global dir_git  "~/Répertoires Git/trade_costs_git/"
 	
 	
 }
@@ -372,11 +373,12 @@ end
 
 
 *global method1 baseline
-global method1 baseline10
+*global method1 baseline10
 *baseline pour baseline 5/3
 *global method2 IV_ref1_y_5_3
 *global method1 qy1_wgt
 *global method1 hs10_qy1_wgt
+global method1 non_séparé_wgt
 ******
 
 
@@ -385,18 +387,19 @@ global method1 baseline10
 *global method2 baseline10
 *global method2 qy1_qy
 *global method2 hs10_qy1_qy
-global method2  dbsamesample10_5_3
+*global method2  dbsamesample10_5_3
+global method2 non_séparé_qy
 
 
-if "$method"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span 2005/2019
+if "$method1"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span 2005/2019
+if "$method1"=="non_séparé_wgt" | "$method2"=="non_séparé_wgt" local time_span 2009/2019
 
 
 
 capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 foreach year of num `time_span'  {
-*foreach year of num 1998 1999 2002(1)2019 {
-*foreach year of num 2011/2015 {
+
 	foreach mode in air ves {
 	*if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
 		if "$method1"=="qy1_wgt" {
