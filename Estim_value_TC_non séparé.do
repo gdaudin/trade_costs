@@ -155,8 +155,7 @@ if "`base'"!="hs10_qy1_qy" & "`base'"!="hs10_qy1_wgt" {
 
 }
 
-
-
+**Cette procédure crée des macro globales qui vont déterminer les pays / secteurs à garder : secteur_a_garder, secteur_x_unit_a_garder, pays_a_garder...
 end
 
 
@@ -280,28 +279,14 @@ args database year class preci mode
 
 **"class" donne la précision des produits. "preci" donne la précision des secteurs
 
-a_garder `mode' `year' `database' 
-**Détermine les secteurs / pays que l’on va garder
+a_garder `mode' `year' `database' /*Crée les macros pour déterminer les secteurs / pays que l’on va garder*/
 
 ** Définir macro pour lieu de stockage des résultats selon base utilisée
 
-if "`database'"=="hummels_tra" | "`database'"=="base_hs10_newyears" {
+if "`database'"=="hummels_tra" {
 	global stock_results $dir/results/baseline
 }
 
-if "`database'"=="db_samesample_`class'_`preci'_HS10" {
-	global stock_results $dir/results/referee1/baselinesamplereferee1
-}
-
-
-if "`database'"=="predictions_FS_panel" {
-	global stock_results $dir/results/IV_referee1_panel
-}
-
-
-if "`database'"=="FS_predictions_both_yearly_prod10_sect3" | "`database'"=="FS_predictions_both_yearly_prod5_sect3"  {
-	global stock_results $dir/results/IV_referee1_yearly
-}
 
 if "`database'"=="hummels_tra_qy1_qy" {
 	global stock_results $dir/results/qy1_qy
@@ -356,53 +341,6 @@ if "`database'"=="base_hs10_newyears"  {
 }
 
 
-
-
-/* Pourquoi faire ça, on le fait ensuite? 
-if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS10"{
-	generate prix_fob=prix_fob_wgt
-	generate prix_caf=prix_caf_wgt
-}
-	*/
-	
-
-if "`database'"=="predictions_FS_panel" {
-	use "$stock_results/`database'"
-	keep if year==`year'
-	keep if mode=="`mode'"
-	keep sitc2-mode lprix_panel_hat_air_allFE2 lprix_panel_hat_ves_allFE2
-	drop sitc2_3d
-	merge 1:1 sitc2-mode using "$dir_data/hummels_tra"
-	rename prix_fob prix_fob_non_instru
-	generate prix_fob = .
-	replace prix_fob=exp(lprix_panel_hat_air_allFE2) if mode=="air"
-	replace prix_fob=exp(lprix_panel_hat_ves_allFE2) if mode=="ves"
-}
-
-if "`database'"=="FS_predictions_both_yearly_prod10_sect3" {
-	use "$stock_results/`database'"
-	keep if year==`year'
-	keep if mode=="`mode'"
-	keep hs10 year mode sitc2 sitc2_3d iso_o lprix_yearly_hat_allFE 
-	order sitc2 year iso_o mode
-	rename hs10 hs
-	merge 1:m hs year mode iso_o using "$dir_data/base_hs10_`year'"
-	rename prix_fob_wgt prix_fob_non_instru
-	generate prix_fob = . 
-	replace prix_fob=exp(lprix_yearly_hat_allFE)
-}
-
-
-if "`database'"=="FS_predictions_both_yearly_prod5_sect3"{
-	use "$stock_results/`database'"
-	keep if year==`year'
-	keep if mode=="`mode'"
-	drop sitc2_3d
-	merge 1:1 sitc2 year iso_o mode using "$dir_data/hummels_tra"
-	rename prix_fob prix_fob_non_instru
-	generate prix_fob = .
-	replace prix_fob=exp(lprix_yearly_hat_allFE)
-}
 
 
 if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
@@ -475,50 +413,6 @@ capture label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
 
-if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS10" {
-	generate sector = substr(hs,1,`preci')
-	collapse (sum) val wgt cha qy1 qy2 (first) sector sitc2 hs6, by(iso_o hs mode)
-	gen prix_caf = (val+cha)/wgt
-	gen prix_fob = val/wgt
-	gen prix_trsp=cha/val  			/* (pcif - pfas) / pfas */
-	gen prix_trsp2 = (val+cha)/val	/* pcif / pfas */
-	
-
-	drop if sector==""
-	*drop if prix_fob==prix_caf
-	/* A METTRE ? */
-}
-
-if "`database'"=="FS_predictions_both_yearly_prod10_sect3" {
-	generate sector = substr(hs,1,`preci')
-	collapse (sum) val wgt cha qy1 qy2 (first) sector sitc2 hs6, by(iso_o hs mode)
-	gen prix_caf = (val+cha)/wgt
-	gen prix_fob = val/wgt
-	gen prix_trsp=cha/val  			/* (pcif - pfas) / pfas */
-	gen prix_trsp2 = (val+cha)/val	/* pcif / pfas */
-	
-
-	drop if sector==""
-	*drop if prix_fob==prix_caf
-	/* A METTRE ? */
-}
-
-
-
-if  "`database'"=="FS_predictions_both_yearly_prod5_sect3" {
-	generate sector = substr(sitc2,1,`preci')
-	rename `mode'_* *
-	collapse (sum) val wgt cha (first) sector, by(iso_o sitc2 mode)
-	gen prix_caf = (val+cha)/wgt
-	gen prix_fob = val/wgt
-	gen prix_trsp=cha/val  			/* (pcif - pfas) / pfas */
-	gen prix_trsp2 = (val+cha)/val	/* pcif / pfas */
-	
-
-	drop if sector==""
-	*drop if prix_fob==prix_caf
-	/* A METTRE ? */
-}
 * Nettoyer la base de donnÈes
 
 *****************************************************************************
@@ -579,7 +473,8 @@ if "`database'"=="hs10_qy1_qy" | "`database'"=="hs10_qy1_wgt" {
 	keep if strpos("$secteur_x_unit_a_garder",sector_x_unit)!=0
 }
 else keep if strpos("$secteur_a_garder",sector)!=0
-
+*C’est ici que l’on restreint la base
+blif
 
 *** Tester le pgm
 if "${test}"!="" {
@@ -887,10 +782,10 @@ foreach year of numlist 2012(1)2019 {
 */
 
 
-***Robustesse de base
+***Robustesse en non-séparé sans qy 
 	
 local base hummels_tra
-foreach year of numlist 2014(1)2018 {
+foreach year of numlist 1990(1)2018 {
 		
 	foreach mode in ves /*`mode_list'*/ {
 		
