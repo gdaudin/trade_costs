@@ -527,7 +527,8 @@ In this section, we provide a robustness analysis to the separability assumption
 That is, we relax Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}) to model $\tau_{is(k)}$ and $t_{is(k)}$ (on a yearly/transport mode basis).
 Yet, this comes at the cost of having to estimate a much larger number of fixed effects (for approx. 200 countries of origin and 200 sectors at the 3-digit level, this means estimating 40,000 versus 400 fixed effects, per year and per transport mode), making the estimation (all the more given our non-linear setting) intractable in practice.
 This drives us to conduct the analysis on a sub-sample of trade flows, upon which two estimations are conducted (for every year and each transport mode): with the separability assumption (Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}) hold, our baseline case) and without.
-For each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows. Table \ref{tab:robustness_separability} shows a summary of the results, considering the average estimated values over the period (by transport mode). \textbf{LP: Pb avec le nb d'observations. }
+For each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows. Table \ref{tab:robustness_separability} shows a summary of the results, considering the average estimated values over the period (by transport mode).
+%\textbf{LP: Pb avec le nb d'observations. } GD : CELA A L’AIR BON ET ON LAISSE COMME CELA
 %
 %\begin{table}[htbp]
 %  \centering
@@ -569,13 +570,15 @@ For each year and transport mode, we select the countries ($i$) and the products
 	\caption{Robustness to the separability assumption - restricted sample}
 	\begin{center}
 			\input{Table4_reshaped.tex}
+			\input{Table4.tex}
 	\end{center}
-	\parbox[l]{12cm}{\footnotesize{Notes: Estimations are performed on a restricted sample, based on the following rule: for each year and transport mode, we select the countries ($i$) and the products (at the 3-digit level, $s(k)$) that constitute 80\% of the total value of trade flows.
+	\parbox[l]{12cm}{\footnotesize{Notes: Estimations are performed on a restricted sample, based on the following rule:  we select, for each year, the largest importers that form together at least 80\% of annual trade and the largest traded sectors that form together at least 80\% of annual trade. We keep in the sample all trade observations from these importers and in these sectors.
 			The additive term is expressed in fraction of fas price.}}
 	\label{tab:robustness_separability}
 \end{table}
 
-Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but 80\% of the total value of aggregated trade) involve a higher share of additive costs: between 48\% and 55\% of total costs on average, versus 30\% to 44\% on the whole sample.
+Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but the vast majority of the total value of aggregated trade)
+\textbf{Ce n’est pas 80\% du commerce : voir le mode de calcul. Je sais que vous allez me demander combien c’est et je n’ai pas de réponse toute faite. Je peux passer une heure ou deux à le calculer si vous voulez -- GD}] involve a higher share of additive costs: between 48\% and 55\% of total costs on average, versus 30\% to 44\% on the whole sample.
 %JH: la phrase suivante est en contradiction avec celle qui suit encore juste après: "Second, assuming that country/product fixed effects are separable in these two dimensions tends to overestimate the value and the share of the additive costs."
 Second, both models provide a similar quality of fit of the regression (once we take into account the number of right-hand-side variables) as the AIC criteria display very close values in both models (conditional on transport mode). Third, the estimated values remain of similar magnitude under both separability and non-separability assumptions.\footnote{We also run two other robustness checks: \textit{i}) comparing the results on a detailed yearly basis and \textit{ii}) reporting the histogram of the distribution for $\beta$ over the triple $(i,k,t)$, which confirm the robustness of the results. These results are reported in the Online Appendix, \textbf{Section XXX} for sake of space saving.} %, even if one can note that under the separability assumption, the share of additive costs seems slightly biased upward, at least for averages over the period. The picture is reversed for medians
 

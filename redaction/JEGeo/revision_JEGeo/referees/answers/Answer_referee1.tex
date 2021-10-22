@@ -110,20 +110,20 @@ University Paris-Dauphine \& PSL University, LEDa, 75016 Paris, France;  email: 
 
 We would like to thank you for your insightful comments. They led us to introduce some
 significant changes to the paper that we hope address your concerns. We first give you an overview
-of the revision (Section\ref{sec:main_changes}) before answering in detail each of your comments (Section\ref{sec:detailed_answers}). Number of sections, pages and equations mentioned in the text refer to the revised version. When necessary, we refer to number of sections, pages and equations from the submitted version. In this case, they are written into brackets.
+of the revision (Section\ref{sec:main_changes}) before answering in detail each of your comments (Section\ref{sec:detailed_answers}). Number of sections, pages and equations mentioned in the text refer to the revised version. When necessary, we refer to number of sections, pages and equations from the submitted version. In this case, they are written between brackets.
 
 \section{Main changes \label{sec:main_changes}}
 
 The structure of the paper has been modified after taking into account the referees' comments.
 \begin{itemize}
 \item In the submitted version, [Section 2] was devoted to the estimation of international transport costs; specifically, their break-down in two components, additive and ad-valorem. In [Section 3], we investigated the role of additive costs in the decomposition of transport costs time trends, between structural changes and composition effects. [Section 4] was devoted to the robustness analysis relative to the results from both previous sections.
-\item In the revised version, we have strengthened the robustness checks regarding the estimation results of international transport costs (robustness checks to aggregation and to endogeneity have been added). Accordingly, the previously-called [Section 2] has been split in two Sections: Section 2, where we present the data and the estimation strategy; and Section 3, which presents the results and now includes the robustness checks as final sub-section. For sake of space saving, the robustness analysis related to composition effects has been set to the Appendix (Section C.3).
-\item Both referees asked us to put light on the implications of additive costs (the ``Big Picture''). We agree that this was not enough emphasized in the submitted version, and we thank the referees for their suggestions on that issue. The revised version answers this concern in two points.
+\item In the revised version, we have strengthened the robustness checks regarding the estimation results of international transport costs (robustness checks to aggregation and to endogeneity have been added). Accordingly, the previously-called [Section 2] has been split in two Sections: Section 2, where we present the data and the estimation strategy; and Section 3, which presents the results and now includes the robustness checks as a final sub-section. For sake of brevity, the robustness analysis related to composition effects has been sent to the Appendix (Section C.3).
+\item Both referees asked us to highlight the implications of additive costs (the ``Big Picture''). We agree that this was not enough emphasized in the submitted version, and we thank the referees for their suggestions on that issue. The revised version answers this concern in two points.
     \begin{enumerate}
-    \item We maintain the analysis of the transport costs time trends (previously [Section 3], now Section 4); but we made our best to make this section easier to read, leaving the technical aspects in the Appendix (Section C). As such, we hope that the main message of this Section is better catched.
-    \item Most importantly, we now emphasize the ``Big Picture'' implications of additive costs on theoretical grounds. Through the lens of the \cites{melitz} model amended to integrate additive costs, we analyze the welfare gains that derive from the reduction in international transport costs that we have estimated (in Section 3 of the revised version), to quantify the extra welfare gains attributable to the reduction of the additive component. This analysis is driven in a new Section 5.
+    \item We maintain the analysis of the transport costs time trends (previously [Section 3], now Section 4); but we improved this section’s readibility by leaving the technical aspects in the Appendix (Section C). As such, we hope that the main message of this Section is easier to understand.
+    \item Most importantly, we now emphasize the ``Big Picture'' welfare implications of additive costs on theoretical grounds. Through the lens of the \cites{melitz} model amended to integrate additive costs, we analyze the welfare gains that derive from the reduction in international transport costs that we have estimated in Section 3, to quantify the extra welfare gains attributable to the reduction of their additive component. This analysis is conducted in a new Section 5.
         \end{enumerate}
-\item To keep the paper (both the main text and with appendix included) within a reasonable number of pages, yet to be fully transparent about our results, we have added numerous detailed tables in the Online Appendix, to which the reader can refer to.
+\item To keep the paper (both the main text and with appendix included) within a reasonable number of pages, yet to be fully transparent about our results, we have added numerous detailed tables to the Online Appendix.
 \end{itemize}
 
 We now answer in detail each of your comments given in italics.
@@ -133,7 +133,7 @@ We now answer in detail each of your comments given in italics.
 
 \subsection{Critique 1: Empirical Strategy}
 
-\textit{Using the notation of the authors, they are intreated
+\textit{Using the notation of the authors, they are interested
 in identifying the share of the specific cost in the total transport cost. Namely,}
 \begin{eqnarray*}
 && \frac{\frac{t_{is(k)}}{\tilde{p}_{ik}}}{\tau_{is(k)}-1 + \frac{t_{is(k)}}{\tilde{p}_{is(k)}}} \\
@@ -159,14 +159,27 @@ is rather detrimental in my opinion.}
 %\paragraph{Strategy of answer} To clarify the discussion, we decided to answer concerns (i) and (iii) each in turn. As regards to point (ii), we run the referee's proposed estimation method without relying on instrumental variables; this way, the results are comparable with the benchmark results, the only change being the estimation strategy (Section \ref{subsec:functional_form} of the letter). As noted above, this drove us to maintain our estimation method as benchmark. As regards to point (iii), we instrument fas prices at the $k=$ 10-digit level, still based on our original estimation strategy (but switching to a finest product category disaggregation level $k=10$). This allows a direct comparison of the results obtained in the non-linear least squares regression with those obtained with IV (with $s=3$ digit at the sector level and $k=10$ at the product level in both cases). This is developed in \textbf{Section ??? of the letter}.
 
 
-The three points raised by the referee indeed deserve careful consideration. We provide separate answers to each of them below.
+These three points indeed deserve careful consideration. We provide separate answers to each of them below.
 
 %\subsubsection{On the justifications for our empirical approach}
 
 \subsubsection{Concern (i): About the assumption of separability}
 Our main empirical equation and its underlying assumptions regarding the separability of transport costs between their country- and product-level components draw on the one proposed by \citet{Irrazabal_2015} to estimate the share of additive costs in a firm-level context. It relies on a simple theoretical framework with minimal assumptions, and is compatible with most approaches within the so-called category of ``New Trade Theories''.
 
-Further, we provide a robustness check for this separative assumption, in Section 4.1 of the paper (\textbf{Table 2 in both the submitted and revised versions XXX CHECK AT THE END XXX}). We check the robustness of our results by re-running the estimation without the separability assumption. This comes at the cost of a substantial increase in the number of fixed effects to include in the regression. Based on the numbers of countries and sectors reported in \textbf{Table 1 of the submitted and revised versions XXX CHECK AT THE END XXX} (188 countries, 230 3-digit sectors), it would mean including 86,480 fixed effects ($188\times230\times2$ for the two additive and multiplicative costs) rather than ``only'' 836 ($(188+230)\times 2$). This is computationally not tractable. For this reason, we have decided to run the robustness check on a reduced sample. If it is smaller in terms of observations (2,381 for Air, 2,798 for Vessel on average over the period 1974-2019 \textbf{XXX CHECK NUMBERS XXX}, vs around 29,000 on the complete sample, see Table 1), it yet remains quite large in terms of trade coverage, as the selected countries and sectors (at the 3-digit level) constitute 80\% of the total value of flows (on a yearly basis).\footnote{In the restricted sample, we have around 25 sectors from 14 countries for Air transport, vs 230 sectors from 190 countries in the large sample; and around 50 sectors from 20 countries for Vessel, vs 600 sectors from 190 countries in the complete sample). Given that the reduced sample makes for 80\% of the total value of trade flows, this suggests that the vast majority of US imports comes from a selected range of countries, in a selected range of sectors. \textbf{LP: CHECK THE NUMBERS}} As we conclude at the end of Section 4.1, whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs are very similar whether estimated under the separability assumption or not - see in particular Figures 6 and 7 on pp. 25-26 \textbf{XXX CHECK AT THE END XXX}. Given that the restricted sample covers 80\% of the total trade flows of the US economy, we hope to convince you that this result can be extended to the whole dataset.
+Further, we provide a robustness check for this separability assumption that $\tau_{ik} = \tau_i\tau_{k}$ and
+ $t_{ik} = t_i +t_k$ in Section 3.3.1 of the paper (Table 2) \textbf{XXX CHECK AT THE END XXX}). We check the robustness of our results by re-running the estimation without the separability assumption. This comes at the cost of a substantial increase in the number of fixed in the regression. In 2019, for example, there are 14,016 country*sector pairs. Adding 28,032 fixed effects (number of country pairs $\times2$ for the two additive and multiplicative costs fixe effects) rather than ``only'' 836 ($(188+230)\times 2$). This is computationally not tractable.
+% use "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/data/hummels_tra.dta", clear
+% keep if year==2019
+% keep if mode=="ves"
+% gen sector=substr(sitc2,1,3)
+% gen blouk = iso_o+sector
+% codebook blouk
+ For this reason, we have decided to run the robustness check on a reduced sample.
+ We select, for each year, the largest importers that form together at least 80\% of annual trade and the largest traded sectors that form together at least 80\% of annual trade.
+ We keep in the sample all trade observations from these importers and in these sectors.
+ This sample is smaller in terms of observations (2,125 for Air, 5,260 for Vessel on average over the period 1974-2019 (see Table 2), vs more than 30,000 on the complete sample, see Table 1), yet it remains quite large in terms of trade coverage.\footnote{In the restricted sample, we have around 25 sectors from 14 countries for Air transport, vs 230 sectors from 190 countries in the large sample; and around 50 sectors from 20 countries for Vessel, vs 600 sectors from 190 countries in the complete sample). The vast majority of US imports comes from a selected range of countries, in a selected range of sectors. \textbf{LP: CHECK THE NUMBERS}}.
+ As we conclude at the end of Section 3.3.1, whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs are very similar whether estimated under the separability assumption or not.
+ %- see in particular Figures 6 and 7 on pp. 25-26 \textbf{XXX CHECK AT THE END XXX}. Given that the restricted sample covers 80\% of the total trade flows of the US economy, we hope to convince you that this result can be extended to the whole dataset.
 
 
 
