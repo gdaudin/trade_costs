@@ -577,8 +577,13 @@ For each year and transport mode, we select the countries ($i$) and the products
 	\label{tab:robustness_separability}
 \end{table}
 
-Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but the vast majority of the total value of aggregated trade)
-\textbf{Ce n’est pas 80\% du commerce : voir le mode de calcul. Je sais que vous allez me demander combien c’est et je n’ai pas de réponse toute faite. Je peux passer une heure ou deux à le calculer si vous voulez -- GD}] involve a higher share of additive costs: between 48\% and 55\% of total costs on average, versus 30\% to 44\% on the whole sample.
+Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but the vast majority of the total value of aggregated trade (an annual mean of 68\% )
+%use "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various/stats_comp_baseline_non_séparé.dta", clear
+%gen cover = cover_non_séparé/cover_baseline
+%sum coveruse "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various/stats_comp_baseline_non_séparé.dta", clear
+%gen cover = cover_non_séparé/cover_baseline
+%sum cover
+involve a higher share of additive costs: between 48\% and 55\% of total costs on average, versus 30\% to 44\% on the whole sample.
 %JH: la phrase suivante est en contradiction avec celle qui suit encore juste après: "Second, assuming that country/product fixed effects are separable in these two dimensions tends to overestimate the value and the share of the additive costs."
 Second, both models provide a similar quality of fit of the regression (once we take into account the number of right-hand-side variables) as the AIC criteria display very close values in both models (conditional on transport mode). Third, the estimated values remain of similar magnitude under both separability and non-separability assumptions.\footnote{We also run two other robustness checks: \textit{i}) comparing the results on a detailed yearly basis and \textit{ii}) reporting the histogram of the distribution for $\beta$ over the triple $(i,k,t)$, which confirm the robustness of the results. These results are reported in the Online Appendix, \textbf{Section XXX} for sake of space saving.} %, even if one can note that under the separability assumption, the share of additive costs seems slightly biased upward, at least for averages over the period. The picture is reversed for medians
 

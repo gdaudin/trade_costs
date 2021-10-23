@@ -177,7 +177,11 @@ Further, we provide a robustness check for this separability assumption that $\t
  For this reason, we have decided to run the robustness check on a reduced sample.
  We select, for each year, the largest importers that form together at least 80\% of annual trade and the largest traded sectors that form together at least 80\% of annual trade.
  We keep in the sample all trade observations from these importers and in these sectors.
- This sample is smaller in terms of observations (2,125 for Air, 5,260 for Vessel on average over the period 1974-2019 (see Table 2), vs more than 30,000 on the complete sample, see Table 1), yet it remains quite large in terms of trade coverage.\footnote{In the restricted sample, we have around 25 sectors from 14 countries for Air transport, vs 230 sectors from 190 countries in the large sample; and around 50 sectors from 20 countries for Vessel, vs 600 sectors from 190 countries in the complete sample). The vast majority of US imports comes from a selected range of countries, in a selected range of sectors. \textbf{LP: CHECK THE NUMBERS}}.
+ This sample is smaller in terms of observations (2,125 for Air, 5,260 for Vessel on average over the period 1974-2019 (see Table 2), vs more than 30,000 on the complete sample, see Table 1), yet it remains quite large in terms of trade coverage (mean of 68\%).
+% use "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various/stats_comp_baseline_non_séparé.dta", clear
+% gen cover = cover_non_séparé/cover_baseline
+% sum cover
+ \footnote{In the restricted sample, we have around 25 sectors from 14 countries for Air transport, vs 230 sectors from 190 countries in the large sample; and around 50 sectors from 20 countries for Vessel, vs 600 sectors from 190 countries in the complete sample). The vast majority of US imports comes from a selected range of countries, in a selected range of sectors. \textbf{LP: CHECK THE NUMBERS}}.
  As we conclude at the end of Section 3.3.1, whatever the transport mode and for both types of transport costs, the trend patterns of international transport costs are very similar whether estimated under the separability assumption or not.
  %- see in particular Figures 6 and 7 on pp. 25-26 \textbf{XXX CHECK AT THE END XXX}. Given that the restricted sample covers 80\% of the total trade flows of the US economy, we hope to convince you that this result can be extended to the whole dataset.
 

@@ -389,12 +389,14 @@ global method1 baseline
 *global method2 hs10_qy1_qy
 *global method2  dbsamesample10_5_3
 *global method2 non_séparé_qy
-global method2 referee1
+*global method2 referee1
+global method2 non_séparé
 
 
 if "$method1"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span 2005/2019
 if "$method1"=="non_séparé_wgt" | "$method2"=="non_séparé_wgt" local time_span 2009/2019
 if "$method1"=="referee1" | "$method2"=="referee1" local time_span 2005/2013
+if "$method1"=="baseline" | "$method2"=="non_séparé" local time_span 1974/2019
 
 
 
@@ -402,10 +404,13 @@ capture erase "$dir_comparaison/stats_comp_${method1}_$method2.dta"
 
 foreach year of num `time_span'  {
 
-	foreach mode in air ves {
+	foreach mode in ves air {
 	*if ("`mode'"!="air" | `year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
 		if "$method1"=="qy1_wgt" {
 			if (`year' != 1987 | "`mode'"=="air") & (`year' != 2002 | "`mode'"=="air") & (`year' != 2012 | "`mode'"=="ves") & (`year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
+		}
+		else if "$method2"=="non_séparé" {
+			if (`year' != 2014 | "`mode'"!="ves")  comparaison_by_year_mode `year' `mode' $method1 $method2
 		}
 		else comparaison_by_year_mode `year' `mode' $method1 $method2
 	}
