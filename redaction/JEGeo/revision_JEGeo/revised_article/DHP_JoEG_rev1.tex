@@ -570,14 +570,14 @@ For each year and transport mode, we select the countries ($i$) and the products
 	\caption{Robustness to the separability assumption - restricted sample}
 	\begin{center}
 			\input{Table4_reshaped.tex}
-			\input{Table4.tex}
+%			\input{Table4.tex}
 	\end{center}
 	\parbox[l]{12cm}{\footnotesize{Notes: Estimations are performed on a restricted sample, based on the following rule:  we select, for each year, the largest importers that form together at least 80\% of annual trade and the largest traded sectors that form together at least 80\% of annual trade. We keep in the sample all trade observations from these importers and in these sectors.
 			The additive term is expressed in fraction of fas price.}}
 	\label{tab:robustness_separability}
 \end{table}
 
-Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but the vast majority of the total value of aggregated trade (an annual mean of 68\% )
+Three main comments can be made. First, the subset of large trade flows we are considering (around 8\% of the observations of our initial sample, but the vast majority of the total value of aggregated trade (an annual mean of 68\% XXX D'OU VIENT CE CHIFFRE DE 68\% ?? N'est-ce pas 80\% ???).
 %use "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various/stats_comp_baseline_non_séparé.dta", clear
 %gen cover = cover_non_séparé/cover_baseline
 %sum coveruse "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various/stats_comp_baseline_non_séparé.dta", clear
@@ -585,7 +585,7 @@ Three main comments can be made. First, the subset of large trade flows we are c
 %sum cover
 involve a higher share of additive costs: between 48\% and 55\% of total costs on average, versus 30\% to 44\% on the whole sample.
 %JH: la phrase suivante est en contradiction avec celle qui suit encore juste après: "Second, assuming that country/product fixed effects are separable in these two dimensions tends to overestimate the value and the share of the additive costs."
-Second, both models provide a similar quality of fit of the regression (once we take into account the number of right-hand-side variables) as the AIC criteria display very close values in both models (conditional on transport mode). Third, the estimated values remain of similar magnitude under both separability and non-separability assumptions.\footnote{We also run two other robustness checks: \textit{i}) comparing the results on a detailed yearly basis and \textit{ii}) reporting the histogram of the distribution for $\beta$ over the triple $(i,k,t)$, which confirm the robustness of the results. These results are reported in the Online Appendix, \textbf{Section XXX} for sake of space saving.} %, even if one can note that under the separability assumption, the share of additive costs seems slightly biased upward, at least for averages over the period. The picture is reversed for medians
+Second, both models provide a similar quality of fit of the regression (once we take into account the number of right-hand-side variables) as the AIC criteria display very close values in both models (conditional on transport mode). Third, the estimated values remain of similar magnitude under both separability and non-separability assumptions.\footnote{We also run two other robustness checks: \textit{i}) comparing the results on a detailed yearly basis and \textit{ii}) reporting the histogram of the distribution for $\beta$ over the triplet $(i,k,t)$, which confirm the robustness of the results. These results are reported in the Online Appendix, respectively in sections C and D.2.} %, even if one can note that under the separability assumption, the share of additive costs seems slightly biased upward, at least for averages over the period. The picture is reversed for medians
 
 
 
@@ -615,7 +615,7 @@ Therefore, we propose to compare our main estimates with those stemming from a t
 
 \subsubsection{Robustness to aggregation}
 
-Current data are available at the 10-digit level for products (HS10) for some specific years. The results reported here rely on exploiting data from 2005 to 2019. This period is obviously smaller than our main sample, due to two main issues. Firstly, we could only access the years 1997-1999 and 2001-2019.\footnote{Theoretically, they should be available from 1989, which is already smaller than our full sample starting in 1974. Because of the COVID situation, it was only possible to get access to the years 1997-1999 and 2001-2019.} Secondly, for the years 1997-1999 and 2001-2005, compatibility issues between Census and Hummels' data prevented reliable comparisons. 
+Current data are available at the 10-digit level for products (HS10) for some specific years. The results reported here rely on exploiting data from 2005 to 2019. This period is obviously smaller than our main sample, due to two main issues. Firstly, we could only access the years 1997-1999 and 2001-2019.\footnote{Theoretically, they should be available from 1989, which is already smaller than our full sample starting in 1974. Because of the COVID situation, it was only possible to get access to the years 1997-1999 and 2001-2019.} Secondly, for the years 1997-1999 and 2001-2005, compatibility issues between Census and Hummels' data prevented reliable comparisons.
 
 
 Notice that switching to a 3 (sector)-10(product) estimation method does not alter the number of fixed effects to estimate, as they are at the sector $s$ level (along with those at the origin country $i$ level). However, within each 3-digit sector category, the 3-10 estimation method has the advantage to exploit a larger source of heterogeneity by considering trade flows at the HS-10 product level.
