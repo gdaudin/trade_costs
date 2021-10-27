@@ -95,6 +95,7 @@
 \vspace{1cm}
 \newpage
 \listoftables
+\listoffigures
 
 \newpage
 
@@ -573,6 +574,11 @@ Still, this does not make much difference. When 1989 is included, the weighed me
 \label{tab_oa:result_air_ally3}%
 \end{table}%
 
+\setcounter{table}{0}
+\renewcommand{\thetable}{D.\arabic{table}}
+
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{D.\arabic{figure}}
 
 \subsection{Robustness checks}
 
@@ -614,14 +620,6 @@ This is also the case for vessel transport, even if the difference between the b
 This provides an indirect robustness check to the degree of classification we have retained to estimate international transport costs.
 Second, the variance of the cif-fas price gap that can be attributed to the product (or sector) dimension is much larger than the between-country variance.
 This holds throughout the period and for both transport modes. By extension, one can expect a limited role of distance and other country-related variables as determinants of transport costs.
-
-
-\setcounter{table}{0}
-\renewcommand{\thetable}{C.\arabic{table}}
-
-\setcounter{figure}{0}
-\renewcommand{\thefigure}{C.\arabic{figure}}
-
 
 
 \subsubsection{Separability Assumption}
@@ -700,7 +698,7 @@ Notwithstanding these limitations, it remains interesting to run this alternativ
 
 
 \begin{table}[htbp]
-	\caption{Baseline and direct beta estimate 2005-2013}
+	\caption{Baseline and direct $\beta$ estimate, 2005-2013}
 	\begin{center}		
 		\input{Comp_baseline_referee1_reshaped.tex}
 	
@@ -710,7 +708,7 @@ Notwithstanding these limitations, it remains interesting to run this alternativ
 \end{table}%
 
 \begin{figure}[htbp]
-	\caption{Baseline and direct beta estimate }
+	\caption{Baseline and direct $\beta$ estimate }
 	\begin{center}
 		\includegraphics[height=8cm]
 		{../scatter_chronology_baseline_referee1.png}
@@ -722,7 +720,7 @@ Notwithstanding these limitations, it remains interesting to run this alternativ
 
 
 \begin{table}[htbp]
-	\caption{Comparison 2005-2019, price per qy or price per kg}
+	\caption{Comparison 2005-2019, Price per quantity or Price per kg}
 	\begin{center}		
 		\input{Comp_baseline_wgt_qy.tex}
 	\end{center}
@@ -733,24 +731,33 @@ Notwithstanding these limitations, it remains interesting to run this alternativ
 
 
 \begin{figure}[htbp]
-	\caption{Comparison 2005-2019, price per qy or price per kg}
+	\caption{$\beta$ Estimate: Price per quantity or price per kg, 2005-2019}
 	\begin{center}
-	\includegraphics[height=8cm]
-	{../scatter_chronology_non_séparé_wgt_non_séparé_qy.png}
+\begin{tabular}{cc}
+	\includegraphics[height=8cm]{../scatter_chronology_non_separe_wgt_non_separe_qy.png}\\
+\multicolumn{2}{l}{{\footnotesize Notes: In both cases, estimation is run without imposing the separability assumption.}}
+\end{tabular}
 	\end{center}
 \end{figure}
 
 J’AI CHANGÉ LA DÉFINITION DU TIME TREND. JE FAIS MAINTENANT LE TREND ENTRE LES BETA MOYENS PAR ANNÉES AU LIEU D’UNE REGRESSIONS SUR TOUS LES BETAS PONDÉRÉ PAR LEUR PART DANS LE COMMERCE. GD.
 
+
+\setcounter{table}{0}
+\renewcommand{\thetable}{E.\arabic{table}}
+
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{E.\arabic{figure}}
+
 \subsection{Eliminating the composition effects} \label{sec_oa:comp-effects}
 
-\subsubsection{More on the Hummel's methodology}
+\subsubsection{More on the Hummels's methodology}
 
 This section complements Section 4 in the main paper, where we replicate the method adopted by \cite{hummels2007} on our database. Here, we report the unfitted measure of transport costs versus the ``pure'' transport costs series, i.e composition effects excluded
-in percentage of the export price, as in \cite{hummels2007}. We also adopt Hummel's (2007) terminology, contrasting the ``expenditure/importe value'' (i.e, the unfitted serie) and the ``fitted ad-valorem rate'' (i.e, corresponding to the ``pure'' transport costs series, composition effects excluded). Unsurprisingly, this accords with his Figure 5 (for Air) and 6 (Vessel) for the comme period (until 2014).
+in percentage of the export price, as in \cite{hummels2007}. The parallel with Hummels's (2007) terminology stands as follows: In Figure \ref{fig:comp_effects_as_in_Hummels}, the ``transport costs, excluding composition effects'' series refers to his ``fitted ad-valorem rate''; the ``transport costs'' series refers to his ``expenditure/import value''. Unsurprisingly, this accords with his Figure 5 (for Air) and 6 (Vessel) for the same period (until 2014).
 
 \begin{figure}[htbp]
-\caption{Characterizing the time trends: applying Hummel's (2007) method }
+\caption{Characterizing the time trends: applying Hummels's (2007) method }
 \label{fig:comp_effects_as_in_Hummels}
 \begin{center}
 \begin{tabular}{cc}
@@ -764,6 +771,7 @@ in percentage of the export price, as in \cite{hummels2007}. We also adopt Humme
 \end{figure}
 
 \subsubsection{Composition effects: Primary vs. Manufacturing sector}
+
 In this section, we refine the characterization of the evolution of international transport costs by distinguishing primary goods trade flows and and manufactured goods trade flows. The evolution in transport costs over time, by transport mode (overall transport costs and composition effects excluded) are reported in Figure \ref{fig:totalTC_compeffects_excl_manuf} for the manufacturing sector, and in Figure \ref{fig:totalTC_compeffects_excl_primary} for the primary goods. For easing comparison, we also report the results obtained on the whole range of trade flows (i.e., Figure 2 of the paper), in Figure \ref{fig:totalTC_compeffects_excl}.
 
 
