@@ -256,7 +256,7 @@ Median & 1.2 & 0.6 & 0.6 & 0.5 & 0.4 & 0.4  \\
 \hline
 \# observations & 14944 & 16844 & 25307 & \multicolumn{1}{c}{35005} & \multicolumn{1}{c}{38475} & \multicolumn{1}{c}{39460}  \\
 \hline\hline
-\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs.
+\multicolumn{7}{l}{\parbox[l]{10cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs.
 Statistics are obtained weighting each observation by its share in trade (mode-dependent).
 Additive term expressed in fraction of fas price.}}}
 \end{tabular}%
@@ -294,7 +294,7 @@ Median & 2.9 & 1.3 & 1.9 & 1.5 & 1.3 & 0.8 \\
 \hline
 \# observations & 19196 & 17916 & \multicolumn{1}{c}{29387} & \multicolumn{1}{c}{36677} & \multicolumn{1}{c}{37643} & \multicolumn{1}{c}{38820} \\
 \hline\hline
-\multicolumn{7}{l}{\parbox[l]{11cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs.
+\multicolumn{7}{l}{\parbox[l]{10cm}{ \vspace{7pt}\scriptsize{Notes: TC = Transport Costs.
 Statistics are obtained weighting each observation by its share in trade (mode-dependent).
 Additive term expressed in fraction of fas price.}}}
 \end{tabular}%
@@ -702,7 +702,7 @@ Notwithstanding these limitations, it remains interesting to run this alternativ
 	\begin{center}		
 		\input{Comp_baseline_referee1_reshaped.tex}
 	
-{\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: Mean values reported for the 2005 and 2013 values reported for $\beta$. Time trend coefficient is the annual growth rate.}}}
+{\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: Time trend coefficient is the annual growth rate.}}}
 \end{center}
 	\label{tab_comp_referee1_baseline}%
 \end{table}%
@@ -720,9 +720,9 @@ Notwithstanding these limitations, it remains interesting to run this alternativ
 
 
 \begin{table}[htbp]
-	\caption{Comparison 2005-2019, Price per quantity or Price per kg}
+	\caption{Comparison Price per quantity or Price per kg, 2005-2019}
 	\begin{center}		
-		\input{Comp_baseline_wgt_qy.tex}
+		\input{Comp_baseline_wgt_qy_reshaped.tex}
 	\end{center}
 	\label{tab_comp_referee1_baseline}%
 \end{table}%
@@ -754,21 +754,22 @@ J’AI CHANGÉ LA DÉFINITION DU TIME TREND. JE FAIS MAINTENANT LE TREND ENTRE L
 \subsubsection{More on the Hummels's methodology}
 
 This section complements Section 4 in the main paper, where we replicate the method adopted by \cite{hummels2007} on our database. Here, we report the unfitted measure of transport costs versus the ``pure'' transport costs series, i.e composition effects excluded
-in percentage of the export price, as in \cite{hummels2007}. The parallel with Hummels's (2007) terminology stands as follows: In Figure \ref{fig:comp_effects_as_in_Hummels}, the ``transport costs, excluding composition effects'' series refers to his ``fitted ad-valorem rate''; the ``transport costs'' series refers to his ``expenditure/import value''. Unsurprisingly, this accords with his Figure 5 (for Air) and 6 (Vessel) for the same period (until 2014).
+in percentage of the export price, as in \cite{hummels2007}, for each transport mode. The parallel with Hummels's (2007) terminology stands as follows: In Figure \ref{fig:comp_effects_as_in_Hummels}, the ``transport costs, excluding composition effects'' series refers to his ``fitted ad-valorem rate''; the ``transport costs'' series refers to his ``expenditure/import value''. Unsurprisingly, this accords with his Figure 5 (for Air) and 6 (Vessel) for the same period (until 2014).
 
 \begin{figure}[htbp]
 \caption{Characterizing the time trends: applying Hummels's (2007) method }
 \label{fig:comp_effects_as_in_Hummels}
 \begin{center}
 \begin{tabular}{cc}
-{\small (A) Ad-valorem air freight} & {\small (B) Ad-valorem vessel freight}\\
+{\small (A) Air } & {\small (B) Vessel }\\
 \multicolumn{2}{c}{{\small In percent of the export price}} \\
 \includegraphics[width=2.5in, height=1.8in]{figure5_comme_hummels.jpg}
 & \includegraphics[width=2.5in,height=1.8in]{figure6_comme_hummels.jpg} \\
-{\small (c) Ad-valorem air freight} & {\small (d) Ad-valorem vessel freight} \\
 \end{tabular}
 \end{center}
 \end{figure}
+
+\textbf{CHANGER EXP/IMPORT VALUE POUR TRANSPORT COSTS}
 
 \subsubsection{Composition effects: Primary vs. Manufacturing sector}
 
