@@ -186,12 +186,13 @@ drop _merge
 erase "$dir_temp/`method1'_`method2'.dta"
 
 *** Comparaison des beta
+/*
 graph twoway (scatter beta_method2 beta_method1) (lfit beta_method2 beta_method1), ///
 	title("For `year', `mode'") scheme(s1mono)
 
 graph export "$dir_comparaison/scatter_`year'_`mode'_`method1'_`method2'.png", replace
 
-
+*/
 
 *** Statistiques
 
@@ -201,10 +202,10 @@ open_year_mode_method_model `year' `mode' `method1' `model'
 rename beta beta_`method1'
 
 gen Nb_baseline=_N
-summarize beta_`method1', det
+quietly summarize beta_`method1', det
 generate beta_`method1'_mean = r(mean)
 generate beta_`method1'_med = r(p50)
-summarize beta_`method1' [fweight=val], det
+quietly summarize beta_`method1' [fweight=val], det
 generate beta_`method1'_mean_pd = r(mean)
 generate beta_`method1'_med_pd = r(p50)
 generate blif = iso_o+sector
@@ -255,10 +256,10 @@ label var Nb_iso "Nb of origin countries in `method2'"
 rename beta beta_`method2'
 
 gen Nb_`method2'=_N
-summarize beta_`method2', det
+quietly summarize beta_`method2', det
 generate beta_`method2'_mean = r(mean)
 generate beta_`method2'_med = r(p50)
-summarize beta_`method2' [fweight=val], det
+quietly summarize beta_`method2' [fweight=val], det
 generate beta_`method2'_mean_pd = r(mean)
 generate beta_`method2'_med_pd = r(p50)
 generate blif = iso_o+sector
@@ -295,7 +296,7 @@ use "$dir_comparaison/stats_comp_`method1'_`method2'.dta", clear
 
 
 
-
+/*
 
 graph twoway (scatter beta_`method2'_mean beta_`method1'_mean) (lfit beta_`method2'_mean beta_`method1'_mean) ///
 			 (scatter beta_`method2'_mean_pd beta_`method1'_mean_pd) (lfit beta_`method2'_mean_pd beta_`method1'_mean_pd) ///
@@ -304,7 +305,7 @@ graph twoway (scatter beta_`method2'_mean beta_`method1'_mean) (lfit beta_`metho
 			 ytitle("`method1'") xtitle("`method2'") scheme(s1mono)
 			 
 graph export "$dir_comparaison/scatter_comparaison_`method1'_`method2'.png", replace
-
+*/
 
 keep year mode beta* 
 
@@ -339,11 +340,13 @@ reshape wide beta_,i(year mode type) j(method) string
 
 
 
-
+/*
 graph twoway (scatter beta_`method2' beta_`method1') (lfit beta_`method2' beta_`method1'), ///
 			 ytitle("`method1'") xtitle("`method2'") by(mode type) scheme(s1mono)
 			 
 graph export "$dir_comparaison/scatter_comparaison_by_type_`method1'_`method2'.png", replace
+*/
+
 
 capture label var beta_IV_ref1_y_5_3 "beta computed by IV"
 capture label var beta_baseline "beta baseline" 
@@ -357,7 +360,21 @@ replace mode="Air" if mode=="air"
 replace mode="Vessel" if mode=="ves"
 
 
-graph twoway (line beta_`method1' year) (line beta_`method2' year), by(mode type, cols(4) iscale(*.8)) scheme(s1mono)
+*graph twoway (line beta_`method1' year) (line beta_`method2' year), by(mode type, cols(4) iscale(*.8)) scheme(s1mono)
+
+
+keep  if (type=="Weighted median" | type == "Weighted mean")
+
+if "`method1'" == "baseline10" label var beta_`method1' "{it:{&beta}} 10/3"
+if "`method1'" == "dbsamesample10_5_3" label var beta_`method1' "{it:{&beta}} baseline"
+if "`method1'" == "baseline" label var beta_`method1' "{it:{&beta}} baseline"
+
+if "`method2'" == "baseline" label var beta_`method2' "{it:{&beta}} baseline"
+if "`method2'" == "dbsamesample10_5_3" label var beta_`method2' "{it:{&beta}} baseline"
+if "`method2'" == "IV_ref1_y_5_3" label var beta_`method2' "{it:{&beta}} computed by IV"
+
+
+graph twoway (line beta_`method1' year) (line beta_`method2' year), by(mode type, cols(2) iscale(*.8)) scheme(s1mono)
 
 
 graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.png", replace
@@ -372,26 +389,13 @@ end
 *****************************************************************************************
 
 
-global method1 baseline
-*global method1 baseline10
-*baseline pour baseline 5/3
-*global method2 IV_ref1_y_5_3
-*global method1 qy1_wgt
-*global method1 hs10_qy1_wgt
-*global method1 non_séparé_wgt
-******
 
+capture drop program comparaison
+program comparaison
+args method1 method2
 
-*global method2 IV_referee1_panel
-*global method2 IV_ref1_y_5_3
-*global method2 baseline10
-*global method2 qy1_qy
-*global method2 hs10_qy1_qy
-*global method2  dbsamesample10_5_3
-*global method2 non_séparé_qy
-*global method2 referee1
-global method2 non_séparé
-
+global method1 `method1'
+global method2 `method2'
 
 if "$method1"=="baseline10" | "$method"=="dbsamesample10_5_3" local time_span 2005/2019
 if "$method1"=="non_séparé_wgt" | "$method2"=="non_séparé_wgt" local time_span 2009/2019
@@ -436,5 +440,30 @@ export excel using stats_comp_${method1}_$method2.xls, firstrow(varl) replace
 */
 comparaison_graph $method1 $method2
 
+end
+
+comparaison baseline10 dbsamesample10_5_3 /* pour comparer avec l’hypothèse d’aggrégation*/
+
+
+*global method1 baseline
+*global method1 baseline10
+*global method1 baseline
+*baseline pour baseline 5/3
+*global method2 IV_ref1_y_5_3
+*global method1 qy1_wgt
+*global method1 hs10_qy1_wgt
+*global method1 non_séparé_wgt
+******
+
+
+*global method2 IV_referee1_panel
+*global method2 IV_ref1_y_5_3
+*global method2 baseline10
+*global method2 qy1_qy
+*global method2 hs10_qy1_qy
+*global method2  dbsamesample10_5_3
+*global method2 non_séparé_qy
+*global method2 referee1
+*global method2 non_séparé
 
 
