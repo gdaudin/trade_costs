@@ -185,7 +185,7 @@ gen trend = year - 1973
 gen dt = dist * trend
 save "$dir_temp/temp.dta", replace
 
-egen ii = group(sitc2 ctry)
+egen ii = group(sitc2 iso_o)
 destring(sitc2), gen(s2)
 
 save "$dir_temp/temp1.dta", replace
@@ -271,23 +271,24 @@ clear
 use "$dir_temp/predictedrates.dta"
 tsset year, yearly 
 
-label var afvhat  "Fitted ad-valorem rate"
-label var vfvhat  "Fitted ad-valorem rate"
-label var afv_wgt "Expenditure/import value"
-label var vfv_wgt "Expenditure/import value"
+label var afvhat  "Transport costs, excluding composition effects"
+label var vfvhat  "Transport costs, excluding composition effects"
+label var afv_wgt "Transport costs"
+label var vfv_wgt "Transport costs"
 
 tsline afvhat afv_wgt, ///
-	ytitle("% of value shipped") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
+	ytitle("% of value shipped" " ") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
 quietly capture graph save "$dir_results/Effets de composition/figure5_comme_hummels.gph", replace
 quietly capture graph export "$dir_results/Effets de composition/figure5_comme_hummels.jpg", replace
 quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure5_comme_hummels.jpg", replace
 
 tsline vfvhat vfv_wgt, ///
-	ytitle("% of value shipped") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
+	ytitle("% of value shipped" " ") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
 
 quietly capture graph save "$dir_results/Effets de composition/figure6_comme_hummels.gph", replace
 quietly capture graph export "$dir_results/Effets de composition/figure6_comme_hummels.jpg", replace
 quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure6_comme_hummels.jpg", replace
+
 
 
 ********En base 100 en 1974
@@ -302,16 +303,16 @@ gen vfv_wgt_index = (vfv_wgt/vfv_wgt[1])*100
 
 
 
-label var afvhat_index  "Fitted ad-valorem rate, 100 in 1974"
-label var vfvhat_index  "Fitted ad-valorem rate, 100 in 1974"
-label var afv_wgt_index "Expenditure/import value, 100 in 1974"
-label var vfv_wgt_index "Expenditure/import value, 100 in 1974"
+label var afvhat_index  "Transport costs, excluding composition effects"
+label var vfvhat_index  "Transport costs, excluding composition effects"
+label var afv_wgt_index "Transport costs"
+label var vfv_wgt_index "Transport costs"
 
 twoway (line  afvhat_index year,  clpattern(solid) color(navy)) ///
 	   (line  afv_wgt_index year, clpattern( longdash) color(sienna)  ) ///
 	   (lfit  afvhat_index year, clpattern(solid) color(navy) ) ///
 	   (lfit  afv_wgt_index year, clpattern( longdash) color(sienna)) ///
-	   , /* ytitle("% of value shipped") title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order (1 2)) ///
+	   ,  ytitle("% of value shipped, 100 in 1974") /*title("Figure 5 -- Ad-valorem Air Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order (1 2)) ///
 	   scheme(s1mono)
 	   
 quietly capture graph save "$dir_results/Effets de composition/figure5_comme_hummels_base100.gph", replace
@@ -322,7 +323,7 @@ twoway (line  vfvhat_index year,  clpattern(solid) color(navy)) ///
 	   (line  vfv_wgt_index year, clpattern( longdash) color(sienna) ) ///
 	   (lfit  vfvhat_index year, clpattern(solid) color(navy) ) ///
 	   (lfit  vfv_wgt_index year, clpattern( longdash) color(sienna)  ) ///  
-	   , /*ytitle("% of value shipped") title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order(1 2)) ///
+	   , ytitle("% of value shipped, 100 in 1974") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ xlabel("1974,1984,1994,2004,2014,2018") legend(stack order(1 2)) ///
 	   scheme(s1mono)
 
 	   
