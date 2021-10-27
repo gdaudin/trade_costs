@@ -1,188 +1,109 @@
-\begin{tabular}{lllll}
+\begin{tabular}{l|cc|cc}
 \cline{1-5}
 Sector $s$ &
-  \multicolumn{2}{|c}{3-digit} &
+  \multicolumn{2}{|c|}{3-digit} &
   \multicolumn{2}{c}{4-digit} \\
 Mode  &
-  \multicolumn{1}{|r}{Air} &
-  \multicolumn{1}{r}{Ves} &
-  \multicolumn{1}{r}{Air} &
-  \multicolumn{1}{r}{Ves} \\
+  \multicolumn{1}{|c}{Air} &
+  \multicolumn{1}{c}{Vessel} &
+  \multicolumn{1}{|c}{Air} &
+  \multicolumn{1}{c}{Vessel} \\
 \cline{1-5}
-\multicolumn{1}{l}{\textbf{Data}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\ \hline
-\multicolumn{1}{l}{\hspace{1em}\textit{Mean}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\
-\multicolumn{1}{l}{\hspace{2em}{$\#$ obs. ($k,i$)}} &
-  \multicolumn{1}{|r}{30,174} &
-  \multicolumn{1}{r}{30,735} &
-  \multicolumn{1}{r}{30,669} &
-  \multicolumn{1}{r}{31,170} \\
-\multicolumn{1}{l}{\hspace{2em}{$\#$ sectors ($s$)}} &
-  \multicolumn{1}{|r}{212} &
-  \multicolumn{1}{r}{229} &
-  \multicolumn{1}{r}{576} &
-  \multicolumn{1}{r}{667} \\
-\multicolumn{1}{l}{\hspace{2em}{$\#$ origin countries ($i$)}} &
-  \multicolumn{1}{|r}{193} &
-  \multicolumn{1}{r}{190} &
-  \multicolumn{1}{r}{193} &
-  \multicolumn{1}{r}{192} \\
-\multicolumn{1}{l}{\hspace{1em}{\textit{Obs. transport costs $(p/\widehat{p}-1)$ (in $\%$)}}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\
-\multicolumn{1}{l}{\hspace{2em}Mean} &
-  \multicolumn{1}{|r}{3.8} &
-  \multicolumn{1}{r}{5.4} &
-  \multicolumn{1}{r}{3.7} &
-  \multicolumn{1}{r}{5.4} \\
-\multicolumn{1}{l}{\hspace{2em}Median} &
-  \multicolumn{1}{|r}{1.8} &
-  \multicolumn{1}{r}{4.1} &
-  \multicolumn{1}{r}{1.7} &
-  \multicolumn{1}{r}{4.1} \\
-\multicolumn{1}{l}{\hspace{2em}Std. dev.} &
-  \multicolumn{1}{|r}{6.0} &
-  \multicolumn{1}{r}{4.8} &
-  \multicolumn{1}{r}{6.0} &
-  \multicolumn{1}{r}{5.0} \\
-\multicolumn{1}{l}{\hspace{1em}{\textit{Export price in USD per kg (\textit{$\widehat{p}$})}}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\
-\multicolumn{1}{l}{\hspace{2em}Mean} &
-  \multicolumn{1}{|r}{8,427} &
-  \multicolumn{1}{r}{16} &
-  \multicolumn{1}{r}{8,968} &
-  \multicolumn{1}{r}{11} \\
-\multicolumn{1}{l}{\hspace{2em}Median} &
-  \multicolumn{1}{|r}{146} &
-  \multicolumn{1}{r}{3} &
-  \multicolumn{1}{r}{158} &
-  \multicolumn{1}{r}{3} \\
-\multicolumn{1}{l}{\hspace{2em}Std. dev.} &
-  \multicolumn{1}{|r}{63,665} &
-  \multicolumn{1}{r}{2,055} &
-  \multicolumn{1}{r}{74,068} &
-  \multicolumn{1}{r}{259} \\ \hline
-\multicolumn{1}{l}{{\textbf{Model (A)}}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\ \hline
-\multicolumn{1}{l}{\hspace{1em}{\textit{Multiplicative term} ($\widehat{\tau}^{ice}-1$)}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\
-\multicolumn{1}{l}{\hspace{2em}Mean, in $\%$} &
-  \multicolumn{1}{|r}{4.8} &
-  \multicolumn{1}{r}{5.5} &
-  \multicolumn{1}{r}{4.5} &
-  \multicolumn{1}{r}{5.6} \\
-\multicolumn{1}{l}{\hspace{2em}Median, in $\%$} &
-  \multicolumn{1}{|r}{3.6} &
-  \multicolumn{1}{r}{4.7} &
-  \multicolumn{1}{r}{3.1} &
-  \multicolumn{1}{r}{4.7} \\
-\multicolumn{1}{l}{\hspace{2em}Std. dev.} &
-  \multicolumn{1}{|r}{4.3} &
-  \multicolumn{1}{r}{3.5} &
-  \multicolumn{1}{r}{4.6} &
-  \multicolumn{1}{r}{3.9} \\ \hline
-\multicolumn{1}{l}{{\textbf{Model (B)}}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\ \hline
-\multicolumn{1}{l}{\hspace{1em}{\textit{Multiplicative term } ($\widehat{\tau}^{adv}-1$)}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\
-\multicolumn{1}{l}{\hspace{2em}Mean, in $\%$} &
-  \multicolumn{1}{|r}{2.4} &
-  \multicolumn{1}{r}{3.0} &
-  \multicolumn{1}{r}{2.2} &
-  \multicolumn{1}{r}{3.1} \\
-\multicolumn{1}{l}{\hspace{2em}Median, in $\%$} &
-  \multicolumn{1}{|r}{1.7} &
-  \multicolumn{1}{r}{2.5} &
-  \multicolumn{1}{r}{1.5} &
-  \multicolumn{1}{r}{2.5} \\
-\multicolumn{1}{l}{\hspace{2em}Std. dev.} &
-  \multicolumn{1}{|r}{2.3} &
-  \multicolumn{1}{r}{2.5} &
-  \multicolumn{1}{r}{2.5} &
-  \multicolumn{1}{r}{2.7} \\
-\multicolumn{1}{l}{\hspace{1em}{\textit{Additive term } ($\widehat{t}/\widetilde{p}$)}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\
-\multicolumn{1}{l}{\hspace{2em}Mean, in $\%$} &
-  \multicolumn{1}{|r}{1.7} &
-  \multicolumn{1}{r}{2.8} &
-  \multicolumn{1}{r}{1.7} &
-  \multicolumn{1}{r}{2.7} \\
-\multicolumn{1}{l}{\hspace{2em}Median, in $\%$} &
-  \multicolumn{1}{|r}{0.6} &
-  \multicolumn{1}{r}{1.8} &
-  \multicolumn{1}{r}{0.6} &
-  \multicolumn{1}{r}{1.6} \\
-\multicolumn{1}{l}{\hspace{2em}Std. dev.} &
-  \multicolumn{1}{|r}{3.4} &
-  \multicolumn{1}{r}{4.1} &
-  \multicolumn{1}{r}{3.5} &
-  \multicolumn{1}{r}{4.0} \\
-\multicolumn{1}{l}{\hspace{1em}{\textit{Additive term, in USD per kg ($\widehat{t}$)}}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\
-\multicolumn{1}{l}{\hspace{2em}Mean} &
-  \multicolumn{1}{|r}{1.13} &
-  \multicolumn{1}{r}{0.09} &
-  \multicolumn{1}{r}{2.49} &
-  \multicolumn{1}{r}{0.09} \\
-\multicolumn{1}{l}{\hspace{2em}Median} &
-  \multicolumn{1}{|r}{0.96} &
-  \multicolumn{1}{r}{0.07} &
-  \multicolumn{1}{r}{1.01} &
-  \multicolumn{1}{r}{0.06} \\
-\multicolumn{1}{l}{\hspace{2em}Std. dev.} &
-  \multicolumn{1}{|r}{0.89} &
-  \multicolumn{1}{r}{0.09} &
-  \multicolumn{1}{r}{8.24} &
-  \multicolumn{1}{r}{0.10} \\
-\multicolumn{1}{l}{\hspace{1em}$\widehat{\beta}$:  \textit{Share of additive costs}} &
-  \multicolumn{1}{|r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} &
-  \multicolumn{1}{r}{} \\
-\multicolumn{1}{l}{\hspace{2em}Mean} &
-  \multicolumn{1}{|r}{0.30} &
-  \multicolumn{1}{r}{0.44} &
-  \multicolumn{1}{r}{0.34} &
-  \multicolumn{1}{r}{0.42} \\
-\multicolumn{1}{l}{\hspace{2em}Median} &
-  \multicolumn{1}{|r}{0.27} &
-  \multicolumn{1}{r}{0.42} &
-  \multicolumn{1}{r}{0.32} &
-  \multicolumn{1}{r}{0.40} \\
-\multicolumn{1}{l}{\hspace{2em}Std. dev.} &
-  \multicolumn{1}{|r}{0.22} &
-  \multicolumn{1}{r}{0.27} &
-  \multicolumn{1}{r}{0.23} &
-  \multicolumn{1}{r}{0.27} \\
+\multicolumn{5}{l}{\textbf{Data}} \\ \hline
+\hspace{1em}\textit{Mean} & & & & \\
+\hspace{2em}{$\#$ obs. ($k,i$)} &
+30,174 &30,735 &
+30,669 &
+31,170 \\
+\hspace{2em}{$\#$ sectors ($s$)} &
+212 &229 &576 &667 \\
+\hspace{2em}{$\#$ origin countries ($i$)} &
+193 &190 &
+193 &
+192 \\
+\hspace{1em}{\textit{Obs. transport costs $(p/\widehat{p}-1)$ (in $\%$)}} &
+ & & & \\
+\hspace{2em}Mean &
+3.8 &5.4 &3.7 &5.4 \\
+\hspace{2em}Median &
+1.8 &4.1 &1.7 &4.1 \\
+\hspace{2em}Std. dev. &
+6.0 &4.8 &6.0 &5.0 \\
+\hspace{1em}{\textit{Export price in USD per kg (\textit{$\widehat{p}$})}} &
+ & & & \\
+\hspace{2em}Mean &
+8,427 &16 &8,968 &11 \\
+\hspace{2em}Median &
+146 &3 &158 &3 \\
+\hspace{2em}Std. dev. &
+63,665 &2,055 &74,068 &259 \\ \hline
+\multicolumn{5}{l}{\textbf{Model (A)}} \\\hline
+\hspace{1em}{\textit{Multiplicative term} ($\widehat{\tau}^{ice}-1$)} &
+ &
+ &
+ &
+ \\
+\hspace{2em}Mean, in $\%$ &
+4.8 &5.5 &4.5 &5.6 \\
+\hspace{2em}Median, in $\%$ &
+3.6 &4.7 &
+3.1 &
+4.7 \\
+\hspace{2em}Std. dev. &
+4.3 &3.5 &4.6 &3.9 \\ \hline
+\multicolumn{5}{l}{{\textbf{Model (B)}}} \\ \hline
+\hspace{1em}{\textit{Multiplicative term } ($\widehat{\tau}^{adv}-1$)} &
+ &
+&
+ &
+ \\
+\hspace{2em}Mean, in $\%$ &
+2.4 &3.0 &2.2 &3.1 \\
+\hspace{2em}Median, in $\%$ &
+1.7 &2.5 &1.5 &2.5 \\
+\hspace{2em}Std. dev. &
+2.3 &2.5 &2.5 &2.7 \\
+\hspace{1em}{\textit{Additive term } ($\widehat{t}/\widetilde{p}$)} &
+&
+&
+ &
+ \\
+\hspace{2em}Mean, in $\%$ &
+1.7 &2.8 &1.7 &2.7 \\
+\hspace{2em}Median, in $\%$ &
+0.6 &1.8 &0.6 &1.6 \\
+\hspace{2em}Std. dev. &
+3.4 &4.1 &3.5 &4.0 \\
+\hspace{1em}{\textit{Additive term, in USD per kg ($\widehat{t}$)}} &
+ &
+ &
+ &
+ \\
+\hspace{2em}Mean &
+1.13 &0.09 &2.49 &0.09 \\
+\hspace{2em}Median &
+0.96 &0.07 &1.01 &0.06 \\
+\hspace{2em}Std. dev. &
+0.89 &0.09 &8.24 &0.10 \\
+\hspace{1em}$\widehat{\beta}$:  \textit{Share of additive costs} &
+ &
+ &
+ &
+ \\
+\hspace{2em}Mean &
+0.30 &
+0.44 &
+0.34 &
+0.42 \\
+\hspace{2em}Median &
+0.27 &
+0.42 &
+0.32 &
+0.40 \\
+\hspace{2em}Std. dev. &
+0.22 &
+0.27 &
+0.23 &
+0.27 \\
 \cline{1-5}
 \end{tabular}
