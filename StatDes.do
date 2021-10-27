@@ -180,7 +180,7 @@ do "$dir_git/Open_year_mode_method_model.do"
 *global method qy1_qy
 *global method hs10_qy1_qy
 
-
+/*
 ******************Pour la table 1 du texte
 collect clear
 
@@ -385,7 +385,7 @@ table1_part dbsamesample10_5_3
 	*/ tableonly replace
 
 
-
+*/
 
 
 /*
@@ -756,9 +756,9 @@ foreach mode in air ves {
 }
 
 */
-/*
 
-******************************Pour la figure 1 du texte
+/*
+******************************Pour la figure 2 du texte (
 global method baseline
 
 local model nlAetI
@@ -783,9 +783,17 @@ twoway (line  mean_share_Aves year, lcolor(black)) (line   mean_share_Aair year,
 graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure1_share_of_additive_in_totalTC.jpg", replace
 
+gen ln_meanshareAair=ln(mean_share_Aair)
+gen ln_meanshareAves=ln(mean_share_Aves)
+
+reg ln_meanshareAair year
+reg ln_meanshareAves year
+
+**Pour les taux de croissance
+*/
 
 
-******************************Pour la figure 2 du texte
+******************************Pour la figure 1 du texte 
 global method baseline
 
 local model nlAetI
@@ -814,6 +822,14 @@ graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure2_Trend_of_totalTC_bymode.jpg", replace
 
 
+gen ln_mean_est_trsp_cost=ln(mean_est_trsp_cost)
+
+
+bys mode :reg ln_mean_est_trsp_cost year
+**Pour la droite de régression
+
+
+*/
 
 ************Pour la figure 3 du texte
 global method baseline
