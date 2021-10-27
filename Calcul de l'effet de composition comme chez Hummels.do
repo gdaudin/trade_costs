@@ -277,13 +277,13 @@ label var afv_wgt "Transport costs"
 label var vfv_wgt "Transport costs"
 
 tsline afvhat afv_wgt, ///
-	ytitle("% of value shipped""") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
+	ytitle("% of value shipped" " ") /*title("Figure 5 -- Ad-valorem Air Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
 quietly capture graph save "$dir_results/Effets de composition/figure5_comme_hummels.gph", replace
 quietly capture graph export "$dir_results/Effets de composition/figure5_comme_hummels.jpg", replace
 quietly capture graph export "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/figure5_comme_hummels.jpg", replace
 
 tsline vfvhat vfv_wgt, ///
-	ytitle("% of value shipped""") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
+	ytitle("% of value shipped" " ") /*title("Figure 6 -- Ad-valorem Ocean Freight")*/ clpattern(solid longdash) xlabel("1974,1984,1994,2004,2014") scheme(s1mono)
 
 quietly capture graph save "$dir_results/Effets de composition/figure6_comme_hummels.gph", replace
 quietly capture graph export "$dir_results/Effets de composition/figure6_comme_hummels.jpg", replace
