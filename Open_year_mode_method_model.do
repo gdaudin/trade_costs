@@ -60,8 +60,11 @@ if "`method'"=="dbsamesample10_5_3" {
 
 
 
-if "`method'"=="IV_referee1_yearly_10_3" {
-	use "$dir_results/IV_referee1_yearly/results_estimTC_`year'_prod10_sect3_`mode'.dta", clear
+if "`method'"=="IV_ref1_y_5_3" {
+	use "$dir_results/IV_ref1_y/results_estimTC_`year'_prod5_sect3_`mode'.dta", clear
+	generate beta=(terme_A/(terme_I+terme_A-1))
+	capture rename product sector
+	capture rename stic2 product
 	*rename product sector /*Product is in fact 3 digits*/
 	*drop _merge
 }	
@@ -108,8 +111,8 @@ if "`method'"=="IV_referee1_yearly_5_3" {
 
 
 
-if "`method'"=="non_séparé" {
-	use "$dir_results/robustesse_non_séparé/results_estimTC_non_séparé_`year'_5_3_`mode'_hummels_tra.dta", clear
+if "`method'"=="non_separe" {
+	use "$dir_results/robustesse_non_séparé/results_estimTC_non_separe_`year'_5_3_`mode'_hummels_tra.dta", clear
 	generate beta_method = (terme_A/(terme_I+terme_A-1))
 	capture rename `mode'_val val 
 	capture drop *_val
@@ -118,8 +121,8 @@ if "`method'"=="non_séparé" {
 	*drop _merge
 }	
 
-if "`method'"=="non_séparé_qy" {
-	use "$dir_results/hs10_qy1_qy/results_estimTC_non_séparé_`year'_5_3_`mode'_hs10_qy1_qy.dta", clear
+if "`method'"=="non_separe_qy" {
+	use "$dir_results/hs10_qy1_qy/results_estimTC_non_separe_`year'_5_3_`mode'_hs10_qy1_qy.dta", clear
 	generate beta_method = (terme_A/(terme_I+terme_A-1))
 	capture rename `mode'_val val 
 	capture drop *_val
@@ -128,8 +131,8 @@ if "`method'"=="non_séparé_qy" {
 	*drop _merge
 }	
 
-if "`method'"=="non_séparé_wgt" {
-	use "$dir_results/hs10_qy1_wgt/results_estimTC_non_séparé_`year'_5_3_`mode'_hs10_qy1_wgt.dta", clear
+if "`method'"=="non_separe_wgt" {
+	use "$dir_results/hs10_qy1_wgt/results_estimTC_non_separe_`year'_5_3_`mode'_hs10_qy1_wgt.dta", clear
 	generate beta_method = (terme_A/(terme_I+terme_A-1))
 	capture rename `mode'_val val 
 	capture drop *_val
@@ -140,8 +143,8 @@ if "`method'"=="non_séparé_wgt" {
 
 
 
-if "`method'"=="séparé_pour_robustesse_ns" {
-	use "$dir_results/robustesse_non_separe/results_estimTC_séparé_pour_robustesse_ns_`year'_5_3_`mode'_hummels_tra.dta", clear
+if "`method'"=="_pour_robustesse_ns" {
+	use "$dir_results/robustesse_non_separe/results_estimTC_separe_pour_robustesse_ns_`year'_5_3_`mode'_hummels_tra.dta", clear
 	generate beta_method = -(terme_A/(terme_I+terme_A-1))
 	capture rename `mode'_val val 
 	capture drop *_val
