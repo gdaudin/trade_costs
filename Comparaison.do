@@ -369,15 +369,18 @@ if "`method1'" == "baseline10" label var beta_`method1' "{it:{&beta}} 10/3"
 if "`method1'" == "dbsamesample10_5_3" label var beta_`method1' "{it:{&beta}} baseline"
 if "`method1'" == "baseline" label var beta_`method1' "{it:{&beta}} baseline"
 if "`method1'" == "non_separe_wgt" label var beta_`method1' "{it:{&beta}}, price per kg"
+if "`method1'" == "pour_robustesse_ns" label var beta_`method1' "{it:{&beta}} baseline same sample"
+if "`method1'" == "non_separe" label var beta_`method1' "{it:{&beta}} without the separability assumption"
 
 if "`method2'" == "baseline" label var beta_`method2' "{it:{&beta}} baseline"
 if "`method2'" == "dbsamesample10_5_3" label var beta_`method2' "{it:{&beta}} baseline"
 if "`method2'" == "IV_ref1_y_5_3" label var beta_`method2' "{it:{&beta}} computed by IV"
 if "`method2'" == "referee1" label var beta_`method2' "direct {it:{&beta}} estimate"
 if "`method2'" == "non_separe_qy" label var beta_`method2' "{it:{&beta}}, price per unit"
+if "`method2'" == "pour_robustesse_ns" label var beta_`method2' "{it:{&beta}} baseline, same sample"
 
 
-graph twoway (line beta_`method1' year) (line beta_`method2' year), by(mode type, note("") cols(2) iscale(*.8)) scheme(s1mono)
+graph twoway (line beta_`method1' year) (line beta_`method2' year), xscale(range(1974 2020)) xlabel(1980(20)2020) by(mode type, note("") cols(2) iscale(*.8)) scheme(s1mono)
 
 
 graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.png", replace
@@ -406,6 +409,7 @@ if "$method1"=="referee1" | "$method2"=="referee1" local time_span 2005/2013
 if "$method1"=="baseline" | "$method2"=="non_separe" local time_span 1974/2019
 if "$method2"=="IV_ref1_y_5_3" | "$method1"=="IV_ref1_y_5_3" local time_span 1975/2019
 if "$method2"=="referee1" | "$method1"=="referee1" local time_span 2005/2013
+if "$method1"=="non_separe" local time_span 1974/2019
 
 
 
@@ -418,7 +422,7 @@ foreach year of num `time_span'  {
 		if "$method1"=="qy1_wgt" {
 			if (`year' != 1987 | "`mode'"=="air") & (`year' != 2002 | "`mode'"=="air") & (`year' != 2012 | "`mode'"=="ves") & (`year' != 2013) comparaison_by_year_mode `year' `mode' $method1 $method2
 		}
-		else if "$method2"=="non_separe" {
+		else if "$method2"=="non_separe" | "$method1"=="non_separe"{
 			if (`year' != 2014 | "`mode'"!="ves")  comparaison_by_year_mode `year' `mode' $method1 $method2
 		}
 		else comparaison_by_year_mode `year' `mode' $method1 $method2
@@ -450,7 +454,8 @@ end
 *comparaison baseline10 dbsamesample10_5_3 /* pour comparer avec l’hypothèse d’aggrégation (figure 4)*/
 *comparaison baseline IV_ref1_y_5_3    /* pour comparer avec l'hypothèse d'aggrégation (figure 3)*/
 *comparaison baseline referee1    /* pour comparer avec les beta directement (figure D3)*/
-comparaison non_separe_wgt non_separe_qy    /* pour comparer avec non-séparé _poids (figure C4)*/
+*comparaison non_separe_wgt non_separe_qy    /* pour comparer avec non-séparé _poids (figure C4)*/
+comparaison non_separe pour_robustesse_ns     /* pour comparer avec non-séparé _poids (figure C4)*/
 
 
 *global method1 baseline
