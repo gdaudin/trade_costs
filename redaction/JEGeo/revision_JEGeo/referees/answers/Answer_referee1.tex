@@ -182,7 +182,7 @@ Further, we provide a robustness check for this separability assumption that $\t
 % sum cover
 
 
-\subsubsection{Concern (ii): On the use of non-linear least squares (NLS)} As noted by the referee (and in the paper), it is true that relying on the non-linear least squares method is computationally highly demanding when the number of fixed effects is high. This constraint notably drove us to impose the separability assumption and retain $s=3$ as the relevant sectoral degree of aggregation.
+\subsubsection{Concern (ii): On the use of non-linear least squares (NLS)} As noted by the referee (and in the paper), it is true that relying on the non-linear least squares method is highly demanding computationally when the number of fixed effects is high. This constraint notably drove us to impose the separability assumption and retain $s=3$ as the relevant sectoral degree of aggregation.
 
 
 The referee writes: \textit{A more natural approach is what the authors, at some point, refer to as the Hummels' Methodology. That is, one can alternatively estimate the share of the additive component as:}
@@ -204,28 +204,16 @@ across all districts and all 10-digit products pertaining to the same 5-digit ca
 
 Now coming to the technical side, we thank the referee for his/her relevant suggestion of an alternative estimation method. This drove us to question our own empirical specification deeper. In the end, we decided to maintain our empirical strategy in the revised version, because its advantages seem to overweight the possible costs, and the alternative that the referee suggests does not go without a few important limitations. We develop each line of argument in our answer. Yet, because the referee's estimation method is also an interesting alternative, we added a new section in the Online appendix devoted to it (Section D.3 \textbf{XXX CHECK XXX }). After reading our answer, we hope to convince you that we made the right choice.
 
-<<<<<<< HEAD
-\paragraph{Estimating the share of additive costs: Highlighting some requirements} Our estimated equation relies on Non-Linear Least Squares. However, even with another formulation, such as the one suggested by the referee in Equation (\ref{eq:estimation_ref1}), we would still be constrained to resort to non-linear estimators. This is due to the necessity of imposing an \textit{ex-ante} restriction on parameters, i.e. $\tau \geq 1$ and $t \geq 0$, or $0 \leq  \beta \leq 1$. Should we relax these restrictions, standard linear least squares estimates often deliver negative, meaningless estimates. In this respect, implementing the referee's method (see below) does not dispose of the requirement of resorting on non-linear estimates (and the computational, time-consuming burden it induces -- though the referee's method is indeed less computational intensive). Imposing this parameters constraint was not made clear enough in the initial version, and we did our best to make this very important justification clearer in the revised version, as it is now exposed in footnote \textbf{12 page 8}. \textbf{Vérifier à la fin ? GD}\smallskip
-=======
->>>>>>> e9998176d43e6444deeab5bafbba1ac90b4fe183
 
 \paragraph{Estimating the share of additive costs: Highlighting some requirements} Our estimated equation relies on non-linear estimation methods, such as Non-Linear Least Squares. However, even with another formulation, such as the one suggested by the referee in Equation (\ref{eq:estimation_ref1}), we would still be constrained to resort to non-linear estimators. This is due to the necessity of imposing an \textit{ex-ante} restriction on parameters, i.e. $\tau \geq 1$ and $t \geq 0$, or $0 \leq  \beta \leq 1$. Should we relax these restrictions, standard linear, least squares estimates often deliver negative, meaningless estimates. In this respect, implementing the referee's method (see below) does not dispose of the requirement of resorting on non-linear estimates (and the computational, time-consuming burden it induces -- though the referee’s method is indeed less computational intensive). Imposing this parameters constraint was not made clear enough in the initial version, and we did our best to make this very important justification clearer in the revised version, as it is now exposed in footnote 12 page 8. \textbf{XXX Verifier à la fin? GD XXX }\smallskip
 
 
-<<<<<<< HEAD
-The estimation strategy suggested by the referee starts from Equation (\ref{eq:Hummels}) linking transport costs and unit prices as assumed in \citet{hummels2010}, yielding for estimation Equation (\ref{eq:estimation_ref1}). This implies running the estimation by year and transport mode, for each country of origin $i$ and each sector $s(k)$ = 3 digit sector, exploiting the variability between sub-sectors at the 10-digit level ($k$) and between ports of entry in the US ($d$). As previously noticed, running this estimation limits the time coverage as information is available at the HS-10 level and by ports of entry only since 2001. We have thus run referee's method over the years 2005-2013, at the $s=3, k=10$ sectoral/product levels, and reported the results in the Online Appendix.
-
-Notice that we are aware of the referee's suggestion to run his/her estimation strategy considering sectoral aggregation at the 5-digit level (with $k=10$). We yet keep considering sectors at the 3-digit aggregation level, in view of being able to compare the pros and cons of the referee's method versus ours, including those years for which the finest disaggregation level is $k=5$ (i.e., the original \cites{hummels2007} dataset over 1974-1988, as the US Bureau of census import database starts in 1989 --yet being effectively available since 2001 only because of the Covid situation.) %\textbf{Est-ec que cet argument peut vraiment être fait puisqu’on fait simplement 2005-2013 ?}
-
-Despite its interest, implementing the referee's method uncovered some drawbacks, that in our view, outweighs those of our method (in particular associated with \textit{Assumptions (a) $\tau_{ik} = \tau_i\tau_{k}$, and (b) $t_{ik} = t_i+ t_{k}$.}) Our answer can be articulated in two steps. First, we detail the reasons why the advantages the referee's estimation method would bring in comparison with ours may not be as important as expected. Second, we emphasize the drawbacks induced by this method. \smallskip
-=======
 
 \paragraph{Exploring Referee's alternative functional form \label{subsec:functional_form}}
 
 The estimation strategy suggested by the referee starts from Equation (\ref{eq:Hummels}) linking transport costs and unit prices as assumed in Hummels (2007), yielding Equation (\ref{eq:estimation_ref1}) as estimation equation. By year and transport mode, this implies running the estimation for each country of origin $i$ and each sector $s(k)$ = 3 digit sector, exploiting the variability between sub-sectors at the 10-digit level ($k$) and between ports of entry in the US ($d$).
 
 Despite its interest, implementing the referee's method uncovered some drawbacks, that in our view outweighs those of our method (in particular associated with \textit{Assumptions (a) $\tau_{ik} = \tau_i\tau_{k}$, and (b) $t_{ik} = t_i+ t_{k}$.}) Our answer can be articulated in two steps. First, we challenge the advantages that the referee's estimation method would bring in comparison with our's. Second, we emphasize the drawbacks induced by this method. \smallskip
->>>>>>> e9998176d43e6444deeab5bafbba1ac90b4fe183
 %
 %\paragraph{What we do}
 %
@@ -270,11 +258,7 @@ We thank the referee for this valuable suggestion. It is worth noticing that we 
 
 \item  \textit{The third advantage is that, by adopting this approach, the comparison between the paper [...] and those in Hummels (2007) would become more transparent.}\\
      \textbf{Our answer:}
-<<<<<<< HEAD
-     We agree with the referee that the comparison with the literature (\citealp{hummels2007}) in particular) was not straightforward for the reader in the submitted version. We did our best to make the comparison clearer in the revised version, yet in a way consistent with our estimation method. In contrast to the submitted version, the paper now starts from the relation linking transport costs to the unit price specified in \citet{hummels2007}:
-=======
      We agree with the referee that the comparison with the literature (\citealp{hummels2007} in particular) was not straightforward for the reader in the submitted version. We did our best to make the comparison clearer in the revised version, yet in a way consistent with our estimation method. In contrast to the submitted version, the paper now starts from the relation linking transport costs to the unit price specified in Hummels (2007):
->>>>>>> e9998176d43e6444deeab5bafbba1ac90b4fe183
     \begin{equation}
     f_{ikt} = X_{is(k)t}\widetilde{p}_{ikt}^{-\beta_{ikt}} \label{eq:Hummels}
     \end{equation}
@@ -285,11 +269,7 @@ We thank the referee for this valuable suggestion. It is worth noticing that we 
      \beta_{ikt} = \frac{\frac{t_{is(k)}}{\widetilde{p}_{ikt}}}{\tau_{is(k)t}-1+\frac{t_{is(k)t}}{\widetilde{p}_{ikt}} } \label{eq:beta_TC}
      \end{equation}
 
-<<<<<<< HEAD
-     Equation (\ref{eq:Hummels}) lies at the root of \cites{hummels2007} method. In contrast to our method though, \cite{hummels2007} estimates Equation (\ref{eq:Hummels}) on a panel basis and at the sectoral $s(k)$ basis, assuming a constant $\beta$ invariant over time/sector/origin country (even though mode-specific). Rather than Equation (\ref{eq:Hummels}), this amounts starting from the functional form: $f_{ikt} = X_{is(k)t}\widetilde{p}_{ikt}^{-\beta}$.
-=======
      Equation (\ref{eq:Hummels}) lies at the root of Hummels's (2007) method. In contrast to our method though, \cite{hummels2007} estimates Equation (\ref{eq:Hummels}) on a panel basis and at the sectoral $s(k)$ basis, assuming a mode-specific $\beta$ invariant over time/sector/origin country. Rather than Equation (\ref{eq:Hummels}), this amounts starting from the functional form: $f_{ikt} = X_{is(k)t}\widetilde{p}_{ikt}^{-\beta}$.
->>>>>>> e9998176d43e6444deeab5bafbba1ac90b4fe183
 
      Two alternative strategies are possible. Let us start with our interpretation of the referee's method. It starts from the functional form linking transport costs and the fas price as specified in the Equation (\ref{eq:Hummels}). Taken in log (on a mode/yearly basis), it is written as:
      $$\ln f_{ikd} = \beta_{is(k)}\ln \widetilde{p}_{ikd} +\text{Controls}_{ikd}+ \varepsilon_{ikd}$$
@@ -307,34 +287,14 @@ p_{ik} &=& \tau_{is(k)}\widetilde{p}_{ik} +t_{is(k)} \label{eq:system1}\\
      $$\ln f_{ik} = \ln\left(\tau_{is(k)} -1 + \frac{t_{is(k)}}{\widetilde{p}_{ik}}\right) +\varepsilon_{ik}$$
 \noindent from which we deduce the additive/multiplicative costs $\widehat{t}_{is(k)}$, $\widehat{\tau}_{is(k)}$ (on a mode/yearly basis). Then, relying on the Hummels' equation, one can deduce the share of additive costs in total transport costs $\beta_{ik}$ through Equation (\ref{eq:beta_TC}), again on a mode/yearly basis.
 
-<<<<<<< HEAD
-In this respect, the referee's method and our's are equivalent, in that they both allow to uncover the share of additive costs in total transport costs $\beta$, as well as the value of each trade costs component ($t,\tau$), that vary over time and sectors (and transport mode). Put it differently, our method is consistent with Hummel's methodology - provided that it is adequately reported as such. In comparison with \cite{hummels2007}, one additional advantage of our method is that we estimate a $\beta$ that varies over time, origin country and sector. Section 4 ([Section 3] of the submitted version) explores the importance of allowing for such a variability in accounting for the sources of the transport costs time trend. We agree that this was not sufficiently transparent in the submitted version. We hope that the revised version now meets the referee's expectations on this point.
-
-\end{itemize}
-=======
->>>>>>> e9998176d43e6444deeab5bafbba1ac90b4fe183
 
 In this respect, the referee's method and our's are equivalent, in that they both allow to uncover the share of additive costs in total transport costs $\beta$, as well as the value of each trade costs component ($t,\tau$), that vary over time and sectors (and transport mode). Put it differently, our method is consistent with Hummels' methodology - provided that it is adequately reported as such. In comparison with \cite{hummels2007}, one supplementary advantage of our method is that we estimate a $\beta$ that varies over time, origin country and sector. Section 4 ([Section 3] of the submitted version) explores the importance of allowing for such a variability in accounting for the sources of the transport costs time trend. We agree that this was not sufficiently transparent in the submitted version. We hope that the revised version now fits the referee's expectations on this point.
 
 \end{itemize}
 
-<<<<<<< HEAD
-\paragraph{b) The costs are high}
-\begin{itemize}
-\item[Concern 1] The suggested estimation strategy implies having much less data to exploit, for two reasons.
-\begin{enumerate}
-\item Information about the port of entry are only available since 1989, which is already smaller than our full sample starting
-in 1974. On top of that, because of the Covid situation, the US Bureau of Census was only able to send them the CDs relative to the years 1997-1999 and 2001-2019. Implementing the referee's method would hence necessarily reduce the time coverage of our analysis by more than 20 years (skipping the 1974-1996 years in particular). We hope the revised version of our paper makes clear that historical coverage is very important \emph{per se} for our analysis, especially in light of the new Section 5. In the latter, we revisit the welfare gains of trade liberalization in presence of additive costs. In this regard, we shed light on the welfare variations induced by the ``hyper-globalization'' period (and the subsequent retrenchment after 2008-2009), as well as the disproportionate part of additive transport costs in determining those welfare variations. Therefore, eliminating the long time length from the paper would be detrimental to its value-added.
-
-\item As underlined before, the method is run country by country, and 3-digit sector by 3-digit sector, exploiting the variability within each country-3d sector across 10-d sub-sectors and ports of entry. Yet, it appears that for many couples (country, 3-digit sector), there is too few variability across sub-sectors or ports en entry given the number of fixed effects included in the regression, such that estimation can not be run. This can be seen comparing the number of observations by year/ transport mode with our method / with the referee's method reported in Table \ref{tab_comp_referee1_baseline}. Put it differently, this methodology discards countries which export a limited range of goods to the US and/or which arrive in the USA through the same ports of entry. In this respect, the induced selection bias may reduce the general scope of the transport costs estimates. This concern might yet be mitigated by noticing that the covered value of trade flows is only slightly lower. If it reduces the sample of sectors and origin countries covered, this method preserves the majority of trade flows in value.
-
-
-    \begin{table}[htbp]
-=======
 As previously noticed, running this estimation limits the time coverage as information is available at the HS-10 level and by ports of entry only since 2001. We have thus run referee's method over the years 2005-2013, at the $s=3, k=10$ sectoral/product levels, and reported the results in the Online Appendix, Section D.3, Table D.1 and Figure D.3.\textbf{XXX Check XXX}\footnote{Notice that we are aware of the referee's suggestion to run his/her estimation strategy considering sectoral aggregation at the 5-digit level (with $k=10$). We yet keep considering sectors at the 3-digit aggregation level, in view of being able to compare the referee's method versus ours.} For sake of reading clarity, we also report here the results of Table D.1 (here Table \ref{tab_comp_referee1_baseline}).
 
 \begin{table}[htbp]
->>>>>>> e9998176d43e6444deeab5bafbba1ac90b4fe183
 	\caption{Comparison 2005-2013}
 	\begin{center}		
 		\input{../../revised_article/Online_Appendix/Comp_baseline_referee1_reshaped.tex}
@@ -417,7 +377,7 @@ Indeed, this is a very important point. The referee states that, based on theore
 
 We obviously do not question this conceptual issue. However, it is worth noting that a good deal of the bias (actually, the part relating to the quality effect) is going to appear identically in the CIF (p) and the FAS ($\widetilde{p}_{ik}$) prices. Consequently, since our dependent variable is based on a ratio between the former and the latter, the (reverse causality) bias cancels out. That said, remains the possibility that bigger firms may impact transport costs, due to their ability of bargaining discounts for larger shipped volumes.
 
-Following the referee's advice, we decided therefore to provide a full set of IV estimates to provide a clean assessment of the size of the potential bias. Section 4.3 in the revised version of the paper provides an overview of the results, while section B.4 in Appendix B provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. We follow earlier literature (see e.g. \citealp{Caliendo_Parro_2015} or \citealp{Lashkaripour-2017}) by implementing a first-stage equation regressing $\widetilde{p}$ on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. First-stage estimates reported in section B.4 show that our main instrumental variable displays the right statistical properties, and that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation 10 to produce a 2SLS-type of estimation. Figure 9 in the revised version of the paper reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns.
+Following the referee's advice, we decided therefore to provide a full set of IV estimates to provide a clean assessment of the size of the potential bias. Section 4.3 in the revised version of the paper provides an overview of the results, while section B.4 in Appendix B provides a full presentation of the theoretical basis for the first-stage equation, as well as first-stage estimates. We follow earlier literature (see e.g. Caliendo and Parro, 2015, or Lashkaripour, 2017) by implementing a first-stage equation regressing $\widetilde{p}$ on custom duties coming based on tariffs at the product line, together with one-year lagged fas prices. First-stage estimates reported in section B.4 show that our main instrumental variable displays the right statistical properties, and that we can confidently re-inject the predictions arising from the first-stage equation for $\widetilde{p}_{ik}$ on the right-hand side of Equation 10 to produce a 2SLS-type of estimation. Figure 9 in the revised version of the paper reports our benchmark estimates by transport mode, together with their instrumented counterpart. In all cases, these estimates are very similar, when not identical. This supports that our benchmark estimates do not suffer any substantial biases arising from endogeneity concerns.
 
 It should be noted that we performed this check on our main dataset (SITC 5 digit), and also at the HS 10 level, to handle simultaneously the referee's concern about aggregation issues. In the latter case, second-stage estimates are not reported for the sake of space, but do not change anything to previous conclusion - they are very, very similar to their non-IV, least squares counterparts. Needless to say that these results are available upon request from the referee.
 
@@ -460,7 +420,7 @@ new (but avoidable) source of endogeneity.}
 \noindent This is a very important point we had not thought about, and we thank the referee for raising it.
 The referee definitely has a point here, in the sense that Census data do report the quantity of goods (and sometimes even two quantities).
 %At a more fundamental level, this raises the following question: Do we have reason to believe our measure of unit prices generate significant deviations from the one relying on quantities?
-To that extent, the findings by \cite{Lashkaripour_JIE2020} were an eye-opener.
+To that extent, the findings in \cite{Lashkaripour_JIE2020} were an eye-opener.
 Based on US data very similar to ours over the period 1995-2015, the paper highlights, among other results, that the unit weight of imported goods is indeed substantially heterogeneous even within narrowly-defined product categories and the cost of transportation increases more rapidly with unit weight than the cost of production.  \cite{Lashkaripour_JIE2020} finds that accounting for the heterogeneity in export unit weights provides evidence in favor of the iceberg cost assumption regarding transport costs.
 This result of transport costs close to be totally iceberg contrasts from our own findings of additive costs representing 30 to 45\% of total costs.
 We believe the two sets of findings are complementary.
@@ -500,26 +460,40 @@ To the best of our knowledge, these can only be found in the "Harmonized Tariff 
 These schedules change many time per year.
 Schedules from 1987 can be found on the webside of the bureau (https://www.usitc.gov/tata/hts/archive/index.htm), but the ones from 1987 to 2008 are under pdf or html format.
 We could only find them in .csv format in a continuous manner from 2009.
-Even these files need cleaning up as the units are not always coherent (eg weight can be given in "kg" "kg." "Kg" and, also, "g" and "t").
+Even these files need cleaning up as the units are not always coherent (eg weight can be given in ``kg’’, ``kg." ``Kg" and, also, ``g" and ``t").
 We did not try to transform the older pdf and html ones into csv, as that would have been too much work compared to our objectives.
 This is important, because, at our sector level (3-digit  sitc rev2 ), goods (either 5-digit sitc rev 2 or 10-digit hts) are measured in different units.
 In 2019, only 125 3-digit sitc sectors out of 230 are measured in a single unit (after cleaning up the unit names).
-For example, 3-digit sitc sector "061. Sugar, molasses and honey" includes among other products, 5-digit sitc "06150 Molasses, whether or not decolourized", measured in liters and 5-digit sitc "06160 Natural Honey" measured in kg.
-Actually worse than this, the 5-digit sitc product "06190 Other sugars; sugar syrups; artificial honey (whether or not mixed with natural honey); caramel" includes both 10-digit hts product "1702903500 Other: invert molasses", measured in liters and 10-digit hts product " 1702602200 Blended syrups described in additional u.s. note 4 to chapter 17: described in general note 15 of the tariff schedule and entered pursuant to its provisions"  measured in kilograms.
-3-digit sitc sector "291 Crude animal materials, n.e.s." includes 5-digit sitc products measured in kg ("29250 Seeds, fruit and spores, n.e.s., of a. kind used for sowing), in pieces ("29269 Other live plants (including trees, shrubs, bushes, roots, cuttings and slips)" )or measured in kg or not measured at all ("29230 Vegetable materials of a. kind used primarily for plaiting (e.g. cereal straw, cleaned, bleached or dyed, osier, reeds, rushes, rattans, bamboos, raffia and lime bark").
-
-
-
+For example, 3-digit sitc sector ``061 Sugar, molasses and honey" includes among other products, 5-digit sitc product ``6150 Molasses, whether or not decolourized", measured in liters and 5-digit sitc product ``06160 Natural Honey" measured in kg.
+Actually worse than this, the 5-digit sitc product ``06190 Other sugars; sugar syrups; artificial honey (whether or not mixed with natural honey); caramel" includes both 10-digit hts product ````1702903500 Other: invert molasses", measured in liters and 10-digit hts product ``1702602200 Blended syrups described in additional u.s. note 4 to chapter 17: described in general note 15 of the tariff schedule and entered pursuant to its provisions"  measured in kilograms.
+3-digit sitc sector ``291 Crude animal materials, n.e.s." includes 5-digit sitc products measured in kg (``29250 Seeds, fruit and spores, n.e.s., of a. kind used for sowing), in pieces (``29269 Other live plants (including trees, shrubs, bushes, roots, cuttings and slips)" )or measured in kg or not measured at all (``29230 Vegetable materials of a kind used primarily for plaiting (e.g. cereal straw, cleaned, bleached or dyed, osier, reeds, rushes, rattans, bamboos, raffia and lime bark").
+Neglecting these differences would invalidate our functional forms, as no one expects the transport cost of a ``piece" to be the same as the transport cost of a ``kg’’, even in the same sector.
 So we are limited to using quantity units from 2009 to 2019.
-hese have to be found information on the \textit{units} considered for \textit{quantities} are not available for many years over our period, especially in the 1970s and the 1980s; discarding information on this would lead to blurred results as many types of units can be found within a same sector (dozens, liters, etc...) which are hardly comparable with each other. The option of not considering these observations would mean a drastic reduction in the estimation period that could be covered. Again, this is particularly problematic considering that the time length is crucial for the assessment of transport costs long-run dynamics, which is one of the main objectives of the paper. \textbf{XXXX LP: Je ne suis pas sure de cet argument. Veut-on dire que dans les "quantity", en fait on trouve de tout mais pas des unites? Je crois que je comprends, check with Guillaume }
 
-\textbf{SUPPRIMER CE QUI EST EN GRAS Time length is especially important considering that, in the 1970s, trade composition was significantly different from today, with more goods for which correlation between weight and quality is likely to be less obvious} \textbf{XXX GUILLAUME: EXAMPLES XXX}.
+%
+%hese have to be found information on the \textit{units} considered for \textit{quantities} are not available for many years over our period, especially in the 1970s and the 1980s; discarding information on this would lead to blurred results as many types of units can be found within a same sector (dozens, liters, etc...) which are hardly comparable with each other. The option of not considering these observations would mean a drastic reduction in the estimation period that could be covered. Again, this is particularly problematic considering that the time length is crucial for the assessment of transport costs long-run dynamics, which is one of the main objectives of the paper. \textbf{XXXX LP: Je ne suis pas sure de cet argument. Veut-on dire que dans les "quantity", en fait on trouve de tout mais pas des unites? Je crois que je comprends, check with Guillaume }
+%
+%\textbf{SUPPRIMER CE QUI EST EN GRAS Time length is especially important considering that, in the 1970s, trade composition was significantly different from today, with more goods for which correlation between weight and quality is likely to be less obvious} \textbf{XXX GUILLAUME: EXAMPLES XXX}. 
+%
+%
+%Considering the US census data which complete the original \cites{hummels2007} database, it is true that we can retrieve information on quantities. Specifically, this can be obtained crossing HS-10 product information with the correspondence table between the HS-6 product classification and the associated units (kg, tons, liters, numbers, etc.) also provided by the US Census. We are able to collect information since 2009. Investigating this database, it appears that in many 3-digit sectors, there are more than one type of quantities reported (for instance, sector \textbf{XXX} includes goods both recorded in terms of \textbf{YYY} and \textbf{ZZZ}.) To identify a proper unit price, we consequently reduce the flows to the 3-digit sectors reporting a single quantity \textbf{at the 3-digit level}.
 
 
-Considering the US census data which complete the original \cites{hummels2007} database, it is true that we can retrieve information on quantities. Specifically, this can be obtained crossing HS-10 product information with the correspondence table between the HS-6 product classification and the associated units (kg, tons, liters, numbers, etc.) also provided by the US Census. We are able to collect information since 2009. Investigating this database, it appears that in many 3-digit sectors, there are more than one type of quantities reported (for instance, sector \textbf{XXX} includes goods both recorded in terms of \textbf{YYY} and \textbf{ZZZ}.) To identify a proper unit price, we consequently reduce the flows to the 3-digit sectors reporting a single quantity \textbf{at the 3-digit level}.
-
-
-Getting deeper into the referee's suggestion, we were yet confronted to another issue. As discussed above, in our baseline regression we separate each transport cost component in its two distinct sector-origin country dimensions. As in \cite{Irrazabal_2015}, we assume an additive form for the additive cost, i.e. $t_{is(k)} = t_i+t_{s(k)}$ with $i$ the origin country and $s$ the sector. In the specific case of quantities, this raises a non-trivial issue yet. Specifically, imposing a country $i$ fixed effect would imply that the cost of sending one unit of say, tee-shirt from France is the same than sending one unit of say, car; and that this cost would be \textit{added} to the sector-fixed effect. \textbf{XXX PAS CLAIR IL FAUT MIEUX EXPLIQUER } This does not seem to us as a reasonable assumption; in this case specifically, skipping the separability assumption does appear as the appropriate choice.
+The same issue imposes the use of (sector,quantity unit) fixed effect rather than sector fixed effects
+But this is not enough to adapt our equation to unit prices rather than weight price.
+As discussed above, in our baseline regression we separate each transport cost component in its two distinct sector-origin country dimensions.
+As in \cite{Irrazabal_2015}, we assume an additive form for the additive cost, i.e. $t_{is(k)} = t_i+t_{s(k)}$ with $i$ the origin country and $s$ the sector.
+In the specific case of quantities, this raises a non-trivial issue for country-level fixed effects.
+Sector-level fixed effects can be easily replaced by (sector,quantity unit) fixed effects.
+But the same is not possible for country fixed effects.
+In the per-weight price, the existence of a single country fixed effect applicable to all sector could be justified, as a kilogram is always a kilogram and one can assume they both add the same to transport from, say, Germany.
+But a unit of tee-shirt is quite different from an unit of car.
+Assume imports of tee-shirts and cars from Germany and China.
+Importing a tee-shirt from either country implies paying the fixed effect for both countries (the same for all sectors) and the fixed effect for the sector (the same for all countries).
+Idem for importing a car.
+Hence, the difference in the cost of importing a car from Germany and the cost of importing a car from China would be the same (in dollars) as difference between the cost of importing a tee-shirt from Germany and the cost of importing a tee-shirt from China.
+This does not seem to us as a reasonable assumption; in this case specifically, we cannot keep the separability assumption.
+As discussed before, that dramatically increases the computational difficulty of our method and yet does not yield different results.
 
 As a consequence, we run the estimation on a reduced sample (\textbf{specify the number of years, value to trade flows in comparison with the full sample}), according to the following equation:
 
@@ -546,9 +520,11 @@ Because the referee's concern yet seems important to address, we run a robustnes
 Two main results emerge. First, given the constraints on the sample selection for quantities, the estimation based on quantity can only be run on a reduced sample. In contrast to the aggregation and the separability issues, these restrictions that strongly limit both the number of sectors and of countries covered, do also impact the value of trade flows covered. In our view, this raises a non-trivial sample selection bias that may reduce the general scope of the transport cost estimates. Second, in terms of $\beta$ estimates, it is true that our method seems to yield a higher share of additive costs than when considering the price per quantity. This is somehow an expected result, as we do agree that there should be a link between the transport costs and the weight, or the volume of the goods transported. In all cases though, the share of additive costs remains substantial on average. In this respect, one might view these results as the lower bound for the size of additive costs in total transport costs.\smallskip
 
 
-These motives altogether highlight that it would be too costly in our context to switch from weights to quantities to compute unit prices for our baseline regression. We then decided to maintain our original empirical strategy covering the whole period 1974-2019 in the revised version, and to extend the online Appendix with this supplementary robustness check. We hope to convince you that this is a relevant choice. \textbf{XXX CHECK RELECTURE TO BE COMPLETED XXX}
+These motives altogether highlight that it would be too costly in our context to switch from weights to quantities to compute unit prices for our baseline regression.
+We then decided to maintain our original empirical strategy covering the whole period 1974-2019 in the revised version, and to extend the online Appendix with this supplementary robustness check.
+We hope to convince you that this is a relevant choice. \textbf{XXX CHECK RELECTURE TO BE COMPLETED XXX}
 
-At a more fundamental level, one may argue that considering the unit price as value/weight is relevant in our setting where we seek to identify transport costs. For instance, it makes sense that the shipment costs of cars do depend not only on the quantity of cars exported, but on the weight it makes, which is related to the volume it takes in the plane or the vessel. \textbf{XXX Guillaume : Do we have evidence on this point ? XXX}
+At a more fundamental level, one may argue that considering the unit price as value/weight is relevant in our setting where we seek to identify transport costs. For instance, it makes sense that the shipment costs of cars do depend not only on the quantity of cars exported, but on the weight it makes, which is related to the volume it takes in the plane or the vessel. \textbf{XXX Guillaume : Do we have evidence on this point ? XXX} 
 
 
 
