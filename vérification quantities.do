@@ -44,6 +44,21 @@ gen com_total_reduit= ves_total_reduit+air_total_reduit
 tab com_total_reduit
 
 
+*****Autre méthode pour vérifier le même genre de choses.
+use "/Users/guillaumedaudin/Documents/Recherche/2013 -- Trade Costs -- local/external_data/hummels.dta", clear
+
+gen multimode = 0
+replace multimode = 1 if (ves_val !=0 & ves_val!=.) & (air_val !=0 & air_val !=.) 
+tab multimode
+
+gen val = air_val + ves_val
+collapse (sum) val, by(multimode)
+gen n = 1
+reshape wide val, i(n) j(multimode)
+generate multimode = val1/(val1+val0)
+list
+
+*On ne peut pas faire le même chose avec les suivantes, car les flux bimodaux y sont déjà dédoublés je pense GD.
 
 
 	
@@ -93,6 +108,15 @@ tab unit_qy1_new, sort
 drop if unit_qy1=="X"
 duplicates report sector
 
+***Pour l’exemple
+use "$dir_data/Quantity/hs_qy1_2019.dta", clear
+gen hs6= substr(hs,1,6)
+merge m:1 hs6 using "$dir_data/hs2002_sitc2.dta"
+keep if _merge==3
+drop _merge
+generate sector = substr(sitc2,1,3)
+bys sector unit_qy1 hs6: keep if _n==1
+*C’est de là qu’on tire le miel
 
 
 

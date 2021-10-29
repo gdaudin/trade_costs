@@ -342,15 +342,15 @@ If we take the value of the $\beta$ by itself, there is no clear criteria to dis
     \caption{Accuracy of the estimation of the $\beta$: Comparison}
     \label{fig:accuracy_beta}
     \begin{center}
-    \includegraphics[height=4in]{../../revised_article/comparaison_amplitute_baseline_referee1_2013_ves.png"}
+    \includegraphics[height=4in]{../../revised_article/comparaison_amplitude_baseline_referee1_2013_ves.png"}
     \begin{minipage} [c]  {5in} \scriptsize%
-    	    Note: Ratio of the confidence intervals = $ ln(CI_{is}/CI^{ref}_{is})$
+    	    Note: Ratio of the confidence intervals = $ _{}ln(CI_{is}/CI^{ref}_{is})$
     \end{minipage}
 
     \end{center}
     \end{figure}
 
-    In most cases, the log of the ratio is negative, implying a lower interval confidence of the $\beta$ estimate with our methodology. Our method undoubtedly yields more accurate estimations of the share of additive components, whatever the transport mode considered. We have checked that a similar conclusion applies on other years (they are not reported here for sake of brevity but they are available upon request).
+   \textbf{XXXX J’ai laissé en plan le calcul sur d’autres modes et d’autres années à reprendre ? commit 16b215ca44c3f4cfb0fd43d3aaec6e6532aa7f9d  GD} In most cases, the log of the ratio is negative, implying a lower interval confidence of the $\beta$ estimate with our methodology. Our method undoubtedly yields more accurate estimations of the share of additive components, whatever the transport mode considered. We have checked that a similar conclusion applies on other years (they are not reported here for sake of brevity but they are available upon request).
     \end{itemize}
 
 One explanation of the limited accuracy with the alternative method might be the following. Given that the estimation method is run at the country-sector level (exploiting heterogeneity \textit{within} a given country-sector pair), it implicitly assumes that transport costs are independent \textit{across} sectors and \textit{across} origin countries. Put it in plain words, it means that transport costs of say, cars, have nothing in common whether those goods comes from France or from Germany; or that transport costs that apply to imported goods from France have no common component across sectors. One might view this as a disputable assumption. From a statistical point of view further, it implies leaving aside information contained in the fact that transport costs have a both a country-specific component and a sector-specific component, that explains the lower accuracy of the estimation.
@@ -417,14 +417,61 @@ new (but avoidable) source of endogeneity.}
 
 % MEMO: DO NOT FORGET TO REPORT THE ARGUMENTATION BELOW IN THE MAIN TEXT XXX
 \paragraph{Our answer:}
-\noindent The referee definitely has a point here, in the sense that Census data do report the quantity of goods. At a more fundamental level, this raises the following question: Do we have reason to believe our measure of unit prices generate significant deviations from the one relying on quantities? This referee's remark echoes recent findings by \cite{Lashkaripour_JIE2020}: based on US data very similar to ours over the period 1995-2015, the paper highlights, among other results, that the unit weight of imported goods is indeed substantially heterogeneous even within narrowly-defined product categories and the cost of transportation increases more rapidly with unit weight than the cost of production. Finally, \cite{Lashkaripour_JIE2020} finds that accounting for the heterogeneity in export unit weights provides evidence in favor of the iceberg cost assumption regarding transport costs. This result of transport costs close to be totally iceberg is quite different from our own findings of additive costs representing 30 to 45\% of total costs. The two stories are not necessarily incompatible, however. Beyond a longer time span, our database is exhaustive, and encompasses all goods and industries, while \citet{Lashkaripour_JIE2020}) restricts to indivisible/discrete goods representing a bit more 56\% of US total imports of goods. In this regard, when comparing Tables 1 and 10 in \citet{Lashkaripour_JIE2020}, one can see that the share of multiplicative costs tends to decrease with the share of discrete goods. It is therefore reasonable to think that the inclusion of all goods, like in our setting, would move the average share of multiplicative costs far from 100\%.
+\noindent This is a very important point we had not thought about, and we thank the referee for raising it.
+The referee definitely has a point here, in the sense that Census data do report the quantity of goods (and sometimes even two quantities).
+%At a more fundamental level, this raises the following question: Do we have reason to believe our measure of unit prices generate significant deviations from the one relying on quantities?
+To that extent, the findings by \cite{Lashkaripour_JIE2020} were an eye-opener.
+Based on US data very similar to ours over the period 1995-2015, the paper highlights, among other results, that the unit weight of imported goods is indeed substantially heterogeneous even within narrowly-defined product categories and the cost of transportation increases more rapidly with unit weight than the cost of production.  \cite{Lashkaripour_JIE2020} finds that accounting for the heterogeneity in export unit weights provides evidence in favor of the iceberg cost assumption regarding transport costs.
+This result of transport costs close to be totally iceberg contrasts from our own findings of additive costs representing 30 to 45\% of total costs.
+We believe the two sets of findings are complementary.
 
-Nevertheless, the point made by the referee is an important one and deserves careful investigation. We devoted a lot of thought to a potential switch from weight to quantity. Running the estimation considering quantities (i.e., units) rather than weight, still on the transport mode-yearly basis yet appears really uneasy in our context for several, non-trivial reasons, that we develop below.
+We now report results based on per-unit prices.
+They confirm the results of \cite{Lashkaripour_JIE2020}
+Yet, first, looking at per-unit prices leads to leaving aside a large part of the data, both sectorally and chronologically.
+Second  it is interesting to look at additive costs on a per-weight basis even there is a correlation between unit price and weight.
+
+%The two stories are not necessarily incompatible, however.
+Beyond a longer time span, our database is exhaustive, and encompasses all goods and industries, while \citet{Lashkaripour_JIE2020}) restricts to indivisible/discrete goods representing a bit more 56\% of US total imports of goods. In this regard, when comparing Tables 1 and 10 in \citet{Lashkaripour_JIE2020}, one can see that the share of multiplicative costs tends to decrease with the share of discrete goods. It is therefore reasonable to think that the inclusion of all goods, like in our setting, would move the average share of multiplicative costs far from 100\%.
+
+%Nevertheless, the point made by the referee is an important one and deserves careful investigation. We devoted a lot of thought to a potential switch from weight to quantity.
+%Running the estimation considering quantities (i.e., units) rather than weight, still on the transport mode-yearly basis yet appears really uneasy in our context for several, non-trivial reasons, that we develop below.
+
+\subsubsection{Data issues}
+
+We do not know why that is, but the Census Bureau data do not report quantities by transport mode.
+Nor do the 1974-2004 Hummels’s data, which is based on the Census Bureau data. 
+This is incompatible with our empirical strategy of estimation transport costs which is conditional on the transport mode, similarly as in \cite{hummels2007}.
+As a result, to compute the unit price of all trade would require the assumption that the weight per unit is the same for vessel shipments and air shipments at the level of the observation.
+This is unlikely, as one would expect the higher-to-weight value to be transported by air rather than by vessel.
+Hummels data are reported at the  sitc rev2 5-digit x  country level. In that context, 41.1 \% of trade flows and 79\% of trade value are multimode.
+Reducing the total value of the sample from 12,500 billion dollars to 2,650 billion dollars would entail of large loss of useful information. 
+%data from "vérification quantities.do"
+Original census data, when accessible (normally from 1989, but actually only for 1997-1999 and from 2002 because of the Covid situation), are more promising.
+They are reported at the HS-10 digit x district of entry x district of unleading x rate provision code.
+In 2019, multi-modal flows are 570 billion dollars out of 1,790 billion dollars, or 31\% of the data.
+This is still a large share, but not too large to perclude any work. 
+So we decided to work only with data obtained directly from the Bureau of census. 
+
+%This would be a non-trivial reduction.  for Hummels). We could restrict observations to single-mode flows, but that would alter our sample in a non-trivial way, raising some potential selection biases. Investigating this possibility shows that this would reduce the total value of trade flows from around 32,000 billion dollars, to 7,000 billion dollars, i.e. a reduction of flows by a factor of 4.5. \textbf{XXX LP: Donne l'impression que ce n'est pas ce qu'on fait, alors que si, en fait? XXX}
+
+%Even on this very reduced sample
+Another difficulty is that our data, comming from Hummels or the Bureau of Census, include quantity, but not units.
+To the best of our knowledge, these can only be found in the "Harmonized Tariff Schedule of the United State".
+These schedules change many time per year.
+Schedules from 1987 can be found on the webside of the bureau (https://www.usitc.gov/tata/hts/archive/index.htm), but the ones from 1987 to 2008 are under pdf or html format.
+We could only find them in .csv format in a continuous manner from 2009.
+Even these files need cleaning up as the units are not always coherent (eg weight can be given in "kg" "kg." "Kg" and, also, "g" and "t").
+We did not try to transform the older pdf and html ones into csv, as that would have been too much work compared to our objectives.
+This is important, because, at our sector level (3-digit  sitc rev2 ), goods (either 5-digit sitc rev 2 or 10-digit hts) are measured in different units.
+In 2019, only 125 3-digit sitc sectors out of 230 are measured in a single unit (after cleaning up the unit names).
+For example, 3-digit sitc sector "061. Sugar, molasses and honey" includes among other products, 5-digit sitc "06150 Molasses, whether or not decolourized", measured in liters and 5-digit sitc "06160 Natural Honey" measured in kg.
+Actually worse than this, the 5-digit sitc product "06190 Other sugars; sugar syrups; artificial honey (whether or not mixed with natural honey); caramel" includes both 10-digit hts product "1702903500 Other: invert molasses", measured in liters and 10-digit hts product " 1702602200 Blended syrups described in additional u.s. note 4 to chapter 17: described in general note 15 of the tariff schedule and entered pursuant to its provisions"  measured in kilograms.
+3-digit sitc sector "291 Crude animal materials, n.e.s." includes 5-digit sitc products measured in kg ("29250 Seeds, fruit and spores, n.e.s., of a. kind used for sowing), in pieces ("29269 Other live plants (including trees, shrubs, bushes, roots, cuttings and slips)" )or measured in kg or not measured at all ("29230 Vegetable materials of a. kind used primarily for plaiting (e.g. cereal straw, cleaned, bleached or dyed, osier, reeds, rushes, rattans, bamboos, raffia and lime bark").
 
 
-In the original Hummels' database which we use from 1974 to 2004, we don't have information on quantity by transport mode. This is incompatible with our empirical strategy of estimation transport costs which is conditional on the transport mode, similarly as in \cite{hummels2007}. We could restrict observations to single-mode flows, but that would alter our sample in a non-trivial way, raising some potential selection biases. Investigating this possibility shows that this would reduce the total value of trade flows from around 32,000 billion dollars, to 7,000 billion dollars, i.e. a reduction of flows by a factor of 4.5. \textbf{XXX LP: Donne l'impression que ce n'est pas ce qu'on fait, alors que si, en fait? XXX}
 
-Even on this very reduced sample, information on the \textit{units} considered for \textit{quantities} are not available for many years over our period, especially in the 1970s and the 1980s; discarding information on this would lead to blurred results as many types of units can be found within a same sector (dozens, liters, etc...) which are hardly comparable with each other. The option of not considering these observations would mean a drastic reduction in the estimation period that could be covered. Again, this is particularly problematic considering that the time length is crucial for the assessment of transport costs long-run dynamics, which is one of the main objectives of the paper. \textbf{XXXX LP: Je ne suis pas sure de cet argument. Veut-on dire que dans les "quantity", en fait on trouve de tout mais pas des unites? Je crois que je comprends, check with Guillaume }
+So we are limited to using quantity units from 2009 to 2019.
+hese have to be found information on the \textit{units} considered for \textit{quantities} are not available for many years over our period, especially in the 1970s and the 1980s; discarding information on this would lead to blurred results as many types of units can be found within a same sector (dozens, liters, etc...) which are hardly comparable with each other. The option of not considering these observations would mean a drastic reduction in the estimation period that could be covered. Again, this is particularly problematic considering that the time length is crucial for the assessment of transport costs long-run dynamics, which is one of the main objectives of the paper. \textbf{XXXX LP: Je ne suis pas sure de cet argument. Veut-on dire que dans les "quantity", en fait on trouve de tout mais pas des unites? Je crois que je comprends, check with Guillaume }
 
 \textbf{SUPPRIMER CE QUI EST EN GRAS Time length is especially important considering that, in the 1970s, trade composition was significantly different from today, with more goods for which correlation between weight and quality is likely to be less obvious} \textbf{XXX GUILLAUME: EXAMPLES XXX}. 
 
