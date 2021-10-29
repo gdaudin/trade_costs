@@ -379,8 +379,13 @@ if "`method2'" == "referee1" label var beta_`method2' "direct {it:{&beta}} estim
 if "`method2'" == "non_separe_qy" label var beta_`method2' "{it:{&beta}}, price per unit"
 if "`method2'" == "pour_robustesse_ns" label var beta_`method2' "{it:{&beta}} baseline, same sample"
 
+if "`method2'" == "pour_robustesse_ns" local label 1980(20)2020
+if "`method2'" == "non_separe_qy" local lobel 2010(5)2020
 
-graph twoway (line beta_`method1' year) (line beta_`method2' year), xscale(range(1974 2020)) xlabel(1980(20)2020) by(mode type, note("") cols(2) iscale(*.8)) scheme(s1mono)
+if "`method2'" == "pour_robustesse_ns" local range 1974 2020
+if "`method2'" == "non_separe_qy" local range 2009 2020
+
+graph twoway (line beta_`method1' year) (line beta_`method2' year), xscale(range(`range')) xlabel(`label') by(mode type, note("") cols(2) iscale(*.8)) scheme(s1mono)
 
 
 graph export "$dir_comparaison/scatter_chronology_`method1'_`method2'.png", replace
@@ -454,8 +459,8 @@ end
 *comparaison baseline10 dbsamesample10_5_3 /* pour comparer avec l’hypothèse d’aggrégation (figure 4)*/
 *comparaison baseline IV_ref1_y_5_3    /* pour comparer avec l'hypothèse d'aggrégation (figure 3)*/
 *comparaison baseline referee1    /* pour comparer avec les beta directement (figure D3)*/
-*comparaison non_separe_wgt non_separe_qy    /* pour comparer avec non-séparé _poids (figure C4)*/
-comparaison non_separe pour_robustesse_ns     /* pour comparer avec non-séparé _poids (figure C4)*/
+comparaison non_separe_wgt non_separe_qy    /* pour comparer avec non-séparé _poids (figure C4)*/
+*comparaison non_separe pour_robustesse_ns     /* pour comparer avec non-séparé _poids (figure C4)*/
 
 
 *global method1 baseline
