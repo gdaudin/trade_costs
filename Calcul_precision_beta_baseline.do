@@ -114,7 +114,7 @@ args mode year
 capture log close
 log using hummels_3digits_complet_`year'_`mode', replace
 
-prep_reg db_samesample_sitc2_3 `year' sitc2 3 `mode'
+prep_reg db_samesample_5_3_HS10 `year' 5 3 `mode'
 
 *erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 *erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
@@ -306,7 +306,9 @@ end
 
 
 *collecte_beta ves 2013
-graphique ves 2013
+collecte_beta air 2013
+*graphique ves 2013
+graphique air 2013
 
 erase temp_beta.dta
 erase temp_t_tau.dta

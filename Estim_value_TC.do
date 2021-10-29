@@ -417,13 +417,18 @@ if "`database'"=="hummels_tra" {
 }
 
 
-if "`database'"=="base_hs10_newyears"  {
+if "`database'"=="base_hs10_newyears" {
 	use "$dir_data/base_hs10_`year'", clear
 	keep if year==`year'
 	keep if mode=="`mode'"
 	global restreindre non
 }
 
+if "`database'"=="db_samesample_5_3_HS10"{
+	use "$dir_data/base_hs10_`year'", clear
+	keep if year==`year'
+	keep if mode=="`mode'"
+}
 
 
 
