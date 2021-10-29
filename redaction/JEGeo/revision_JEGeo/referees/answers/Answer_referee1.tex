@@ -428,7 +428,7 @@ We believe the two sets of findings are complementary.
 We now report results based on per-unit prices.
 They confirm the results of \cite{Lashkaripour_JIE2020}
 Yet, first, looking at per-unit prices leads to leaving aside a large part of the data, both sectorally and chronologically.
-Second  it is interesting to look at additive costs on a per-weight basis even there is a correlation between unit price and weight.
+Second,  it is interesting to look at additive costs on a per-weight basis even there is a correlation between unit price and weight.
 
 %The two stories are not necessarily incompatible, however.
 Beyond a longer time span, our database is exhaustive, and encompasses all goods and industries, while \citet{Lashkaripour_JIE2020}) restricts to indivisible/discrete goods representing a bit more 56\% of US total imports of goods. In this regard, when comparing Tables 1 and 10 in \citet{Lashkaripour_JIE2020}, one can see that the share of multiplicative costs tends to decrease with the share of discrete goods. It is therefore reasonable to think that the inclusion of all goods, like in our setting, would move the average share of multiplicative costs far from 100\%.
@@ -495,7 +495,9 @@ Hence, the difference in the cost of importing a car from Germany and the cost o
 This does not seem to us as a reasonable assumption; in this case specifically, we cannot keep the separability assumption.
 As discussed before, that dramatically increases the computational difficulty of our method and yet does not yield different results.
 
-As a consequence, we run the estimation on a reduced sample (\textbf{specify the number of years, value to trade flows in comparison with the full sample}), according to the following equation:
+\subsubsection{Estimation}
+
+As a consequence, we run the following estimation on a reduced sample (2009-2019, 66\% of the value of the baseline sample)
 
 \begin{equation}
 \ln\left(\frac{p_{ik}}{p^u_{ik}}-1 \right)= \ln \left(\tau_{is(k)} -1+\frac{t_{is(k)} }{p^u_{ik}} \right) + \epsilon_{ik} \label{eq:model_IetA}
@@ -503,18 +505,47 @@ As a consequence, we run the estimation on a reduced sample (\textbf{specify the
 \noindent where $p^u_{ik}$ refers to the unit price associated with quantity. Depending on the sector, two different units are considered, kilograms and numbers.
 
 
-Because the referee's concern yet seems important to address, we run a robustness check to the use of quantity versus weight. These results, obtained on a reduced sample given the above-mentioned constraints, have been added in the online appendix, Section D.4, Table D.2 and Figure D.4\textbf{XXX CHECK XXX }. For sake of reading clarity, we report here the results of Table D.2 (Table \ref{tab_comp_wgt_qty} here). For each transport mode, the first column reports the estimation based on the price per quantity; while the second column reports the results obtained considering the price per kg on the same sample; the last column reported our baseline results on the large sample (considering the average value over 2005-2019).
+These results, in the online appendix, Section D.4, Table D.2 and Figure D.4\textbf{XXX CHECK XXX }. For sake of reading clarity, we report here the results of Table D.2 (Table \ref{tab_comp_wgt_qty} here and figure \ref{graph_comp_wgt_qty} ). For each transport mode, the first column reports the estimation based on the price per quantity; while the second column reports the results obtained considering the price per kg on the same sample; the last column reported our baseline results on the large sample (considering the average value over 2009-2019).
 
 \begin{table}[htbp]
-	\caption{Comparison: Price per quantity versus per kg, 2005-2019}
+	\caption{Comparison: Price per quantity versus per kg, 2009-2019}
 	\begin{center}		
 		\input{../../revised_article/Online_Appendix/Comp_baseline_wgt_qy_reshaped.tex}
-		%\input{../../revised_article/Online_Appendix/Comp_baseline_referee1.tex}
-	
+%		\input{../../revised_article/Online_Appendix/Comp_baseline_wgt_qy.tex}
 {\parbox[l]{12cm}{ \vspace{4pt}\footnotesize{Notes: Time trend coefficient is the annual growth rate.}}}
 \end{center}
 	\label{tab_comp_wgt_qty}%
 \end{table}%
+
+\begin{figure}[htbp]
+	\caption{$\beta$ Estimate: Price per quantity or price per kg, 2009-2019}
+	\begin{center}
+		\begin{tabular}{cc}
+			\includegraphics[height=8cm]{../../revised_article/scatter_chronology_non_separe_wgt_non_separe_qy.png}\\
+			\multicolumn{2}{l}{{\footnotesize Notes: In both cases, estimation is run without imposing the separability assumption.}}
+		\end{tabular}
+	\end{center}
+		\label{graph_comp_wgt_qty}%
+\end{figure}
+
+
+These results show clearly that using price per unit (whatever that unit is) instead of price per weight decreases the share of additive costs (except if one look at the median for air).
+They confirm the results of \citet{Lashkaripour_JIE2020} that there is a correlation between weight per unit and unit price.
+Still, the share of additive cost is not reduced to zero, except if one looks at the median for vessel).
+Thus these results do not disqualify our approach, especially as we cover a much larger period and sample.
+
+\subsubsection{Why is price per weight interesting}
+It is true that to study welfare, the relevant variable that would create distortions is the cost per unit. 
+However, our primary aim is descriptive. 
+From that point of view, transport cost schedule are expressed historically and currently in a mix per-weight and per-volume basis. 
+Fo example, in 2021, air freight trade costs are expressed in weights, with a minimal weight per volume (``volumetric weight’’ or ``dimensional weight). See for example \href{https://transporteca.co.uk/shipping-costs}{https://transporteca.co.uk/shipping-costs}, \href{http://wap.dhl.com/serv/volweight.html}{http://wap.dhl.com/serv/volweight.html} and \href{https://en.wikipedia.org/wiki/Dimensional_weight}{ https://en.wikipedia.org/wiki/Dimensional\_weight}).
+Maritime freight costs are expressed in volume.
+Hence, looking at per-kg transport cost can be interpreted straightforwardly as trying to estimate the actual existing shipping costs, with sector fixed effects interpretable as measure of mean density for different sectors.
+The existence of per-volume or per-weight shipping cost is a fact of (second) nature, directly linked to the technical constraints of the transportation sector.
+
+The notion of per-unit shipping cost is one step removed for technical constraints and the functionning of the transportation sector.
+The weight per unit is at least partly the result of a choice by firms. 
+
 
 
 Two main results emerge. First, given the constraints on the sample selection for quantities, the estimation based on quantity can only be run on a reduced sample. In contrast to the aggregation and the separability issues, these restrictions that strongly limit both the number of sectors and of countries covered, do also impact the value of trade flows covered. In our view, this raises a non-trivial sample selection bias that may reduce the general scope of the transport cost estimates. Second, in terms of $\beta$ estimates, it is true that our method seems to yield a higher share of additive costs than when considering the price per quantity. This is somehow an expected result, as we do agree that there should be a link between the transport costs and the weight, or the volume of the goods transported. In all cases though, the share of additive costs remains substantial on average. In this respect, one might view these results as the lower bound for the size of additive costs in total transport costs.\smallskip
