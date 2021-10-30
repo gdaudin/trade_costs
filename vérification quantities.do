@@ -127,5 +127,47 @@ generate sector = substr(hs,1,3)
 bys sector unit_qy1 : keep if _n==1
 duplicates report sector
 
+*****Pour approximation des dénombrables
+
+
+use "$dir_data/Quantity/hs_qy1_2019.dta", clear
+gen hs6= substr(hs,1,6)
+merge m:1 hs6 using "$dir_data/hs2002_sitc2.dta"
+keep if _merge==3
+drop _merge
+merge m:1 unit_qy1 using "$dir/external_data/Quantity/Unit_conversion.dta"
+drop _merge
+
+merge 1:m hs using "$dir/data/base_hs10_2019.dta"
+
+
+drop _merge
+tab unit_qy1_new
+gen denombrable = 1 if unit_qy1_new=="doses" | unit_qy1_new=="No."
+replace denombrable=0 if denombrable==.
+gen den_value = val*denombrable
+collapse (sum) val den_value, by(sitc2)
+br
+drop if val == 0
+br
+drop if sitc2==""
+gen share_den = den_value/val
+drop val den_value
+br
+merge 1:m sitc2 using "$dir/data/hummels_tra.dta"
+keep if _merge==3
+replace ves_val=0 if mode=="air"
+replace air_val=0 if mode=="ves"
+gen val = max(ves_val, air_val)
+gen den_val = val*share_den
+collapse (sum) den_val val, by(year)
+gen share_den = den_val/val
+label var share_den "value share of discrete goods in US imports"
+twoway (line share_den year), scheme(s1mono) note("Based on the value share of discrete goods per 5-digit sitc product in 2019")
+
+
+
+ 
+
 
 
