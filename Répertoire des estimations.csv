@@ -9,4 +9,5 @@ hs10_qy1_wgt/results_non_séparé_year_prod5_sect3_mode_hs10_qy1_wgt,non_sépar�
 robustesse_non_séparé/results_estimTC_non_sépare_year_5_3_mode_hummels_tra,non_séparé,Robustesse en non-séparé,Estim_value_TC_non séparé.do,Nonséparé. Effets fixe pays*secteurs,hummels_tra,Réduit pour 80 % du sample,29/08/21
 robustesse_non_séparé/results_estimTC_sépare_pour_robustesse_ns_year_5_3_mode_hummels_tra,separe_pour_robustesse_non_separe,Pour compléter robustesse en non-séparé,Estim_value_TC_séparé_pour_robustesse_non séparé.do,baseline,hummels_tra,Réduit pour 80 % du sample,26/08/21
 IV_ref1_y/results_estimTC_`year'_prod5_sect3_`mode'.dta,IV_ref1_y_5_3,IV comme l’a dit le referee 1,Lancer_EstimTC.do,"IV, puis baseline",,,
-estimation des betas,referee1,Estimation directe des beta comme le suggère le referee 1,,,,,
+estimation des betas,referee1,Estimation directe des beta comme le suggère le referee 1,revision_estim_TC_referee1_nonlinear.do,Beta non-linéaire,base_hs10_year,,
+,,Régression baseline sur la bdd de l’estimation directe des betas,Lancer_EstimTC_Compare_referee1 (?),,,,
