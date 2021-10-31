@@ -1,31 +1,76 @@
 
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/Documents/Recherche/2013 -- Trade Costs -- local
-	global dir_data ~/Documents/Recherche/2013 -- Trade Costs -- local/data
-}
-
-** Fixe Lise bureau
-if "`c(hostname)'" =="LAB0271A" {
-	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
-	global dir_data "$dir/data"
-}
-
-/* Vieux portable Lise
-if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost
-}
-*/
-
-/* Nouveau portable Lise */
-
-if "`c(hostname)'" =="MSOP112C" {
-  
-	global dir C:\Lise\trade_costs
-	global dir_data "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\data"
+	global dir_baseline_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/baseline"
+	global dir_referee1 "~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1"
+	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
+	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
+	global dir_temp ~/Downloads/temp_stata
+	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
+	global dir_redaction  "~/Répertoires Git/trade_costs_git/redaction/JEGeo/revision_JEGeo/revised_article"
+	global dir_git  "~/Répertoires Git/trade_costs_git/"
+	
 	
 }
-cd "$dir"
+
+
+*** Juillet 2020: Lise, tout sur mon OneDrive
+
+
+/* Fixe Lise P112*/
+if "`c(hostname)'" =="LAB0271A" {
+	 
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+	
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_ref1_y/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	 
+	 
+	 
+	}
+
+/* Nouveau portable Lise */
+if "`c(hostname)'" =="MSOP112C" {
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_ref1_y/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	}
+
+
+
+set more off
 
 *****Ici, on vérifie la part des unimodaux dans hummels_tra (exemple 1998)
 use "$dir_data/hummels_tra", clear
@@ -130,15 +175,16 @@ duplicates report sector
 *****Pour approximation des dénombrables
 
 
-use "$dir_data/Quantity/hs_qy1_2019.dta", clear
+use "$dir_data/Quantity/hs_qy1_2009.dta", clear
 gen hs6= substr(hs,1,6)
 merge m:1 hs6 using "$dir_data/hs2002_sitc2.dta"
 keep if _merge==3
 drop _merge
 merge m:1 unit_qy1 using "$dir/external_data/Quantity/Unit_conversion.dta"
 drop _merge
+drop if hs==""
 
-merge 1:m hs using "$dir/data/base_hs10_2019.dta"
+merge 1:m hs using "$dir/data/base_hs10_2009.dta"
 
 
 drop _merge
@@ -162,8 +208,10 @@ gen val = max(ves_val, air_val)
 gen den_val = val*share_den
 collapse (sum) den_val val, by(year)
 gen share_den = den_val/val
-label var share_den "value share of discrete goods in US imports"
-twoway (line share_den year), scheme(s1mono) note("Based on the value share of discrete goods per 5-digit sitc product in 2019")
+label var share_den "Share of discrete goods in the total value of US imports"
+twoway (line share_den year if year !=1977), scheme(s1mono) note("Based on the share of discrete goods in the value of each 5-digit sitc import in 2009." "1977 not reported (the number is very small)")
+
+graph export "$dir_redaction/Share_of_discrete_goods.png"
 
 
 
