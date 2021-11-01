@@ -586,11 +586,12 @@ capture label variable iso_d "pays importateur"
 label variable iso_o "pays exportateur"
 
 
-if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_sitc2_3_HS10" {
+if "`database'"=="base_hs10_newyears" | "`database'"=="db_samesample_5_3_HS10" {
 	generate sector = substr(sitc2,1,`preci')
 	collapse (sum) val wgt cha qy1 qy2 (first) sector sitc2 hs6, by(iso_o hs mode)
 	gen prix_caf = (val+cha)/wgt
 	gen prix_fob = val/wgt
+	gen year =`year'
 	gen prix_trsp=cha/val  			/* (pcif - pfas) / pfas */
 	gen prix_trsp2 = (val+cha)/val	/* pcif / pfas */
 	
