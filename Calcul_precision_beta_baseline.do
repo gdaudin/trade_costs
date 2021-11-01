@@ -141,8 +141,8 @@ generate pair = iso_o + "_" + sitc2
 levelsof pair, local(list_sample)
 
 use temp.dta, clear
-local z 2013
-local x ves
+*local z `year'
+*local x "`mode'"
 
 local prod_num=0
 **La référence est prod_num=1
@@ -244,7 +244,7 @@ order sitc2 iso_o _varname
 drop _merge	
 save temp_t_tau.dta, replace
 use "$dir_data/db_samesample_sitc2_3.dta", clear
-keep if year==2013
+keep if year==`year'
 merge m:1 iso_o sitc2  using temp_t_tau.dta
 
 foreach i of numlist 1(1)1000 {
