@@ -132,7 +132,7 @@ save temp.dta, replace
 clear
 clear matrix
 clear mata
-local number_var = wordcount("$liste_iso_o")*wordcount("$liste_prod")*2+1000
+local number_var = max(2048,wordcount("$liste_iso_o")*wordcount("$liste_prod")*2+1000)
 set maxvar  `number_var'
 
 
@@ -200,7 +200,7 @@ foreach prod of global liste_prod {
 	}
 }
 
-
+blif
 drop ln*
 xpose, clear varname
 rename v* t*
