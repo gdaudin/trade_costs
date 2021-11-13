@@ -1,28 +1,75 @@
 
 if "`c(username)'" =="guillaumedaudin" {
-	global dir ~/dropbox/2013 -- trade_cost -- dropbox
+	global dir_baseline_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results/baseline"
+	global dir_referee1 "~/Documents/Recherche/2013 -- Trade Costs -- local/results/referee1"
+	global dir "~/Documents/Recherche/2013 -- Trade Costs -- local"
+	global dir_comparaison "~/Documents/Recherche/2013 -- Trade Costs -- local/results/comparaisons_various"
+	global dir_temp ~/Downloads/temp_stata
+	global dir_results "~/Documents/Recherche/2013 -- Trade Costs -- local/results"
+	global dir_redaction  "~/Répertoires Git/trade_costs_git/redaction/JEGeo/revision_JEGeo/revised_article"
+	global dir_git  "~/Répertoires Git/trade_costs_git/"
+	
+	
 }
 
 
+*** Juillet 2020: Lise, tout sur mon OneDrive
+
+
+/* Fixe Lise P112*/
 if "`c(hostname)'" =="LAB0271A" {
-	global dir C:\Users\lpatureau\Dropbox\trade_cost
-}
+	 
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+	
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_ref1_y/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\lpatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	 
+	 
+	 
+	}
+
+/* Nouveau portable Lise */
+if "`c(hostname)'" =="MSOP112C" {
+
+	* baseline results sur hummels_tra dans son intégralité
+    global dir_baseline_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\baseline"
+		
+	* résultats selon méthode référé 1
+	global dir_referee1 "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1"
+	
+	* stocker la comparaison des résultats
+	global dir_comparaison "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results\referee1\comparaison_baseline_referee1"
+	
+	/* Il me manque pour faire méthode 2 en IV 
+	- IV_referee1_panel/results_estimTC_`year'_sitc2_3_`mode'.dta
+	- IV_ref1_y/results_estimTC_`year'_sitc2_3_`mode'.dta
+	
+	*/
+	
+	global dir_temp "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\temp"
+	global dir "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs"
+	global dir_results "C:\Users\Ipatureau\OneDrive - Université Paris-Dauphine\Université Paris-Dauphine\trade_costs\results"
+	}
 
 
-if "`c(hostname)'" =="lise-HP" {
-	global dir C:\Users\lise\Dropbox\trade_cost
-}
 
-if "`c(hostname)'" =="LABP112" {
-    global dir C:\Users\lpatureau\Dropbox\trade_cost
-}
-cd $dir
-
-clear all
-*set mem 800m
-set matsize 8000
 set more off
-set maxvar 32767
 
 
 
@@ -61,32 +108,32 @@ program decompo_var
 				if mode=="`mode'", ///
 				legend(label(1 "Share of between-product variance") label(3 "Share of between-country variance") label(2 "Share of between-sector variance")  /*label(3 "Share of between product x country variance")*/ ///
 				rows(3)) ///
-				title("`mode'") name("`mode'", replace)
+				title("`mode'") name("`mode'", replace) ///
+				scheme(s1mono)
 					
 	}
 	
-	graph combine air ves, rows(2)	
+	graph combine air ves, rows(1) scheme(s1mono)
 
 
 end
 
 
 
-
-use "$dir/database/hummels_tra.dta", clear
+use "$dir/data/hummels_tra.dta", clear
 
 gen sector = substr(sitc2,1,3)
 
 decompo_var	
 		
-graph export "$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_brut.png", replace	
+graph export "$dir_results/Decomposition_variance/Décomposition de la variance à la mimine_brut.png", replace	
 
 keep year mode sd_tot-share_var_inter_secteur
 
 
-export delimited 	"$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_brut.csv", replace
+export delimited 	"$dir_results/Decomposition_variance/Décomposition de la variance à la mimine_brut.csv", replace
 
-use "$dir/database/hummels_tra.dta", clear
+use "$dir/data/hummels_tra.dta", clear
 
 gen sector = substr(sitc2,1,3)
 
@@ -96,12 +143,13 @@ drop if prix_trsp2 < c_05_prix_trsp2 | prix_trsp2 > c_95_prix_trsp2
 
 decompo_var	
 
-graph export "$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_ss_val_ext.png", replace	
+graph export "$dir_results/Decomposition_variance/Décomposition de la variance à la mimine_ss_val_ext.png", replace	
+graph export "$dir_redaction/Décomposition de la variance à la mimine_ss_val_ext.png"
 
 keep year mode sd_tot-share_var_inter_secteur
 
 
-export delimited 	"$dir/results/Décomposition de la variance/Décomposition de la variance à la mimine_ss_val_ext.csv", replace
+export delimited 	"$dir_results/Decomposition_variance/Décomposition de la variance à la mimine_ss_val_ext.csv", replace
 
 
 

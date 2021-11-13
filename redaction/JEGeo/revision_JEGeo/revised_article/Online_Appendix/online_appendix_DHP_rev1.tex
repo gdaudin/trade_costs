@@ -607,7 +607,7 @@ Results are reported in Figure \ref{fig:decomp_variance}.
 \caption{Variance decomposition (observed cif-fas price gap)}
 \label{fig:decomp_variance}
 \begin{center}
-\includegraphics[width=10cm, height=7cm]{variance_decomposition.pdf}
+\includegraphics[width=10cm, height=7cm]{../Decomposition_de_la_variance_a_la_mimine_ss_val_ext.png}
 %{\footnotesize {OECD data} }
 \end{center}
 \end{figure}
@@ -675,7 +675,7 @@ It should also be noted that this estimation method implies a lower coverage, bo
 
 With respect to the trade flows coverage, the method is run country by country, and 3-digit sector by 3-digit sector, exploiting the variability within each country-3d sector across 10-d sub-sectors and ports of entry. Yet, it appears that for many couples (country, 3-digit sector), there is too few variability across sub-sectors or ports en entry given the number of fixed effects included in the regression, such that estimation can not be run. This can be seen comparing the number of observations by year/ transport mode between this alternative method and our baseline method reported in Table \ref{tab_comp_referee1_baseline}. Put it differently, this methodology discards countries which export a limited range of goods to the US and/or which arrive in the USA through the same ports of entry. In this respect, the induced selection bias reduces the general scope of the transport costs estimates.
 
-Notwithstanding these limitations, it remains interesting to run this alternative estimation method as robustness check. Table \ref{tab_comp_referee1_baseline} reports the estimation results, by transport mode, in the Column ``Alternative'', along with the results obtained with our baseline method over the same period 2005-2013. Figure \ref{fig:beta_comp_direct_estimate} displays the estimated share of additive costs $\beta$ on a yearly basis over the estimation period, under both methods. 
+Notwithstanding these limitations, it remains interesting to run this alternative estimation method as robustness check. Table \ref{tab_comp_referee1_baseline} reports the estimation results, by transport mode, in the Column ``Alternative'', along with the results obtained with our baseline method over the same period 2005-2013. Figure \ref{fig:beta_comp_direct_estimate} displays the estimated share of additive costs $\beta$ on a yearly basis over the estimation period, under both methods.
 
 
 
@@ -705,21 +705,28 @@ As noted above, the partners-sectors covered are lower. Regarding the share of a
 \subsubsection{Weights and quantities}
 
 One may be concerned by the fact that unit prices are calculated as the value divided by the shipping
-weight, rather than to the quantity (the number) of goods. \cite{Lashkaripour_JIE2020} notably points out the importance of this measurement issue. Based on US data very similar to ours over the period 1995-2015, the paper highlights, among other results, that the unit weight of imported goods is substantially heterogeneous even within narrowly-defined product categories and the cost of transportation increases more rapidly with unit weight than the cost of production.  \cite{Lashkaripour_JIE2020} finds that accounting for the heterogeneity in export unit weights provides evidence in favor of the iceberg cost assumption regarding transport costs. This result of transport costs close to be totally iceberg contrasts from our own findings of additive costs representing 30 to 45\% of total costs. In this section, we then investigate the robustness of our results where unit values are built as the ratio between value and quantity of goods per observation.
+weight, rather than to the quantity (the number) of goods. \cite{Lashkaripour_JIE2020} notably points out the importance of this measurement issue. Based on US data very similar to ours over the period 1995-2015, the paper highlights, among other results, that the unit weight of imported goods is substantially heterogeneous even within narrowly-defined product categories and the cost of transportation increases more rapidly with unit weight than the cost of production. \cite{Lashkaripour_JIE2020} finds that accounting for the heterogeneity in export unit weights provides evidence in favor of the iceberg cost assumption regarding transport costs. This result of transport costs close to be totally iceberg contrasts from our own findings of additive costs representing 30 to 45\% of total costs. Some elements can yet be put forward to account for the difference of results. Beyond a longer time span, our database is exhaustive, and encompasses all goods and industries, while \citet{Lashkaripour_JIE2020}) restricts to indivisible/discrete goods that represent a bit more 56\% of US total imports of goods in his dataset. In this regard, when comparing Tables 1 and 10 in \citet{Lashkaripour_JIE2020}, one can see that the share of multiplicative costs tends to decrease with the share of discrete goods. It is therefore reasonable to think that the inclusion of all goods, like in our setting, would move the average share of multiplicative costs far from 100\%.
 
-As we develop below, this is not without difficulties. The first one refers to the availability of information on quantities. Neither the US Bureau of Census data nor the 1974-2004 Hummels' data (based on the Census Bureau data) do report the quantity by transport mode. This is incompatible with our empirical strategy of estimation transport costs which is conditional on the transport mode, similarly as in \cite{hummels2007}. As a result, to compute the unit price of all trade would require the assumption that the weight per unit is the same for vessel shipments and air shipments at the level of the observation. This is unlikely, as one would expect the higher-to-weight value to be transported by air rather than by vessel. The alternative would then be to only consider single-mode flows. In Hummels' data (1974-2014), on average 41.1 \% of trade flows and 79\% of trade value are multi-mode. Reducing the total value of the sample from 12,500 billion dollars to 2,650 billion dollars would entail of large loss of useful information. Original census data, when accessible (from 2002 because of the Covid situation), are more promising.\footnote{Original Census data are  reported at the HS-10 digit $\times$ district of entry $\times$ district of unleading $\times$ rate provision code.} In 2019, multi-modal flows are 570 billion dollars out of 1,790 billion dollars, or 31\% of the data. This is still a large share, but not too large to preclude any work. Accordingly, we dig deeper into this issue with the US Census dataset starting in 2002, restricted to single transport mode flows. \smallskip
+Nevertheless, this section investigates the robustness of our results when unit values are built as the ratio between value and quantity of goods per observation. This was not without difficulty yet, in particular due to data and estimation constraints. At a more fundamental level, we also believe that looking at transport costs on a per-weight basis does add relevant information.
 
-The second difficulty dwells on the units used to measure quantities. The Census data, if it provides some information on quantity, remains silent on the units considered. To the best of our knowledge, these can only be found in the ``Harmonized Tariff Schedule of the United State''. Unfortunately, these schedules change many time per year and only the schedules from 2009 onwards were available in a .csv format. On the years for which the match could be done (from 2009), it turns out that at our sector level (3-digit), goods (either at the 5-digit or the 10-digit level) are measured in different units. In 2019, only 125 3-digit sectors out of 230 are measured in a single unit (after cleaning up the unit names\footnote{As units are not always coherent (eg weight can be given in ``kg’’, ``kg.'' ``Kg'' and, also, ``g'' and ``t'').}).\footnote{For instance, 3-digit SITC sector ``061 Sugar, molasses and honey'' includes among other products, 5-digit SITC product ``6150 Molasses, whether or not decolourized'', measured in liters and 5-digit SITC product ``06160 Natural Honey'' measured in kg. Actually worse than this, the 5-digit SITC product ``06190 Other sugars; sugar syrups; artificial honey (whether or not mixed with natural honey); caramel'' includes both 10-digit HTS product ``1702903500 Other: invert molasses'', measured in liters and 10-digit HTS product ``1702602200 Blended syrups described in additional u.s. note 4 to chapter 17: described in general note 15 of the tariff schedule and entered pursuant to its provisions''  measured in kilograms.} Neglecting these differences would invalidate our functional forms, as no one expects the transport cost of a ``piece'' to be the same as the transport cost of a ``kg'', even in the same sector.
-So we are limited to using quantity units from 2009 to 2019, amending our structure of fixed effects to consider the triplet (origin country, sector, quantity unit). 
+\paragraph{Data availability issue} The first difficulty is tied to the availability of information on quantities. Neither the US Bureau of Census data nor the 1974-2004 Hummels's data (based on the Census Bureau data) do report the quantity by transport mode. This is incompatible with our empirical strategy for estimating transport costs which is conditional on the transport mode, similarly as in \cite{hummels2007}. As a result, to compute the unit price of all trade flows would require the assumption that the weight per unit is the same for vessel shipments and air shipments at the level of the observation. This is unlikely, as one would expect the higher-to-weight value to be transported by air rather than by vessel. The alternative would then be to only consider single-mode flows. In Hummels's data (1974-2014), on average 41.1 \% of trade flows and 79\% of trade value are multi-mode. Reducing the total value of the sample from 12,500 billion dollars to 2,650 billion dollars would entail a large loss of useful information. Original census data, when accessible (from 2002 because of the Covid situation), are more promising.\footnote{Original Census data are  reported at the HS-10 digit $\times$ district of entry $\times$ district of unleading $\times$ rate provision code.} In 2019, multi-modal flows are 570 billion dollars out of 1,790 billion dollars, or 31\% of the data. This is still a large share, but not too large to preclude any work. Accordingly, we dig deeper into this issue with the US Census dataset starting in 2002, restricted to single transport mode flows. \smallskip
 
-Getting deeper on the estimated functional form raised a third difficulty in adapting our equation to unit prices rather than weight price.
-As discussed above, in our baseline regression we separate each transport cost component in its two distinct sector-origin country dimensions.
-As in \cite{Irrazabal_2015}, we assume an additive form for the additive cost, i.e. $t_{is(k)} = t_i+t_{s(k)}$ with $i$ the origin country and $s$ the sector. In the specific case of quantities, this raises a non-trivial issue for country-level fixed effects. Sector-level fixed effects could indeed be easily replaced by (sector,quantity unit) fixed effects; but the same does not appear relevant for country fixed effects. Let us develop on that.
+The second difficulty dwells on the units used to measure quantities. The Census data, if it provides some information on quantity, remains silent on the units considered. To the best of our knowledge, these can only be found in the ``Harmonized Tariff Schedule of the United State''. Unfortunately, these schedules change many time per year and only the schedules from 2009 onwards were available in a .csv format. On the years for which the match could be done (from 2009), it turns out that at our sector level (3-digit), goods (either at the 5-digit or the 10-digit level) are measured in different units. In 2019, only 125 3-digit sectors out of 230 are measured in a single unit (after cleaning up the unit names\footnote{As units are not always coherent (e.g. weight can be given in ``kg’’, ``kg.'' ``Kg'' and, also, ``g'' and ``t'').}).\footnote{For instance, 3-digit SITC sector ``061 Sugar, molasses and honey'' includes among other products, 5-digit SITC product ``6150 Molasses, whether or not decolourized'', measured in liters and 5-digit SITC product ``06160 Natural Honey'' measured in kg. Actually worse than this, the 5-digit SITC product ``06190 Other sugars; sugar syrups; artificial honey (whether or not mixed with natural honey); caramel'' includes both 10-digit HTS product ``1702903500 Other: invert molasses'', measured in liters and 10-digit HTS product ``1702602200 Blended syrups described in additional u.s. note 4 to chapter 17: described in general note 15 of the tariff schedule and entered pursuant to its provisions''  measured in kilograms.} Neglecting these differences would invalidate our functional forms, as no one expects the transport cost of a ``piece'' to be the same as the transport cost of a ``kg'', even in the same sector.
+So we are limited to using quantity units from 2009 to 2019, amending our structure of fixed effects to consider the triplet (origin country, sector, quantity unit).\medskip
 
-In the per-weight price, the existence of a single country fixed effect applicable to all sector could be justified, as a kilogram is always a kilogram and one can assume they both add the same to transport from, say, Germany. In contrast, an unit of tee-shirt is quite different from an unit of car. To clarify this point, assume imports of tee-shirts and cars from Germany and China. Under the separability assumption, importing a tee-shirt from either country implies paying the fixed effect for both countries (the same for all sectors) and the fixed effect for the sector (the same for all countries); and similarly for importing a car. Hence, the difference in the cost of importing a car from Germany and the cost of importing a car from China would be the same (in dollars) as the difference between the cost of importing a tee-shirt from Germany and the cost of importing a tee-shirt from China. This does not seem to us as a reasonable assumption; in this case specifically, we cannot keep the separability assumption.
-As discussed before, this dramatically increases the computational difficulty of our method (with no substantial different results, see Subsection 3.3.1. in the main paper).\smallskip
+\paragraph{Estimation issue} Getting deeper on the estimated functional form raised another difficulty in adapting our equation to unit prices rather than weight price. As discussed above, in our baseline regression we separate each transport cost component in its two distinct sector-origin country dimensions. As in \cite{Irrazabal_2015}, we assume an additive form for the additive cost, i.e. $t_{is(k)} = t_i+t_{s(k)}$ with $i$ the origin country and $s$ the sector. In the specific case of quantities, this raises a non-trivial issue for country-level fixed effects. Sector-level fixed effects could indeed be easily replaced by (sector,quantity unit) fixed effects; but the same does not appear relevant for country fixed effects. Let us elaborate on this issue.
 
-Integrating these various constraints, we run this robustness check (weight versus quantity) on a reduced sample over 2009-2019, considering single transport mode flows and retaining a non-separable structure of three-dimensional fixed effects $t_{is(k)u}$, $\tau_{is(k)u}$ where $u$ refers to the unit considered to measure the quantity. The results are reported in Table \ref{tab_comp_wgt_qty} and in Figure \ref{fig:beta_comp_wgt_qty}. In Table \ref{tab_comp_wgt_qty}, for each transport mode, the first column reports the estimation based on the price per quantity; while the second column reports the results obtained considering the price per kg on the same sample; the last column reported our baseline results on the large sample (considering the average value over 2005-2019, under the separability assumption).
+In the per-weight price, the existence of a single country fixed effect applicable to all sector could be justified, as a kilogram is always a kilogram and one can assume they both add the same to transport from, say, Germany. In contrast, an unit of tee-shirt is quite different from an unit of car. To clarify this point, assume imports of tee-shirts and cars from Germany and China. Under the separability assumption, importing a tee-shirt from either country implies paying the fixed effect for both countries (the same for all sectors) and the fixed effect for the sector (the same for all countries); and similarly for importing a car. Hence, the difference in the cost of importing a car from Germany and the cost of importing a car from China would be the same, in dollars, as the difference between the cost of importing a tee-shirt from Germany and the cost of importing a tee-shirt from China. This does not seem a sensible assumption; in this case specifically, we cannot keep the separability assumption.
+As discussed before, this dramatically increases the computational difficulty of our method (with no substantial different results, see Subsection 3.3.1. in the main paper.\smallskip
+
+Integrating these various constraints, we run the robustness check (weight versus quantity) \textit{i)} on a sample reduced over 2009-2019, considering single transport mode flows - amounting to 66\% of the value of the baseline sample; \textit{ii)} retaining a non-separable structure of three-dimensional fixed effects $t_{is(k)u}$, $\tau_{is(k)u}$ according to the following equation:
+$$
+\ln\left(\frac{p_{iku}}{\widetilde{p}_{iku}}-1 \right)= \ln \left(\tau_{is(k)u} -1+\frac{t_{is(k)u} }{\widetilde{p}_{iku}} \right) + \epsilon_{iku}
+$$
+\noindent where $p_{iku}$ refers to the cif price associated with quantity of goof $k$ imported from country $i$, measured in unit $u$, $\widetilde{p}_{iku}$ the corresponding unit value (fas price). Depending on the sector, two different units are considered, kilograms and numbers.
+
+
+The results are reported in Table \ref{tab_comp_wgt_qty} and in Figure \ref{fig:beta_comp_wgt_qty}. In Table \ref{tab_comp_wgt_qty}, for each transport mode, the first column reports the estimation based on the price per quantity; while the second column reports the results obtained considering the price per kg on the same sample; the last column reported our baseline results on the large sample (considering the average value over 2005-2019, under the separability assumption).
 
 
 \begin{table}[htbp]
@@ -734,12 +741,8 @@ Integrating these various constraints, we run this robustness check (weight vers
 
 
 \begin{figure}[htbp]
-<<<<<<< HEAD
-	\caption{$\beta$ Estimate: Price per quantity or price per kg, 2005-2019}
-\label{fig:beta_comp_wgt_qty}
-=======
 	\caption{$\beta$ Estimate: Price per quantity or price per kg, 2009-2019}
->>>>>>> f5dce745b70f059ed56a69af2a6ba0c6c5d8ebe2
+\label{fig:beta_comp_wgt_qty}
 	\begin{center}
 \begin{tabular}{cc}
 	\includegraphics[height=8cm]{../scatter_chronology_non_separe_wgt_non_separe_qy.png}\\
@@ -748,10 +751,30 @@ Integrating these various constraints, we run this robustness check (weight vers
 	\end{center}
 \end{figure}
 
-\textbf{CHANGER LEGENDE PAS TRES BEAU - ENLEVER unweigthed}
+%\textbf{CHANGER LEGENDE PAS TRES BEAU - ENLEVER unweigthed}. Je crois que c’est bon.
 
 
-Two main results emerge. First, given the constraints on the sample selection for quantities, the estimation based on quantity can only be run on a reduced sample. In contrast to the aggregation and the separability issues, these restrictions that strongly limit both the number of sectors and of countries covered, do also impact the value of trade flows covered. In our view, this raises a non-trivial sample selection bias that may reduce the general scope of the transport cost estimates. Second, in terms of $\beta$ estimates, it is true that our method seems to yield a higher share of additive costs than when considering the price per quantity. This is somehow an expected result, as we do agree that there should be a link between the transport costs and the weight, or the volume of the goods transported. In all cases though, the share of additive costs remains substantial on average. In this respect, one might view these results as the lower bound for the size of additive costs in total transport costs.\smallskip
+Two main results emerge. First, given the constraints on the sample selection for quantities, the estimation based on quantity can only be run on a reduced sample. In contrast to the aggregation and the separability issues, these restrictions that strongly limit both the number of sectors and of countries covered, do also impact the value of trade flows covered. This raises a non-trivial sample selection bias that may reduce the general scope of the transport cost estimates. Second, in terms of $\beta$ estimates, the results clearly show that using price per unit (whatever that unit is) instead of price per weight decreases the share of additive costs (except if one look at the median for air). In this respect, they stand in line with the results of \cite{Lashkaripour_JIE2020}, stressing the correlation between weight per unit and unit price. Still, the share of additive cost is not reduced to zero (except if one looks at the median for vessel). Thus these results do not disqualify our approach, especially as we cover a much larger period and sample with our baseline estimate.
+
+
+\paragraph{On the relevance of the price per-weight approach}
+At a more fundamental level, we do believe that the study of transport costs measured on a per-weight price add some relevant information on the international transport cost burden faced by exporters. We detail below the underlying rationale.
+
+Our main objective in this paper is to provide a quantitative assessment of the international transport costs burden over time; on that matter, one may start with the observation that transport cost schedules are expressed through a mix per-weight and per-volume basis, both historically and nowadays. For example, in 2021, air freight trade costs are expressed in weights, with a minimal weight per volume (``volumetric weight'' or ``dimensional weight'')\footnote{See for example \href{https://transporteca.co.uk/shipping-costs}{https://transporteca.co.uk/shipping-costs}, \href{http://wap.dhl.com/serv/volweight.html}{http://wap.dhl.com/serv/volweight.html} and \href{https://en.wikipedia.org/wiki/Dimensional_weight}{ https://en.wikipedia.org/wiki/Dimensional\_weight}).} while maritime freight costs are expressed in volume.
+Hence, looking at per-kg transport cost can be interpreted straightforwardly as trying to estimate the actual existing shipping costs, with sector fixed effects interpretable as measure of mean density for different sectors. The existence of per-volume or per-weight shipping cost is directly linked to the technical constraints of the transportation sector, hence exogenous to exporting firms' decisions - in contrast, per-unit shipping cost depends on the behavior of exporting firms. Put differently, the shipping cost per weight is one of the exogenous parameters firms take into account in their production choices, including weight per unit. Accordingly, studying the technical per-volume or per-weight shipping cost is interesting to understand the context in which they operate.
+
+Another argument is illustrated by Figure \ref{graph_Share_of_discrete_goods.png}. After computing the share of discrete goods per 5-digit SITC import in 2009, we have used the changing composition of US imports to approximate the share of discrete goods in the total value of US imports on a yearly basis. According to this rough approximation, discrete goods are between 23\% and 52\% of US imports, reaching a value only above 50\% for two years. Switching to a per-unit approach would hence mean a marked reduction in the trade flows coverage, thereby limiting the general scope of our estimates.
+
+
+\begin{figure}[htbp]
+	\caption{Estimated share of discrete goods in US imports, 1974-2019}
+	\begin{center}
+		\begin{tabular}{cc}
+			\includegraphics[height=8cm]{../../revised_article/Share_of_discrete_goods.png}\\
+		\end{tabular}
+	\end{center}
+	\label{graph_Share_of_discrete_goods.png}%
+\end{figure}
 
 
 
@@ -763,7 +786,7 @@ Two main results emerge. First, given the constraints on the sample selection fo
 
 \subsection{Eliminating the composition effects} \label{sec_oa:comp-effects}
 
-\subsubsection{More on the Hummels's methodology}
+\subsubsection{More on the Hummels' methodology}
 
 This section complements Section 4 in the main paper, where we replicate the method adopted by \cite{hummels2007} on our database. Here, we report the unfitted measure of transport costs versus the ``pure'' transport costs series, i.e composition effects excluded
 in percentage of the export price, as in \cite{hummels2007}, for each transport mode. The parallel with Hummels's (2007) terminology stands as follows: In Figure \ref{fig:comp_effects_as_in_Hummels}, the ``transport costs, excluding composition effects'' series refers to his ``fitted ad-valorem rate''; the ``transport costs'' series refers to his ``expenditure/import value''. Unsurprisingly, this accords with his Figure 5 (for Air) and 6 (Vessel) for the same period (until 2014).
@@ -774,14 +797,15 @@ in percentage of the export price, as in \cite{hummels2007}, for each transport 
 \begin{center}
 \begin{tabular}{cc}
 {\small (A) Air } & {\small (B) Vessel }\\
-\multicolumn{2}{c}{{\small In percent of the export price}} \\
-\includegraphics[width=2.5in, height=1.8in]{figure5_comme_hummels.jpg}
-& \includegraphics[width=2.5in,height=1.8in]{figure6_comme_hummels.jpg} \\
+\multicolumn{2}{c}{{\small In percent of value shipped (i.e. the export price)}} \\
+\includegraphics[width=2.5in, height=1.8in]{../figure5_comme_hummels.jpg}
+& \includegraphics[width=2.5in,height=1.8in]{../figure6_comme_hummels.jpg} \\
 \end{tabular}
 \end{center}
 \end{figure}
 
-\textbf{XXX CHANGER legende pour transport costs, excluding composition effects; EXP/IMPORT VALUE = transport costs. On parle en \% de la valeur (y-axis) ou du prix fas (title)? XXX }
+%\textbf{XXX CHANGER legende pour transport costs, excluding composition effects; EXP/IMPORT VALUE = transport costs. On parle en \% de la valeur (y-axis) ou du prix fas (title)? XXX }
+%Fait GD
 
 \subsubsection{Composition effects: Primary vs. Manufacturing sector}
 
@@ -796,7 +820,7 @@ Are considered as ``primary goods'' all flows recorded as ``Food and live animal
 \caption{Transport costs (with and without composition effects), Manufacturing}
 \label{fig:totalTC_compeffects_excl_manuf}
 \begin{center}
-\includegraphics[height=8cm] {graph_composition_manuf.pdf}
+\includegraphics[height=8cm] {../graph_composition_manuf.jpg}
 \end{center}
 \end{figure}
 
@@ -805,7 +829,7 @@ Are considered as ``primary goods'' all flows recorded as ``Food and live animal
 \label{fig:totalTC_compeffects_excl_primary}
 \begin{center}
 \includegraphics[height=8cm]
-{graph_composition_primary.pdf}
+{../graph_composition_primary.jpg}
 \end{center}
 \end{figure}
 
@@ -814,7 +838,7 @@ Are considered as ``primary goods'' all flows recorded as ``Food and live animal
 \label{fig:totalTC_compeffects_excl}
 \begin{center}
 \includegraphics[height=8cm]
-{graph_composition_all.pdf}
+{../graph_composition_all.jpg}
 \end{center}
 \end{figure}
 
@@ -830,10 +854,11 @@ One explanation for the similarity between the results for the manufacturing goo
 \label{fig:Share_prim_goods}
 \begin{center}
 \includegraphics[height=6cm]
-{Share_of_primary.pdf}
+{../Share_of_primary.jpg}
 \end{center}
 \end{figure}
 
-
+\bibliographystyle{apalike2}
+\bibliography{biblio}
 
 \end{document}
