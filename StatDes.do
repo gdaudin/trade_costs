@@ -757,7 +757,7 @@ foreach mode in air ves {
 
 */
 
-/*
+
 ******************************Pour la figure 2 du texte (
 global method baseline
 
@@ -767,7 +767,7 @@ capture erase $dir_temp/data_`model'_${method}.dta
 foreach mode in air ves {
 	foreach year of num 1974/2019  {
 		open_year_mode_method_model `year' `mode' $method `model'
-		gen share_A = -beta
+		gen share_A = beta
 		egen mean_share_A = wtmean(share_A), weight(val) by(year)
 		bys year :keep if _n==1
 		keep year mode mean_share_A
@@ -776,21 +776,30 @@ foreach mode in air ves {
 	}	
 }
 
-reshape wide mean_share_A, i(year) j(mode) string
-label var mean_share_Aair "Air"
-label var mean_share_Aves "Vessel"
-twoway (line  mean_share_Aves year, lcolor(black)) (line   mean_share_Aair year, lpattern(dash) lcolor(black)) ,scheme(s1mono)
+replace mode = "(a) Air" if mode=="air"
+replace mode = "(b) Vessel" if mode=="ves"
+
+twoway (line  mean_share_A year, lcolor(black)) (qfit   mean_share_A year, lpattern(dash) lcolor(black)), ///
+	xtitle(Year)xscale(range(1973 2019)) xlabel(1974 1980 (10) 2000 2019) by(mode, legend(off) note(""))  scheme(s1mono) ///
+	
+ 
+
 graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure1_share_of_additive_in_totalTC.jpg", replace
 
-gen ln_meanshareAair=ln(mean_share_Aair)
-gen ln_meanshareAves=ln(mean_share_Aves)
+gen ln_meanshareA=ln(mean_share_A)
+gen year2=year*year
 
-reg ln_meanshareAair year
-reg ln_meanshareAves year
+reg ln_meanshareA year year2 if mode=="(b) Vessel"
+predict blouf_ves
+gen trend_beta = exp(blouf_ves) if mode=="(b) Vessel"
+reg ln_meanshareA year if mode=="(a) Air"
+predict blouf_air
+replace trend_beta = exp(blouf_air) if mode=="(a) Air"
+list trend_beta mode year if year==1974 | year==2019
 
 **Pour les taux de croissance
-*/
+
 
 
 ******************************Pour la figure 1 du texte 
@@ -816,7 +825,7 @@ replace mode = "(b) Vessel" if mode=="ves"
 
 twoway (line mean_est_trsp_cost year) (lfit mean_est_trsp_cost year), ///
 			ytitle("In % of FAS price") yscale(range(0 12)) ylabel(0 (3) 12) xtitle(Year) ///
-			xscale(range(1973 2019)) xlabel(1974 1980 (10) 2000 2019) by(mode, legend(off))  scheme(s1mono)
+			xscale(range(1973 2019)) xlabel(1974 1980 (10) 2000 2019) by(mode, legend(off) note(""))  scheme(s1mono)
 
 graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure2_Trend_of_totalTC_bymode.jpg", replace
@@ -825,11 +834,16 @@ graph export /*
 gen ln_mean_est_trsp_cost=ln(mean_est_trsp_cost)
 
 
-bys mode :reg ln_mean_est_trsp_cost year
-**Pour la droite de régression
+reg ln_mean_est_trsp_cost year if mode=="(b) Vessel"
+predict blouf_ves
+gen trend_trsp_cost = exp(blouf_ves) if mode=="(b) Vessel"
+reg ln_mean_est_trsp_cost year if mode=="(a) Air"
+predict blouf_air
+replace trend_trsp_cost = exp(blouf_air) if mode=="(a) Air"
+list trend_trsp_cost mode year if year==1974 | year==2019
+**Pour la droite de régression et les valeurs aux extremas
 
 
-*/
 
 ************Pour la figure 3 du texte
 global method baseline
