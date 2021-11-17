@@ -222,25 +222,25 @@ One can analytically show that $\beta$ is indeed equal to the share of additive 
 \begin{equation}
 p = \tau \widetilde{p}+ \widetilde{t}\widetilde{p}  \label{eq:base}
 \end{equation}
-Starting from Equation (\ref{eq:base}), the elasticity of transport costs to the unit price $\widetilde{p}$ can be shown to be equal to:
+Starting from Equation (\ref{eq:base}), the elasticity of transport costs to the unit price $\widetilde{p}$ is equal to:
 \begin{eqnarray}
 \frac{\partial TC}{\partial \widetilde{p}} \frac{\tilde{p}}{TC}&=& -\frac{\frac{t}{\tilde{p}}}{\tau -1  +\frac{t}{\tilde{p}}} = -\frac{\widetilde{t}}{\tau-1 +\widetilde{t}} \label{eq:tt2}
 \end{eqnarray}
 
-Comparing Equations (\ref{eq:alternative}) and (\ref{eq:tt2}), it is straightforward that the unit price-elasticity of transport costs is also equal to the share of additive costs in total transport costs.
+Comparing Equations (\ref{eq:alternative}) and (\ref{eq:tt2}), it is straightforward that the unit price-elasticity of transport costs (in absolute value, $\beta$) is also equal to the share of additive costs in total transport costs.
 
-While many in the related literature provide an indirect measure of additive costs by estimating the elasticity of freight charges to the unit price (\citealp{hummels_skiba}, \citealp{Lashkaripour-2017}), thereby relying on Equation (\ref{eq:alternative}), we propose an alternative route. Based on Equation (\ref{eq:base}), we exploit our dataset to obtain explicit measures of both transport costs components $\tau$ and $t$ (or $\widetilde{t}$). From this, we can deduce the price-elasticity of transport costs as the share of additive costs in total transport costs through Equation (\ref{eq:tt2}).
+While many in the related literature provide an indirect measure of additive costs by estimating the elasticity of freight charges to the unit price (\citealp{hummels_skiba}, \citealp{Lashkaripour_JIE2020}), thereby relying on Equation (\ref{eq:alternative}), we propose an alternative route. Based on Equation (\ref{eq:base}), we exploit our dataset to obtain explicit measures of both transport costs components $\tau$ and $t$ (or $\widetilde{t}$). From this, we can deduce the price-elasticity of transport costs as the share of additive costs in total transport costs through Equation (\ref{eq:tt2}).
 
 
 
 \paragraph{Obtaining the estimated equation} Let us denote $i$ the origin country, and $k$ the product (at the 5-digit level in our benchmark estimate), for each year-mode specific flow. For sake of reading convenience, we skip the year and transport-mode dimensions in the notations. Transforming the above equation (\ref{eq:base}) as the percentage change in prices induced by transportation, we get the following baseline specification underlying our estimation:
 
 \begin{equation}
-\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik}-1 +\frac{t_{ik}}{ \widetilde{p}_{ik}} \label{eq:base_estimee}
+\frac{p_{ik}}{\widetilde{p}_{ik}} -1 = \tau_{ik}-1 +\frac{t_{ik}}{ \widetilde{p}_{ik}}, ~~\text{with } \tau_{ik}\geq 1 ~\text{and }t_{ik}\geq 0 \label{eq:base_estimee}
 \end{equation}
 
 We follow \cite{Irrazabal_2015} by considering that \textit{i)} both ad-valorem and additive costs are separable between the origin country ($i$) and the product ($k$) dimensions, and \textit{ii)} this separability is in a multiplicative way for the former and an additive way for the latter.
-In other words, $\tau_{ik}$ and $t_{ik}$ are written as:\footnote{Notice that, given the magnitude or order of transport costs, assuming an additive or a multiplicative form for country/product fixed effects does not make a substantial difference since, for small values (as we generally obtain), we have $\tau_i\times \tau_k -1\simeq (\tau_i-1) + (\tau_k -1) $ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.
+In other words, $\tau_{ik}$ and $t_{ik}$ are written as:\footnote{Notice that, given the small magnitude of transport costs, assuming an additive or a multiplicative form for country/product fixed effects does not make a substantial difference since, for small values (as we generally obtain), we have $\tau_i\times \tau_k -1\simeq (\tau_i-1) + (\tau_k -1) $ and $t_i+t_k\simeq (1+t_i)\times(1+t_k)-1$.
 We also provide a robustness analysis to the separability assumption. Given the much higher number of fixed effects to estimate, we run this robustness check on a sub-sample of goods/origin countries. See Section \ref{sec:robustness} for a detailed presentation of this robustness check.}
 \begin{eqnarray}
 \tau_{ik} &=& \tau_{i} \times\tau_{k} \label{eq:ad-valorem}\\
@@ -253,18 +253,19 @@ t_{ik} &=& t_{i} + t_{k} \label{eq:add}
 \frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\tau_{i}\times\tau_{k} -1 +\frac{t_{i} + t_{k}}{ \widetilde{p}_{ik}} \label{eq:theory_equation}
 \end{equation*}
 
-The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by construction, the import price $p$ cannot be lower than the export price ($p_{ik}\geq\widetilde{p}_{ik}$). Taking into account this constraint in the estimate implies that the error term should be always positive.
+The ratio $\frac{p_{ik}}{\widetilde{p}_{ik}}$ has a lower bound of one, since by construction, the import price cannot be lower than the export price ($p_{ik}\geq\widetilde{p}_{ik}$). Taking into account this constraint in the estimation implies that the error term should be always positive.
 We ensure that this constraint is fulfilled by specifying the error term as follows:
 
 \begin{equation*}
 \frac{p_{ik}}{\widetilde{p}_{ik}}-1 =\left(\tau_{i}\times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}} \right)\times \exp(\epsilon_{ik})
 \end{equation*}
-\noindent where $\epsilon_{ik}$ follows a normal law centered on 0.
-Considered in logs, the above equation becomes:
+\noindent where $\epsilon_{ik}$ follows a normal law centered on 0. Considering that the LHS is positive by nature, we need to take into account a positivity constraint on the RHS. We fulfill this requirement by taking logs. The above equation then becomes:
 
 \begin{equation}
 \ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\tau_{i}\times \tau_{k} -1+\frac{t_{i} + t_{k}}{\widetilde{p}_{ik}}-1 \right) + \epsilon_{ik} \label{eq:equation0}
 \end{equation}
+
+\textbf{STOP HERE XXXX }
 
 Since Equation (\ref{eq:equation0}) is non-linear, it cannot be estimated using standard linear estimators. All estimates are thus performed using non-linear least squares.\footnote{The basis of the method is to approximate the model by a linear one and to refine the parameters by successive iterations. The intuitive criterion for convergence is that the sum of squares of residuals does not increase from one iteration to the next.
 See \cite{Woolridge-Book-2001} for more details.} Yet, the use of a non-linear estimator triggers computational limitations that limit the level of possible detail, especially when covering a long period of time.
