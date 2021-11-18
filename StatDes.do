@@ -780,7 +780,7 @@ replace mode = "(a) Air" if mode=="air"
 replace mode = "(b) Vessel" if mode=="ves"
 
 twoway (line  mean_share_A year, lcolor(black)) (qfit   mean_share_A year, lpattern(dash) lcolor(black)), ///
-	xtitle(Year)xscale(range(1973 2019)) xlabel(1974 1980 (10) 2000 2019) by(mode, legend(off) note(""))  scheme(s1mono) ///
+	xtitle(Year)xscale(range(1973 2019)) xlabel(1974 1980 (10) 2010 2019) by(mode, legend(off) note(""))  scheme(s1mono) ///
 	
  
 
@@ -823,9 +823,10 @@ foreach mode in air ves {
 replace mode = "(a) Air" if mode=="air"
 replace mode = "(b) Vessel" if mode=="ves"
 
-twoway (line mean_est_trsp_cost year) (lfit mean_est_trsp_cost year), ///
+twoway (line mean_est_trsp_cost year if (mode == "(b) Vessel" | year !=1989)) ///
+		(lfit mean_est_trsp_cost year if (mode == "(b) Vessel" | year !=1989)), ///
 			ytitle("In % of FAS price") yscale(range(0 12)) ylabel(0 (3) 12) xtitle(Year) ///
-			xscale(range(1973 2019)) xlabel(1974 1980 (10) 2000 2019) by(mode, legend(off) note(""))  scheme(s1mono)
+			xscale(range(1973 2019)) xlabel(1974 1980 (10) 2010 2019) by(mode, legend(off) note(""))  scheme(s1mono)
 
 graph export /*
 */ "$dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Figure2_Trend_of_totalTC_bymode.jpg", replace
