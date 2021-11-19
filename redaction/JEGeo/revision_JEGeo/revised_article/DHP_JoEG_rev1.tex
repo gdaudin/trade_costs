@@ -1186,7 +1186,10 @@ Denoting as usual $i$ the origin country, $k$ the product at the 5 digit level, 
 \widetilde{p}_{ikt} = (1+\tau^d_{is(k)t})^\alpha \left(\bar{p}_{ikt}\right)^\beta \label{eq:link_fas_duty}
 \end{equation}
 
-\noindent with $s(k)$ the 3-digit sector as a function of the 5-digit product.
+\noindent with $s(k)$ the 3-digit sector of the 5-digit product.
+
+The $\alpha$ parameter should fall between $-1$ and $0$, and has a direct theoretical interpretation in terms of ``pricing-to-market'' behavior of firms. $\alpha = 0$ corresponds to the case where the considered sector is made of firms not adjusting their fas price to the change in tariff, to cancel out the influence of the tariff change on the price paid by the US consumers; this rather corresponds to small firms which do not have enough market power to manipulate their prices following changes in international competition. $\alpha = -1$ is the other polar case: the sector here displays full pricing-to-market, because it involves large firms fully compensating the tariff change through their margin (see \citealp{Berman_Martin_Mayer_2012}).
+In-between, $\alpha$ $\in$ $]-1,0[$ corresponds to some variable degree of``pricing-to-market'' in the sector, characterized by firms offsetting partly the impact of the tariff change on the fas price by adjusting the producer price in the opposite direction of the tariff change.
 
 We first-differentiate this equation (between $t$ and $t-1$), with $\Delta $ the difference operator ($\Delta\widetilde{p}_{ikt} = \widetilde{p}_{ikt} - \widetilde{p}_{ikt-1}$ and so on):
 \begin{eqnarray*}
@@ -1225,10 +1228,9 @@ Finally, we allow a variable degree of persistence in the fas price, i.e. by rel
 \log \widetilde{p}_{ikt} = \beta\log \widetilde{p}_{ikt-1} + \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\lambda_{s(k)}+\epsilon_{ikt} \label{eq:firststage_final}
 \end{equation}
 
-Note that in such a formulation, $\log \widetilde{p}_{ikt-1}$ appears as a second instrument for $\log \widetilde{p}_{ikt}$. The $\alpha$ parameter should fall between $-1$ and $0$, and has a direct theoretical interpretation in terms of ``pricing-to-market'' behavior of firms. $\alpha = 0$ corresponds to the case where the considered sector is made of firms not adjusting their fas price to the change in tariff, that would cancel out the influence of the tariff change on the price paid by the US consumers; this rather corresponds to small firms which do not have enough market power to manipulate their prices following changes in international competition. $\alpha = -1$ is the other polar case: the sector here displays full pricing-to-market, because it involves large firms fully compensating the tariff change through their margin (see \citealp{Berman_Martin_Mayer_2012}).
-In-between, $\alpha$ $\in$ $]-1,0[$ corresponds to some variable degree of``pricing-to-market'' in the sector, characterized by firms offsetting partly the impact of the tariff change on the fas price by adjusting the producer price in the opposite direction of the tariff change.
+Note that in such a formulation, $\log \widetilde{p}_{ikt-1}$ appears as a second instrument for $\log \widetilde{p}_{ikt}$. 
 
-As already mentioned, consistently with the cross-section analysis adopted by now, the first-stage equation is estimated on a yearly basis, and implements 3-digit sector fixed effects ($\lambda_{is(k)}$ ). We then replace the observed series of fas prices in the right-hand side of Equation (\ref{eq:model_IetA}) by the predicted fas prices produced by Equation (\ref{eq:firststage_final}). We now report results based on our main database at the SITC 5-digit level, before replicating the exercise on HS10 digit level, consistently with another major robustness implemented in section \ref{sec:agg_main_text} from the main text.
+As already mentioned, consistently with our cross-section analysis adopted, the first-stage equation is estimated on a yearly basis, and implements 3-digit sector fixed effects ($\lambda_{is(k)}$). We then replace the observed series of fas prices in the right-hand side of Equation (\ref{eq:model_IetA}) by the predicted fas prices produced by Equation (\ref{eq:firststage_final}). We first report results based on our main database at the SITC 5-digit level, before replicating the exercise on HS10 digit level, consistently with another major robustness implemented in section \ref{sec:agg_main_text} from the main text.
 
 \paragraph{First-stage estimates based on SITC5 data.}
 
@@ -1341,11 +1343,11 @@ We begin by describing the estimation method to extract the fitted and unfitted 
 \smallskip
 
 \paragraph{Obtaining the ``pure'' transport costs component series} - The empirical strategy to find the fitted transport cost measure (i.e. extracting from trade composition effect) can be described as a two-stage process.
-First, we decompose the estimated measure in the three product/country/time dimensions, using fixed effects. In plain words, we measure how these costs have changed over time by blocking the composition of trade flows by product and country partners to the one observed in 1974 (the beginning of our sample).\smallskip
+First, we decompose the estimated measure in the three product/country/time dimensions, using fixed effects. Our aim is to obtain time fixed effects measuring how costs have changed over time.\smallskip
 
-For the estimated ad-valorem component, we estimate the following equation:
+For the estimated ad-valorem component, we estimate the following equation by transport mode:
 \begin{eqnarray}
-\ln(\widehat{\tau}_{ikt}-1)&=&\delta +\underbrace{\sum_{i \neq \text{ARG}}\alpha_i.\mathbbm{1}_i}_{(A)} + \underbrace{\sum_{s(k)\neq \text{011}}\beta_{s(k)}.\mathbbm{1}_{s(k)}}_{(B)} + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t}_{(c)}+\epsilon_{ikt} \label{eq:compeffects_mult}
+\ln(\widehat{\tau}_{ikt}-1)&=&\delta +\underbrace{\sum_{i \neq \text{ARG}}\alpha_i.\mathbbm{1}_i}_{(A)} + \underbrace{\sum_{s(k)\neq \text{011}}\beta_{s(k)}.\mathbbm{1}_{s(k)}}_{(B)} + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t}_{(C)}+\epsilon_{ikt} \label{eq:compeffects_mult}
 \end{eqnarray}
 
 \noindent where $\mathbbm{1}_i$ and $\mathbbm{1}_{s(k)}$ represent country and sector fixed effects.\footnote{Throughout the exercise, we consider Argentina, the sector 011 and the first year of our dataset 1974, as references for the country, product and year dummies.}  Equation (\ref{eq:compeffects_mult}) is estimated using OLS, with a weighting scheme based on the value of each flow in the total value of flows for the relevant year.
@@ -1368,16 +1370,16 @@ From this, we obtain the following recursive link: $\widehat{\tau}_{ist} -1 = (\
 
 
 As for the additive component, given that the sector fixed effect and the country fixed effect are additive rather than multiplicative by construction, we estimate the following equation using non-linear least squares:\footnote{For sake of notational simplicity, we do not distinguish the coefficients associated with the fixed effects between Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}), even if they are specific to the type of transport costs considered (e.g. the series of $\gamma_t$ differs from one estimation to the other).
-Note that we apply the same weighting scheme as for the OLS regression (based on the relative value of the flow).}
+Note that we apply the same weighting scheme throughout (based on the relative value of the flow).}
 
 %, based on the additive cost series $\widehat{t}_{ikt}$ previously obtained:
 \begin{eqnarray}
-\ln(\widehat{t}_{ikt})&=&\ln\left( \delta + \underbrace{\sum_{i \neq \text{ARG}}  \alpha_i.\mathbbm{1}_i}_{(A)}+\underbrace{\sum_{s(k)}\beta_{s(k)}.\mathbbm{1}_{s(k)}}_{(B)}\right) + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t}_{(c)}+\epsilon_{ikt} \label{eq:compeffects_add}
+\ln(\widehat{t}_{ikt})&=&\ln\left( \delta + \underbrace{\sum_{i \neq \text{ARG}}  \alpha_i.\mathbbm{1}_i}_{(A)}+\underbrace{\sum_{s(k)}\beta_{s(k)}.\mathbbm{1}_{s(k)}}_{(B)}\right) + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t}_{(C)}+\epsilon_{ikt} \label{eq:compeffects_add}
 \end{eqnarray}
 
 
 
-As displayed in Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}), we decompose the estimated transport cost component in three elements: the country dimension (Term (A)), the product dimension (Term (B)) and the pure transport costs time trend (Term (c)).
+As displayed in Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}), we decompose the estimated transport cost component in three elements: the country dimension (Term (A)), the product dimension (Term (B)) and the pure transport costs time trend (Term (C)).
 Note that Equations (\ref{eq:compeffects_mult}) and (\ref{eq:compeffects_add}) preserve our specification of the ad-valorem and additive costs of Equations (\ref{eq:ad-valorem}) and (\ref{eq:add}), as we consider that the ad-valorem cost is the product of the country of origin and the goods dimension, while the additive cost is the sum of the two dimensions.
 Both equations are estimated by transport mode.\smallskip
 
@@ -1401,7 +1403,7 @@ Given the constraint $t>0$, we then obtain the percentage change from 1974 from 
 
 
 
-\noindent where the subscript $^{add}$ clarifies that this time fixed effect is specific to the additive component. However, one should notice that $\Gamma^{add}_t$ has been obtained considering the additive cost in USD, ie subject to the inflation trend. To eliminate the influence of inflation in the additive cost index, we extract the time trend (e.g, inflation) from the observed fas price series according to:
+\noindent where the subscript $^{add}$ clarifies that this time fixed effect is specific to the additive component. However, one should notice that $\Gamma^{add}_t$ has been obtained considering the additive cost in USD, and thus is subject to the inflation trend. To eliminate the influence of inflation in the additive cost index, we extract the time trend (e.g, inflation) from the observed fas price series according to:
 \begin{eqnarray}
 \ln(\widehat{p}_{ikt})&=&\delta +\underbrace{\sum_{i \neq \text{ARG}}\alpha_i.\mathbbm{1}_i}_{(A)} + \underbrace{\sum_{s(k)\neq \text{011}}\beta_{s(k)}.\mathbbm{1}_{s(k)}}_{(B)} + \underbrace{\sum_{t \neq 1974}\gamma_t.\mathbbm{1}_t}_{(c)}+\epsilon_{ikt} \label{eq:compeffects_pfas}
 \end{eqnarray}
@@ -1430,7 +1432,7 @@ We also build two measures of the ``total'' transport costs for both the unfitte
 
 \paragraph{Obtaining the unfitted total transport cost index} For each transport mode, we build the total transport cost series based on Equation (\ref{eq:base_estimee}) according to:
 $$\widehat{TC}^{raw}_t= \widehat{\tau}^{adv}_t -1 + \frac{\widehat{t}_t}{\widetilde{p}_t}$$
-\noindent where $\widehat{\tau}^{adv}_t$ and $\widehat{t}_t$ are the weighted average values over the country/sector dimension estimated (conditional on a year and a transport mode), as explained in Section \ref{sec:data_method}, and $\widetilde{p}_t$ the corresponding weighted average observed fas price.
+\noindent where $\widehat{\tau}^{adv}_t$ and $\widehat{t}_t$ are the weighted average values (conditional on a year and a transport mode), as explained in Section \ref{sec:data_method}, and $\widetilde{p}_t$ the corresponding weighted average observed fas price.
 We then transform this value in an index with base year 1974, applying a similar formula as above (by transport mode):
 %$$\Gamma^{tc, raw}_t = 100\frac{\widehat{tc}^{raw}_t -1 }{\widehat{tc}^{raw}_{1974}-1}$$
 
@@ -1438,7 +1440,7 @@ $$\Gamma^{tc, raw}_t = 100\frac{\widehat{TC}^{raw}_t  }{\widehat{TC}^{raw}_{1974
 
 
 
-\paragraph{Obtaining the fitted total transport cost index} The same logic as above applies to constructing the fitted measure of total transport cost (i.e. composition effect excluded), with one notable exception: Fitted ad-valorem and additive components have not been estimated in value, but extracted and built as indices. In a first step then, starting from these indices, we rebuild the fitted measures of each transport cost component in value (expressed in percentage of the fas price in both cases):
+\paragraph{Obtaining the fitted total transport cost index} The same logic as above applies to constructing the fitted measure of total transport cost (i.e. composition effect excluded), with one notable exception: Fitted ad-valorem and additive components have not been estimated in value, but extracted and built as indices: we cannot add them together. In a first step then, starting from these indices, we rebuild the fitted measures of each transport cost component in value (expressed in percentage of the fas price in both cases):
 
 \begin{eqnarray*}
 \widehat{\tau}^{pure, adv}_t -1 &=&\Gamma^{adv}_t \frac{\bar{\tau}_{1974} }{100} \\
@@ -1492,7 +1494,7 @@ However, we do not view this as the major cause of difference between our two me
 
 Fourth, we differ in the weighting scheme retained to obtain the yearly value of the fitted transport cost (in the terms of \cite{hummels2007} method, the switch from $\widehat{TC}_{ikt}$ to $\widehat{TC}_{t}$). \cite{hummels2007} takes the unweighed average value over the $i,k$ dimension, which implicitly attributes a weight equal to 1 to each flow. We proceed differently, as we weight each flow by its relative value on total trade flows (on the relevant year of observation), based on the argument that this weighting scheme does not overweight the small flows in value. However, we ensure that our results are not sensitive to an alternative weighting scheme, by building the average fitted transport costs rate as in \cite{hummels2007}, as reported in the following Section \ref{app:compeffects_weights}.
 
-One last difference remains to be commented, concerning the way the additive component of international transport costs is treated.
+One last difference remains, concerning the way the additive component of international transport costs is treated.
 As we show below, it turns out to be key in accounting for the difference of results with \cite{hummels2007}.
 Coming back to Equation (\ref{eq:Hummels1}), it can be shown that it encompasses the two extreme cases of only ad-valorem costs ($\beta = 0$) and only additive costs ($\beta=1$), as also pointed out in \cite{hummels_skiba}. Rewriting the predict of Equation (\ref{eq:Hummels1}) in a simpler form as:
 
@@ -1505,7 +1507,7 @@ Under the first polar case with $\beta = 1$, it becomes:
 &&\ln \left(\frac{p_{ikt}- \widetilde{p}_{ikt}}{\widetilde{p}_{ikt}} \right) = \Delta_{ikt}- \ln \widetilde{p}_{ikt} \\
 \Leftrightarrow && \ln (p_{ikt}- \widetilde{p}_{ikt}) = \Delta_{ikt}
 \end{eqnarray*}
-\noindent Taken the exponential, this becomes: $p_{ikt} = \widetilde{p}_{ikt} + \exp(\Delta_{ikt})$ or, equivalently: $p_{ikt} = \widetilde{p}_{ikt} + t_{ikt}$, with $t_{ikt}$ appropriately defined. This exactly corresponds to the case of additive costs only.
+\noindent Taking the exponential, this becomes: $p_{ikt} = \widetilde{p}_{ikt} + \exp(\Delta_{ikt})$ or, equivalently: $p_{ikt} = \widetilde{p}_{ikt} + t_{ikt}$, with $t_{ikt}$ appropriately defined. This exactly corresponds to the case of additive costs only.
 
 In the second polar case with $\beta = 0$, Equation (\ref{eq:Hummels1}) becomes:
 $$\ln \left(\frac{p_{ikt}}{\widetilde{p}_{ikt}}-1\right) = \Delta_{ikt}$$
@@ -1551,7 +1553,7 @@ However, Figure \ref{fig:compeffects_robustness} also shows that the composition
 
 \subsection{The model in the general case} \label{app: model_general}
 
-In this section, we provide more details on the model's solving in the general case, i.e. without specifying any functional form for the distribution of firm productivity.
+In this section, we provide more details on solving in the model in general case, i.e. without specifying any functional form for the distribution of firm productivity.
 
 \subsubsection{Firms}
 
@@ -1586,6 +1588,7 @@ Making use of the firm's first-order pricing conditions, revenues on each local 
 \frac{\pi_d(\varphi^\ast)}{\delta} = 0 &\Leftrightarrow & \varphi^\ast = \frac{1}{f^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}}}\\
 \frac{\pi_x(\varphi_x^\ast)}{\delta} = 0 &\Leftrightarrow & \varphi_x^\ast = \frac{\tau}{f_x^{\frac{1}{1-\sigma}}B^{\frac{-1}{1-\sigma}} -t}
 \end{eqnarray*}
+\noindent with $B$ defined in Equation (\ref{eq:muofphi}).
 
 \subsubsection{Aggregation: Price indices}
 
@@ -1595,7 +1598,7 @@ Following \cite{melitz}, and decomposing the set of available varieties into $\O
 P &=& \left[\int_{\omega \in \Omega_d} p_d^{1-\sigma}(\omega)d\omega + \int_{\omega \in \Omega_x} p_x^{1-\sigma}(\omega)d\omega  \right]^{\frac{1}{1-\sigma}} \\
 &=& \left[\int_{0}^\infty p_d^{1-\sigma}(\varphi)M\mu(\varphi)d\varphi + \int_{0}^\infty p_x^{1-\sigma}(\varphi)M_x \mu_x(\varphi)d\varphi  \right]^{\frac{1}{1-\sigma}}
 \end{eqnarray*}
-Making use of Equation (\ref{eq:muofphi}), the price index reads as:
+Using Equation (\ref{eq:muofphi}), the price index reads as:
 \begin{eqnarray*}
 P &=& \left[\frac{M}{1-G(\varphi^\ast)}\int_{\varphi^\ast}^\infty p_d^{1-\sigma}(\varphi)g(\varphi)d\varphi + \frac{M_x}{1-G(\varphi_x^\ast)}\int_{\varphi^\ast_x}^\infty p_x^{1-\sigma}(\varphi)g(\varphi)d\varphi  \right]^{\frac{1}{1-\sigma}} \\
 \text{with}&& \left\{
@@ -1618,7 +1621,7 @@ Similarly as in the closed-economy case (\cite{melitz}), let us define $\widetil
 
 
 
-Further defining $M_T = M+M_x$ as the total number of varieties accessible to the consumers, one can show that the consumer price index can be rewritten as: comes that:
+Further defining $M_T = M+M_x$ as the total number of varieties accessible to the consumers, one can show that the consumer price index can be rewritten as:
 $$P = \frac{\sigma}{\sigma-1}M_T^{\frac{1}{1-\sigma}}\left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$$
 
 \noindent with $\widetilde{\varphi}(\varphi^\ast)$ and $\widetilde{\varphi}_x(\varphi_x^\ast)$ the weighted average of productivities of domestic and imported varieties respectively defined in Equations (\ref{eq:def_phitilde}) and (\ref{eq:def_phitildex}). With $\widetilde{\varphi}_T \equiv \left[\frac{1}{M_T}\left(M\widetilde{\varphi}^{\sigma-1} + M_x \left( \frac{\widetilde{\varphi}_x}{\tau} \right)^{\sigma-1} \right)  \right]^{\frac{1}{1-\sigma}}$ the weighted average of firm productivities on the domestic market (including both local producers and foreign producers exporting at Home), the price index can be expressed as $P = M_T^{\frac{1}{1-\sigma}}\frac{1}{\rho \widetilde{\varphi}_T }$. As in \cite{melitz}, given our assumptions of wage normalization and a one-sector economy, welfare per worker is simply equal the inverse of the price level: $\mathcal{W} = \frac{w}{P}= P^{-1}$, leading to:
@@ -1650,7 +1653,7 @@ $$\rho_e M_e = \delta M$$.
 
 Given the wage normalization, total revenue in each country should be such that: $E = L_p+\Pi$, with $L_p$ the number of workers of the productive sector and $\Pi$ total profits. Labor market equilibrium further requires: $L = L_p+ L_e$ with $L_e = f_eM_e$ as sunk entry costs are paid in terms of labor. Combining this with the free-entry condition (\ref{eq:FEC}), we obtain that $\Pi = L_e$: Total profits in the productive sector are used to pay the entry sunk costs. Making use of this, we obtain that aggregate income in each country is equal to its labor endowment: $E =L$.
 
-Further, total revenue can de expressed as the product of the average sales and the mass of active producers, according to: $E = M\bar{r}$, with $\bar{r}$ average sales. Similarly as for profits, it can be expressed as the sum of average sales on each local and foreign market:
+Further, total revenue can be expressed as the product of the average sales and the mass of active producers, according to: $E = M\bar{r}$, with $\bar{r}$ average sales. Similarly as for profits, it can be expressed as the sum of average sales on each local and foreign market:
 $$\bar{r} = r_d(\widetilde{\varphi}(\varphi^\ast))+ \rho_x r_d(\widetilde{\varphi}_x(\varphi_x^\ast))$$
 \noindent with the (conditional) probability of export $\rho_x = \frac{1-G(\varphi^\ast_x)}{1-G(\varphi^\ast)}$ and average sales on each market which can be shown to be:
 \begin{eqnarray*}
@@ -1658,7 +1661,7 @@ $$\bar{r} = r_d(\widetilde{\varphi}(\varphi^\ast))+ \rho_x r_d(\widetilde{\varph
 \bar{r}_x &=& \left(\frac{\widetilde{\varphi}_x^\ast}{\varphi_x^\ast}\right)^{\sigma-1}\left(\frac{\tau+ t \varphi^\ast_x}{\tau+ t \widetilde{\varphi}^\ast_x}\right)^{\sigma-1} \sigma f_x
 \end{eqnarray*}
 
-Given selection on the export market, the mass of domestic exporters depends on that of domestic active firms according to: $M_x = \rho_x M$. In the symmetric equilibrium, the total mass of available varieties is then: $M_T= M+M_x = (1+\rho_x)M$.
+Given selection on the export market, the mass of domestic exporters depends on that of domestic active firms according to: $M_x = \rho_x M$ ($\rho_x$ is defined in Equation (\ref{eq:px})In the symmetric equilibrium, the total mass of available varieties is then: $M_T= M+M_x = (1+\rho_x)M$.
 
 \subsubsection{Summary}
 
