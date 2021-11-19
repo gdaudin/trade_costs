@@ -1173,7 +1173,7 @@ These results holds whatever the considered year. \footnote{For comparison purpo
 
 
 
-\subsection{IV estimates: First stage \label{app:first_stage_IV}} 
+\subsection{IV estimates: First stage \label{app:first_stage_IV}}
 
 We report here the first-stage procedure and estimates underlying the IV estimates reported in section \ref{sec:IV_main_text}. We start by detailing the theoretical intuitions behind the first-stage equation. Afterwards, we report the estimates based on 5-digit-product-level data, before moving to the more disaggregated HS10 level for sensitivity checks.
 
@@ -1274,7 +1274,9 @@ $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)  &    
 
 %\newpage
 
-Table \ref{tab: FS_sitc5} suggests that custom duties variations are a satisfactory predictor of fas prices $\widetilde{p}_{ik}$, with strong significance and the correct, negative sign. The lagged fas price $\log \widetilde{p}_{ikt-1}$ displays also the expected positive sign: with a $\beta$ parameter around 0.75 on average, fas prices exhibit substantial persistence. The F-statistic on the excluded instrument ($\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)) is on average above 10, the ``rule-of-thumb'' threshold value recommended by \cite{staiger_stock} as a test for weak instrumentation. In addition, Figure \ref{fig: FS_IV_SITC5} shows that most values of the $\alpha$ parameter stand between 0 and -1, as expected, except in a very small number of occasions, corresponding to abrupt fluctuations in oil prices. This is typically the case in 1975, with $\alpha$=-1.83. All in all, these estimates make us confident in the validity of our instrumentation strategy.
+Table \ref{tab: FS_sitc5} suggests that custom duties variations are a satisfactory predictor of fas prices $\widetilde{p}_{ik}$, with strong significance and the correct, negative sign. The lagged fas price $\log \widetilde{p}_{ikt-1}$ displays also the expected positive sign: with a $\beta$ parameter around 0.75 on average, fas prices exhibit substantial persistence. The F-statistic on the excluded instrument ($\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)) is on average above 10, the ``rule-of-thumb'' threshold value recommended by \cite{staiger_stock} as a test for weak instrumentation. It is true that the median is at 6.63, indicating that estimates may be noisier for more than half of the considered years. That said, the use of the lagged fas price as additional instrument ensures an overall strong predictive power of the first-stage equation, and consequently, accurate (i.e. less noisy) second-stage estimates. 
+
+In addition, Figure \ref{fig: FS_IV_SITC5} shows that most values of the $\alpha$ parameter stand between 0 and -1, as expected, except in a very small number of occasions, corresponding to abrupt fluctuations in oil prices. This is typically the case in 1975, with $\alpha$=-1.83. All in all, these estimates make us confident in the validity of our instrumentation strategy.
 
 
 
@@ -1314,7 +1316,9 @@ $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)  &    
 \end{center}
 \end{figure}
 
-Results are qualitatively very similar to those reported on the longer-time-span, more-aggregated-SITC5 dataset previously reported. The F-statistic on the excluded instrument ($\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)) is on average close to 12, slightly higher than in our benchmark. As previously, Figure \ref{fig: FS_IV_HS10} shows that most values of the $\alpha$ parameter stand between 0 and -1, as expected, except in a few years which seem again to coincide with significant fluctuations in oil prices. Interestingly, the value of the $\alpha$ parameter is on average -0.36, lower than in our benchmark on SITC5 data. At this highly disaggregated level, pricing-to-market behavior seems weaker, indicating that the per-product average firm is smaller than the average per-sector one. In addition, this average value is almost identical to the one found by \citet{Fontagne_Martin_Orefice2018} on French HS6 data between 1995 and 2010 (see the first-stage coefficients in their table 6), or by \citet{Bussiere2013} on country-level data between 1980 and 2006. In any case, this strengthens our confidence in the validity of our estimation strategy.
+Results are qualitatively very similar to those reported on the longer-time-span, more-aggregated-SITC5 dataset previously reported. The F-statistic on the excluded instrument ($\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ ($\widehat{\alpha}$)) is on average close to 12, with a median closer to 10. In both cases, these numbers are slightly higher than in our benchmark.
+
+As previously, Figure \ref{fig: FS_IV_HS10} shows that most values of the $\alpha$ parameter stand between 0 and -1, as expected, except in a few years which seem again to coincide with significant fluctuations in oil prices. Interestingly, the value of the $\alpha$ parameter is on average -0.36, lower than in our benchmark on SITC5 data. At this highly disaggregated level, pricing-to-market behavior seems weaker, indicating that the per-product average firm is smaller than the average per-sector one. In addition, this average value is almost identical to the one found by \citet{Fontagne_Martin_Orefice2018} on French HS6 data between 1995 and 2010 (see the first-stage coefficients in their table 6), or by \citet{Bussiere2013} on country-level data between 1980 and 2006. In any case, this strengthens our confidence in the validity of our estimation strategy.
 
 \clearpage
 \setcounter{table}{0}
