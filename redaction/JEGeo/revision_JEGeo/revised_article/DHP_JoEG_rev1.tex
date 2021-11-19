@@ -1180,13 +1180,13 @@ We report here the first-stage procedure and estimates underlying the IV estimat
 
 Our main instrumental variable for the fas price $\widetilde{p}_{ikt}$ is the share of tariff duties over the total value imported, at the product line. Tariffs may be considered as a (reasonably) exogenous source of variation for fas prices, i.e., uncorrelated with transport costs changes and mostly independent from firm- or sector-level dynamics. In this respect, considering the predicted part of the fas price related to tariff duties is likely to solve potential endogeneity biases. In other words, tariff shocks should eliminate from the fas price any endogenous component that might be related to transport costs. Note that this strategy has been regularly used in the related literature - see for example \citet{Caliendo_Parro_2015} or \citet{Lashkaripour-2017}.
 
-Denoting as usual $i$ the origin country, $k$ the product at the 5 digit level, we assume that the fas price $\widetilde{p}_{ik}$ decomposes in two components, say $\bar{p}_{ik}$ the ``firm-specific'' price (related to its cost and pricing strategy) and $\tau^d_{ik}$ the tax duty (out of the firm's hands) according to :
+Denoting as usual $i$ the origin country, $k$ the product at the 5 digit level, we assume that the fas price $\widetilde{p}_{ik}$ is a function of components, say $\bar{p}_{ik}$ the ``firm-specific'' price (related to its cost and pricing strategy) and $\tau^d_{ik}$ the tax duty (out of the firm's hands) according to :
 
 \begin{equation}
 \widetilde{p}_{ikt} = (1+\tau^d_{is(k)t})^\alpha \left(\bar{p}_{ikt}\right)^\beta \label{eq:link_fas_duty}
 \end{equation}
 
-\noindent with $s(k)$ the 3-digit classification as a function of the 5-digit product classification.
+\noindent with $s(k)$ the 3-digit sector as a function of the 5-digit product.
 
 We first-differentiate this equation (between $t$ and $t-1$), with $\Delta $ the difference operator ($\Delta\widetilde{p}_{ikt} = \widetilde{p}_{ikt} - \widetilde{p}_{ikt-1}$ and so on):
 \begin{eqnarray*}
@@ -1206,7 +1206,7 @@ Or equivalently, taking logs:
 $$\Delta \log \widetilde{p}_{ikt}= \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\gamma_{k}+\epsilon_{ikt}$$
 
 
-\noindent with the LHS being the growth rate of the fas price (between $t$ and $t-1$). $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ is the change in the considered tariff rate, the second and third terms are fixed effects designed to capture changes in the ``firm-specific price'' $\bar{p}_{ik}$, $\epsilon_{ikt}$ being the residual. Note that, consistently with the second stage, the first stage will be estimated on a year-by-year basis, and will incorporate 3-digit-sector fixed effects. This implies to consider the following functional form of the first-stage equation:
+\noindent with the LHS being the growth rate of the fas price (between $t$ and $t-1$). $\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d}$ is the change in the considered tariff rate, the second and third terms are fixed effects designed to capture changes in the ``firm-specific price'' $\bar{p}_{ik}$, $\epsilon_{ikt}$ being the residual. Note that, consistently with the second stage, the first stage will be estimated on a year-by-year basis, and will incorporate 3-digit-sector fixed effects. This considering the following functional form of the first-stage equation:
 
 \begin{equation}
 \Delta \log \widetilde{p}_{ikt} = \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\gamma_{s}+\epsilon_{ikt} \label{eq:firststage_Deltalog}
@@ -1218,7 +1218,7 @@ or equivalently:
 \log \widetilde{p}_{ikt} = \log \widetilde{p}_{ikt-1} + \alpha\frac{\Delta \tau^d_{is(k)t}}{1+\tau_{is(k)t-1}^d} +\gamma_{i} +\gamma_{s}+\epsilon_{ikt} \label{eq:firststage_Deltalog_bis}
 \end{equation}
 
-Finally, we allow for more flexibility in the empirical set-up, by allowing a variable degree of persistence in the fas price, i.e. by relieving the constraint of a unit parameter on $\log \widetilde{p}_{ikt-1}$:
+Finally, we allow a variable degree of persistence in the fas price, i.e. by relieving the constraint of a unit parameter on $\log \widetilde{p}_{ikt-1}$:
 
 
 \begin{equation}
