@@ -860,7 +860,6 @@ foreach mode in air ves {
 	}	
 }
 
-replace beta = -beta
 label var beta "Share of additive costs"
 
 
