@@ -121,6 +121,8 @@ prep_reg db_samesample_5_3_HS10 `year' 5 3 `mode'
 
 log close
 
+set trace on
+
 
 matrix Esperance_`mode'_`year'=X
 matrix Var_Covariance_`mode'_`year'=ET	
@@ -129,11 +131,12 @@ set seed 525245224
 drawnorm $liste_parametres, n(10000) means(Esperance_`mode'_`year') cov(Var_Covariance_`mode'_`year') clear
 
 save temp.dta, replace
-clear
+set maxvar  $number_var
+*clear
 clear matrix
 clear mata
-local number_var = max(2048,wordcount("$liste_iso_o")*wordcount("$liste_prod")*2+1000)
-set maxvar  `number_var'
+global number_var = max(2048,wordcount("$liste_iso_o")*wordcount("$liste_prod")*2+1000)
+
 
 
 use "$dir_data/db_samesample_sitc2_3", clear
@@ -200,7 +203,7 @@ foreach prod of global liste_prod {
 	}
 }
 
-blif
+
 drop ln*
 xpose, clear varname
 rename v* t*
