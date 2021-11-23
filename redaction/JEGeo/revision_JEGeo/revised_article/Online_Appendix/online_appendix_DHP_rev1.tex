@@ -120,14 +120,14 @@
 \subsection{Three models: Comparison \label{secoa:additive_only}}
 
 The paper compares the empirical performances of two models: one with only ad-valorem costs (Model (A)) and one with where both ad-valorem and additive costs (Model (B)).
-For comparison purposes,  we also estimate the model with only additive costs (Model (C)), in which case the estimated equation is:
+For comparison purposes, we also estimate the model with only additive costs (Model (C)), in which case the estimated equation is:
 $$\ln\left(\frac{p_{ik}}{\widetilde{p}_{ik}}-1 \right)= \ln \left(\frac{t_{i} + t_{s(k)}}{\widetilde{p}_{ik}}\right) + \epsilon^{add}_{ik}$$
 
-This section is devoted to presenting the results. We first compare the estimates of the transport costs components under the three models. In a second step, we report quality of fit tests for the three models.
+In this section, we first compare the estimates of the transport costs components under the three models. In a second step, we report quality of fit tests for the three models.
 
 \subsubsection{Estimation results}
 
-In this section, we report the estimation results of the three models: Model (A) (with only ad-valorem costs), Model (B) (with both additive and ad-valorem) and Model (C) (with only additive costs). Table \ref{tab:3models_estimation_results_air} reports the results for air transport, Table \ref{tab:3models_estimation_results_ves} for vessel transport.
+We report estimations of the three models for selected years. Section \ref{secoa:yearly_results} provides estimations for every year. Table \ref{tab:3models_estimation_results_air} reports the results for air transport, Table \ref{tab:3models_estimation_results_ves} for vessel transport.
 
 %%%% RAW TABLE TO BE FOUND AT: "...\Dropbox\Papier_Lise_Guillaume\trade_cost\results\3_models"
 % modele iceberg tout seul : terme nlI
@@ -231,7 +231,7 @@ In this section, we report the estimation results when we retain the 4-digit cla
 \subsubsection{Transport cost estimates}
 
 
-Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} report the estimates of both models (with and without additive costs) in air and ocean transport respectively. Estimates at the 4-digit level confirm the significant role of the additive component in fitting international transport costs, already established at the 3-digit level.
+Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} report the estimates of both models (with and without additive costs) in air and vessel transport respectively. Estimates at the 4-digit level confirm the significant role of the additive component in fitting international transport costs we found at the 3-digit level.
 
 
 \begin{table}[htbp]
@@ -286,8 +286,6 @@ Additive term expressed in fraction of fas price.}}}
 		\end{tablenotes}
 \end{table}%
 
-
-tcrt
 
 
 \begin{table}[htbp]
@@ -460,7 +458,7 @@ The number \# of restrictions is equal to the number of parameters estimated, i.
 
 If anything, the quality of fit appears slightly higher when estimations are based on the 4-digit classification. This is especially true for the model restricting transport cost to their ad-valorem dimension, whatever the transport mode considered.
 When the additive part is taken into account however, the difference in goodness of fit between the 3- and the 4-digit classification level becomes very small, whatever the considered criterion.
-In other words, if using a more disaggregated product classification unsurprisingly adds some statistical precision, this is not to an extent that would disqualify the use of slightly more aggregated data.
+Using a more disaggregated product classification unsurprisingly adds some statistical precision, but the gain is not large enough to disqualify the use of slightly more aggregated data.
 
 \newpage
 
@@ -470,7 +468,7 @@ In other words, if using a more disaggregated product classification unsurprisin
 \setcounter{table}{0}
 \renewcommand{\thetable}{C.\arabic{table}}
 
-\subsection{Transport Cost Estimates: Yearly Detailed Results}
+\subsection{Transport Cost Estimates: Yearly Detailed Results \label{secoa:yearly_results}}
 
 In this section, we complement Table 1 of the main text by reporting the year-to-year results of the estimation driven at the 3-digit classification level. Table \ref{tab_oa:result_ves_ally3} reports the results for each year over 1974-2019 for vessel; Table \ref{tab_oa:result_air_ally3} reports similar results for air transport. In both cases, we report the estimated values of the transport costs (weighted mean and median) when only ad-valorem costs are modeled (Model (A)), when both additive and ad-valorem costs are modeled (Model (B)) and when only additive costs are modeled (Model (C)). In all tables, statistics are weighted by value.
 
@@ -557,8 +555,9 @@ In this section, we complement Table 1 of the main text by reporting the year-to
 \end{table}%
 
 
-As mentioned in the paper, the estimates for air transport costs in 1989 show a surprisingly high value for the additive component (the additive cost is estimated to amount to $4.6\%$ of the export price, whereas it amounts to 2.5\% on average between 1974 and 1988, and to 1.7\% over the following decade 1990-2000). This can be attributed to the presence of outliers in the distribution of the additive costs estimates. The maximum value for $\widehat{t}/\widetilde{p}$ is 10,000\% in 1989, whereas it amounts to 1,690\% on average over 1974-1988 and to 1,500\% on average over 1990-2000. Accordingly, in the paper we discard this year 1989 when we report the average values over the period of the transport costs estimates in air transport.\\
-Still, this does not make much difference. When 1989 is included, the weighted mean transport cost value amounts to 1.9\% for the ad-valorem component, vs 1.8\% when 1989 is excluded. The weighted median value is left unchanged at 2.9\% whether 1989 is included or not.
+As mentioned in the paper, the estimates for air transport costs in 1989 show a surprisingly high value for the additive component (the additive cost is estimated to amount to $4.6\%$ of the export price, whereas it amounts to 2.5\% on average between 1974 and 1988, and to 1.7\% over the following decade 1990-2000). This can be attributed to the presence of outliers in the distribution of the additive costs estimates, despite the exclusion of outliers in the data. The maximum value for $\widehat{t}/\widetilde{p}$ is 10,000\% in 1989, whereas it amounts to 1,690\% on average over 1974-1988 and to 1,500\% on average over 1990-2000. Accordingly, in the paper we discard this year 1989 when we report the average values over the period of the transport costs estimates in air transport.\\
+Excluding or excluding a single year out of 45 does not make much difference in the weighted mean transport cost.
+%When 1989 is included, the weighted mean transport cost value amounts to 1.9\% for the ad-valorem component, vs 1.8\% when 1989 is excluded. The weighted median value is left unchanged at 2.9\% whether 1989 is included or not.
 
 
 
@@ -689,7 +688,7 @@ Both account for between 30 and 40\% of the total variance in air transport, dep
 This is also the case for vessel transport, even if the difference between the between-product variance share and the between-sector share is more pronounced (30\% for the between-sector vs 40\% for the between-product variance at the beginning of the period).
 This provides an indirect robustness check to the degree of classification we have selected to estimate international transport costs.
 Second, the variance of the cif-fas price gap that can be attributed to the product (or sector) dimension is much larger than the between-country variance.
-This holds throughout the period and for both transport modes. By extension, one can expect a limited role of distance and other country-related variables as determinants of transport costs.
+This holds throughout the period and for both transport modes.
 
 
 \subsubsection{Separability Assumption}
@@ -786,7 +785,10 @@ So we are limited to using quantity units from 2009 to 2019, amending our struct
 
 \paragraph{Estimation issue} Getting deeper on the estimated functional form raised another difficulty in adapting our equation to unit prices rather than weight price. As discussed above, in our baseline regression we separate each transport cost component in its two distinct sector-origin country dimensions. As in \cite{Irrazabal_2015}, we assume an additive form for the additive cost, i.e. $t_{is(k)} = t_i+t_{s(k)}$ with $i$ the origin country and $s$ the sector. In the specific case of quantities, this raises a non-trivial issue for country-level fixed effects. Sector-level fixed effects could indeed be easily replaced by (sector times quantity unit) fixed effects; but the same does not appear relevant for country fixed effects. Let us elaborate on this issue.
 
-In the per-weight price, the existence of a single country fixed effect applicable to all sector could be justified, as a kilogram is always a kilogram and one can assume they both add the same to transport from, say, Germany. In contrast, an unit of tee-shirt is quite different from an unit of car. To clarify this point, assume imports of tee-shirts and cars from Germany and China. Under the separability assumption, importing a tee-shirt from either country implies paying the fixed effect for both countries (the same for all sectors) and the fixed effect for the sector (the same for all countries); and similarly for importing a car. Hence, the difference in the cost of importing a car from Germany and the cost of importing a car from China would be the same, in dollars, as the difference between the cost of importing a tee-shirt from Germany and the cost of importing a tee-shirt from China. This does not seem a sensible assumption; in this case specifically, we cannot keep the separability assumption.
+In the per-weight price, the existence of a single country fixed effect applicable to all sector could be justified, as a kilogram is always a kilogram and one can assume they both add the same to transport from, say, Germany. In contrast, an unit of tee-shirt is quite different from an unit of car. In the per-weight price, the existence of a single country fixed effect applicable to all sectors is justified, as a kilogram is always a kilogram and one can assume they both add the same to transport costs from, say, Germany. In contrast, an unit of tee-shirt is quite different from an unit of car. To clarify this point, consider imports of tee-shirts and cars from Germany and China.
+Under the separability assumption, importing a tee-shirt from either country implies paying the cost given by the  country fixed effect (the same for all sectors) plus the cost given by the sector fixed effect ; and similarly for importing a car.
+Hence, the difference in the cost of importing a car from Germany versus China would be the same, in dollars, as the difference between the cost of importing a tee- shirt from Germany relative to China. This does not seem a sensible assumption.
+In this setting, we cannot keep the separability assumption.
 As discussed before, this dramatically increases the computational difficulty of our method (with no substantial different results, see Subsection 3.3.1. in the main paper.\smallskip
 
 Integrating these various constraints, we run the robustness check (weight versus quantity) \textit{i)} on a sample reduced over 2009-2019, considering single transport mode flows - amounting to 66\% of the value of the baseline sample; \textit{ii)} retaining a non-separable structure of three-dimensional fixed effects $t_{is(k)u}$, $\tau_{is(k)u}$ according to the following equation:
