@@ -636,7 +636,7 @@ collect clear
 global method baseline5_4
 foreach mode in air ves {
 	collect clear
-	foreach model in nlAetI nlI nlA {
+	foreach model in nlAetI nlI {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num 1974 1985 2005 2017 2019 {
 			open_year_mode_method_model `year' `mode' $method `model'
@@ -688,13 +688,7 @@ foreach mode in air ves {
 		quietly if "`model'"=="nlI" {
 			replace terme_nlI=(terme_nlI-1) *100
 			by year: collect get, tags(model[`model'] var[terme_nlI]) : sum terme_nlI [aweight=val], det
-		}
-		
-		quietly if "`model'"=="nlA" {
-			replace terme_nlA=terme_nlA *100
-			by year: collect get, tags(model[`model'] var[terme_nlA]) : sum terme_nlA [aweight=val], det
-		}
-		
+		}	
 			
 	}
 	
@@ -720,12 +714,10 @@ foreach mode in air ves {
 	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
 	collect label levels var terme_nlI "{\textit{Multiplicative term} ($\widehat{\tau}^{ice}$)}", modify
 	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
-	collect label levels var terme_nlA "{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$)}", modify
 	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
 	collect label levels model data "\textbf{Data}"
 	collect label levels model nlAetI "{\textbf{Model (B)}}"
 	collect label levels model nlI "{\textbf{Model (A)}}"
-	collect label levels model nlA "{\textbf{Model (C)}}"
 	collect style cell, warn nformat (%3.1f)
 	collect style cell var[beta], warn nformat(%3.2f)
 	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
@@ -752,7 +744,7 @@ global method baseline5_4
 foreach mode in air ves {
 	collect clear
 	capture erase $dir_temp/forLLratio_${method}_`mode'.dta, replace
-	foreach model in nl nlI nlA {
+	foreach model in nl nlI {
 		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
 		foreach year of num 1974 1985 2005 2017 2019 {
 			open_year_mode_method_model `year' `mode' $method `model'
@@ -810,20 +802,13 @@ foreach mode in air ves {
 	sort year
 	gen statLLratioB_A = 2*abs(logL_nlI-logL_nl)
 	gen restLLratioB_A = Nb_sectors_nl*2+Nb_partners_nl*2-Nb_sectors_nlI-Nb_partners_nlI
-	
-	gen statLLratioB_C = 2*abs(logL_nlA-logL_nl)
-	gen restLLratioB_C = Nb_sectors_nl*2+Nb_partners_nl*2-Nb_sectors_nlA-Nb_partners_nlA
-	
+		
 	gen p_value_B_A=chi2den(restLLratioB_A,statLLratioB_A)
-	gen p_value_B_C=chi2den(restLLratioB_C,statLLratioB_C)
+	
 	
 	by year: collect r(mean), tags(var[TestLL] varb[statLLratioB_A]): sum statLLratioB_A
 	by year: collect r(mean), tags(var[TestLL] varb[restLLratioB_A]): sum restLLratioB_A
 	by year: collect r(mean), tags(var[TestLL] varb[p_value_B_A]): sum p_value_B_A
-	
-	by year: collect r(mean), tags(var[TestLL] varb[statLLratioB_C]): sum statLLratioB_C
-	by year: collect r(mean), tags(var[TestLL] varb[restLLratioB_C]): sum restLLratioB_C
-	by year: collect r(mean), tags(var[TestLL] varb[p_value_B_C]): sum p_value_B_C
 	
 	
 	collect layout (var[R2 SER aic LL]#model[nlI nl nlA]#result[mean] /*
@@ -834,28 +819,27 @@ foreach mode in air ves {
 	
 	collect label levels model nl "{Model (B)}"
 	collect label levels model nlI "{Model (A)}"
-	collect label levels model nlA "{Model (C)}"
 	collect label levels var R2 "\textbf{\textit{R}$^2$}"
 	collect label levels var SER "\textbf{SER (in $%$)}"
 	collect label levels var aic "\textbf{AIC criteria}"
 	collect label levels var LL "\textbf{Log-likelihood}"
 	collect label levels var TestLL "\textbf{Test LL}"
 	collect label levels varb statLLratioB_A "Stat LL ratio (B vs A)"
-	collect label levels varb statLLratioB_C "Stat LL ratio (B vs C)"
+	
 	collect label levels varb restLLratioB_A "$#$ of restrictions (B vs A)"
-	collect label levels varb restLLratioB_C "$#$ of restrictions (B vs C)"
+	
 	collect label levels varb p_value_B_A "p-value (B vs A)"
-	collect label levels varb p_value_B_C "p-value (B vs C)"
+	
 	
 	
 	
 	collect style cell, warn nformat (%3.1f)
 	collect style cell var[R2], warn nformat(%3.2f)
-	collect style cell varb[p_value_B_C], warn nformat(%3.2f)
+	
 	collect style cell varb[p_value_B_A], warn nformat(%3.2f)
 	collect style cell var[SER], warn nformat(%2.1f)
 	collect style cell var[LL aic], warn nformat(%9.0fc)
-	collect style cell varb[restLLratioB_C restLLratioB_A], warn nformat(%4.0fc)
+	
 	collect style cell varb[statLLratioB_C statLLratioB_A], warn nformat(%9.0fc)
 	collect style header result[mean], level(hide)
 	
