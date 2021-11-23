@@ -630,11 +630,258 @@ foreach mode in air ves {
 
 
 */
-/*
-******Pour les tables B appendix
 
-capture program drop tablesB
-program tablesB
+***Pour les tables B1 et B2 de l'appendix
+collect clear
+global method baseline5_4
+foreach mode in air ves {
+	collect clear
+	foreach model in nlAetI nlI nlA {
+		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+		foreach year of num 1974 1985 2005 2017 2019 {
+			open_year_mode_method_model `year' `mode' $method `model'
+			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
+			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
+		}
+		label var year "year ($method, `mode')"
+		
+		
+		if "`model'"=="nlAetI" {
+			generate N = 0
+			generate Nb_sectors = 0
+			generate Nb_partners = 0
+			label var prix_trsp "Observed transport costs"
+			
+			foreach year of num 1974 1985 2005 2017 2019 {
+				capture tabulate iso_o if year==`year'
+				replace Nb_partners=r(r) if year==`year'
+				capture tabulate sector if year==`year'
+				replace Nb_sectors=r(r) if year==`year'
+				egen N_`year'=count(prix_trsp), by(year)
+				replace N=N_`year' if year==`year'
+				drop N_`year'
+			}
+		}
+		
+
+
+		
+
+		sort year
+	*	macro list
+		quietly if "`model'"=="nlAetI" {
+			
+			replace prix_trsp=prix_trsp *100
+			replace terme_A=terme_A *100
+			replace terme_I=(terme_I-1) *100
+			
+			by year: collect r(max), tags(model[data] var[N]): 	sum N
+			by year: collect get r(max), tags(model[data] var[Nb_sectors]): 	sum Nb_sectors
+			by year: collect get r(max), tags(model[data] var[Nb_partners]): 	sum Nb_partners 
+
+			by year: collect get, tags(model[data] var[prix_trsp]) : sum prix_trsp [aweight=val], det
+			by year: collect get, tags(model[nlAetI] var[terme_I]) : sum terme_I [aweight=val], det
+			by year: collect get, tags(model[nlAetI] var[terme_A]) : sum terme_A [aweight=val], det
+			by year: collect get, tags(model[nlAetI] var[beta]) : sum beta [aweight=val], det
+		}
+		
+		quietly if "`model'"=="nlI" {
+			replace terme_nlI=(terme_nlI-1) *100
+			by year: collect get, tags(model[`model'] var[terme_nlI]) : sum terme_nlI [aweight=val], det
+		}
+		
+		quietly if "`model'"=="nlA" {
+			replace terme_nlA=terme_nlA *100
+			by year: collect get, tags(model[`model'] var[terme_nlA]) : sum terme_nlA [aweight=val], det
+		}
+		
+			
+	}
+	
+	
+	
+	
+	
+	collect layout (model[data]#result[max]#var[N Nb_sectors Nb_partners] /*
+		*/ model[data]#var[prix_trsp]#result[mean p50 sd] /*
+		*/ model[nlI]#var[terme_nlI]#result[mean p50 sd]/*
+		*/ model[nlAetI]#var[terme_I terme_A beta]#result[mean p50 sd] /* 
+		*/ model[nlA]#var[terme_nlA]#result[mean p50 sd]) /* 
+		*/ (year)
+
+	
+	collect label levels var N "{$#$ obs.}"
+	collect label levels var Nb_sectors "{$#$ sectors}"
+	collect label levels var Nb_partners "{$#$ origin countries}"
+	collect label levels result max "\textbf{Data}", modify
+	collect label levels result mean "Mean (in $%$)", modify
+	collect label levels result p50 "Median (in $%$)", modify
+	collect label levels var prix_trsp "{\textit{Observed transport costs}}", modify
+	collect label levels var terme_I "{\textit{Multiplicative term} ($\widehat{\tau}^{adv}$)}", modify
+	collect label levels var terme_nlI "{\textit{Multiplicative term} ($\widehat{\tau}^{ice}$)}", modify
+	collect label levels var terme_A "{\textit{Additive term} ($\widehat{t}/\widetilde{p}$)}", modify
+	collect label levels var terme_nlA "{\textit{Additive term} ($\widehat{t}^{add}/\widetilde{p}$)}", modify
+	collect label levels var beta "{\textit{Elasticity of transport cost to price} ($\widehat{\beta}$)}", modify
+	collect label levels model data "\textbf{Data}"
+	collect label levels model nlAetI "{\textbf{Model (B)}}"
+	collect label levels model nlI "{\textbf{Model (A)}}"
+	collect label levels model nlA "{\textbf{Model (C)}}"
+	collect style cell, warn nformat (%3.1f)
+	collect style cell var[beta], warn nformat(%3.2f)
+	collect style cell var[N]#var[Nb_sectors]#var[Nb_partners], warn nformat(%9.0gc)
+	collect style header result[max], level(hide)
+	
+	collect style save myappendixAB, replace
+	
+	
+	collect preview
+	
+	collect export /* 		 
+	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableB1_`mode'.tex, /*
+	*/ tableonly replace
+
+	
+	
+}
+
+
+
+******Pour les tables B3 et B4 de l'appendix (quality of fit)
+global method baseline5_4
+
+foreach mode in air ves {
+	collect clear
+	capture erase $dir_temp/forLLratio_${method}_`mode'.dta, replace
+	foreach model in nl nlI nlA {
+		capture erase $dir_temp/data_`model'_${method}_`mode'.dta
+		foreach year of num 1974 1985 2005 2017 2019 {
+			open_year_mode_method_model `year' `mode' $method `model'
+			capture append using $dir_temp/data_`model'_${method}_`mode'.dta
+			save $dir_temp/data_`model'_${method}_`mode'.dta, replace
+		}
+		
+		sort year
+		
+	
+	
+			
+			
+
+		****Pour la standard error of regression (https://en.wikipedia.org/wiki/Reduced_chi-squared_statistic)
+		egen value_year=total(val), by(year)
+		by year: generate weightN = val/value_year*_N
+		
+		gen Nb_partners=.
+		gen Nb_sectors=.
+		
+		foreach year of num 1974 1985 2005 2017 2019 {
+			capture tabulate iso_o if year==`year'
+			replace Nb_partners=r(r) if year==`year'
+			
+			capture tabulate sector if year==`year'
+			replace Nb_sectors=r(r) if year==`year'
+		}
+		
+		sort year
+		gen error =prix_trsp2 - predict_`model'
+		egen blouf = total(error^2*weightN), by(year)
+		
+		by year : gen SER = (blouf/(_N-Nb_sectors-Nb_partners))^0.5*100
+		
+		
+		drop blouf
+	*	gen error =abs(ln(prix_trsp2) - ln(predict_`model'))
+		by year: collect r(mean), tags(model[`model'] var[SER]): 	sum SER
+		
+		by year: collect r(mean), tags(model[`model'] var[R2]): 	sum Rp2_`model'
+		by year: collect r(mean), tags(model[`model'] var[aic]): 	sum aic_`model'
+		by year: collect r(mean), tags(model[`model'] var[LL]): 	sum logL_`model'
+		
+		bys year : keep if _n==1
+		keep year Nb_partners Nb_sectors logL_`model' mode
+		rename Nb_partners Nb_partners_`model'
+		rename Nb_sectors Nb_sectors_`model'
+		capture drop _merge
+		capture noisily merge 1:1 year mode using $dir_temp/forLLratio_${method}_`mode'.dta
+		capture drop _merge
+		save $dir_temp/forLLratio_${method}_`mode'.dta, replace
+	}
+
+	sort year
+	gen statLLratioB_A = 2*abs(logL_nlI-logL_nl)
+	gen restLLratioB_A = Nb_sectors_nl*2+Nb_partners_nl*2-Nb_sectors_nlI-Nb_partners_nlI
+	
+	gen statLLratioB_C = 2*abs(logL_nlA-logL_nl)
+	gen restLLratioB_C = Nb_sectors_nl*2+Nb_partners_nl*2-Nb_sectors_nlA-Nb_partners_nlA
+	
+	gen p_value_B_A=chi2den(restLLratioB_A,statLLratioB_A)
+	gen p_value_B_C=chi2den(restLLratioB_C,statLLratioB_C)
+	
+	by year: collect r(mean), tags(var[TestLL] varb[statLLratioB_A]): sum statLLratioB_A
+	by year: collect r(mean), tags(var[TestLL] varb[restLLratioB_A]): sum restLLratioB_A
+	by year: collect r(mean), tags(var[TestLL] varb[p_value_B_A]): sum p_value_B_A
+	
+	by year: collect r(mean), tags(var[TestLL] varb[statLLratioB_C]): sum statLLratioB_C
+	by year: collect r(mean), tags(var[TestLL] varb[restLLratioB_C]): sum restLLratioB_C
+	by year: collect r(mean), tags(var[TestLL] varb[p_value_B_C]): sum p_value_B_C
+	
+	
+	collect layout (var[R2 SER aic LL]#model[nlI nl nlA]#result[mean] /*
+		*/ var[TestLL]#varb#result[mean])/* 
+		*/ (year)
+
+	
+	
+	collect label levels model nl "{Model (B)}"
+	collect label levels model nlI "{Model (A)}"
+	collect label levels model nlA "{Model (C)}"
+	collect label levels var R2 "\textbf{\textit{R}$^2$}"
+	collect label levels var SER "\textbf{SER (in $%$)}"
+	collect label levels var aic "\textbf{AIC criteria}"
+	collect label levels var LL "\textbf{Log-likelihood}"
+	collect label levels var TestLL "\textbf{Test LL}"
+	collect label levels varb statLLratioB_A "Stat LL ratio (B vs A)"
+	collect label levels varb statLLratioB_C "Stat LL ratio (B vs C)"
+	collect label levels varb restLLratioB_A "$#$ of restrictions (B vs A)"
+	collect label levels varb restLLratioB_C "$#$ of restrictions (B vs C)"
+	collect label levels varb p_value_B_A "p-value (B vs A)"
+	collect label levels varb p_value_B_C "p-value (B vs C)"
+	
+	
+	
+	collect style cell, warn nformat (%3.1f)
+	collect style cell var[R2], warn nformat(%3.2f)
+	collect style cell varb[p_value_B_C], warn nformat(%3.2f)
+	collect style cell varb[p_value_B_A], warn nformat(%3.2f)
+	collect style cell var[SER], warn nformat(%2.1f)
+	collect style cell var[LL aic], warn nformat(%9.0fc)
+	collect style cell varb[restLLratioB_C restLLratioB_A], warn nformat(%4.0fc)
+	collect style cell varb[statLLratioB_C statLLratioB_A], warn nformat(%9.0fc)
+	collect style header result[mean], level(hide)
+	
+
+	collect preview
+	collect export /* 		 
+	*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableB3_`mode'.tex, /*
+	*/ tableonly replace
+	
+	
+
+	
+}
+
+
+
+
+
+
+
+
+/*
+******Pour les tables C appendix (year by year)
+
+capture program drop tablesC
+program tablesC
 args start end mode method
 
 collect clear
@@ -741,7 +988,7 @@ collect style header result[max], level(hide)
 collect preview
 
 collect export /* 		 
-*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableB`start'_`end'_`mode'.tex, /*
+*/ $dir_git/redaction/JEGeo/revision_JEGeo/revised_article/Online_Appendix/TableC`start'_`end'_`mode'.tex, /*
 */ tableonly replace
 
 
@@ -749,10 +996,10 @@ collect export /*
 end
 
 foreach mode in air ves {
-	tablesB 1974 1987 `mode' $method
-	tablesB 1988 2001 `mode' $method
-	tablesB 2002 2015 `mode' $method
-	tablesB 2016 2019 `mode' $method
+	tablesC 1974 1987 `mode' $method
+	tablesC 1988 2001 `mode' $method
+	tablesC 2002 2015 `mode' $method
+	tablesC 2016 2019 `mode' $method
 }
 
 */
