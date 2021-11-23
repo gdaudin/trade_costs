@@ -630,7 +630,7 @@ foreach mode in air ves {
 
 
 */
-
+/*
 ***Pour les tables B1 et B2 de l'appendix
 collect clear
 global method baseline5_4
@@ -737,7 +737,7 @@ foreach mode in air ves {
 }
 
 
-
+*/
 ******Pour les tables B3 et B4 de l'appendix (quality of fit)
 global method baseline5_4
 

@@ -13,7 +13,7 @@ if "`method'"=="baseline" & ("`model'"=="" | "`model'"=="nlAetI" | "`model'"=="n
 	generate beta=(terme_A/(terme_I+terme_A-1))
 }	
 
-if "`method'"=="baseline5_4" & ("`model'"=="" | "`model'"=="nlAetI") {
+if "`method'"=="baseline5_4" & ("`model'"=="" | "`model'"=="nlAetI" | "`model'"=="nl") {
 	use "$dir_baseline_results/results_estimTC_`year'_prod5_sect4_`mode'.dta", clear
 	capture rename `mode'_val val 
 	capture drop *_val
