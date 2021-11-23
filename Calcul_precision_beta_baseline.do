@@ -114,14 +114,13 @@ args mode year
 capture log close
 log using hummels_3digits_complet_`year'_`mode', replace
 
+global test test
 prep_reg db_samesample_5_3_HS10 `year' 5 3 `mode'
 
 *erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
 *erase "$dir/results/blouk_nlI_`year'_`class'_`preci'_`mode'.dta"
 
 log close
-
-set trace on
 
 
 matrix Esperance_`mode'_`year'=X
@@ -131,11 +130,14 @@ set seed 525245224
 drawnorm $liste_parametres, n(10000) means(Esperance_`mode'_`year') cov(Var_Covariance_`mode'_`year') clear
 
 save temp.dta, replace
-set maxvar  $number_var
-*clear
+
+clear
 clear matrix
 clear mata
-global number_var = max(2048,wordcount("$liste_iso_o")*wordcount("$liste_prod")*2+1000)
+global number_var = max(11000,wordcount("$liste_iso_o")*wordcount("$liste_sect")*2+1000)
+*set maxvar  $number_var, perm
+set maxvar 50000
+
 
 
 
@@ -149,7 +151,7 @@ use temp.dta, clear
 
 local prod_num=0
 **La référence est prod_num=1
-foreach prod of global liste_prod {
+foreach prod of global liste_sect {
 	local prod_num=`prod_num'+1	
 	local iso_num=0
 	foreach iso of global liste_iso_o { 
@@ -161,7 +163,7 @@ foreach prod of global liste_prod {
 		display "`danssample'"				
 			
 		if `prod_num' !=1 & `danssample'==1 {
-			generate t_`prod'_`iso' = exp(lnfeA_prod_`prod_num')+exp(lnfeA_iso_o_`iso_num')
+			generate t_`prod'_`iso' = exp(lnfeA_sect_`prod_num')+exp(lnfeA_iso_o_`iso_num')
 		}
 		
 		if `prod_num' ==1 & `danssample'==1 {
@@ -215,7 +217,7 @@ save temp2_t.dta,replace
 use temp.dta, clear
 local prod_num=0
 **La référence est prod_num=1
-foreach prod of global liste_prod {
+foreach prod of global liste_sect {
 	local prod_num=`prod_num'+1	
 	local iso_num=0
 	foreach iso of global liste_iso_o { 
@@ -227,7 +229,7 @@ foreach prod of global liste_prod {
 		
 		
 		if `prod_num' !=1 & `danssample'==1 {
-			generate tau_`prod'_`iso' = (exp(lnfem1I_prod_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
+			generate tau_`prod'_`iso' = (exp(lnfem1I_sect_`prod_num')+1)*(exp(lnfem1I_iso_o_`iso_num')+1)
 		}
 		
 		if `prod_num' ==1 & `danssample'==1 {
