@@ -94,8 +94,8 @@ gen share_prim_ves = ves_valprim / (ves_valprim + ves_valmanuf)
 gen share_prim_air = air_valprim / (air_valprim + air_valmanuf)
 
 twoway (line share_prim_ves year) (line share_prim_air year,lpattern(shortdash)), ///
-	legend( label(1 "Share of primary trade in the total value of vessel imports") ///
-			label(2 "Share of primary trade in the total value of air imports") rows(2)) ///
+	legend( label(1 "Share of primary goods in the total value of vessel imports") ///
+			label(2 "Share of primary goods in the total value of air imports") rows(2)) ///
 			scheme(s1mono)
 			
 graph export "$dir_results/Share_of_primary.jpg", replace
