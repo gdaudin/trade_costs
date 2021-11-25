@@ -254,7 +254,7 @@ Tables \ref{tab:result_air_rob} and \ref{tab:result_ves_rob} report the estimate
 	\centering
 %	\footnotesize{
 		\caption{Vessel: Transport costs estimates, selected years, 4-digit level}
-		\label{tab:result_air_rob}%
+		\label{tab:result_ves_rob}%
 		\input{TableB1_ves_reshaped.tex}
 		\begin{tablenotes}
 			\scriptsize
@@ -284,7 +284,7 @@ The results are reported in Tables \ref{tab:good_fit_air_rob} (for air) and \ref
 	\centering
 %	\footnotesize{
 		\caption{Vessel: Measures of goodness of fit, 4-digit level}
-		\label{tab:good_fit_air_rob}%
+		\label{tab:good_fit_ves_rob}%
 		\input{TableB3_ves_reshaped.tex}
 		%\begin{tablenotes}
 {\parbox[l]{12cm}{
@@ -650,7 +650,7 @@ Nevertheless, this section investigates the robustness of our results when unit 
 Quantity units are a second difficulty. The Census data remain silent on that matter. To the best of our knowledge, these can only be found in the ``Harmonized Tariff Schedule of the United State''. Unfortunately, these schedules change many time per year and only the schedules from 2009 onwards were available in a .csv format. On the years for which the match could be done (from 2009), it turns out that at our sector level (3-digit), goods (either at the 5-digit or the 10-digit level) are measured in different units. In 2019, only 125 3-digit sectors out of 230 are measured in a single unit (after cleaning up the unit names\footnote{As units are not always coherent (e.g. weight can be given in ``kg’’, ``kg.'' ``Kg'' and, also, ``g'' and ``t'').}).\footnote{For instance, 3-digit SITC sector ``061 Sugar, molasses and honey'' includes among other products, 5-digit SITC product ``6150 Molasses, whether or not decolourized'', measured in liters and 5-digit SITC product ``06160 Natural Honey'' measured in kg. Even worse, the 5-digit SITC product ``06190 Other sugars; sugar syrups; artificial honey (whether or not mixed with natural honey); caramel'' includes both 10-digit HTS product ``1702903500 Other: invert molasses'', measured in liters and 10-digit HTS product ``1702602200 Blended syrups described in additional u.s. note 4 to chapter 17: described in general note 15 of the tariff schedule and entered pursuant to its provisions''  measured in kilograms.} Neglecting these differences would invalidate our functional forms, as no one expects the transport cost of a ``piece'' to be the same as the transport cost of a ``kg'', even in the same sector.
 So we are limited to using quantity units from 2009 to 2019, amending our structure of fixed effects to consider the triplet (origin country, sector, quantity unit).\medskip
 
-\paragraph{Estimation issue} Getting deeper on the estimated functional form raised another difficulty in adapting our equation to per-unit rather than per-weight price. As discussed above, in our baseline regression we separate each transport cost component in two distinct sector-country dimensions. As in \cite{Irrazabal_2015}, we assume an additive form for the additive cost, i.e. $t_{is(k)} = t_i+t_{s(k)}$ with $i$ the origin country and $s$ the sector. In the specific case of quantities, this raises a non-trivial issue for country-level fixed effects. Sector-level fixed effects could indeed be easily replaced by (sector times quantity unit) fixed effects; but the same does not appear possible for country fixed effects. Let us elaborate on this issue.
+\paragraph{Estimation issue} Getting deeper on the estimated functional form raised another difficulty in adapting our equation to per-unit rather than per-weight price. As discussed above, in our baseline regression we separate each transport cost component in two distinct sector-country dimensions. As in \cite{Irrazabal_2015}, we assume an additive form for the additive cost, i.e. $t_{is(k)} = t_i+t_{s(k)}$ with $i$ the origin country and $s$ the sector. In the specific case of quantities, this raises a non-trivial issue for country-level fixed effects. Sector-level fixed effects could indeed be easily replaced by (sector $\times$ quantity unit) fixed effects; but the same does not appear possible for country fixed effects. Let us elaborate on this issue.
 
 In the per-weight price, the existence of a single country fixed effect applicable to all sector could be justified, as a kilogram is always a kilogram and one can assume they both add the same to transport costs from, say, Germany. In contrast, an unit of tee-shirt is quite different from an unit of car. To clarify this point, consider imports of tee-shirts and cars from Germany and China.
 Under the separability assumption, importing a tee-shirt from either country implies paying the cost given by the  country fixed effect (the same for all sectors) plus the cost given by the sector fixed effect; and similarly for importing a car.
