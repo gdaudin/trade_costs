@@ -114,7 +114,8 @@ args mode year
 capture log close
 log using hummels_3digits_complet_`year'_`mode', replace
 
-global test test
+global test
+*global test test
 prep_reg db_samesample_5_3_HS10 `year' 5 3 `mode'
 
 *erase "$dir/results/blouk_nlA_`year'_`class'_`preci'_`mode'.dta"
